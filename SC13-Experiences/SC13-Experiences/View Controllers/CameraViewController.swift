@@ -80,12 +80,11 @@ class CameraViewController: UIViewController,AVCaptureFileOutputRecordingDelegat
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         recordButton.setImage(UIImage(named: "Record"), for: .normal)
         delegate?.didFinishRecording(atURL: outputFileURL)
-        dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
     //MARK: - Properties
     
     weak var delegate:CameraViewControlDelegate?
-    
     private var captureSession: AVCaptureSession!
     private var recordOutput: AVCaptureMovieFileOutput!
     @IBOutlet weak var previewView: PreviewView!

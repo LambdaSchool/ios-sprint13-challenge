@@ -18,9 +18,12 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         locationHelper.locationManager.delegate = self
         locationHelper.requestAuthorization()
         locationHelper.getCurrentLocation()
-        
+        audioResetButton.isHidden = true
+        videoResetButton.isHidden = true
+        saveButton.isEnabled    = false
         // Do any additional setup after loading the view.
     }
+
     //MARK: - IBActions
     
     @IBAction func save(_ sender: Any) {
@@ -34,6 +37,8 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         }
         experienceController.create(with: title, audio: audioOutputURL, image: image, video: videoOutputURL, location: location)
         navigationController?.popViewController(animated: true)
+        componentCount = 0
+        saveButton.isEnabled = false
     }
     @IBAction func addImage(_ sender: Any) {
         choosePhoto()
@@ -60,6 +65,20 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         updateAudioView()
     }
     
+    @IBAction func resetAudio(_ sender: Any) {
+        audioOutputURL = nil
+        audioResetButton.isHidden = true
+        if componentCount > 0{
+            componentCount -= 1
+        }
+    }
+    @IBAction func resetVideo(_ sender: Any) {
+        videoOutputURL = nil
+        videoResetButton.isHidden = true
+        if componentCount > 0{
+            componentCount -= 1
+        }
+    }
     // MARK: - Methods for Image Features
     func choosePhoto(){
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
@@ -82,9 +101,10 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
             let outputCGImage = context.createCGImage(outputCIimage, from: outputCIimage.extent) else {return}
         let finalOutput = UIImage(cgImage: outputCGImage)
         imageView.image = finalOutput
+        componentCount += 1
         
     }
-    
+
     //MARK: - UIImagePickerControllerDelegate Mehods
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
@@ -136,20 +156,50 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     private let imageFilter = CIFilter(name: "CIPhotoEffectFade")!
     private let context = CIContext(options: nil)
     
+    //MARK: - Save Monitoring
+    private var componentCount = 0{
+        didSet{
+            guard let text = titleLabel.text else {return}
+            if componentCount == 3 && !text.isEmpty {
+                saveButton.isEnabled = true
+            } else {
+                saveButton.isEnabled = false
+            }
+        }
+    }
+    
+    
     //MARK: - Audio Adding
     private var recorder: AVAudioRecorder?
     private var audioPlayer: AVAudioPlayer?
-    private var audioOutputURL: URL?
+    private var audioOutputURL: URL?{
+        didSet{
+            audioResetButton.isHidden = false
+            if oldValue == nil{
+            componentCount += 1
+            }
+        }
+    }
     
     //MARK: - Video Adding
-    private var videoOutputURL: URL?
+    private var videoOutputURL: URL?{
+        didSet{
+            videoResetButton.isHidden = false
+            if oldValue == nil {
+            componentCount += 1
+            }
+        }
+    }
     
     //MARK: - Location Adding
     private var location: CLLocationCoordinate2D?
     
     //MARK: - IBOutlets
+    @IBOutlet weak var audioResetButton: UIButton!
+    @IBOutlet weak var videoResetButton: UIButton!
     @IBOutlet weak var titleLabel: UITextField!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var recordVideoButton: UIButton!
     @IBOutlet weak var recordAudioButton: UIButton!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
 }
