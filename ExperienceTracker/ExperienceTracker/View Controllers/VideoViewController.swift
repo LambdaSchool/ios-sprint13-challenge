@@ -116,6 +116,9 @@ class VideoViewController: UIViewController, AVCaptureFileOutputRecordingDelegat
     
     // AMRK: - Properties
     
+    var experienceController: ExperienceController?
+    var experience: Experience?
+    
     private var captureSession: AVCaptureSession!
     private var recordOutput: AVCaptureMovieFileOutput!
 

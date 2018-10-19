@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController, MKMapViewDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,17 +17,36 @@ class MapViewController: UIViewController, MKMapViewDelegate {
        
     }
     
-
-    /*
+    // MARK: - CLLocationManagerDelegate
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else { return }
+        self.coordinate = location.coordinate
+    }
+    
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        let destVC = segue.destination as! ExperienceViewController
+        if let coordinate = coordinate {
+            experienceController.createNewExperience(title: nil, audioRecording: nil, videoRecording: nil, image: nil, coordinate: coordinate)
+            let index = (experienceController.experiences.endIndex - 1)
+            destVC.experience = experienceController.experiences[index]
+        }
+        destVC.experienceController = experienceController
     }
-    */
     
+    // MARK: - Properties
+    
+    let experienceController = ExperienceController()
+    var coordinate: CLLocationCoordinate2D?
+    
+    lazy var locationManager: CLLocationManager = {
+        let result = CLLocationManager()
+        result.delegate = self
+        return result
+    } ()
+    private let geocoder = CLGeocoder()
     
     @IBOutlet weak var mapView: MKMapView!
     @IBAction func addExperienceButton(_ sender: Any) {

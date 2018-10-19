@@ -19,7 +19,7 @@ class ExperienceViewController: UIViewController, UIImagePickerControllerDelegat
         // Do any additional setup after loading the view.
     }
     
-    // AMRK: - Buttons
+    // MARK: - Buttons
     
     @IBAction func addPhotoImage(_ sender: Any) {
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
@@ -95,17 +95,26 @@ class ExperienceViewController: UIViewController, UIImagePickerControllerDelegat
         return documentsDir.appendingPathComponent(UUID().uuidString).appendingPathExtension("caf")
     }
     
-    /*
+    
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        let destVC = segue.destination as! VideoViewController
+        destVC.experienceController = experienceController
+        if let experience = experience,
+            let title = titleTextField.text,
+            let image = imageView.image,
+            let audioRecordingURL = recorder?.url {
+            destVC.experience = experienceController?.update(experience: experience, title: title, audioRecording: audioRecordingURL, videoRecording: nil, image: image)
+            
+        }
     }
-    */
+    
     
     // MARK: - Properties
+    
+    var experienceController: ExperienceController?
+    var experience: Experience?
     
     private var originalImage: UIImage? {
         didSet {
@@ -118,8 +127,7 @@ class ExperienceViewController: UIViewController, UIImagePickerControllerDelegat
     
     private var recorder: AVAudioRecorder?
     
-    var location: CLLocationCoordinate2D?
-    
+    @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var addPhotoImageButton: UIButton!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var imageView: UIImageView! {
