@@ -17,6 +17,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     var imageData: Data?
     var experienceTitle: String?
     var audioURL: URL?
+    var coordinate: CLLocationCoordinate2D?
+    var videoURL: URL?
     
     @IBOutlet var previewView: CameraPreviewView!
     @IBOutlet var recordButton: UIButton!
@@ -46,10 +48,12 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     @IBAction func saveExperience(_ sender: Any) {
         // create experience with Title, photo, audio, and video
-//        guard let imageData = imageData,
-//            let experienceTitle = experienceTitle,
-//            let audioURL = audioURL else { return }
-//        let experience = Experience(title: experienceTitle, audioURL: audioURL, videoURL: videoURL, imageData: imageData, coordinate: <#T##CLLocationCoordinate2D?#>)
+        guard let imageData = imageData,
+            let experienceTitle = experienceTitle,
+            let audioURL = audioURL,
+            let videoURL = videoURL,
+            let coordinate = coordinate else { return }
+        let experience = Experience(title: experienceTitle, audioURL: audioURL, videoURL: videoURL, imageData: imageData, coordinate: coordinate)
     }
     
     // MARK: - AVCaptureFileOutputRecordingDelegate
@@ -69,6 +73,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 }
                 
                 PHPhotoLibrary.shared().performChanges({
+                    self.videoURL = outputFileURL
                     PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: outputFileURL)
                 }, completionHandler: { (success, error) in
                     if let error = error {

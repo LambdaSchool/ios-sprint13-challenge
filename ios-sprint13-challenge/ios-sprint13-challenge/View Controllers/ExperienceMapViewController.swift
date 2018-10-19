@@ -13,6 +13,7 @@ class ExperienceMapViewController: UIViewController {
     @IBOutlet var mapView: MKMapView!
     
     private let geoCoder = CLGeocoder()
+    private var coordinate: CLLocationCoordinate2D?
     lazy var locationManager: CLLocationManager = {
         let result = CLLocationManager()
         result.delegate = self
@@ -35,7 +36,10 @@ class ExperienceMapViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AddExperienceSegue" {
+            guard let coordinate = coordinate,
+            let vc = segue.destination as? NewExperienceViewController else { return }
             
+            vc.coordinate = coordinate
         }
     }
 }
@@ -58,7 +62,10 @@ extension ExperienceMapViewController: CLLocationManagerDelegate {
                 return
             }
             
-            guard let placemark = placemarks?.first else { return }
+            guard let placemark = placemarks?.first,
+                let latitude = placemark.location?.coordinate.latitude,
+                let longitude = placemark.location?.coordinate.longitude else { return }
+            self.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
             // Get longitude and latitude from placemark and create CLLocation for passing
         }
     }

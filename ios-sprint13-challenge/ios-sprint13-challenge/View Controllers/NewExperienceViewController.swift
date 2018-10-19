@@ -17,6 +17,7 @@ class NewExperienceViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var recordAudioButton: UIButton!
     
     private var recorder: AVAudioRecorder?
+    var coordinate: CLLocationCoordinate2D?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,12 +42,14 @@ class NewExperienceViewController: UIViewController, UITextFieldDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "VideoRecordSegue" {
             guard let url = recorder?.url,
-                let imageData = imageView.image?.jpegData(compressionQuality: 0.1) else { return }
+                let imageData = imageView.image?.jpegData(compressionQuality: 0.1),
+                let coordinate = coordinate else { return }
             
             if let vc = segue.destination as? CameraViewController {
                 vc.audioURL = url
                 vc.imageData = imageData
                 vc.experienceTitle = titleTextField.text
+                vc.coordinate = coordinate
             }
         }
     }
