@@ -8,6 +8,9 @@
 
 import Foundation
 
-struct Experience {
-    
+struct Experience: Codable, Equatable {
+    var title: String
+    var image: URL
+    var audio: URL
+    var video: URL
 }

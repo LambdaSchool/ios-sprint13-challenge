@@ -20,26 +20,24 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="VUb-NI-beC">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lfY-KV-ftP">
-                                <rect key="frame" x="187" y="578" width="172" height="30"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Create Your Experience">
-                                    <color key="titleColor" cyan="0.0" magenta="0.0" yellow="0.0" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
-                                </state>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PpH-hm-vI3">
+                                <rect key="frame" x="243" y="506" width="132" height="42"/>
+                                <fontDescription key="fontDescription" type="system" weight="black" pointSize="25"/>
+                                <state key="normal" title="Create"/>
                                 <connections>
-                                    <segue destination="U2v-0w-G3n" kind="presentation" identifier="createYourExperience" id="iFf-DF-Cdk"/>
+                                    <segue destination="U2v-0w-G3n" kind="presentation" id="HI9-we-GAN"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="PpH-hm-vI3" firstAttribute="trailing" secondItem="VUb-NI-beC" secondAttribute="trailing" id="11N-qZ-s37"/>
                             <constraint firstItem="VUb-NI-beC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="FYd-DO-PhU"/>
                             <constraint firstItem="VUb-NI-beC" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="IVp-zE-lX4"/>
-                            <constraint firstItem="lfY-KV-ftP" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="Lsv-yU-wXZ"/>
                             <constraint firstItem="VUb-NI-beC" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="QCb-X9-3Zw"/>
                             <constraint firstItem="VUb-NI-beC" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="TiV-2U-L7W"/>
-                            <constraint firstItem="lfY-KV-ftP" firstAttribute="leading" secondItem="VUb-NI-beC" secondAttribute="trailing" constant="-188" id="mYU-u2-qUu"/>
-                            <constraint firstItem="lfY-KV-ftP" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="514" id="mxP-FX-IDR"/>
+                            <constraint firstItem="PpH-hm-vI3" firstAttribute="leading" secondItem="VUb-NI-beC" secondAttribute="trailing" constant="-132" id="l35-2W-Gui"/>
+                            <constraint firstItem="PpH-hm-vI3" firstAttribute="top" secondItem="VUb-NI-beC" secondAttribute="bottom" constant="-161" id="yyR-aF-mkn"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -61,38 +59,54 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TYp-Kw-Bpa">
-                                <rect key="frame" x="16" y="116" width="343" height="30"/>
+                                <rect key="frame" x="16" y="133" width="343" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4FW-Bo-21V">
-                                <rect key="frame" x="127" y="212" width="122" height="30"/>
+                                <rect key="frame" x="126" y="381" width="123" height="30"/>
                                 <state key="normal" title="Add Poster Image"/>
                                 <connections>
                                     <action selector="addPoster:" destination="qdU-nz-fTz" eventType="touchUpInside" id="XAM-Cy-5wu"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wnX-gH-olA">
-                                <rect key="frame" x="163" y="293" width="49" height="30"/>
+                                <rect key="frame" x="163" y="419" width="49" height="30"/>
                                 <color key="tintColor" cyan="0.0" magenta="1" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                                 <state key="normal" title="Record"/>
                                 <connections>
                                     <action selector="record:" destination="qdU-nz-fTz" eventType="touchUpInside" id="M21-Fo-dg5"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="I6h-ZY-hQ6">
+                                <rect key="frame" x="16" y="171" width="343" height="202"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tID-hb-8jl">
+                                <rect key="frame" x="136" y="457" width="103" height="30"/>
+                                <state key="normal" title="Play"/>
+                                <connections>
+                                    <action selector="play:" destination="qdU-nz-fTz" eventType="touchUpInside" id="U82-J8-Ifc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="4FW-Bo-21V" firstAttribute="leading" secondItem="4S8-oa-woT" secondAttribute="leading" constant="127" id="627-Fc-42i"/>
-                            <constraint firstItem="wnX-gH-olA" firstAttribute="top" secondItem="4FW-Bo-21V" secondAttribute="bottom" constant="51" id="O1F-qD-Amz"/>
-                            <constraint firstItem="wnX-gH-olA" firstAttribute="leading" secondItem="4S8-oa-woT" secondAttribute="leading" constant="163" id="XEq-fK-S6E"/>
-                            <constraint firstItem="4S8-oa-woT" firstAttribute="trailing" secondItem="4FW-Bo-21V" secondAttribute="trailing" constant="126" id="b8p-K7-cze"/>
-                            <constraint firstItem="TYp-Kw-Bpa" firstAttribute="leading" secondItem="4S8-oa-woT" secondAttribute="leading" constant="16" id="cDa-Ap-Lhx"/>
-                            <constraint firstItem="4S8-oa-woT" firstAttribute="bottom" secondItem="TYp-Kw-Bpa" secondAttribute="bottom" constant="521" id="rN8-hX-pXR"/>
-                            <constraint firstItem="4FW-Bo-21V" firstAttribute="top" secondItem="TYp-Kw-Bpa" secondAttribute="bottom" constant="66" id="tIX-b0-UOb"/>
-                            <constraint firstItem="4S8-oa-woT" firstAttribute="trailing" secondItem="TYp-Kw-Bpa" secondAttribute="trailing" constant="16" id="xDX-k5-h7i"/>
-                            <constraint firstItem="4S8-oa-woT" firstAttribute="trailing" secondItem="wnX-gH-olA" secondAttribute="trailing" constant="163" id="xy9-mL-eKU"/>
+                            <constraint firstItem="I6h-ZY-hQ6" firstAttribute="top" secondItem="TYp-Kw-Bpa" secondAttribute="bottom" constant="8" symbolic="YES" id="2Nd-uu-9W8"/>
+                            <constraint firstItem="wnX-gH-olA" firstAttribute="top" secondItem="4FW-Bo-21V" secondAttribute="bottom" constant="8" symbolic="YES" id="4Xl-Hr-Ubi"/>
+                            <constraint firstItem="TYp-Kw-Bpa" firstAttribute="top" secondItem="4S8-oa-woT" secondAttribute="top" constant="17" id="8fT-tC-BOE"/>
+                            <constraint firstItem="4FW-Bo-21V" firstAttribute="centerX" secondItem="wnX-gH-olA" secondAttribute="centerX" id="EgZ-fL-j3G"/>
+                            <constraint firstItem="TYp-Kw-Bpa" firstAttribute="trailing" secondItem="I6h-ZY-hQ6" secondAttribute="trailing" id="IyC-aZ-hCr"/>
+                            <constraint firstItem="TYp-Kw-Bpa" firstAttribute="trailing" secondItem="Fpj-lf-LUs" secondAttribute="trailingMargin" id="JOb-Nh-NM6"/>
+                            <constraint firstItem="4S8-oa-woT" firstAttribute="bottom" secondItem="wnX-gH-olA" secondAttribute="bottom" constant="218" id="Ows-R5-x0M"/>
+                            <constraint firstItem="tID-hb-8jl" firstAttribute="leading" secondItem="4S8-oa-woT" secondAttribute="leading" constant="136" id="Wkh-If-PuF"/>
+                            <constraint firstItem="4FW-Bo-21V" firstAttribute="top" secondItem="I6h-ZY-hQ6" secondAttribute="bottom" constant="8" symbolic="YES" id="eKb-Bn-2Mj"/>
+                            <constraint firstItem="4FW-Bo-21V" firstAttribute="leading" secondItem="4S8-oa-woT" secondAttribute="leading" constant="126" id="h2y-M9-lwf"/>
+                            <constraint firstItem="TYp-Kw-Bpa" firstAttribute="leading" secondItem="Fpj-lf-LUs" secondAttribute="leadingMargin" id="h7u-pj-yZk"/>
+                            <constraint firstItem="TYp-Kw-Bpa" firstAttribute="leading" secondItem="I6h-ZY-hQ6" secondAttribute="leading" id="n4F-Ie-BWg"/>
+                            <constraint firstItem="4S8-oa-woT" firstAttribute="trailing" secondItem="tID-hb-8jl" secondAttribute="trailing" constant="136" id="psP-jG-Kp1"/>
+                            <constraint firstItem="4S8-oa-woT" firstAttribute="bottom" secondItem="tID-hb-8jl" secondAttribute="bottom" constant="180" id="tN4-9X-wDL"/>
+                            <constraint firstItem="I6h-ZY-hQ6" firstAttribute="centerX" secondItem="4FW-Bo-21V" secondAttribute="centerX" id="yUl-1L-cPx"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4S8-oa-woT"/>
                     </view>
@@ -105,6 +119,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="imageView" destination="I6h-ZY-hQ6" id="Kx6-1v-uWE"/>
+                        <outlet property="playLabel" destination="tID-hb-8jl" id="FAw-uZ-nFf"/>
+                        <outlet property="recordLabel" destination="wnX-gH-olA" id="Uy3-RY-96n"/>
                         <outlet property="titleTextField" destination="TYp-Kw-Bpa" id="S3b-LE-v66"/>
                     </connections>
                 </viewController>
