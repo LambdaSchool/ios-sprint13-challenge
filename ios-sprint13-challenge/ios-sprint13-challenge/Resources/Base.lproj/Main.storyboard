@@ -37,7 +37,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="20q-oD-dgm" kind="presentation" id="W2r-VN-lJ6"/>
+                                    <segue destination="20q-oD-dgm" kind="presentation" identifier="AddExperienceSegue" id="W2r-VN-lJ6"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -83,7 +83,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lZh-vu-CWy">
                                         <rect key="frame" x="0.0" y="38" width="343" height="259"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="g1H-eL-PF2">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="g1H-eL-PF2">
                                                 <rect key="frame" x="0.0" y="0.0" width="343" height="259"/>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="itb-eD-40a" userLabel="Choose Photo">
@@ -137,7 +137,12 @@
                         <viewLayoutGuide key="safeArea" id="seU-h9-OCw"/>
                     </view>
                     <navigationItem key="navigationItem" title="New Experience" id="4Is-Ko-M89">
-                        <barButtonItem key="rightBarButtonItem" title="Next" id="CIe-rj-9ZR"/>
+                        <barButtonItem key="backBarButtonItem" title="Back" id="tqR-p0-zg7"/>
+                        <barButtonItem key="rightBarButtonItem" title="Next" id="CIe-rj-9ZR">
+                            <connections>
+                                <segue destination="G4g-s2-WcS" kind="show" identifier="VideoRecordSegue" id="cnz-sE-qLi"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="choosePhotoButton" destination="itb-eD-40a" id="Ogz-B7-U3f"/>
@@ -150,20 +155,62 @@
             </objects>
             <point key="canvasLocation" x="2472.8000000000002" y="126.38680659670166"/>
         </scene>
-        <!--View Controller-->
+        <!--Video Recording-->
         <scene sceneID="7rk-Zf-L38">
             <objects>
-                <viewController id="G4g-s2-WcS" sceneMemberID="viewController">
+                <viewController id="G4g-s2-WcS" customClass="CameraViewController" customModule="ios_sprint13_challenge" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="j4V-tI-xKM">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RlQ-Sh-ZBW" customClass="CameraPreviewView" customModule="ios_sprint13_challenge" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="116" width="375" height="551"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hya-RP-8hB">
+                                        <rect key="frame" x="150" y="416" width="75" height="75"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="75" id="7mX-Mv-eSb"/>
+                                            <constraint firstAttribute="width" constant="75" id="F7e-NA-YBI"/>
+                                        </constraints>
+                                        <color key="tintColor" red="1" green="0.18592151649999999" blue="0.19488327859999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" image="Record"/>
+                                        <connections>
+                                            <action selector="toggleRecord:" destination="G4g-s2-WcS" eventType="touchUpInside" id="zJh-yu-PGr"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="hya-RP-8hB" secondAttribute="bottom" constant="60" id="9jD-ar-i3j"/>
+                                    <constraint firstItem="hya-RP-8hB" firstAttribute="centerX" secondItem="RlQ-Sh-ZBW" secondAttribute="centerX" id="UAL-gf-TcX"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="RlQ-Sh-ZBW" firstAttribute="top" secondItem="0YL-JA-FnA" secondAttribute="top" id="Bf0-fR-Ime"/>
+                            <constraint firstItem="RlQ-Sh-ZBW" firstAttribute="trailing" secondItem="0YL-JA-FnA" secondAttribute="trailing" id="ZLA-63-TA0"/>
+                            <constraint firstAttribute="bottom" secondItem="RlQ-Sh-ZBW" secondAttribute="bottom" id="ePC-oQ-gSA"/>
+                            <constraint firstItem="RlQ-Sh-ZBW" firstAttribute="leading" secondItem="0YL-JA-FnA" secondAttribute="leading" id="hS2-c9-myG"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="0YL-JA-FnA"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Video Recording" id="sc7-Kr-4f0">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="SYT-Ih-Yoc">
+                            <connections>
+                                <action selector="saveExperience:" destination="G4g-s2-WcS" id="n2f-1o-w1g"/>
+                                <segue destination="NXT-N7-vIQ" kind="presentation" id="Hwi-CQ-e3Y"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="previewView" destination="RlQ-Sh-ZBW" id="FyO-xS-OsD"/>
+                        <outlet property="recordButton" destination="hya-RP-8hB" id="s3Q-0d-9HE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SmF-tY-Sv2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3250" y="118"/>
+            <point key="canvasLocation" x="3390" y="126"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="c7A-fd-OOi">
@@ -184,4 +231,7 @@
             <point key="canvasLocation" x="1533.5999999999999" y="126.38680659670166"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Record" width="116" height="116"/>
+    </resources>
 </document>

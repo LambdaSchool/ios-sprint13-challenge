@@ -12,7 +12,12 @@ import MapKit
 class ExperienceMapViewController: UIViewController {
     @IBOutlet var mapView: MKMapView!
     
-    private let locationManager = CLLocationManager()
+    private let geoCoder = CLGeocoder()
+    lazy var locationManager: CLLocationManager = {
+        let result = CLLocationManager()
+        result.delegate = self
+        return result
+    }()
     private var experiences = [Experience]() {
         didSet {
             DispatchQueue.main.async {
@@ -24,7 +29,14 @@ class ExperienceMapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotationView")
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AddExperienceSegue" {
+            
+        }
     }
 }
 
@@ -34,5 +46,24 @@ extension ExperienceMapViewController: MKMapViewDelegate {
         let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceAnnotationView", for: experience) as! MKMarkerAnnotationView
         
         return annotationView
+    }
+}
+
+extension ExperienceMapViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else { return }
+        geoCoder.reverseGeocodeLocation(location) { (placemarks, error) in
+            if let error = error {
+                NSLog("Error geocoding location: \(error)")
+                return
+            }
+            
+            guard let placemark = placemarks?.first else { return }
+            // Get longitude and latitude from placemark and create CLLocation for passing
+        }
+    }
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        NSLog("Failed getting location with error: \(error)")
+        return
     }
 }

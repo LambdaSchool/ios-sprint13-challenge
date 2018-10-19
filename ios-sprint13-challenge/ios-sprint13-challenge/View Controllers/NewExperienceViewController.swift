@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 
-class NewExperienceViewController: UIViewController {
+class NewExperienceViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var titleTextField: UITextField!
     @IBOutlet var imageView: UIImageView!
@@ -20,6 +20,12 @@ class NewExperienceViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        titleTextField.delegate = self
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     @IBAction func recordAudioTapped(_ sender: Any) {
@@ -29,6 +35,19 @@ class NewExperienceViewController: UIViewController {
             endRecording()
         } else {
             beginRecording()
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "VideoRecordSegue" {
+            guard let url = recorder?.url,
+                let imageData = imageView.image?.jpegData(compressionQuality: 0.1) else { return }
+            
+            if let vc = segue.destination as? CameraViewController {
+                vc.audioURL = url
+                vc.imageData = imageData
+                vc.experienceTitle = titleTextField.text
+            }
         }
     }
 }
@@ -129,9 +148,6 @@ extension NewExperienceViewController {
         if isRecording {
             recorder?.stop()
             recordAudioButton.setTitle("Record Audio", for: .normal)
-            if let url = recorder?.url {
-                // Add recording URL to Experience
-            }
         }
     }
 }
