@@ -11,53 +11,45 @@ import MapKit
 
 class ExperienceMapViewController: UIViewController {
     @IBOutlet var mapView: MKMapView!
-    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {}
-    
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) { }
+
     private let geoCoder = CLGeocoder()
     private var coordinate: CLLocationCoordinate2D?
     let experienceController = ExperienceController()
-    
+
     lazy var locationManager: CLLocationManager = {
         let result = CLLocationManager()
         result.delegate = self
         return result
     }()
-    
-//    var experiences = [Experience]() {
-//        didSet {
-//            DispatchQueue.main.async {
-//                self.mapView.addAnnotations(self.experiences)
-//            }
-//        }
-//    }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
         fetchExperiences()
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         fetchExperiences()
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotationView")
         fetchExperiences()
     }
-    
+
     private func fetchExperiences() {
         self.mapView.addAnnotations(experienceController.experiences)
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AddExperienceSegue" {
             guard let coordinate = coordinate,
                 let vc = segue.destination as? NewExperienceViewController else { return }
-            
+
             vc.coordinate = coordinate
             vc.experienceController = experienceController
         }
@@ -68,7 +60,7 @@ extension ExperienceMapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let experience = annotation as? Experience else { return nil }
         let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceAnnotationView", for: experience) as! MKMarkerAnnotationView
-        
+
         return annotationView
     }
 }
@@ -81,7 +73,7 @@ extension ExperienceMapViewController: CLLocationManagerDelegate {
                 NSLog("Error geocoding location: \(error)")
                 return
             }
-            
+
             guard let placemark = placemarks?.first,
                 let latitude = placemark.location?.coordinate.latitude,
                 let longitude = placemark.location?.coordinate.longitude else { return }
