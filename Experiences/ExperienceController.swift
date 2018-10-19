@@ -15,8 +15,8 @@ class ExperienceController {
     private(set) var experiences = [Experience]()
     
     
-    func addExperience(image: UIImage, recordingURL: URL, videoURL: URL) {
-        let experience = Experience(image: image, recordingURL: recordingURL, videoURL: videoURL)
+    func addExperience(image: UIImage, recordingURL: URL, videoURL: URL, title: String) {
+        let experience = Experience(image: image, recordingURL: recordingURL, videoURL: videoURL, title: title)
         experiences.append(experience)
     }
     

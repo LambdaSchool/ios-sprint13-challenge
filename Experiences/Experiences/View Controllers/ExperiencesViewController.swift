@@ -45,9 +45,9 @@ class ExperiencesViewController: UIViewController, MKMapViewDelegate {
         
         let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceAnnotationView", for: experience) as! MKMarkerAnnotationView
         annotationView.markerTintColor = .gray
-        annotationView.glyphText = "Test"
+        annotationView.glyphText = experience.titleOfExperience
         annotationView.glyphTintColor = .black
-
+        
         return annotationView
     }
     

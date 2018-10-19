@@ -14,6 +14,7 @@ class AddExperienceViewController: UIViewController, UINavigationControllerDeleg
 
     // MARK: - Properties
     
+    @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     var recordingURL: URL!
@@ -76,6 +77,7 @@ class AddExperienceViewController: UIViewController, UINavigationControllerDeleg
             let destinationVC = segue.destination as! CameraViewController
             destinationVC.image = imageView.image
             destinationVC.audioURL = recordingURL
+            destinationVC.titleOfExperience = titleTextField.text
         }
     }
    

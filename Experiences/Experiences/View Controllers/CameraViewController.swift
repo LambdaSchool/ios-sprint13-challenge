@@ -23,6 +23,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     var outputURL: URL!
     var audioURL: URL!
     var image: UIImage!
+    var titleOfExperience: String!
     
     // MARK: - View Life Cycle
     override func viewDidLoad() {
@@ -73,7 +74,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     @IBAction func save(_ sender: Any) {
         
-        experienceController.addExperience(image: image, recordingURL: audioURL, videoURL: outputURL)
+        experienceController.addExperience(image: image, recordingURL: audioURL, videoURL: outputURL, title: titleOfExperience)
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "Map") as! ExperiencesViewController
