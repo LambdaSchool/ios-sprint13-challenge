@@ -28,15 +28,33 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "MemoryAnnotationView")
     }
     
-    // MARK: - Properties
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        updateViews()
+    }
+    
+    // MARK: - Private Properties
     
     private let locationManager = CLLocationManager()
     private var userTrackingButton: MKUserTrackingButton!
+    
+    private let memoryController = MemoryController.shared
     
     
     // MARK: - Outlets
     
     @IBOutlet weak var mapView: MKMapView!
+    
+    
+    // MARK: - Private Functions
+    
+    private func updateViews() {
+        let annotations = mapView.annotations
+        
+        mapView.removeAnnotations(annotations)
+        mapView.addAnnotations(memoryController.memories)
+    }
     
     
     // MARK: - MKMapViewDelegate
@@ -47,7 +65,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         annotationView.markerTintColor = .gray
         annotationView.glyphTintColor = .black
         
-        annotationView.canShowCallout = true
+//        annotationView.canShowCallout = true
         
         return annotationView
     }
