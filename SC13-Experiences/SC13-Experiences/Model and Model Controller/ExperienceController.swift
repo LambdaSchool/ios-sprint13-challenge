@@ -11,6 +11,7 @@ import UIKit
 import MapKit
 
 class ExperienceController{
+    static let shared = ExperienceController()
     
     //MARK: - CRUD
     func create(with title:String, audio: URL, image: UIImage, video: URL, location: CLLocationCoordinate2D){

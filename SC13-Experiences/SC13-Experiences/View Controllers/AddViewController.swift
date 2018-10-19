@@ -10,28 +10,27 @@ import UIKit
 import Photos
 import CoreImage
 import AVFoundation
-enum MediaType: String{
-    case audio = "caf"
-    case video = "mov"
-}
-class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CameraViewControlDelegate, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        locationHelper.requestAuthorization()
+//        location = locationHelper.getCurrentLocation()
         // Do any additional setup after loading the view.
     }
     //MARK: - IBActions
     
     @IBAction func save(_ sender: Any) {
-        
-        PHPhotoLibrary.requestAuthorization { (status) in
-            guard status == .authorized else {
-                NSLog("Access not permitted")
+        guard let title = titleLabel.text,
+            let image = imageView.image,
+            let location = location,
+        let audioOutputURL = audioOutputURL,
+            let videoOutputURL = videoOutputURL else{
+                NSLog("Missing experience components")
                 return
-            }
-            
         }
+        experienceController.create(with: title, audio: audioOutputURL, image: image, video: videoOutputURL, location: location)
     }
     @IBAction func addImage(_ sender: Any) {
         choosePhoto()
@@ -52,13 +51,12 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
                 audioPlayer.stop()
             }
             let format = AVAudioFormat(standardFormatWithSampleRate: 44100.0, channels: 1)!
-            recorder = try! AVAudioRecorder(url: newRecordingURL(mediaType: .audio), format: format)
+            recorder = try! AVAudioRecorder(url: URL.newRecordingURL(mediaType: .audio), format: format)
             recorder?.record()
         }
         updateAudioView()
     }
-    @IBAction func recordVideo(_ sender: Any) {
-    }
+    
     // MARK: - Methods for Image Features
     func choosePhoto(){
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
@@ -91,21 +89,22 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         
     }
     
+    
     //MARK: - Methods Audio Recording
+    
     private func updateAudioView(){
         guard let isRecording = recorder?.isRecording else {return}
         let title = !isRecording ? "Record Audio" : "Recording..."
         recordAudioButton.setTitle(title, for: .normal)
     }
-    
-    //MARK: - Properties
-    var experienceController: ExperienceController?
-    private func newRecordingURL(mediaType: MediaType) -> URL {
-        let fm = FileManager.default
-        let documentsDir = try! fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-        return documentsDir.appendingPathComponent(UUID().uuidString).appendingPathExtension(mediaType.rawValue)
+    //MARK: - CamerViewControllerDelegate Method
+    func didFinishRecording(atURL url: URL) {
+        videoOutputURL = url
     }
     
+    //MARK: - Properties
+    var experienceController = ExperienceController.shared
+    private let  locationHelper = LocationHelper()
     //MARK: -Image Adding Properties
     private var originalImage: UIImage?{
         didSet{
@@ -119,6 +118,12 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     private var recorder: AVAudioRecorder?
     private var audioPlayer: AVAudioPlayer?
     private var audioOutputURL: URL?
+    
+    //MARK: - Video Adding
+    private var videoOutputURL: URL?
+    
+    //MARK: - Location Adding
+    private var location: CLLocationCoordinate2D?
     
     //MARK: - IBOutlets
     @IBOutlet weak var titleLabel: UITextField!
