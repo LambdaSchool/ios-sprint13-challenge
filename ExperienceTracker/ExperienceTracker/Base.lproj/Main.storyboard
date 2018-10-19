@@ -56,7 +56,7 @@
         <!--Title-->
         <scene sceneID="hHE-b5-WCL">
             <objects>
-                <viewController id="kk5-hF-IXB" sceneMemberID="viewController">
+                <viewController id="kk5-hF-IXB" customClass="ExperienceViewController" customModule="ExperienceTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yY0-T8-dWm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -76,11 +76,17 @@
                                 <state key="normal" title="Record">
                                     <color key="titleColor" red="0.80367551810000004" green="0.046285474090000001" blue="0.0088335181910000008" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="recordAudio:" destination="kk5-hF-IXB" eventType="touchUpInside" id="WT2-fL-icp"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N3D-EM-b6C">
                                 <rect key="frame" x="126" y="274" width="122" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Add Poster Image"/>
+                                <connections>
+                                    <action selector="addPhotoImage:" destination="kk5-hF-IXB" eventType="touchUpInside" id="vbW-im-K0V"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -98,16 +104,21 @@
                     <navigationItem key="navigationItem" title="Title" id="wlt-4O-hEW">
                         <barButtonItem key="rightBarButtonItem" title="Next" id="aEF-Qo-C3u">
                             <connections>
+                                <action selector="next:" destination="kk5-hF-IXB" id="8LE-tm-mV6"/>
                                 <segue destination="Pu0-V0-ijP" kind="show" id="pQe-Ck-BxQ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="addPhotoImageButton" destination="N3D-EM-b6C" id="8RF-zi-Q1W"/>
+                        <outlet property="recordButton" destination="kX9-rz-JxY" id="Rbb-lj-wJu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S9D-eP-LAv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2221.5999999999999" y="25.637181409295355"/>
         </scene>
-        <!--Video View Controller-->
+        <!--Title-->
         <scene sceneID="MBm-lw-W8j">
             <objects>
                 <viewController id="Pu0-V0-ijP" customClass="VideoViewController" customModule="ExperienceTracker" customModuleProvider="target" sceneMemberID="viewController">
@@ -147,6 +158,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Boq-DU-y7S"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Title" id="Unm-Kc-VYl">
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="hKV-K3-oZk">
+                            <connections>
+                                <action selector="save:" destination="Pu0-V0-ijP" id="FPU-5y-xyO"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="cameraView" destination="P6G-js-c4o" id="Xd8-ZC-guc"/>
                         <outlet property="recordingButton" destination="M86-9t-eCi" id="Zwg-Ej-4zG"/>

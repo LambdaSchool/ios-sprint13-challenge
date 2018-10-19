@@ -29,12 +29,18 @@ class VideoViewController: UIViewController, AVCaptureFileOutputRecordingDelegat
         captureSession.stopRunning()
     }
     
+    // MARK: - Buttons
+    
     @IBAction func toggleRecording(_ sender: Any) {
         if recordOutput.isRecording {
             recordOutput.stopRecording()
         } else {
             recordOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
         }
+    }
+    
+    @IBAction func save(_ sender: Any) {
+        
     }
     
     // MARK: - AVCaptureFileOutputRecordingDelegate
