@@ -13,6 +13,7 @@ class Image_AudioViewController: UIViewController, AVAudioPlayerDelegate {
 
     // MARK: - Navigation
     var experienceController: ExperienceController!
+    var locationHelper = LocationHelper()
     var experience: Experience?
     var recorder: AVAudioRecorder?
     var audioPlayer: AVAudioPlayer?
@@ -27,6 +28,11 @@ class Image_AudioViewController: UIViewController, AVAudioPlayerDelegate {
         super.viewDidLoad()
 
         experience = Experience()
+        
+        // Add location
+        locationHelper.requestAuthorization()
+        let location = locationHelper.getLocation()
+        experience?.geotag = location?.coordinate
     }
     
     @IBAction func recordAudio(_ sender: Any) {

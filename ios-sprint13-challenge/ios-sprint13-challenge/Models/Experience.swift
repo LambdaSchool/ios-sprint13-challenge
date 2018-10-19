@@ -24,17 +24,24 @@ class Experience: NSObject {
     var audioURL: URL?
     var videoURL: URL?
     var image: UIImage?
+    var geotag: CLLocationCoordinate2D?
     
 }
 
 extension Experience: MKAnnotation {
     
     var coordinate: CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(latitude: CLLocationDegrees(exactly: 0.0)!, longitude: CLLocationDegrees(exactly: 0.0)!)
+        guard let geotag = self.geotag else { return kCLLocationCoordinate2DInvalid }
+        
+        return geotag
     }
     
-    var subtitle: String? {
+    var title: String? {
         return self.experienceTitle
     }
+    
+//    var subtitle: String? {
+//        return self.experienceTitle
+//    }
     
 }

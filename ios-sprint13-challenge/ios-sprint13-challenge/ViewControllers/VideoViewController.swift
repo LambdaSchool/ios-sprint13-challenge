@@ -46,17 +46,34 @@ class VideoViewController: UIViewController, AVCaptureFileOutputRecordingDelegat
     }
     
     @IBAction func save(_ sender: Any) {
+        self.addExperience()
         self.dismiss(animated: true, completion: nil)
     }
     
     // MARK: - AVCaptureFileOutputRecordingDelegate
     
     func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
-        
+        DispatchQueue.main.async {
+            self.updateViews()
+        }
     }
     
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
-        
+        DispatchQueue.main.async {
+            self.updateViews()
+            // Save video
+            self.experience?.videoURL = outputFileURL
+            
+            if let _ = self.experience?.videoURL {
+                let alert = UIAlertController(title: "Saved video", message: "You shall go on now recording more experiences", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Ok", style: .default, handler: { (_) in
+                    self.addExperience()
+                    self.dismiss(animated: true, completion: nil)
+                })
+                alert.addAction(okAction)
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
     }
     
 
@@ -67,6 +84,12 @@ class VideoViewController: UIViewController, AVCaptureFileOutputRecordingDelegat
         
         let recordButtonImageName = recordOutput.isRecording ? "Stop" : "Record"
         recordButton.setImage(UIImage(named: recordButtonImageName), for: .normal)
+    }
+    
+    private func addExperience() {
+        if let experience = experience {
+            experienceController.experiences.append(experience)
+        }
     }
     
     private func setupCapture() {

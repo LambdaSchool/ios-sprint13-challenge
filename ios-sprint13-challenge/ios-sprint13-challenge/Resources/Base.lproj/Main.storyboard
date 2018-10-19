@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="L8p-uv-yr9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wjC-G7-ae0">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -78,7 +78,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ara-hd-j7J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2058" y="582"/>
+            <point key="canvasLocation" x="2996" y="581.55922038980509"/>
         </scene>
         <!--Video Recording-->
         <scene sceneID="Z66-4a-mWe">
@@ -122,7 +122,7 @@
                         <viewLayoutGuide key="safeArea" id="osC-ND-Zln"/>
                     </view>
                     <navigationItem key="navigationItem" title="Video Recording" id="aaV-pq-Z9U">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="5Jh-lq-uoL">
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="5Jh-lq-uoL">
                             <connections>
                                 <action selector="save:" destination="ogR-kE-h3s" id="kiF-WH-w9g"/>
                             </connections>
@@ -135,11 +135,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dE0-jC-KLW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2863" y="582"/>
+            <point key="canvasLocation" x="3800.8000000000002" y="581.55922038980509"/>
         </scene>
         <!--Experience-->
         <scene sceneID="RRa-pj-sk3">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cdY-W3-9sS" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="22a-ZK-T2P" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Experience" id="cr8-3b-fgl"/>
                     <toolbarItems/>
@@ -152,11 +153,10 @@
                         <segue destination="JYS-6Q-V4j" kind="relationship" relationship="rootViewController" id="lng-v7-KeR"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cdY-W3-9sS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1226" y="582"/>
+            <point key="canvasLocation" x="2204" y="581.55922038980509"/>
         </scene>
-        <!--Map-->
+        <!--Map View Controller-->
         <scene sceneID="BK9-Zs-AEt">
             <objects>
                 <viewController id="L8p-uv-yr9" customClass="MapViewController" customModule="ios_sprint13_challenge" customModuleProvider="target" sceneMemberID="viewController">
@@ -165,11 +165,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="yiZ-28-VSB">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vA9-qA-5Ns">
-                                <rect key="frame" x="209" y="597" width="126" height="30"/>
-                                <state key="normal" title="Create Experience"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vA9-qA-5Ns">
+                                <rect key="frame" x="285" y="577" width="50" height="50"/>
+                                <color key="backgroundColor" red="1" green="0.28877979570000001" blue="0.30224576850000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="QBL-Oc-cVg"/>
+                                    <constraint firstAttribute="width" constant="50" id="ava-Nn-oPa"/>
+                                </constraints>
+                                <color key="tintColor" red="0.62745098040000002" green="0.0039215686269999999" blue="0.1176470588" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="experience"/>
                                 <connections>
                                     <segue destination="22a-ZK-T2P" kind="presentation" identifier="CreateExperience" id="Lys-3F-i5T"/>
                                 </connections>
@@ -186,17 +192,37 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="QXm-Jg-EJb"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Map" id="HLr-sI-EsX"/>
+                    <navigationItem key="navigationItem" id="hFe-IJ-S7l"/>
                     <connections>
                         <outlet property="mapView" destination="yiZ-28-VSB" id="tPL-21-AsB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kHd-Oa-KXA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="398" y="582"/>
+            <point key="canvasLocation" x="1336.8" y="581.55922038980509"/>
+        </scene>
+        <!--Map-->
+        <scene sceneID="qwj-uF-n1g">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wjC-G7-ae0" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Map" id="HLr-sI-EsX"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="tqW-OT-We8">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="L8p-uv-yr9" kind="relationship" relationship="rootViewController" id="m4F-AY-Iu0"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kFU-aY-8gd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="397.60000000000002" y="581.55922038980509"/>
         </scene>
     </scenes>
     <resources>
         <image name="Record" width="116" height="116"/>
+        <image name="experience" width="200" height="200"/>
     </resources>
 </document>

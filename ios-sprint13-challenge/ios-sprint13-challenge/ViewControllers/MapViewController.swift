@@ -24,6 +24,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         self.mapView.addAnnotations(experienceController.experiences)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.mapView.addAnnotations(experienceController.experiences)
+    }
+    
     // MARK: - MKMapViewDelegate
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -41,7 +46,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "CreateExperience" {
-            guard let imageAudioVC = segue.destination as? Image_AudioViewController else { return }
+            guard let navController = segue.destination as? UINavigationController,
+            let imageAudioVC = navController.children[0] as? Image_AudioViewController else { return }
             imageAudioVC.experienceController = experienceController
         }
     }
