@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import Photos
+import AVFoundation
 
 class ExperienceViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -34,6 +35,15 @@ class ExperienceViewController: UIViewController, UIImagePickerControllerDelegat
     }
     
     @IBAction func recordAudio(_ sender: Any) {
+        let isRecording = recorder?.isRecording ?? false
+        if isRecording {
+            recorder?.stop()
+        } else {
+            let format = AVAudioFormat(standardFormatWithSampleRate: 44100.0, channels: 1)!
+            recorder = try! AVAudioRecorder(url: newRecordingURL(), format: format)
+            recorder?.record()
+        }
+        updateViews()
     }
     
     @IBAction func next(_ sender: Any) {
@@ -58,6 +68,13 @@ class ExperienceViewController: UIViewController, UIImagePickerControllerDelegat
         imageView.image = image(byFiltering: originalImage)
     }
     
+    private func updateViews() {
+        guard isViewLoaded else { return }
+        let isRecording = recorder?.isRecording ?? false
+        let recordButtonTitle = isRecording ? "Stop Recording" : "Record"
+        recordButton.setTitle(recordButtonTitle, for: .normal)
+    }
+    
     private func image(byFiltering image: UIImage) -> UIImage? {
         guard let cgImage = image.cgImage else { return originalImage }
         
@@ -70,6 +87,12 @@ class ExperienceViewController: UIViewController, UIImagePickerControllerDelegat
         }
         
         return UIImage(cgImage: outputCGIImage)
+    }
+    
+    private func newRecordingURL() -> URL {
+        let fm = FileManager.default
+        let documentsDir = try! fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        return documentsDir.appendingPathComponent(UUID().uuidString).appendingPathExtension("caf")
     }
     
     /*
@@ -92,6 +115,8 @@ class ExperienceViewController: UIViewController, UIImagePickerControllerDelegat
     
     private let filter = CIFilter(name: "CIPhotoEffectNoir")!
     private let context = CIContext(options: nil)
+    
+    private var recorder: AVAudioRecorder?
     
     var location: CLLocationCoordinate2D?
     
