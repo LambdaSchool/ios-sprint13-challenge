@@ -109,7 +109,11 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         }
         self.location = location.coordinate
     }
-
+    //MARK: Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! CameraViewController
+        destinationVC.delegate = self
+    }
     //MARK: - Properties
     var experienceController = ExperienceController.shared
     private let  locationHelper = LocationHelper()
