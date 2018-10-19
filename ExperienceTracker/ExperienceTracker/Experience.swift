@@ -12,13 +12,15 @@ import MapKit
 
 class Experience: NSObject, MKAnnotation {
     
-    init(audioRecording: URL, videoRecording: URL, image: UIImage, coordinate: CLLocationCoordinate2D) {
+    init(title: String?, audioRecording: URL, videoRecording: URL, image: UIImage, coordinate: CLLocationCoordinate2D) {
+        self.title = title
         self.audioRecording = audioRecording
         self.videoRecording = videoRecording
         self.image = image
         self.coordinate = coordinate
     }
     
+    let title: String?
     let audioRecording: URL // to source of audio recording
     let videoRecording: URL // to source of video recording
     let image: UIImage
