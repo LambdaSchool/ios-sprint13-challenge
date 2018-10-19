@@ -12,6 +12,10 @@
 		39AAA251217A3263004AC4AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39AAA24F217A3263004AC4AC /* Main.storyboard */; };
 		39AAA253217A3263004AC4AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39AAA252217A3263004AC4AC /* Assets.xcassets */; };
 		39AAA256217A3263004AC4AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39AAA254217A3263004AC4AC /* LaunchScreen.storyboard */; };
+		39AAA263217A32CD004AC4AC /* Experience.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 39AAA261217A32CD004AC4AC /* Experience.xcdatamodeld */; };
+		39AAA266217A339B004AC4AC /* Experience+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AAA265217A339B004AC4AC /* Experience+Convenience.swift */; };
+		39AAA268217A33CC004AC4AC /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AAA267217A33CC004AC4AC /* CoreDataStack.swift */; };
+		39AAA26A217A350E004AC4AC /* ExperienceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AAA269217A350E004AC4AC /* ExperienceController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +26,10 @@
 		39AAA252217A3263004AC4AC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		39AAA255217A3263004AC4AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		39AAA257217A3263004AC4AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		39AAA262217A32CD004AC4AC /* Experience.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Experience.xcdatamodel; sourceTree = "<group>"; };
+		39AAA265217A339B004AC4AC /* Experience+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Experience+Convenience.swift"; sourceTree = "<group>"; };
+		39AAA267217A33CC004AC4AC /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		39AAA269217A350E004AC4AC /* ExperienceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperienceController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +62,66 @@
 		39AAA24A217A3263004AC4AC /* Experiences */ = {
 			isa = PBXGroup;
 			children = (
-				39AAA24B217A3263004AC4AC /* AppDelegate.swift */,
-				39AAA24D217A3263004AC4AC /* ViewController.swift */,
-				39AAA24F217A3263004AC4AC /* Main.storyboard */,
-				39AAA252217A3263004AC4AC /* Assets.xcassets */,
-				39AAA254217A3263004AC4AC /* LaunchScreen.storyboard */,
-				39AAA257217A3263004AC4AC /* Info.plist */,
+				39AAA25F217A32AA004AC4AC /* App Lifecycle */,
+				39AAA264217A32D1004AC4AC /* Model */,
+				39AAA26B217A3511004AC4AC /* Model Controller */,
+				39AAA260217A32B4004AC4AC /* View Controllers */,
+				39AAA25D217A3297004AC4AC /* Storyboards */,
+				39AAA25E217A32A3004AC4AC /* Resources */,
 			);
 			path = Experiences;
+			sourceTree = "<group>";
+		};
+		39AAA25D217A3297004AC4AC /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				39AAA24F217A3263004AC4AC /* Main.storyboard */,
+				39AAA254217A3263004AC4AC /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		39AAA25E217A32A3004AC4AC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				39AAA252217A3263004AC4AC /* Assets.xcassets */,
+				39AAA257217A3263004AC4AC /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		39AAA25F217A32AA004AC4AC /* App Lifecycle */ = {
+			isa = PBXGroup;
+			children = (
+				39AAA24B217A3263004AC4AC /* AppDelegate.swift */,
+			);
+			path = "App Lifecycle";
+			sourceTree = "<group>";
+		};
+		39AAA260217A32B4004AC4AC /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				39AAA24D217A3263004AC4AC /* ViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		39AAA264217A32D1004AC4AC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				39AAA261217A32CD004AC4AC /* Experience.xcdatamodeld */,
+				39AAA265217A339B004AC4AC /* Experience+Convenience.swift */,
+				39AAA267217A33CC004AC4AC /* CoreDataStack.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		39AAA26B217A3511004AC4AC /* Model Controller */ = {
+			isa = PBXGroup;
+			children = (
+				39AAA269217A350E004AC4AC /* ExperienceController.swift */,
+			);
+			path = "Model Controller";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,8 +195,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39AAA268217A33CC004AC4AC /* CoreDataStack.swift in Sources */,
+				39AAA263217A32CD004AC4AC /* Experience.xcdatamodeld in Sources */,
 				39AAA24E217A3263004AC4AC /* ViewController.swift in Sources */,
+				39AAA26A217A350E004AC4AC /* ExperienceController.swift in Sources */,
 				39AAA24C217A3263004AC4AC /* AppDelegate.swift in Sources */,
+				39AAA266217A339B004AC4AC /* Experience+Convenience.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,6 +400,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		39AAA261217A32CD004AC4AC /* Experience.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				39AAA262217A32CD004AC4AC /* Experience.xcdatamodel */,
+			);
+			currentVersion = 39AAA262217A32CD004AC4AC /* Experience.xcdatamodel */;
+			path = Experience.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 39AAA240217A3263004AC4AC /* Project object */;
 }
