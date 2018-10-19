@@ -33,6 +33,7 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
                 return
         }
         experienceController.create(with: title, audio: audioOutputURL, image: image, video: videoOutputURL, location: location)
+        navigationController?.popViewController(animated: true)
     }
     @IBAction func addImage(_ sender: Any) {
         choosePhoto()
@@ -99,6 +100,7 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         let title = !isRecording ? "Record Audio" : "Recording..."
         recordAudioButton.setTitle(title, for: .normal)
     }
+    
     //MARK: - CamerViewControllerDelegate Method
     func didFinishRecording(atURL url: URL) {
         videoOutputURL = url

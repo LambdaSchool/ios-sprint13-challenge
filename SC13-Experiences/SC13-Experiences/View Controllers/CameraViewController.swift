@@ -35,6 +35,14 @@ class CameraViewController: UIViewController,AVCaptureFileOutputRecordingDelegat
             return
         }
     }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        captureSession.startRunning()
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        captureSession.stopRunning()
+    }
     
     @IBAction func record(_ sender: Any) {
         if recordOutput.isRecording{
@@ -55,23 +63,24 @@ class CameraViewController: UIViewController,AVCaptureFileOutputRecordingDelegat
             else { return }
         captureSession.addInput(videoDeviceInput)
       
-        let photoOutput = AVCapturePhotoOutput()
-        guard captureSession.canAddOutput(photoOutput) else { return }
-        captureSession.sessionPreset = .photo
-        captureSession.addOutput(photoOutput)
+        let fileOutput = AVCaptureMovieFileOutput()
+        guard captureSession.canAddOutput(fileOutput) else { return }
+        captureSession.sessionPreset = .hd1920x1080
+        captureSession.addOutput(fileOutput)
         captureSession.commitConfiguration()
-        
+        self.recordOutput = fileOutput
         self.captureSession = captureSession
         previewView.videoPreviewLayer.session = captureSession
     }
     //MARK: Delegate Method
     func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
-        recordButton.setImage(UIImage(named: "Start"), for: .normal)
+        recordButton.setImage(UIImage(named: "Stop"), for: .normal)
         
     }
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
-        recordButton.setImage(UIImage(named: "Stop"), for: .normal)
+        recordButton.setImage(UIImage(named: "Record"), for: .normal)
         delegate?.didFinishRecording(atURL: outputFileURL)
+        dismiss(animated: true, completion: nil)
     }
     //MARK: - Properties
     

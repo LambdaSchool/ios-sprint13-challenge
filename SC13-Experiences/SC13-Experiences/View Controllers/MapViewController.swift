@@ -15,9 +15,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        experienceAnnotations = experienceController.experiences
-        mapView.register(MKAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotation")
         mapView.delegate = self
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotation")
+       
+        mapView.addAnnotations( experienceController.experiences)
+        
+        
     }
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
@@ -30,7 +33,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     
     //MARK: - Properties
-    private var experienceAnnotations = [MKAnnotation]()
+
     private let experienceController = ExperienceController.shared
     @IBOutlet weak var mapView: MKMapView!
     
