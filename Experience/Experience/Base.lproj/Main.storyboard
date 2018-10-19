@@ -80,9 +80,13 @@
                                     <action selector="addAudio:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Zrk-GP-q99"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FNI-5v-TbX">
-                                <rect key="frame" x="51" y="94" width="273" height="268"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FNI-5v-TbX">
+                                <rect key="frame" x="51" y="94.5" width="273" height="268"/>
                                 <color key="backgroundColor" red="0.64598208670000001" green="0.84908968210000002" blue="0.42013943199999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="268" id="ccf-Ix-1kC"/>
+                                    <constraint firstAttribute="width" constant="273" id="uG9-DF-RQF"/>
+                                </constraints>
                                 <state key="normal" title="Add Image"/>
                                 <connections>
                                     <action selector="addImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="I30-x9-5CR"/>
@@ -160,11 +164,13 @@
                     </view>
                     <navigationItem key="navigationItem" title="Add Video" id="zm6-3i-abK"/>
                     <connections>
-                        <outlet property="cameraPreviewView" destination="JsE-vt-eiJ" id="hJQ-M6-WGe"/>
+                        <outlet property="previewView" destination="JsE-vt-eiJ" id="0jt-va-Cfi"/>
                         <outlet property="videoRecordingButton" destination="4Gp-Ub-SK0" id="iRC-Oy-5aQ"/>
+                        <segue destination="WNi-tv-X8p" kind="unwind" identifier="unwindToMapView" unwindAction="unwindToExperienceViewControllerWithSegue:" id="63Z-IG-oWp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5GU-P8-Rb5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="WNi-tv-X8p" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1808.8" y="-619.34032983508246"/>
         </scene>

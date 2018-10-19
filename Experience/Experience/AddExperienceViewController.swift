@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class AddExperienceViewController: UIViewController
 {
@@ -34,8 +35,34 @@ class AddExperienceViewController: UIViewController
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
-        //ShowAddVideo
+        if segue.identifier == "ShowAddVideo"
+        {
+            let addVideoView = segue.destination as! AddVideoViewController
+            
+        }
     }
     
+    private func showCamera()
+    {
+        performSegue(withIdentifier: "ShowAddVideo", sender: nil)
+    }
+    
+    private func getPermission()
+    {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized:
+            self.showCamera()
+            break
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { (granted) in
+                if !granted {fatalError("VideoFilters needs camera access")}
+                self.showCamera()
+            }
+        case .denied:
+            fallthrough
+        case .restricted:
+            fatalError("VideoFilters needs camera access")
+        }
+    }
 
 }
