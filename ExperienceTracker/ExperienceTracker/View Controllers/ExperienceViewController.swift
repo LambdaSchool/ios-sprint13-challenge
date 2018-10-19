@@ -53,8 +53,14 @@ class ExperienceViewController: UIViewController, UIImagePickerControllerDelegat
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
-        imageView.image = info[.originalImage] as? UIImage
+        
+        guard let returnedImage = info[.originalImage] as? UIImage else { return }
+        
+        
+    
+        imageView.image = image(byFiltering: returnedImage)
         updateImage()
+        updateViews()
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -73,6 +79,10 @@ class ExperienceViewController: UIViewController, UIImagePickerControllerDelegat
         let isRecording = recorder?.isRecording ?? false
         let recordButtonTitle = isRecording ? "Stop Recording" : "Record"
         recordButton.setTitle(recordButtonTitle, for: .normal)
+        
+        if imageView.image != nil {
+            addPhotoImageButton.setTitle("", for: .normal)
+        }
     }
     
     private func image(byFiltering image: UIImage) -> UIImage? {
@@ -117,11 +127,11 @@ class ExperienceViewController: UIViewController, UIImagePickerControllerDelegat
     var experienceController: ExperienceController?
     var experience: Experience?
     
-    private var originalImage: UIImage? {
-        didSet {
-            updateImage()
-        }
-    }
+    private var originalImage: UIImage? //{
+//        didSet {
+//            updateImage()
+//        }
+ //   }
     
     private let filter = CIFilter(name: "CIPhotoEffectNoir")!
     private let context = CIContext(options: nil)
