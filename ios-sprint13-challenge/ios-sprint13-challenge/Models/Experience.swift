@@ -13,14 +13,14 @@ import CoreLocation
 
 class Experience: NSObject {
     
-    init(title: String, audioURL: URL, videoURL: URL, image: UIImage) {
-        self.experienceTitle = title
-        self.audioURL = audioURL
-        self.videoURL = videoURL
-        self.image = image
-    }
+//    init(title: String?, audioURL: URL?, videoURL: URL?, image: UIImage?) {
+//        self.experienceTitle = title
+//        self.audioURL = audioURL
+//        self.videoURL = videoURL
+//        self.image = image
+//    }
     
-    var experienceTitle: String
+    var experienceTitle: String?
     var audioURL: URL?
     var videoURL: URL?
     var image: UIImage?

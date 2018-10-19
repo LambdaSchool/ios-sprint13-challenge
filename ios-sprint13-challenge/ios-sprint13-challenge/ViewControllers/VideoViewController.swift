@@ -14,6 +14,7 @@ class VideoViewController: UIViewController, AVCaptureFileOutputRecordingDelegat
     // MARK: - Properties
     
     var experienceController: ExperienceController!
+    var experience: Experience?
     private var captureSession: AVCaptureSession!
     private var recordOutput: AVCaptureMovieFileOutput!
     
@@ -69,27 +70,24 @@ class VideoViewController: UIViewController, AVCaptureFileOutputRecordingDelegat
     }
     
     private func setupCapture() {
-        // Session will hold all the components needed for video (input, output)
         let captureSession = AVCaptureSession()
         let device = bestCamera()
         guard let videoDeviceInput = try? AVCaptureDeviceInput(device: device),
-            captureSession.canAddInput(videoDeviceInput) else { // check if it can be added or not
+            captureSession.canAddInput(videoDeviceInput) else {
                 fatalError()
         }
         captureSession.addInput(videoDeviceInput)
         
-        // Setup video output to disk
         let fileOutput = AVCaptureMovieFileOutput()
         guard captureSession.canAddOutput(fileOutput) else { fatalError() }
         captureSession.addOutput(fileOutput)
         recordOutput = fileOutput
         
         captureSession.sessionPreset = .hd1920x1080
-        captureSession.commitConfiguration() // Save all configurations and set up captureSession
+        captureSession.commitConfiguration()
         
         self.captureSession = captureSession
         
-        // Assign captureSession to the VideoPreviewLayer
         previewView.videoPreviewLayer.session = captureSession
     }
     
