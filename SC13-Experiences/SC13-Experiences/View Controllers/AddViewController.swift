@@ -16,7 +16,7 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     override func viewDidLoad() {
         super.viewDidLoad()
         locationHelper.requestAuthorization()
-//        location = locationHelper.getCurrentLocation()
+        locationHelper.getCurrentLocation()
         // Do any additional setup after loading the view.
     }
     //MARK: - IBActions
@@ -101,7 +101,15 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     func didFinishRecording(atURL url: URL) {
         videoOutputURL = url
     }
-    
+    //MARK: - CLLocationManagerDelegate
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else {
+            NSLog("Empty location array")
+            return
+        }
+        self.location = location.coordinate
+    }
+
     //MARK: - Properties
     var experienceController = ExperienceController.shared
     private let  locationHelper = LocationHelper()
