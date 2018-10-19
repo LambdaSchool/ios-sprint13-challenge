@@ -40,7 +40,10 @@ class VideoViewController: UIViewController, AVCaptureFileOutputRecordingDelegat
     }
     
     @IBAction func save(_ sender: Any) {
-        
+        if let experience = experience,
+            let videoRecording = recordOutput.outputFileURL {
+            experienceController?.updateVideoURL(experience: experience, videoRecording: videoRecording)
+        }
     }
     
     // MARK: - AVCaptureFileOutputRecordingDelegate

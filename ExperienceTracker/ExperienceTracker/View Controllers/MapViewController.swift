@@ -36,6 +36,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         destVC.experienceController = experienceController
     }
     
+    @IBAction func unwindFromVideoScreen(segue: UIStoryboardSegue) {
+        if let fromVC = segue.source as? VideoViewController {
+            if let experienceController = fromVC.experienceController {
+                self.experienceController.experiences = experienceController.experiences
+            }
+        }
+    }
+    
     // MARK: - Properties
     
     let experienceController = ExperienceController()

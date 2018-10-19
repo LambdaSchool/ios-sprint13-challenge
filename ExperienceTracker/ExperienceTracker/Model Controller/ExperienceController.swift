@@ -30,6 +30,13 @@ class ExperienceController {
         return experience
     }
     
+    func updateVideoURL(experience: Experience, videoRecording: URL?) {
+        experience.videoRecording = videoRecording
+        if let index = experiences.firstIndex(of: experience) {
+            experiences[index] = experience
+        }
+    }
+    
     var experiences: [Experience] = []
     
 }
