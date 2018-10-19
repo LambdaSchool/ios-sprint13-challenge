@@ -25,7 +25,7 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         guard let title = titleLabel.text,
             let image = imageView.image,
             let location = location,
-        let audioOutputURL = audioOutputURL,
+            let audioOutputURL = audioOutputURL,
             let videoOutputURL = videoOutputURL else{
                 NSLog("Missing experience components")
                 return
@@ -111,8 +111,10 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     }
     //MARK: Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationVC = segue.destination as! CameraViewController
-        destinationVC.delegate = self
+        if segue.identifier == "RecordVideo"{
+            let destinationVC = segue.destination as! CameraViewController
+            destinationVC.delegate = self
+        }
     }
     //MARK: - Properties
     var experienceController = ExperienceController.shared
