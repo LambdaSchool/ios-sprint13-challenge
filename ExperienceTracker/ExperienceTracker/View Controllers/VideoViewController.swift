@@ -123,7 +123,7 @@ class VideoViewController: UIViewController, AVCaptureFileOutputRecordingDelegat
     var experience: Experience?
     
     private var captureSession: AVCaptureSession!
-    private var recordOutput: AVCaptureMovieFileOutput!
+    var recordOutput: AVCaptureMovieFileOutput!
 
     @IBOutlet weak var recordingButton: UIButton!
     @IBOutlet weak var cameraView: CameraPreviewView!

@@ -100,12 +100,13 @@ class ExperienceViewController: UIViewController, UIImagePickerControllerDelegat
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destVC = segue.destination as! VideoViewController
-        destVC.experienceController = experienceController
-        if let experience = experience,
+        if let experienceController = experienceController,
+            let experience = experience,
             let title = titleTextField.text,
             let image = imageView.image,
             let audioRecordingURL = recorder?.url {
-            destVC.experience = experienceController?.update(experience: experience, title: title, audioRecording: audioRecordingURL, videoRecording: nil, image: image)
+            destVC.experience = experienceController.update(experience: experience, title: title, audioRecording: audioRecordingURL, videoRecording: nil, image: image)
+            destVC.experienceController = experienceController
             
         }
     }
