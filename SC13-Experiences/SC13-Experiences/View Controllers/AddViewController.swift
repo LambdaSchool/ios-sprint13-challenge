@@ -9,7 +9,11 @@
 import UIKit
 import Photos
 import CoreImage
-
+import AVFoundation
+enum MediaType: String{
+    case audio = "caf"
+    case video = "mov"
+}
 class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     override func viewDidLoad() {
@@ -31,6 +35,29 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     }
     @IBAction func addImage(_ sender: Any) {
         choosePhoto()
+    }
+    
+    @IBAction func recordAudio(_ sender: Any) {
+        let isRecording = recorder?.isRecording ?? false
+        if isRecording{
+            recorder?.stop()
+            if let url = recorder?.url{
+                audioOutputURL = url
+                audioPlayer = try! AVAudioPlayer(contentsOf: url)
+                audioPlayer?.play()
+            }
+            
+        } else {
+            if let audioPlayer = audioPlayer{
+                audioPlayer.stop()
+            }
+            let format = AVAudioFormat(standardFormatWithSampleRate: 44100.0, channels: 1)!
+            recorder = try! AVAudioRecorder(url: newRecordingURL(mediaType: .audio), format: format)
+            recorder?.record()
+        }
+        updateAudioView()
+    }
+    @IBAction func recordVideo(_ sender: Any) {
     }
     // MARK: - Methods for Image Features
     func choosePhoto(){
@@ -64,12 +91,20 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         
     }
     
-    @IBAction func recordAudio(_ sender: Any) {
+    //MARK: - Methods Audio Recording
+    private func updateAudioView(){
+        guard let isRecording = recorder?.isRecording else {return}
+        let title = !isRecording ? "Record Audio" : "Recording..."
+        recordAudioButton.setTitle(title, for: .normal)
     }
-    @IBAction func recordVideo(_ sender: Any) {
-    }
+    
     //MARK: - Properties
     var experienceController: ExperienceController?
+    private func newRecordingURL(mediaType: MediaType) -> URL {
+        let fm = FileManager.default
+        let documentsDir = try! fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        return documentsDir.appendingPathComponent(UUID().uuidString).appendingPathExtension(mediaType.rawValue)
+    }
     
     //MARK: -Image Adding Properties
     private var originalImage: UIImage?{
@@ -79,6 +114,11 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     }
     private let imageFilter = CIFilter(name: "CIPhotoEffectFade")!
     private let context = CIContext(options: nil)
+    
+    //MARK: - Audio Adding
+    private var recorder: AVAudioRecorder?
+    private var audioPlayer: AVAudioPlayer?
+    private var audioOutputURL: URL?
     
     //MARK: - IBOutlets
     @IBOutlet weak var titleLabel: UITextField!
