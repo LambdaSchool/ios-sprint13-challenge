@@ -11,13 +11,14 @@ import AVFoundation
 
 class NewMemoryViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, AVAudioPlayerDelegate {
     
-    // MARK: - Properties
+    // MARK: - Private Properties
     
     private let filter = CIFilter(name: "CISepiaTone")!
     private let context = CIContext(options: nil)
     
-    var player: AVAudioPlayer?
-    var recorder: AVAudioRecorder?
+    private var player: AVAudioPlayer?
+    private var recorder: AVAudioRecorder?
+    private var audioURL: URL?
     
     
     // MARK: - Outlets
@@ -69,6 +70,7 @@ class NewMemoryViewController: UIViewController, UIImagePickerControllerDelegate
         if isRecording {
             recorder?.stop()
             if let url = recorder?.url {
+                audioURL = url
                 player = try! AVAudioPlayer(contentsOf: url)
                 player?.delegate = self
             }
@@ -91,6 +93,14 @@ class NewMemoryViewController: UIViewController, UIImagePickerControllerDelegate
             player?.play()
         }
         updateViews()
+    }
+    
+    @IBAction func showAddVideo(_ sender: Any) {
+        guard let _ = titleTextField.text,
+            let _ = imageView.image,
+            let _ = audioURL else { NSLog("Make sure you've added a title, image, and audio recording"); return }
+        
+        performSegue(withIdentifier: "ShowTakeAVideo", sender: nil)
     }
     
     
@@ -120,5 +130,14 @@ class NewMemoryViewController: UIViewController, UIImagePickerControllerDelegate
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         updateViews()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowTakeAVideo" {
+            guard let destinationVC = segue.destination as? RecordVideoViewController else { return }
+            destinationVC.titleString = titleTextField.text
+            destinationVC.image = imageView.image
+            destinationVC.audioURL = audioURL
+        }
     }
 }

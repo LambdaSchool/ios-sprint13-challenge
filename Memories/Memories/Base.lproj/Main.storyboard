@@ -140,7 +140,7 @@
                     <navigationItem key="navigationItem" title="Title" id="AOy-nV-ylp">
                         <barButtonItem key="rightBarButtonItem" title="Add Video" id="xGz-zX-Tof">
                             <connections>
-                                <segue destination="Idv-KF-VWg" kind="show" id="hyT-XD-Yeb"/>
+                                <action selector="showAddVideo:" destination="6ct-mg-2sP" id="Bhk-oa-Ey0"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -150,6 +150,7 @@
                         <outlet property="playbackButton" destination="OKu-jx-wcw" id="ysD-bi-e9c"/>
                         <outlet property="recordStopButton" destination="zKN-Ta-shu" id="yqh-ak-cD8"/>
                         <outlet property="titleTextField" destination="SBC-da-4QW" id="M0m-m6-uGd"/>
+                        <segue destination="Idv-KF-VWg" kind="show" identifier="ShowTakeAVideo" id="nNO-4c-ojq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ald-ru-vsI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -159,7 +160,7 @@
         <!--Take a Video-->
         <scene sceneID="UHI-9m-6q4">
             <objects>
-                <viewController id="Idv-KF-VWg" sceneMemberID="viewController">
+                <viewController id="Idv-KF-VWg" customClass="RecordVideoViewController" customModule="Memories" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="d7L-hU-C42">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -175,7 +176,7 @@
                                     <constraint firstAttribute="width" constant="75" id="gf9-EG-kz9"/>
                                 </constraints>
                                 <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="Button" image="Record"/>
+                                <state key="normal" image="Record"/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
