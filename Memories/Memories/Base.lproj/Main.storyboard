@@ -165,7 +165,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dq9-rr-2Ye">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dq9-rr-2Ye" customClass="CameraPreviewView" customModule="Memories" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
@@ -177,6 +177,9 @@
                                 </constraints>
                                 <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" image="Record"/>
+                                <connections>
+                                    <action selector="toggleRecord:" destination="Idv-KF-VWg" eventType="touchUpInside" id="0XH-hf-T3S"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -192,6 +195,8 @@
                     </view>
                     <navigationItem key="navigationItem" title="Take a Video" id="Kjd-rU-VZt"/>
                     <connections>
+                        <outlet property="cameraView" destination="dq9-rr-2Ye" id="bxf-Tg-1fK"/>
+                        <outlet property="recordStopButton" destination="ACG-uF-EhA" id="ZFg-zo-T3f"/>
                         <segue destination="gf1-ug-lZ2" kind="show" identifier="ShowVideoPlayback" id="7eN-bp-sGE"/>
                     </connections>
                 </viewController>
@@ -199,10 +204,10 @@
             </objects>
             <point key="canvasLocation" x="2596" y="134"/>
         </scene>
-        <!--View Controller-->
+        <!--Video Playback View Controller-->
         <scene sceneID="aPb-aT-9cc">
             <objects>
-                <viewController id="gf1-ug-lZ2" sceneMemberID="viewController">
+                <viewController id="gf1-ug-lZ2" customClass="VideoPlaybackViewController" customModule="Memories" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IV1-Do-g5q">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -222,8 +227,15 @@
                         <viewLayoutGuide key="safeArea" id="94q-1L-mD7"/>
                     </view>
                     <navigationItem key="navigationItem" id="fSw-T7-vsx">
-                        <barButtonItem key="rightBarButtonItem" title="Save Memory" id="YOZ-fN-Yof"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save Memory" id="YOZ-fN-Yof">
+                            <connections>
+                                <action selector="saveMemory:" destination="gf1-ug-lZ2" id="N23-gd-kXO"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="videoView" destination="YD0-8d-0IV" id="TLv-wM-Slt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tmi-Wp-2L0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -132,6 +132,9 @@ class NewMemoryViewController: UIViewController, UIImagePickerControllerDelegate
         updateViews()
     }
     
+    
+    // MARK: - Prepare for segue
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowTakeAVideo" {
             guard let destinationVC = segue.destination as? RecordVideoViewController else { return }
