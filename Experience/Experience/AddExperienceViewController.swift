@@ -17,6 +17,9 @@ class AddExperienceViewController: UIViewController, AVAudioPlayerDelegate, UIIm
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var titleTextField: UITextField!
     
+    var experienceController: ExperienceController!
+    var experience: Experience?
+    var locationHelper = Location()
     var player: AVAudioPlayer?
     var recorder: AVAudioRecorder?
     
@@ -63,6 +66,8 @@ class AddExperienceViewController: UIViewController, AVAudioPlayerDelegate, UIIm
             if let url = recorder?.url {
                 player = try! AVAudioPlayer(contentsOf: url)
                 player?.delegate = self
+                
+                experience?.audioURL = url
             }
         }
         else
@@ -103,6 +108,8 @@ class AddExperienceViewController: UIViewController, AVAudioPlayerDelegate, UIIm
         if segue.identifier == "ShowAddVideo"
         {
             let addVideoView = segue.destination as! AddVideoViewController
+            addVideoView.experienceController = experienceController
+            addVideoView.experience = experience
             savePhoto()
         }
     }
@@ -125,6 +132,11 @@ class AddExperienceViewController: UIViewController, AVAudioPlayerDelegate, UIIm
                 
                 NSLog("Saving photo succeeded")
             })
+        }
+        
+        if let title = titleTextField?.text
+        {
+            experience?.experienceTitle = title
         }
     }
     

@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6dZ-Jg-pso">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6dZ-Jg-pso" customClass="MKMapView">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MsB-Gc-SeF">
@@ -29,7 +29,6 @@
                                         <state key="normal" image="edit"/>
                                         <connections>
                                             <action selector="addExperience:" destination="Hsk-ye-NlZ" eventType="touchUpInside" id="r36-vf-3n2"/>
-                                            <segue destination="BYZ-38-t0r" kind="show" identifier="ShowAddExperience" id="wVq-gp-344"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -49,7 +48,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Hkp-ll-Sa3"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Experiences" id="Wt9-5t-FmD"/>
+                    <navigationItem key="navigationItem" title="Experiences" id="Wt9-5t-FmD">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="9Rg-f2-F8y">
+                            <connections>
+                                <segue destination="BYZ-38-t0r" kind="show" identifier="ShowAddExperience" id="b2B-xE-7pu"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="6dZ-Jg-pso" id="7Hg-3l-UZg"/>
                     </connections>

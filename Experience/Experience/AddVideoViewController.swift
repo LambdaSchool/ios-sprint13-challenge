@@ -9,14 +9,27 @@
 import UIKit
 import AVFoundation
 import Photos
+import MapKit
 
-class AddVideoViewController: UIViewController, AVCaptureFileOutputRecordingDelegate
+class AddVideoViewController: UIViewController, AVCaptureFileOutputRecordingDelegate, CLLocationManagerDelegate
 {
     @IBOutlet var videoRecordingButton: UIButton!
     @IBOutlet var previewView: CameraPreviewView!
     
+    var experienceController: ExperienceController!
+    var experience: Experience?
     private var captureSession: AVCaptureSession!
     private var recordOutput: AVCaptureMovieFileOutput!
+    
+    var experienceTitle: String?
+    var image: UIImage?
+    var audioURL: URL?
+    var videoURL: URL?
+    private lazy var locationManager: CLLocationManager = {
+        let result = CLLocationManager()
+        result.delegate = self
+        return result
+    }()
     
     override func viewWillAppear(_ animated: Bool)
     {
@@ -120,6 +133,8 @@ class AddVideoViewController: UIViewController, AVCaptureFileOutputRecordingDele
             
             self.updateViews()
             
+            self.experience?.videoURL = outputFileURL
+            
             PHPhotoLibrary.requestAuthorization({(status) in
                 if status != .authorized
                 {
@@ -139,7 +154,24 @@ class AddVideoViewController: UIViewController, AVCaptureFileOutputRecordingDele
                     }
                 })
             })
+            self.saveExperience()
             self.performSegue(withIdentifier: "unwindToMapView", sender: self)
         }
+    }
+    
+    func saveExperience()
+    {
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        guard let title = experienceTitle,
+            let image = image,
+            let audioURL = audioURL,
+            let videoURL = videoURL,
+            let location = locationManager.location else { return }
+        locationManager.stopUpdatingLocation()
+        
+        let coordinate = location.coordinate
+        
+        experienceController.addExperience(title: title, audioURL: audioURL, videoURL: videoURL, image: image, coordinate: coordinate)
     }
 }
