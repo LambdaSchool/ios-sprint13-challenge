@@ -11,35 +11,55 @@ import MapKit
 
 class ExperienceMapViewController: UIViewController {
     @IBOutlet var mapView: MKMapView!
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {}
     
     private let geoCoder = CLGeocoder()
     private var coordinate: CLLocationCoordinate2D?
+    let experienceController = ExperienceController()
+    
     lazy var locationManager: CLLocationManager = {
         let result = CLLocationManager()
         result.delegate = self
         return result
     }()
-    private var experiences = [Experience]() {
-        didSet {
-            DispatchQueue.main.async {
-                self.mapView.addAnnotations(self.experiences)
-            }
-        }
+    
+//    var experiences = [Experience]() {
+//        didSet {
+//            DispatchQueue.main.async {
+//                self.mapView.addAnnotations(self.experiences)
+//            }
+//        }
+//    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
+        fetchExperiences()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        fetchExperiences()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.requestLocation()
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotationView")
+        fetchExperiences()
+    }
+    
+    private func fetchExperiences() {
+        self.mapView.addAnnotations(experienceController.experiences)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AddExperienceSegue" {
             guard let coordinate = coordinate,
-            let vc = segue.destination as? NewExperienceViewController else { return }
+                let vc = segue.destination as? NewExperienceViewController else { return }
             
             vc.coordinate = coordinate
+            vc.experienceController = experienceController
         }
     }
 }

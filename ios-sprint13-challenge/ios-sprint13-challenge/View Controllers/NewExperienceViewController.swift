@@ -17,6 +17,7 @@ class NewExperienceViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var recordAudioButton: UIButton!
     
     private var recorder: AVAudioRecorder?
+    var experienceController: ExperienceController?
     var coordinate: CLLocationCoordinate2D?
 
     override func viewDidLoad() {
@@ -29,9 +30,16 @@ class NewExperienceViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    func updateViews() {
+        guard isViewLoaded else { return }
+        
+        let isRecording = recorder?.isRecording ?? false
+        let recordButtonTitle = isRecording ? "Stop recording..." : "Record Audio"
+        recordAudioButton.setTitle(recordButtonTitle, for: .normal)
+    }
+    
     @IBAction func recordAudioTapped(_ sender: Any) {
         let isRecording = recorder?.isRecording ?? false
-        
         if isRecording {
             endRecording()
         } else {
@@ -43,12 +51,13 @@ class NewExperienceViewController: UIViewController, UITextFieldDelegate {
         if segue.identifier == "VideoRecordSegue" {
             guard let url = recorder?.url,
                 let imageData = imageView.image?.jpegData(compressionQuality: 0.1),
-                let coordinate = coordinate else { return }
+                let coordinate = self.coordinate else { return }
             
             if let vc = segue.destination as? CameraViewController {
                 vc.audioURL = url
                 vc.imageData = imageData
                 vc.experienceTitle = titleTextField.text
+                vc.experienceController = experienceController
                 vc.coordinate = coordinate
             }
         }
@@ -129,28 +138,18 @@ extension NewExperienceViewController {
     }
     
     private func beginRecording() {
-        let isRecording = recorder?.isRecording ?? false
-        
-        if isRecording {
-            recorder?.stop()
-        } else {
-            do {
-                let format = AVAudioFormat(standardFormatWithSampleRate: 44100.0, channels: 1)!
-                recorder = try AVAudioRecorder(url: newRecordingURL(), format: format)
-                recorder?.record()
-                recordAudioButton.setTitle("Recording...", for: .normal)
-            } catch {
-                NSLog("Error beginning the recording...")
-            }
+        do {
+            let format = AVAudioFormat(standardFormatWithSampleRate: 44100.0, channels: 1)!
+            recorder = try AVAudioRecorder(url: newRecordingURL(), format: format)
+            recorder?.record()
+            updateViews()
+        } catch {
+            NSLog("Error beginning the recording...")
         }
     }
     
     private func endRecording() {
-        let isRecording = recorder?.isRecording ?? false
-        
-        if isRecording {
-            recorder?.stop()
-            recordAudioButton.setTitle("Record Audio", for: .normal)
-        }
+        recorder?.stop()
+        updateViews()
     }
 }

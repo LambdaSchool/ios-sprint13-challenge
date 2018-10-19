@@ -14,6 +14,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     private var captureSession: AVCaptureSession!
     private var recordOutput: AVCaptureMovieFileOutput!
+    var experienceController: ExperienceController?
     var imageData: Data?
     var experienceTitle: String?
     var audioURL: URL?
@@ -48,12 +49,13 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     @IBAction func saveExperience(_ sender: Any) {
         // create experience with Title, photo, audio, and video
-        guard let imageData = imageData,
-            let experienceTitle = experienceTitle,
+        guard let experienceTitle = experienceTitle,
             let audioURL = audioURL,
             let videoURL = videoURL,
+            let imageData = imageData,
             let coordinate = coordinate else { return }
-        let experience = Experience(title: experienceTitle, audioURL: audioURL, videoURL: videoURL, imageData: imageData, coordinate: coordinate)
+        experienceController?.createExperience(title: experienceTitle, audioURL: audioURL, videoURL: videoURL, imageData: imageData, coordinate: coordinate)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     // MARK: - AVCaptureFileOutputRecordingDelegate
