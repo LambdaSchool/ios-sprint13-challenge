@@ -8,8 +8,9 @@
 
 import UIKit
 import MapKit
+import Photos
 
-class ExperienceViewController: UIViewController {
+class ExperienceViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,12 +21,33 @@ class ExperienceViewController: UIViewController {
     // AMRK: - Buttons
     
     @IBAction func addPhotoImage(_ sender: Any) {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            NSLog("The photo library is unavailable")
+            return
+        }
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
+        
     }
     
     @IBAction func recordAudio(_ sender: Any) {
     }
     
     @IBAction func next(_ sender: Any) {
+    }
+    
+    // MARK: - UIImagePickerControllerDelegate
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        imageView.image = info[.originalImage] as? UIImage
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
     }
     
     /*
@@ -44,5 +66,6 @@ class ExperienceViewController: UIViewController {
     
     @IBOutlet weak var addPhotoImageButton: UIButton!
     @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var imageView: UIImageView!
     
 }
