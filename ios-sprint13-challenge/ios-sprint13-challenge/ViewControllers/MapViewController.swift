@@ -11,9 +11,9 @@ import MapKit
 
 class MapViewController: UIViewController, MKMapViewDelegate {
     
-    // MARK: - Properties
+    // MAvar - Properties
     
-    var experienceController: ExperienceController?
+    var experienceController = ExperienceController()
     @IBOutlet weak var mapView: MKMapView!
     
     
@@ -21,9 +21,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
 
         self.mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "AnnotiationView")
-        if let experienceController = experienceController {
-            self.mapView.addAnnotation(experienceController.experiences)
-        }
+        self.mapView.addAnnotations(experienceController.experiences)
     }
     
     // MARK: - MKMapViewDelegate
@@ -37,6 +35,15 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         annotationView.canShowCallout = true
         
         return annotationView
+    }
+    
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "CreateExperience" {
+            guard let imageAudioVC = segue.destination as? Image_AudioViewController else { return }
+            imageAudioVC.experienceController = experienceController
+        }
     }
 
 }

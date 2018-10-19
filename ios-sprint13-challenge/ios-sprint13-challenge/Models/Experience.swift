@@ -21,9 +21,9 @@ class Experience: NSObject {
     }
     
     var experienceTitle: String
-    var audioURL: URL
-    var videoURL: URL
-    var image: UIImage
+    var audioURL: URL?
+    var videoURL: URL?
+    var image: UIImage?
     
 }
 
