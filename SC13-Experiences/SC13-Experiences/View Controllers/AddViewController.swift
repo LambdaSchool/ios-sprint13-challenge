@@ -15,8 +15,10 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        locationHelper.locationManager.delegate = self
         locationHelper.requestAuthorization()
         locationHelper.getCurrentLocation()
+        
         // Do any additional setup after loading the view.
     }
     //MARK: - IBActions
@@ -109,6 +111,10 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         }
         self.location = location.coordinate
     }
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        NSLog("Error getting location: \(error)")
+    }
+    
     //MARK: Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "RecordVideo"{
