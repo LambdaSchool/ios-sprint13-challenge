@@ -32,4 +32,7 @@ extension Experience: MKAnnotation{
     var coordinate: CLLocationCoordinate2D {
         return self.location
     }
+    var getTitle: String{
+        return self.title!
+    }
 }

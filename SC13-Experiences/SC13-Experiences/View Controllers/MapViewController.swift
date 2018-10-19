@@ -11,24 +11,27 @@ import MapKit
 
 private let segueIdentifier = "AddExperience"
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, MKMapViewDelegate {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        experienceAnnotations = experienceController.experiences
+        mapView.register(MKAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotation")
+        mapView.delegate = self
+    }
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        let experienceAnnotation = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceAnnotation", for: annotation) as! MKMarkerAnnotationView
+        if let title = annotation.title {
+            experienceAnnotation.glyphText = title
+        }
+        return experienceAnnotation
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    
+    //MARK: - Properties
+    private var experienceAnnotations = [MKAnnotation]()
+    private let experienceController = ExperienceController.shared
     @IBOutlet weak var mapView: MKMapView!
     
 }
