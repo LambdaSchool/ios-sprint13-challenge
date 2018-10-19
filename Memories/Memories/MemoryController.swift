@@ -11,6 +11,8 @@ import MapKit
 
 class MemoryController {
     
+    static let shared = MemoryController()
+    
     var memories: [Memory] = []
     
     func addMemory(title: String, image: UIImage, audioURL: URL, videoURL: URL, coordinate: CLLocationCoordinate2D) {
