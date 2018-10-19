@@ -25,7 +25,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         userTrackingButton.leftAnchor.constraint(equalTo: mapView.leftAnchor, constant: 20).isActive = true
         userTrackingButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -20).isActive = true
         
-        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "QuakeAnnotationView")
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "MemoryAnnotationView")
     }
     
     // MARK: - Properties
@@ -43,10 +43,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
-        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "QuakeAnnotationView") as! MKMarkerAnnotationView
+        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "MemoryAnnotationView") as! MKMarkerAnnotationView
         annotationView.markerTintColor = .gray
         annotationView.glyphTintColor = .black
-        annotationView.glyphImage = UIImage(named: "QuakeIcon")!
         
         annotationView.canShowCallout = true
         
