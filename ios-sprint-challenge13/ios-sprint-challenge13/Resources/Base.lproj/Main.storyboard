@@ -139,7 +139,23 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GgX-vg-yEM">
                                 <rect key="frame" x="0.0" y="116" width="375" height="551"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GY9-oT-aya">
+                                        <rect key="frame" x="129.5" y="373" width="116" height="116"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="116" id="fEN-zO-eX1"/>
+                                        </constraints>
+                                        <state key="normal" title="Button" image="Record"/>
+                                        <connections>
+                                            <action selector="record:" destination="yfZ-0h-sD5" eventType="touchUpInside" id="Rak-jl-Xpo"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="GY9-oT-aya" secondAttribute="bottom" constant="62" id="LXs-za-5ZM"/>
+                                    <constraint firstItem="GY9-oT-aya" firstAttribute="centerX" secondItem="GgX-vg-yEM" secondAttribute="centerX" id="heq-Kb-Zfo"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -159,7 +175,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="videoView" destination="GgX-vg-yEM" id="AoB-Y7-KK9"/>
+                        <outlet property="record" destination="GY9-oT-aya" id="nQc-Ui-BJP"/>
+                        <outlet property="videoView" destination="GgX-vg-yEM" id="C7S-1R-GUs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qHo-iK-Vpc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -203,4 +220,7 @@
             <point key="canvasLocation" x="2152.8000000000002" y="158.77061469265368"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Record" width="116" height="116"/>
+    </resources>
 </document>

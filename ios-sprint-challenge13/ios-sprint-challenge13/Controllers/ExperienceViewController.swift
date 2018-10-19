@@ -14,6 +14,8 @@ class ExperienceViewController: UIViewController, AVAudioPlayerDelegate, UIImage
     
     // MARK: - Properties
     
+    var experienceController: ExperienceController?
+    
     private var originalImage: UIImage?
     private var recorder: AVAudioRecorder?
     private var player: AVAudioPlayer?
@@ -88,7 +90,6 @@ class ExperienceViewController: UIViewController, AVAudioPlayerDelegate, UIImage
         updateViews()
     }
     
-    
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         updateViews()
         playTimeTimer = nil
@@ -112,11 +113,13 @@ class ExperienceViewController: UIViewController, AVAudioPlayerDelegate, UIImage
         }
     }
     
-    
     @IBAction func next(_ sender: Any) {
+
+        // TODO:
         
 //        guard let title = titleTextField.text else { return }
         
+//        experienceController?.createExperience(with: title, image: , audio: )
         
     }
     
