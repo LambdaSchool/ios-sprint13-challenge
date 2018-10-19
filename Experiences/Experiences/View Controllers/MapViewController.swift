@@ -22,6 +22,14 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        mapView.removeAnnotations(mapView.annotations)
+        
+        mapView.addAnnotations(experienceController.experiences)
+    }
+    
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

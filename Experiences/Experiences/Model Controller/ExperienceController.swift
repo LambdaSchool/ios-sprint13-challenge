@@ -12,11 +12,10 @@ import MapKit
 
 class ExperienceController {
     
-    init() {
-        loadFromCoreData()
+    var experiences: [Experience] {
+        return loadFromCoreData()
     }
     
-    var experiences: [Experience] = []
     
     func createExperience(withTitle title: String, imageURL: URL, audioURL: URL, videoURL: URL, coordinate: CLLocationCoordinate2D = kCLLocationCoordinate2DInvalid) {
         
