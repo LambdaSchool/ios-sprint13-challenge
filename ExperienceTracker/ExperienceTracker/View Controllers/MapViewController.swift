@@ -15,10 +15,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         super.viewDidLoad()
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
+        
+        mapView.delegate = self
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotationView")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        for experience in experienceController.experiences {
+            mapView.addAnnotation(experience)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -27,6 +33,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+    }
+    
+    // MARK: - MKMapViewDelegate
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let experience = annotation as? Experience else { return nil }
+        
+        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceAnnotationView", for: experience) as! MKMarkerAnnotationView
+        annotationView.canShowCallout = true
+        
+        return annotationView
     }
     
     // MARK: - CLLocationManagerDelegate
