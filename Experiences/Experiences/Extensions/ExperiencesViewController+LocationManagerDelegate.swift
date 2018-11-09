@@ -17,7 +17,7 @@ extension ExperiencesViewController: CLLocationManagerDelegate {
         guard let location = locations.last else { return }
         geoCoder.reverseGeocodeLocation(location) { (placemarks, error) in
             if let error = error {
-                NSLog("Error geocoding location: \(error)")
+                NSLog("Location Manager geocoder error: \(error)")
                 return
             }
             
@@ -27,8 +27,9 @@ extension ExperiencesViewController: CLLocationManagerDelegate {
             self.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         }
     }
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        NSLog("Failed getting location with error: \(error)")
+        NSLog("Location Manager did failed: \(error)")
         return
     }
 }

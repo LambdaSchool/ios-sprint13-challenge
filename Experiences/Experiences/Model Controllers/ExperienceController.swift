@@ -13,8 +13,8 @@ class ExperienceController {
     
     private(set) var experiences: [Experience] = []
     
-    func createExperience(title: String, audioURL: URL, videoURL: URL, imageData: Data, coordinate: CLLocationCoordinate2D) {
-        let experience = Experience(title: title, audioURL: audioURL, videoURL: videoURL, imageData: imageData, coordinate: coordinate)
+    func createExperience(title: String, imageData: Data, audioURL: URL, videoURL: URL, coordinate: CLLocationCoordinate2D) {
+        let experience = Experience(title: title, imageData: imageData, audioURL: audioURL, videoURL: videoURL, coordinate: coordinate)
         experiences.append(experience)
     }
 }

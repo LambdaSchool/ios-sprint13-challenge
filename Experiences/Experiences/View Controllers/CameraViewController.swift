@@ -106,8 +106,10 @@ class CameraViewController: UIViewController {
             let videoURL = videoURL,
             let imageData = imageData,
             let coordinate = coordinate else { return }
-        experienceController?.createExperience(title: experienceTitle, audioURL: audioURL, videoURL: videoURL, imageData: imageData, coordinate: coordinate)
-        self.navigationController?.popToRootViewController(animated: true)
+        experienceController?.createExperience(title: experienceTitle, imageData: imageData, audioURL: audioURL, videoURL: videoURL, coordinate: coordinate)
+        
+        let mapvView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ExperiencesViewController")
+        present(mapvView, animated: true, completion: nil)
+//        self.navigationController?.popToRootViewController(animated: true)
     }
-    
 }

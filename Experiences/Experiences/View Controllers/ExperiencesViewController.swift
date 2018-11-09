@@ -12,10 +12,11 @@ import MapKit
 class ExperiencesViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
-    let geoCoder = CLGeocoder()
-    var coordinate: CLLocationCoordinate2D?
-    var userTrackingButton: MKUserTrackingButton!
+    
     let experienceController = ExperienceController()
+    var coordinate: CLLocationCoordinate2D?
+    let geoCoder = CLGeocoder()
+    var userTrackingButton: MKUserTrackingButton!
     
     lazy var locationManager: CLLocationManager = {
         let result = CLLocationManager()
@@ -36,14 +37,14 @@ class ExperiencesViewController: UIViewController {
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotationView")
         
         fetchExperiences()
-        findMyLocationButton()
+        setUpFindMyLocationButton()
     }
     
     private func fetchExperiences() {
         self.mapView.addAnnotations(experienceController.experiences)
     }
     
-    private func findMyLocationButton() {
+    private func setUpFindMyLocationButton() {
         userTrackingButton = MKUserTrackingButton(mapView: mapView)
         userTrackingButton.translatesAutoresizingMaskIntoConstraints = false
         mapView.addSubview(userTrackingButton)
@@ -53,7 +54,7 @@ class ExperiencesViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "AddExperienceSegue" {
+        if segue.identifier == "NewExperienceSegue" {
             guard let coordinate = coordinate,
                 let destVC = segue.destination as? NewExperienceViewController else { return }
             
