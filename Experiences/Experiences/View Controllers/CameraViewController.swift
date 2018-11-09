@@ -17,6 +17,7 @@ class CameraViewController: UIViewController {
     
     var captureSession: AVCaptureSession!
     var recordingOutput: AVCaptureMovieFileOutput!
+    
     var experienceController: ExperienceController?
     var imageData: Data?
     var experienceTitle: String?
@@ -49,6 +50,7 @@ class CameraViewController: UIViewController {
         captureSession.commitConfiguration()
         
         recordingOutput = fileOutput
+        self.captureSession = captureSession
         
         cameraPreviewView.videoPreviewLayer.session = captureSession
     }
