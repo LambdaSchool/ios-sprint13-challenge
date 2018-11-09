@@ -9,11 +9,17 @@
 import UIKit
 import AVFoundation
 import Photos
-class ExperiencesHomeViewController: UIViewController, AVAudioRecorderDelegate {
+class ExperiencesHomeViewController: UIViewController, AVAudioRecorderDelegate, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        titleTextField.delegate = self
         requestMicrophonePermission()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     func updateViews() {
@@ -132,6 +138,7 @@ class ExperiencesHomeViewController: UIViewController, AVAudioRecorderDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "NewVideoRecording" {
             guard let destinationVC = segue.destination as? CameraViewController else { return }
+            
             destinationVC.experienceController = experienceController
             destinationVC.imageTitle = titleTextField.text
             destinationVC.audioURL = audioURL

@@ -84,6 +84,15 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     @IBAction func saveVideo(_ sender: Any) {
         
+        guard let imageTitle = imageTitle,
+            let videoURL = videoURL,
+            let coordinate = locationManagerHelper.getCurrentLocation()?.coordinate,
+            let audioURL = audioURL,
+            let imageData = imageData else { return }
+
+        experienceController?.createExperience(title: imageTitle, coordinate: coordinate, videoURL: videoURL, audioURL: audioURL, imageData: imageData)
+        
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func recordVideo(_ sender: Any) {
@@ -93,6 +102,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             recordingOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
         }
     }
+    
+    
+    let locationManagerHelper = LocationManagerHelper()
     
     var experienceController: ExperienceController?
     var audioURL: URL?
