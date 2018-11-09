@@ -16,11 +16,8 @@ class NewExperienceViewController: UIViewController {
     @IBOutlet weak var addPosterImageButton: UIButton!
     @IBOutlet weak var recordAudioButton: UIButton!
     
-    private var originalImage: UIImage? {
-        didSet {
-            
-        }
-    }
+    private let context = CIContext(options: nil)
+    private let coolFilter = CIFilter(name: "CIPhotoEffectProcess")!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +50,17 @@ class NewExperienceViewController: UIViewController {
             self.presentInformationalAlertController(title: "Error", message: "Unable to access the photo library. Your device's restrictions do not allow access.")
         }
         presentImagePicker()
+    }
+    
+    private func apply(filter: CIFilter, for image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage else { return image }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        guard let filteredCIImage = filter.outputImage else { return image }
+        guard let filteredCGImage = context.createCGImage(filteredCIImage, from: filteredCIImage.extent) else { return image }
+        
+        return UIImage(cgImage: filteredCGImage)
     }
     
     @IBAction func recordAudioTapped(_ sender: Any) {
@@ -97,7 +105,8 @@ extension NewExperienceViewController: UIImagePickerControllerDelegate, UINaviga
         picker.dismiss(animated: true, completion: nil)
         
         guard let image = info[.originalImage] as? UIImage else { return}
-        originalImage = image
+        
+        experienceImage.image = apply(filter: coolFilter, for: image)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
