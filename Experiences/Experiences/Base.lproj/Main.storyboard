@@ -22,9 +22,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N4u-kI-dGD">
-                                <rect key="frame" x="295" y="587" width="60" height="60"/>
+                                <rect key="frame" x="305" y="587" width="50" height="60"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="60" id="Lhy-Sf-ObV"/>
+                                    <constraint firstAttribute="width" constant="50" id="Lhy-Sf-ObV"/>
                                     <constraint firstAttribute="height" constant="60" id="qcv-QY-Sp2"/>
                                 </constraints>
                                 <state key="normal" image="feedback"/>
@@ -56,7 +56,7 @@
         <!--New Experience-->
         <scene sceneID="c24-xD-V2l">
             <objects>
-                <viewController id="2zJ-RK-dgz" sceneMemberID="viewController">
+                <viewController id="2zJ-RK-dgz" customClass="NewExperienceViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RLF-1X-uCU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -64,7 +64,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="vob-N6-164">
                                 <rect key="frame" x="16" y="124" width="343" height="333.5"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f4i-c8-PID">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f4i-c8-PID">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -73,12 +73,15 @@
                                     <view contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="y59-8J-Jhq">
                                         <rect key="frame" x="0.0" y="38" width="343" height="257.5"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PhU-S9-r7s">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PhU-S9-r7s">
                                                 <rect key="frame" x="0.0" y="0.0" width="343" height="257.5"/>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N2d-fR-9se">
                                                 <rect key="frame" x="110.5" y="114" width="122" height="30"/>
                                                 <state key="normal" title="Add Poster Image"/>
+                                                <connections>
+                                                    <action selector="addPosterImageTapped:" destination="2zJ-RK-dgz" eventType="touchUpInside" id="ZtW-pZ-ft5"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -96,6 +99,9 @@
                                         <state key="normal" title="Record Audio">
                                             <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="recordAudioTapped:" destination="2zJ-RK-dgz" eventType="touchUpInside" id="ywT-3q-cUk"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -110,13 +116,23 @@
                         <viewLayoutGuide key="safeArea" id="abP-9F-sej"/>
                     </view>
                     <navigationItem key="navigationItem" title="New Experience" id="k2t-hl-YO2">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="DNN-bh-vGX"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="DNN-bh-vGX">
+                            <connections>
+                                <action selector="cancelTapped:" destination="2zJ-RK-dgz" id="N07-do-9Fg"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Next" id="9S3-qa-qZQ">
                             <connections>
-                                <segue destination="cf3-Ml-H9U" kind="show" id="s54-QB-bh6"/>
+                                <segue destination="cf3-Ml-H9U" kind="show" identifier="NextSegue" id="s54-QB-bh6"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="addPosterImageButton" destination="N2d-fR-9se" id="0zY-Xb-Y0Y"/>
+                        <outlet property="experienceImage" destination="PhU-S9-r7s" id="R7r-Er-lGQ"/>
+                        <outlet property="experienceTitle" destination="f4i-c8-PID" id="D66-cR-vvC"/>
+                        <outlet property="recordAudioButton" destination="Y2x-Fy-6Y9" id="3BR-ta-2v9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cmX-NJ-Gfx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
