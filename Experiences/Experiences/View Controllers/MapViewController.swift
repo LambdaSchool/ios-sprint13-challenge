@@ -16,21 +16,15 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
     @IBAction func presentExperiences(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let experiencesNavigationController = storyboard.instantiateViewController(withIdentifier: "ExperiencesNavigationController")
-        self.present(experiencesNavigationController, animated: true, completion: nil)
+        self.performSegue(withIdentifier: "NewExperience", sender: sender)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "NewExperience" {
+            guard let destinationVC = segue.destination as? ExperiencesHomeViewController else { return }
+            
+        }
     }
     
     
