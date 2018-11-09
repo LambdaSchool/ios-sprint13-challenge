@@ -37,6 +37,7 @@ class NewExperienceViewController: UIViewController {
         super.viewDidLoad()
         
         playAudioButton.isHidden = true
+        
     }
     
     @IBAction func cancelTapped(_ sender: Any) {
@@ -128,10 +129,31 @@ class NewExperienceViewController: UIViewController {
 
     // MARK: - Navigation
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "NextSegue" {
-//
-//        }
-//    }
+    @IBAction func nextTapped(_ sender: Any) {
+
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized:
+            showCamera()
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { (granted) in
+                if granted {
+                    self.showCamera()
+                }
+                NSLog("VideoFilters needs video capture access")
+                self.presentInformationalAlertController(title: "Error", message: "In order to access the camera, you must allow this application access to it.")
+            }
+        case .denied, .restricted:
+            NSLog("Experiences needs video capture access")
+            self.presentInformationalAlertController(title: "Error", message: "In order to access the camera, you must allow this application access to it.")
+        }
+    }
+    
+    func showCamera() {
+        performSegue(withIdentifier: "NextSegue", sender: self)
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+    }
 }
 
