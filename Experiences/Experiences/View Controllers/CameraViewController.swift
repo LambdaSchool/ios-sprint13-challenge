@@ -17,6 +17,12 @@ class CameraViewController: UIViewController {
     
     var captureSession: AVCaptureSession!
     var recordingOutput: AVCaptureMovieFileOutput!
+    var experienceController: ExperienceController?
+    var imageData: Data?
+    var experienceTitle: String?
+    var audioURL: URL?
+    var coordinate: CLLocationCoordinate2D?
+    var videoURL: URL?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,8 +53,22 @@ class CameraViewController: UIViewController {
         cameraPreviewView.videoPreviewLayer.session = captureSession
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        captureSession?.startRunning()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        captureSession?.stopRunning()
+    }
+    
     @IBAction func recordTapped(_ sender: Any) {
-        
+        if recordingOutput.isRecording {
+            recordingOutput.stopRecording()
+        } else {
+            recordingOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
+        }
     }
     
     private func bestCamera() -> AVCaptureDevice {
@@ -76,6 +96,16 @@ class CameraViewController: UIViewController {
         
         let image = UIImage(named: recordButtonImageTitle)
         recordButton.setImage(image, for: .normal)
+    }
+    
+    @IBAction func saveTapped(_ sender: Any) {
+        guard let experienceTitle = experienceTitle,
+            let audioURL = audioURL,
+            let videoURL = videoURL,
+            let imageData = imageData,
+            let coordinate = coordinate else { return }
+        experienceController?.createExperience(title: experienceTitle, audioURL: audioURL, videoURL: videoURL, imageData: imageData, coordinate: coordinate)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
 }

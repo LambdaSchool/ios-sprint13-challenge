@@ -33,6 +33,9 @@ class NewExperienceViewController: UIViewController {
         return player?.isPlaying ?? false
     }
     
+    var experienceController: ExperienceController?
+    var coordinate: CLLocationCoordinate2D?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -131,29 +134,39 @@ class NewExperienceViewController: UIViewController {
     
     @IBAction func nextTapped(_ sender: Any) {
 
-        switch AVCaptureDevice.authorizationStatus(for: .video) {
-        case .authorized:
-            showCamera()
-        case .notDetermined:
-            AVCaptureDevice.requestAccess(for: .video) { (granted) in
-                if granted {
-                    self.showCamera()
-                }
-                NSLog("VideoFilters needs video capture access")
-                self.presentInformationalAlertController(title: "Error", message: "In order to access the camera, you must allow this application access to it.")
-            }
-        case .denied, .restricted:
-            NSLog("Experiences needs video capture access")
-            self.presentInformationalAlertController(title: "Error", message: "In order to access the camera, you must allow this application access to it.")
-        }
+//        switch AVCaptureDevice.authorizationStatus(for: .video) {
+//        case .authorized:
+//            showCamera()
+//        case .notDetermined:
+//            AVCaptureDevice.requestAccess(for: .video) { (granted) in
+//                if granted {
+//                    self.showCamera()
+//                }
+//                NSLog("VideoFilters needs video capture access")
+//                self.presentInformationalAlertController(title: "Error", message: "In order to access the camera, you must allow this application access to it.")
+//            }
+//        case .denied, .restricted:
+//            NSLog("Experiences needs video capture access")
+//            self.presentInformationalAlertController(title: "Error", message: "In order to access the camera, you must allow this application access to it.")
+//        }
     }
     
-    func showCamera() {
-        performSegue(withIdentifier: "NextSegue", sender: self)
-    }
+//    func showCamera() {
+//        performSegue(withIdentifier: "NextSegue", sender: self)
+//    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        if segue.identifier == "NextSegue" {
+            guard let url = recorder?.url,
+                let imageData = experienceImage.image?.jpegData(compressionQuality: 0.1),
+                let coordinate = self.coordinate else { return }
+            guard let destVC = segue.destination as? CameraViewController else { return }
+                destVC.audioURL = url
+                destVC.imageData = imageData
+                destVC.experienceTitle = experienceTitle.text
+                destVC.experienceController = experienceController
+                destVC.coordinate = coordinate
+        }
     }
 }
 
