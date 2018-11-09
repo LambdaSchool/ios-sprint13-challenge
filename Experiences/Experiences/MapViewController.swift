@@ -26,9 +26,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         guard let nextVC = navVC.viewControllers.first as? AddNewExperienceViewController else { return }
         
-        //Should I pass mapview?
         nextVC.experienceController = experienceController
         nextVC.coordinate = mapView.userLocation.coordinate
+        nextVC.mapView = mapView
     }
     
     let locationManager = CLLocationManager()

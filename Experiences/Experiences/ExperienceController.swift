@@ -24,5 +24,5 @@ class ExperienceController {
         return unfinishedExperience
     }
     
-    var experiences: [Experience] = []
+    private var experiences: [Experience] = []
 }

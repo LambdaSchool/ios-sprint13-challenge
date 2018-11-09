@@ -12,6 +12,13 @@ import AVFoundation
 
 class AddNewExperienceViewController: UIViewController {
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        view.addGestureRecognizer(tap)
+    }
+    
     @IBAction func continueToVideoRecording(_ sender: Any) {
         
         guard let title = titleTextField.text,
@@ -23,7 +30,19 @@ class AddNewExperienceViewController: UIViewController {
         
         self.unfinishedExperience = unfinishedExperience
         
-        performSegue(withIdentifier: "AddVideoRecording", sender: self)
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized:
+            performSegue(withIdentifier: "AddVideoRecording", sender: self)
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { (granted) in
+                if granted { self.performSegue(withIdentifier: "AddVideoRecording", sender: self) }
+                
+                NSLog("VideoFilters needs video capture access.")
+            }
+        case .denied, .restricted:
+            NSLog("VideoFilters needs video capture access.")
+        }
+
     }
     
     // MARK: - Add Audio Recording
@@ -95,7 +114,10 @@ class AddNewExperienceViewController: UIViewController {
         
         self.image = filteredImage
         imageView.image = filteredImage
-        
+    }
+    
+    private func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     // MARK: - Navigation
@@ -106,6 +128,7 @@ class AddNewExperienceViewController: UIViewController {
         
         destinationVC.experienceController = experienceController
         destinationVC.unfinishedExperience = unfinishedExperience
+        destinationVC.mapView = mapView
 
     }
     
@@ -114,6 +137,7 @@ class AddNewExperienceViewController: UIViewController {
     var experienceController: ExperienceController?
     var unfinishedExperience: Experience?
     var coordinate: CLLocationCoordinate2D?
+    var mapView: MKMapView?
     var audioURL: URL?
     var image: UIImage?
     var originalImage: UIImage? {
