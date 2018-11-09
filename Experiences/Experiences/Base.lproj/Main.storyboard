@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Map View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="MapViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="qNI-eV-Dgs">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jkX-7X-h1w">
+                                <rect key="frame" x="263" y="592" width="84" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Experiences"/>
+                                <connections>
+                                    <action selector="presentExperiences:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BPn-04-L8b"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="qNI-eV-Dgs" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="2g3-iE-7w6"/>
+                            <constraint firstItem="qNI-eV-Dgs" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="4qg-ng-NyM"/>
+                            <constraint firstItem="qNI-eV-Dgs" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="5d6-Cx-TGN"/>
+                            <constraint firstItem="qNI-eV-Dgs" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="wGj-lI-tdI"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="qNI-eV-Dgs" id="mV0-Dv-tb0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
+        </scene>
+        <!--New Experience-->
+        <scene sceneID="NXP-iD-afj">
+            <objects>
+                <viewController id="2Yr-7J-a3w" customClass="ExperiencesHomeViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="muI-13-nMZ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8On-Fy-Kme">
+                                <rect key="frame" x="126" y="298" width="122" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Add Poster Image"/>
+                                <connections>
+                                    <action selector="addPoster:" destination="2Yr-7J-a3w" eventType="touchUpInside" id="Sfu-hA-zy8"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VR2-Ei-lwS">
+                                <rect key="frame" x="163" y="499" width="49" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Record"/>
+                                <connections>
+                                    <action selector="record:" destination="2Yr-7J-a3w" eventType="touchUpInside" id="LxA-P2-y6t"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7pq-Iq-DVB">
+                                <rect key="frame" x="16" y="167" width="343" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="doX-ap-E1N"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="New Experience" id="Z4F-Ya-MIi">
+                        <barButtonItem key="rightBarButtonItem" title="Next" id="WUk-He-vER">
+                            <connections>
+                                <segue destination="wH2-Ci-QGC" kind="show" id="8pU-j5-LYH"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="addPosterButton" destination="8On-Fy-Kme" id="Xbd-We-UKo"/>
+                        <outlet property="recordButton" destination="VR2-Ei-lwS" id="xqb-ZA-FoD"/>
+                        <outlet property="titleTextField" destination="7pq-Iq-DVB" id="6RP-uF-4Hk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kSQ-gs-vJS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1868" y="133.5832083958021"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="0qF-AO-O78">
+            <objects>
+                <navigationController storyboardIdentifier="ExperiencesNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zMa-8V-fmB" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="aMX-NT-xCT">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="2Yr-7J-a3w" kind="relationship" relationship="rootViewController" id="W84-UB-wah"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sPd-i7-aXf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="928.79999999999995" y="133.5832083958021"/>
+        </scene>
+        <!--Video Recording-->
+        <scene sceneID="p9c-qc-bst">
+            <objects>
+                <viewController id="wH2-Ci-QGC" customClass="CameraViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="abU-E4-N7D">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hJn-Gd-7WI" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="116" width="375" height="551"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="who-Kg-6Lg">
+                                        <rect key="frame" x="162.5" y="438" width="50" height="53"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="F9g-il-8Kg"/>
+                                            <constraint firstAttribute="height" constant="53" id="dxt-1U-NKX"/>
+                                        </constraints>
+                                        <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Button" image="Record"/>
+                                        <connections>
+                                            <action selector="record:" destination="wH2-Ci-QGC" eventType="touchUpInside" id="Mfq-9n-znt"/>
+                                            <action selector="recordVideo:" destination="wH2-Ci-QGC" eventType="touchUpInside" id="pjG-s1-uX0"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="who-Kg-6Lg" firstAttribute="centerX" secondItem="hJn-Gd-7WI" secondAttribute="centerX" id="3Dx-ET-g5K"/>
+                                    <constraint firstAttribute="bottom" secondItem="who-Kg-6Lg" secondAttribute="bottom" constant="60" id="cSm-3M-wMK"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="hJn-Gd-7WI" firstAttribute="bottom" secondItem="ktJ-tW-Fy9" secondAttribute="bottom" id="KIB-Ky-oVC"/>
+                            <constraint firstItem="hJn-Gd-7WI" firstAttribute="leading" secondItem="ktJ-tW-Fy9" secondAttribute="leading" id="KS0-a2-Lc8"/>
+                            <constraint firstItem="hJn-Gd-7WI" firstAttribute="bottom" secondItem="ktJ-tW-Fy9" secondAttribute="bottom" id="VfJ-RS-S2J"/>
+                            <constraint firstItem="hJn-Gd-7WI" firstAttribute="leading" secondItem="ktJ-tW-Fy9" secondAttribute="leading" id="Vh2-9k-CiM"/>
+                            <constraint firstItem="hJn-Gd-7WI" firstAttribute="trailing" secondItem="ktJ-tW-Fy9" secondAttribute="trailing" id="W8a-ZV-7Fu"/>
+                            <constraint firstItem="hJn-Gd-7WI" firstAttribute="top" secondItem="ktJ-tW-Fy9" secondAttribute="top" id="YDg-Dg-9kR"/>
+                            <constraint firstItem="hJn-Gd-7WI" firstAttribute="trailing" secondItem="ktJ-tW-Fy9" secondAttribute="trailing" id="e8J-ru-ZTy"/>
+                            <constraint firstItem="hJn-Gd-7WI" firstAttribute="top" secondItem="ktJ-tW-Fy9" secondAttribute="top" id="hxd-yq-sln"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ktJ-tW-Fy9"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Video Recording" id="eiJ-nU-qj7">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="zCL-Pq-0Fh">
+                            <connections>
+                                <action selector="saveVideo:" destination="wH2-Ci-QGC" id="Fhn-7A-FX6"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="previewView" destination="hJn-Gd-7WI" id="aXv-2J-PN3"/>
+                        <outlet property="recordButton" destination="who-Kg-6Lg" id="mUo-2l-ueX"/>
+                        <outlet property="recordVideoButton" destination="who-Kg-6Lg" id="Nru-tG-IwH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rwe-1n-hOC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2759.1999999999998" y="133.5832083958021"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Record" width="116" height="116"/>
+    </resources>
+</document>
