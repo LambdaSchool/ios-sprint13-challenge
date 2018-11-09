@@ -15,7 +15,7 @@ class AddNewExperienceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
     }
     
@@ -30,19 +30,20 @@ class AddNewExperienceViewController: UIViewController {
         
         self.unfinishedExperience = unfinishedExperience
         
-        switch AVCaptureDevice.authorizationStatus(for: .video) {
-        case .authorized:
-            performSegue(withIdentifier: "AddVideoRecording", sender: self)
-        case .notDetermined:
-            AVCaptureDevice.requestAccess(for: .video) { (granted) in
-                if granted { self.performSegue(withIdentifier: "AddVideoRecording", sender: self) }
-                
+        DispatchQueue.main.sync {
+            switch AVCaptureDevice.authorizationStatus(for: .video) {
+            case .authorized:
+                performSegue(withIdentifier: "AddVideoRecording", sender: self)
+            case .notDetermined:
+                AVCaptureDevice.requestAccess(for: .video) { (granted) in
+                    if granted { self.performSegue(withIdentifier: "AddVideoRecording", sender: self) }
+                    
+                    NSLog("VideoFilters needs video capture access.")
+                }
+            case .denied, .restricted:
                 NSLog("VideoFilters needs video capture access.")
             }
-        case .denied, .restricted:
-            NSLog("VideoFilters needs video capture access.")
         }
-
     }
     
     // MARK: - Add Audio Recording
@@ -116,7 +117,7 @@ class AddNewExperienceViewController: UIViewController {
         imageView.image = filteredImage
     }
     
-    private func dismissKeyboard() {
+    @objc func dismissKeyboard() {
         view.endEditing(true)
     }
     

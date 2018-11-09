@@ -43,7 +43,7 @@ class VideoRecordingViewController: UIViewController, AVCaptureFileOutputRecordi
         }
         
         mapView.addAnnotation(experience)
-        //go back to map
+        performSegue(withIdentifier: "UnwindToFirstVC", sender: self)
     }
     
     

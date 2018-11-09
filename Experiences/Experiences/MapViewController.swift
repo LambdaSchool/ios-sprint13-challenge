@@ -20,6 +20,20 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotationView")
     }
     
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
+        
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let experience = annotation as? Experience else { return nil }
+        
+        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceAnnotationView", for: experience) as! MKMarkerAnnotationView
+        
+        annotationView.glyphText = "E"
+        
+        return annotationView
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
        
         let navVC = segue.destination as! UINavigationController
