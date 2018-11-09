@@ -17,8 +17,31 @@ class ExperiencesHomeViewController: UIViewController, AVAudioRecorderDelegate {
     }
     
     func updateViews() {
+        guard let originalImage = originalImage else { return }
+        
+        imageView.image = image(byFiltering: originalImage)
+    }
+    private func image(byFiltering image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage else { return image }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        filter.setValue(3, forKey: kCIInputSaturationKey)
+        guard let outputCIImage = filter.outputImage else { return image }
+        
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
+        
+        let filteredImage = UIImage(cgImage: outputCGImage)
+        
+        imageData = filteredImage.jpegData(compressionQuality: 1)
+        
+        return filteredImage
         
     }
+    
+    private let filter = CIFilter(name: "CIColorControls")!
+    private let context = CIContext(options: nil)
+    
     
     func requestMicrophonePermission() {
         let session = AVAudioSession.sharedInstance()
@@ -42,18 +65,20 @@ class ExperiencesHomeViewController: UIViewController, AVAudioRecorderDelegate {
         isRecording ? recordButton.setTitle("Stop", for: .normal) : recordButton.setTitle("Record", for: .normal)
     }
     
+    
     private func newRecordingURL() -> URL {
         let documentsDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         return documentsDirectory.appendingPathComponent(UUID().uuidString).appendingPathExtension("caf")
     }
     
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-        recordingURL = recorder.url
+        audioURL = recorder.url
         self.recorder = nil
         updateButtons()
     }
     
-    private var recordingURL: URL?
+    var imageData: Data?
+    var audioURL: URL?
     private var recorder: AVAudioRecorder?
     private var isRecording: Bool {
         return recorder?.isRecording ?? false
@@ -108,6 +133,9 @@ class ExperiencesHomeViewController: UIViewController, AVAudioRecorderDelegate {
         if segue.identifier == "NewVideoRecording" {
             guard let destinationVC = segue.destination as? CameraViewController else { return }
             destinationVC.experienceController = experienceController
+            destinationVC.imageTitle = titleTextField.text
+            destinationVC.audioURL = audioURL
+            destinationVC.imageData = imageData
         }
     }
     
@@ -152,6 +180,7 @@ extension ExperiencesHomeViewController: UIImagePickerControllerDelegate, UINavi
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         addPosterButton.setTitle("", for: [])
+        
         
         picker.dismiss(animated: true, completion: nil)
         

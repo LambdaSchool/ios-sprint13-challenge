@@ -43,6 +43,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         DispatchQueue.main.async {
             defer { self.updateButton() }
         }
+        videoURL = outputFileURL
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,6 +83,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     
     @IBAction func saveVideo(_ sender: Any) {
+        
     }
     
     @IBAction func recordVideo(_ sender: Any) {
@@ -93,6 +95,10 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     }
     
     var experienceController: ExperienceController?
+    var audioURL: URL?
+    var imageTitle: String?
+    var imageData: Data?
+    var videoURL: URL?
     
     @IBOutlet weak var previewView: CameraPreviewView!
     @IBOutlet weak var recordVideoButton: UIButton!
