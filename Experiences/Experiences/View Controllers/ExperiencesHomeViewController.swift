@@ -104,6 +104,13 @@ class ExperiencesHomeViewController: UIViewController, AVAudioRecorderDelegate {
         presentImagePickerController()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "NewVideoRecording" {
+            guard let destinationVC = segue.destination as? CameraViewController else { return }
+            destinationVC.experienceController = experienceController
+        }
+    }
+    
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var addPosterButton: UIButton!
@@ -125,6 +132,8 @@ class ExperiencesHomeViewController: UIViewController, AVAudioRecorderDelegate {
             NSLog("Unable to start recording: \(error)")
         }
     }
+    
+    var experienceController: ExperienceController?
     
     
     var originalImage: UIImage? {

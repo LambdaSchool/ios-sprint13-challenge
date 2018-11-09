@@ -23,11 +23,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "NewExperience" {
             guard let destinationVC = segue.destination as? ExperiencesHomeViewController else { return }
-            
+            destinationVC.experienceController = experienceController
         }
     }
     
-    
+    let experienceController = ExperienceController()
     @IBOutlet weak var mapView: MKMapView!
     
 }

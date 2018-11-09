@@ -91,6 +91,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             recordingOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
         }
     }
+    
+    var experienceController: ExperienceController?
+    
     @IBOutlet weak var previewView: CameraPreviewView!
     @IBOutlet weak var recordVideoButton: UIButton!
     var captureSession: AVCaptureSession!
