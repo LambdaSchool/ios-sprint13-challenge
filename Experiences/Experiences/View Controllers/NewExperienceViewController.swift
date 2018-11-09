@@ -129,9 +129,6 @@ class NewExperienceViewController: UIViewController {
         }
     }
     
-
-    // MARK: - Navigation
-    
     @IBAction func nextTapped(_ sender: Any) {
 
 //        switch AVCaptureDevice.authorizationStatus(for: .video) {
@@ -155,6 +152,8 @@ class NewExperienceViewController: UIViewController {
 //        performSegue(withIdentifier: "NextSegue", sender: self)
 //    }
 
+    // MARK: - Navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "NextSegue" {
             guard let url = recorder?.url,

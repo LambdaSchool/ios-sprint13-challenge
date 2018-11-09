@@ -12,8 +12,9 @@ import MapKit
 class ExperiencesViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
-    private let geoCoder = CLGeocoder()
-    private var coordinate: CLLocationCoordinate2D?
+    let geoCoder = CLGeocoder()
+    var coordinate: CLLocationCoordinate2D?
+    var userTrackingButton: MKUserTrackingButton!
     let experienceController = ExperienceController()
     
     lazy var locationManager: CLLocationManager = {
@@ -29,12 +30,26 @@ class ExperiencesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        locationManager.requestWhenInUseAuthorization()
+        mapView.delegate = self
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotationView")
+        
         fetchExperiences()
+        findMyLocationButton()
     }
     
     private func fetchExperiences() {
         self.mapView.addAnnotations(experienceController.experiences)
+    }
+    
+    private func findMyLocationButton() {
+        userTrackingButton = MKUserTrackingButton(mapView: mapView)
+        userTrackingButton.translatesAutoresizingMaskIntoConstraints = false
+        mapView.addSubview(userTrackingButton)
+        
+        userTrackingButton.leftAnchor.constraint(equalTo: mapView.leftAnchor, constant: 20).isActive = true
+        userTrackingButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -20).isActive = true
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -57,24 +72,4 @@ extension ExperiencesViewController: MKMapViewDelegate {
     }
 }
 
-extension ExperiencesViewController: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else { return }
-        geoCoder.reverseGeocodeLocation(location) { (placemarks, error) in
-            if let error = error {
-                NSLog("Error geocoding location: \(error)")
-                return
-            }
-            
-            guard let placemark = placemarks?.first,
-                let latitude = placemark.location?.coordinate.latitude,
-                let longitude = placemark.location?.coordinate.longitude else { return }
-            self.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        }
-    }
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        NSLog("Failed getting location with error: \(error)")
-        return
-    }
-}
 
