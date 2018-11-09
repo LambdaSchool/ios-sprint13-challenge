@@ -62,25 +62,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pon-tZ-VDx">
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pon-tZ-VDx">
                                 <rect key="frame" x="16" y="159" width="343" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mAQ-ds-eGR">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mAQ-ds-eGR">
                                 <rect key="frame" x="16" y="197" width="343" height="212"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xaz-NQ-37i">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xaz-NQ-37i">
                                 <rect key="frame" x="92" y="282" width="191" height="42"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <state key="normal" title="Add Poster Image"/>
                                 <connections>
                                     <action selector="addPosterImageButtonTapped:" destination="hMy-W8-znD" eventType="touchUpInside" id="M4t-UY-auZ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hda-mn-8xH">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hda-mn-8xH">
                                 <rect key="frame" x="16" y="447" width="343" height="42"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <state key="normal" title="Record Audio">
                                     <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -91,20 +95,6 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="pon-tZ-VDx" firstAttribute="top" secondItem="o2j-AV-aro" secondAttribute="top" constant="19" id="0bk-9u-ACj"/>
-                            <constraint firstItem="pon-tZ-VDx" firstAttribute="leading" secondItem="dOn-hb-gJC" secondAttribute="leadingMargin" id="6Sf-zd-QSw"/>
-                            <constraint firstItem="Xaz-NQ-37i" firstAttribute="top" secondItem="pon-tZ-VDx" secondAttribute="bottom" constant="93" id="6kc-Qt-deg"/>
-                            <constraint firstItem="mAQ-ds-eGR" firstAttribute="leading" secondItem="Hda-mn-8xH" secondAttribute="leading" id="N4w-1e-qbG"/>
-                            <constraint firstItem="pon-tZ-VDx" firstAttribute="trailing" secondItem="mAQ-ds-eGR" secondAttribute="trailing" id="QTE-3q-Pq0"/>
-                            <constraint firstItem="pon-tZ-VDx" firstAttribute="leading" secondItem="mAQ-ds-eGR" secondAttribute="leading" id="TXd-tb-WXa"/>
-                            <constraint firstItem="mAQ-ds-eGR" firstAttribute="centerY" secondItem="Xaz-NQ-37i" secondAttribute="centerY" id="cdS-mR-nSQ"/>
-                            <constraint firstItem="Hda-mn-8xH" firstAttribute="top" secondItem="mAQ-ds-eGR" secondAttribute="bottom" constant="38" id="hMt-W1-7TA"/>
-                            <constraint firstItem="pon-tZ-VDx" firstAttribute="centerX" secondItem="Xaz-NQ-37i" secondAttribute="centerX" id="nLE-b1-acu"/>
-                            <constraint firstItem="mAQ-ds-eGR" firstAttribute="trailing" secondItem="Hda-mn-8xH" secondAttribute="trailing" id="vlv-2A-RbF"/>
-                            <constraint firstItem="mAQ-ds-eGR" firstAttribute="top" secondItem="pon-tZ-VDx" secondAttribute="bottom" constant="8" symbolic="YES" id="wUa-jw-8NH"/>
-                            <constraint firstItem="pon-tZ-VDx" firstAttribute="trailing" secondItem="dOn-hb-gJC" secondAttribute="trailingMargin" id="wcS-MB-7Mc"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="o2j-AV-aro"/>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="ZaD-se-Ybo">
