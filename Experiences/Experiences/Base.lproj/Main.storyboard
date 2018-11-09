@@ -6,18 +6,19 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Map View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MapViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="DKj-3j-7Im">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DKj-3j-7Im">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jhr-sX-pMd">
@@ -25,7 +26,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="60"/>
                                 <state key="normal" title="📝"/>
                                 <connections>
-                                    <segue destination="VjD-cH-DLA" kind="show" id="kpm-rU-pbJ"/>
+                                    <segue destination="VjD-cH-DLA" kind="presentation" id="XNS-Br-QWJ"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -40,6 +41,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="DKj-3j-7Im" id="3h3-EE-xgq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -64,13 +68,13 @@
         <!--New Experience-->
         <scene sceneID="eju-aC-zcE">
             <objects>
-                <viewController id="N6t-Fq-c44" sceneMemberID="viewController">
+                <viewController id="N6t-Fq-c44" customClass="AddNewExperienceViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kGe-Ie-O3N">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="103" translatesAutoresizingMaskIntoConstraints="NO" id="2Cf-Ia-MYR">
-                                <rect key="frame" x="16" y="136" width="343" height="296"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="2Cf-Ia-MYR">
+                                <rect key="frame" x="16" y="136" width="343" height="331"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yhQ-y6-orq">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="30"/>
@@ -78,12 +82,18 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="o2i-re-BZj">
+                                        <rect key="frame" x="0.0" y="38" width="343" height="217"/>
+                                    </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OgB-aV-ArF">
-                                        <rect key="frame" x="0.0" y="133" width="343" height="30"/>
+                                        <rect key="frame" x="0.0" y="263" width="343" height="30"/>
                                         <state key="normal" title="Add Poster Image"/>
+                                        <connections>
+                                            <action selector="addImage:" destination="N6t-Fq-c44" eventType="touchUpInside" id="MOK-cN-O2t"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hv4-yp-MzT">
-                                        <rect key="frame" x="0.0" y="266" width="343" height="30"/>
+                                        <rect key="frame" x="0.0" y="301" width="343" height="30"/>
                                         <state key="normal" title="Record Audio">
                                             <color key="titleColor" red="1" green="0.06974860209" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -96,16 +106,23 @@
                             <constraint firstItem="2Cf-Ia-MYR" firstAttribute="leading" secondItem="kGe-Ie-O3N" secondAttribute="leading" constant="16" id="9bp-HJ-M5D"/>
                             <constraint firstItem="2Cf-Ia-MYR" firstAttribute="top" secondItem="JJL-Ge-5Pf" secondAttribute="top" constant="20" id="LEz-3h-pJY"/>
                             <constraint firstItem="JJL-Ge-5Pf" firstAttribute="trailing" secondItem="2Cf-Ia-MYR" secondAttribute="trailing" constant="16" id="VvK-nI-pJz"/>
+                            <constraint firstItem="JJL-Ge-5Pf" firstAttribute="bottom" secondItem="2Cf-Ia-MYR" secondAttribute="bottom" constant="200" id="tZ6-tL-erg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="JJL-Ge-5Pf"/>
                     </view>
                     <navigationItem key="navigationItem" title="New Experience" id="3SF-FO-TFf">
                         <barButtonItem key="rightBarButtonItem" title="Next" id="9QI-bG-CE1">
                             <connections>
-                                <segue destination="IaQ-Hn-eRb" kind="show" id="AQM-DZ-GS8"/>
+                                <action selector="continueToVideoRecording:" destination="N6t-Fq-c44" id="aEA-SK-cFQ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="audioRecord" destination="Hv4-yp-MzT" id="NlM-Q1-nDb"/>
+                        <outlet property="imageView" destination="o2i-re-BZj" id="GxE-X4-Drb"/>
+                        <outlet property="titleTextField" destination="yhQ-y6-orq" id="TS0-Zt-SFQ"/>
+                        <segue destination="IaQ-Hn-eRb" kind="show" identifier="AddVideoRecording" id="l03-XM-Esw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5UY-Jp-Q5C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -114,7 +131,7 @@
         <!--Record A Video-->
         <scene sceneID="0Vp-6q-Uje">
             <objects>
-                <viewController id="IaQ-Hn-eRb" sceneMemberID="viewController">
+                <viewController id="IaQ-Hn-eRb" customClass="VideoRecordingViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jKZ-mW-MIa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -150,7 +167,11 @@
                         <viewLayoutGuide key="safeArea" id="MAE-Xd-F3J"/>
                     </view>
                     <navigationItem key="navigationItem" title="Record A Video" id="3ry-L2-hrf">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="VwB-kb-7bm"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="VwB-kb-7bm">
+                            <connections>
+                                <action selector="saveExperience:" destination="IaQ-Hn-eRb" id="N0M-bk-yF0"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3VZ-jK-uNB" userLabel="First Responder" sceneMemberID="firstResponder"/>
