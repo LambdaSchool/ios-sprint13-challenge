@@ -8,18 +8,9 @@
 
 import UIKit
 import MapKit
+import AVFoundation
 
 class AddNewExperienceViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        
-    }
-    
-    @IBAction func addImage(_ sender: Any) {
-        presentImagePickerController()
-    }
     
     @IBAction func continueToVideoRecording(_ sender: Any) {
         
@@ -33,6 +24,44 @@ class AddNewExperienceViewController: UIViewController {
         self.unfinishedExperience = unfinishedExperience
         
         performSegue(withIdentifier: "AddVideoRecording", sender: self)
+    }
+    
+    // MARK: - Add Audio Recording
+    
+    @IBAction func recordAudio(_ sender: Any) {
+        
+        defer { updateButtons() }
+        
+        guard !isRecording else {
+            recorder?.stop()
+            return
+        }
+        
+        do {
+            let format = AVAudioFormat(standardFormatWithSampleRate: 44100.0, channels: 2)!
+            recorder = try AVAudioRecorder(url: newRecordingURL(), format: format)
+            recorder?.delegate = self
+            recorder?.record()
+        } catch {
+            NSLog("Error starting recording: \(error)")
+        }
+    }
+    
+    func updateButtons() {
+        let recordButtonTitle = isRecording ? "Stop" : "Record Audio"
+        audioRecord.setTitle(recordButtonTitle, for: .normal)
+    }
+    
+    private func newRecordingURL() -> URL {
+        let documentsDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        
+        return documentsDirectory.appendingPathComponent(UUID().uuidString).appendingPathExtension("caf")
+    }
+    
+    // MARK: - Add Filtered Image
+    
+    @IBAction func addImage(_ sender: Any) {
+        presentImagePickerController()
     }
     
     private func presentImagePickerController() {
@@ -96,6 +125,11 @@ class AddNewExperienceViewController: UIViewController {
     private let filter = CIFilter(name: "CIPhotoEffectChrome")!
     private let context = CIContext(options: nil)
     
+    private var isRecording: Bool {
+        return recorder?.isRecording ?? false
+    }
+    private var recorder: AVAudioRecorder?
+    
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var audioRecord: UIButton!
     @IBOutlet weak var imageView: UIImageView!
@@ -116,4 +150,13 @@ extension AddNewExperienceViewController: UIImagePickerControllerDelegate, UINav
         picker.dismiss(animated: true, completion: nil)
     }
     
+}
+
+extension AddNewExperienceViewController: AVAudioRecorderDelegate {
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        
+        self.audioURL = recorder.url
+        self.recorder = nil
+        updateButtons()
+    }
 }
