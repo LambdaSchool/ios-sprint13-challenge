@@ -14,6 +14,10 @@
 		8208DFC02195E9C9003F5211 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8208DFBE2195E9C9003F5211 /* LaunchScreen.storyboard */; };
 		8208DFC92195EA26003F5211 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8208DFC82195EA26003F5211 /* Default-568h@2x.png */; };
 		8208DFCB2195F394003F5211 /* NewExperienceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208DFCA2195F394003F5211 /* NewExperienceViewController.swift */; };
+		8208DFCD2195FB93003F5211 /* ImageFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208DFCC2195FB93003F5211 /* ImageFilter.swift */; };
+		8208DFCF2195FCAE003F5211 /* NewExperienceViewController+ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208DFCE2195FCAE003F5211 /* NewExperienceViewController+ImagePicker.swift */; };
+		8208DFD421960466003F5211 /* NewExperienceViewController+AVAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208DFD321960466003F5211 /* NewExperienceViewController+AVAudio.swift */; };
+		8208DFD621960649003F5211 /* CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208DFD521960649003F5211 /* CameraPreviewView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +30,10 @@
 		8208DFC12195E9C9003F5211 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8208DFC82195EA26003F5211 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		8208DFCA2195F394003F5211 /* NewExperienceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewExperienceViewController.swift; sourceTree = "<group>"; };
+		8208DFCC2195FB93003F5211 /* ImageFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFilter.swift; sourceTree = "<group>"; };
+		8208DFCE2195FCAE003F5211 /* NewExperienceViewController+ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewExperienceViewController+ImagePicker.swift"; sourceTree = "<group>"; };
+		8208DFD321960466003F5211 /* NewExperienceViewController+AVAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewExperienceViewController+AVAudio.swift"; sourceTree = "<group>"; };
+		8208DFD521960649003F5211 /* CameraPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,9 +66,10 @@
 		8208DFB42195E9C8003F5211 /* Experiences */ = {
 			isa = PBXGroup;
 			children = (
-				8208DFB72195E9C8003F5211 /* ExperiencesViewController.swift */,
-				8208DFCA2195F394003F5211 /* NewExperienceViewController.swift */,
-				8208DFB92195E9C8003F5211 /* Main.storyboard */,
+				8208DFD72196064D003F5211 /* Views */,
+				8208DFD821960654003F5211 /* View Controllers */,
+				8208DFD92196065C003F5211 /* Stroyboards */,
+				8208DFD02195FCB4003F5211 /* Helpers */,
 				8208DFC72195E9DF003F5211 /* Resources */,
 			);
 			path = Experiences;
@@ -70,12 +79,55 @@
 			isa = PBXGroup;
 			children = (
 				8208DFB52195E9C8003F5211 /* AppDelegate.swift */,
-				8208DFC82195EA26003F5211 /* Default-568h@2x.png */,
 				8208DFBC2195E9C9003F5211 /* Assets.xcassets */,
-				8208DFBE2195E9C9003F5211 /* LaunchScreen.storyboard */,
+				8208DFC82195EA26003F5211 /* Default-568h@2x.png */,
 				8208DFC12195E9C9003F5211 /* Info.plist */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		8208DFD02195FCB4003F5211 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				8208DFD12195FD76003F5211 /* Extensions */,
+				8208DFCC2195FB93003F5211 /* ImageFilter.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		8208DFD12195FD76003F5211 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				8208DFCE2195FCAE003F5211 /* NewExperienceViewController+ImagePicker.swift */,
+				8208DFD321960466003F5211 /* NewExperienceViewController+AVAudio.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		8208DFD72196064D003F5211 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8208DFD521960649003F5211 /* CameraPreviewView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		8208DFD821960654003F5211 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8208DFB72195E9C8003F5211 /* ExperiencesViewController.swift */,
+				8208DFCA2195F394003F5211 /* NewExperienceViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		8208DFD92196065C003F5211 /* Stroyboards */ = {
+			isa = PBXGroup;
+			children = (
+				8208DFB92195E9C8003F5211 /* Main.storyboard */,
+				8208DFBE2195E9C9003F5211 /* LaunchScreen.storyboard */,
+			);
+			path = Stroyboards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -151,8 +203,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				8208DFB82195E9C8003F5211 /* ExperiencesViewController.swift in Sources */,
+				8208DFCD2195FB93003F5211 /* ImageFilter.swift in Sources */,
+				8208DFCF2195FCAE003F5211 /* NewExperienceViewController+ImagePicker.swift in Sources */,
+				8208DFD621960649003F5211 /* CameraPreviewView.swift in Sources */,
 				8208DFB62195E9C8003F5211 /* AppDelegate.swift in Sources */,
 				8208DFCB2195F394003F5211 /* NewExperienceViewController.swift in Sources */,
+				8208DFD421960466003F5211 /* NewExperienceViewController+AVAudio.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

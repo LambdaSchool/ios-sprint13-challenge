@@ -105,13 +105,22 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j5B-Vz-bfp">
+                                <rect key="frame" x="151.5" y="465.5" width="72" height="30"/>
+                                <state key="normal" title="Play Audio"/>
+                                <connections>
+                                    <action selector="playAudioTapped:" destination="2zJ-RK-dgz" eventType="touchUpInside" id="aXr-Va-Stq"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="abP-9F-sej" firstAttribute="trailing" secondItem="vob-N6-164" secondAttribute="trailing" constant="16" id="JcY-Gh-6Ot"/>
                             <constraint firstItem="vob-N6-164" firstAttribute="height" secondItem="RLF-1X-uCU" secondAttribute="height" multiplier="1/2" id="OLl-4s-QAq"/>
+                            <constraint firstItem="j5B-Vz-bfp" firstAttribute="centerX" secondItem="RLF-1X-uCU" secondAttribute="centerX" id="VUk-nA-M13"/>
                             <constraint firstItem="vob-N6-164" firstAttribute="leading" secondItem="RLF-1X-uCU" secondAttribute="leading" constant="16" id="dy3-oC-sc5"/>
                             <constraint firstItem="vob-N6-164" firstAttribute="top" secondItem="abP-9F-sej" secondAttribute="top" constant="8" id="jgF-wb-ksF"/>
+                            <constraint firstItem="j5B-Vz-bfp" firstAttribute="top" secondItem="vob-N6-164" secondAttribute="bottom" constant="8" id="r3M-pa-TcG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="abP-9F-sej"/>
                     </view>
@@ -131,6 +140,7 @@
                         <outlet property="addPosterImageButton" destination="N2d-fR-9se" id="0zY-Xb-Y0Y"/>
                         <outlet property="experienceImage" destination="PhU-S9-r7s" id="R7r-Er-lGQ"/>
                         <outlet property="experienceTitle" destination="f4i-c8-PID" id="D66-cR-vvC"/>
+                        <outlet property="playAudioButton" destination="j5B-Vz-bfp" id="llb-1s-nuS"/>
                         <outlet property="recordAudioButton" destination="Y2x-Fy-6Y9" id="3BR-ta-2v9"/>
                     </connections>
                 </viewController>
@@ -163,7 +173,34 @@
                     <view key="view" contentMode="scaleToFill" id="29z-9s-cB2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CHA-7I-e4W" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="116" width="375" height="551"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yaq-cN-suE">
+                                        <rect key="frame" x="162.5" y="471" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="yaq-cN-suE" secondAttribute="height" multiplier="1:1" id="1ZY-NW-N1y"/>
+                                            <constraint firstAttribute="width" constant="50" id="hkv-Kp-tt4"/>
+                                        </constraints>
+                                        <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" image="Record"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="yaq-cN-suE" secondAttribute="bottom" constant="30" id="2ep-6v-uhJ"/>
+                                    <constraint firstItem="yaq-cN-suE" firstAttribute="centerX" secondItem="CHA-7I-e4W" secondAttribute="centerX" id="y9U-tu-uXI"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="CHA-7I-e4W" firstAttribute="top" secondItem="CWq-7K-W1l" secondAttribute="top" id="4IM-Ky-0SQ"/>
+                            <constraint firstItem="CHA-7I-e4W" firstAttribute="leading" secondItem="CWq-7K-W1l" secondAttribute="leading" id="L5N-Rh-du9"/>
+                            <constraint firstItem="CHA-7I-e4W" firstAttribute="trailing" secondItem="CWq-7K-W1l" secondAttribute="trailing" id="Wgs-QG-0ff"/>
+                            <constraint firstItem="CHA-7I-e4W" firstAttribute="bottom" secondItem="CWq-7K-W1l" secondAttribute="bottom" id="ZWR-8m-rVa"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="CWq-7K-W1l"/>
                     </view>
                     <navigationItem key="navigationItem" title="Video Recording" id="NG0-Bc-eg0">
@@ -172,10 +209,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HjT-JN-lXa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3412" y="27"/>
+            <point key="canvasLocation" x="3412" y="26.53673163418291"/>
         </scene>
     </scenes>
     <resources>
+        <image name="Record" width="116" height="116"/>
         <image name="feedback" width="102.40000152587891" height="102.40000152587891"/>
     </resources>
 </document>
