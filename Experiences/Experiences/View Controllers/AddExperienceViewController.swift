@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import Photos
 
 class AddExperienceViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     
@@ -21,14 +22,18 @@ class AddExperienceViewController: UIViewController, AVAudioRecorderDelegate, AV
     var settings         = [String : Int]()
     
     var audioPlayer : AVAudioPlayer!
-   
+    
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
     
+    private let filter = CIFilter(name: "CIPhotoEffectChrome")!
+    private let context = CIContext(options: nil)
+    
+    // MARK: Setup
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         recordingSession = AVAudioSession.sharedInstance()
         do {
             try? recordingSession.setMode(.spokenAudio)
@@ -40,18 +45,80 @@ class AddExperienceViewController: UIViewController, AVAudioRecorderDelegate, AV
                     NSLog("Not allowed to record")
                 }
             }
-        
-        // Audio Settings
-        
-        settings = [
-            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-            AVSampleRateKey: 12000,
-            AVNumberOfChannelsKey: 1,
-            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-        ]    }
+            
+            // Audio Settings
+            
+            settings = [
+                AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+                AVSampleRateKey: 12000,
+                AVNumberOfChannelsKey: 1,
+                AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+            ]    }
     }
     
-     // MARK: Local Methods
+    // MARK: Local Methods
+    
+    
+    @IBAction func selectPhoto(_ sender: Any) {
+        
+        let authorizationStatus = PHPhotoLibrary.authorizationStatus()
+        
+        switch authorizationStatus {
+        case .authorized:
+            presentImagePickerController()
+        case .notDetermined:
+            
+            PHPhotoLibrary.requestAuthorization { (status) in
+                
+                guard status == .authorized else {
+                    NSLog("User did not authorize access to the photo library")
+                    self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
+                    return
+                }
+                
+                self.presentImagePickerController()
+            }
+            
+        case .denied:
+            self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
+        case .restricted:
+            self.presentInformationalAlertController(title: "Error", message: "Unable to access the photo library. Your device's restrictions do not allow access.")
+            
+        }
+        presentImagePickerController()
+        
+    }
+    
+    func applyChromeEffect(image: UIImage) -> UIImage? {
+        
+        guard let cgImage = image.cgImage else {return nil}
+        
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        
+        guard let outputCIImage = filter.outputImage else {return nil}
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else {return nil}
+        
+        let newImage = UIImage(cgImage: outputCGImage)
+        
+        return newImage
+        
+    }
+    
+    private func presentImagePickerController(){
+        
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            NSLog("No PL")
+            return
+        }
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
+        
+    }
     
     func directoryURL() -> URL? {
         let fileManager = FileManager.default
@@ -126,8 +193,6 @@ class AddExperienceViewController: UIViewController, AVAudioRecorderDelegate, AV
         print(player.debugDescription)
     }
     
-  
-    
     
     // MARK: - Navigation
     
@@ -148,15 +213,34 @@ class AddExperienceViewController: UIViewController, AVAudioRecorderDelegate, AV
             NSLog("VideoFilter need video capture access")
             return
         }
-    
+        
         
     }
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
     }
     
+    
+}
 
+extension AddExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        picker.dismiss(animated: true, completion: nil)
+        
+        let pickedImage = info[.originalImage] as? UIImage
+        let imageToShow = applyChromeEffect(image: pickedImage!)
+        
+        imageView.image = imageToShow
+        
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
 }
