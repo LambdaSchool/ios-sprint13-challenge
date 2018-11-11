@@ -83,19 +83,37 @@
                                             <constraint firstAttribute="height" constant="30" id="esq-Td-Lbl"/>
                                         </constraints>
                                         <state key="normal" title="Select Photo"/>
+                                        <connections>
+                                            <action selector="selectPhoto:" destination="g5h-GI-RqW" eventType="touchUpInside" id="oaP-vA-BGj"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lBS-fn-UzT">
-                                        <rect key="frame" x="134" y="340" width="91" height="20"/>
-                                        <state key="normal" title="Record Voice">
-                                            <color key="titleColor" red="0.85490196080000003" green="0.19301735950000001" blue="0.095578052519999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="IT1-Dc-943">
+                                        <rect key="frame" x="73.5" y="340" width="212" height="20"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lBS-fn-UzT">
+                                                <rect key="frame" x="0.0" y="0.0" width="91" height="20"/>
+                                                <state key="normal" title="Record Voice">
+                                                    <color key="titleColor" red="0.85490196080000003" green="0.19301735950000001" blue="0.095578052519999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="clickedAudioRecord:" destination="g5h-GI-RqW" eventType="touchUpInside" id="KdI-Da-7Tk"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r0i-EU-CtO">
+                                                <rect key="frame" x="141" y="0.0" width="71" height="20"/>
+                                                <state key="normal" title="Play Voice"/>
+                                                <connections>
+                                                    <action selector="doPlay:" destination="g5h-GI-RqW" eventType="touchUpInside" id="NHA-3i-mBd"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="tintColor" red="0.85490196080000003" green="0.19301735950000001" blue="0.095578052519999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </stackView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="giI-E8-3CF" secondAttribute="trailing" id="Tj8-9X-vIB"/>
                                     <constraint firstItem="giI-E8-3CF" firstAttribute="leading" secondItem="Wge-2Y-q8h" secondAttribute="leading" id="dQU-mu-xNV"/>
                                     <constraint firstItem="bFE-93-Idy" firstAttribute="leading" secondItem="giI-E8-3CF" secondAttribute="leading" id="dki-9N-PyM"/>
-                                    <constraint firstItem="lBS-fn-UzT" firstAttribute="top" secondItem="g2D-0d-A11" secondAttribute="bottom" constant="8" id="nfO-mu-YuW"/>
                                     <constraint firstItem="bFE-93-Idy" firstAttribute="top" secondItem="Wge-2Y-q8h" secondAttribute="top" constant="51" id="qMp-Gs-LNo"/>
                                 </constraints>
                             </stackView>
@@ -125,6 +143,12 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="imageView" destination="bFE-93-Idy" id="c6C-EO-eP6"/>
+                        <outlet property="playButton" destination="r0i-EU-CtO" id="aRU-dr-ebO"/>
+                        <outlet property="recordButton" destination="lBS-fn-UzT" id="bRl-s0-b7g"/>
+                        <outlet property="titleField" destination="GUI-wR-dmM" id="5gw-Rp-TTQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pen-2d-GzV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
