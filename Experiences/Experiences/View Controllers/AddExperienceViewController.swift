@@ -61,6 +61,30 @@ class AddExperienceViewController: UIViewController, AVAudioRecorderDelegate, AV
     
     @IBAction func selectPhoto(_ sender: Any) {
         
+        let alertController = UIAlertController(title: "From where would you like to get an image?", message: nil, preferredStyle: .actionSheet)
+        
+        let cameraAction = UIAlertAction(title: "Camera", style: .default) { (_) in
+            let imagePicker =  UIImagePickerController()
+            imagePicker.delegate = self
+            
+            imagePicker.sourceType = .camera
+            
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+        
+        let photoLibAction = UIAlertAction(title: "Photo Library", style: .default) { (_) in
+            self.photoLibChosen()
+        }
+        
+        alertController.addAction(cameraAction)
+        alertController.addAction(photoLibAction)
+        
+        present(alertController, animated: true, completion: nil)
+        
+    }
+    
+    private func photoLibChosen(){
+        
         let authorizationStatus = PHPhotoLibrary.authorizationStatus()
         
         switch authorizationStatus {
