@@ -107,8 +107,13 @@ class AddExperienceViewController: UIViewController, AVAudioRecorderDelegate, AV
             self.photoLibChosen()
         }
         
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
+            return
+        }
+        
         alertController.addAction(cameraAction)
         alertController.addAction(photoLibAction)
+        alertController.addAction(cancelAction)
         
         present(alertController, animated: true, completion: nil)
         

@@ -7,16 +7,26 @@
 //
 
 import UIKit
+import MapKit
 
-class MapViewController: UIViewController {
-    
-//    var experienceController: ExperienceController?
+class MapViewController: UIViewController, MKMapViewDelegate {
     
     let experienceController = ExperienceController()
 
+    @IBOutlet weak var mapView: MKMapView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        mapView.delegate = self
+        
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotationView")
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+         self.mapView.addAnnotations(experienceController.experiences)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -26,6 +36,18 @@ class MapViewController: UIViewController {
             destVC?.experienceController = experienceController
             
         }
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        guard let experience = annotation as? Experience else {return nil}
+        
+        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceAnnotationView", for: experience) as! MKMarkerAnnotationView
+
+        annotationView.glyphTintColor = .white
+        annotationView.glyphImage = UIImage(named: "ExperienceIcon")
+        
+        return annotationView
     }
 
 
