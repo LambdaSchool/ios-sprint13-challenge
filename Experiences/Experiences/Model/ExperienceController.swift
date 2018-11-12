@@ -8,18 +8,23 @@
 
 import Foundation
 import CoreLocation
+import UIKit
 
 class ExperienceController {
     
     //CRUD
     var experiences = [Experience]()
     
-    func createExperience (title: String, location: CLLocationCoordinate2D, imageURL: URL, videoURL: URL, soundURL: URL){
+    func createExperience (title: String, location: CLLocationCoordinate2D, image: UIImage, videoURL: URL?, soundURL: URL){
         
-        let experience = Experience(title: title, coordinate: location, imageURL: imageURL, videoURL: videoURL, soundURL: soundURL)
+        let experience = Experience(title: title, coordinate: location, image: image, videoURL: videoURL, soundURL: soundURL)
         
         experiences.append(experience)
         
+    }
+    
+    func addExperience(experience: Experience){
+        experiences.append(experience)
     }
     
     

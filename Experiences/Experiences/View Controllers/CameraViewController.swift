@@ -12,6 +12,28 @@ import Photos
 
 class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
+    // Properties
+    
+    var experienceController: ExperienceController?{
+        didSet{
+            NSLog("Final Experience Controller created")
+        }
+    }
+    var experience: Experience?
+    
+    //Local Methods
+    
+    
+    @IBAction func createExperience(_ sender: Any) {
+        
+        guard let experience = experience else {return}
+        
+        experienceController?.addExperience(experience: experience)
+        
+        navigationController?.popToRootViewController(animated: true)
+        
+    }
+    
     // MARK: AVCaptureFileOutputRecording methods
     
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {

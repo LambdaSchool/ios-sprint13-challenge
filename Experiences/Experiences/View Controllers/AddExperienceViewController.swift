@@ -9,19 +9,29 @@
 import UIKit
 import AVFoundation
 import Photos
+import CoreLocation
 
 class AddExperienceViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     
     // MARK: Properties
     
+    var experience: Experience?
+    var experienceController: ExperienceController?{
+        didSet{
+            NSLog("EC set")
+        }
+    }
+    var locationManager = CLLocationManager()
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleField: UITextField!
     
-    var recordingSession : AVAudioSession!
-    var audioRecorder    :AVAudioRecorder!
-    var settings         = [String : Int]()
+    var recordingSession: AVAudioSession!
+    var audioRecorder: AVAudioRecorder!
+    var storageURL: URL?
+    var settings = [String : Int]()
     
-    var audioPlayer : AVAudioPlayer!
+    var audioPlayer: AVAudioPlayer!
     
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
@@ -57,6 +67,27 @@ class AddExperienceViewController: UIViewController, AVAudioRecorderDelegate, AV
     }
     
     // MARK: Local Methods
+    
+    private func getUserLocation () -> CLLocationCoordinate2D {
+        
+        locationManager.requestWhenInUseAuthorization()
+        
+        var currentLocation: CLLocation?
+        
+        if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+            CLLocationManager.authorizationStatus() ==  .authorizedAlways){
+            
+            currentLocation = locationManager.location
+            
+        }
+        
+        guard let latitude = currentLocation?.coordinate.latitude,
+            let longitude = currentLocation?.coordinate.longitude else {return CLLocationCoordinate2D(latitude: 3.0312837232521039E-314, longitude: 2.1435884063071794E-314)}
+        
+        let curLocationCoordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        return curLocationCoordinate
+        
+    }
     
     
     @IBAction func selectPhoto(_ sender: Any) {
@@ -156,7 +187,8 @@ class AddExperienceViewController: UIViewController, AVAudioRecorderDelegate, AV
     func startRecording() {
         let audioSession = AVAudioSession.sharedInstance()
         do {
-            audioRecorder = try AVAudioRecorder(url: self.directoryURL()! as URL,
+            storageURL = directoryURL()!
+            audioRecorder = try AVAudioRecorder(url: storageURL!,
                                                 settings: settings)
             audioRecorder.delegate = self
             audioRecorder.prepareToRecord()
@@ -228,7 +260,8 @@ class AddExperienceViewController: UIViewController, AVAudioRecorderDelegate, AV
             performSegue(withIdentifier: "ShowCamera", sender: nil)
         case .notDetermined:
             AVCaptureDevice.requestAccess(for: .video) { (granted) in
-                if granted { self.performSegue(withIdentifier: "ShowCamera", sender: nil)}
+                if granted {
+                    self.performSegue(withIdentifier: "ShowCamera", sender: nil)}
             }
         case .denied:
             NSLog("VideoFilter need video capture access")
@@ -243,8 +276,21 @@ class AddExperienceViewController: UIViewController, AVAudioRecorderDelegate, AV
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+
+        if segue.identifier == "ShowCamera" {
+            
+            let destVC = segue.destination as? CameraViewController
+            guard let title = self.titleField.text,
+                let image = self.imageView.image,
+                let soundURL = self.storageURL else {return}
+            
+            let location = self.getUserLocation()
+            
+            self.experience = Experience(title: title, coordinate: location, image: image, videoURL: nil, soundURL: soundURL)
+            destVC?.experience = experience
+            destVC?.experienceController = experienceController
+        }
+
     }
     
     
