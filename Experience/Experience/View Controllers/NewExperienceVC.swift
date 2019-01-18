@@ -36,22 +36,25 @@ class NewExperienceVC: UIViewController, UIImagePickerControllerDelegate, UINavi
     @IBAction func recordTapped(_ sender: Any) {
         let isRecording = recorder?.isRecording ?? false
         
-        // If already recording, stop the recording and return
+        // If already recording, stop the recording
         if isRecording {
             recorder?.stop()
-            return
+            
+            audioURL = recorder?.url
+        } else {
+            
+            // Otherwise, start a new recording
+            do {
+                let format = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 2)!
+                let recordingURL = newRecordingURL()
+                recorder = try AVAudioRecorder(url: recordingURL, format: format)
+                recorder?.delegate = self
+                recorder?.record()
+            } catch {
+                NSLog("Unable to start recording")
+            }
         }
         
-        // Otherwise, start a new recording
-        do {
-            let format = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 2)!
-            
-            recorder = try AVAudioRecorder(url: newRecordingURL(), format: format)
-            recorder?.delegate = self
-            recorder?.record()
-        } catch {
-            NSLog("Unable to start recording")
-        }
         updateViews()
     }
     
@@ -61,20 +64,22 @@ class NewExperienceVC: UIViewController, UIImagePickerControllerDelegate, UINavi
         // If already playing, pause the playback and then return
         if isPlaying {
             player?.pause()
-            return
+            
+        } else {
+            
+            // Past this point means we are playing a new URL
+            guard let url = audioURL else { return }
+            
+            do {
+                player = try AVAudioPlayer(contentsOf: url)
+                player?.delegate = self
+                player?.play()
+            } catch {
+                NSLog("Unable to start playing audio: \(error)")
+            }
         }
         
-        // Past this point means we are playing a new URL
         
-        guard let url = audioURL else { return }
-        
-        do {
-            player = try AVAudioPlayer(contentsOf: url)
-            player?.delegate = self
-            player?.play()
-        } catch {
-            NSLog("Unable to start playing audio: \(error)")
-        }
         updateViews()
     }
     
@@ -93,7 +98,7 @@ class NewExperienceVC: UIViewController, UIImagePickerControllerDelegate, UINavi
     
     func updateViews() {
         let isPlaying = player?.isPlaying ?? false
-        let playTitle = isPlaying ? "Pause" : "Play Recording"
+        let playTitle = isPlaying ? "Stop" : "Play Recording"
         playButton.setTitle(playTitle, for: .normal)
         
         let isRecording = recorder?.isRecording ?? false
@@ -159,7 +164,7 @@ class NewExperienceVC: UIViewController, UIImagePickerControllerDelegate, UINavi
         
         let filter = CIFilter(name: "CIColorControls")!
         filter.setValue(ciImage, forKey: "inputImage")
-        filter.setValue(150, forKey: "inputContrast")
+        filter.setValue(120, forKey: "inputContrast")
         
         guard let outputCIImage = filter.outputImage else { return image }
         
@@ -168,8 +173,6 @@ class NewExperienceVC: UIViewController, UIImagePickerControllerDelegate, UINavi
         return UIImage(cgImage: outputCGIImage)
         
     }
-    
-    
     
     
 

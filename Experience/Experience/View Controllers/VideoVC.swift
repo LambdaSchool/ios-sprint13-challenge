@@ -140,6 +140,7 @@ class VideoVC: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         DispatchQueue.main.async {
+            self.videoURL = outputFileURL
             self.updateViews()
         }
     }
