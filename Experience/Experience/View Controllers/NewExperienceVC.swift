@@ -124,16 +124,17 @@ class NewExperienceVC: UIViewController, UIImagePickerControllerDelegate, UINavi
         
         guard let chosenImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
+        let filteredImage = filterImage(image: chosenImage)
         
         do {
             self.imageURL = newImageURL()
-            try chosenImage.jpegData(compressionQuality: 1.0)?.write(to: imageURL!)
+            try filteredImage.jpegData(compressionQuality: 1.0)?.write(to: imageURL!)
             
         } catch {
             NSLog("Could not save image: \(error)")
         }
         
-        imageView.image = chosenImage
+        imageView.image = filteredImage
         picker.dismiss(animated: true, completion: nil)
     }
     
@@ -144,9 +145,28 @@ class NewExperienceVC: UIViewController, UIImagePickerControllerDelegate, UINavi
         let documentsDir = try! fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         
         // The UUID is the name of the file
-        let newRecordingURL = documentsDir.appendingPathComponent(UUID().uuidString).appendingPathExtension("jpeg")
+        let newImageURL = documentsDir.appendingPathComponent(UUID().uuidString).appendingPathExtension("jpeg")
         
-        return newRecordingURL
+        return newImageURL
+    }
+    
+    func filterImage(image: UIImage) -> UIImage{
+        
+        guard let cgImage = image.cgImage else { return image}
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        let context = CIContext(options: nil)
+        
+        let filter = CIFilter(name: "CIColorControls")!
+        filter.setValue(ciImage, forKey: "inputImage")
+        filter.setValue(150, forKey: "inputContrast")
+        
+        guard let outputCIImage = filter.outputImage else { return image }
+        
+        guard let outputCGIImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
+        
+        return UIImage(cgImage: outputCGIImage)
+        
     }
     
     
