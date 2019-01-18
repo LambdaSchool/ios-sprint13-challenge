@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--MapVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Experience" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MapVC" customModule="Experience" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -38,6 +38,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="4Fe-AK-dCL" id="JWy-RV-PTG"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -46,7 +49,7 @@
         <!--Your Experience-->
         <scene sceneID="o4k-2I-ewZ">
             <objects>
-                <viewController id="kMk-SS-Hcj" sceneMemberID="viewController">
+                <viewController id="kMk-SS-Hcj" customClass="NewExperienceVC" customModule="Experience" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="x3t-XK-JWf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -69,6 +72,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I7H-PJ-zUZ">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="275"/>
                                         <state key="normal" title="Choose Photo"/>
+                                        <connections>
+                                            <action selector="chosePhotoTapped:" destination="kMk-SS-Hcj" eventType="touchUpInside" id="sJi-zx-AWV"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -86,10 +92,16 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cyV-Sk-Aad">
                                 <rect key="frame" x="118" y="437" width="139" height="30"/>
                                 <state key="normal" title="Record Voice Memo"/>
+                                <connections>
+                                    <action selector="recordTapped:" destination="kMk-SS-Hcj" eventType="touchUpInside" id="qC8-UR-9Xw"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vCb-n1-QiU">
                                 <rect key="frame" x="136" y="475" width="103" height="30"/>
                                 <state key="normal" title="Play Recording"/>
+                                <connections>
+                                    <action selector="playTapped:" destination="kMk-SS-Hcj" eventType="touchUpInside" id="W2G-Lt-gQT"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -116,6 +128,13 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="choosePhotoButton" destination="I7H-PJ-zUZ" id="RGF-Mp-ZTB"/>
+                        <outlet property="imageView" destination="1ts-g1-t6d" id="7r6-Ih-Ewi"/>
+                        <outlet property="playButton" destination="vCb-n1-QiU" id="4hR-kE-OhJ"/>
+                        <outlet property="recordButton" destination="cyV-Sk-Aad" id="ezW-aU-Ciy"/>
+                        <outlet property="titleTextField" destination="bc8-RA-4Rj" id="JPO-0b-bAQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3l1-jo-Lkw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -124,7 +143,7 @@
         <!--Title-->
         <scene sceneID="aua-ya-F2l">
             <objects>
-                <viewController id="ZXN-bE-ena" sceneMemberID="viewController">
+                <viewController id="ZXN-bE-ena" customClass="VideoVC" customModule="Experience" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mV9-hx-ae7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -132,8 +151,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="duX-g4-Nba">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ckX-UR-faJ">
-                                        <rect key="frame" x="150" y="478" width="75" height="75"/>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ckX-UR-faJ">
+                                        <rect key="frame" x="150" y="477" width="75" height="75"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="75" id="3kQ-yC-GXG"/>
                                             <constraint firstAttribute="height" constant="75" id="P8l-Lu-dkA"/>
@@ -159,8 +178,15 @@
                         <viewLayoutGuide key="safeArea" id="Eut-ub-z3N"/>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="j2r-oJ-TtU">
-                        <barButtonItem key="rightBarButtonItem" title="Done" id="Fyi-xF-KNT"/>
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="Fyi-xF-KNT">
+                            <connections>
+                                <action selector="donButtonTapped:" destination="ZXN-bE-ena" id="Wxc-Ll-Kf1"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="recordButton" destination="ckX-UR-faJ" id="7kY-1k-Qjo"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gTN-Cg-2zH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
