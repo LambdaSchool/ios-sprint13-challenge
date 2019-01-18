@@ -9,7 +9,7 @@
 import UIKit
 import AVKit
 
-class VideoVC: UIViewController {
+class VideoVC: UIViewController, AVCaptureFileOutputRecordingDelegate {
 
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var previewView: CameraPreviewView!
@@ -52,6 +52,11 @@ class VideoVC: UIViewController {
     
     @IBAction func recordButtonTapped(_ sender: Any) {
         
+        if recordOutput.isRecording {
+            recordOutput.stopRecording()
+        } else {
+            recordOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
+        }
         
     }
     
@@ -102,6 +107,32 @@ class VideoVC: UIViewController {
         } else {
             // This should only run on simulator or device without camera
             fatalError("Missing camera")
+        }
+    }
+    
+    func newRecordingURL() -> URL {
+        
+        let fileManager = FileManager.default
+        let documentsDir = try! fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        
+        // The UUID is the name of the file
+        let newRecordingURL = documentsDir.appendingPathComponent(UUID().uuidString).appendingPathExtension("caf")
+        
+        return newRecordingURL
+    }
+    
+    
+    // MARK: AVCapture Delegate
+    
+    func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
+        DispatchQueue.main.async {
+            self.updateViews()
+        }
+    }
+    
+    func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+        DispatchQueue.main.async {
+            self.updateViews()
         }
     }
     
