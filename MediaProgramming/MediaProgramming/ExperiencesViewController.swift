@@ -8,7 +8,7 @@
 import Photos
 import MapKit
 import UIKit
-
+import CoreImage
 
 class ExperiencesViewController: UIViewController,UITextFieldDelegate {
 
@@ -20,6 +20,11 @@ class ExperiencesViewController: UIViewController,UITextFieldDelegate {
     private var recorder: AVAudioRecorder?
     var experiencesController: ExperiencesController?
     var coordinate: CLLocationCoordinate2D?
+    
+    private let imageFilter = CIFilter(name: "CIPhotoEffectFade")!
+    private let context = CIContext(options: nil)
+
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +53,28 @@ class ExperiencesViewController: UIViewController,UITextFieldDelegate {
         }
     }
     
+    func applyFilter(){
+        guard let originalImage = imageData,
+            let cgImage = originalImage.cgImage  else {return}
+        
+        let ciImage = CIImage(cgImage: cgImage)
+        imageFilter.setValue(ciImage, forKey: "inputImage")
+        
+        guard let outputCIimage = imageFilter.outputImage,
+            let outputCGImage = context.createCGImage(outputCIimage, from: outputCIimage.extent) else {return}
+        let finalOutput = UIImage(cgImage: outputCGImage)
+        imageView.image = finalOutput
+        
+    }
+    
+    private var imageData: UIImage?{
+        didSet{
+            applyFilter()
+        }
+    }
+    
+    
+    
     private func newRecordingURL() -> URL {
         let fm = FileManager.default
         let documentsDir = try! fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
@@ -71,16 +98,16 @@ class ExperiencesViewController: UIViewController,UITextFieldDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "VideoRecordSegue" {
+        if segue.identifier == "showVideo" {
             guard let url = recorder?.url,
-                let imageData = imageView.image?.jpegData(compressionQuality: 0.1),
+                let imageData = imageView.image,
                 let coordinate = self.coordinate else { return }
             
             if let vc = segue.destination as? VideoViewController {
                 vc.audioURL = url
                 vc.image = imageData
-                vc.experience = titleText.text
-                vc.experienceController = experiencesController
+                vc.title = titleText.text
+                vc.experiencesController = experiencesController
                 vc.coordinate = coordinate
             }
         }
@@ -149,6 +176,11 @@ extension ExperiencesViewController: UIImagePickerControllerDelegate, UINavigati
         }
         presentImagePickerController()
     }
+
+
+   
+    
+    
 }
 
 

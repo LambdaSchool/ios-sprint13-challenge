@@ -8,6 +8,7 @@
 import AVFoundation
 import Photos
 import UIKit
+import CoreImage
 
 class VideoViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
 
@@ -18,12 +19,12 @@ class VideoViewController: UIViewController, AVCaptureFileOutputRecordingDelegat
     }
     
     @IBAction func saveVideo(_ sender: Any) {
-        guard let experienceTitle = experience,
+        guard let experienceTitle = experienceTitle,
             let audioURL = audioURL,
             let videoURL = videoURL,
-            let imageData = image,
+            let image = image,
             let coordinate = coordinate else { return }
-        experienceController?.makingExperiences(coordinate: coordinate, title: experienceTitle, image: imageData, audioURL: audioURL, videoURL: videoURL)
+        experiencesController?.makingExperiences(coordinate: coordinate, title: experienceTitle, image: image, audioURL: audioURL, videoURL: videoURL)
         self.navigationController?.popToRootViewController(animated: true)
         
     }
@@ -44,15 +45,16 @@ class VideoViewController: UIViewController, AVCaptureFileOutputRecordingDelegat
     @IBOutlet weak var videoView: CameraPreviewView!
     
 
-    var experienceController: ExperiencesController?
+    var experiencesController: ExperiencesController?
     private var captureSession: AVCaptureSession!
     private var recordOutput: AVCaptureMovieFileOutput!
-   var image: Data?
-    var experience: String?
+   var image: UIImage?
+    var experienceTitle: String?
     var audioURL: URL?
     var coordinate: CLLocationCoordinate2D?
     var videoURL: URL?
-    
+    private let imageFilter = CIFilter(name: "CIPhotoEffectFade")!
+    private let context = CIContext(options: nil)
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -126,7 +128,7 @@ class VideoViewController: UIViewController, AVCaptureFileOutputRecordingDelegat
         } else if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
             return device
         } else {
-            fatalError("Missing back camera device")
+            fatalError("Missing expected back camera device")
         }
     }
     
