@@ -38,9 +38,22 @@ class ExperienceMapViewController: UIViewController, MKMapViewDelegate {
         
         let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceAnnotationView", for: experience) as! MKMarkerAnnotationView
         
-        annotationView.glyphText = "E"
-        
         return annotationView
+    }
+    
+    
+    // MARK:- Navigation
+    
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {}
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard let navVC = segue.destination as? NavigationController,
+              let vc = navVC.viewControllers.first as? NewExperienceViewController else { return }
+        
+        vc.experienceController = experienceController
+        vc.coordinate = mapView.userLocation.coordinate
+        vc.mapView = mapView
     }
 
 }
