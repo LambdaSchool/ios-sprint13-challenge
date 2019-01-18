@@ -1,28 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kyo-0r-rkR">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Experience Map View Controller-->
-        <scene sceneID="tne-QT-ifu">
+        <!--Navigation Controller-->
+        <scene sceneID="6vs-FJ-RFC">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ExperienceMapViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                <navigationController id="kyo-0r-rkR" customClass="NavigationController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="jUy-K9-GSh">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" name="Theme"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="tjG-tH-s9B" kind="relationship" relationship="rootViewController" id="ddV-VW-EfQ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sUC-c9-j4t" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-694" y="288"/>
+        </scene>
+        <!--Experiences-->
+        <scene sceneID="Oc4-eH-9Lm">
+            <objects>
+                <viewController id="tjG-tH-s9B" customClass="ExperienceMapViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TTI-dz-H6p">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ONI-e9-cGL">
+                                <rect key="frame" x="0.0" y="116" width="375" height="551"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ONI-e9-cGL" firstAttribute="trailing" secondItem="TTI-dz-H6p" secondAttribute="trailing" id="5Dh-op-eg7"/>
+                            <constraint firstItem="ONI-e9-cGL" firstAttribute="top" secondItem="ooz-Tz-lVI" secondAttribute="top" id="5k7-rt-qeE"/>
+                            <constraint firstItem="ONI-e9-cGL" firstAttribute="leading" secondItem="TTI-dz-H6p" secondAttribute="leading" id="nIb-ZM-q4G"/>
+                            <constraint firstItem="ONI-e9-cGL" firstAttribute="bottom" secondItem="TTI-dz-H6p" secondAttribute="bottom" id="q06-s2-alr"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ooz-Tz-lVI"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Experiences" id="uuY-lo-bEE">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="2d1-lp-MLj"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="ONI-e9-cGL" id="eXX-Dq-ZZF"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ilm-YH-jFl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="144.80000000000001" y="288.30584707646182"/>
         </scene>
     </scenes>
+    <resources>
+        <namedColor name="Theme">
+            <color red="0.16470588235294117" green="0.5725490196078431" blue="0.1803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>
