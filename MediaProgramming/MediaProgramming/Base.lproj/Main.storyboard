@@ -28,8 +28,10 @@
                                     <constraint firstAttribute="height" constant="64" id="64P-Hs-oy0"/>
                                     <constraint firstAttribute="width" constant="50" id="llP-ca-TEw"/>
                                 </constraints>
-                                <state key="normal" title="Button" image="notepad-button.jpg" backgroundImage="notepad-button.jpg"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="42"/>
+                                <state key="normal" title="📝"/>
                                 <connections>
+                                    <action selector="experiencesButton:" destination="87u-hn-CFm" eventType="touchUpInside" id="P69-Zh-V64"/>
                                     <segue destination="A40-oj-pZh" kind="show" identifier="showExperience" id="knx-6r-cUp"/>
                                 </connections>
                             </button>
@@ -46,6 +48,9 @@
                         <viewLayoutGuide key="safeArea" id="9vc-JI-mig"/>
                     </view>
                     <navigationItem key="navigationItem" id="iTX-Ux-fLs"/>
+                    <connections>
+                        <outlet property="mapView" destination="tXH-vy-Tie" id="0UA-ru-t4x"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="exa-Jo-wyD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -127,7 +132,7 @@
                     <navigationItem key="navigationItem" title="New Experience" id="PyO-It-Puq">
                         <barButtonItem key="rightBarButtonItem" title="Next" id="Kbs-HT-yHY">
                             <connections>
-                                <segue destination="ucg-n1-Qj8" kind="show" id="MA0-Wu-TI3"/>
+                                <segue destination="ucg-n1-Qj8" kind="show" identifier="showVideo" id="MA0-Wu-TI3"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -219,6 +224,5 @@
     </scenes>
     <resources>
         <image name="Record" width="116" height="116"/>
-        <image name="notepad-button.jpg" width="180" height="217"/>
     </resources>
 </document>
