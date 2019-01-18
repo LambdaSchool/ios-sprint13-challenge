@@ -22,9 +22,9 @@ class VideoViewController: UIViewController, AVCaptureFileOutputRecordingDelegat
         guard let experienceTitle = experienceTitle,
             let audioURL = audioURL,
             let videoURL = videoURL,
-            let image = image,
+            let imageData = imageData,
             let coordinate = coordinate else { return }
-        experiencesController?.makingExperiences(coordinate: coordinate, title: experienceTitle, image: image, audioURL: audioURL, videoURL: videoURL)
+        experiencesController?.makingExperiences(coordinate: coordinate, title: experienceTitle, image : imageData, audioURL: audioURL, videoURL: videoURL)
         self.navigationController?.popToRootViewController(animated: true)
         
     }
@@ -48,14 +48,12 @@ class VideoViewController: UIViewController, AVCaptureFileOutputRecordingDelegat
     var experiencesController: ExperiencesController?
     private var captureSession: AVCaptureSession!
     private var recordOutput: AVCaptureMovieFileOutput!
-   var image: UIImage?
+  
     var experienceTitle: String?
     var audioURL: URL?
     var coordinate: CLLocationCoordinate2D?
     var videoURL: URL?
-    private let imageFilter = CIFilter(name: "CIPhotoEffectFade")!
-    private let context = CIContext(options: nil)
-    
+    var imageData: UIImage?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

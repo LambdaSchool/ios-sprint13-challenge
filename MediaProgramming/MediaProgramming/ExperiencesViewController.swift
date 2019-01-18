@@ -21,7 +21,6 @@ class ExperiencesViewController: UIViewController,UITextFieldDelegate {
     var experiencesController: ExperiencesController?
     var coordinate: CLLocationCoordinate2D?
     
-    private let imageFilter = CIFilter(name: "CIPhotoEffectFade")!
     private let context = CIContext(options: nil)
 
     
@@ -53,25 +52,25 @@ class ExperiencesViewController: UIViewController,UITextFieldDelegate {
         }
     }
     
-    func applyFilter(){
-        guard let originalImage = imageData,
-            let cgImage = originalImage.cgImage  else {return}
-        
+    func makeBlackWhite(img: UIImage) -> UIImage? {
+        guard  let cgImage = img.cgImage  else {return nil}
+        let imageFilter = CIFilter(name: "CIPhotoEffectNoir")!
+
         let ciImage = CIImage(cgImage: cgImage)
         imageFilter.setValue(ciImage, forKey: "inputImage")
         
         guard let outputCIimage = imageFilter.outputImage,
-            let outputCGImage = context.createCGImage(outputCIimage, from: outputCIimage.extent) else {return}
-        let finalOutput = UIImage(cgImage: outputCGImage)
-        imageView.image = finalOutput
+            let outputCGImage = context.createCGImage(outputCIimage, from: outputCIimage.extent) else {return nil}
+        return UIImage(cgImage: outputCGImage)
         
     }
     
-    private var imageData: UIImage?{
-        didSet{
-            applyFilter()
-        }
-    }
+//    private var imageData: UIImage?{
+//        didSet{
+//
+//            applyFilter()
+//        }
+//    }
     
     
     
@@ -105,7 +104,7 @@ class ExperiencesViewController: UIViewController,UITextFieldDelegate {
             
             if let vc = segue.destination as? VideoViewController {
                 vc.audioURL = url
-                vc.image = imageData
+                vc.imageData = imageData
                 vc.title = titleText.text
                 vc.experiencesController = experiencesController
                 vc.coordinate = coordinate
@@ -118,9 +117,9 @@ extension ExperiencesViewController: UIImagePickerControllerDelegate, UINavigati
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         addImageButton.setTitle("", for: [])
         picker.dismiss(animated: true, completion: nil)
-        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
+        guard let imageData = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
-        imageView?.image = image
+        imageView?.image = makeBlackWhite(img: imageData)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
