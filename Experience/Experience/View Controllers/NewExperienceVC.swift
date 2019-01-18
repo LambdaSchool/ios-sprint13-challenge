@@ -45,7 +45,7 @@ class NewExperienceVC: UIViewController, UIImagePickerControllerDelegate, UINavi
             
             // Otherwise, start a new recording
             do {
-                let format = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 2)!
+                let format = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 1)!
                 let recordingURL = newRecordingURL()
                 recorder = try AVAudioRecorder(url: recordingURL, format: format)
                 recorder?.delegate = self
