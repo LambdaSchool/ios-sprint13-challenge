@@ -10,7 +10,7 @@ import Photos
 import UIKit
 import CoreImage
 
-class VideoViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
+class VideoViewController: UIViewController, AVCaptureFileOutputRecordingDelegate,UINavigationControllerDelegate, CLLocationManagerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
