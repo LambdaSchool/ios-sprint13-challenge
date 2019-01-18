@@ -47,6 +47,14 @@ class VideoVC: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
     @IBAction func donButtonTapped(_ sender: Any) {
         
+        // TODO: Make stuff optional
+        guard let imageURL = imageURL, let audioURL = audioURL, let experienceTitle = experienceTitle, let videoURL = videoURL, let location = LocationHelper.shared.currentLocation else { return }
+        
+        
+        
+        experienceCont.newExperience(title: experienceTitle, imageURL: imageURL, audioURL: audioURL, videoURL: videoURL, locationCoordinate: location.coordinate)
+        
+        navigationController?.popToRootViewController(animated: true)
         
     }
     
