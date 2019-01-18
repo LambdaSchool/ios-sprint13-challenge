@@ -26,6 +26,23 @@ class VideoVC: UIViewController {
     var recordOutput: AVCaptureMovieFileOutput!
     var captureSession: AVCaptureSession!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupVideoCapture()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        captureSession.startRunning()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        captureSession.stopRunning()
+    }
     
     
     @IBAction func donButtonTapped(_ sender: Any) {
@@ -34,6 +51,14 @@ class VideoVC: UIViewController {
     }
     
     @IBAction func recordButtonTapped(_ sender: Any) {
+        
+        
+    }
+    
+    
+    func updateViews() {
+        let recordButtonTitle = recordOutput.isRecording ? "Stop" : "Record"
+        recordButton.setImage(UIImage(named: recordButtonTitle)!, for: .normal)
     }
     
     func setupVideoCapture() {
