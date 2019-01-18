@@ -43,7 +43,7 @@ class NewExperienceVC: UIViewController, UIImagePickerControllerDelegate, UINavi
             audioURL = recorder?.url
         } else {
             
-            // Otherwise, start a new recording
+            // Otherwise, start a new recording with a randomURL within documents
             do {
                 let format = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 1)!
                 let recordingURL = newRecordingURL()
@@ -55,6 +55,7 @@ class NewExperienceVC: UIViewController, UIImagePickerControllerDelegate, UINavi
             }
         }
         
+        // Updates the button
         updateViews()
     }
     
@@ -78,7 +79,6 @@ class NewExperienceVC: UIViewController, UIImagePickerControllerDelegate, UINavi
                 NSLog("Unable to start playing audio: \(error)")
             }
         }
-        
         
         updateViews()
     }
@@ -107,6 +107,7 @@ class NewExperienceVC: UIViewController, UIImagePickerControllerDelegate, UINavi
     }
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        // Don't need to do anything here, since we update everything when user clicks "stop recording"
         updateViews()
     }
     
@@ -125,12 +126,14 @@ class NewExperienceVC: UIViewController, UIImagePickerControllerDelegate, UINavi
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
+        // Hides the "Choose Photo" button
         choosePhotoButton.setTitle("", for: .normal)
         
         guard let chosenImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
         let filteredImage = filterImage(image: chosenImage)
         
+        // Saves image to a new url in documents
         do {
             self.imageURL = newImageURL()
             try filteredImage.jpegData(compressionQuality: 1.0)?.write(to: imageURL!)
@@ -138,6 +141,7 @@ class NewExperienceVC: UIViewController, UIImagePickerControllerDelegate, UINavi
         } catch {
             NSLog("Could not save image: \(error)")
         }
+        
         
         imageView.image = filteredImage
         picker.dismiss(animated: true, completion: nil)

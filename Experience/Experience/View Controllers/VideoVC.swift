@@ -76,6 +76,7 @@ class VideoVC: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
     func setupVideoCapture() {
         
+        // Add inputs
         let captureSession = AVCaptureSession()
         let camera = bestCamera()
         
@@ -99,6 +100,7 @@ class VideoVC: UIViewController, AVCaptureFileOutputRecordingDelegate {
         captureSession.sessionPreset = .hd1920x1080
         captureSession.commitConfiguration()
         
+        // Preview Layer
         self.captureSession = captureSession
         previewView.videoPreviewLayer.session = captureSession
     }
@@ -144,15 +146,6 @@ class VideoVC: UIViewController, AVCaptureFileOutputRecordingDelegate {
             self.updateViews()
         }
     }
-    
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
