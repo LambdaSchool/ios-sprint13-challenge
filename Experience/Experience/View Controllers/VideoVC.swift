@@ -11,6 +11,9 @@ import UIKit
 class VideoVC: UIViewController {
 
     @IBOutlet weak var recordButton: UIButton!
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,6 +21,8 @@ class VideoVC: UIViewController {
     }
     
     @IBAction func donButtonTapped(_ sender: Any) {
+        
+        
     }
     
     /*
