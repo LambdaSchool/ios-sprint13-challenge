@@ -152,14 +152,17 @@ class NewExperienceVC: UIViewController, UIImagePickerControllerDelegate, UINavi
     
     
     
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "toVideo" {
+            let dest = segue.destination as! VideoVC
+            
+            dest.audioURL = audioURL
+            dest.imageURL = imageURL
+            dest.experienceCont = experienceCont
+            dest.experienceTitle = titleTextField.text
+        }
     }
-    */
+ 
 
 }

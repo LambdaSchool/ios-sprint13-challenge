@@ -12,6 +12,11 @@ class VideoVC: UIViewController {
 
     @IBOutlet weak var recordButton: UIButton!
     
+    var imageURL: URL?
+    var audioURL: URL?
+    var experienceTitle: String!
+    var experienceCont: ExperienceController!
+    
     
     
     override func viewDidLoad() {
