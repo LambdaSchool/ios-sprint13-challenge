@@ -105,7 +105,7 @@ class ExperiencesViewController: UIViewController,UITextFieldDelegate {
             if let vc = segue.destination as? VideoViewController {
                 vc.audioURL = url
                 vc.imageData = imageData
-                vc.title = titleText.text
+                vc.experienceTitle = titleText.text
                 vc.experiencesController = experiencesController
                 vc.coordinate = coordinate
             }
