@@ -16,6 +16,7 @@ class ExperienceController {
     func createExperience(title: String, audioURL: URL, videoURL: URL, imageURL: URL, geotag: CLLocationCoordinate2D? = nil ) {
         let newExperience = Experience(title: title, audioURL: audioURL, videoURL: videoURL, imageURL: imageURL, geotag: geotag)
         experiences.append(newExperience)
+        NotificationCenter.default.post(name: .newExperienceNotification, object: self)
     }
     
     func experiencesWithAnnotations() -> Set<Experience> {
@@ -23,4 +24,8 @@ class ExperienceController {
         return Set(geotagged)
     }
     
+}
+
+extension Notification.Name {
+    static let newExperienceNotification = Notification.Name(rawValue: "NewExperienceNotification")
 }

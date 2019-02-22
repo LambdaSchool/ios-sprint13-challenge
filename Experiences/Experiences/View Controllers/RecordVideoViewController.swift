@@ -9,6 +9,10 @@
 import UIKit
 import AVFoundation
 
+protocol RecordVideoViewControllerDelegate: class {
+    func recordVideoController(_ recordVideoController: RecordVideoViewController, didPostRecordingAt url: URL)
+}
+
 class RecordVideoViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
 
     // MARK: - Properties
@@ -16,6 +20,8 @@ class RecordVideoViewController: UIViewController, AVCaptureFileOutputRecordingD
     private let fileOutput = AVCaptureMovieFileOutput()
     private var currentURL: URL?
     private var playerView: VideoPlayerView?
+    
+    weak var delegate: RecordVideoViewControllerDelegate?
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var recordButton: UIButton!
@@ -54,6 +60,13 @@ class RecordVideoViewController: UIViewController, AVCaptureFileOutputRecordingD
             fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
         }
     }
+    
+    @IBAction func postExperience(_ sender: Any) {
+        if let currentURL = currentURL {
+            delegate?.recordVideoController(self, didPostRecordingAt: currentURL)
+        }
+    }
+    
     
     // MARK: - AV Capture File Output Recording Delegate
     func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {

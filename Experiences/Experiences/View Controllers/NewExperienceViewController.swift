@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewExperienceViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate, AudioRecorderDelegate, AudioPlayerDelegate {
+class NewExperienceViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate, AudioRecorderDelegate, AudioPlayerDelegate, RecordVideoViewControllerDelegate {
     
     // MARK: - Properties
     var experienceController: ExperienceController!
@@ -85,6 +85,12 @@ class NewExperienceViewController: UIViewController, UINavigationControllerDeleg
         updateButtons()
     }
     
+    // MARK: - RecordVideoViewController Delegate
+    func recordVideoController(_ recordVideoController: RecordVideoViewController, didPostRecordingAt url: URL) {
+        postExperience(with: url)
+        dismiss(animated: true)
+    }
+    
     // MARK: - UI Image Picker Controller Delegate
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
@@ -97,6 +103,13 @@ class NewExperienceViewController: UIViewController, UINavigationControllerDeleg
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
+    }
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destinationVC = segue.destination as? RecordVideoViewController {
+            destinationVC.delegate = self
+        }
     }
     
     // MARK: - Private Utility Methods
@@ -168,6 +181,29 @@ class NewExperienceViewController: UIViewController, UINavigationControllerDeleg
                 }
             }
         }
+    }
+    
+    private func newImageURL() -> URL {
+        let documentDir = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        
+        let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: [.withInternetDateTime])
+        let fileURL = documentDir.appendingPathComponent(name).appendingPathExtension("jpg")
+        return fileURL
+    }
+    
+    private func postExperience(with videoURL: URL) {
+        let imageURL = newImageURL()
+        guard let image = imageView.image, let imageData = image.jpegData(compressionQuality: 0.6) else { return }
+        
+        // TODO: Figure out a better way to handle this
+        try! imageData.write(to: imageURL)
+        
+        guard let title = titleTextField.text,
+            let audioURL = player.currentURL else { return }
+        
+        let geotag = LocationHelper.shared.currentLoction?.coordinate
+        
+        experienceController.createExperience(title: title, audioURL: audioURL, videoURL: videoURL, imageURL: imageURL, geotag: geotag)
     }
 
 }

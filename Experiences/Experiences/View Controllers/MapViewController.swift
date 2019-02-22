@@ -39,6 +39,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotationView")
         mapView.delegate = self
         fetchExperiences()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchExperiences), name: .newExperienceNotification, object: nil)
     }
     
     // MARK: - MK Map View Delegate
@@ -59,7 +61,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     // MARK: - Utility Methods
-    private func fetchExperiences() {
+    @objc private func fetchExperiences() {
         experiences = experienceController.experiencesWithAnnotations()
     }
 
