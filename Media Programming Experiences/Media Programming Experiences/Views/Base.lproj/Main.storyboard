@@ -53,7 +53,7 @@
         <!--Experience-->
         <scene sceneID="vJ3-hc-ehd">
             <objects>
-                <viewController id="5gF-5g-026" sceneMemberID="viewController">
+                <viewController id="5gF-5g-026" customClass="ExperienceViewController" customModule="Media_Programming_Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gn3-Qq-muZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -73,6 +73,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1e8-6M-wR8">
                                 <rect key="frame" x="9.5" y="163.5" width="356" height="356"/>
                                 <state key="normal" title="Add Poster Image"/>
+                                <connections>
+                                    <action selector="addPosterImageButtonTapped:" destination="5gF-5g-026" eventType="touchUpInside" id="brP-7a-He5"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="60Z-6Y-elO">
                                 <rect key="frame" x="163" y="526.5" width="49" height="30"/>
@@ -103,6 +106,10 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="addPosterImageButton" destination="1e8-6M-wR8" id="h5R-jF-KoP"/>
+                        <outlet property="imageView" destination="plu-YI-5y2" id="5lR-Qf-JUS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h52-Pe-fZt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -129,7 +136,7 @@
         <!--Video Recording-->
         <scene sceneID="Ufy-j9-zqU">
             <objects>
-                <viewController id="H3m-sN-MA5" sceneMemberID="viewController">
+                <viewController id="H3m-sN-MA5" customClass="VideoRecordingViewController" customModule="Media_Programming_Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1Rx-pd-Kfh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

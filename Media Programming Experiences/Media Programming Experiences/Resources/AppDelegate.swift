@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import AVFoundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,6 +18,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let session = AVAudioSession.sharedInstance()
+        session.requestRecordPermission { granted in
+            guard granted == true else {
+                NSLog("We need microphone access")
+                return
+            }
+            do {
+                try session.setCategory(.playAndRecord, mode: .default, options: [])
+                // tell the audio session which output we are going to be using
+                try session.overrideOutputAudioPort(.speaker)
+                // finally nee to say the session is now active...
+                try session.setActive(true, options: [])
+            } catch {
+                NSLog("Error setting up audio session: \(error)")
+            }
+        }
         return true
     }
 
