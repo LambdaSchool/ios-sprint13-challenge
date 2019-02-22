@@ -194,5 +194,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     private let captureSession = AVCaptureSession()
     private let fileOutput = AVCaptureMovieFileOutput()
     @IBOutlet weak var recordButton: UIButton!
+    var imageURL: URL?
+    var titleString: String?
+    var audioURL: URL?
+    var videoURL: URL?
     
 }
