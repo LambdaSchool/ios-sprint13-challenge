@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		AB6628B3222083D700153F2F /* ShiftableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6628B2222083D700153F2F /* ShiftableViewController.swift */; };
 		AB6628B92220871C00153F2F /* UIViewController+InformationalAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6628B82220871C00153F2F /* UIViewController+InformationalAlert.swift */; };
+		AB6628C02220A2B800153F2F /* MediaRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6628BE2220A2B800153F2F /* MediaRecorder.swift */; };
+		AB6628C12220A2B800153F2F /* MediaPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6628BF2220A2B800153F2F /* MediaPlayer.swift */; };
+		AB6628C42220A6CE00153F2F /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6628C32220A6CE00153F2F /* Cache.swift */; };
+		AB6628C62220ACC600153F2F /* dramatic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AB6628C52220ACC600153F2F /* dramatic.mp3 */; };
 		ABF508D9221FF0B300EA38FC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF508D8221FF0B300EA38FC /* AppDelegate.swift */; };
 		ABF508DB221FF0B300EA38FC /* ExperiencesMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF508DA221FF0B300EA38FC /* ExperiencesMapViewController.swift */; };
 		ABF508DE221FF0B300EA38FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABF508DC221FF0B300EA38FC /* Main.storyboard */; };
@@ -24,6 +28,10 @@
 /* Begin PBXFileReference section */
 		AB6628B2222083D700153F2F /* ShiftableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShiftableViewController.swift; sourceTree = "<group>"; };
 		AB6628B82220871C00153F2F /* UIViewController+InformationalAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+InformationalAlert.swift"; sourceTree = "<group>"; };
+		AB6628BE2220A2B800153F2F /* MediaRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaRecorder.swift; sourceTree = "<group>"; };
+		AB6628BF2220A2B800153F2F /* MediaPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaPlayer.swift; sourceTree = "<group>"; };
+		AB6628C32220A6CE00153F2F /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
+		AB6628C52220ACC600153F2F /* dramatic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dramatic.mp3; sourceTree = "<group>"; };
 		ABF508D5221FF0B300EA38FC /* Experiences.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Experiences.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF508D8221FF0B300EA38FC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ABF508DA221FF0B300EA38FC /* ExperiencesMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperiencesMapViewController.swift; sourceTree = "<group>"; };
@@ -55,8 +63,18 @@
 				ABF508EE221FF27700EA38FC /* Experience+Mapping.swift */,
 				AB6628B82220871C00153F2F /* UIViewController+InformationalAlert.swift */,
 				AB6628B2222083D700153F2F /* ShiftableViewController.swift */,
+				AB6628C32220A6CE00153F2F /* Cache.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		AB6628C22220A2BE00153F2F /* Audio+Video */ = {
+			isa = PBXGroup;
+			children = (
+				AB6628BF2220A2B800153F2F /* MediaPlayer.swift */,
+				AB6628BE2220A2B800153F2F /* MediaRecorder.swift */,
+			);
+			path = "Audio+Video";
 			sourceTree = "<group>";
 		};
 		ABF508CC221FF0B300EA38FC = {
@@ -78,7 +96,9 @@
 		ABF508D7221FF0B300EA38FC /* Experiences */ = {
 			isa = PBXGroup;
 			children = (
+				AB6628C52220ACC600153F2F /* dramatic.mp3 */,
 				ABF508D8221FF0B300EA38FC /* AppDelegate.swift */,
+				AB6628C22220A2BE00153F2F /* Audio+Video */,
 				AB6628B1222083B400153F2F /* Extensions */,
 				ABF508ED221FF23900EA38FC /* Model */,
 				ABF508EA221FF0F800EA38FC /* View Controllers */,
@@ -170,6 +190,7 @@
 				ABF508E3221FF0B400EA38FC /* LaunchScreen.storyboard in Resources */,
 				ABF508E0221FF0B400EA38FC /* Assets.xcassets in Resources */,
 				ABF508DE221FF0B300EA38FC /* Main.storyboard in Resources */,
+				AB6628C62220ACC600153F2F /* dramatic.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,12 +203,15 @@
 			files = (
 				ABF508F52220601600EA38FC /* VideoPreviewView.swift in Sources */,
 				AB6628B3222083D700153F2F /* ShiftableViewController.swift in Sources */,
+				AB6628C02220A2B800153F2F /* MediaRecorder.swift in Sources */,
 				ABF508EC221FF22D00EA38FC /* Experience.swift in Sources */,
 				ABF508F322205F9700EA38FC /* RecordVideoViewController.swift in Sources */,
 				ABF508DB221FF0B300EA38FC /* ExperiencesMapViewController.swift in Sources */,
 				AB6628B92220871C00153F2F /* UIViewController+InformationalAlert.swift in Sources */,
 				ABF508EF221FF27700EA38FC /* Experience+Mapping.swift in Sources */,
+				AB6628C12220A2B800153F2F /* MediaPlayer.swift in Sources */,
 				ABF508F122205D7F00EA38FC /* AddExperienceViewController.swift in Sources */,
+				AB6628C42220A6CE00153F2F /* Cache.swift in Sources */,
 				ABF508D9221FF0B300EA38FC /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -32,10 +32,45 @@ extension AddExperienceViewController: UIImagePickerControllerDelegate, UINaviga
     }
 }
 
+extension AddExperienceViewController: PlayerDelegate, RecorderDelegate {
+    func playerDidChangeState(_ player: Player) {
+        DispatchQueue.main.async {
+            self.updateViews()
+        }
+    }
+    
+    func recorderDidChangeState(_ recorder: Recorder) {
+        DispatchQueue.main.async {
+            self.updateViews()
+        }
+    }
+    
+
+    
+    private func updateViews() {
+        let isPlaying = player.isPlaying
+        audioPlayButton.setTitle(isPlaying ? "⏸" : "▶️", for: [])
+        
+        let isRecording = recorder.isRecording
+        recordAudioButton.setTitle(isRecording ? "⏹" : "⏺", for: [])
+        
+        let remainingTime = player.timeRemaining
+        let elapsedTime = player.elapsedTime
+        
+        elapsedTimeLabel.text = timeFormatter.string(from: elapsedTime)
+        remainingTimeLabel.text = timeFormatter.string(from: remainingTime)
+        
+        timeSlider.minimumValue = 0
+        timeSlider.maximumValue = Float(player.totalDuration)
+        timeSlider.value = Float(player.elapsedTime)
+    }
+    
+}
+
 class AddExperienceViewController: ShiftableViewController {
 
     @IBAction func nextButtonTapped(_ sender: Any) {
-        
+        performSegue(withIdentifier: "ShowCamera", sender: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,18 +83,40 @@ class AddExperienceViewController: ShiftableViewController {
         self.navigationController?.isNavigationBarHidden = false
         navigationController?.navigationBar.prefersLargeTitles = true
         // Do any additional setup after loading the view.
+        
+        player.delegate = self
+        recorder.delegate = self
+        let fontSize = UIFont.systemFontSize
+        let font = UIFont.monospacedDigitSystemFont(ofSize: fontSize, weight: .regular)
+        elapsedTimeLabel.font = font
+        remainingTimeLabel.font = font
+        
+        DispatchQueue.main.async {
+            self.updateViews()
+        }
     }
     
 
-    /*
-    // MARK: - Navigation
 
+    // MARK: - Navigation
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "ShowCamera" {
+            let destinationVC = segue.destination as? RecordVideoViewController
+            
+            // Pass the selected object to the new view controller.
+            guard let audioFile = try? AVAudioFile(forReading: recorder.currentFile!) else {
+                NSLog("error fetching audio memory")
+                return
+            }
+            destinationVC?.audioMemory = audioFile
+            destinationVC?.experienceImage = imageView.image
+            destinationVC?.experienceTitle = titleTextField.text
+        }
     }
-    */
+ 
     
     //MARK: - IBOutlets
     @IBOutlet weak var imageView: UIImageView!
@@ -69,6 +126,9 @@ class AddExperienceViewController: ShiftableViewController {
     @IBOutlet weak var recordAudioButton: UIButton!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var audioPlayButton: UIButton!
+    @IBOutlet weak var remainingTimeLabel: UILabel!
+    @IBOutlet weak var elapsedTimeLabel: UILabel!
+    @IBOutlet weak var timeSlider: UISlider!
     
     //MARK: - IBActions
     
@@ -78,10 +138,14 @@ class AddExperienceViewController: ShiftableViewController {
     }
     @IBAction func recordAudioButtonTapped(_ sender: Any) {
         //FIXME: - Implement
+        print("recorderRecordButton tapped")
+        recorder.toggleRecording()
     }
     
     @IBAction func audioPlayButtonTapped(_ sender: Any) {
         //FIXME: - Implement
+        print("recorderPlayPauseButton tapped")
+        player.playPause(song: recorder.currentFile)
     }
     
     
@@ -115,6 +179,20 @@ class AddExperienceViewController: ShiftableViewController {
     }
     
     //MARK: - Properties
+    
+    //Audio+Video
+    private let player = Player()
+    private let recorder = Recorder()
+    
+    private lazy var timeFormatter: DateComponentsFormatter = {
+        let f = DateComponentsFormatter()
+        f.unitsStyle = .positional
+        f.zeroFormattingBehavior = .pad
+        f.allowedUnits = [.minute, .second]
+        return f
+    }()
+    
+    //Photo Filters
     private let context = CIContext(options: nil)
     private var appliedFilter: CIFilter = CIFilter(name: "CIPhotoEffectInstant")!
     private var originalImage: UIImage? {
@@ -126,6 +204,8 @@ class AddExperienceViewController: ShiftableViewController {
     }
     
     //MARK: - Private Methods
+    
+
     private func presentImagePickerController() {
         
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {

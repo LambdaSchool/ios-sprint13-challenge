@@ -110,6 +110,11 @@ class RecordVideoViewController: UIViewController, AVCaptureFileOutputRecordingD
     private let captureSession = AVCaptureSession()
     private let fileOutput = AVCaptureMovieFileOutput()
     
+    //Experience Data
+    var audioMemory: AVAudioFile?
+    var experienceImage: UIImage?
+    var experienceTitle: String?
+    
     // MARK: - Private methods
     
     private func bestCamera() -> AVCaptureDevice {
