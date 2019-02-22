@@ -7,17 +7,18 @@
 //
 
 import UIKit
+import AVKit
+import MobileCoreServices
 
 class EntryViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     //Properties
-    let photoPicker = UIImagePickerController()
+    let mediaPicker = UIImagePickerController()
     
     //Overrides
     override func viewDidLoad() {
-        photoPicker.delegate = self
-        photoPicker.sourceType = .photoLibrary
-        photoPicker.allowsEditing = true
+        mediaPicker.delegate = self
+        
     }
     
     //Outlets
@@ -29,12 +30,20 @@ class EntryViewController: UIViewController, UINavigationControllerDelegate, UII
     
     //Actions
     @IBAction func choosePhoto(_ sender: UIButton) {
+        mediaPicker.sourceType = .photoLibrary
+        mediaPicker.allowsEditing = false
         //Show the Photo Library so the user can pick a photo
-        present(photoPicker, animated: true, completion: nil)
+        present(mediaPicker, animated: true, completion: nil)
     }
     
     @IBAction func recordVideo(_ sender: UIButton) {
-        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) { //Check camera access
+        mediaPicker.sourceType = .camera
+        mediaPicker.allowsEditing = false
+        mediaPicker.mediaTypes = [kUTTypeMovie as String]
+        present(mediaPicker, animated: true, completion: nil)
+        } else { print("Camera unavailable") }
+
     }
     
     @IBAction func saveEntry(_ sender: UIBarButtonItem) {
@@ -45,7 +54,7 @@ class EntryViewController: UIViewController, UINavigationControllerDelegate, UII
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         //What happens once the user has selected an image. Lets you adjust the image.
-        if let selectedImage = info[UIImagePickerController.InfoKey.editedImage] {
+        if let selectedImage = info[UIImagePickerController.InfoKey.originalImage] {
             entryImage.image = selectedImage as? UIImage //Assign to entry image
         }
         
