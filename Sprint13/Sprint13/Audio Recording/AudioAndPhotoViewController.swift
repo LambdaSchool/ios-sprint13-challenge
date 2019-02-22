@@ -5,7 +5,7 @@ protocol AudioPostDelegate {
     func recordedFile(audio: URL)
 }
 
-class AudioAndPhotoViewController: UIViewController, PlayerDelegate, RecorderDelegate {
+class AudioAndPhotoViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, PlayerDelegate, RecorderDelegate {
    
     
     
@@ -18,24 +18,20 @@ class AudioAndPhotoViewController: UIViewController, PlayerDelegate, RecorderDel
     @IBAction func choosePhoto(_ sender: Any) {
         
         
-    }
-    
-   
-    @IBAction func next(_ sender: Any) {
-        
-        guard let audioURL = recorder.currentFile else { return }
-       
-        let data = try? Data(contentsOf: audioURL)
-    
-       
-        DispatchQueue.main.async {
-            self.dismiss(animated: true, completion: nil)
-            self.navigationController?.popViewController(animated: true)
+            guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+                print("The photo library is unavailable")
+                return
+            }
+            let picker = UIImagePickerController()
+            picker.delegate = self
+            picker.sourceType = .photoLibrary
+            present(picker, animated: true, completion: nil)
+            
         }
-    }
-    
+    private var originalImage: UIImage?
      let player = Player()
      let recorder = Recorder()
+     var curentRecordedAudioURl: URL?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,5 +67,24 @@ class AudioAndPhotoViewController: UIViewController, PlayerDelegate, RecorderDel
     }
     
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "Video" && textField.text != nil && imageView.image != nil{
+            guard let destination = segue.destination as? CameraViewController else { return }
+            destination.titleString = textField.text
+            destination.image = imageView.image
+            destination.curentRecordedAudioURL = recorder.currentFile
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        originalImage = info[.originalImage] as? UIImage
+        imageView.image = originalImage
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
 }
 

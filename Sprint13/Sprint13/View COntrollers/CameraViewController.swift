@@ -12,13 +12,18 @@ import Photos
 import AVKit
 
 
-class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
+class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptureFileOutputRecordingDelegate {
     
    
    
     var vidoeRecordedURL: URL?
     var player: AVPlayer?
+    var titleString: String?
+    var image: UIImage?
+    var curentRecordedAudioURL: URL?
+    let experienceController = ExperienceController.shared
     var audioController: AudioAndPhotoViewController?
+    
     
     @IBOutlet weak var record: UIButton!
     @IBOutlet weak var playVideo: UIButton!
@@ -33,6 +38,12 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
     }
     
+    
+    private lazy var locationManager: CLLocationManager = {
+        let result = CLLocationManager()
+        result.delegate = self
+        return result
+    }()
    
   
     
@@ -40,21 +51,25 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     @IBAction func saveButton(_ sender: Any) {
     
-        guard let videoURL = vidoeRecordedURL else { return }
-        
-        let data = try? Data(contentsOf: videoURL)
         
         
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        guard let title = titleString,
+            let image = image,
+            let audioURL = curentRecordedAudioURL,
+            let videoURL = vidoeRecordedURL,
+            let location = locationManager.location else { return }
+        locationManager.stopUpdatingLocation()
         
+        let coordinate = location.coordinate
         
+        experienceController.addExperience(title: title, image: image, audioURL: audioURL, videoURL: videoURL, coordinate: coordinate)
         
-        
-        DispatchQueue.main.async {
-            self.dismiss(animated: true, completion: nil)
-            self.navigationController?.popViewController(animated: true)
+        performSegue(withIdentifier: "backToMap", sender: nil)
         }
     
-    }
+    
     
     
     

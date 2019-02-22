@@ -52,13 +52,7 @@ class PhotoFilterViewController: UIViewController, UIImagePickerControllerDelega
         
     }
     
-    @IBAction func resetButton(_ sender: Any) {
-        
-        imageView.image = originalImage
-        configurationSlider(brightnessSliderOutlet, from: filter.attributes[kCIInputBrightnessKey])
-        configurationSlider(contrastSliderOutlet, from: filter.attributes[kCIInputContrastKey])
-        configurationSlider(saturationSliderOutlet, from: filter.attributes[kCIInputSaturationKey])
-    }
+   
     @IBAction func choosePhotoButton(_ sender: Any) {
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
             print("The photo library is unavailable")
@@ -71,10 +65,7 @@ class PhotoFilterViewController: UIViewController, UIImagePickerControllerDelega
         
     }
     
-    @IBAction func sliderChange(_ sender: Any) {
-        updateImageView()
-        
-    }
+   
     
     private func configurationSlider(_ slider: UISlider, from attributes: Any) {
         
