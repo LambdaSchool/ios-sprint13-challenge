@@ -102,7 +102,7 @@
                     <navigationItem key="navigationItem" title="Experience" id="kM2-ux-3ju">
                         <barButtonItem key="rightBarButtonItem" title="Next" id="bmi-i3-1GK">
                             <connections>
-                                <segue destination="H3m-sN-MA5" kind="show" id="gdR-tb-Tw4"/>
+                                <segue destination="NAa-F0-96H" kind="show" id="UGx-Y3-4Vk"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -143,7 +143,17 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7iC-eM-UZQ" customClass="CameraView" customModule="Media_Programming_Experiences" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="116" width="375" height="551"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="86C-jh-b7u">
+                                        <rect key="frame" x="163" y="501" width="49" height="30"/>
+                                        <state key="normal" title="Record"/>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" red="0.3761742347" green="1" blue="0.98990605089999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="86C-jh-b7u" firstAttribute="centerX" secondItem="7iC-eM-UZQ" secondAttribute="centerX" id="ZRe-hZ-gcw"/>
+                                    <constraint firstAttribute="bottom" secondItem="86C-jh-b7u" secondAttribute="bottom" constant="20" id="cyQ-PF-ZgD"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -160,10 +170,31 @@
                     <navigationItem key="navigationItem" title="Video Recording" id="fei-yg-036">
                         <barButtonItem key="rightBarButtonItem" title="Save" id="ahF-JB-6Qs"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="recordButton" destination="86C-jh-b7u" id="xTq-ei-2an"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L52-qI-bZg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3756" y="134"/>
+            <point key="canvasLocation" x="4521" y="134"/>
+        </scene>
+        <!--Permission View Controller-->
+        <scene sceneID="Wfv-qb-89x">
+            <objects>
+                <viewController id="NAa-F0-96H" customClass="PermissionViewController" customModule="Media_Programming_Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="V5g-XR-68O">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="FoI-FC-nr1"/>
+                    </view>
+                    <connections>
+                        <segue destination="H3m-sN-MA5" kind="show" identifier="ShowCamera" id="l1S-Rg-YhA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="V3b-gi-JJ1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3722" y="134"/>
         </scene>
     </scenes>
     <resources>
