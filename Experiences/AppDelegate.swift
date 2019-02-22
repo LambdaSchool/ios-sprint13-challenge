@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Photos
+import AVFoundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +18,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        //Device Permissions Authorization
+        let authorizationStatus = AVCaptureDevice.authorizationStatus(for: .video)
+        
+        switch authorizationStatus {
+            
+        case .notDetermined:
+            // we have not asked user yet
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                if granted == false {
+                    fatalError("Please don't do this in an actual app")
+                }
+                return
+            }
+            
+            AVCaptureDevice.requestAccess(for: .audio) { granted in
+                if granted == false {
+                    fatalError("Please don't do this in an actual app")
+                }
+                return
+            }
+            
+        case .restricted:
+            // parental controls prevent access to cameras
+            fatalError("Please have better scenario handling than this")
+            
+        case .denied:
+            // asked for permission and said NO
+            fatalError("Please have better scenario handling than this")
+        case .authorized:
+            // asked for permission and said YES
+            break
+        }
         return true
     }
 

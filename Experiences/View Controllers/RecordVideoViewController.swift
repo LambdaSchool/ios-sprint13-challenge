@@ -17,11 +17,13 @@ class RecordVideoViewController: UIViewController, AVCaptureFileOutputRecordingD
     private let fileOutput = AVCaptureMovieFileOutput()
     @IBOutlet weak var cameraView: CameraPreviewView!
     
+    @IBOutlet weak var recordButtonOuterCircleLabel: UILabel!
     @IBOutlet weak var recordButton: UIButton!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.isNavigationBarHidden = false
         // Set up capture session
         // MARK: - Camera Authorization
         
@@ -127,6 +129,6 @@ class RecordVideoViewController: UIViewController, AVCaptureFileOutputRecordingD
     
     private func updateViews() {
         let isRecording = fileOutput.isRecording
-        recordButton.setTitle(isRecording ? "Stop" : "Record", for: [])
+        recordButton.setTitle(isRecording ? "■" : "●", for: [])
     }
 }

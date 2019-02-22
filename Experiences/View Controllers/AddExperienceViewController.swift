@@ -7,9 +7,14 @@
 //
 
 import UIKit
+import AVFoundation
 
 class AddExperienceViewController: UIViewController {
 
+    @IBAction func nextButtonTapped(_ sender: Any) {
+        
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // Hide the navigation bar on the this view controller
@@ -31,5 +36,10 @@ class AddExperienceViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    //MARK: - Private Methods
+    private func showCamera() {
+        performSegue(withIdentifier: "ShowCamera", sender: self)
+    }
 
 }
