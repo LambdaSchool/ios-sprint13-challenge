@@ -191,8 +191,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         experienceController.createExperience(with: title, audioURL: audioURL, videoURL: videoURL, imageURL: imageURL, geotag: geotag)
         
-        navigationController?.popViewController(animated: true)
-        navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true) {
+            self.navigationController?.popViewController(animated: true)
+        }
         
     }
     
