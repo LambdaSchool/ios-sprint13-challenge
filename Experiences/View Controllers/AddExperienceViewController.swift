@@ -68,6 +68,7 @@ class AddExperienceViewController: ShiftableViewController {
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var recordAudioButton: UIButton!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
+    @IBOutlet weak var audioPlayButton: UIButton!
     
     //MARK: - IBActions
     
@@ -76,7 +77,13 @@ class AddExperienceViewController: ShiftableViewController {
             , completion: nil)
     }
     @IBAction func recordAudioButtonTapped(_ sender: Any) {
+        //FIXME: - Implement
     }
+    
+    @IBAction func audioPlayButtonTapped(_ sender: Any) {
+        //FIXME: - Implement
+    }
+    
     
     @IBAction func chooseImageButtonTapped(_ sender: Any) {
         
