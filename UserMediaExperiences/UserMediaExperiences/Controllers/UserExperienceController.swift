@@ -12,13 +12,13 @@ import MapKit
 class UserExperienceController {
     
     //MARK: Non-Private Properties
-    var userExperienceArray: [UserExperience]?
+    var userExperienceArray: [UserExperience] = []
     
     //MARK: Non-Private Methods
-    func addVideoExperience(userExperience: UserExperience, videoURL: URL) {
-        let userExperienceIndex = userExperienceArray?.firstIndex(of: userExperience)
-        userExperienceArray?[userExperienceIndex!].videoURL = videoURL
-    }
+//    func addVideoExperience(userExperience: UserExperience, videoURL: URL) {
+//        let userExperienceIndex = userExperienceArray?.firstIndex(of: userExperience)
+//        userExperienceArray?[userExperienceIndex!].videoURL = videoURL
+//    }
     func createUserExperience(coordinate: CLLocationCoordinate2D) -> UserExperience {
         return UserExperience(audioURL: nil, videoURL: nil, imageData: nil, title: nil, coordinate: coordinate)
         
@@ -27,6 +27,6 @@ class UserExperienceController {
         userExperience.audioURL = audioURL
         userExperience.imageData = imageData
         userExperience.title = title
-        userExperienceArray?.append(userExperience)
+        userExperienceArray.append(userExperience)
     }
 }

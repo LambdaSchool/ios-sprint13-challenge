@@ -17,15 +17,20 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     //MARK: Private Properties
     private let locationManager = CLLocationManager()
     private var userExperienceArray: [UserExperience]?
-    private var userExperience: UserExperience?
-    private var coordinates: CLLocationCoordinate2D?
+    private let originalUserExperienceController = UserExperienceController()
+    private var latitude = 36.272442
+    private var longitude = 115.0219134
+    private var simulatedUserLocation: CLLocation?
     
     //MARK: Non-Private Properties
-    var userExperienceController: UserExperienceController?
+    var continuedUserExperienceController: UserExperienceController?
+    var userExperience: UserExperience?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        mapView.delegate = self
         
         locationManager.requestWhenInUseAuthorization()
         
@@ -34,10 +39,20 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        userExperienceArray = userExperienceController?.userExperienceArray
-        self.mapView.addAnnotations(userExperienceArray ?? [])
-        coordinates = CLLocationCoordinate2D(latitude: 36.1998815, longitude: 115.2269095)
-        
+        simulatedUserLocation = CLLocation(latitude: latitude, longitude: longitude)
+        centerMapOnLocation(location: simulatedUserLocation!)
+        if continuedUserExperienceController != nil {
+            mapView.addAnnotations((continuedUserExperienceController?.userExperienceArray)!)
+        }
+        latitude += 50
+        longitude += 50
+    }
+    
+    let regionRadius: CLLocationDistance = 100_000
+    func centerMapOnLocation(location: CLLocation) {
+        let coordinateRegion = MKCoordinateRegion(center: location.coordinate,
+                                                  latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+        mapView.setRegion(coordinateRegion, animated: true)
     }
     
     
@@ -45,19 +60,18 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let experience = annotation as? UserExperience else { return nil}
         let experienceView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceAnnotationView", for: experience) as! MKMarkerAnnotationView
-        
         return experienceView
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as? ImageAudioViewController
-        if coordinates != nil {
-        userExperience = userExperienceController?.createUserExperience(coordinate: coordinates!)
+        userExperience = UserExperience(audioURL: nil, videoURL: nil, imageData: nil, title: nil, coordinate: (simulatedUserLocation?.coordinate)!)
             destinationVC?.userExperience = userExperience
+        if continuedUserExperienceController != nil {
+            destinationVC?.userExperienceController = continuedUserExperienceController
+        } else {
+        destinationVC?.userExperienceController = originalUserExperienceController
         }
-        
-        destinationVC?.userExperienceController = userExperienceController
-        
     }
     
 }

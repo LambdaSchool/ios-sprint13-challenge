@@ -119,7 +119,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     }
     
     private func saveVideo() {
-        userExperienceController?.addVideoExperience(userExperience: userExperience!, videoURL: saveURL)
+//        userExperienceController?.addVideoExperience(userExperience: userExperience!, videoURL: saveURL)
     }
     
     private func updateViews() {

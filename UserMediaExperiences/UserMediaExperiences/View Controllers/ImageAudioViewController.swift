@@ -21,7 +21,11 @@ class ImageAudioViewController: UIViewController, RecorderDelegate, UIImagePicke
     private var saturationValue: Float = 10
     
     //MARK: Non-Private Properties
-    var userExperienceController: UserExperienceController?
+    var userExperienceController: UserExperienceController? {
+        didSet {
+            print("DidSet destinationVC UEController")
+        }
+    }
     var userExperience: UserExperience?
     //MARK: IBOutlets
     @IBOutlet weak var titleTextField: UITextField!
@@ -37,11 +41,7 @@ class ImageAudioViewController: UIViewController, RecorderDelegate, UIImagePicke
     
     //MARK: IBAction
     @IBAction func nextButtonWasTapped(_ sender: Any) {
-        userExperience?.title = titleTextField.text
-        userExperience?.audioURL = recorder.currentFile
-        let imageData = imageView.image?.pngData()
-        navigationController?.popViewController(animated: true)
-    }
+}
     
     @IBAction func addPosterImageButtonWasTapped(_ sender: Any) {
         presentImagePickerController()
@@ -117,9 +117,12 @@ class ImageAudioViewController: UIViewController, RecorderDelegate, UIImagePicke
     }
     //MARK: Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-            let destinationVC = segue.destination as? CameraViewController
-            destinationVC?.userExperienceController = self.userExperienceController
-        destinationVC?.userExperience = self.userExperience
+        guard let text = titleTextField.text,
+            let audioURL = recorder.currentFile,
+            let imageData = imageView.image?.pngData() else { return }
+        userExperienceController?.addAudioImageUserExperiences(userExperience: userExperience!, audioURL: audioURL, imageData: imageData, title: text)
+        let destinationVC = segue.destination as! MapViewController
+        destinationVC.continuedUserExperienceController = userExperienceController
         
     }
 

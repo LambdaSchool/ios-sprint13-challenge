@@ -23,6 +23,8 @@ class UserExperience: NSObject, MKAnnotation {
         self.videoURL = videoURL
         self.imageData = imageData
         self.title = title
+        
+        super.init()
     }
 
 }
