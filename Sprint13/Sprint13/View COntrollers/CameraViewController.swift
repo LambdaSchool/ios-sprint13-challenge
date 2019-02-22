@@ -173,7 +173,8 @@ class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptu
     private func updateViews() {
         
         let isRecording = fileOutput.isRecording
-       //record.imageView?.image( )(isRecording ? "Stop" : "Record", for: .normal)
+        let text = isRecording ? "stop" : "record"
+        record.setImage(UIImage(named: text), for: .normal)
     }
     //    private func showCamera() {
     //        performSegue(withIdentifier: "showCamera", sender: self)
