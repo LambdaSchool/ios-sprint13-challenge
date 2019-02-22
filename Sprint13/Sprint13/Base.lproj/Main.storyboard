@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Geo View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Sprint13" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="GeoViewController" customModule="Sprint13" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -42,6 +42,9 @@
                     <navigationItem key="navigationItem" id="Whi-Gh-AnS">
                         <barButtonItem key="rightBarButtonItem" title="Item" id="9Ng-Rv-EuU"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="63J-QV-zHC" id="mZQ-CH-kbB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -50,13 +53,13 @@
         <!--New Experience-->
         <scene sceneID="lQw-AC-xhI">
             <objects>
-                <viewController id="prK-UZ-Lpn" sceneMemberID="viewController">
+                <viewController id="prK-UZ-Lpn" customClass="AudioAndPhotoViewController" customModule="Sprint13" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pbe-U7-DGG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="yCJ-LQ-g0Z">
-                                <rect key="frame" x="8" y="124" width="359" height="343"/>
+                                <rect key="frame" x="8" y="124" width="359" height="393"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1Yz-cM-N7w">
                                         <rect key="frame" x="0.0" y="0.0" width="359" height="30"/>
@@ -65,19 +68,32 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="VLH-1X-NcI">
-                                        <rect key="frame" x="0.0" y="38" width="359" height="267"/>
+                                        <rect key="frame" x="0.0" y="38" width="359" height="279"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XDN-mB-PT9">
-                                        <rect key="frame" x="0.0" y="313" width="359" height="30"/>
+                                        <rect key="frame" x="0.0" y="325" width="359" height="30"/>
                                         <state key="normal" title="Record">
                                             <color key="titleColor" red="1" green="0.097888789810000001" blue="0.1009366376" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </state>
+                                        <connections>
+                                            <action selector="tappedRecordButton:" destination="prK-UZ-Lpn" eventType="touchUpInside" id="Hh0-i3-Dhm"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uN0-5q-oJ8">
+                                        <rect key="frame" x="0.0" y="363" width="359" height="30"/>
+                                        <state key="normal" title="Play"/>
+                                        <connections>
+                                            <action selector="tappedPlayButton:" destination="prK-UZ-Lpn" eventType="touchUpInside" id="ZIc-aU-08j"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Se8-j8-9wh">
                                 <rect key="frame" x="139" y="318.5" width="97" height="30"/>
                                 <state key="normal" title="Choose Photo"/>
+                                <connections>
+                                    <action selector="choosePhoto:" destination="prK-UZ-Lpn" eventType="touchUpInside" id="1mL-OD-qHu"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -85,7 +101,7 @@
                             <constraint firstItem="yCJ-LQ-g0Z" firstAttribute="top" secondItem="81h-11-cjA" secondAttribute="top" constant="8" id="1D8-Qu-dTW"/>
                             <constraint firstItem="yCJ-LQ-g0Z" firstAttribute="leading" secondItem="81h-11-cjA" secondAttribute="leading" constant="8" id="ORD-5W-5pl"/>
                             <constraint firstItem="81h-11-cjA" firstAttribute="trailing" secondItem="yCJ-LQ-g0Z" secondAttribute="trailing" constant="8" id="ct0-Rx-mDK"/>
-                            <constraint firstItem="81h-11-cjA" firstAttribute="bottom" secondItem="yCJ-LQ-g0Z" secondAttribute="bottom" constant="200" id="gsK-S5-mYO"/>
+                            <constraint firstItem="81h-11-cjA" firstAttribute="bottom" secondItem="yCJ-LQ-g0Z" secondAttribute="bottom" constant="150" id="gsK-S5-mYO"/>
                             <constraint firstItem="Se8-j8-9wh" firstAttribute="centerY" secondItem="pbe-U7-DGG" secondAttribute="centerY" id="hc0-iD-Xty"/>
                             <constraint firstItem="Se8-j8-9wh" firstAttribute="centerX" secondItem="pbe-U7-DGG" secondAttribute="centerX" id="vdj-3m-EFH"/>
                         </constraints>
@@ -94,19 +110,26 @@
                     <navigationItem key="navigationItem" title="New Experience" id="Sgo-CI-EZL">
                         <barButtonItem key="rightBarButtonItem" title="Next" id="l2G-H6-pal">
                             <connections>
+                                <action selector="next:" destination="prK-UZ-Lpn" id="ktg-qf-4Ch"/>
                                 <segue destination="yql-L9-FEy" kind="show" id="jOx-tg-Rf6"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="imageView" destination="VLH-1X-NcI" id="Iac-Ab-WJt"/>
+                        <outlet property="playButton" destination="uN0-5q-oJ8" id="cVe-OA-VgY"/>
+                        <outlet property="recordButton" destination="XDN-mB-PT9" id="Zfd-2H-l6F"/>
+                        <outlet property="textField" destination="1Yz-cM-N7w" id="YOf-zN-a8v"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fnz-Lo-pL3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2146" y="125"/>
+            <point key="canvasLocation" x="2144.8000000000002" y="124.58770614692655"/>
         </scene>
         <!--Video Recording-->
         <scene sceneID="wo7-Nm-YHS">
             <objects>
-                <viewController id="yql-L9-FEy" sceneMemberID="viewController">
+                <viewController id="yql-L9-FEy" customClass="CameraViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3Il-L9-Wfv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -138,7 +161,7 @@
                     <navigationItem key="navigationItem" title="Video Recording" id="Bo6-Of-Uqv">
                         <barButtonItem key="rightBarButtonItem" title="Save" id="ebG-PH-skU">
                             <connections>
-                                <segue destination="BYZ-38-t0r" kind="show" id="n8L-YJ-igr"/>
+                                <segue destination="BYZ-38-t0r" kind="presentation" id="OkV-zA-lWe"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
