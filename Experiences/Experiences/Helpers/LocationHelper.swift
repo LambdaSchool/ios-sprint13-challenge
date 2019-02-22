@@ -12,7 +12,10 @@ import CoreLocation
 class LocationHelper: NSObject, CLLocationManagerDelegate {
     
     static let shared = LocationHelper()
-    private override init () {}
+    private override init () {
+        super.init()
+        manager.delegate = self
+    }
     
     
     private var closure: ((Bool) -> Void)?

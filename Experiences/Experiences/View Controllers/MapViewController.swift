@@ -24,18 +24,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        LocationHelper.shared.requestAccess(completion: { granted in
-            DispatchQueue.main.async {
-                if granted {
-                    let userTrackingButton = MKUserTrackingButton(mapView: self.mapView)
-                    userTrackingButton.translatesAutoresizingMaskIntoConstraints = false
-                    self.mapView.addSubview(userTrackingButton)
-                    
-                    userTrackingButton.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
-                    userTrackingButton.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
-                }
-            }
-        })
+        LocationHelper.shared.requestAccess(completion: setupUserTrackingButton)
         
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotationView")
         mapView.delegate = self
@@ -75,6 +64,19 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         DispatchQueue.main.async {
             self.mapView.removeAnnotations(Array(removeExperiences))
             self.mapView.addAnnotations(Array(addedExperiences))
+        }
+    }
+    
+    private func setupUserTrackingButton(_ granted: Bool) {
+        DispatchQueue.main.async {
+            if granted {
+                let userTrackingButton = MKUserTrackingButton(mapView: self.mapView)
+                userTrackingButton.translatesAutoresizingMaskIntoConstraints = false
+                self.mapView.addSubview(userTrackingButton)
+                
+                userTrackingButton.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
+                userTrackingButton.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
+            }
         }
     }
 }
