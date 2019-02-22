@@ -79,11 +79,14 @@
                                     <action selector="chooseImage:" destination="38K-5f-RjQ" eventType="touchUpInside" id="wfi-qN-s3m"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hgz-AW-Iqh">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hgz-AW-Iqh">
                                 <rect key="frame" x="163" y="617" width="49" height="30"/>
                                 <state key="normal" title="Record">
                                     <color key="titleColor" red="0.96030298223350252" green="0.14365250180771219" blue="0.008296809881770369" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="recordVideo:" destination="38K-5f-RjQ" eventType="touchUpInside" id="jrH-xF-DqS"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -92,7 +95,6 @@
                             <constraint firstItem="hdg-Jn-tKC" firstAttribute="trailing" secondItem="6TS-09-I4V" secondAttribute="trailing" constant="8" id="9ud-Dv-e4o"/>
                             <constraint firstItem="86j-bU-C54" firstAttribute="centerY" secondItem="e5n-mT-MLq" secondAttribute="centerY" id="F7O-lI-oLb"/>
                             <constraint firstItem="6TS-09-I4V" firstAttribute="leading" secondItem="hdg-Jn-tKC" secondAttribute="leading" constant="8" id="NW2-Bh-kTQ"/>
-                            <constraint firstItem="hdg-Jn-tKC" firstAttribute="bottom" secondItem="hgz-AW-Iqh" secondAttribute="bottom" constant="20" id="PcQ-7s-teT"/>
                             <constraint firstItem="iQh-Qy-Zk2" firstAttribute="top" secondItem="hdg-Jn-tKC" secondAttribute="top" constant="8" id="VtC-R8-cul"/>
                             <constraint firstItem="86j-bU-C54" firstAttribute="centerX" secondItem="e5n-mT-MLq" secondAttribute="centerX" id="ZCk-Jo-fPe"/>
                             <constraint firstItem="hdg-Jn-tKC" firstAttribute="trailing" secondItem="iQh-Qy-Zk2" secondAttribute="trailing" constant="8" id="aza-9M-3Dz"/>
@@ -101,17 +103,65 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hdg-Jn-tKC"/>
                     </view>
-                    <navigationItem key="navigationItem" title="New Experience" id="x6v-IB-rTb"/>
+                    <navigationItem key="navigationItem" title="New Experience" id="x6v-IB-rTb">
+                        <barButtonItem key="rightBarButtonItem" title="Next" id="knB-8W-i1C"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="addImageButton" destination="86j-bU-C54" id="XJi-JC-I0e"/>
                         <outlet property="imageView" destination="6TS-09-I4V" id="nlU-VS-BmT"/>
                         <outlet property="recordButton" destination="hgz-AW-Iqh" id="dCB-IN-g8q"/>
                         <outlet property="titleTextField" destination="iQh-Qy-Zk2" id="ceL-uL-0YR"/>
+                        <segue destination="8Q2-XP-CFB" kind="presentation" identifier="showcamera" id="5iz-tw-qSC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ixe-eZ-zbh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2052" y="27"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="5As-KP-Nzl">
+            <objects>
+                <viewController id="TeP-GC-m3t" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Yck-BW-nuS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="2vR-y6-UBO"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xtI-Wj-EMB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2836" y="-307"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="nem-lg-Yef">
+            <objects>
+                <viewController id="qId-Ty-k4e" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5MI-0I-QB9">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="rm6-4r-6mF"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fjd-NM-zgr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3506" y="80"/>
+        </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="Hdi-qr-e3E">
+            <objects>
+                <viewController id="8Q2-XP-CFB" customClass="CameraViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="UTK-Xd-TLS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="gsv-cd-pH1"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ItQ-vR-V5n" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2836" y="392"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="mlI-Fa-Y52">

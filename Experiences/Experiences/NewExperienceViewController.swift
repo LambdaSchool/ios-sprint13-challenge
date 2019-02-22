@@ -39,14 +39,37 @@ class NewExperienceViewController: UIViewController, UIImagePickerControllerDele
     }
 
     @IBAction func chooseImage(_ sender: Any) {
-        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
-            print("The photo library is unavailable")
-            return
+        
+        let alert = UIAlertController(title: "Select Source", message: "", preferredStyle: .actionSheet)
+        
+        let cameraAction = UIAlertAction(title: "Camera", style: .default) { (_) in
+            
+            // Segue to the camera
+            self.performSegue(withIdentifier: "showcamera", sender: nil)
+            
         }
-        let picker = UIImagePickerController()
-        picker.delegate = self
-        picker.sourceType = .photoLibrary
-        present(picker, animated: true, completion: nil)
+        
+        let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .default) { (_) in
+            
+            // Bring up the Photo Library
+            guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+                print("The photo library is unavailable")
+                return
+            }
+            let picker = UIImagePickerController()
+            picker.delegate = self
+            picker.sourceType = .photoLibrary
+            self.present(picker, animated: true, completion: nil)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(cameraAction)
+        alert.addAction(photoLibraryAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true, completion: nil)
+
     }
     
     private func applyFilter(to image: UIImage) -> UIImage {
@@ -75,6 +98,13 @@ class NewExperienceViewController: UIViewController, UIImagePickerControllerDele
             return image
         }
         return UIImage(cgImage: cgImage)
+        
+    }
+    
+    @IBAction func recordVideo(_ sender: Any) {
+        
+        
+        
         
     }
     
