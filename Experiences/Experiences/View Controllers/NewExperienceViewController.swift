@@ -179,8 +179,4 @@ class NewExperienceViewController: UIViewController, UIImagePickerControllerDele
     }
     
     
-    
-    
-    
-    
 }
