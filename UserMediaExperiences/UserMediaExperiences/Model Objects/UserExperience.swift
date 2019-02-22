@@ -12,20 +12,17 @@ import MapKit
 class UserExperience: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     
-    let audioURL: URL
+    var audioURL: URL?
     var videoURL: URL?
-    let imageData: Data
-    let title: String?
+    var imageData: Data?
+    var title: String?
     
-    init(audioURL: URL, videoURL: URL?, imageData: Data, title: String?, coordinate: CLLocationCoordinate2D) {
+    init(audioURL: URL?, videoURL: URL?, imageData: Data?, title: String?, coordinate: CLLocationCoordinate2D) {
         self.coordinate = coordinate
         self.audioURL = audioURL
         self.videoURL = videoURL
         self.imageData = imageData
         self.title = title
     }
-    
-    
-    //MARK: Non-Init Properties
-    
+
 }

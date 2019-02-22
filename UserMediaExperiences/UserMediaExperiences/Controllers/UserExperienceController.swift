@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MapKit
 
 class UserExperienceController {
     
@@ -18,7 +19,14 @@ class UserExperienceController {
         let userExperienceIndex = userExperienceArray?.firstIndex(of: userExperience)
         userExperienceArray?[userExperienceIndex!].videoURL = videoURL
     }
-    func createUserExperience(audioURL: URL, imageData: Data, title: String) {
-        return UserExperience(audioURL: audioURL, videoURL: nil, imageData: imageData, title: title, coordinate: <#T##CLLocationCoordinate2D#>)
+    func createUserExperience(coordinate: CLLocationCoordinate2D) -> UserExperience {
+        return UserExperience(audioURL: nil, videoURL: nil, imageData: nil, title: nil, coordinate: coordinate)
+        
+    }
+    func addAudioImageUserExperiences(userExperience: UserExperience, audioURL: URL, imageData: Data, title: String) {
+        userExperience.audioURL = audioURL
+        userExperience.imageData = imageData
+        userExperience.title = title
+        userExperienceArray?.append(userExperience)
     }
 }
