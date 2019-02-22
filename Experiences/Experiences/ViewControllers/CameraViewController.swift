@@ -18,6 +18,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         // Get authorization
         authorization()
         
+        // Get user Location
+        self.geotag = locationHelper.fetchUsersLocation()
+        
         // Set up the capture session
         let camera = bestCamera()
         guard let cameraInput = try? AVCaptureDeviceInput(device: camera) else {
@@ -72,6 +75,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         saveVideo(with: outputFileURL)
+        videoURL = outputFileURL
         DispatchQueue.main.async {
             self.updateViews()
             
@@ -122,21 +126,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         return documents.appendingPathComponent(name).appendingPathExtension("mov")
     }
     
-    
-    
-    // MARK: - IBActions
-    
-    @IBAction func toggleRecording(_ sender: Any) {
-        
-        if fileOutput.isRecording {
-            fileOutput.stopRecording()
-            
-        } else {
-            let url = newRecordingURL()
-            fileOutput.startRecording(to: url, recordingDelegate: self)
-        }
-    }
-    
     private func saveVideo(with url: URL) {
         
         PHPhotoLibrary.requestAuthorization { status in
@@ -177,6 +166,36 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             print("Permission Authorized")
         }
     }
+    
+    
+    
+    // MARK: - IBActions
+    
+    @IBAction func toggleRecording(_ sender: Any) {
+        
+        if fileOutput.isRecording {
+            fileOutput.stopRecording()
+            
+        } else {
+            let url = newRecordingURL()
+            fileOutput.startRecording(to: url, recordingDelegate: self)
+        }
+    }
+    
+    @IBAction func saveButtonClicked(_ sender: Any) {
+        
+        guard let title = titleString,
+            let audioURL = audioURL,
+            let videoURL = videoURL,
+            let imageURL = imageURL else {fatalError("not enough information to create a new experience")}
+        
+        experienceController.createExperience(with: title, audioURL: audioURL, videoURL: videoURL, imageURL: imageURL, geotag: geotag)
+        
+        navigationController?.popViewController(animated: true)
+        
+    }
+    
+    
     // AVPlayer - playback
     // this is playback but not visualization
 
@@ -192,11 +211,14 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     @IBOutlet weak var cameraView: CameraPreviewView!
     private let captureSession = AVCaptureSession()
+    var locationHelper = LocationHelper()
+    var experienceController = ExperienceController()
     private let fileOutput = AVCaptureMovieFileOutput()
     @IBOutlet weak var recordButton: UIButton!
     var imageURL: URL?
     var titleString: String?
     var audioURL: URL?
     var videoURL: URL?
+    var geotag: CLLocationCoordinate2D?
     
 }

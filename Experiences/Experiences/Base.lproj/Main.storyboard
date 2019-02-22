@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="agT-B5-RRD">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                             </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6eS-s0-5Kg">
                                 <rect key="frame" x="295" y="587" width="40" height="40"/>
@@ -138,7 +138,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Next" id="WSD-k7-rVs">
                             <connections>
                                 <action selector="nextExperienceVCButtonClicked:" destination="QPe-cz-wOE" id="1i8-Ji-yFP"/>
-                                <segue destination="1i2-Lc-Doq" kind="show" id="6s0-K4-Xi4"/>
+                                <segue destination="1i2-Lc-Doq" kind="show" identifier="AddVideoSegue" id="6s0-K4-Xi4"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -186,7 +186,12 @@
                         <viewLayoutGuide key="safeArea" id="Gke-Pd-9Ml"/>
                     </view>
                     <navigationItem key="navigationItem" title="Video Recording" id="RZu-tk-DlA">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="mds-f5-HXq"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="mds-f5-HXq">
+                            <connections>
+                                <action selector="saveButtonClicked:" destination="1i2-Lc-Doq" id="tVt-Ys-jCl"/>
+                                <segue destination="BYZ-38-t0r" kind="show" id="H4o-b3-FAF"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="cameraView" destination="Vxb-b7-GTd" id="PIq-fc-tuT"/>

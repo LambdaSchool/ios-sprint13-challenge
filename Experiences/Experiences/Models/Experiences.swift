@@ -14,4 +14,8 @@ class Experiences {
     
     // 
     private var model: [Experience] = []
+    
+    func addNewExperience(experience: Experience){
+        model.append(experience)
+    }
 }

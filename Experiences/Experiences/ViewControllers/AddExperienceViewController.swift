@@ -106,6 +106,36 @@ class AddExperienceViewController: ShiftableViewController, RecorderDelegate {
         return UIImage(cgImage: cgImage)
     }
     
+    func saveImage(image: UIImage) -> URL {
+        
+        
+        guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { fatalError("Bad Directory") }
+        
+        let fileName = UUID().uuidString
+        let fileURL = documentsDirectory.appendingPathComponent(fileName)
+        guard let data = image.jpegData(compressionQuality: 1) else { fatalError("Bad Image") }
+        
+        //Checks if file exists, removes it if so.
+        if FileManager.default.fileExists(atPath: fileURL.path) {
+            do {
+                try FileManager.default.removeItem(atPath: fileURL.path)
+                print("Removed old image")
+            } catch let removeError {
+                print("couldn't remove file at path", removeError)
+            }
+            
+        }
+        
+        do {
+            try data.write(to: fileURL)
+        } catch let error {
+            print("error saving file with error", error)
+        }
+        
+        return fileURL
+        
+    }
+    
     private func updateImageView() {
         guard let image = originalImage else { return }
         imageView?.image = applyFilter(to: image)
@@ -121,11 +151,20 @@ class AddExperienceViewController: ShiftableViewController, RecorderDelegate {
         updateViews()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let destVC = segue.destination as? CameraViewController else {fatalError("Could not cast destination VC as a CameraViewController")}
+        guard let image = imageView.image else { fatalError("no image present")}
+        guard let audioURL = recorder.currentFile else { fatalError("no image present")}
+        
+        destVC.audioURL = audioURL
+        destVC.imageURL = saveImage(image: image)
+        destVC.titleString = experienceTitleTextField.text
+    }
+    
     // MARK: - IBActions
     
-    
-    
     @IBAction func nextExperienceVCButtonClicked(_ sender: Any) {
+        self.performSegue(withIdentifier: "AddVideoSegue", sender: nil)
         
     }
     
@@ -141,6 +180,8 @@ class AddExperienceViewController: ShiftableViewController, RecorderDelegate {
     @IBAction func recordAudioButtonClicked(_ sender: Any) {
         recorder.toggleRecording()
     }
+    
+    
     
     // MARK: - Properties
     
@@ -158,6 +199,7 @@ class AddExperienceViewController: ShiftableViewController, RecorderDelegate {
     private var filter = CIFilter(name: "CIPixellate")!
     private let recorder = Recorder()
     private let player = Player()
+    private let cameraViewController = CameraViewController()
 }
 
 extension AddExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
