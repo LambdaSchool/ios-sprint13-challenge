@@ -15,7 +15,7 @@ import AVKit
 class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptureFileOutputRecordingDelegate {
     
    
-   
+    var recordedURL: AVCaptureMovieFileOutput!
     var vidoeRecordedURL: URL?
     var player: AVPlayer?
     var titleString: String?
@@ -26,17 +26,7 @@ class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptu
     
     
     @IBOutlet weak var record: UIButton!
-    @IBOutlet weak var playVideo: UIButton!
     @IBOutlet weak var cameraView: CameraPreviewView!
-    @IBAction func playRecordedVidoe(_ sender: Any) {
-        let player = AVPlayer(url: vidoeRecordedURL!)
-        let vc = AVPlayerViewController()
-        vc.player = player
-        present(vc, animated: true) {
-            vc.player?.play()
-            self.audioController?.player.playPause()
-        }
-    }
     
     
     private lazy var locationManager: CLLocationManager = {
@@ -45,14 +35,8 @@ class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptu
         return result
     }()
    
-  
-    
-   
-    
     @IBAction func saveButton(_ sender: Any) {
-    
-        
-        
+     
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         guard let title = titleString,
@@ -68,22 +52,6 @@ class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptu
         
         performSegue(withIdentifier: "backToMap", sender: nil)
         }
-    
-    
-    
-    
-    
-    func deleteFile(_ filePath:URL) {
-        guard FileManager.default.fileExists(atPath: filePath.path) else {
-            return
-        }
-        
-        do {
-            try FileManager.default.removeItem(atPath: filePath.path)
-        }catch{
-            fatalError("Unable to delete file: \(error) : \(#function).")
-        }
-    }
     
     @IBAction func recordButton(_ sender: Any) {
         if fileOutput.isRecording {
@@ -114,6 +82,7 @@ class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptu
         
         captureSession.addOutput(fileOutput)
         
+        
         if captureSession.canSetSessionPreset(.hd4K3840x2160) {
         captureSession.sessionPreset = .hd4K3840x2160 // try
         } else {
@@ -122,6 +91,7 @@ class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptu
         captureSession.commitConfiguration()
         
         cameraView.session = captureSession
+        cameraView.videoPreviewLayer.session = captureSession
         
     }
     
@@ -174,19 +144,8 @@ class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptu
         }
         
         vidoeRecordedURL = outputFileURL
-        
-//        PHPhotoLibrary.requestAuthorization { status in
-//            guard status == .authorized else { return }
-//            PHPhotoLibrary.shared().performChanges({
-//                PHAssetCreationRequest.creationRequestForAssetFromVideo(atFileURL: outputFileURL)
-//            }, completionHandler: { (success, error) in
-//                if let error = error {
-//                    NSLog("error saving video: \(error)")
-//                } else {
-//                    NSLog("saving video succeeded")
-//                }
-//            })
-//        }
+        self.performSegue(withIdentifier: "backToMap", sender: nil)
+    
     }
     
     

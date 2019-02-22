@@ -66,9 +66,20 @@ class AudioAndPhotoViewController: UIViewController, UIImagePickerControllerDele
         
     }
     
-
+    @IBAction func nextBarButton(_ sender: Any) {
+        
+        if curentRecordedAudioURl != nil && textField.text != nil && imageView.image != nil {
+            performSegue(withIdentifier: "Video", sender: nil)
+        } else {
+            performSegue(withIdentifier: "Video", sender: nil) // temp for test
+            return
+        }
+        
+        
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Video" && textField.text != nil && imageView.image != nil{
+        if segue.identifier == "Video" {  //&& textField.text != nil && imageView.image != nil
             guard let destination = segue.destination as? CameraViewController else { return }
             destination.titleString = textField.text
             destination.image = imageView.image
