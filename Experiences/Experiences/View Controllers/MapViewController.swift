@@ -13,6 +13,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
     // MARK: - Properties
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var addNewButton: UIButton!
     
     private let experienceController = ExperienceController()
     private var experiences: Set<Experience> = [] {
@@ -39,6 +40,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotationView")
         mapView.delegate = self
         fetchExperiences()
+        addNewButton.setupCustomAppearance()
         
         NotificationCenter.default.addObserver(self, selector: #selector(fetchExperiences), name: .newExperienceNotification, object: nil)
     }

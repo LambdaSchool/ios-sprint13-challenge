@@ -20,6 +20,8 @@ class RecordVideoViewController: UIViewController, AVCaptureFileOutputRecordingD
     private let fileOutput = AVCaptureMovieFileOutput()
     private var currentURL: URL?
     private var playerView: VideoPlayerView?
+    private var playerLooper: NSObject?
+    private var queuePlayer: AVQueuePlayer?
     
     weak var delegate: RecordVideoViewControllerDelegate?
     
@@ -34,6 +36,7 @@ class RecordVideoViewController: UIViewController, AVCaptureFileOutputRecordingD
         setupSessionInputs()
         setupSessionOutputs()
         updateViews()
+        recordButton.setupCustomAppearance()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,10 +53,7 @@ class RecordVideoViewController: UIViewController, AVCaptureFileOutputRecordingD
     
     // MARK: - UI Actions
     @IBAction func recordVideo(_ sender: Any) {
-        if let playerView = playerView {
-            playerView.removeFromSuperview()
-            self.playerView = nil
-        }
+        dismissPlayerView()
         if fileOutput.isRecording {
             fileOutput.stopRecording()
         } else {
@@ -74,8 +74,8 @@ class RecordVideoViewController: UIViewController, AVCaptureFileOutputRecordingD
     }
     
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
-        updateViews()
         currentURL = outputFileURL
+        updateViews()
         presentPlayerView(with: outputFileURL)
     }
     
@@ -131,6 +131,7 @@ class RecordVideoViewController: UIViewController, AVCaptureFileOutputRecordingD
             let isRecording = self.fileOutput.isRecording
             let recordTitle = isRecording ? "Stop" : "Record"
             self.recordButton.setTitle(recordTitle, for: .normal)
+            self.saveButton.isEnabled = self.currentURL != nil
         }
     }
     
@@ -140,12 +141,23 @@ class RecordVideoViewController: UIViewController, AVCaptureFileOutputRecordingD
         playerView?.constrainToFill(view)
         
         let playerItem = AVPlayerItem(url: url)
-        let player = AVPlayer(playerItem: playerItem)
+        queuePlayer = AVQueuePlayer(items: [playerItem])
+        playerLooper = AVPlayerLooper(player: queuePlayer!, templateItem: playerItem)
+        
         
         playerView?.viewPlayerLayer.videoGravity = .resizeAspectFill
-        player.play()
+        queuePlayer?.play()
         
-        playerView?.player = player
+        playerView?.player = queuePlayer
         
+    }
+    
+    private func dismissPlayerView() {
+        if let playerView = playerView {
+            playerView.removeFromSuperview()
+            self.playerView = nil
+            self.playerLooper = nil
+            self.queuePlayer = nil
+        }
     }
 }

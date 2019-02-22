@@ -33,6 +33,7 @@ class NewExperienceViewController: UIViewController, UINavigationControllerDeleg
         titleTextField.delegate = self
         player.delegate = self
         recorder.delegate = self
+        recordButton.tintColor = .redColor
         updateButtons()
     }
     
