@@ -16,9 +16,9 @@ class GeoViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBOutlet weak var mapView: MKMapView!
     private let locationManager = CLLocationManager()
     var curentLocation: CLLocationCoordinate2D?
-    
+    var index = 0
     let experienceController = ExperienceController.shared
-
+    var data: Experience?
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,7 +59,6 @@ class GeoViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "AnnotationView") as! MKMarkerAnnotationView
         annotationView.markerTintColor = .gray
         annotationView.glyphTintColor = .black
-        
         return annotationView
     }
     
@@ -70,6 +69,12 @@ class GeoViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         curentLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         let region = MKCoordinateRegion(center: curentLocation!, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
         
+        
+        let newPin = MKPointAnnotation()
+        newPin.coordinate = curentLocation!
+       // newPin.title = experienceController.experiences[0].title ?? ""
+        mapView.addAnnotation(newPin)
+        index += 1
         //set region on the map
         self.mapView.setRegion(region, animated: true)
         self.locationManager.stopUpdatingLocation()
@@ -79,7 +84,6 @@ class GeoViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     func updateView() {
         
         let anotations = mapView.annotations
-        
         
         mapView.removeAnnotations(anotations)
         mapView.addAnnotations(experienceController.experiences)

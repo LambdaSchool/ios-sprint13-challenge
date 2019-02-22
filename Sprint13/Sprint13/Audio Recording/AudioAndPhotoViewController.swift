@@ -86,11 +86,22 @@ class AudioAndPhotoViewController: UIViewController, UIImagePickerControllerDele
             destination.curentRecordedAudioURL = recorder.currentFile
         }
     }
+    let filter = CIFilter(name: "CIColorControls")!
+    let context = CIContext(options: nil)
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
         originalImage = info[.originalImage] as? UIImage
-        imageView.image = originalImage
+        
+        
+//        filter.setValue(originalImage, forKey: kCIInputImageKey)
+//        filter.setValue(0.5, forKey: kCIInputBrightnessKey)
+        
+//        guard let outputImage = filter.outputImage,
+//            let outputCGImage = context.createCGImage(outputImage, from: outputImage.extent) else { return }
+//        
+        imageView.image = originalImage   //UIImage(cgImage: outputCGImage)
+        
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
