@@ -15,6 +15,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Get authorization
+        authorization()
+        
         // Set up the capture session
         let camera = bestCamera()
         guard let cameraInput = try? AVCaptureDeviceInput(device: camera) else {
@@ -38,6 +41,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             captureSession.sessionPreset = .high
         }
         captureSession.commitConfiguration()
+        
+        
         
         cameraView.session = captureSession
         
@@ -147,6 +152,31 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             })
         }
     }
+    
+    private func authorization() {
+        let authorizationStatus = AVCaptureDevice.authorizationStatus(for: .video)
+        
+        switch authorizationStatus {
+            
+        case .notDetermined:
+            // we have not asked the user yet for authorization
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                if granted == false {
+                    fatalError("Please don't do this in an actual app")
+                }
+                print("Permission Authorized")
+            }
+        case .restricted:
+            // parental controls on the device prevent access to the cameras
+            fatalError("Please have beter scenario handling than this")
+        case .denied:
+            // we asked for permission, but they said no
+            fatalError("Please have beter scenario handling than this")
+        case .authorized:
+            // we asked for permission, and they said yes
+            print("Permission Authorized")
+        }
+    }
     // AVPlayer - playback
     // this is playback but not visualization
 
@@ -160,7 +190,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 
     // MARK: - Properties
     
-    @IBOutlet weak var cameraPreview: CameraPreviewView!
+    @IBOutlet weak var cameraView: CameraPreviewView!
     private let captureSession = AVCaptureSession()
     private let fileOutput = AVCaptureMovieFileOutput()
     @IBOutlet weak var recordButton: UIButton!

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -72,8 +72,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="7df-g6-0JV">
-                                <rect key="frame" x="20" y="84" width="335" height="300"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="7df-g6-0JV">
+                                <rect key="frame" x="20" y="84" width="335" height="352"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter experience title here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ife-id-X1r">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="30"/>
@@ -82,20 +82,20 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Kzo-6b-exl">
-                                        <rect key="frame" x="0.0" y="48" width="335" height="156"/>
+                                        <rect key="frame" x="0.0" y="38" width="335" height="200"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="200" id="kgU-mn-OGQ"/>
+                                            <constraint firstAttribute="height" constant="200" id="PYC-Pg-hJg"/>
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3u8-pv-FWu">
-                                        <rect key="frame" x="0.0" y="222" width="335" height="30"/>
+                                        <rect key="frame" x="0.0" y="246" width="335" height="30"/>
                                         <state key="normal" title="Get Image"/>
                                         <connections>
                                             <action selector="getImageButtonClicked:" destination="QPe-cz-wOE" eventType="touchUpInside" id="yQe-Bz-lgk"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6ZP-Ko-b4n">
-                                        <rect key="frame" x="0.0" y="270" width="335" height="30"/>
+                                        <rect key="frame" x="0.0" y="284" width="335" height="30"/>
                                         <state key="normal" title="Record">
                                             <color key="titleColor" red="0.71372549019999998" green="0.23529411759999999" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -103,9 +103,16 @@
                                             <action selector="recordAudioButtonClicked:" destination="QPe-cz-wOE" eventType="touchUpInside" id="PNV-e1-N9x"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZYg-7g-fYe">
+                                        <rect key="frame" x="0.0" y="322" width="335" height="30"/>
+                                        <state key="normal" title="Play"/>
+                                        <connections>
+                                            <action selector="playButtonClicked:" destination="QPe-cz-wOE" eventType="touchUpInside" id="Xbe-O1-hbT"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="300" id="346-jO-Nsg"/>
+                                    <constraint firstItem="ZYg-7g-fYe" firstAttribute="leading" secondItem="7df-g6-0JV" secondAttribute="leading" id="3ki-7Q-FRK"/>
                                     <constraint firstItem="6ZP-Ko-b4n" firstAttribute="leading" secondItem="7df-g6-0JV" secondAttribute="leading" id="5SB-Yc-DHt"/>
                                     <constraint firstItem="3u8-pv-FWu" firstAttribute="leading" secondItem="7df-g6-0JV" secondAttribute="leading" id="BgL-Z3-F5A"/>
                                     <constraint firstAttribute="trailing" secondItem="Kzo-6b-exl" secondAttribute="trailing" id="Cud-Cc-vR4"/>
@@ -113,6 +120,7 @@
                                     <constraint firstItem="ife-id-X1r" firstAttribute="leading" secondItem="7df-g6-0JV" secondAttribute="leading" id="Lhg-qe-V50"/>
                                     <constraint firstAttribute="trailing" secondItem="3u8-pv-FWu" secondAttribute="trailing" id="TTX-Lb-kcM"/>
                                     <constraint firstItem="Kzo-6b-exl" firstAttribute="leading" secondItem="7df-g6-0JV" secondAttribute="leading" id="UJG-RD-OYS"/>
+                                    <constraint firstAttribute="trailing" secondItem="ZYg-7g-fYe" secondAttribute="trailing" id="bxY-tM-980"/>
                                     <constraint firstAttribute="trailing" secondItem="6ZP-Ko-b4n" secondAttribute="trailing" id="gMG-Q3-cAu"/>
                                 </constraints>
                             </stackView>
@@ -120,7 +128,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Ccb-gW-CBl" firstAttribute="trailing" secondItem="7df-g6-0JV" secondAttribute="trailing" constant="20" id="0cq-it-5iy"/>
-                            <constraint firstItem="Ccb-gW-CBl" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="7df-g6-0JV" secondAttribute="bottom" constant="80" id="3gt-HF-aLb"/>
+                            <constraint firstItem="Ccb-gW-CBl" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="7df-g6-0JV" secondAttribute="bottom" constant="60" id="3gt-HF-aLb"/>
                             <constraint firstItem="7df-g6-0JV" firstAttribute="top" secondItem="Ccb-gW-CBl" secondAttribute="top" constant="20" id="DNd-dE-3Qq"/>
                             <constraint firstItem="7df-g6-0JV" firstAttribute="leading" secondItem="Ccb-gW-CBl" secondAttribute="leading" constant="20" id="yhv-80-xv2"/>
                         </constraints>
@@ -138,6 +146,7 @@
                         <outlet property="experienceTitleTextField" destination="ife-id-X1r" id="chJ-92-rtJ"/>
                         <outlet property="getImageButton" destination="3u8-pv-FWu" id="kKA-BQ-doY"/>
                         <outlet property="imageView" destination="Kzo-6b-exl" id="5aW-4b-dps"/>
+                        <outlet property="playButton" destination="ZYg-7g-fYe" id="AoG-Wp-Uk1"/>
                         <outlet property="recordAudioButton" destination="6ZP-Ko-b4n" id="Xbz-qc-oSd"/>
                     </connections>
                 </viewController>
@@ -180,7 +189,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="mds-f5-HXq"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="cameraPreview" destination="Vxb-b7-GTd" id="SVL-ek-C0Z"/>
+                        <outlet property="cameraView" destination="Vxb-b7-GTd" id="PIq-fc-tuT"/>
                         <outlet property="recordButton" destination="CfE-0d-TFz" id="3sp-kn-7vs"/>
                     </connections>
                 </viewController>
