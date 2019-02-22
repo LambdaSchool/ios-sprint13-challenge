@@ -18,4 +18,8 @@ class Experiences {
     func addNewExperience(experience: Experience){
         model.append(experience)
     }
+    
+    func getExperiences() -> [Experience] {
+        return model
+    }
 }

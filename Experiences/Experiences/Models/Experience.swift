@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreLocation
+import MapKit
 
 enum MediaType: String {
     case image
@@ -20,15 +21,18 @@ enum LatLongType: String {
     case longitude
 }
 
-class Experience {
+class Experience: NSObject, MKAnnotation {
+    var coordinate: CLLocationCoordinate2D
     
     init(title: String, audioURL: URL, videoURL: URL, imageURL: URL, geotag: CLLocationCoordinate2D? = nil, timestamp: Date = Date()) {
+        
         self.audioURL = audioURL
         self.videoURL = videoURL
         self.imageURL = imageURL
         self.timestamp = timestamp
         self.geotag = geotag
-        self.title = title
+        self.coordinate = geotag!
+        self.titleString = title
     }
     
     init?(dictionary: [String : Any], id: String) {
@@ -57,16 +61,17 @@ class Experience {
         self.videoURL = videoURL
         self.imageURL = imageURL
         self.timestamp = Date(timeIntervalSince1970: timestampTimeInterval)
-        self.title = title
+        self.titleString = title
         self.id = id
         self.geotag = geotag
+        self.coordinate = geotag!
     }
     
     var dictionaryRepresentation: [String : Any] {
         var dict: [String: Any] = [Experience.audioKey: audioURL.absoluteString,
                                    Experience.videoKey: videoURL.absoluteString,
                                    Experience.imageKey: imageURL.absoluteString,
-                                   Experience.titleKey: title,
+                                   Experience.titleKey: titleString,
                                    Experience.timestampKey: timestamp.timeIntervalSince1970]
         
         
@@ -81,7 +86,7 @@ class Experience {
     var videoURL: URL
     var imageURL: URL
     let timestamp: Date
-    var title: String
+    var titleString: String
     var id: String?
     var geotag: CLLocationCoordinate2D?
     
