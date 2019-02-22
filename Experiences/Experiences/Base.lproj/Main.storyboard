@@ -163,26 +163,69 @@
                         <outlet property="timerSlider" destination="2vq-eQ-NIe" id="AMK-WC-64O"/>
                         <outlet property="titleTextField" destination="iQh-Qy-Zk2" id="ceL-uL-0YR"/>
                         <segue destination="8Q2-XP-CFB" kind="presentation" identifier="showcamera" id="5iz-tw-qSC"/>
+                        <segue destination="7rW-xI-RYd" kind="presentation" id="OzK-VV-dvr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ixe-eZ-zbh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2052" y="27"/>
         </scene>
-        <!--View Controller-->
+        <!--Video Recording-->
         <scene sceneID="5As-KP-Nzl">
             <objects>
-                <viewController id="TeP-GC-m3t" sceneMemberID="viewController">
+                <viewController id="TeP-GC-m3t" customClass="VideoCameraViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Yck-BW-nuS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sLQ-oY-Mwy" customClass="VideoPreviewView" customModule="Experiences" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="116" width="375" height="551"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o8m-kQ-5BF">
+                                        <rect key="frame" x="137.5" y="411" width="100" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="Ckb-E0-qHy"/>
+                                            <constraint firstAttribute="height" constant="100" id="qjd-eN-Q8G"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <state key="normal" image="record"/>
+                                        <connections>
+                                            <action selector="toggleRecord:" destination="TeP-GC-m3t" eventType="touchUpInside" id="HPR-C2-1Ln"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="o8m-kQ-5BF" secondAttribute="bottom" constant="40" id="VBo-38-h8R"/>
+                                    <constraint firstItem="o8m-kQ-5BF" firstAttribute="centerX" secondItem="sLQ-oY-Mwy" secondAttribute="centerX" id="d2q-Og-eQ8"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="2vR-y6-UBO" firstAttribute="trailing" secondItem="sLQ-oY-Mwy" secondAttribute="trailing" id="WyP-JN-CbH"/>
+                            <constraint firstItem="2vR-y6-UBO" firstAttribute="bottom" secondItem="sLQ-oY-Mwy" secondAttribute="bottom" id="b9l-JC-biM"/>
+                            <constraint firstItem="sLQ-oY-Mwy" firstAttribute="top" secondItem="2vR-y6-UBO" secondAttribute="top" id="qNr-fq-bCy"/>
+                            <constraint firstItem="sLQ-oY-Mwy" firstAttribute="leading" secondItem="2vR-y6-UBO" secondAttribute="leading" id="zYE-hp-XwT"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="2vR-y6-UBO"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Video Recording" id="FKU-Lg-nbu">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="1Gj-kW-2fV">
+                            <connections>
+                                <action selector="back:" destination="TeP-GC-m3t" id="BXo-8C-gUf"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="D8W-wW-nNo"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="cameraView" destination="sLQ-oY-Mwy" id="8zt-BL-PG2"/>
+                        <outlet property="recordButton" destination="o8m-kQ-5BF" id="ff3-TE-I1r"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xtI-Wj-EMB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2836" y="-307"/>
+            <point key="canvasLocation" x="3545" y="-307"/>
         </scene>
         <!--Camera View Controller-->
         <scene sceneID="Hdi-qr-e3E">
@@ -232,5 +275,26 @@
             </objects>
             <point key="canvasLocation" x="1346" y="27"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="g6d-ON-mwZ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7rW-xI-RYd" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="0am-PJ-LxN">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="TeP-GC-m3t" kind="relationship" relationship="rootViewController" id="5Wh-un-fgf"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EUa-IU-gPw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2836" y="-307.1964017991005"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="record" width="200" height="200"/>
+    </resources>
 </document>
