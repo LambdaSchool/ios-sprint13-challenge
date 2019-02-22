@@ -72,21 +72,38 @@
                                 <rect key="frame" x="164.5" y="318.5" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iMV-S7-XRo">
+                                <rect key="frame" x="20" y="122" width="335" height="180"/>
+                                <state key="normal" title="Choose an image..."/>
+                                <connections>
+                                    <action selector="chooseImageButtonTapped:" destination="2Cg-xW-7Dq" eventType="touchUpInside" id="nbG-sB-RSW"/>
+                                    <action selector="recordAudioButtonTapped:" destination="2Cg-xW-7Dq" eventType="touchUpInside" id="BH3-4V-CF6"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="elj-V2-JQa" firstAttribute="top" secondItem="h3H-aa-Foa" secondAttribute="bottom" constant="20" id="6DZ-3f-Gdh"/>
                             <constraint firstItem="h3H-aa-Foa" firstAttribute="leading" secondItem="eD1-ln-jnJ" secondAttribute="leading" constant="20" id="I01-vH-2Sq"/>
                             <constraint firstItem="elj-V2-JQa" firstAttribute="leading" secondItem="eD1-ln-jnJ" secondAttribute="leading" constant="20" id="IBg-A0-GCc"/>
+                            <constraint firstItem="iMV-S7-XRo" firstAttribute="centerY" secondItem="elj-V2-JQa" secondAttribute="centerY" id="Mst-gl-zmW"/>
                             <constraint firstItem="eD1-ln-jnJ" firstAttribute="trailing" secondItem="elj-V2-JQa" secondAttribute="trailing" constant="20" id="PM3-lm-UjT"/>
+                            <constraint firstItem="iMV-S7-XRo" firstAttribute="centerX" secondItem="elj-V2-JQa" secondAttribute="centerX" id="bXo-Qq-37Q"/>
+                            <constraint firstItem="iMV-S7-XRo" firstAttribute="height" secondItem="elj-V2-JQa" secondAttribute="height" id="gPW-A9-5y8"/>
                             <constraint firstItem="Qjh-WO-yeX" firstAttribute="centerX" secondItem="vac-4J-jh0" secondAttribute="centerX" id="j5M-8I-5fG"/>
                             <constraint firstItem="h3H-aa-Foa" firstAttribute="top" secondItem="eD1-ln-jnJ" secondAttribute="top" constant="8" id="ll5-d0-pZU"/>
                             <constraint firstItem="Qjh-WO-yeX" firstAttribute="centerY" secondItem="vac-4J-jh0" secondAttribute="centerY" id="vKn-Nk-6bE"/>
                             <constraint firstItem="eD1-ln-jnJ" firstAttribute="trailing" secondItem="h3H-aa-Foa" secondAttribute="trailing" constant="20" id="wHg-eK-3DI"/>
+                            <constraint firstItem="iMV-S7-XRo" firstAttribute="width" secondItem="elj-V2-JQa" secondAttribute="width" id="wyt-ez-YsV"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="eD1-ln-jnJ"/>
                     </view>
                     <navigationItem key="navigationItem" title="New Experience" id="AjU-cj-PFR">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="gqj-JI-47F">
+                            <connections>
+                                <action selector="cancelButtonTapped:" destination="2Cg-xW-7Dq" id="hNM-uS-JP3"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Next" id="yEX-pg-Pgx">
                             <connections>
                                 <action selector="nextButtonTapped:" destination="2Cg-xW-7Dq" id="gTq-g3-QGc"/>
@@ -95,6 +112,14 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="canceButton" destination="gqj-JI-47F" id="RfN-lM-IXA"/>
+                        <outlet property="chooseImageButton" destination="iMV-S7-XRo" id="3IM-We-aln"/>
+                        <outlet property="imageView" destination="elj-V2-JQa" id="pP5-yq-LrM"/>
+                        <outlet property="nextButton" destination="yEX-pg-Pgx" id="5Gp-lH-dhc"/>
+                        <outlet property="recordAudioButton" destination="Qjh-WO-yeX" id="Bm8-KW-Azf"/>
+                        <outlet property="titleTextField" destination="h3H-aa-Foa" id="wPg-6M-Ty8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ccg-TE-izl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
