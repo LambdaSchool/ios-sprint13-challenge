@@ -8,13 +8,12 @@
 
 import UIKit
 import AVFoundation
-import Photos
-import AVKit
+import MapKit
 
 
 class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptureFileOutputRecordingDelegate {
     
-   
+    
     var recordedURL: AVCaptureMovieFileOutput!
     var vidoeRecordedURL: URL?
     var player: AVPlayer?
@@ -34,9 +33,9 @@ class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptu
         result.delegate = self
         return result
     }()
-   
+    
     @IBAction func saveButton(_ sender: Any) {
-     
+        
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         guard let title = titleString,
@@ -51,7 +50,7 @@ class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptu
         experienceController.addExperience(title: title, image: image, audioURL: audioURL, videoURL: videoURL, coordinate: coordinate)
         
         performSegue(withIdentifier: "backToMap", sender: nil)
-        }
+    }
     
     @IBAction func recordButton(_ sender: Any) {
         if fileOutput.isRecording {
@@ -84,7 +83,7 @@ class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptu
         
         
         if captureSession.canSetSessionPreset(.hd4K3840x2160) {
-        captureSession.sessionPreset = .hd4K3840x2160 // try
+            captureSession.sessionPreset = .hd4K3840x2160 // try
         } else {
             captureSession.sessionPreset = .high
         }
@@ -95,10 +94,10 @@ class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptu
         
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        captureSession.startRunning()
-//    }
+    //    override func viewDidAppear(_ animated: Bool) {
+    //        super.viewDidAppear(animated)
+    //        captureSession.startRunning()
+    //    }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -106,7 +105,7 @@ class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptu
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-         captureSession.startRunning()
+        captureSession.startRunning()
         let authorizationStatus = AVCaptureDevice.authorizationStatus(for: .video)
         
         switch authorizationStatus{
@@ -117,7 +116,7 @@ class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptu
                     fatalError("Please don't do this in an actual app")
                 }
                 DispatchQueue.main.async {
-                     print("Auth")
+                    print("Auth")
                 }
             }
         case .restricted:
@@ -126,7 +125,7 @@ class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptu
             fatalError("Please have better scenario handling than this in real life")
         case .authorized:
             print("Auth")
-
+            
         }
         
         
@@ -134,32 +133,32 @@ class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptu
     
     func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
         DispatchQueue.main.async {
-        self.updateViews()
+            self.updateViews()
         }
     }
     
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         DispatchQueue.main.async {
-        self.updateViews()
+            self.updateViews()
         }
         
         vidoeRecordedURL = outputFileURL
         self.performSegue(withIdentifier: "backToMap", sender: nil)
-    
+        
     }
     
     
     private func bestCamera() -> AVCaptureDevice {
         
         if let device = AVCaptureDevice.default(.builtInDualCamera, for: .video, position: .back) {
-        return device
+            return device
         }
         if let device = AVCaptureDevice.default( .builtInWideAngleCamera, for: .video, position: .back) {
-        return device
+            return device
             
+        }
+        fatalError("no camera on device")
     }
-    fatalError("no camera on device")
-}
     private func newRecordingURL() -> URL {
         let fm = FileManager.default
         let documents = try! fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
@@ -174,11 +173,11 @@ class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptu
     private func updateViews() {
         
         let isRecording = fileOutput.isRecording
-        record.setTitle(isRecording ? "Stop" : "Record", for: .normal)
+       //record.imageView?.image( )(isRecording ? "Stop" : "Record", for: .normal)
     }
-//    private func showCamera() {
-//        performSegue(withIdentifier: "showCamera", sender: self)
-//    }
-
+    //    private func showCamera() {
+    //        performSegue(withIdentifier: "showCamera", sender: self)
+    //    }
+    
 }
 
