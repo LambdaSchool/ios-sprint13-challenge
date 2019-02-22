@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -73,21 +74,64 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="86j-bU-C54">
-                                <rect key="frame" x="126.5" y="318.5" width="122" height="30"/>
+                                <rect key="frame" x="110.5" y="315.5" width="154" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Add Poster Image"/>
                                 <connections>
                                     <action selector="chooseImage:" destination="38K-5f-RjQ" eventType="touchUpInside" id="wfi-qN-s3m"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hgz-AW-Iqh">
-                                <rect key="frame" x="163" y="617" width="49" height="30"/>
-                                <state key="normal" title="Record">
-                                    <color key="titleColor" red="0.96030298223350252" green="0.14365250180771219" blue="0.008296809881770369" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="recordVideo:" destination="38K-5f-RjQ" eventType="touchUpInside" id="jrH-xF-DqS"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Rha-U7-t8y">
+                                <rect key="frame" x="8" y="529" width="359" height="138"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hgz-AW-Iqh">
+                                        <rect key="frame" x="0.0" y="0.0" width="359" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <state key="normal" title="Record Audio"/>
+                                        <connections>
+                                            <action selector="recordAudio:" destination="38K-5f-RjQ" eventType="touchUpInside" id="jrH-xF-DqS"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yNY-2s-fsl">
+                                        <rect key="frame" x="0.0" y="40" width="359" height="30"/>
+                                        <state key="normal" title="Play"/>
+                                        <connections>
+                                            <action selector="tappedPlayButton:" destination="38K-5f-RjQ" eventType="touchUpInside" id="lAq-md-CEp"/>
+                                        </connections>
+                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="bwd-4c-sSF">
+                                        <rect key="frame" x="0.0" y="74" width="359" height="30"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Fg-SA-pZR">
+                                                <rect key="frame" x="0.0" y="0.0" width="30.5" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="2vq-eQ-NIe">
+                                                <rect key="frame" x="36.5" y="0.0" width="286" height="31"/>
+                                                <color key="tintColor" red="0.64549908759999997" green="1" blue="0.90091120319999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </slider>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E5a-xo-ZbR">
+                                                <rect key="frame" x="328.5" y="0.0" width="30.5" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="E5a-xo-ZbR" firstAttribute="width" secondItem="5Fg-SA-pZR" secondAttribute="width" id="QKE-f0-7sy"/>
+                                        </constraints>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rhO-Rz-mI2">
+                                        <rect key="frame" x="0.0" y="108" width="359" height="30"/>
+                                        <state key="normal" title="Save"/>
+                                        <connections>
+                                            <action selector="saveAudioButton:" destination="38K-5f-RjQ" eventType="touchUpInside" id="tRW-pG-7ER"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -95,11 +139,13 @@
                             <constraint firstItem="hdg-Jn-tKC" firstAttribute="trailing" secondItem="6TS-09-I4V" secondAttribute="trailing" constant="8" id="9ud-Dv-e4o"/>
                             <constraint firstItem="86j-bU-C54" firstAttribute="centerY" secondItem="e5n-mT-MLq" secondAttribute="centerY" id="F7O-lI-oLb"/>
                             <constraint firstItem="6TS-09-I4V" firstAttribute="leading" secondItem="hdg-Jn-tKC" secondAttribute="leading" constant="8" id="NW2-Bh-kTQ"/>
+                            <constraint firstItem="Rha-U7-t8y" firstAttribute="leading" secondItem="hdg-Jn-tKC" secondAttribute="leading" constant="8" id="Shl-U9-2Ke"/>
                             <constraint firstItem="iQh-Qy-Zk2" firstAttribute="top" secondItem="hdg-Jn-tKC" secondAttribute="top" constant="8" id="VtC-R8-cul"/>
                             <constraint firstItem="86j-bU-C54" firstAttribute="centerX" secondItem="e5n-mT-MLq" secondAttribute="centerX" id="ZCk-Jo-fPe"/>
                             <constraint firstItem="hdg-Jn-tKC" firstAttribute="trailing" secondItem="iQh-Qy-Zk2" secondAttribute="trailing" constant="8" id="aza-9M-3Dz"/>
+                            <constraint firstAttribute="trailing" secondItem="Rha-U7-t8y" secondAttribute="trailing" constant="8" id="pAy-PS-oM8"/>
+                            <constraint firstItem="Rha-U7-t8y" firstAttribute="top" secondItem="6TS-09-I4V" secondAttribute="bottom" constant="8" id="r37-Ga-E3Q"/>
                             <constraint firstItem="iQh-Qy-Zk2" firstAttribute="leading" secondItem="hdg-Jn-tKC" secondAttribute="leading" constant="8" id="yMT-do-3iD"/>
-                            <constraint firstItem="hgz-AW-Iqh" firstAttribute="centerX" secondItem="e5n-mT-MLq" secondAttribute="centerX" id="yf6-w5-Rvz"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hdg-Jn-tKC"/>
                     </view>
@@ -108,8 +154,13 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addImageButton" destination="86j-bU-C54" id="XJi-JC-I0e"/>
+                        <outlet property="elapsedTimeLabel" destination="5Fg-SA-pZR" id="bG8-MI-MKn"/>
                         <outlet property="imageView" destination="6TS-09-I4V" id="nlU-VS-BmT"/>
+                        <outlet property="playButton" destination="yNY-2s-fsl" id="2bj-KK-dJQ"/>
                         <outlet property="recordButton" destination="hgz-AW-Iqh" id="dCB-IN-g8q"/>
+                        <outlet property="remainingTimeLabel" destination="E5a-xo-ZbR" id="WXW-ep-i54"/>
+                        <outlet property="saveAudioButton" destination="rhO-Rz-mI2" id="FIz-8D-kFk"/>
+                        <outlet property="timerSlider" destination="2vq-eQ-NIe" id="AMK-WC-64O"/>
                         <outlet property="titleTextField" destination="iQh-Qy-Zk2" id="ceL-uL-0YR"/>
                         <segue destination="8Q2-XP-CFB" kind="presentation" identifier="showcamera" id="5iz-tw-qSC"/>
                     </connections>
@@ -133,21 +184,6 @@
             </objects>
             <point key="canvasLocation" x="2836" y="-307"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="nem-lg-Yef">
-            <objects>
-                <viewController id="qId-Ty-k4e" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="5MI-0I-QB9">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="rm6-4r-6mF"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fjd-NM-zgr" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3506" y="80"/>
-        </scene>
         <!--Camera View Controller-->
         <scene sceneID="Hdi-qr-e3E">
             <objects>
@@ -155,6 +191,21 @@
                     <view key="view" contentMode="scaleToFill" id="UTK-Xd-TLS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rEe-sx-Gpw">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="Camera" id="yF2-1b-lfZ">
+                                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="XsL-DP-LMH">
+                                            <connections>
+                                                <action selector="backButton:" destination="8Q2-XP-CFB" id="ecI-y3-eor"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="gsv-cd-pH1"/>
                     </view>

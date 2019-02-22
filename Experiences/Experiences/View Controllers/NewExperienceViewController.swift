@@ -21,12 +21,20 @@ class NewExperienceViewController: UIViewController, UIImagePickerControllerDele
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var addImageButton: UIButton!
     @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var elapsedTimeLabel: UILabel!
+    @IBOutlet weak var remainingTimeLabel: UILabel!
+    @IBOutlet weak var timerSlider: UISlider!
+    @IBOutlet weak var saveAudioButton: UIButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
     }
+    
+    // MARK: - Image Methods
     
     private func updateImageView() {
         // Make sure I have an image
@@ -98,14 +106,6 @@ class NewExperienceViewController: UIViewController, UIImagePickerControllerDele
             return image
         }
         return UIImage(cgImage: cgImage)
-        
-    }
-    
-    @IBAction func recordVideo(_ sender: Any) {
-        
-        
-        
-        
     }
     
     // MARK: - UIIMagePickerControllerDelegate Methods
@@ -121,6 +121,25 @@ class NewExperienceViewController: UIViewController, UIImagePickerControllerDele
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
+    
+    // MARK: - Audio Methods
+    
+    @IBAction func recordAudio(_ sender: Any) {
+        
+        
+    }
+    
+    @IBAction func tappedPlayButton(_ sender: Any) {
+    }
+    
+    @IBAction func saveAudioButton(_ sender: Any) {
+        
+        
+        saveAudioButton.setTitle("Saved!", for: [])
+        saveAudioButton.tintColor = .gray
+        
+    }
+    
     
     
     
