@@ -66,7 +66,7 @@ class AddExperienceViewController: ShiftableViewController {
     @IBOutlet weak var nextButton: UIBarButtonItem!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var recordAudioButton: UIButton!
-    @IBOutlet weak var canceButton: UIBarButtonItem!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
     
     //MARK: - IBActions
     
