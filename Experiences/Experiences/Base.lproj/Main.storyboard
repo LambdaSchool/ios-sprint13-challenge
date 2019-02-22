@@ -133,7 +133,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Next" id="bgZ-LZ-tfF">
                             <connections>
-                                <segue destination="sFn-Xi-eCa" kind="show" id="lQ9-Jd-07q"/>
+                                <action selector="goToNextScreen:" destination="xcJ-zG-mUU" id="cRe-el-fEf"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -143,6 +143,7 @@
                         <outlet property="playButton" destination="4HO-05-wF2" id="nc7-ef-dbq"/>
                         <outlet property="recordButton" destination="Dkx-MC-Oio" id="hcw-kC-DoJ"/>
                         <outlet property="titleTextField" destination="Ys7-W5-ruF" id="YX9-90-10P"/>
+                        <segue destination="sFn-Xi-eCa" kind="show" identifier="AddVideoSegue" id="wxn-aG-hiX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QWE-c9-Wpi" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -159,7 +160,6 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UuA-wu-5k0" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="116" width="375" height="551"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gTf-8B-jJA">
                                 <rect key="frame" x="151" y="605" width="73" height="42"/>
@@ -167,6 +167,9 @@
                                 <color key="tintColor" red="0.73725490199999999" green="0.16078431369999999" blue="0.23921568630000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="contentEdgeInsets" minX="12" minY="12" maxX="12" maxY="12"/>
                                 <state key="normal" title="Record"/>
+                                <connections>
+                                    <action selector="recordVideo:" destination="sFn-Xi-eCa" eventType="touchUpInside" id="ym3-NR-0zv"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -183,6 +186,11 @@
                     <navigationItem key="navigationItem" title="Record Video" id="lEh-65-7wK">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="t8a-0O-wnd"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="cameraPreviewView" destination="UuA-wu-5k0" id="jx9-SY-4jp"/>
+                        <outlet property="recordButton" destination="gTf-8B-jJA" id="va4-j0-eox"/>
+                        <outlet property="saveButton" destination="t8a-0O-wnd" id="UEE-MQ-78l"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CrX-aY-gyf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

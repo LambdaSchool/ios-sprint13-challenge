@@ -61,6 +61,10 @@ class NewExperienceViewController: UIViewController, UINavigationControllerDeleg
         recorder.toggleRecording()
     }
     
+    @IBAction func goToNextScreen(_ sender: Any) {
+        segueIfCanAddVideo()
+    }
+    
     @IBAction func cancel(_ sender: Any) {
         dismiss(animated: true)
     }
@@ -153,4 +157,17 @@ class NewExperienceViewController: UIViewController, UINavigationControllerDeleg
         playButton.setTitle(playTitle, for: .normal)
 
     }
+    
+    private func segueIfCanAddVideo() {
+        AVCaptureDeviceHelper.shared.checkAuthorizationStatus { (alertController) in
+            DispatchQueue.main.async {
+                if let alertController = alertController {
+                    self.present(alertController, animated: true)
+                } else {
+                    self.performSegue(withIdentifier: "AddVideoSegue", sender: self)
+                }
+            }
+        }
+    }
+
 }
