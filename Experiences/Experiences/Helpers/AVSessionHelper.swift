@@ -22,8 +22,7 @@ class AVSessionHelper {
             }
             
             do {
-                try session.setCategory(.playAndRecord, mode: .default, options: [])
-                try session.overrideOutputAudioPort(.speaker)
+                try session.setCategory(.playAndRecord, mode: .default, options: [.allowBluetooth, .allowAirPlay])
                 try session.setActive(true, options: [])
                 
             } catch {

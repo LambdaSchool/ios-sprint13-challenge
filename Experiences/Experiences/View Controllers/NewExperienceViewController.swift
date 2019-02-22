@@ -8,11 +8,13 @@
 
 import UIKit
 
-class NewExperienceViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class NewExperienceViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate, AudioRecorderDelegate, AudioPlayerDelegate {
     
     // MARK: - Properties
     var experienceController: ExperienceController!
     
+    private let recorder = AudioRecorder()
+    private let player = AudioPlayer()
     private let context = CIContext(options: nil)
     private var originalImage: UIImage? {
         didSet { updateImageView() }
@@ -24,8 +26,23 @@ class NewExperienceViewController: UIViewController, UINavigationControllerDeleg
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
     
-    // MARK: - UI Actions
+    // MARK: - Lifecycle Methods
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        titleTextField.delegate = self
+        player.delegate = self
+        recorder.delegate = self
+        updateButtons()
+    }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        AVSessionHelper.shared.setupSessionForAudioRecording()
+    }
+    
+    // MARK: - UI Actions
     @IBAction func addPhoto(_ sender: Any) {
         PhotoLibraryHelper.shared.checkAuthorizationStatus { (alertController) in
             if let alertController = alertController {
@@ -37,15 +54,31 @@ class NewExperienceViewController: UIViewController, UINavigationControllerDeleg
     }
     
     @IBAction func playAudio(_ sender: Any) {
-        
+        player.play(file: recorder.currentFile)
     }
     
     @IBAction func recordAudio(_ sender: Any) {
-        
+        recorder.toggleRecording()
     }
     
     @IBAction func cancel(_ sender: Any) {
         dismiss(animated: true)
+    }
+    
+    // MARK: - UI Text Field Delegate
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    // MARK: - Audio Recorder Delegate
+    func recorderDidChangeState(_ recorder: AudioRecorder) {
+        updateButtons()
+    }
+    
+    // MARK: - Audio Player Delegate
+    func playerDidChangeState(_ player: AudioPlayer) {
+        updateButtons()
     }
     
     // MARK: - UI Image Picker Controller Delegate
@@ -104,5 +137,20 @@ class NewExperienceViewController: UIViewController, UINavigationControllerDeleg
             let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else { return image }
         
         return UIImage(cgImage: cgImage)
+    }
+    
+    private func updateButtons() {
+        let enableRecordButton = !player.isPlaying
+        recordButton.isEnabled = enableRecordButton
+        
+        let recordTitle = recorder.isRecording ? "Stop" : "Record"
+        recordButton.setTitle(recordTitle, for: .normal)
+        
+        let enablePlayButton = recorder.currentFile != nil && !recorder.isRecording
+        playButton.isEnabled = enablePlayButton
+        
+        let playTitle = player.isPlaying ? "Pause" : "Play"
+        playButton.setTitle(playTitle, for: .normal)
+
     }
 }
