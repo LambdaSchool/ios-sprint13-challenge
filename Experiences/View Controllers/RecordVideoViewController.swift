@@ -12,15 +12,6 @@ import Photos
 
 class RecordVideoViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
-    private let captureSession = AVCaptureSession()
-    
-    private let fileOutput = AVCaptureMovieFileOutput()
-    @IBOutlet weak var cameraView: CameraPreviewView!
-    
-    @IBOutlet weak var recordButtonOuterCircleLabel: UILabel!
-    @IBOutlet weak var recordButton: UIButton!
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = false
@@ -66,13 +57,7 @@ class RecordVideoViewController: UIViewController, AVCaptureFileOutputRecordingD
         captureSession.stopRunning()
     }
     
-    @IBAction func toggleRecord(_ sender: Any) {
-        if fileOutput.isRecording {
-            fileOutput.stopRecording()
-        }else {
-            fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
-        }
-    }
+    
     
     // MARK: - AVCaptureFileOutputRecordingDelegate Methods
     func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
@@ -101,6 +86,29 @@ class RecordVideoViewController: UIViewController, AVCaptureFileOutputRecordingD
         
         
     }
+    
+    //MARK: - IBOutlets
+    @IBOutlet weak var cameraView: CameraPreviewView!
+    @IBOutlet weak var recordButtonOuterCircleLabel: UILabel!
+    @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
+    
+    //MARK: - IBActions
+    @IBAction func toggleRecord(_ sender: Any) {
+        if fileOutput.isRecording {
+            fileOutput.stopRecording()
+        }else {
+            fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
+        }
+    }
+    
+    @IBAction func saveButtonTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    //MARK: - Properties
+    private let captureSession = AVCaptureSession()
+    private let fileOutput = AVCaptureMovieFileOutput()
     
     // MARK: - Private methods
     
