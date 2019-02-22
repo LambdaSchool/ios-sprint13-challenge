@@ -14,11 +14,11 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     //MARK: Private Properties
     private let captureSession = AVCaptureSession()
     private let fileOutput = AVCaptureMovieFileOutput()
-    private let postController = PostController()
     private var saveURL = URL(fileURLWithPath: "Hello")
     
     //MARK: Non-Private Properties
     var userExperience: UserExperience?
+    var userExperienceController: UserExperienceController?
     
     //MARK: IBOutlets
     @IBOutlet weak var cameraView: CameraPreviewView!
@@ -81,8 +81,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     //MARK: IBActions
     @IBAction func saveButtonWasTapped(_ sender: Any) {
-        let url = saveURL
-        userExperience.addVideoExperience(userExperience)
+        saveVideo()
     }
     
     @IBAction func toggleRecord(_ sender: Any) {
@@ -119,11 +118,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         return documents.appendingPathComponent(name).appendingPathExtension("mov")
     }
     
-    private func createVideoPost(with title: String, with url: URL) {
-        guard let data = try? Data(contentsOf: url) else {
-            fatalError("Just doing this to debug. Could not turn video url into data.")
-        }
-        postController.createPost(with: title, ofType: .video, mediaData: data)
+    private func saveVideo() {
+        userExperienceController?.addVideoExperience(userExperience: userExperience!, videoURL: saveURL)
     }
     
     private func updateViews() {

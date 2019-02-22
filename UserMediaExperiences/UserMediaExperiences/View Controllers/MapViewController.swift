@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class EarthquakesViewController: UIViewController, MKMapViewDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate {
     
     //MARK: IBOutlets
     @IBOutlet weak var mapView: MKMapView!

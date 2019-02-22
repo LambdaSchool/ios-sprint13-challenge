@@ -15,6 +15,10 @@
 		A22BF65A222056C1006BD130 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A22BF658222056C1006BD130 /* LaunchScreen.storyboard */; };
 		A22BF67722205AAE006BD130 /* UserExperience.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22BF67622205AAE006BD130 /* UserExperience.swift */; };
 		A22BF67A22205ED4006BD130 /* UserExperienceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22BF67922205ED4006BD130 /* UserExperienceController.swift */; };
+		A29C36682220658300D97155 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29C36662220658200D97155 /* Player.swift */; };
+		A29C36692220658300D97155 /* Recorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29C36672220658300D97155 /* Recorder.swift */; };
+		A29C3674222065CC00D97155 /* CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29C3672222065CC00D97155 /* CameraPreviewView.swift */; };
+		A29C3675222065CC00D97155 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29C3673222065CC00D97155 /* CameraViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,13 +30,13 @@
 		A22BF656222056C1006BD130 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A22BF659222056C1006BD130 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A22BF65B222056C1006BD130 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A22BF66C22205A00006BD130 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
-		A22BF66D22205A00006BD130 /* EarthquakesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthquakesViewController.swift; sourceTree = "<group>"; };
-		A22BF66F22205A17006BD130 /* Recorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recorder.swift; sourceTree = "<group>"; };
-		A22BF67022205A17006BD130 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
-		A22BF67422205A4B006BD130 /* CameraPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
+		A22BF66D22205A00006BD130 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		A22BF67622205AAE006BD130 /* UserExperience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserExperience.swift; sourceTree = "<group>"; };
 		A22BF67922205ED4006BD130 /* UserExperienceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserExperienceController.swift; sourceTree = "<group>"; };
+		A29C36662220658200D97155 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		A29C36672220658300D97155 /* Recorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recorder.swift; sourceTree = "<group>"; };
+		A29C3672222065CC00D97155 /* CameraPreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
+		A29C3673222065CC00D97155 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,9 +86,9 @@
 		A22BF66B22205A00006BD130 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				A22BF66D22205A00006BD130 /* EarthquakesViewController.swift */,
+				A22BF66D22205A00006BD130 /* MapViewController.swift */,
 				A22BF64E222056BF006BD130 /* ImageAudioViewController.swift */,
-				A22BF66C22205A00006BD130 /* CameraViewController.swift */,
+				A29C3673222065CC00D97155 /* CameraViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -92,8 +96,8 @@
 		A22BF66E22205A17006BD130 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				A22BF67022205A17006BD130 /* Player.swift */,
-				A22BF66F22205A17006BD130 /* Recorder.swift */,
+				A29C36662220658200D97155 /* Player.swift */,
+				A29C36672220658300D97155 /* Recorder.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -101,7 +105,7 @@
 		A22BF67322205A4B006BD130 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				A22BF67422205A4B006BD130 /* CameraPreviewView.swift */,
+				A29C3672222065CC00D97155 /* CameraPreviewView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -202,11 +206,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A29C3674222065CC00D97155 /* CameraPreviewView.swift in Sources */,
 				A22BF67A22205ED4006BD130 /* UserExperienceController.swift in Sources */,
 				A22BF655222056BF006BD130 /* UserMediaExperiences.xcdatamodeld in Sources */,
 				A22BF64F222056BF006BD130 /* ImageAudioViewController.swift in Sources */,
 				A22BF67722205AAE006BD130 /* UserExperience.swift in Sources */,
+				A29C36682220658300D97155 /* Player.swift in Sources */,
+				A29C36692220658300D97155 /* Recorder.swift in Sources */,
 				A22BF64D222056BF006BD130 /* AppDelegate.swift in Sources */,
+				A29C3675222065CC00D97155 /* CameraViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Map View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="UserMediaExperiences" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MapViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -39,6 +39,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="WI2-Af-eCX" id="JI0-Zz-LFQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -77,6 +80,9 @@
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XvF-th-xCg">
                                 <rect key="frame" x="126" y="242" width="122" height="30"/>
                                 <state key="normal" title="Add Poster Image"/>
+                                <connections>
+                                    <action selector="addPosterImageButtonWasTapped:" destination="gdr-0Y-Taa" eventType="touchUpInside" id="mH9-75-3T5"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dXA-en-PAt">
                                 <rect key="frame" x="163" y="380" width="49" height="30"/>
@@ -84,7 +90,14 @@
                                 <state key="normal" title="Record">
                                     <color key="titleColor" red="1" green="0.13482809300000001" blue="0.048573597480000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="recordButtonWasTapped:" destination="gdr-0Y-Taa" eventType="touchUpInside" id="5Eb-cI-mZZ"/>
+                                </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wyj-7K-EVV">
+                                <rect key="frame" x="16" y="110" width="343" height="262"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -100,19 +113,26 @@
                     <navigationItem key="navigationItem" title="New Experience" id="pHC-k3-Sur">
                         <barButtonItem key="rightBarButtonItem" title="Next" id="9kf-zx-fhI">
                             <connections>
+                                <action selector="nextButtonWasTapped:" destination="gdr-0Y-Taa" id="MC3-vh-5hR"/>
                                 <segue destination="7f8-6Q-ZdS" kind="show" id="voH-KC-e0K"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="addPosterImageButton" destination="XvF-th-xCg" id="REa-nt-Xi0"/>
+                        <outlet property="imageView" destination="Wyj-7K-EVV" id="5gs-Yu-pDh"/>
+                        <outlet property="recordAudioButton" destination="dXA-en-PAt" id="CQ0-u8-baR"/>
+                        <outlet property="titleTextField" destination="Wwk-dG-xZF" id="hLP-ft-XQO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CNK-ON-Qod" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1466" y="134"/>
+            <point key="canvasLocation" x="1464.8" y="133.5832083958021"/>
         </scene>
         <!--Video Recording-->
         <scene sceneID="H6o-2Q-9RG">
             <objects>
-                <viewController id="7f8-6Q-ZdS" customClass="CameraViewController" sceneMemberID="viewController">
+                <viewController id="7f8-6Q-ZdS" customClass="CameraViewController" customModule="UserMediaExperiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WpR-c2-kzM">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
