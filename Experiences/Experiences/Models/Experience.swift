@@ -24,6 +24,8 @@ enum LatLongType: String {
 class Experience: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     
+    
+    
     init(title: String, audioURL: URL, videoURL: URL, imageURL: URL, geotag: CLLocationCoordinate2D? = nil, timestamp: Date = Date()) {
         
         self.audioURL = audioURL

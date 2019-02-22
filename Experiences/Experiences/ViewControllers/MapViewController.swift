@@ -31,7 +31,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let experience = annotation as? Experience else { return nil }
         let experienceView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceAnnotationView", for: experience) as! MKMarkerAnnotationView
-        
+        experienceView.clusteringIdentifier = "identifier"
         experienceView.glyphImage = UIImage(named: "airdrop")
         experienceView.glyphTintColor = .black
         
@@ -45,6 +45,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
         fetchExperiences()
+    }
+    
+    func mapView(_ mapView: MKMapView, clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]) -> MKClusterAnnotation {
+        let test = MKClusterAnnotation(memberAnnotations: memberAnnotations)
+        
+        return test
     }
     
     // MARK: - Private Methods
