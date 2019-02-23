@@ -7,6 +7,8 @@ class NewExperienceViewController: UIViewController, UIImagePickerControllerDele
     
     // MARK: - Properties
     
+    var newExperience = Experience(title: nil, audio: nil, video: nil, image: nil, geotag: nil)
+    
     private var originalImage: UIImage? {
         // When image has changed, add our UI
         didSet {
@@ -56,7 +58,10 @@ class NewExperienceViewController: UIViewController, UIImagePickerControllerDele
         // Put image into my image view and apply filter
         imageView?.image = applyFilter(to: image)
         
-        addImageButton.setTitle("", for: [])
+        // Save image to experience
+        newExperience.image = applyFilter(to: image)
+        
+        addImageButton.isHidden = true
     }
 
     @IBAction func chooseImage(_ sender: Any) {
@@ -158,7 +163,7 @@ class NewExperienceViewController: UIViewController, UIImagePickerControllerDele
         playButton.setTitle(isPlaying ? "Pause" : "Play", for: .normal)
         
         let isRecording = recorder.isRecording
-        recordButton.setTitle(isRecording ? "Stop" : "Record", for: .normal)
+        recordButton.setImage(isRecording ? UIImage(named: "small_mic_filled") : UIImage(named: "small_mic_unfilled"), for: .normal)
         
         let elapsedTime = player.elapsedTime
         elapsedTimeLabel.text = timeFormatter.string(from: player.elapsedTime)
@@ -172,11 +177,20 @@ class NewExperienceViewController: UIViewController, UIImagePickerControllerDele
     
     @IBAction func saveAudioButton(_ sender: Any) {
         
+        guard let audioURL = recorder.currentFile else { return }
+        
+        // Save audio to newExperience
+        newExperience.audio = audioURL
         
         saveAudioButton.setTitle("Saved!", for: [])
         saveAudioButton.tintColor = .gray
         
     }
     
+    @IBAction func nextButton(_ sender: Any) {
+        
+        newExperience.title = titleTextField.text
+        
+    }
     
 }

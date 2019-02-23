@@ -7,12 +7,16 @@ class VideoCameraViewController: UIViewController, AVCaptureFileOutputRecordingD
     
     private let captureSession = AVCaptureSession()
     private let fileOutput = AVCaptureMovieFileOutput()
+    var outputURL: URL!
     
     @IBOutlet weak var cameraView: VideoPreviewView!
     @IBOutlet weak var recordButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        recordButton.setImage(UIImage(named: "record"), for: .normal)
+        recordButton.layer.cornerRadius = 25
         
         // SESSION INPUTS
         
@@ -80,7 +84,7 @@ class VideoCameraViewController: UIViewController, AVCaptureFileOutputRecordingD
         
         if fileOutput.isRecording {
             fileOutput.stopRecording()
-            recordButton.setImage(UIImage(named: "stoprecord"), for: .normal)
+            recordButton.setImage(UIImage(named: "stop"), for: .normal)
         } else {
             fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
             recordButton.setImage(UIImage(named: "record"), for: .normal)
