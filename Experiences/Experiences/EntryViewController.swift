@@ -14,6 +14,9 @@ class EntryViewController: UIViewController, UINavigationControllerDelegate, UII
     
     //Properties
     let mediaPicker = UIImagePickerController()
+    var postPhoto: String?
+    var postVideo: String?
+    var postTitle: String?
     
     //Overrides
     override func viewDidLoad() {
@@ -48,6 +51,14 @@ class EntryViewController: UIViewController, UINavigationControllerDelegate, UII
     
     @IBAction func saveEntry(_ sender: UIBarButtonItem) {
         
+        if entryImage.image != nil { //Add or video
+            guard let itemImage = entryImage.image else { return }
+            
+            //postPhoto = itemImage //convert to string or path.
+        }
+        
+        //saveEntryData(title: String, image: String, video: String)
+        //MOC save
     }
     
     //Delegate Functions
@@ -57,6 +68,20 @@ class EntryViewController: UIViewController, UINavigationControllerDelegate, UII
         if let selectedImage = info[UIImagePickerController.InfoKey.originalImage] {
             entryImage.image = selectedImage as? UIImage //Assign to entry image
         }
+        
+        //Options for Video
+        guard let mediaType = info[UIImagePickerController.InfoKey.mediaURL] as? String else { return }
+        
+        //Make sure the video is the correct format.
+        guard mediaType == (kUTTypeMovie as String) else { return }
+        
+        //Unwrap url of the recorded video.
+        guard let url = info[UIImagePickerController.InfoKey.mediaURL] as? URL else { return }
+        
+        //Checks if the video can be saved to the User's Camera Roll.
+        guard UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(url.path) else { return }
+        
+        print(url.path)
         
         dismiss(animated: true, completion: nil) //Dismiss the picker
     }
