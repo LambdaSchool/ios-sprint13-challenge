@@ -13,7 +13,7 @@
         <!--Geo View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="GeoViewController" customModule="Sprint13" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GeoViewController" id="BYZ-38-t0r" customClass="GeoViewController" customModule="Sprint13" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -25,13 +25,15 @@
                                 <rect key="frame" x="313" y="617" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
-                                    <segue destination="w93-xO-PNA" kind="show" id="XDH-VT-SL0"/>
+                                    <action selector="presentExperiences:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WoY-U9-T4C"/>
+                                    <segue destination="w93-xO-PNA" kind="show" identifier="addExperienceSegue" id="XDH-VT-SL0"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="63J-QV-zHC" secondAttribute="trailing" id="2sa-uX-1og"/>
+                            <constraint firstItem="cUi-8s-aNi" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" symbolic="YES" id="7zl-IR-L0H"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="63J-QV-zHC" secondAttribute="bottom" id="KVW-jv-gDl"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="cUi-8s-aNi" secondAttribute="trailing" constant="16" id="KXf-d3-M4R"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="cUi-8s-aNi" secondAttribute="bottom" constant="20" id="i6K-i6-ZCW"/>
@@ -141,8 +143,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PyO-YZ-vmF" customClass="CameraPreviewView" customModule="Sprint13" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="116" width="375" height="551"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lOz-P1-M3E">
-                                        <rect key="frame" x="155" y="424" width="65" height="65"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lOz-P1-M3E">
+                                        <rect key="frame" x="155" y="426" width="65" height="65"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="65" id="707-aQ-1Rc"/>
                                             <constraint firstAttribute="height" constant="65" id="ED4-no-pOJ"/>
@@ -156,7 +158,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="lOz-P1-M3E" firstAttribute="centerX" secondItem="PyO-YZ-vmF" secondAttribute="centerX" id="OoB-Hb-voG"/>
-                                    <constraint firstAttribute="bottom" secondItem="lOz-P1-M3E" secondAttribute="bottom" constant="62" id="agS-RY-Jqk"/>
+                                    <constraint firstAttribute="bottom" secondItem="lOz-P1-M3E" secondAttribute="bottom" constant="60" id="agS-RY-Jqk"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -173,7 +175,6 @@
                         <barButtonItem key="rightBarButtonItem" title="Save" id="ebG-PH-skU">
                             <connections>
                                 <action selector="saveButton:" destination="yql-L9-FEy" id="Wev-gP-ctV"/>
-                                <segue destination="BYZ-38-t0r" kind="presentation" identifier="backToMap" id="OkV-zA-lWe"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -206,6 +207,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="record" width="225" height="225"/>
+        <image name="record" width="789" height="720"/>
     </resources>
 </document>

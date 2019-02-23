@@ -18,12 +18,14 @@ class GeoViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var curentLocation: CLLocationCoordinate2D?
     var index = 0
     let experienceController = ExperienceController.shared
-    var data: Experience?
+    
+    var titletext: String?
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+       
         updateView()
     }
     
@@ -55,10 +57,11 @@ class GeoViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
      
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
-        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "AnnotationView") as! MKMarkerAnnotationView
+        guard let experience = annotation as? Experience else { return nil }
+        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "AnnotationView", for: experience) as! MKMarkerAnnotationView
         annotationView.markerTintColor = .gray
         annotationView.glyphTintColor = .black
+        annotationView.canShowCallout = true
         return annotationView
     }
     
@@ -69,12 +72,12 @@ class GeoViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         curentLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         let region = MKCoordinateRegion(center: curentLocation!, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
         
-        
         let newPin = MKPointAnnotation()
+        
+        
         newPin.coordinate = curentLocation!
-       // newPin.title = experienceController.experiences[0].title ?? ""
+        newPin.title = titletext
         mapView.addAnnotation(newPin)
-        index += 1
         //set region on the map
         self.mapView.setRegion(region, animated: true)
         self.locationManager.stopUpdatingLocation()
@@ -85,8 +88,32 @@ class GeoViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         let anotations = mapView.annotations
         
+    
         mapView.removeAnnotations(anotations)
         mapView.addAnnotations(experienceController.experiences)
+        print(experienceController.experiences.count)
+        if experienceController.experiences.count > 0 {
+        
+        let newPin = MKPointAnnotation()
+            if let lastCoordinate = experienceController.experiences.last?.coordinate {
+            newPin.coordinate = lastCoordinate
+            }
+            if let annotationText = experienceController.experiences.last?.title {
+        newPin.title = annotationText
+            }
+        mapView.addAnnotation(newPin)
+        }
+    }
+    @IBAction func presentExperiences(_ sender: Any) {
+        self.performSegue(withIdentifier: "addExperienceSegue", sender: sender)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "addExperienceSegue" {
+            guard let destination = segue.destination as? AudioAndPhotoViewController else { return }
+            
+            destination.experienceController = experienceController
+        }
     }
     
 

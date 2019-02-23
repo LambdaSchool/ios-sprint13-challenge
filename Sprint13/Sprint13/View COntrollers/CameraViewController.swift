@@ -14,13 +14,14 @@ import MapKit
 class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptureFileOutputRecordingDelegate {
     
     
-    var recordedURL: AVCaptureMovieFileOutput!
+    
     var vidoeRecordedURL: URL?
     var player: AVPlayer?
     var titleString: String?
     var image: UIImage?
     var curentRecordedAudioURL: URL?
-    let experienceController = ExperienceController.shared
+    var experienceController = ExperienceController()
+    var experiences: [Experience]? = []
     var audioController: AudioAndPhotoViewController?
     
     
@@ -36,7 +37,7 @@ class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptu
     
     @IBAction func saveButton(_ sender: Any) {
         
-        locationManager.requestWhenInUseAuthorization()
+       locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         guard let title = titleString,
             let image = image,
@@ -47,9 +48,16 @@ class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptu
         
         let coordinate = location.coordinate
         
-        experienceController.addExperience(title: title, image: image, audioURL: audioURL, videoURL: videoURL, coordinate: coordinate)
-        
-        performSegue(withIdentifier: "backToMap", sender: nil)
+        ExperienceController.shared.addExperience(title: title, image: image, audioURL: audioURL, videoURL: videoURL, coordinate: coordinate)
+//        experienceController.addExperience(title: title, image: image, audioURL: audioURL, videoURL: videoURL, coordinate: coordinate)
+        experiences = ExperienceController.shared.experiences
+            if experiences != nil {
+                let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let nextViewController = storyBoard.instantiateViewController(withIdentifier: "GeoViewController") as! GeoViewController
+                
+                self.present(nextViewController, animated:true, completion:nil)
+        }
+         print("working")
     }
     
     @IBAction func recordButton(_ sender: Any) {
@@ -94,10 +102,7 @@ class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptu
         
     }
     
-    //    override func viewDidAppear(_ animated: Bool) {
-    //        super.viewDidAppear(animated)
-    //        captureSession.startRunning()
-    //    }
+    
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -125,10 +130,7 @@ class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptu
             fatalError("Please have better scenario handling than this in real life")
         case .authorized:
             print("Auth")
-            
         }
-        
-        
     }
     
     func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
@@ -141,12 +143,8 @@ class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptu
         DispatchQueue.main.async {
             self.updateViews()
         }
-        
         vidoeRecordedURL = outputFileURL
-        self.performSegue(withIdentifier: "backToMap", sender: nil)
-        
     }
-    
     
     private func bestCamera() -> AVCaptureDevice {
         
@@ -171,14 +169,8 @@ class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptu
     }
     
     private func updateViews() {
-        
         let isRecording = fileOutput.isRecording
         let text = isRecording ? "stop" : "record"
         record.setImage(UIImage(named: text), for: .normal)
     }
-    //    private func showCamera() {
-    //        performSegue(withIdentifier: "showCamera", sender: self)
-    //    }
-    
 }
-

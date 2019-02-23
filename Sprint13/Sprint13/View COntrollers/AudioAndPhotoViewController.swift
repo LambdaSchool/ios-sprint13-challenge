@@ -28,10 +28,11 @@ class AudioAndPhotoViewController: UIViewController, UIImagePickerControllerDele
             present(picker, animated: true, completion: nil)
             
         }
-    private var originalImage: UIImage?
+     private var originalImage: UIImage?
      let player = Player()
      let recorder = Recorder()
      var curentRecordedAudioURl: URL?
+     var experienceController: ExperienceController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,16 +75,15 @@ class AudioAndPhotoViewController: UIViewController, UIImagePickerControllerDele
             performSegue(withIdentifier: "Video", sender: nil) // temp for test
             return
         }
-        
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Video" {  //&& textField.text != nil && imageView.image != nil
+        if segue.identifier == "Video" {
             guard let destination = segue.destination as? CameraViewController else { return }
             destination.titleString = textField.text
             destination.image = imageView.image
             destination.curentRecordedAudioURL = recorder.currentFile
+            
         }
     }
     let filter = CIFilter(name: "CIColorControls")!
