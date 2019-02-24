@@ -9,63 +9,40 @@
 import Foundation
 import CoreLocation
 import MapKit
+import AVKit
 
-class Experience: NSObject, Decodable {
+class Experience: NSObject {
     
-    let id: String
-    let geometry: Geometry
-    let details: Details
+    var id: String = UUID().uuidString
+    var experienceName: String
+    var audioMemory: AVAudioFile?
+    var videoMemoryURL: URL?
+    var experienceImage: UIImage?
+    var location: CLLocationCoordinate2D
+    var experienceDate: String = Date().fullDate
+    var experienceTime: String = Date().shortTime
     
-    struct Details: Decodable, Hashable {
-        let experienceName: String
-        let audioURL: URL
-        let videoURL: URL
-        let imageURL: URL
-        
+ 
+    init(experienceName: String, audioMemory: AVAudioFile?, videoMemoryURL: URL?, experienceImage: UIImage?, location: CLLocationCoordinate2D) {
+        self.experienceName = experienceName
+        self.audioMemory = audioMemory
+        self.videoMemoryURL = videoMemoryURL
+        self.experienceImage = experienceImage
+        self.location = location
     }
     
-    struct Geometry: Decodable, Hashable {
-        
-        init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: GeometryCodingKeys.self)
-            var coordinates = try container.nestedUnkeyedContainer(forKey: .coordinates)
-            let longitude = try coordinates.decode(CLLocationDegrees.self)
-            let latitude = try coordinates.decode(CLLocationDegrees.self)
-            
-            location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    // so we can see the contents of the NSObject instead of its memory address
+    override var description: String {
+        get {
+            return "Experience : id : experienceName : \(self.experienceName) - audioMemory : \(self.audioMemory) - videoMemoryURL: : \(self.videoMemoryURL) - experienceImage : \(self.experienceImage) - location : \(self.location) - experienceDate : \(self.experienceDate) - experienceTime : \(self.experienceTime)"
         }
         
-        let location: CLLocationCoordinate2D
-        
-        enum GeometryCodingKeys: CodingKey {
-            case coordinates
-        }
-        
-        
-        static func ==(lhs: Geometry, rhs: Geometry) -> Bool {
-            return lhs.location.latitude == rhs.location.latitude &&
-                lhs.location.longitude == rhs.location.longitude
-        }
-        
-        func hash(into hasher: inout Hasher) {
-            hasher.combine(location.latitude)
-            hasher.combine(location.longitude)
-        }
-        
-    }
-    
-    override var hash: Int {
-        var hasher = Hasher()
-        hasher.combine(id)
-        return hasher.finalize()
-    }
-    
-    override func isEqual(_ object: Any?) -> Bool {
-        guard let other = object as? Experience else { return false }
-        return other.id == id
     }
 }
+    
 
-struct Experiences: Decodable {
-    let experiences: [Experience]
+//Quick and Dirty dataSource for experiences.
+//FIXME: - Add persistence later.
+struct Experiences {
+    static var experiences: [Experience] = []
 }

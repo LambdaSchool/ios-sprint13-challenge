@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="b2r-2A-p1G">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="mutedStandard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b2r-2A-p1G">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eKD-wY-MKg">
@@ -43,6 +43,9 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="xMQ-qK-VcM"/>
+                    <connections>
+                        <outlet property="mapView" destination="b2r-2A-p1G" id="Uya-OI-Ypf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -252,17 +255,18 @@
                         <viewLayoutGuide key="safeArea" id="PcU-s9-p8x"/>
                     </view>
                     <navigationItem key="navigationItem" title="Video Recording" id="6gb-d9-L7L">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="NqY-FP-Jfr">
+                        <barButtonItem key="rightBarButtonItem" title="Next" id="NqY-FP-Jfr">
                             <connections>
-                                <action selector="saveButtonTapped:" destination="HcW-TC-cje" id="WDD-qE-Efb"/>
+                                <action selector="nextButtonTapped:" destination="HcW-TC-cje" id="WDD-qE-Efb"/>
+                                <segue destination="gta-6i-XPS" kind="show" identifier="ReviewVideoMemory" id="I5r-wB-wUn"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="cameraView" destination="boc-O9-na7" id="Cg3-D3-YDZ"/>
+                        <outlet property="nextButton" destination="NqY-FP-Jfr" id="cBr-QM-Ot7"/>
                         <outlet property="recordButton" destination="Ukc-bO-Kly" id="sND-K2-wgW"/>
                         <outlet property="recordButtonOuterCircleLabel" destination="YTh-8K-bbg" id="l7v-cY-IBd"/>
-                        <outlet property="saveButton" destination="NqY-FP-Jfr" id="cBr-QM-Ot7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f4U-UB-bTn" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -286,6 +290,73 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bjz-2B-Kl1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="629.60000000000002" y="196.55172413793105"/>
+        </scene>
+        <!--Video Recording-->
+        <scene sceneID="Mii-nJ-CdF">
+            <objects>
+                <viewController title="Video Recording" id="gta-6i-XPS" customClass="ReviewVideoViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="XRJ-CM-I8p">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qBc-N3-iBi" customClass="VideoView" customModule="Experiences" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="○" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2fC-ho-1rE">
+                                <rect key="frame" x="159.5" y="554" width="56" height="65"/>
+                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="56"/>
+                                <color key="textColor" red="0.8282043147" green="0.076818768590000003" blue="0.041672013600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="86n-Fm-GM4">
+                                <rect key="frame" x="172.5" y="571.5" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="QQR-cQ-UBG"/>
+                                    <constraint firstAttribute="width" constant="30" id="rit-ir-582"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name=".HiraKakuInterface-W3" family=".Hiragino Kaku Gothic Interface" pointSize="24"/>
+                                <state key="normal" title="▶︎">
+                                    <color key="titleColor" red="0.8282043147" green="0.076818768590000003" blue="0.041672013600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <state key="disabled" title="●"/>
+                                <state key="selected" title="■"/>
+                                <state key="highlighted" title="■"/>
+                                <connections>
+                                    <action selector="playPauseButtonTapped:" destination="gta-6i-XPS" eventType="touchUpInside" id="qOX-eE-fke"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="qBc-N3-iBi" firstAttribute="top" secondItem="mAQ-dR-0CU" secondAttribute="top" id="5xB-rb-FxC"/>
+                            <constraint firstItem="mAQ-dR-0CU" firstAttribute="trailing" secondItem="qBc-N3-iBi" secondAttribute="trailing" id="87B-u3-b4f"/>
+                            <constraint firstItem="86n-Fm-GM4" firstAttribute="centerY" secondItem="2fC-ho-1rE" secondAttribute="centerY" id="NmG-pW-7o6"/>
+                            <constraint firstItem="mAQ-dR-0CU" firstAttribute="bottom" secondItem="2fC-ho-1rE" secondAttribute="bottom" constant="48" id="OOD-4j-4sz"/>
+                            <constraint firstItem="86n-Fm-GM4" firstAttribute="centerX" secondItem="2fC-ho-1rE" secondAttribute="centerX" id="ZLv-N0-lHe"/>
+                            <constraint firstItem="2fC-ho-1rE" firstAttribute="centerX" secondItem="XRJ-CM-I8p" secondAttribute="centerX" id="oU2-U6-x0e"/>
+                            <constraint firstItem="mAQ-dR-0CU" firstAttribute="bottom" secondItem="qBc-N3-iBi" secondAttribute="bottom" id="p6i-PY-hNC"/>
+                            <constraint firstItem="qBc-N3-iBi" firstAttribute="leading" secondItem="mAQ-dR-0CU" secondAttribute="leading" id="rAm-Nt-GJS"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="mAQ-dR-0CU"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Review Video" id="XDT-18-Ueu">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="gex-YO-BPe">
+                            <connections>
+                                <action selector="saveExperienceButtonTapped:" destination="gta-6i-XPS" id="d0y-C5-fyP"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="playPauseButton" destination="86n-Fm-GM4" id="JSt-Wj-hyj"/>
+                        <outlet property="playPauseButtonOuterCircleLabel" destination="2fC-ho-1rE" id="awb-sB-uva"/>
+                        <outlet property="saveExperienceButton" destination="gex-YO-BPe" id="Pxl-cG-TcK"/>
+                        <outlet property="videoView" destination="qBc-N3-iBi" id="rjd-v0-NHt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zji-UE-GqA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3271" y="197"/>
         </scene>
     </scenes>
 </document>

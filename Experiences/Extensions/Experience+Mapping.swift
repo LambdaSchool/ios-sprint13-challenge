@@ -11,10 +11,14 @@ import MapKit
 
 extension Experience: MKAnnotation {
     var coordinate: CLLocationCoordinate2D {
-        return geometry.location
+        return location
     }
     
     var title: String? {
-        return details.experienceName
+        return experienceName
     }
+    
+    
+    
+    
 }

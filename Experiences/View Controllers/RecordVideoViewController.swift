@@ -15,8 +15,10 @@ class RecordVideoViewController: UIViewController, AVCaptureFileOutputRecordingD
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = false
-        // Set up capture session
-        // MARK: - Camera Authorization
+//        print(audioMemory)
+//        print(experienceImage)
+//        print(experienceTitle)
+        // MARK: - Set up capture session
         
         // SESSION INPUTS
         let camera = bestCamera()
@@ -67,31 +69,45 @@ class RecordVideoViewController: UIViewController, AVCaptureFileOutputRecordingD
     }
     
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+        
+        experienceVideoURL = outputFileURL
         DispatchQueue.main.async {
             self.updateViews()
         }
         
-        PHPhotoLibrary.requestAuthorization { status in
-            guard status == .authorized else { return }
-            PHPhotoLibrary.shared().performChanges({
-                PHAssetCreationRequest.creationRequestForAssetFromVideo(atFileURL: outputFileURL)
-            }, completionHandler: { (success, error) in
-                if let error = error {
-                    NSLog("error saving video: \(error)")
-                } else {
-                    NSLog("saving video succeeded")
-                }
-            })
+//        PHPhotoLibrary.requestAuthorization { status in
+//            guard status == .authorized else { return }
+//            PHPhotoLibrary.shared().performChanges({
+//                PHAssetCreationRequest.creationRequestForAssetFromVideo(atFileURL: outputFileURL)
+//            }, completionHandler: { (success, error) in
+//                if let error = error {
+//                    NSLog("error saving video: \(error)")
+//                } else {
+//                    NSLog("saving video succeeded")
+//                }
+//            })
+//        }
+        
+        
+    }
+    
+    //MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ReviewVideoMemory" {
+            let destinationVC = segue.destination as? ReviewVideoViewController
+            
+            destinationVC?.audioMemory = audioMemory
+            destinationVC?.experienceImage = experienceImage
+            destinationVC?.experienceTitle = experienceTitle
+            destinationVC?.experienceVideoURL = experienceVideoURL
         }
-        
-        
     }
     
     //MARK: - IBOutlets
     @IBOutlet weak var cameraView: CameraPreviewView!
     @IBOutlet weak var recordButtonOuterCircleLabel: UILabel!
     @IBOutlet weak var recordButton: UIButton!
-    @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var nextButton: UIBarButtonItem!
     
     //MARK: - IBActions
     @IBAction func toggleRecord(_ sender: Any) {
@@ -102,8 +118,8 @@ class RecordVideoViewController: UIViewController, AVCaptureFileOutputRecordingD
         }
     }
     
-    @IBAction func saveButtonTapped(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+    @IBAction func nextButtonTapped(_ sender: Any) {
+        //self.dismiss(animated: true, completion: nil)
     }
     
     //MARK: - Properties
@@ -114,6 +130,8 @@ class RecordVideoViewController: UIViewController, AVCaptureFileOutputRecordingD
     var audioMemory: AVAudioFile?
     var experienceImage: UIImage?
     var experienceTitle: String?
+    
+    var experienceVideoURL: URL?
     
     // MARK: - Private methods
     

@@ -48,21 +48,26 @@ extension AddExperienceViewController: PlayerDelegate, RecorderDelegate {
 
     
     private func updateViews() {
-        let isPlaying = player.isPlaying
-        audioPlayButton.setTitle(isPlaying ? "⏸" : "▶️", for: [])
+        DispatchQueue.main.async {
+            
+            let isPlaying = self.player.isPlaying
+            self.audioPlayButton.setTitle(isPlaying ? "⏸" : "▶️", for: [])
+            
+            let isRecording = self.recorder.isRecording
+            self.recordAudioButton.setTitle(isRecording ? "⏹" : "⏺", for: [])
+            
+            let remainingTime = self.player.timeRemaining
+            let elapsedTime = self.player.elapsedTime
+            
+            self.elapsedTimeLabel.text = self.timeFormatter.string(from: elapsedTime)
+            self.remainingTimeLabel.text = self.timeFormatter.string(from: remainingTime)
+            
+            self.timeSlider.minimumValue = 0
+            self.timeSlider.maximumValue = Float(self.player.totalDuration)
+            self.timeSlider.value = Float(self.player.elapsedTime)
+            
+        }
         
-        let isRecording = recorder.isRecording
-        recordAudioButton.setTitle(isRecording ? "⏹" : "⏺", for: [])
-        
-        let remainingTime = player.timeRemaining
-        let elapsedTime = player.elapsedTime
-        
-        elapsedTimeLabel.text = timeFormatter.string(from: elapsedTime)
-        remainingTimeLabel.text = timeFormatter.string(from: remainingTime)
-        
-        timeSlider.minimumValue = 0
-        timeSlider.maximumValue = Float(player.totalDuration)
-        timeSlider.value = Float(player.elapsedTime)
     }
     
 }
@@ -107,8 +112,10 @@ class AddExperienceViewController: ShiftableViewController {
             let destinationVC = segue.destination as? RecordVideoViewController
             
             // Pass the selected object to the new view controller.
-            guard let audioFile = try? AVAudioFile(forReading: recorder.currentFile!) else {
-                NSLog("error fetching audio memory")
+            guard let currentFile = recorder.currentFile, let audioFile = try? AVAudioFile(forReading: currentFile) else {
+                NSLog("Audio Memory Not Available")
+                destinationVC?.experienceImage = imageView.image
+                destinationVC?.experienceTitle = titleTextField.text
                 return
             }
             destinationVC?.audioMemory = audioFile
