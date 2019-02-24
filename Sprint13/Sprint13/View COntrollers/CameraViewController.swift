@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import MapKit
+import AVKit
 
 
 class CameraViewController: UIViewController, CLLocationManagerDelegate, AVCaptureFileOutputRecordingDelegate {

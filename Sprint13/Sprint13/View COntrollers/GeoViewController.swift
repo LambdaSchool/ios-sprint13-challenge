@@ -28,6 +28,8 @@ class GeoViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
        
         updateView()
     }
+    @IBAction func storeButton(_ sender: Any) {
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,6 +64,7 @@ class GeoViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         annotationView.markerTintColor = .gray
         annotationView.glyphTintColor = .black
         annotationView.canShowCallout = true
+        
         return annotationView
     }
     
@@ -72,12 +75,7 @@ class GeoViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         curentLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         let region = MKCoordinateRegion(center: curentLocation!, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
         
-        let newPin = MKPointAnnotation()
-        
-        
-        newPin.coordinate = curentLocation!
-        newPin.title = titletext
-        mapView.addAnnotation(newPin)
+       
         //set region on the map
         self.mapView.setRegion(region, animated: true)
         self.locationManager.stopUpdatingLocation()
@@ -108,13 +106,13 @@ class GeoViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.performSegue(withIdentifier: "addExperienceSegue", sender: sender)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "addExperienceSegue" {
-            guard let destination = segue.destination as? AudioAndPhotoViewController else { return }
-            
-            destination.experienceController = experienceController
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "addExperienceSegue" {
+//            guard let destination = segue.destination as? AudioAndPhotoViewController else { return }
+//
+//            destination.experienceController = experienceController
+//        }
+//    }
     
 
 }

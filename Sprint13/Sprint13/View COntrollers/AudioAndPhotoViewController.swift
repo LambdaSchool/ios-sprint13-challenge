@@ -1,5 +1,6 @@
 
 import UIKit
+import AVFoundation
 
 protocol AudioPostDelegate {
     func recordedFile(audio: URL)
@@ -36,6 +37,7 @@ class AudioAndPhotoViewController: UIViewController, UIImagePickerControllerDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         player.delegate = self
         recorder.delegate = self
