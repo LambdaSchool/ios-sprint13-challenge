@@ -12,11 +12,15 @@ class VideoCameraViewController: UIViewController, AVCaptureFileOutputRecordingD
     @IBOutlet weak var cameraView: VideoPreviewView!
     @IBOutlet weak var recordButton: UIButton!
     
+    var experienceController = ExperienceController.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        recordButton.setImage(UIImage(named: "record"), for: .normal)
-        recordButton.layer.cornerRadius = 25
+        self.title = "Video Recording"
+        
+        recordButton.setImage(UIImage(named: "record_outer_circle"), for: .normal)
+        //recordButton.layer.cornerRadius = 25
         
         // SESSION INPUTS
         
@@ -53,7 +57,7 @@ class VideoCameraViewController: UIViewController, AVCaptureFileOutputRecordingD
         super.viewDidAppear(animated)
         
         // Request permission to use the camera
-
+        
         let authorizationStatus = AVCaptureDevice.authorizationStatus(for: .video)
         
         switch authorizationStatus {
@@ -87,13 +91,17 @@ class VideoCameraViewController: UIViewController, AVCaptureFileOutputRecordingD
             recordButton.setImage(UIImage(named: "stop"), for: .normal)
         } else {
             fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
-            recordButton.setImage(UIImage(named: "record"), for: .normal)
+            recordButton.setImage(UIImage(named: "record_outer_circle"), for: .normal)
         }
     }
     
-    @IBAction func back(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+    
+    @IBAction func save(_ sender: Any) {
+        
+        performSegue(withIdentifier: "unwindSegueToVC1", sender: self)
+        
     }
+    
     
     func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
         DispatchQueue.main.async {

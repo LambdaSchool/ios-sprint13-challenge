@@ -7,7 +7,18 @@ class NewExperienceViewController: UIViewController, UIImagePickerControllerDele
     
     // MARK: - Properties
     
-    var newExperience = Experience(title: nil, audio: nil, video: nil, image: nil, geotag: nil)
+    //var newExperience = Experience(title: nil, audio: nil, video: nil, image: nil, coordinate: nil)
+    
+    //var experienceController: ExperienceController!
+    
+    var experienceController = ExperienceController.shared
+    
+    var location = ExperienceController.shared.location
+
+    //var experiences: ExperienceController
+    var experiences = ExperienceController.shared.experiences
+    
+    var filteredImage: UIImage?
     
     private var originalImage: UIImage? {
         // When image has changed, add our UI
@@ -44,6 +55,8 @@ class NewExperienceViewController: UIViewController, UIImagePickerControllerDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "New Experience"
+        
         player.delegate = self
         recorder.delegate = self
         
@@ -58,12 +71,15 @@ class NewExperienceViewController: UIViewController, UIImagePickerControllerDele
         // Put image into my image view and apply filter
         imageView?.image = applyFilter(to: image)
         
+        filteredImage = applyFilter(to: image)
+        
         // Save image to experience
-        newExperience.image = applyFilter(to: image)
+        //newExperience.image = applyFilter(to: image)
+        //        experienceController.experiences[0].image = applyFilter(to: image)
         
         addImageButton.isHidden = true
     }
-
+    
     @IBAction func chooseImage(_ sender: Any) {
         
         let alert = UIAlertController(title: "Select Source", message: "", preferredStyle: .actionSheet)
@@ -95,7 +111,7 @@ class NewExperienceViewController: UIViewController, UIImagePickerControllerDele
         alert.addAction(cancelAction)
         
         self.present(alert, animated: true, completion: nil)
-
+        
     }
     
     private func applyFilter(to image: UIImage) -> UIImage {
@@ -177,19 +193,33 @@ class NewExperienceViewController: UIViewController, UIImagePickerControllerDele
     
     @IBAction func saveAudioButton(_ sender: Any) {
         
-        guard let audioURL = recorder.currentFile else { return }
-        
-        // Save audio to newExperience
-        newExperience.audio = audioURL
-        
         saveAudioButton.setTitle("Saved!", for: [])
         saveAudioButton.tintColor = .gray
+        
+        guard let audioURL = recorder.currentFile else { return }
+        
+        experienceController.newExperience = Experience(title: titleTextField.text, audio: audioURL, video: nil, image: applyFilter(to: filteredImage!), coordinate: location!)
+        
+        //experienceController.newExperience?.title = titleTextField.text
+        
+        // Save audio to newExperience
+        //experienceController.newExperience?.audio = audioURL
+//        experiences[0].audio = audioURL
+//        experiences[0].title = titleTextField.text
+//        experiences[0].image = applyFilter(to: filteredImage!)
+        
+//        experienceController.experiences[0].audio = audioURL
+//        experienceController.experiences[0].title = titleTextField.text
+//        experienceController.experiences[0].image = applyFilter(to: filteredImage!)
+        
+
         
     }
     
     @IBAction func nextButton(_ sender: Any) {
         
-        newExperience.title = titleTextField.text
+        //experienceController.newExperience?.title = titleTextField.text
+        //newExperience.title = titleTextField.text
         
     }
     
