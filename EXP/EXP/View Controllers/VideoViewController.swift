@@ -7,24 +7,45 @@
 //
 
 import UIKit
+import AVFoundation
 
 class VideoViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        // Do any additional setup after loading the view, typically from a nib.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        let authorizationStatus = AVCaptureDevice.authorizationStatus(for: .video)
+        
+        switch authorizationStatus {
+            
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                if granted == false {
+                    fatalError("Please do something else in a real app")
+                }
+                
+                DispatchQueue.main.async {
+                    self.showCamera()
+                }
+            }
+        case .restricted:
+            fatalError("Please do something else in a real app")
+            
+        case .denied:
+            fatalError("Please do something else in a real app")
+            
+        case .authorized:
+            showCamera()
+        }
     }
-    */
-
+    
+    private func showCamera() {
+        performSegue(withIdentifier: "showCamera", sender: self)
+    }
+    
 }

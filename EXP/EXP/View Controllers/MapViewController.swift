@@ -7,24 +7,58 @@
 //
 
 import UIKit
+import MapKit
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, MKMapViewDelegate {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    @IBOutlet weak var mapView: MKMapView!
+    private let locationManager = CLLocationManager()
+    
+    @IBAction func addExp(_ sender: Any) {
+        locationManager.requestWhenInUseAuthorization()
+        
+        DispatchQueue.main.async {
+            guard let exp = self.exp else { return }
+            self.mapView.addAnnotation(self.expController.placeAnExp(exp: exp))
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        DispatchQueue.main.async {
+            guard let exp = self.exp else { return }
+            self.mapView.addAnnotation(self.expController.placeAnExp(exp: exp))
+        }
+        
+        let lindon = MKPointAnnotation()
+        lindon.title = "Lindon"
+        
+        let userLocation = MKUserLocation()
+        lindon.coordinate = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+        self.mapView.addAnnotation(userLocation)
     }
-    */
-
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let exp = annotation as? Exp else { return nil }
+        
+        let expView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExpAnnotationView", for: exp as! MKAnnotation) as! MKMarkerAnnotationView
+        
+        expView.canShowCallout = true
+        let detailView = ExpMapDetailView()
+        detailView.exp = exp
+        expView.detailCalloutAccessoryView = detailView
+        
+        return expView
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "NewExp" {
+            let newExpVC = segue.destination as? ExpDetailViewController
+            newExpVC?.exp = exp
+        }
+    }
+    
+    var exp: Exp?
+    let expController = ExpController()
 }

@@ -15,6 +15,8 @@ protocol RecorderDelegate: AnyObject {
 
 class Recorder: NSObject {
     
+    private var timer: Timer?
+    
     private var audioRecorder: AVAudioRecorder?
     
     private (set) var currentFile: URL?
@@ -44,6 +46,10 @@ class Recorder: NSObject {
         let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
         audioRecorder = try! AVAudioRecorder(url: file, format: format)
         currentFile = file
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { [weak self] _ in
+            self?.notifyDelegate()
+        }
         
         audioRecorder?.record()
         notifyDelegate()
