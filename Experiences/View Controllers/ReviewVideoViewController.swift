@@ -44,9 +44,10 @@ class ReviewVideoViewController: UIViewController, MKMapViewDelegate {
         //create an experience
         getCurrentLocation()
         let newExperience = Experience(experienceName: experienceTitle ?? "Untitled Experience", audioMemory: audioMemory, videoMemoryURL: experienceVideoURL, experienceImage: experienceImage, location: currentLocation!)
-        print(newExperience.description)
+        
+        print(newExperience.debugDescription) // <-- Debug Description
         Experiences.experiences.append(newExperience)
-        print(Experiences.experiences.description)
+        print(Experiences.experiences.debugDescription) // <-- Debug Description
         // pop to initial VC
         DispatchQueue.main.async {
             self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
@@ -78,8 +79,6 @@ class ReviewVideoViewController: UIViewController, MKMapViewDelegate {
     
     func getCurrentLocation() {
         currentLocation = locationManager.location!.coordinate
-//        return locationManager.location!.coordinate
-        
     }
     
     //Experience Data
@@ -87,5 +86,7 @@ class ReviewVideoViewController: UIViewController, MKMapViewDelegate {
     var experienceImage: UIImage?
     var experienceTitle: String?
     var experienceVideoURL: URL?
+    
+
 
 }

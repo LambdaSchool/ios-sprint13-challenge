@@ -44,8 +44,8 @@ class ExperienceDetailView: UIView {
         
         dateLabel.text = experience.experienceDate
         timeLabel.text = experience.experienceTime
-        latitudeLabel.text = "Lat: \(experience.location.latitude)"
-        longitudeLabel.text = "Long: \(experience.location.longitude)"
+        latitudeLabel.text = "Lat: \(latLonFormatter.string(from: experience.location.latitude as NSNumber)!)"
+        longitudeLabel.text = "Long: \(latLonFormatter.string(from: experience.location.longitude as NSNumber)!)"
 
         
     }

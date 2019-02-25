@@ -34,9 +34,8 @@ class Experience: NSObject {
     // so we can see the contents of the NSObject instead of its memory address
     override var description: String {
         get {
-            return "Experience : id : experienceName : \(self.experienceName) - audioMemory : \(self.audioMemory) - videoMemoryURL: : \(self.videoMemoryURL) - experienceImage : \(self.experienceImage) - location : \(self.location) - experienceDate : \(self.experienceDate) - experienceTime : \(self.experienceTime)"
+            return "Experience( id: \(self.id), experienceName: \(self.experienceName), audioMemory: \(self.audioMemory), videoMemoryURL: \(self.videoMemoryURL),  experienceImage: \(self.experienceImage), location: \(self.location), experienceDate: \(self.experienceDate), experienceTime: \(self.experienceTime)"
         }
-        
     }
 }
     

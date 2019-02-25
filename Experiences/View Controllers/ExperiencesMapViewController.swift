@@ -14,10 +14,9 @@ import MapKit
 
 class ExperiencesMapViewController: UIViewController, MKMapViewDelegate{
     
-    let reuseIdentifier = "ExperienceAnnotationView"
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var addNewExperienceButton: UIButton!
     
-    //private let quakeFetcher = QuakeFetcher()
     private let locationManager = CLLocationManager()
     private var experiencesAnnotations = Array<Experience>() {
         didSet {
@@ -39,54 +38,51 @@ class ExperiencesMapViewController: UIViewController, MKMapViewDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        addNewExperienceButton.backgroundColor = .purple
         locationManager.requestWhenInUseAuthorization()
         
         
         let userTrackingButton = MKUserTrackingButton(mapView: mapView)
         userTrackingButton.translatesAutoresizingMaskIntoConstraints = false
+        userTrackingButton.tintColor = .purple
+        mapView.tintColor = .purple
         mapView.addSubview(userTrackingButton)
         
-        userTrackingButton.leftAnchor.constraint(equalTo: mapView.leftAnchor, constant: 20).isActive = true
-        userTrackingButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 20).isActive = true
+        userTrackingButton.leftAnchor.constraint(equalTo: mapView.leftAnchor, constant: 30).isActive = true
+        userTrackingButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 30).isActive = true
         
-        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: reuseIdentifier)
-        //fetchQuakes()
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotationView")
+        fetchExperiences()
     }
     
     //MARK: - MKMapViewDelegate
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard let experience = annotation as? Experience else { return nil }
+        guard let experienceInfo = annotation as? Experience else { return nil }
         
-        let experienceView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier, for: experience) as! MKMarkerAnnotationView
+        let experienceView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceAnnotationView", for: experienceInfo) as! MKMarkerAnnotationView
+        experienceView.markerTintColor = .purple
         experienceView.glyphImage = UIImage(named: "ExperienceIcon")
         experienceView.glyphTintColor = .white
         
         experienceView.canShowCallout = true
         let detailView = ExperienceDetailView()
-        detailView.experience = experience
+        detailView.experience = experienceInfo
         experienceView.detailCalloutAccessoryView = detailView
         
         return experienceView
     }
     
     func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
-        //fetchQuakes()
+        fetchExperiences()
+        mapView.reloadInputViews()
     }
     
    
     
-//    private func fetchExperiences() {
-//        let currentArea = mapView.visibleMapRect
-//        let currentRegion = CoordinateRegion(mapRect: currentArea)
-////        quakeFetcher.fetchQuakes(in: currentRegion) { (quakes, error) in
-////            if let error = error {
-////                NSLog("Error fetching quakes: \(error)")
-////            }
-////            self.quakes = quakes ?? []
-////        }
-//    }
+    private func fetchExperiences() {
+            self.experiencesAnnotations = Experiences.experiences
+    }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // Show the navigation bar on other view controllers

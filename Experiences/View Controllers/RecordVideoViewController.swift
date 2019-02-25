@@ -15,9 +15,7 @@ class RecordVideoViewController: UIViewController, AVCaptureFileOutputRecordingD
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = false
-//        print(audioMemory)
-//        print(experienceImage)
-//        print(experienceTitle)
+
         // MARK: - Set up capture session
         
         // SESSION INPUTS

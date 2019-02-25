@@ -55,7 +55,7 @@ class Recorder: NSObject {
     }
     
     func createCommentFromAudio() {
-        guard let audioData = currentFile else {
+        guard currentFile != nil else {
             NSLog("Audio File Error")
             return
         }

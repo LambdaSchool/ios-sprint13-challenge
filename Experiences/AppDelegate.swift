@@ -50,6 +50,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // asked for permission and said YES
             break
         }
+
+        // MARK: - Test Annotations on Startup
+        let testExperience1 = Experience(experienceName: "test experience", audioMemory: nil, videoMemoryURL: nil, experienceImage: nil, location: CLLocationCoordinate2D(latitude: 41.95684814453125, longitude: -85.70046556077921))
+        let testExperience2 = Experience(experienceName: "test experience 2", audioMemory: nil, videoMemoryURL: nil, experienceImage: nil, location: CLLocationCoordinate2D(latitude: 42.95684814453125, longitude: -88.70046556077921))
+        Experiences.experiences.append(testExperience1)
+        Experiences.experiences.append(testExperience2)
+
         return true
     }
 

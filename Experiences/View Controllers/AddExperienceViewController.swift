@@ -144,19 +144,20 @@ class AddExperienceViewController: ShiftableViewController {
             , completion: nil)
     }
     @IBAction func recordAudioButtonTapped(_ sender: Any) {
-        //FIXME: - Implement
+
         print("recorderRecordButton tapped")
         recorder.toggleRecording()
     }
     
     @IBAction func audioPlayButtonTapped(_ sender: Any) {
-        //FIXME: - Implement
+
         print("recorderPlayPauseButton tapped")
         player.playPause(song: recorder.currentFile)
     }
     
     
     @IBAction func chooseImageButtonTapped(_ sender: Any) {
+        //TODO: - Add option to take photo
         
         let authorizationStatus = PHPhotoLibrary.authorizationStatus()
         

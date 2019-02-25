@@ -20,11 +20,29 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="mutedStandard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b2r-2A-p1G">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="aBw-rM-3Dy"/>
+                                </connections>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eKD-wY-MKg">
-                                <rect key="frame" x="219" y="589" width="108" height="30"/>
-                                <color key="backgroundColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="Add Experience"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eKD-wY-MKg">
+                                <rect key="frame" x="267" y="559" width="66" height="66"/>
+                                <color key="backgroundColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="66" id="MFo-n1-nV2"/>
+                                    <constraint firstAttribute="width" constant="66" id="V9Y-3s-kcd"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="4"/>
+                                <state key="normal" title="" image="AddNewExperienceIcon">
+                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <segue destination="QfQ-TT-c5b" kind="presentation" identifier="AddExperience" id="e2i-US-cXB"/>
                                 </connections>
@@ -33,23 +51,23 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="b2r-2A-p1G" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="2WM-cM-SDy"/>
-                            <constraint firstItem="eKD-wY-MKg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" symbolic="YES" id="Awd-Aa-j4z"/>
                             <constraint firstItem="b2r-2A-p1G" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Gmy-3J-vV1"/>
+                            <constraint firstAttribute="trailing" secondItem="eKD-wY-MKg" secondAttribute="trailing" constant="42" id="HIJ-TH-BVO"/>
                             <constraint firstAttribute="trailing" secondItem="b2r-2A-p1G" secondAttribute="trailing" id="Hdi-NZ-yJh"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="eKD-wY-MKg" secondAttribute="trailing" constant="48" id="Yu3-C1-OyU"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="eKD-wY-MKg" secondAttribute="bottom" constant="42" id="aBQ-cR-cOA"/>
                             <constraint firstAttribute="bottom" secondItem="b2r-2A-p1G" secondAttribute="bottom" id="iz7-bh-fXV"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="eKD-wY-MKg" secondAttribute="bottom" constant="48" id="yeE-c9-AKj"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="xMQ-qK-VcM"/>
                     <connections>
+                        <outlet property="addNewExperienceButton" destination="eKD-wY-MKg" id="Ko3-aU-Cuy"/>
                         <outlet property="mapView" destination="b2r-2A-p1G" id="Uya-OI-Ypf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-193" y="197"/>
+            <point key="canvasLocation" x="-194.40000000000001" y="196.55172413793105"/>
         </scene>
         <!--New Experience-->
         <scene sceneID="gxC-yg-IFq">
@@ -359,4 +377,7 @@
             <point key="canvasLocation" x="3271" y="197"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="AddNewExperienceIcon" width="637" height="598"/>
+    </resources>
 </document>
