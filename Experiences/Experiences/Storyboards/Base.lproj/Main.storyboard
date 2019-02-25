@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="uvE-DX-78K">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="uvE-DX-78K">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -80,13 +80,10 @@
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GGC-cJ-z1d">
                                 <rect key="frame" x="47" y="606" width="280" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="280" id="6t4-Zc-WaV"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Record an Optional Video"/>
                                 <connections>
-                                    <action selector="recordVideo:" destination="lTh-Gi-A6S" eventType="touchUpInside" id="JGX-9x-9kg"/>
+                                    <action selector="launchCameraClicked:" destination="lTh-Gi-A6S" eventType="touchUpInside" id="n2D-VF-4Tg"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3aO-VF-ZlV">
@@ -125,11 +122,60 @@
                         <outlet property="chooseButton" destination="3aO-VF-ZlV" id="HeK-5m-HNX"/>
                         <outlet property="entryImage" destination="mFe-Pn-BsT" id="1If-Ti-gc1"/>
                         <outlet property="titleField" destination="WGv-t1-ZRd" id="t3z-Oy-Cdz"/>
+                        <segue destination="7un-9g-MGB" kind="presentation" identifier="recordSegue" id="FFU-ws-91R"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gDp-s0-wvf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1744.8" y="685.90704647676171"/>
+        </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="8dM-AW-1Z4">
+            <objects>
+                <viewController id="7un-9g-MGB" customClass="CameraViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="DUQ-0w-G2j">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1dh-zc-zUv" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kuD-IG-31j">
+                                        <rect key="frame" x="105" y="444" width="150" height="150"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="150" id="Zjw-Hg-psb"/>
+                                            <constraint firstAttribute="width" constant="150" id="hQH-Qr-470"/>
+                                        </constraints>
+                                        <state key="normal" image="record"/>
+                                        <connections>
+                                            <action selector="recordButtonClicked:" destination="7un-9g-MGB" eventType="touchUpInside" id="C7B-PL-EH5"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="kuD-IG-31j" secondAttribute="bottom" constant="53" id="PAl-Ph-W1W"/>
+                                    <constraint firstItem="kuD-IG-31j" firstAttribute="leading" secondItem="1dh-zc-zUv" secondAttribute="leading" constant="105" id="czj-bn-hmr"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="fij-SU-Ani" firstAttribute="bottom" secondItem="1dh-zc-zUv" secondAttribute="bottom" id="5Be-lf-bp1"/>
+                            <constraint firstItem="1dh-zc-zUv" firstAttribute="top" secondItem="fij-SU-Ani" secondAttribute="top" id="dUd-7t-0Zr"/>
+                            <constraint firstItem="1dh-zc-zUv" firstAttribute="leading" secondItem="fij-SU-Ani" secondAttribute="leading" id="m7z-SZ-e7p"/>
+                            <constraint firstItem="fij-SU-Ani" firstAttribute="trailing" secondItem="1dh-zc-zUv" secondAttribute="trailing" id="zMo-zl-n1y"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="fij-SU-Ani"/>
+                    </view>
+                    <connections>
+                        <outlet property="camPreview" destination="1dh-zc-zUv" id="qiR-UX-SdV"/>
+                        <outlet property="recordButton" destination="kuD-IG-31j" id="ZEG-8Y-MzP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wjX-aD-gs9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2461.5999999999999" y="685.90704647676171"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="u1R-2f-JkO">
@@ -151,6 +197,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="record" width="563" height="563"/>
         <image name="write-icon" width="400" height="400"/>
     </resources>
 </document>
