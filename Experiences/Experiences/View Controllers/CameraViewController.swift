@@ -14,6 +14,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     //Properties
     private var capturesession: AVCaptureSession!
     var recordOutput: AVCaptureMovieFileOutput!
+    var videoURL: URL?
     
     //Outlets
     @IBOutlet weak var camPreview: CameraPreviewView!
@@ -108,10 +109,10 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         let fileOutput = AVCaptureMovieFileOutput()
         
         //Check if adding output is possible
-        guard capturesession.canAddOutput(fileOutput) else { fatalError() }
+        guard captureSession.canAddOutput(fileOutput) else { fatalError() }
         
         //Add the output
-        capturesession.addOutput(fileOutput)
+        captureSession.addOutput(fileOutput)
         
         //Assign the output to the class property for use.
         recordOutput = fileOutput
@@ -135,7 +136,13 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         let documentsDir = try! fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         
         //Store each video with unique ID and mov extension
-        return documentsDir.appendingPathComponent( UUID().uuidString).appendingPathExtension("mov")
+        return documentsDir.appendingPathComponent( UUID().uuidString).appendingPathExtension("mov") //pull out the last path component.
+        
+        //let lastPathComponent = documentsDir.lastPathComponent //Save this to CoreData.
+        
+        //build video from this using AVPlayer documentsDir.appendingPathComponent(lastPathComponent)
+        
+        
     }
     
     //Delegate Methods
@@ -149,9 +156,23 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     //Called when recording ends.
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
-        DispatchQueue.main.async {
-            self.updateRecordButton() }
         
+        videoURL = outputFileURL
+
+        
+        DispatchQueue.main.async {
+            self.updateRecordButton()
+        }
+        
+        performSegue(withIdentifier: "reviewVideo", sender: nil)
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "reviewVideo" {
+            
+            ReviewViewController.previewVideo = videoURL
+        }
     }
     
 }
