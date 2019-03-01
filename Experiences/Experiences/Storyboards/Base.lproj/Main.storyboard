@@ -34,7 +34,7 @@
                                     <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="lTh-Gi-A6S" kind="show" id="R21-Zd-QdM"/>
+                                    <segue destination="lTh-Gi-A6S" kind="show" identifier="entrySeg" id="R21-Zd-QdM"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -86,14 +86,6 @@
                                     <action selector="launchCameraClicked:" destination="lTh-Gi-A6S" eventType="touchUpInside" id="n2D-VF-4Tg"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3aO-VF-ZlV">
-                                <rect key="frame" x="112" y="354" width="151" height="39"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <state key="normal" title="Choose a Photo"/>
-                                <connections>
-                                    <action selector="choosePhoto:" destination="lTh-Gi-A6S" eventType="touchUpInside" id="TME-rB-PLi"/>
-                                </connections>
-                            </button>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ADA-tk-ZIx">
                                 <rect key="frame" x="0.0" y="16" width="374" height="44"/>
                                 <items>
@@ -106,17 +98,27 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3aO-VF-ZlV">
+                                <rect key="frame" x="112" y="275" width="151" height="39"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="Choose a Photo"/>
+                                <connections>
+                                    <action selector="choosePhoto:" destination="lTh-Gi-A6S" eventType="touchUpInside" id="TME-rB-PLi"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="ADA-tk-ZIx" firstAttribute="leading" secondItem="n62-XF-3D8" secondAttribute="leading" id="4C5-Ty-cie"/>
+                            <constraint firstItem="3aO-VF-ZlV" firstAttribute="centerX" secondItem="WGv-t1-ZRd" secondAttribute="centerX" id="C2F-YM-4Tg"/>
+                            <constraint firstItem="3aO-VF-ZlV" firstAttribute="leading" secondItem="3IX-jE-BVi" secondAttribute="leading" constant="112" id="Gmf-bE-B58"/>
                             <constraint firstItem="3IX-jE-BVi" firstAttribute="trailing" secondItem="mFe-Pn-BsT" secondAttribute="trailing" constant="38" id="ILh-ew-cYr"/>
                             <constraint firstItem="WGv-t1-ZRd" firstAttribute="leading" secondItem="3IX-jE-BVi" secondAttribute="leading" constant="37" id="Ikc-aJ-2jm"/>
-                            <constraint firstItem="WGv-t1-ZRd" firstAttribute="centerX" secondItem="3aO-VF-ZlV" secondAttribute="centerX" id="Kl4-O8-4f9"/>
                             <constraint firstItem="GGC-cJ-z1d" firstAttribute="top" secondItem="mFe-Pn-BsT" secondAttribute="bottom" constant="24" id="LeL-D4-6C8"/>
                             <constraint firstItem="WGv-t1-ZRd" firstAttribute="top" secondItem="n62-XF-3D8" secondAttribute="top" constant="76" id="Rzw-m9-3sc"/>
                             <constraint firstItem="mFe-Pn-BsT" firstAttribute="leading" secondItem="3IX-jE-BVi" secondAttribute="leading" constant="37" id="VcO-fj-7F9"/>
                             <constraint firstItem="ADA-tk-ZIx" firstAttribute="centerX" secondItem="WGv-t1-ZRd" secondAttribute="centerX" id="cV2-bw-Ow6"/>
+                            <constraint firstItem="3aO-VF-ZlV" firstAttribute="top" secondItem="n62-XF-3D8" secondAttribute="top" constant="275" id="kKQ-1y-xN9"/>
                             <constraint firstItem="mFe-Pn-BsT" firstAttribute="top" secondItem="WGv-t1-ZRd" secondAttribute="bottom" constant="14" id="lsl-6D-U3w"/>
                             <constraint firstItem="3IX-jE-BVi" firstAttribute="trailing" secondItem="GGC-cJ-z1d" secondAttribute="trailing" constant="48" id="pB6-Up-YZw"/>
                             <constraint firstItem="3IX-jE-BVi" firstAttribute="trailing" secondItem="WGv-t1-ZRd" secondAttribute="trailing" constant="38" id="pVU-cb-LDH"/>
@@ -201,42 +203,55 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qU2-Rm-CpS">
-                                <rect key="frame" x="25" y="95" width="325" height="537"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UiG-jv-6vq">
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <items>
                                     <navigationItem title="Save Your Entry" id="hFo-ot-jJb">
                                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="k0v-ro-QRp">
                                             <connections>
+                                                <action selector="saveVidClicked:" destination="39h-Yw-SRO" id="qJB-1A-6GV"/>
                                                 <segue destination="BYZ-38-t0r" kind="show" identifier="saveVidEntry" id="8dg-Yp-Gfl"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title: Your Title Goes Here" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0rp-uf-YTp">
+                                <rect key="frame" x="25" y="93" width="325" height="26"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qU2-Rm-CpS">
+                                <rect key="frame" x="52" y="148" width="271" height="484"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="qU2-Rm-CpS" secondAttribute="height" multiplier="271:484" id="9wz-ki-OW2"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="qU2-Rm-CpS" firstAttribute="top" secondItem="5yW-Ag-SET" secondAttribute="top" constant="75" id="5up-7a-Ri0"/>
+                            <constraint firstItem="5yW-Ag-SET" firstAttribute="bottom" secondItem="qU2-Rm-CpS" secondAttribute="bottom" constant="35" id="0Ik-ZX-Bpl"/>
                             <constraint firstItem="UiG-jv-6vq" firstAttribute="leading" secondItem="f3P-1F-PMd" secondAttribute="leading" id="6Gf-Od-veS"/>
-                            <constraint firstItem="qU2-Rm-CpS" firstAttribute="leading" secondItem="5yW-Ag-SET" secondAttribute="leading" constant="25" id="PEb-zA-E1e"/>
-                            <constraint firstItem="UiG-jv-6vq" firstAttribute="centerX" secondItem="qU2-Rm-CpS" secondAttribute="centerX" id="Rxa-mk-b7M"/>
-                            <constraint firstItem="5yW-Ag-SET" firstAttribute="trailing" secondItem="qU2-Rm-CpS" secondAttribute="trailing" constant="25" id="cTG-1a-5tH"/>
-                            <constraint firstItem="5yW-Ag-SET" firstAttribute="bottom" secondItem="qU2-Rm-CpS" secondAttribute="bottom" constant="35" id="kOx-Rc-JkU"/>
+                            <constraint firstItem="0rp-uf-YTp" firstAttribute="leading" secondItem="5yW-Ag-SET" secondAttribute="leading" constant="25" id="JYt-xD-zle"/>
+                            <constraint firstItem="0rp-uf-YTp" firstAttribute="top" secondItem="UiG-jv-6vq" secondAttribute="bottom" constant="29" id="NsG-9o-DJr"/>
+                            <constraint firstItem="0rp-uf-YTp" firstAttribute="centerX" secondItem="UiG-jv-6vq" secondAttribute="centerX" id="gO6-hY-gqU"/>
+                            <constraint firstItem="5yW-Ag-SET" firstAttribute="trailing" secondItem="0rp-uf-YTp" secondAttribute="trailing" constant="25" id="kNT-J3-K1j"/>
                             <constraint firstItem="UiG-jv-6vq" firstAttribute="top" secondItem="5yW-Ag-SET" secondAttribute="top" id="mcq-FE-dwz"/>
+                            <constraint firstItem="qU2-Rm-CpS" firstAttribute="top" secondItem="0rp-uf-YTp" secondAttribute="bottom" constant="29" id="wVy-nd-29R"/>
+                            <constraint firstItem="qU2-Rm-CpS" firstAttribute="leading" secondItem="5yW-Ag-SET" secondAttribute="leading" constant="52" id="x5e-Rw-MWA"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="5yW-Ag-SET"/>
                     </view>
                     <connections>
+                        <outlet property="entryTitleLabel" destination="0rp-uf-YTp" id="VTx-nm-btO"/>
                         <outlet property="vidScreen" destination="qU2-Rm-CpS" id="25f-KE-Re5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bTV-hX-ZAr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2620" y="1507"/>
+            <point key="canvasLocation" x="2620" y="1506.296851574213"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="u1R-2f-JkO">

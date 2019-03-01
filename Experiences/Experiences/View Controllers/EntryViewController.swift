@@ -8,14 +8,16 @@
 
 import UIKit
 import AVFoundation
+import MapKit
 
 class EntryViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     //Properties
     let mediaPicker = UIImagePickerController()
-    var postPhoto: String?
-    var postVideo: String?
+    var postPhoto: URL?
     var postTitle: String?
+    var postLocation: CLLocationCoordinate2D?
+    private let cdc = CoreDataController.shared
     
     //Get authorisation to record video
     let cameraAuthorizationStatus = AVCaptureDevice.authorizationStatus(for: .video)
@@ -67,6 +69,8 @@ class EntryViewController: UIViewController, UINavigationControllerDelegate, UII
         //What happens once the user has selected an image.
         if let selectedImage = info[UIImagePickerController.InfoKey.originalImage] {
             entryImage.image = selectedImage as? UIImage //Assign to entry image
+            
+            postPhoto = info[UIImagePickerController.InfoKey.imageURL] as! URL
         }
         
         dismiss(animated: true, completion: nil) //Dismiss the picker
@@ -75,14 +79,22 @@ class EntryViewController: UIViewController, UINavigationControllerDelegate, UII
     //Saving the Entry
     @IBAction func saveEntry(_ sender: UIBarButtonItem) {
         
-        if entryImage.image != nil { //Add or video
-            guard let itemImage = entryImage.image else { return }
+        if ((titleField?.text) != nil) && entryImage.image != nil { //Add or video
+           
+        let currentDate = Date()
             
-            //postPhoto = itemImage //convert to string or path.
+            cdc.newEntry(entryTitle: titleField.text!, entryPhoto: postPhoto!, entryVid: nil, entryDate: currentDate, entryLocation: postLocation)
+            
         }
-        
-        //saveEntryData(title: String, image: String, video: String)
-        //MOC save
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "recordSegue" {
+        let vidVC = segue.destination as! ReviewViewController
+        vidVC.vidEntryTitle = titleField.text!
+        vidVC.vidEntryPhoto = postPhoto
+        vidVC.vidEntryLocation = postLocation!
+        }
+    }
 }

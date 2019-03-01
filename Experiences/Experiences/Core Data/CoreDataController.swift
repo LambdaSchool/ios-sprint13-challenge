@@ -28,20 +28,21 @@ class CoreDataController {
     //Core Data CRUD
     
     //Create a new Experience entry
-    func newExperience(entryTitle: String, entryPhoto: URL, entryVid: URL, entryDate: Date, entryLocation: CLLocationCoordinate2D, moc: NSManagedObjectContext = CoreDataStack.shared.mainContext) //Set the context to the one already in use.
+    func newEntry(entryTitle: String, entryPhoto: URL, entryVid: URL?, entryDate: Date, entryLocation: CLLocationCoordinate2D?, moc: NSManagedObjectContext = CoreDataStack.shared.mainContext) //Set the context to the one already in use.
     {
         moc.perform {
             
-            let entry = Experience(title: entryTitle, date: entryDate, longitude: entryLocation.longitude, latitude: entryLocation.latitude, picture: entryPhoto.absoluteString, video: entryVid.absoluteString)
+            //Just declaring a new instance of Experience creates it.
+            let entry = Experience(title: entryTitle, date: entryDate, longitude: (entryLocation?.longitude)!, latitude: (entryLocation?.latitude)!, picture: entryPhoto.absoluteString, video: (entryVid?.absoluteString)!)
             
             do { try moc.save()
                 
-            } catch { NSLog("Failed to save while creating a new entry") }
+            } catch { NSLog("Failed to save while creating a new Experience") }
             
         }
     }
     
-    //Delete Calorie Entry
+    //Delete Experience Entry
     func deleteEntry(entry: Experience, _ completion:@escaping Completions = Empties) {
         
         guard let moc = entry.managedObjectContext else { return }

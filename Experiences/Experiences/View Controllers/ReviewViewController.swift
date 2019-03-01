@@ -8,17 +8,28 @@
 
 import AVKit
 import AVFoundation
+import MapKit
 
 
 class ReviewViewController: UIViewController {
     
+    //Properties
     static var previewVideo: URL?
     
     private var player: AVPlayer?
     
     private let playerController = AVPlayerViewController()
     
+    private let cdc = CoreDataController.shared
+    
+    var vidEntryTitle: String?
+    var vidEntryPhoto: URL?
+    var vidEntryLocation: CLLocationCoordinate2D?
+    
+    //Outlets
     @IBOutlet weak var vidScreen: UIView!
+    
+    @IBOutlet weak var entryTitleLabel: UILabel!
     
     
     override func viewDidLoad() {
@@ -33,14 +44,23 @@ class ReviewViewController: UIViewController {
     
     func seeVideo(){
         //Check if there's already a player
-       
-            playerController.player = try! AVPlayer(url: ReviewViewController.previewVideo!)
-            
+        
+        playerController.player = try! AVPlayer(url: ReviewViewController.previewVideo!)
+        
         //Play the file
         playerController.player?.play()
-    
+        
         //updateButtons() //When the user pauses the song
     }//End of function
     
+    
+    @IBAction func saveVidClicked(_ sender: Any) {
+        
+        let currentDate = Date()
+        
+        cdc.newEntry(entryTitle: vidEntryTitle!, entryPhoto: vidEntryPhoto!, entryVid: ReviewViewController.previewVideo, entryDate: currentDate, entryLocation: vidEntryLocation)
+    }
+    
 }
+
 
