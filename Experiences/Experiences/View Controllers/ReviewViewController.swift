@@ -14,7 +14,7 @@ import MapKit
 class ReviewViewController: UIViewController {
     
     //Properties
-    static var previewVideo: URL?
+    var previewVideo: URL?
     
     private var player: AVPlayer?
     
@@ -43,9 +43,11 @@ class ReviewViewController: UIViewController {
     }
     
     func seeVideo(){
-        //Check if there's already a player
+        //Set Entry Title
+        entryTitleLabel.text = vidEntryTitle
         
-        playerController.player = try! AVPlayer(url: ReviewViewController.previewVideo!)
+        //Check if there's already a player
+        playerController.player = try! AVPlayer(url: previewVideo!)
         
         //Play the file
         playerController.player?.play()
@@ -58,7 +60,13 @@ class ReviewViewController: UIViewController {
         
         let currentDate = Date()
         
-        cdc.newEntry(entryTitle: vidEntryTitle!, entryPhoto: vidEntryPhoto!, entryVid: ReviewViewController.previewVideo, entryDate: currentDate, entryLocation: vidEntryLocation)
+        cdc.newEntry(entryTitle: vidEntryTitle!, entryPhoto: vidEntryPhoto!, entryVid: previewVideo, entryDate: currentDate, entryLocation: vidEntryLocation)
+        
+        print(vidEntryPhoto?.absoluteString)
+        print(vidEntryLocation)
+        
+        performSegue(withIdentifier: "saveVidEntry", sender: nil)
+
     }
     
 }

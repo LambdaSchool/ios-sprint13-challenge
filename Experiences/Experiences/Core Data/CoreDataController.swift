@@ -33,7 +33,7 @@ class CoreDataController {
         moc.perform {
             
             //Just declaring a new instance of Experience creates it.
-            let entry = Experience(title: entryTitle, date: entryDate, longitude: (entryLocation?.longitude)!, latitude: (entryLocation?.latitude)!, picture: entryPhoto.absoluteString, video: (entryVid?.absoluteString)!)
+            let entry = Experience(title: entryTitle, date: entryDate, longitude: (entryLocation?.longitude)!, latitude: (entryLocation?.latitude)!, picture: entryPhoto.absoluteString, video: entryVid?.absoluteString)
             
             do { try moc.save()
                 

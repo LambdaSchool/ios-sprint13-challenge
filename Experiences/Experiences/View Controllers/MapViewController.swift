@@ -13,13 +13,27 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     //Properties
     private let cdc = CoreDataController.shared
+    let locationManager = CLLocationManager()
+
 
     //Outlets
     @IBOutlet weak var mapView: MKMapView!
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //Display the pins
+        DispatchQueue.main.async {
+            self.displayPins()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        //Requesting Location Permission
+        locationManager.requestWhenInUseAuthorization()
+        
+       
     }
     
     func displayPins() {
@@ -34,6 +48,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         entryAnnotation.coordinate = entryCoord
         
         //Add Annotation to the map
+        //mapView.removeAnnotation(entryAnnotation)
         mapView.addAnnotation(entryAnnotation)
         }
         
@@ -67,7 +82,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         if segue.identifier == "entrySeg" {
             let entryVC = segue.destination as! EntryViewController
             
-            entryVC.postLocation = mapView.userLocation.location?.coordinate
+            entryVC.postLocation = locationManager.location?.coordinate
+            
+            print(entryVC.postLocation)
         }
     }
 

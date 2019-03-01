@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import MapKit
 
 class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
@@ -15,6 +16,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     private var capturesession: AVCaptureSession!
     var recordOutput: AVCaptureMovieFileOutput!
     var videoURL: URL?
+    var photoURL: URL?
+    var titleText: String?
+    var locCoords: CLLocationCoordinate2D?
     
     //Outlets
     @IBOutlet weak var camPreview: CameraPreviewView!
@@ -170,9 +174,12 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "reviewVideo" {
+            let reviewVC = segue.destination as! ReviewViewController
             
-            ReviewViewController.previewVideo = videoURL
+            reviewVC.previewVideo = videoURL!
+            reviewVC.vidEntryTitle = titleText!
+            reviewVC.vidEntryPhoto = photoURL
+            reviewVC.vidEntryLocation = locCoords
+            }
         }
-    }
-    
 }

@@ -17,7 +17,7 @@ extension Experience { //This should be extending the Entity in the data model.
         longitude: Double,
         latitude: Double,
         picture: String,
-        video: String,
+        video: String? = nil,
         
         context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
         self.init(context: context)
@@ -26,7 +26,7 @@ extension Experience { //This should be extending the Entity in the data model.
         self.longitude = longitude //Attribute from the Entity
         self.latitude = latitude //Attribute from the Entity
         self.picture = picture //Attribute from the Entity
-        self.video = video //Attribute from the Entity
+        self.video = video ?? nil //Attribute from the Entity
 
     }
 }

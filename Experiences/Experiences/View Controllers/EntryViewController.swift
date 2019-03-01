@@ -85,16 +85,21 @@ class EntryViewController: UIViewController, UINavigationControllerDelegate, UII
             
             cdc.newEntry(entryTitle: titleField.text!, entryPhoto: postPhoto!, entryVid: nil, entryDate: currentDate, entryLocation: postLocation)
             
+            print(postPhoto?.absoluteString)
+            print(postLocation)
+            
+        performSegue(withIdentifier: "saveImgEntry", sender: nil)
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "recordSegue" {
-        let vidVC = segue.destination as! ReviewViewController
-        vidVC.vidEntryTitle = titleField.text!
-        vidVC.vidEntryPhoto = postPhoto
-        vidVC.vidEntryLocation = postLocation!
+            let vidVC = segue.destination as! CameraViewController
+            
+        vidVC.titleText = titleField.text!
+        vidVC.photoURL = postPhoto
+        vidVC.locCoords = postLocation
         }
     }
 }
