@@ -13,6 +13,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     //Properties
     private let cdc = CoreDataController.shared
+    var thumbnail: UIImage?
     let locationManager = CLLocationManager()
 
 
@@ -38,6 +39,22 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     func displayPins() {
         for x in cdc.entries {
+        /*
+        
+             IMAGE BUILDING ISN'T WORKING BECAUSE DIRECTORY CHANGES ALL THE TIME.
+             NEED TO SAVE ONLY THE STATIC PART OF THE URL, THEN BUILD IMAGE BY APPENDING THAT PART BACK ONTO DIRECTORY WITH EXTENSION.
+        
+        //Build Image URL
+        guard let thumbURL = URL(string: x.picture!) else { return }
+        //Build Image Data from URL
+        guard let thumbData = try? Data(contentsOf: thumbURL) else {
+            print("There was an error!")
+            return }
+        
+        //Build Image from Image data
+        thumbnail = UIImage(data: thumbData)
+         
+            */
             
         //Build location
         let entryCoord = CLLocationCoordinate2D(latitude: x.latitude, longitude: x.longitude)
@@ -68,6 +85,14 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             
             annotationView!.canShowCallout = true
+            
+            //Make photo appear in callout
+            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 75, height: 75))
+            imageView.image = thumbnail
+            let snapshotView = UIView()
+            snapshotView.addSubview(imageView)
+            
+            annotationView?.detailCalloutAccessoryView = snapshotView
             
         } else {
             annotationView!.annotation = annotation
