@@ -20,6 +20,7 @@ class ExperiencesViewController: UIViewController, MKMapViewDelegate, CLLocation
         
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,6 +51,19 @@ class ExperiencesViewController: UIViewController, MKMapViewDelegate, CLLocation
         guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceView", for: experience) as? MKMarkerAnnotationView else { return nil }
         
         return annotationView
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        guard let latitude = locationManager.location?.coordinate.latitude,
+            let longitude = locationManager.location?.coordinate.longitude else { return }
+        
+        let center = CLLocationCoordinate2DMake(latitude, longitude)
+        
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
+        
+        self.mapView.setRegion(region, animated: true)
+        locationManager.stopUpdatingLocation()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
