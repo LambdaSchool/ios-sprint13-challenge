@@ -15,6 +15,7 @@ class PhotoAudioViewController: UIViewController, UIImagePickerControllerDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "New Experience"
     }
     
     @IBAction func addPhoto(_ sender: Any) {
@@ -129,7 +130,11 @@ class PhotoAudioViewController: UIViewController, UIImagePickerControllerDelegat
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        if segue.identifier == "RecordVideo" {
+            guard let destination = segue.destination as? VideoViewController else { return }
+            
+            destination.experienceController = experienceController
+        }
     }
     
     // MARK: - Properties

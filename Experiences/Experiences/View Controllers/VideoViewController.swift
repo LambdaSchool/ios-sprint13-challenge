@@ -40,6 +40,8 @@ class VideoViewController: UIViewController, AVCaptureFileOutputRecordingDelegat
         guard experienceController?.videoURL != nil else { return }
         
         experienceController?.createExperience()
+        
+        dismiss(animated: true, completion: nil)
     }
     
     
