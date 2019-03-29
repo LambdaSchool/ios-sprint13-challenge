@@ -18,6 +18,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.navigationBar.installBlurEffect()
+        
         let captureSession = AVCaptureSession()
         let videoDevice = bestCamera()
         guard let videoDeviceInput = try? AVCaptureDeviceInput(device: videoDevice),
@@ -37,6 +39,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         self.captureSession = captureSession
         previewView.videoPreviewLayer.session = captureSession
+        previewView.videoPreviewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -116,4 +119,22 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     @IBOutlet weak var previewView: CameraPreviewView!
     @IBOutlet weak var recordButton: UIButton!
+}
+
+
+extension UINavigationBar {
+    func installBlurEffect() {
+        isTranslucent = true
+        setBackgroundImage(UIImage(), for: .default)
+        let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.height
+        var blurFrame = bounds
+        blurFrame.size.height += statusBarHeight
+        blurFrame.origin.y -= statusBarHeight
+        let blurView  = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+        blurView.isUserInteractionEnabled = false
+        blurView.frame = blurFrame
+        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        addSubview(blurView)
+        blurView.layer.zPosition = -1
+    }
 }
