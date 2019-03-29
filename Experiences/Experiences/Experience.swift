@@ -14,7 +14,8 @@ class Experience {
     
     var title: String
     var photo: UIImage
-    var recording: URL
+    var audioRecording: URL
+    var videoRecording: URL
 //    var fileURL: URL? {
 //        guard let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
 //
@@ -22,10 +23,11 @@ class Experience {
 //    }
     var geoTag: CLLocationCoordinate2D
     
-    init(title: String, photo: UIImage, recording: URL, geoTag: CLLocationCoordinate2D){
+    init(title: String, photo: UIImage, audioRecording: URL, videoRecording: URL, geoTag: CLLocationCoordinate2D){
         self.title = title
         self.photo = photo
-        self.recording = recording
+        self.audioRecording = audioRecording
+        self.videoRecording = videoRecording
         self.geoTag = geoTag
     }
 }
