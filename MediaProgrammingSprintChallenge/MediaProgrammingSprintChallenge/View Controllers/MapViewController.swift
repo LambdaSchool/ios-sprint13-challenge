@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
 class MapViewController: UIViewController, MKMapViewDelegate {
 
@@ -15,6 +16,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         mapView.delegate = self
         mapView.register(MKAnnotationView.self, forAnnotationViewWithReuseIdentifier: "MomentAnnotationView")
+        
+        checkLocationServices()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -52,7 +55,45 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         return annotationView
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AddMomentSegue" {
+            guard let vc = segue.destination as? ImageAndAudioViewController else { return }
+            vc.momentController = momentController
+            vc.longitude = longitude
+            vc.latitude = latitude
+        }
+    }
+    
     @IBOutlet weak var mapView: MKMapView!
     
     let momentController = MomentController()
+    let locationManager = CLLocationManager()
+    
+    var longitude: Double?
+    var latitude: Double?
+}
+
+extension MapViewController: CLLocationManagerDelegate {
+    
+    func checkLocationServices() {
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            checkLocationAuthorization()
+        }
+    }
+    
+    func checkLocationAuthorization() {
+        
+        switch CLLocationManager.authorizationStatus() {
+        case .authorizedWhenInUse:
+            let location = mapView.userLocation
+            
+            longitude = Double(location.coordinate.longitude)
+            latitude = Double(location.coordinate.latitude)
+            
+        default:
+            break
+        }
+    }
 }

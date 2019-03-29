@@ -59,11 +59,18 @@ class ImageAndAudioViewController: UIViewController {
         if segue.identifier == "NextSegue" {
             guard let destinationVC = segue.destination as? CameraViewController,
             let audioURL = audioURL, let imageURL = imageURL,
-            let caption = caption else { return }
+            let caption = caption,
+            let momentController = momentController,
+                let longitude = longitude,
+            let latitude = latitude
+            else { return }
             
             destinationVC.audioURL = audioURL
             destinationVC.imageURL = imageURL
             destinationVC.caption = caption
+            destinationVC.momentController = momentController
+            destinationVC.longitude = longitude
+            destinationVC.latitude = latitude
         }
     }
     
@@ -94,6 +101,11 @@ class ImageAndAudioViewController: UIViewController {
     
     let context = CIContext(options: nil)
     let filter = CIFilter(name: "CIColorInvert")!
+    
+    var momentController: MomentController?
+    
+    var longitude: Double?
+    var latitude: Double?
     
     @IBOutlet weak var captionTextField: UITextField!
     @IBOutlet weak var imageView: UIImageView!
