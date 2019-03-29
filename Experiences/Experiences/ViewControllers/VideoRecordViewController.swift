@@ -34,6 +34,14 @@ class VideoRecordViewController: UIViewController {
         }
     }
     
+    @IBAction func save(_ sender: Any) {
+        
+        guard experienceController?.videoURL != nil else { return }
+        experienceController?.createExperience()
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
     //uses date formatter
     private func newRecordingURL() -> URL {
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!

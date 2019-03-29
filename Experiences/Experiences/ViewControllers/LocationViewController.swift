@@ -10,19 +10,17 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class MapScreen: UIViewController {
+class LocationViewController: UIViewController {
     
+    //MARK: - Properties
     let locationManager = CLLocationManager()
     let regionInMeters: Double = 10000
     let experienceController = ExperienceController()
     
+    //MARK: - Outlets
     @IBOutlet weak var mapView: MKMapView!
     
-    @IBAction func start(_ sender: Any) {
-        performSegue(withIdentifier: "newExperience", sender: nil)
-        
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         checkLocationServices()
@@ -79,7 +77,7 @@ class MapScreen: UIViewController {
     }
 }
 
-extension MapScreen: CLLocationManagerDelegate {
+extension LocationViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
@@ -92,4 +90,3 @@ extension MapScreen: CLLocationManagerDelegate {
         checkLocationAuthorization()
     }
 }
-
