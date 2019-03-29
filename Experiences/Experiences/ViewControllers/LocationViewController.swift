@@ -20,7 +20,6 @@ class LocationViewController: UIViewController {
     //MARK: - Outlets
     @IBOutlet weak var mapView: MKMapView!
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         checkLocationServices()
