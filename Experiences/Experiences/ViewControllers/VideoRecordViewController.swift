@@ -106,6 +106,7 @@ class VideoRecordViewController: UIViewController {
     
     private func updateViews() {
         recordButton.isSelected = fileOutput.isRecording
+
     }
 }
 
