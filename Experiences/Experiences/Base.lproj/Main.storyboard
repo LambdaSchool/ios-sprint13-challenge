@@ -21,11 +21,28 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="a3K-jN-6p4">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="uHK-g3-aAg"/>
+                                </connections>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KcT-jT-geL">
+                                <rect key="frame" x="264" y="712" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="7E3-h7-lfu"/>
+                                    <constraint firstAttribute="height" constant="100" id="LJ5-du-kyF"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="45"/>
+                                <state key="normal" title="👉🏾"/>
+                                <connections>
+                                    <action selector="start:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zrc-K5-5Z1"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KcT-jT-geL" secondAttribute="trailing" constant="50" id="ANM-vT-ApP"/>
                             <constraint firstItem="a3K-jN-6p4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="BqA-IP-dIu"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="KcT-jT-geL" secondAttribute="bottom" constant="50" id="OEK-lO-7gi"/>
                             <constraint firstItem="a3K-jN-6p4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="S1u-bV-tSu"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="a3K-jN-6p4" secondAttribute="bottom" id="f9K-6V-hhT"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="a3K-jN-6p4" secondAttribute="trailing" id="oBC-SS-KVv"/>
@@ -33,6 +50,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="mapView" destination="a3K-jN-6p4" id="Uco-S9-9Vp"/>
                         <segue destination="4GM-cX-EMj" kind="presentation" identifier="createExperience" id="QNo-lA-j0r"/>
                     </connections>
                 </viewController>

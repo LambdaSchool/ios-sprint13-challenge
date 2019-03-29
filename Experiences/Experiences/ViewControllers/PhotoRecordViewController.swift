@@ -9,6 +9,9 @@
 import UIKit
 
 class PhotoRecordViewController: UIViewController {
+    
+    //MARK: - Properties
+    var experienceController: ExperienceController?
 
     override func viewDidLoad() {
         super.viewDidLoad()

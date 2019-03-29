@@ -9,6 +9,9 @@
 import UIKit
 
 class VideoRecordViewController: UIViewController {
+    
+    //MARK: - Properties
+    var experienceController: ExperienceController?
 
     override func viewDidLoad() {
         super.viewDidLoad()

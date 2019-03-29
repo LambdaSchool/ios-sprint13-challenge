@@ -7,24 +7,32 @@
 //
 
 import UIKit
+import MapKit
 
 class MapViewController: UIViewController {
-
+    
+    //MARK: - Properties
+    let experienceController = ExperienceController()
+    
+    
+    @IBOutlet weak var mapView: MKMapView!
+    @IBAction func start(_ sender: Any) {
+        performSegue(withIdentifier: "createExperience", sender: nil)
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
     }
     
 
-    /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "createExperience" {
+            guard let destination = segue.destination as? UINavigationController, let vcDestination = destination.topViewController as? PhotoRecordViewController else { return }
+            
+            vcDestination.experienceController = experienceController
+        }
     }
-    */
-
 }
