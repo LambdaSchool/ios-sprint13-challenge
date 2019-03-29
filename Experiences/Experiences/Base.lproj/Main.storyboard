@@ -106,6 +106,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TQg-RO-cDI" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="140" width="414" height="756"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KJi-RU-2to">
                                 <rect key="frame" x="167" y="758" width="80" height="80"/>
                                 <constraints>
@@ -115,6 +120,9 @@
                                 <color key="tintColor" red="0.99484533070000003" green="0.15425450869999999" blue="0.178707008" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" image="Record"/>
                                 <state key="selected" image="Stop"/>
+                                <connections>
+                                    <action selector="recordVideo:" destination="3wb-pu-8zf" eventType="touchUpInside" id="Y3l-aN-QCk"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -127,6 +135,10 @@
                     <navigationItem key="navigationItem" title="Record Video" id="UmJ-dD-2FH">
                         <barButtonItem key="rightBarButtonItem" title="Save" id="nOj-mI-h5F"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="cameraView" destination="TQg-RO-cDI" id="1Ai-2I-czL"/>
+                        <outlet property="recordButton" destination="KJi-RU-2to" id="sP5-u2-ZnU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1ml-Z6-kXq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
