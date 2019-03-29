@@ -41,7 +41,7 @@ class AddNewImageViewController: UIViewController, UIImagePickerControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Experiences"
+        title = "Add Photo"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(importPicture))
         
         context = CIContext()
