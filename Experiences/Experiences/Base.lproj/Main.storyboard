@@ -116,6 +116,7 @@
                     <navigationItem key="navigationItem" title="New Experience" id="jeE-2t-Uo3">
                         <barButtonItem key="rightBarButtonItem" title="Video" id="5cY-On-fxv">
                             <connections>
+                                <action selector="moveToVideo:" destination="Vlx-DL-qcL" id="4Wa-ay-DYm"/>
                                 <segue destination="oR6-8o-J92" kind="show" identifier="videoSegue" id="nUk-1d-8gd"/>
                             </connections>
                         </barButtonItem>
@@ -150,6 +151,9 @@
                                         </constraints>
                                         <color key="tintColor" red="0.61599336140000005" green="0.13365125750000001" blue="0.059533340990000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Button" image="Record"/>
+                                        <connections>
+                                            <action selector="recordButtonPressed:" destination="oR6-8o-J92" eventType="touchUpInside" id="Stq-v3-pzg"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -175,6 +179,10 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="cameraView" destination="8Kr-Jx-UVI" id="IDv-oy-VVk"/>
+                        <outlet property="recordButton" destination="cPb-E0-1hM" id="id5-k8-gaa"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xKf-2p-kHH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

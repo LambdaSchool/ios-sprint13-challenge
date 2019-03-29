@@ -15,6 +15,7 @@ class PhotoRecordViewController: UIViewController {
     
     //MARK: - Properties
     var experienceController: ExperienceController?
+    var recordingURL: URL?
     private lazy var recorder = Recorder()
     private let context = CIContext(options: nil)
     
@@ -50,6 +51,18 @@ class PhotoRecordViewController: UIViewController {
     
     @IBAction func recordButtonPressed(_ sender: Any) {
         recorder.toggleRecording()
+    }
+    
+    @IBAction func moveToVideo(_ sender: Any) {
+        guard let title = titleTextField.text, !title.isEmpty, let image = self.scaledImage, let recordingURL = recordingURL else { return }
+        
+        //let filteredImage = self.image(byFiltering: image)
+        
+        experienceController?.title = title
+        //experienceController?.photo = filteredImage
+        experienceController?.audioURL = recordingURL
+        
+        performSegue(withIdentifier: "videoSegue", sender: nil)
     }
     
     func resize(image: UIImage, toSize size: CGSize) -> UIImage? {
