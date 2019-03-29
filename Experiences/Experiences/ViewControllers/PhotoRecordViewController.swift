@@ -54,7 +54,7 @@ class PhotoRecordViewController: UIViewController {
     }
     
     @IBAction func moveToVideo(_ sender: Any) {
-        guard let title = titleTextField.text, !title.isEmpty, let image = self.scaledImage, let recordingURL = recordingURL else { return }
+        guard let title = titleTextField.text, !title.isEmpty, let photo = self.scaledImage, let recordingURL = recordingURL else { return }
         
         //let filteredImage = self.image(byFiltering: image)
         

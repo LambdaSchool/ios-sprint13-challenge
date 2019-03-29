@@ -86,35 +86,7 @@ class VideoRecordViewController: UIViewController {
         
         //request permission to use the camera
         let status = AVCaptureDevice.authorizationStatus(for: .video)
-        
-        switch status {
-        //first time the app is opened and user hasn't been prompted
-        case .notDetermined:
-            //request access
-            AVCaptureDevice.requestAccess(for: .video) { (status) in
-                if status == false {
-                    fatalError("Please request user to enable camera in Settings > Privacy")
-                }
-                
-                DispatchQueue.main.async {
-                    self.showCamera()
-                }
-            }
-            
-        //parental controls have disabled camera usage
-        case .restricted:
-            fatalError("Please inform user they cannot use app")
-        //we asked permission but eh user said no. they'd need to enable settings > privacy
-        case .denied:
-            fatalError("Please request user to enable Settings > Privacy > Camera")
-        //we asked for permission and they said yes
-        case .authorized:
-            showCamera()
-        }
-    }
-    
-    private func showCamera() {
-        performSegue(withIdentifier: "showCamera", sender: self)
+
     }
     
     override func viewDidDisappear(_ animated: Bool) {
