@@ -84,12 +84,18 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YFC-6D-RO7">
                                         <rect key="frame" x="0.0" y="380" width="334" height="30"/>
                                         <state key="normal" title="record"/>
+                                        <connections>
+                                            <action selector="recordButtonPressed:" destination="Vlx-DL-qcL" eventType="touchUpInside" id="6hb-Wm-eXB"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9BW-1f-fYv">
                                 <rect key="frame" x="40" y="178" width="334" height="30"/>
                                 <state key="normal" title="add photo"/>
+                                <connections>
+                                    <action selector="addPhotoPressed:" destination="Vlx-DL-qcL" eventType="touchUpInside" id="861-CK-mQn"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -110,6 +116,12 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="addPhoto" destination="9BW-1f-fYv" id="bmW-fh-egy"/>
+                        <outlet property="photoView" destination="2rq-fE-nwg" id="FnR-1c-2ai"/>
+                        <outlet property="recordButton" destination="YFC-6D-RO7" id="2rH-Eo-GTz"/>
+                        <outlet property="titleTextField" destination="2N7-Ed-SiL" id="Yst-DW-dmA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="muu-Xg-W5L" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

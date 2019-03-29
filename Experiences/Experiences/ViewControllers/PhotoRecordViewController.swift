@@ -19,7 +19,19 @@ class PhotoRecordViewController: UIViewController {
     }
     
     //MARK: Outlets
-
+    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var photoView: UIImageView!
+    @IBOutlet weak var addPhoto: UIButton!
+    @IBOutlet weak var recordButton: UIButton!
+    
+    @IBAction func addPhotoPressed(_ sender: Any) {
+        
+    }
+    
+    @IBAction func recordButtonPressed(_ sender: Any) {
+        
+    }
+    
 
     /*
     // MARK: - Navigation
