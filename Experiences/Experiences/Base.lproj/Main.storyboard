@@ -9,6 +9,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="CircularStd-Medium.ttf">
+            <string>CircularStd-Medium</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Map View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -64,68 +69,78 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Gdp-rB-HYg">
-                                <rect key="frame" x="62.5" y="178" width="250" height="250"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Gdp-rB-HYg">
+                                <rect key="frame" x="0.0" y="178" width="375" height="489"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jOt-L9-WuI">
-                                        <rect key="frame" x="0.0" y="0.0" width="250" height="202"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="250" id="ARj-IL-kMw"/>
+                                        </constraints>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sds-Dv-gS5">
-                                        <rect key="frame" x="0.0" y="202" width="250" height="48"/>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" image="image-gallery"/>
-                                        <connections>
-                                            <action selector="addPhotoPressed:" destination="2Nc-nE-wti" eventType="touchUpInside" id="YYK-Hl-qqA"/>
-                                        </connections>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="KyP-K3-sPe">
+                                        <rect key="frame" x="0.0" y="260" width="375" height="229"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sds-Dv-gS5">
+                                                <rect key="frame" x="21" y="0.0" width="333" height="69.5"/>
+                                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" image="image-gallery"/>
+                                                <connections>
+                                                    <action selector="addPhotoPressed:" destination="2Nc-nE-wti" eventType="touchUpInside" id="YYK-Hl-qqA"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sik-JQ-QS8" userLabel="AddRecord Button">
+                                                <rect key="frame" x="21" y="79.5" width="333" height="70"/>
+                                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <state key="normal" image="microphone"/>
+                                                <state key="selected" image="microphone"/>
+                                                <connections>
+                                                    <action selector="recordAudioPressed:" destination="2Nc-nE-wti" eventType="touchUpInside" id="Rna-gj-sIo"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gvt-Fr-U4k">
+                                                <rect key="frame" x="21" y="159.5" width="333" height="69.5"/>
+                                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="19"/>
+                                                <state key="normal" title="PHOTO FILTER">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="photoFilterPressed:" destination="2Nc-nE-wti" eventType="touchUpInside" id="5OR-oA-jBz"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="gvt-Fr-U4k" firstAttribute="width" secondItem="Sik-JQ-QS8" secondAttribute="width" id="iVk-YO-I0U"/>
+                                            <constraint firstItem="Sik-JQ-QS8" firstAttribute="width" secondItem="Sds-Dv-gS5" secondAttribute="width" id="j4n-fU-Bh5"/>
+                                        </constraints>
+                                    </stackView>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="250" id="X43-B9-0jJ"/>
-                                    <constraint firstAttribute="height" constant="250" id="y22-nt-BsY"/>
-                                </constraints>
                             </stackView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ne2-xs-ham">
                                 <rect key="frame" x="12" y="128" width="351" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="XFG-cw-Cja"/>
+                                </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gvt-Fr-U4k">
-                                <rect key="frame" x="62.5" y="496" width="250" height="41"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="21"/>
-                                <state key="normal" title="PHOTO FILTER">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="photoFilterPressed:" destination="2Nc-nE-wti" eventType="touchUpInside" id="5OR-oA-jBz"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sik-JQ-QS8" userLabel="AddRecord Button">
-                                <rect key="frame" x="62.5" y="440" width="250" height="48"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <state key="normal" image="microphone"/>
-                                <state key="selected" image="microphone"/>
-                                <connections>
-                                    <action selector="recordAudioPressed:" destination="2Nc-nE-wti" eventType="touchUpInside" id="Rna-gj-sIo"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="ZVm-nh-LQH" firstAttribute="bottom" secondItem="Gdp-rB-HYg" secondAttribute="bottom" id="594-hQ-lNE"/>
                             <constraint firstItem="Ne2-xs-ham" firstAttribute="top" secondItem="ZVm-nh-LQH" secondAttribute="top" constant="12" id="D7Q-wE-CgT"/>
+                            <constraint firstItem="ZVm-nh-LQH" firstAttribute="trailing" secondItem="Gdp-rB-HYg" secondAttribute="trailing" id="FC3-J5-l7b"/>
                             <constraint firstItem="Gdp-rB-HYg" firstAttribute="centerX" secondItem="Om6-Wr-7Yd" secondAttribute="centerX" id="Lpr-2P-DuH"/>
                             <constraint firstItem="Gdp-rB-HYg" firstAttribute="top" secondItem="Ne2-xs-ham" secondAttribute="bottom" constant="20" id="OTO-Au-HoI"/>
-                            <constraint firstItem="gvt-Fr-U4k" firstAttribute="top" secondItem="Sik-JQ-QS8" secondAttribute="bottom" constant="8" id="PiY-Tv-hU6"/>
-                            <constraint firstItem="Sik-JQ-QS8" firstAttribute="top" secondItem="Gdp-rB-HYg" secondAttribute="bottom" constant="12" id="TA0-sm-Sjy"/>
-                            <constraint firstItem="gvt-Fr-U4k" firstAttribute="width" secondItem="Sik-JQ-QS8" secondAttribute="width" id="VF6-6b-6fD"/>
+                            <constraint firstItem="Gdp-rB-HYg" firstAttribute="leading" secondItem="ZVm-nh-LQH" secondAttribute="leading" id="PTG-22-Bnu"/>
                             <constraint firstItem="ZVm-nh-LQH" firstAttribute="trailing" secondItem="Ne2-xs-ham" secondAttribute="trailing" constant="12" id="Zpj-bi-HUB"/>
-                            <constraint firstItem="Sik-JQ-QS8" firstAttribute="centerX" secondItem="Om6-Wr-7Yd" secondAttribute="centerX" id="b1E-Nz-P27"/>
+                            <constraint firstItem="Sds-Dv-gS5" firstAttribute="width" secondItem="Om6-Wr-7Yd" secondAttribute="width" multiplier="8/9" id="aoF-rC-NqZ"/>
+                            <constraint firstItem="KyP-K3-sPe" firstAttribute="width" secondItem="Om6-Wr-7Yd" secondAttribute="width" id="bO1-KQ-P47"/>
                             <constraint firstItem="Ne2-xs-ham" firstAttribute="leading" secondItem="ZVm-nh-LQH" secondAttribute="leading" constant="12" id="ebm-75-oHt"/>
-                            <constraint firstItem="Sik-JQ-QS8" firstAttribute="width" secondItem="Sds-Dv-gS5" secondAttribute="width" id="gWu-4a-n4k"/>
-                            <constraint firstItem="gvt-Fr-U4k" firstAttribute="centerX" secondItem="Om6-Wr-7Yd" secondAttribute="centerX" id="vIN-NY-Pc0"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ZVm-nh-LQH"/>
                     </view>
@@ -151,7 +166,7 @@
         <!--Video Recording-->
         <scene sceneID="DD7-ko-JYH">
             <objects>
-                <viewController id="gPu-Xy-UDG" sceneMemberID="viewController">
+                <viewController id="gPu-Xy-UDG" customClass="CameraViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="onn-Z8-K6D">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -170,6 +185,9 @@
                                 <color key="tintColor" red="0.98823529409999999" green="0.4039215686" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" image="Record"/>
                                 <state key="selected" image="Stop"/>
+                                <connections>
+                                    <action selector="recordButtonPressed:" destination="gPu-Xy-UDG" eventType="touchUpInside" id="uyk-vw-KSC"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -182,6 +200,10 @@
                     <navigationItem key="navigationItem" title="Video Recording" id="U17-xv-SPj">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="Aft-UR-rW2"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="previewView" destination="r6q-Ns-PSw" id="xwb-Gy-Lfu"/>
+                        <outlet property="recordButton" destination="dtL-fY-pDb" id="6X0-j8-The"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2hd-NA-cPg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
