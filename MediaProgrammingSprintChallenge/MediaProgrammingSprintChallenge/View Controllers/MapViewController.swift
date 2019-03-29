@@ -87,13 +87,14 @@ extension MapViewController: CLLocationManagerDelegate {
         
         switch CLLocationManager.authorizationStatus() {
         case .authorizedWhenInUse:
-            let location = mapView.userLocation
+            guard let location = locationManager.location else { break }
             
             longitude = Double(location.coordinate.longitude)
             latitude = Double(location.coordinate.latitude)
             break
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
+            return
         default:
             break
         }
