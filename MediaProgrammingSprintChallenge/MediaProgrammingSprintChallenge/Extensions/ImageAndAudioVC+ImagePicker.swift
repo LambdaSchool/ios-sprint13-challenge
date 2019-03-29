@@ -63,6 +63,8 @@ extension ImageAndAudioViewController: UIImagePickerControllerDelegate, UINaviga
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
         originalImage = image
+        
+        imageURL = image.pngData()
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

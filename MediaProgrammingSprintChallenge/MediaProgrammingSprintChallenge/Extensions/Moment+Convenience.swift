@@ -18,7 +18,7 @@ extension Moment: MKAnnotation {
         return CLLocationCoordinate2D(latitude: lat, longitude: long)
     }
     
-    convenience init(caption: String, imageURL: URL, videoURL: URL, audioURL: URL, longitude: Double, latitude: Double,  context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
+    convenience init(caption: String, imageURL: Data, videoURL: URL, audioURL: URL, longitude: Double, latitude: Double,  context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
         self.init(context: context)
         self.caption = caption
         self.imageURL = imageURL

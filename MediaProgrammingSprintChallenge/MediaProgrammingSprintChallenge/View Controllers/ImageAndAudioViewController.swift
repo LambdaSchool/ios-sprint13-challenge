@@ -57,9 +57,9 @@ class ImageAndAudioViewController: UIViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "NextSegue" {
-            guard let destinationVC = segue.destination as? CameraViewController,
+            guard let destinationVC = segue.destination as? ShowCameraViewController,
             let audioURL = audioURL, let imageURL = imageURL,
-            let caption = caption,
+            let caption = captionTextField.text,
             let momentController = momentController,
                 let longitude = longitude,
             let latitude = latitude
@@ -91,8 +91,8 @@ class ImageAndAudioViewController: UIViewController {
     }
     
     var audioURL: URL?
-    var imageURL: URL?
-    var caption: String?
+    
+    var imageURL: Data?
     
     var session: AVAudioSession!
     
@@ -122,6 +122,7 @@ extension ImageAndAudioViewController: RecorderDelegate {
         
         if let recordedURL = recorder.url {
             player.url = recordedURL
+            audioURL = recordedURL
         }
     }
 }

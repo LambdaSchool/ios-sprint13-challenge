@@ -10,7 +10,7 @@ import CoreData
 
 class MomentController {
     
-    func createMoment(caption: String, imageURL: URL, audioURL: URL, videoURL: URL, longitude: Double, latitude: Double) {
+    func createMoment(caption: String, imageURL: Data, audioURL: URL, videoURL: URL, longitude: Double, latitude: Double) {
         _ = Moment(caption: caption, imageURL: imageURL, videoURL: videoURL, audioURL: audioURL, longitude: longitude, latitude: latitude)
         saveToCoreData()
     }

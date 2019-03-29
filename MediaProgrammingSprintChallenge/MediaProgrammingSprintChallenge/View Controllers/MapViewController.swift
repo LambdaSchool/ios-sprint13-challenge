@@ -91,7 +91,9 @@ extension MapViewController: CLLocationManagerDelegate {
             
             longitude = Double(location.coordinate.longitude)
             latitude = Double(location.coordinate.latitude)
-            
+            break
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
         default:
             break
         }

@@ -86,6 +86,8 @@ class CameraViewController: UIViewController {
     
     private func updateViews() {
         recordButton.isSelected = fileOutput.isRecording
+        recordButton.setTitle("Record", for: .normal)
+        recordButton.setTitle("Stop", for: .selected)
     }
     
     @IBAction func recordButtonTapped(_ sender: UIButton) {
@@ -100,14 +102,20 @@ class CameraViewController: UIViewController {
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
         guard let audioURL = audioURL, let imageURL = imageURL, let caption = caption,
         let longitude = longitude, let latitude = latitude,
-        let videoURL = fileOutput.outputFileURL
-        else { return }
+        let videoURL = videoURL
+        else {
+            print("Missing something")
+            return
+            
+        }
         
         momentController?.createMoment(caption: caption, imageURL: imageURL, audioURL: audioURL, videoURL: videoURL, longitude: longitude, latitude: latitude)
+        
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     var audioURL: URL?
-    var imageURL: URL?
+    var imageURL: Data?
     var caption: String?
     var longitude: Double?
     var latitude: Double?
@@ -115,6 +123,8 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var cameraView: CameraView!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var saveButton: UIBarButtonItem!
+    
+    var videoURL: URL?
     
     var momentController: MomentController?
     
@@ -143,7 +153,11 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
                 print("Error saving video")
             } else {
                 print("Saving video succeeded")
+                
+                self.videoURL = outputFileURL
+                
             }
+            
         }
         
         DispatchQueue.main.async {

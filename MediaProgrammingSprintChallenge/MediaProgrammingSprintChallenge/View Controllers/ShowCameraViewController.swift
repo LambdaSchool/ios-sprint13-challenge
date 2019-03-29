@@ -11,8 +11,8 @@ import AVFoundation
 
 class ShowCameraViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
 
         let status = AVCaptureDevice.authorizationStatus(for: .video)
         
@@ -59,7 +59,7 @@ class ShowCameraViewController: UIViewController {
     }
     
     var audioURL: URL?
-    var imageURL: URL?
+    var imageURL: Data?
     var caption: String?
     var longitude: Double?
     var latitude: Double?
