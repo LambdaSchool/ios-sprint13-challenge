@@ -49,7 +49,7 @@
             </objects>
             <point key="canvasLocation" x="137.68115942028987" y="138.61607142857142"/>
         </scene>
-        <!--Add New Experience-->
+        <!--Add Experience-->
         <scene sceneID="PVc-eL-RfM">
             <objects>
                 <viewController id="ogG-Gn-jwI" sceneMemberID="viewController">
@@ -80,7 +80,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="Exs-7U-j4j"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Add New Experience" id="4TD-Ot-1ub">
+                    <navigationItem key="navigationItem" title="Add Experience" id="4TD-Ot-1ub">
                         <barButtonItem key="leftBarButtonItem" title="Add Image" id="4IA-d9-lxq"/>
                         <barButtonItem key="rightBarButtonItem" title="Next" id="euq-kL-pVj"/>
                     </navigationItem>
@@ -92,11 +92,27 @@
         <!--Record Video-->
         <scene sceneID="05Q-m8-7bE">
             <objects>
-                <viewController id="3wb-pu-8zf" sceneMemberID="viewController">
+                <viewController id="3wb-pu-8zf" customClass="RecorderViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="N6e-uy-9px">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KJi-RU-2to">
+                                <rect key="frame" x="167" y="758" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="3hy-Bp-tcs"/>
+                                    <constraint firstAttribute="width" constant="80" id="baY-no-GZg"/>
+                                </constraints>
+                                <color key="tintColor" red="0.99484533070000003" green="0.15425450869999999" blue="0.178707008" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <state key="normal" image="Record"/>
+                                <state key="selected" image="Stop"/>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="KJi-RU-2to" firstAttribute="centerX" secondItem="N6e-uy-9px" secondAttribute="centerX" id="aQO-o4-caY"/>
+                            <constraint firstItem="h2j-1W-zv5" firstAttribute="bottom" secondItem="KJi-RU-2to" secondAttribute="bottom" constant="24" id="qCg-Sy-Afm"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="h2j-1W-zv5"/>
                     </view>
                     <navigationItem key="navigationItem" title="Record Video" id="UmJ-dD-2FH">
@@ -105,7 +121,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1ml-Z6-kXq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2810" y="139"/>
+            <point key="canvasLocation" x="2808.6956521739135" y="138.61607142857142"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="eeT-0e-01C">
@@ -126,4 +142,8 @@
             <point key="canvasLocation" x="1049" y="139"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Record" width="116" height="116"/>
+        <image name="Stop" width="116" height="116"/>
+    </resources>
 </document>
