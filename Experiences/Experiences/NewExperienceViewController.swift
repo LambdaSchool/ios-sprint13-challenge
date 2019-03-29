@@ -68,6 +68,8 @@ class NewExperienceViewController: UIViewController {
         case .restricted:
             self.presentInformationalAlertController(title: "Error", message: "Unable to access the photo library. Your device's restrictions do not allow access.")
             
+        @unknown default:
+            fatalError("Unaccounted for authorization status")
         }
         presentImagePickerController()
     }
