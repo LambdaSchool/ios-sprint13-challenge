@@ -15,7 +15,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
-        mapView.register(MKAnnotationView.self, forAnnotationViewWithReuseIdentifier: "MomentAnnotationView")
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "MomentAnnotationView")
         
         checkLocationServices()
     }
@@ -46,7 +46,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         annotationView.canShowCallout = true
         
-        let detailView = MomentDetailView(frame: .zero)
+        let detailView = MomentDetailView(frame: .infinite)
         
         detailView.moment = moment
         

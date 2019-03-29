@@ -13,10 +13,20 @@ class MomentDetailView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        captionLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16).isActive = true
-        captionLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
-        captionLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: 16).isActive = true
-        captionLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 16).isActive = true
+        captionLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        captionLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        
+        let stackView = UIStackView(arrangedSubviews: [captionLabel])
+        stackView.spacing = UIStackView.spacingUseSystem
+        stackView.axis = .horizontal
+        
+        addSubview(stackView)
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        stackView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        stackView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {

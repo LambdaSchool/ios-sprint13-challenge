@@ -15,7 +15,6 @@ class ImageAndAudioViewController: UIViewController {
         super.viewDidLoad()
         updateViews()
         recorder.delegate = self
-        player.delegate = self
         
         setUpSession()
     }
@@ -23,11 +22,6 @@ class ImageAndAudioViewController: UIViewController {
     func updateViews() {
         let recordingTitle = recorder.isRecording ? "Stop recording" : "Record voice"
         recordButton.setTitle(recordingTitle, for: .normal)
-        
-        let playTitle = player.isPlaying ? "Stop" : "Play"
-        playButton.setTitle(playTitle, for: .normal)
-        playButton.isEnabled = recorder.hasRecorded
-        playButton.alpha = recorder.hasRecorded ? 1 : 0
     }
     
     // MARK: - IBActions
@@ -38,19 +32,14 @@ class ImageAndAudioViewController: UIViewController {
     
     @IBAction func invertSwitchValueChanged(_ sender: UISwitch) {
         updateImage()
-        
     }
     
     @IBAction func recordButtonTapped(_ sender: UIButton) {
         recorder.toggleRecording()
         
         if let recordedURL = recorder.url {
-            player.url = recordedURL
+            audioURL = recordedURL
         }
-    }
-    
-    @IBAction func playButtonTapped(_ sender: UIButton) {
-        player.playPause()
     }
 
     // MARK: - Navigation
@@ -97,7 +86,6 @@ class ImageAndAudioViewController: UIViewController {
     var session: AVAudioSession!
     
     let recorder = Recorder()
-    var player = Player()
     
     let context = CIContext(options: nil)
     let filter = CIFilter(name: "CIColorInvert")!
@@ -112,7 +100,6 @@ class ImageAndAudioViewController: UIViewController {
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var invertSwitch: UISwitch!
-    @IBOutlet weak var playButton: UIButton!
 }
 
 extension ImageAndAudioViewController: RecorderDelegate {
@@ -121,16 +108,8 @@ extension ImageAndAudioViewController: RecorderDelegate {
         updateViews()
         
         if let recordedURL = recorder.url {
-            player.url = recordedURL
             audioURL = recordedURL
         }
-    }
-}
-
-extension ImageAndAudioViewController: PlayerDelegate {
-    
-    func playerDidChangeState(player: Player) {
-        updateViews()
     }
 }
 
