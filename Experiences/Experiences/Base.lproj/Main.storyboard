@@ -77,16 +77,26 @@
                                 <rect key="frame" x="0.0" y="193" width="414" height="374"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yqf-Mb-ylM">
-                                <rect key="frame" x="183" y="620" width="49" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Record"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yqf-Mb-ylM">
+                                <rect key="frame" x="166" y="621" width="82" height="44"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="4Un-0D-0As"/>
+                                    <constraint firstAttribute="width" constant="82" id="zpV-oM-Fbj"/>
+                                </constraints>
+                                <state key="normal" title="Record">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <connections>
                                     <segue destination="3wb-pu-8zf" kind="show" id="I6x-Mw-woZ"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Exs-7U-j4j" firstAttribute="bottom" secondItem="Yqf-Mb-ylM" secondAttribute="bottom" constant="197" id="4s2-j5-vac"/>
+                            <constraint firstItem="Yqf-Mb-ylM" firstAttribute="centerX" secondItem="Sor-H4-eKE" secondAttribute="centerX" id="qla-Xj-6lW"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Exs-7U-j4j"/>
                     </view>
                     <navigationItem key="navigationItem" title="Add Experience" id="4TD-Ot-1ub">
@@ -106,9 +116,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TQg-RO-cDI" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TQg-RO-cDI" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="140" width="414" height="756"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KJi-RU-2to">
@@ -127,8 +136,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="TQg-RO-cDI" secondAttribute="bottom" id="T0D-gb-3im"/>
                             <constraint firstItem="KJi-RU-2to" firstAttribute="centerX" secondItem="N6e-uy-9px" secondAttribute="centerX" id="aQO-o4-caY"/>
+                            <constraint firstItem="TQg-RO-cDI" firstAttribute="leading" secondItem="h2j-1W-zv5" secondAttribute="leading" id="ccA-8U-OjB"/>
+                            <constraint firstItem="TQg-RO-cDI" firstAttribute="trailing" secondItem="h2j-1W-zv5" secondAttribute="trailing" id="hRv-Lg-kQx"/>
                             <constraint firstItem="h2j-1W-zv5" firstAttribute="bottom" secondItem="KJi-RU-2to" secondAttribute="bottom" constant="24" id="qCg-Sy-Afm"/>
+                            <constraint firstItem="TQg-RO-cDI" firstAttribute="top" secondItem="h2j-1W-zv5" secondAttribute="top" id="tGU-mx-oJu"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="h2j-1W-zv5"/>
                     </view>
