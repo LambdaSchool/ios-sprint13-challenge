@@ -13,7 +13,7 @@
         <!--Moments-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MediaProgrammingSprintChallenge" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MapViewController" customModule="MediaProgrammingSprintChallenge" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -34,10 +34,13 @@
                     <navigationItem key="navigationItem" title="Moments" id="nAE-wz-kqq">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="pXR-wA-eYF">
                             <connections>
-                                <segue destination="fZu-7v-g5M" kind="presentation" id="5cY-eU-Ki7"/>
+                                <segue destination="fZu-7v-g5M" kind="presentation" identifier="AddMomentSegue" id="5cY-eU-Ki7"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="uOb-De-B1X" id="Seh-Q1-ftg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -46,7 +49,7 @@
         <!--New Moment-->
         <scene sceneID="KCs-Z6-eLI">
             <objects>
-                <viewController id="XnU-Ue-XTr" sceneMemberID="viewController">
+                <viewController id="XnU-Ue-XTr" customClass="ImageAndAudioViewController" customModule="MediaProgrammingSprintChallenge" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mFo-Lf-fPb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -75,6 +78,9 @@
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gf5-Qv-DwC">
                                         <rect key="frame" x="333" y="0.0" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="invertSwitchValueChanged:" destination="XnU-Ue-XTr" eventType="valueChanged" id="BnE-sU-fkZ"/>
+                                        </connections>
                                     </switch>
                                 </subviews>
                             </stackView>
@@ -83,10 +89,16 @@
                                 <state key="normal" title="Record voice">
                                     <color key="titleColor" red="0.71046560400000003" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="recordButtonTapped:" destination="XnU-Ue-XTr" eventType="touchUpInside" id="Od1-yi-AaG"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D2C-jW-aav">
                                 <rect key="frame" x="158" y="342" width="98" height="30"/>
                                 <state key="normal" title="Choose image"/>
+                                <connections>
+                                    <action selector="chooseImageButtonTapped:" destination="XnU-Ue-XTr" eventType="touchUpInside" id="NeK-Dm-ytr"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -110,10 +122,16 @@
                     <navigationItem key="navigationItem" title="New Moment" id="EPm-YO-Xp5">
                         <barButtonItem key="rightBarButtonItem" title="Next" id="DJ5-zj-BxJ">
                             <connections>
-                                <segue destination="oJa-dX-dpP" kind="show" id="4pl-FK-1rN"/>
+                                <segue destination="oJa-dX-dpP" kind="show" identifier="NextSegue" id="4pl-FK-1rN"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="captionTextField" destination="2xw-yM-lkw" id="O4C-bU-zuT"/>
+                        <outlet property="chooseImageButton" destination="D2C-jW-aav" id="9OB-AT-6cw"/>
+                        <outlet property="imageView" destination="usW-pi-uae" id="aBB-4C-nqn"/>
+                        <outlet property="recordButton" destination="fda-iM-so7" id="HBa-1u-azr"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bye-Rr-uey" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -122,7 +140,7 @@
         <!--Record Video-->
         <scene sceneID="FUo-wb-NzH">
             <objects>
-                <viewController id="oJa-dX-dpP" sceneMemberID="viewController">
+                <viewController id="oJa-dX-dpP" customClass="CameraViewController" customModule="MediaProgrammingSprintChallenge" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ELh-Uq-0Mv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -133,6 +151,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="toY-7p-J90">
                                         <rect key="frame" x="182.5" y="702" width="49" height="30"/>
                                         <state key="normal" title="Record"/>
+                                        <connections>
+                                            <action selector="recordButtonTapped:" destination="oJa-dX-dpP" eventType="touchUpInside" id="XoY-dN-aBp"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -152,8 +173,17 @@
                         <viewLayoutGuide key="safeArea" id="QMV-WY-ljm"/>
                     </view>
                     <navigationItem key="navigationItem" title="Record Video" id="5ls-Ee-Nj6">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="PMj-LY-brM"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="PMj-LY-brM">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="oJa-dX-dpP" id="NOn-8g-8a1"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="cameraView" destination="272-1D-8cq" id="Kh8-rb-2a1"/>
+                        <outlet property="recordButton" destination="toY-7p-J90" id="Fzf-Li-jI4"/>
+                        <outlet property="saveButton" destination="PMj-LY-brM" id="Tur-EE-QOg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oGY-cb-pTc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
