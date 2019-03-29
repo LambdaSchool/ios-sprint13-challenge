@@ -79,7 +79,7 @@ class RecordAudioViewController: UIViewController, AVAudioRecorderDelegate {
             recordButton.setTitle("Tap to Re-record", for: .normal)
         } else {
             recordButton.setTitle("Tap to Record", for: .normal)
-            // recording failed :(
+            
         }
     }
     

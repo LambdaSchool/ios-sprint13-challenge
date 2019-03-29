@@ -57,6 +57,8 @@ class ViewController: UIViewController {
             break
         case .authorizedAlways:
             break
+        default:
+            break
         }
     }
 
