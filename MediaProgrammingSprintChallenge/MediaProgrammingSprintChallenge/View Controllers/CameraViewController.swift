@@ -22,8 +22,11 @@ class CameraViewController: UIViewController {
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
     }
     
+    var audioURL: URL?
+    var imageURL: URL?
+    var caption: String?
+    
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var saveButton: UIBarButtonItem!
-    
 }

@@ -60,7 +60,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="usW-pi-uae">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="usW-pi-uae">
                                 <rect key="frame" x="0.0" y="150" width="414" height="414"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
@@ -76,7 +76,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gf5-Qv-DwC">
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="gf5-Qv-DwC">
                                         <rect key="frame" x="333" y="0.0" width="51" height="31"/>
                                         <connections>
                                             <action selector="invertSwitchValueChanged:" destination="XnU-Ue-XTr" eventType="valueChanged" id="BnE-sU-fkZ"/>
@@ -84,15 +84,27 @@
                                     </switch>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fda-iM-so7">
-                                <rect key="frame" x="162.5" y="643" width="89" height="30"/>
-                                <state key="normal" title="Record voice">
-                                    <color key="titleColor" red="0.71046560400000003" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="recordButtonTapped:" destination="XnU-Ue-XTr" eventType="touchUpInside" id="Od1-yi-AaG"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="3K0-yR-exv">
+                                <rect key="frame" x="132.5" y="627" width="149" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fda-iM-so7">
+                                        <rect key="frame" x="0.0" y="0.0" width="89" height="30"/>
+                                        <state key="normal" title="Record voice">
+                                            <color key="titleColor" red="0.71046560400000003" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="recordButtonTapped:" destination="XnU-Ue-XTr" eventType="touchUpInside" id="Od1-yi-AaG"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Loe-7u-uHe">
+                                        <rect key="frame" x="119" y="0.0" width="30" height="30"/>
+                                        <state key="normal" title="Play"/>
+                                        <connections>
+                                            <action selector="playButtonTapped:" destination="XnU-Ue-XTr" eventType="touchUpInside" id="W58-sX-nqm"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D2C-jW-aav">
                                 <rect key="frame" x="158" y="342" width="98" height="30"/>
                                 <state key="normal" title="Choose image"/>
@@ -106,16 +118,16 @@
                             <constraint firstItem="8dP-Q9-qec" firstAttribute="leading" secondItem="i44-FI-AcW" secondAttribute="leading" constant="16" id="3Qm-4b-eM7"/>
                             <constraint firstItem="i44-FI-AcW" firstAttribute="trailing" secondItem="8dP-Q9-qec" secondAttribute="trailing" constant="16" id="KN6-iC-KpG"/>
                             <constraint firstItem="usW-pi-uae" firstAttribute="leading" secondItem="i44-FI-AcW" secondAttribute="leading" id="Naz-ZS-H5B"/>
-                            <constraint firstItem="fda-iM-so7" firstAttribute="top" secondItem="iHi-Jo-hhS" secondAttribute="bottom" constant="32" id="PGP-VU-e7T"/>
                             <constraint firstItem="usW-pi-uae" firstAttribute="top" secondItem="2xw-yM-lkw" secondAttribute="bottom" constant="16" id="ROZ-Qt-As9"/>
                             <constraint firstItem="D2C-jW-aav" firstAttribute="centerX" secondItem="usW-pi-uae" secondAttribute="centerX" id="Y1f-RV-9N4"/>
                             <constraint firstItem="D2C-jW-aav" firstAttribute="centerY" secondItem="usW-pi-uae" secondAttribute="centerY" id="c0A-nu-L4q"/>
                             <constraint firstItem="2xw-yM-lkw" firstAttribute="leading" secondItem="i44-FI-AcW" secondAttribute="leading" constant="16" id="dyO-RW-bsb"/>
+                            <constraint firstItem="3K0-yR-exv" firstAttribute="top" secondItem="8dP-Q9-qec" secondAttribute="bottom" constant="16" id="ipr-uS-uMT"/>
                             <constraint firstItem="8dP-Q9-qec" firstAttribute="top" secondItem="usW-pi-uae" secondAttribute="bottom" constant="16" id="lDt-B2-dgP"/>
                             <constraint firstItem="i44-FI-AcW" firstAttribute="trailing" secondItem="usW-pi-uae" secondAttribute="trailing" id="nx7-AL-knd"/>
                             <constraint firstItem="2xw-yM-lkw" firstAttribute="top" secondItem="i44-FI-AcW" secondAttribute="top" constant="16" id="pHn-w9-kcZ"/>
-                            <constraint firstItem="fda-iM-so7" firstAttribute="centerX" secondItem="i44-FI-AcW" secondAttribute="centerX" id="pLu-Mb-qR3"/>
                             <constraint firstItem="i44-FI-AcW" firstAttribute="trailing" secondItem="2xw-yM-lkw" secondAttribute="trailing" constant="16" id="v4X-W6-Ujb"/>
+                            <constraint firstItem="3K0-yR-exv" firstAttribute="centerX" secondItem="i44-FI-AcW" secondAttribute="centerX" id="xQr-Cp-Cu4"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="i44-FI-AcW"/>
                     </view>
@@ -130,6 +142,8 @@
                         <outlet property="captionTextField" destination="2xw-yM-lkw" id="O4C-bU-zuT"/>
                         <outlet property="chooseImageButton" destination="D2C-jW-aav" id="9OB-AT-6cw"/>
                         <outlet property="imageView" destination="usW-pi-uae" id="aBB-4C-nqn"/>
+                        <outlet property="invertSwitch" destination="gf5-Qv-DwC" id="ZZM-zG-OnI"/>
+                        <outlet property="playButton" destination="Loe-7u-uHe" id="3hX-nO-iVN"/>
                         <outlet property="recordButton" destination="fda-iM-so7" id="HBa-1u-azr"/>
                     </connections>
                 </viewController>

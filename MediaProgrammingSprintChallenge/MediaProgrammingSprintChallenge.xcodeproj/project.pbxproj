@@ -19,6 +19,11 @@
 		771E1E35224E70BB00E25E8A /* Moment+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771E1E34224E70BB00E25E8A /* Moment+Convenience.swift */; };
 		771E1E37224E71BF00E25E8A /* MomentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771E1E36224E71BF00E25E8A /* MomentController.swift */; };
 		771E1E3C224E763D00E25E8A /* MomentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771E1E3B224E763D00E25E8A /* MomentDetailView.swift */; };
+		771E1E3F224E7B3E00E25E8A /* UIImage+Scaling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771E1E3E224E7B3E00E25E8A /* UIImage+Scaling.swift */; };
+		771E1E41224E7C7D00E25E8A /* ImageAndAudioVC+ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771E1E40224E7C7D00E25E8A /* ImageAndAudioVC+ImagePicker.swift */; };
+		771E1E43224E7D0B00E25E8A /* Recorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771E1E42224E7D0B00E25E8A /* Recorder.swift */; };
+		771E1E46224E7DBD00E25E8A /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771E1E45224E7DBD00E25E8A /* Player.swift */; };
+		771E1E48224E7F7B00E25E8A /* piano.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 771E1E47224E7F7B00E25E8A /* piano.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +41,11 @@
 		771E1E34224E70BB00E25E8A /* Moment+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Moment+Convenience.swift"; sourceTree = "<group>"; };
 		771E1E36224E71BF00E25E8A /* MomentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentController.swift; sourceTree = "<group>"; };
 		771E1E3B224E763D00E25E8A /* MomentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentDetailView.swift; sourceTree = "<group>"; };
+		771E1E3E224E7B3E00E25E8A /* UIImage+Scaling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Scaling.swift"; sourceTree = "<group>"; };
+		771E1E40224E7C7D00E25E8A /* ImageAndAudioVC+ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageAndAudioVC+ImagePicker.swift"; sourceTree = "<group>"; };
+		771E1E42224E7D0B00E25E8A /* Recorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recorder.swift; sourceTree = "<group>"; };
+		771E1E45224E7DBD00E25E8A /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		771E1E47224E7F7B00E25E8A /* piano.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = piano.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +78,7 @@
 		771E1E16224E68B700E25E8A /* MediaProgrammingSprintChallenge */ = {
 			isa = PBXGroup;
 			children = (
+				771E1E47224E7F7B00E25E8A /* piano.mp3 */,
 				771E1E17224E68B700E25E8A /* AppDelegate.swift */,
 				771E1E1B224E68B700E25E8A /* Main.storyboard */,
 				771E1E1E224E68B800E25E8A /* Assets.xcassets */,
@@ -79,6 +90,7 @@
 				771E1E3D224E77C100E25E8A /* Views */,
 				771E1E2F224E703200E25E8A /* MediaProgrammingSprintChallenge.xcdatamodeld */,
 				771E1E32224E708600E25E8A /* CoreDataStack.swift */,
+				771E1E44224E7DB200E25E8A /* Helpers */,
 			);
 			path = MediaProgrammingSprintChallenge;
 			sourceTree = "<group>";
@@ -97,6 +109,8 @@
 			isa = PBXGroup;
 			children = (
 				771E1E34224E70BB00E25E8A /* Moment+Convenience.swift */,
+				771E1E3E224E7B3E00E25E8A /* UIImage+Scaling.swift */,
+				771E1E40224E7C7D00E25E8A /* ImageAndAudioVC+ImagePicker.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -115,6 +129,15 @@
 				771E1E3B224E763D00E25E8A /* MomentDetailView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		771E1E44224E7DB200E25E8A /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				771E1E42224E7D0B00E25E8A /* Recorder.swift */,
+				771E1E45224E7DBD00E25E8A /* Player.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,6 +200,7 @@
 			files = (
 				771E1E22224E68B800E25E8A /* LaunchScreen.storyboard in Resources */,
 				771E1E1F224E68B800E25E8A /* Assets.xcassets in Resources */,
+				771E1E48224E7F7B00E25E8A /* piano.mp3 in Resources */,
 				771E1E1D224E68B700E25E8A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -189,14 +213,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				771E1E3C224E763D00E25E8A /* MomentDetailView.swift in Sources */,
+				771E1E3F224E7B3E00E25E8A /* UIImage+Scaling.swift in Sources */,
 				771E1E18224E68B700E25E8A /* AppDelegate.swift in Sources */,
+				771E1E43224E7D0B00E25E8A /* Recorder.swift in Sources */,
 				771E1E31224E703200E25E8A /* MediaProgrammingSprintChallenge.xcdatamodeld in Sources */,
+				771E1E46224E7DBD00E25E8A /* Player.swift in Sources */,
 				771E1E2E224E6D8C00E25E8A /* CameraViewController.swift in Sources */,
 				771E1E33224E708600E25E8A /* CoreDataStack.swift in Sources */,
 				771E1E35224E70BB00E25E8A /* Moment+Convenience.swift in Sources */,
 				771E1E37224E71BF00E25E8A /* MomentController.swift in Sources */,
 				771E1E2A224E6D5300E25E8A /* MapViewController.swift in Sources */,
 				771E1E2C224E6D7600E25E8A /* ImageAndAudioViewController.swift in Sources */,
+				771E1E41224E7C7D00E25E8A /* ImageAndAudioVC+ImagePicker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +373,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HBKK7B5HAP;
 				INFOPLIST_FILE = MediaProgrammingSprintChallenge/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -363,6 +392,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HBKK7B5HAP;
 				INFOPLIST_FILE = MediaProgrammingSprintChallenge/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
