@@ -19,7 +19,7 @@ class PhotoRecordViewController: UIViewController {
     private lazy var recorder = Recorder()
     private let context = CIContext(options: nil)
     
-    private let filter = CIFilter(name: "CIColorControls")!
+    private let filter = CIFilter(name: "CIColorMonochrome")!
     
     private var originalImage: UIImage? {
         didSet {
@@ -100,9 +100,6 @@ class PhotoRecordViewController: UIViewController {
         let ciImage = CIImage(cgImage: cgImage)
         
         filter.setValue(ciImage, forKey: kCIInputImageKey) //"inputImage"
-        //        filter.setValue(saturationSlider.value, forKey: kCIInputSaturationKey)
-        //        filter.setValue(brightnessSlider.value, forKey: kCIInputBrightnessKey)
-        //        filter.setValue(contrastSlider.value, forKey: kCIInputContrastKey)
         
         //recipe ..meta data
         guard let outputCIImage = filter.outputImage else { return image }
