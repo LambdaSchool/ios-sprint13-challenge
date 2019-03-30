@@ -10,11 +10,37 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, MKMapViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapView.delegate = self
         requestPermission()
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotationView")
+        
+    }
+    
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let experience = annotation as? Experience else { return nil }
+        
+        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceAnnotationView", for: experience) as! MKMarkerAnnotationView
+        
+        annotationView.glyphText = "Exp"
+        
+        return annotationView
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let destination = segue.destination as! UINavigationController
+        
+        guard let nextVC = destination.viewControllers.first as? PostViewController else { return }
+        
+        nextVC.experienceController = experienceController
+        nextVC.coordinate = mapView.userLocation.coordinate
+        nextVC.mapView = mapView
     }
     
     func setupLocationManager() {
@@ -66,6 +92,7 @@ class MapViewController: UIViewController {
     // MARK: - Properties
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var addButton: UIButton!
+    var experienceController = ExperienceController()
     let locationManager = CLLocationManager()
     var location: CLLocationCoordinate2D!
     let regionInMeters: Double = 10000

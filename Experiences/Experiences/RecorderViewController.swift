@@ -8,8 +8,9 @@
 
 import Foundation
 import UIKit
-import Photos
 import AVFoundation
+import MapKit
+import Photos
 
 
 
@@ -75,6 +76,24 @@ class RecorderViewController: UIViewController {
     }
     
     
+    @IBAction func saveVideo(_ sender: Any) {
+        guard let experienceController = experienceController,
+            let newExperience = newExperience,
+            let video = video else { return }
+        
+        let experience = experienceController.addExperience(from: newExperience, video: video)
+        
+        guard let mapView = mapView else {
+            NSLog("No map view passed")
+            return
+        }
+        
+        mapView.addAnnotation(experience)
+        performSegue(withIdentifier: "BackToMap", sender: self)
+    }
+    
+    
+    
     private func newRecordingURL() -> URL {
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         
@@ -95,8 +114,14 @@ class RecorderViewController: UIViewController {
         
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
+    
+    var experienceController: ExperienceController?
+    var newExperience: Experience?
+    var video: URL?
+    var mapView: MKMapView?
     @IBOutlet weak var cameraView: CameraPreviewView!
     @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     
     
 }

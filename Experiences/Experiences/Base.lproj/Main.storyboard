@@ -19,10 +19,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="FlQ-1X-5ej">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="971"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Le-Cp-Ko9">
-                                <rect key="frame" x="117" y="729" width="180" height="51"/>
+                                <rect key="frame" x="117" y="825" width="180" height="30"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="51" id="VLC-Nq-Kza"/>
@@ -66,43 +66,62 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7wc-Qn-bKo">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7wc-Qn-bKo">
                                 <rect key="frame" x="20" y="150" width="374" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h9L-oK-EDt">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="h9L-oK-EDt">
                                 <rect key="frame" x="0.0" y="193" width="414" height="374"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yqf-Mb-ylM">
-                                <rect key="frame" x="166" y="621" width="82" height="44"/>
+                                <rect key="frame" x="142.5" y="623" width="129" height="44"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="4Un-0D-0As"/>
-                                    <constraint firstAttribute="width" constant="82" id="zpV-oM-Fbj"/>
+                                    <constraint firstAttribute="width" constant="129" id="O7f-5V-z5F"/>
                                 </constraints>
-                                <state key="normal" title="Record">
+                                <state key="normal" title="Record Audio">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="3wb-pu-8zf" kind="show" id="I6x-Mw-woZ"/>
+                                    <action selector="recordAudio:" destination="ogG-Gn-jwI" eventType="touchUpInside" id="L4m-gz-5DJ"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Exs-7U-j4j" firstAttribute="bottom" secondItem="Yqf-Mb-ylM" secondAttribute="bottom" constant="197" id="4s2-j5-vac"/>
-                            <constraint firstItem="Yqf-Mb-ylM" firstAttribute="centerX" secondItem="Sor-H4-eKE" secondAttribute="centerX" id="qla-Xj-6lW"/>
+                            <constraint firstItem="Yqf-Mb-ylM" firstAttribute="top" secondItem="h9L-oK-EDt" secondAttribute="bottom" constant="56" id="Gta-bj-rfw"/>
+                            <constraint firstItem="7wc-Qn-bKo" firstAttribute="leading" secondItem="Exs-7U-j4j" secondAttribute="leading" constant="20" id="MRs-i7-YwT"/>
+                            <constraint firstItem="Exs-7U-j4j" firstAttribute="trailing" secondItem="7wc-Qn-bKo" secondAttribute="trailing" constant="20" id="RXS-mS-zDM"/>
+                            <constraint firstItem="h9L-oK-EDt" firstAttribute="leading" secondItem="Exs-7U-j4j" secondAttribute="leading" id="VJc-4K-O7Z"/>
+                            <constraint firstItem="7wc-Qn-bKo" firstAttribute="top" secondItem="Exs-7U-j4j" secondAttribute="top" constant="10" id="iar-kf-F8J"/>
+                            <constraint firstItem="Exs-7U-j4j" firstAttribute="bottom" secondItem="Yqf-Mb-ylM" secondAttribute="bottom" constant="195" id="kn5-oH-c7w"/>
+                            <constraint firstItem="h9L-oK-EDt" firstAttribute="trailing" secondItem="Exs-7U-j4j" secondAttribute="trailing" id="r08-Kc-s6X"/>
+                            <constraint firstItem="h9L-oK-EDt" firstAttribute="top" secondItem="7wc-Qn-bKo" secondAttribute="bottom" constant="13" id="uXe-Kc-J55"/>
+                            <constraint firstItem="Yqf-Mb-ylM" firstAttribute="centerX" secondItem="Sor-H4-eKE" secondAttribute="centerX" id="vrN-2f-na6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Exs-7U-j4j"/>
                     </view>
                     <navigationItem key="navigationItem" title="Add Experience" id="4TD-Ot-1ub">
-                        <barButtonItem key="leftBarButtonItem" title="Add Image" id="4IA-d9-lxq"/>
-                        <barButtonItem key="rightBarButtonItem" title="Next" id="euq-kL-pVj"/>
+                        <barButtonItem key="leftBarButtonItem" title="Add Image" id="4IA-d9-lxq">
+                            <connections>
+                                <action selector="addImage:" destination="ogG-Gn-jwI" id="T9M-Wv-zAE"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Next" id="euq-kL-pVj">
+                            <connections>
+                                <action selector="segueToCamera:" destination="ogG-Gn-jwI" id="PSF-a2-ViX"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="imageView" destination="h9L-oK-EDt" id="jYo-hG-6kK"/>
+                        <outlet property="recordButton" destination="Yqf-Mb-ylM" id="6PX-cg-EFm"/>
+                        <outlet property="titleTextField" destination="7wc-Qn-bKo" id="dE2-VQ-43a"/>
+                        <segue destination="3wb-pu-8zf" kind="show" identifier="ShowVideoCamera" id="ycj-1a-7FU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jo1-iM-TvL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -146,11 +165,17 @@
                         <viewLayoutGuide key="safeArea" id="h2j-1W-zv5"/>
                     </view>
                     <navigationItem key="navigationItem" title="Record Video" id="UmJ-dD-2FH">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="nOj-mI-h5F"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="nOj-mI-h5F">
+                            <connections>
+                                <action selector="saveVideo:" destination="3wb-pu-8zf" id="zcK-9n-Cyk"/>
+                                <segue destination="BYZ-38-t0r" kind="show" identifier="BackToMap" id="CfU-J1-Fwi"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="cameraView" destination="TQg-RO-cDI" id="1Ai-2I-czL"/>
                         <outlet property="recordButton" destination="KJi-RU-2to" id="sP5-u2-ZnU"/>
+                        <outlet property="saveButton" destination="nOj-mI-h5F" id="b4l-xI-LLM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1ml-Z6-kXq" userLabel="First Responder" sceneMemberID="firstResponder"/>
