@@ -17,12 +17,44 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="oj8-8a-Ige">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g9n-8b-yjY">
+                                <rect key="frame" x="169.5" y="773" width="75" height="75"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="75" id="B3j-0P-9HQ"/>
+                                    <constraint firstAttribute="height" constant="75" id="L5t-Cf-AZ8"/>
+                                </constraints>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="plus"/>
+                                <connections>
+                                    <action selector="addExperienceButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jub-vq-rDA"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="g9n-8b-yjY" secondAttribute="bottom" constant="48" id="5Hq-Hg-P64"/>
+                            <constraint firstItem="oj8-8a-Ige" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="GmX-zW-yvh"/>
+                            <constraint firstItem="oj8-8a-Ige" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="IMB-Ad-qt2"/>
+                            <constraint firstItem="g9n-8b-yjY" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="KA4-8X-oEy"/>
+                            <constraint firstItem="oj8-8a-Ige" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="LAo-xz-TX0"/>
+                            <constraint firstAttribute="bottom" secondItem="oj8-8a-Ige" secondAttribute="bottom" id="o9n-mM-DW2"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="oj8-8a-Ige" id="m4P-3Y-PSS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="95.652173913043484" y="20.758928571428569"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="plus" width="512" height="512"/>
+    </resources>
 </document>
