@@ -16,7 +16,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     let locationManager = CLLocationManager()
     var location: CLLocationCoordinate2D!
-    var expController = ExperienceController.shared
+    var expController = ExperienceController()
 
     
 
@@ -24,9 +24,16 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotationView")
+
+        mapView.addAnnotations(expController.experiences)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        mapView.addAnnotations(expController.experiences)
+    }
     func updateViews() {
 
         let annotations = mapView.annotations
@@ -63,6 +70,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
 
 
+  /*  @IBAction func addExperienceButtonTapped(_ sender: Any) {
+
+        let experience = Experience(title: nil, audio: nil, image: nil, video: nil, coordinate: location)
+
+        expController.experiences.append(experience)
+    }
+ */
 
 
 }

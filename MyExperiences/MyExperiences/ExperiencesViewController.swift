@@ -23,8 +23,8 @@ class ExperiencesViewController: UIViewController, RecorderDelegate, PlayerDeleg
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
-    var expController = ExperienceController.shared
-    var location = ExperienceController.shared.location
+    var expController: ExperienceController?
+    
     let recorder = Recorder()
     let player = Player()
     let filter = CIFilter(name: "CIGaussianBlur")
