@@ -47,6 +47,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "CreateExperience" {
             //logic
+            guard let navController = segue.destination as? UINavigationController,
+                let imageAudioVC = navController.children[0] as? Image_AudioViewController else { return }
+            imageAudioVC.experienceController = experienceController
         }
     }
     
