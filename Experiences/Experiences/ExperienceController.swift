@@ -7,15 +7,16 @@
 //
 
 import UIKit
+import CoreLocation
 
 class ExperienceController {
     
     var experiences: [Experience] = []
     
-    func createExperience(title: String, audio: URL, video: URL, image: UIImage) {
-        let newExperience = Experience(audio: audio, video: video, image: image, title: title)
+    func createExperience(title: String, image: UIImage, location: CLLocationCoordinate2D) {
+        let newExperience = Experience(image: image, title: title, location: location)
         
-//        experiences.append(newExperience)
+        experiences.append(newExperience)
     }
     
     //save an experience

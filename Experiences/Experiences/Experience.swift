@@ -7,18 +7,29 @@
 //
 
 import UIKit
+import CoreLocation
 
 
 class Experience: NSObject {
-    var audio: URL
-    var video: URL 
+    var audio: URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory  = paths[0]
+        return documentsDirectory
+    }
+    var video: URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory  = paths[0]
+        return documentsDirectory
+    }
     var image: UIImage
-    var title: String
+    var title: String?
+    var location: CLLocationCoordinate2D
 
-    init(audio: URL, video: URL, image: UIImage, title: String) {
-        self.audio = audio
-        self.video = video
+    init(image: UIImage, title: String, location: CLLocationCoordinate2D) {
+        self.location = location
         self.image = image
         self.title = title
     }
+    
 }
+

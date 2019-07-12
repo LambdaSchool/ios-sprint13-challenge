@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 
 class CameraViewController: UIViewController {
-    
+    var experienceController: ExperienceController?
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     private var player: AVPlayer!
@@ -55,7 +55,7 @@ class CameraViewController: UIViewController {
         cameraView.session = captureSession
         
     }
-    
+  
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -120,10 +120,10 @@ class CameraViewController: UIViewController {
     
  
     @IBAction func saveButtonTapped(_ sender: Any) {
-        //assign the video url to models video
-        // Gather all of the Experience data (image, audio, video, title) and create an experience to use in the mapViewController.
+        //How can I pop back to root VC and pass my experienceController
         
-        
+        let rvc = navigationController?.viewControllers[0] as! MapViewController
+        rvc.experienceController = experienceController
         navigationController?.popToRootViewController(animated: true)
     }
     

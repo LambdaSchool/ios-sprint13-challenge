@@ -8,11 +8,11 @@
 
 import UIKit
 import Photos
+import CoreLocation
 
-class ExperienceViewController: UIViewController {
-    
+class ExperienceViewController: UIViewController, CLLocationManagerDelegate {
+    let locationManager = CLLocationManager()
     var experienceController = ExperienceController()
-    var experience: Experience!
     
     var originalImage: UIImage? {
         didSet {
@@ -28,7 +28,20 @@ class ExperienceViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.startUpdatingLocation()
+        }
+        
+        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+            if let location = locations.first {
+                print(location.coordinate)
+            }
+        }
         recorder.delegate = self
         
         // Do any additional setup after loading the view.
@@ -57,14 +70,13 @@ class ExperienceViewController: UIViewController {
         guard let outputCIImage = filter?.outputImage else { return image }
       
         guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
-        experience?.image = UIImage(cgImage: outputCGImage)
+        experienceController.createExperience(title: titleTextField.text ?? "New Experience", image: UIImage(cgImage: outputCGImage), location: locationManager.location!.coordinate)
         return UIImage(cgImage: outputCGImage)
         
     }
  
     @IBAction func textFieldEnter(_ sender: Any) {
         print("title: \(titleTextField.text)")
-        experience?.title = titleTextField.text ?? "New Experience"
     }
     
 
@@ -81,6 +93,15 @@ class ExperienceViewController: UIViewController {
     @IBAction func recordButtonTapped(_ sender: Any) {
         recorder.toggleRecording()
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "CameraSegue" {
+            guard let destinationVC = segue.destination as? CameraViewController else { return }
+            destinationVC.experienceController = experienceController
+            
+        }
+    }
+    
     
 
 }
