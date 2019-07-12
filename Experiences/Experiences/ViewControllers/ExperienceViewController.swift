@@ -77,7 +77,7 @@ class ExperienceViewController: UIViewController, UIImagePickerControllerDelegat
             let cgImages = context.createCGImage(outputImage, from: outputImage.extent) else { return image }
         return UIImage(cgImage: cgImages)
     }
-
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
     }
@@ -129,9 +129,9 @@ class ExperienceViewController: UIViewController, UIImagePickerControllerDelegat
         }
         return fileURL
     }
-
+    
     // MARK: - Navigation
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toVideoVC" {
             let destinationVC = segue.destination as? VideoRecordingViewController
@@ -143,21 +143,76 @@ class ExperienceViewController: UIViewController, UIImagePickerControllerDelegat
             destinationVC?.titleTextString = titleTextField.text
         }
     }
-
+    
     // MARK: - IBAction Properties
     @IBAction func addImageButtonTapped(_ sender: Any) {
-        
+        let picker = UIImagePickerController()
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            
+            let alert = UIAlertController(title: "Error", message: "Could not reach photo library at this time", preferredStyle: .alert)
+            let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(alertAction)
+            present(alert, animated: true, completion: nil)
+            
+            return
+        }
+        picker.delegate = self
+        picker.sourceType = .photoLibrary
+        self.present(picker, animated: true, completion: nil)
     }
     
     @IBAction func recordAudioButtonTapped(_ sender: Any) {
+        if isRecording {
+            recorder?.stop()
+            return
+        }
+        
+        do {
+            let format = AVAudioFormat(standardFormatWithSampleRate: 44100.0, channels: 2)!
+            recorder = try AVAudioRecorder(url: newRecordingURL(), format: format)
+            recorder?.record()
+            recorder?.delegate = self
+        } catch {
+            NSLog("Unable to start recording: \(error)")
+        }
         updateButton()
     }
     
     @IBAction func playAudioRecordingButtonTapped(_ sender: Any) {
+        guard let recordingURL = recordingURL else {return}
+        
+        if isPlaying {
+            player?.stop()
+            return
+        }
+        
+        do {
+            //Set up the player with the sample audio file
+            player = try AVAudioPlayer(contentsOf: recordingURL)
+            
+            player?.play()
+            
+            //the VC adding itself as the observer of the delegate method.
+            player?.delegate = self
+        } catch {
+            NSLog("Error attmepting to start playing audio: \(error)")
+        }
         updateButton()
     }
     
     @IBAction func addVideoButtonTapped(_ sender: Any) {
-        
+        guard let title = titleTextField.text, !title.isEmpty, (recordingURL != nil) else {
+            
+            let alert = UIAlertController(title: "Error", message: "Please make sure you have both a title text and an audio recording!", preferredStyle: .alert)
+            
+            let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            
+            alert.addAction(alertAction)
+            
+            present(alert, animated: true, completion: nil)
+            return
+            
+        }
+        performSegue(withIdentifier: "toVideoVC", sender: self)
     }
 }
