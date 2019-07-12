@@ -1,0 +1,40 @@
+//
+//  ExperienceController.swift
+//  MyExperiences
+//
+//  Created by Diante Lewis-Jolley on 7/12/19.
+//  Copyright © 2019 Diante Lewis-Jolley. All rights reserved.
+//
+
+import Foundation
+import MapKit
+
+class ExperienceController {
+
+     var experiences: [Experience] = []
+
+    var newExperience: Experience?
+    var location: CLLocationCoordinate2D!
+
+    func createExperience(title: String?, audio: URL?, video: URL?, image: UIImage?, coordinate: CLLocationCoordinate2D) -> Experience {
+
+        let newExp = Experience(title: title, audio: audio, image: image, video: video, coordinate: coordinate)
+
+        return newExp
+    }
+
+    func addNewExperience(experience: Experience) {
+
+        experiences.append(experience)
+    }
+
+    func addVideo(to experience: Experience, video: URL?) {
+
+        experience.video = video
+
+    }
+
+
+
+
+}
