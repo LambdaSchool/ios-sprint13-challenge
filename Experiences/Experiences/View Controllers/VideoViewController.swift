@@ -6,7 +6,6 @@
 //  Copyright © 2019 Victor . All rights reserved.
 //
 
-import Foundation
 import UIKit
 import AVFoundation
 
@@ -19,7 +18,7 @@ class VideoViewController: UIViewController, AVCaptureFileOutputRecordingDelegat
     private var captureSession: AVCaptureSession!
     private var recordOutput: AVCaptureMovieFileOutput!
     
-    @IBOutlet weak var previewView: CameraPreView!
+    @IBOutlet weak var view1: CameraPreviewView!
     @IBOutlet weak var recordButton: UIButton!
     
     override func viewDidLoad() {
@@ -94,24 +93,29 @@ class VideoViewController: UIViewController, AVCaptureFileOutputRecordingDelegat
     
     private func setupCapture() {
         let captureSession = AVCaptureSession()
+        captureSession.beginConfiguration()
         let device = bestCamera()
         guard let videoDeviceInput = try? AVCaptureDeviceInput(device: device),
             captureSession.canAddInput(videoDeviceInput) else {
-                fatalError()
+                return
         }
         captureSession.addInput(videoDeviceInput)
         
         let fileOutput = AVCaptureMovieFileOutput()
-        guard captureSession.canAddOutput(fileOutput) else { fatalError() }
-        captureSession.addOutput(fileOutput)
+        guard captureSession.canAddOutput(fileOutput) else {
+            return
+        }
         recordOutput = fileOutput
         
         captureSession.sessionPreset = .hd1920x1080
+        captureSession.addOutput(fileOutput)
+
         captureSession.commitConfiguration()
         
         self.captureSession = captureSession
-        
-        previewView.videoPreviewLayer.session = captureSession
+        print("hello3")
+        view1.videoPreviewLayer.session = captureSession
+        print("hello4")
     }
     
     private func newRecordingURL() -> URL {

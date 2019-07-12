@@ -1,5 +1,5 @@
 //
-//  CameraPreView.swift
+//  CameraPreviewView.swift
 //  Experiences
 //
 //  Created by Victor  on 7/12/19.
@@ -10,7 +10,8 @@ import Foundation
 import UIKit
 import AVFoundation
 
-class CameraPreView: UIView {
+class CameraPreviewView: UIView {
+    
     override class var layerClass: AnyClass {
         return AVCaptureVideoPreviewLayer.self
     }
@@ -18,4 +19,5 @@ class CameraPreView: UIView {
     var videoPreviewLayer: AVCaptureVideoPreviewLayer {
         return layer as! AVCaptureVideoPreviewLayer
     }
+    
 }

@@ -120,7 +120,7 @@ class Image_AudioViewController: UIViewController, AVAudioPlayerDelegate {
     private func newRecordingURL() -> URL {
         let fm = FileManager.default
         let documentsDir = try! fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-        return documentsDir.appendingPathComponent(UUID().uuidString).appendingPathExtension("new")
+        return documentsDir.appendingPathComponent(UUID().uuidString).appendingPathExtension("caf")
     }
     
     
