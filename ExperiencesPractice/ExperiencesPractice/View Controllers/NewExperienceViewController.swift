@@ -83,8 +83,6 @@ class NewExperienceViewController: UIViewController {
     
     private func filterAndPresentImage(image: UIImage) {
         
-        
-        
     }
     
     func updateViews() {
@@ -132,7 +130,7 @@ extension NewExperienceViewController: UIImagePickerControllerDelegate, UINaviga
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
-        guard let imageFilterPETonal = CIFilter(name: "CIPhotoEffectChrome") else { return }
+        guard let imageFilterPETonal = CIFilter(name: "CIPhotoEffectTonal") else { return }
         
         let filteredImage = imageRender(byFiltering: image, with: imageFilterPETonal)
         
