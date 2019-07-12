@@ -85,21 +85,21 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="0nR-Gt-Wgd">
                                 <rect key="frame" x="8" y="96" width="398" height="303"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XpX-q3-c5y">
+                                    <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XpX-q3-c5y">
                                         <rect key="frame" x="0.0" y="0.0" width="398" height="30"/>
                                         <color key="backgroundColor" red="0.96862745100000003" green="0.98823529409999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="huT-KC-FcM">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="huT-KC-FcM">
                                         <rect key="frame" x="0.0" y="38" width="398" height="189"/>
                                         <color key="backgroundColor" red="0.96862745100000003" green="0.98823529409999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="huT-KC-FcM" secondAttribute="height" multiplier="398:189" id="E7D-9c-36t"/>
                                         </constraints>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DIV-8J-Xgr">
+                                    <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DIV-8J-Xgr">
                                         <rect key="frame" x="0.0" y="235" width="398" height="30"/>
                                         <color key="backgroundColor" red="0.027450980390000001" green="0.54901960780000003" blue="0.3294117647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Add Poster Image">
@@ -109,7 +109,7 @@
                                             <action selector="addPosterButtonPressed:" destination="3p9-H1-N9G" eventType="touchUpInside" id="t4S-Ab-0jD"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PAR-hq-v3Q">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PAR-hq-v3Q">
                                         <rect key="frame" x="0.0" y="273" width="398" height="30"/>
                                         <color key="backgroundColor" red="0.027450980390000001" green="0.54901960780000003" blue="0.3294117647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Record">
@@ -150,20 +150,44 @@
             </objects>
             <point key="canvasLocation" x="1945" y="139"/>
         </scene>
-        <!--View Controller-->
+        <!--Camera View Controller-->
         <scene sceneID="Bhl-aP-JtK">
             <objects>
-                <viewController id="yxb-PA-gBl" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="qc8-aR-23w">
+                <viewController id="yxb-PA-gBl" customClass="CameraViewController" customModule="experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qc8-aR-23w" customClass="CameraPreviewView" customModule="experiences" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d9Y-gs-dR3">
+                                <rect key="frame" x="149" y="730" width="116" height="116"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="d9Y-gs-dR3" secondAttribute="height" multiplier="1:1" id="i52-e2-t2X"/>
+                                </constraints>
+                                <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" backgroundImage="Record"/>
+                                <connections>
+                                    <action selector="recordButtonPressed:" destination="yxb-PA-gBl" eventType="touchUpInside" id="9Z8-Z5-Ng0"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="d9Y-gs-dR3" firstAttribute="centerX" secondItem="qc8-aR-23w" secondAttribute="centerX" id="cuy-cd-0i0"/>
+                            <constraint firstItem="hzv-Ts-Mlh" firstAttribute="bottom" secondItem="d9Y-gs-dR3" secondAttribute="bottom" constant="16" id="oFf-zh-OPA"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="hzv-Ts-Mlh"/>
                     </view>
+                    <connections>
+                        <outlet property="cameraView" destination="qc8-aR-23w" id="9E0-MJ-m7b"/>
+                        <outlet property="recordButton" destination="d9Y-gs-dR3" id="rJ3-tV-6v8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K3R-rr-gxI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2790" y="139"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Record" width="116" height="116"/>
+    </resources>
 </document>
