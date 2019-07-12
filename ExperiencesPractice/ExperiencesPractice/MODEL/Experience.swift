@@ -19,12 +19,13 @@ class Experience: NSObject {
     let videoRecording: URL?
     let location: CLLocationCoordinate2D
     
-    init(name: String, image: UIImage, audioRecording: URL, videoRecording: URL, longitude: longitude, latitude: ) {
+    init(name: String, image: UIImage, audioRecording: URL, videoRecording: URL, longitude: Double, latitude: Double) {
         self.name = name
         self.image = image
         self.audioRecording = audioRecording
         self.videoRecording = videoRecording
         // need to input user's current location or...
+        self.location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
     
 }

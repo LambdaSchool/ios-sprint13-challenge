@@ -24,6 +24,14 @@ class ExperiencesMapViewController: UIViewController {
         
         mapView.addAnnotations(experiences)
     }
+    
+    func createExperience(name: String, image: UIImage, audioRecording: URL, videoRecording: URL, longitude: Double, latitude: Double) {
+        
+        let newExperience = Experience(name: name, image: image, audioRecording: audioRecording, videoRecording: videoRecording, longitude: longitude, latitude: latitude)
+        
+        experiences.append(newExperience)
+        
+    }
 
 
 }
