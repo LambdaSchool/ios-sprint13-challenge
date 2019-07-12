@@ -108,15 +108,34 @@ class ExperienceViewController: UIViewController, UIImagePickerControllerDelegat
         updateButton()
         recordingURL = recorder.url
     }
-    /*
+    
+    func saveImage(image: UIImage) -> URL {
+        guard let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { fatalError("No access to documents directory at this time.") }
+        
+        let fileURL = documentDirectory.appendingPathComponent(UUID().uuidString).appendingPathExtension("jpeg")
+        guard let data = image.jpegData(compressionQuality: 0.8) else { fatalError("No data returned") }
+        
+        if FileManager.default.fileExists(atPath: fileURL.path) {
+            do {
+                try FileManager.default.removeItem(atPath: fileURL.path)
+            } catch {
+                NSLog("Could not delete the file at path: \(fileURL.path)")
+            }
+        }
+        do {
+            try data.write(to: fileURL)
+        } catch {
+            NSLog("There was an error while trying to save/write to file.")
+        }
+        return fileURL
+    }
+
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        
     }
-    */
+
     
     // MARK: - IBAction Properties
     @IBAction func addImageButtonTapped(_ sender: Any) {
