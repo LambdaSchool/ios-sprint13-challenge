@@ -26,7 +26,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
  
   
     @IBOutlet weak var mapView: MKMapView!
-    //Pass these in from a closure? in our camera view controller?
+   
     var experience: Experience?
     var experienceController: ExperienceController?
     

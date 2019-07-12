@@ -26,7 +26,7 @@ class Recorder: NSObject {
     }
     
     func record() {
-        //save a file in the documents directory
+        
         let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         print("doc: \(documentDirectory)")
         
@@ -39,7 +39,6 @@ class Recorder: NSObject {
         audioRecorder?.delegate = self
         
         audioRecorder?.record()
-        // ASSIGN THE FILE URL TO THE MODEL AUDIO ??!!!!?? here????
         
         notifyDelegate()
     }

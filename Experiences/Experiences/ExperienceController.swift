@@ -19,7 +19,4 @@ class ExperienceController {
         experiences.append(newExperience)
     }
     
-    //save an experience
-    //append to experiences
-    
 }

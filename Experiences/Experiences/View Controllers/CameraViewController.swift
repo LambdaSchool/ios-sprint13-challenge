@@ -96,19 +96,7 @@ class CameraViewController: UIViewController {
         }
     }
     
-//    func playMovie(url: URL) {
-//        player = AVPlayer(url: url)
-//        let playerLayer = AVPlayerLayer(player: player)
-//        var topRect = self.view.bounds
-//        topRect.size.width = topRect.width / 4
-//        topRect.size.height = topRect.height / 4
-//        topRect.origin.y = view.layoutMargins.top
-//        playerLayer.frame = topRect
-//
-//        view.layer.addSublayer(playerLayer)
-//
-//        player.play()
-//    }
+
     
     @IBAction func recordButtonPressed(_ sender: Any) {
         if fileOutput.isRecording {
@@ -139,7 +127,7 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         DispatchQueue.main.async {
             self.updateViews()
-//            self.playMovie(url: outputFileURL)
+
         }
     }
 }
