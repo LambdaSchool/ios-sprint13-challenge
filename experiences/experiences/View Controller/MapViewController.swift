@@ -33,6 +33,7 @@ class MapViewController: UIViewController {
 		mapview?.addAnnotations(experienceController.experinces)
 		experienceController.currentLocation = locationManager.location?.coordinate
 		
+		mapview.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnotationView")
 	}
 
 	@IBAction func postButtonPressed(_ sender: Any) {
@@ -64,9 +65,15 @@ class MapViewController: UIViewController {
 
 extension MapViewController: MKMapViewDelegate {
 	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//		if annotation is MKUserLocation { return nil }
+		let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceAnotationView", for: annotation) as! MKMarkerAnnotationView
+		annotationView.glyphTintColor = .white
+		annotationView.markerTintColor = .black
+		annotationView.canShowCallout = true
 	
-		return nil
+		let dv = DetailView(frame: .zero)
+		annotationView.detailCalloutAccessoryView = dv
+
+		return annotationView
 	}
 	
 	
