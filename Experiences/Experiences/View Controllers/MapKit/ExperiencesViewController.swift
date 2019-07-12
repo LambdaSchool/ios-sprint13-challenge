@@ -16,12 +16,24 @@ class ExperiencesViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var journalButton: UIButton!
     
-    
+    // MARK: - Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotationView")
+        locateUser()
+    }
+    
+    func locateUser() {
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse
+        {
+            mapView.showsUserLocation = true
+            if let location = CLLocationManager().location?.coordinate {
+                let region = MKCoordinateRegion(center: location, latitudinalMeters: 5000, longitudinalMeters: 5000)
+                mapView.setRegion(region, animated: true)
+            }
+        } 
     }
 
 
