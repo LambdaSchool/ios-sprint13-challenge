@@ -99,7 +99,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
  */
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "" {
+        if segue.identifier == "ToExperiencesView" {
+            guard let ExpVC = segue.destination as? ExperiencesViewController else { return }
+
+            ExpVC.expController = expController
+            expController.currentLocation = locationManager.location?.coordinate
             
         }
     }
