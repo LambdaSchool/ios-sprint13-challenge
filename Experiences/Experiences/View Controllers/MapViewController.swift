@@ -19,8 +19,15 @@ class MapViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         locationManager = CLLocationManager()
         locationManager?.delegate = self
@@ -29,11 +36,15 @@ class MapViewController: UIViewController {
         startLocationServices()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showExperienceCreation" {
-            guard let navViewController = segue.destination as? UINavigationController,
-            let newExperienceViewController = navViewController.viewControllers.first as? NewExperienceViewController
-            else { return }
+            guard let newExperienceViewController = segue.destination as? NewExperienceViewController else { return }
             
             newExperienceViewController.experienceController = experienceController
             newExperienceViewController.currentLocation = currentLocation

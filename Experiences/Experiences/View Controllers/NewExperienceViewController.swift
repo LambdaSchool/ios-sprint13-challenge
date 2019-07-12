@@ -24,13 +24,31 @@ class NewExperienceViewController: UIViewController {
     @IBOutlet weak var experienceNameTextField: UITextField!
     @IBOutlet weak var recordButton: UIButton!
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         recordingSession = AVAudioSession.sharedInstance()
         
         if AVAudioSession.sharedInstance().recordPermission == .granted {
             
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "ShowVideoView" {
+            guard let addVideoViewController = segue.destination as? AddVideoViewController else { return }
+            addVideoViewController.recordedURL = recordedURL
+            addVideoViewController.currentLocation = currentLocation
+            addVideoViewController.experienceController = experienceController
+            addVideoViewController.experienceName = experienceNameTextField.text
+            addVideoViewController.image = pickedImage
         }
     }
     
