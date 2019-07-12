@@ -1,5 +1,5 @@
 //
-//  VideoRecordingViewController.swift
+//  NewExperienceViewController.swift
 //  Experiences
 //
 //  Created by Mitchell Budge on 7/12/19.
@@ -8,14 +8,30 @@
 
 import UIKit
 
-class VideoRecordingViewController: UIViewController {
+class NewExperienceViewController: UIViewController {
 
+    // MARK: - Properties
+    
+    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var addPosterImageButton: UIButton!
+    @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var imageView: UIImageView!
+    
+    
+    // MARK: - Methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
     }
     
+    @IBAction func addPosterImageButtonPressed(_ sender: Any) {
+        
+    }
+    
+    @IBAction func recordButtonPressed(_ sender: Any) {
+        
+    }
 
     /*
     // MARK: - Navigation
