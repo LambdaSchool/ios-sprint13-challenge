@@ -27,7 +27,7 @@ class ExperienceViewController: UIViewController, UIImagePickerControllerDelegat
     
     var originalImage: UIImage? {
         didSet {
-            
+            updateImageViews()
         }
     }
     
@@ -80,6 +80,7 @@ class ExperienceViewController: UIViewController, UIImagePickerControllerDelegat
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
+        originalImage = info[.originalImage] as? UIImage
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -145,7 +146,7 @@ class ExperienceViewController: UIViewController, UIImagePickerControllerDelegat
     }
     
     // MARK: - IBAction Properties
-    @IBAction func addImageButtonTapped(_ sender: Any) {
+    @IBAction func addImageButtonTapped(_ sender: UIButton) {
         let picker = UIImagePickerController()
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
             
@@ -161,7 +162,7 @@ class ExperienceViewController: UIViewController, UIImagePickerControllerDelegat
         self.present(picker, animated: true, completion: nil)
     }
     
-    @IBAction func recordAudioButtonTapped(_ sender: Any) {
+    @IBAction func recordAudioButtonTapped(_ sender: UIButton) {
         if isRecording {
             recorder?.stop()
             return
@@ -178,7 +179,7 @@ class ExperienceViewController: UIViewController, UIImagePickerControllerDelegat
         updateButton()
     }
     
-    @IBAction func playAudioRecordingButtonTapped(_ sender: Any) {
+    @IBAction func playAudioRecordingButtonTapped(_ sender: UIButton) {
         guard let recordingURL = recordingURL else {return}
         
         if isPlaying {
@@ -200,7 +201,7 @@ class ExperienceViewController: UIViewController, UIImagePickerControllerDelegat
         updateButton()
     }
     
-    @IBAction func addVideoButtonTapped(_ sender: Any) {
+    @IBAction func addVideoButtonTapped(_ sender: UIBarButtonItem) {
         guard let title = titleTextField.text, !title.isEmpty, (recordingURL != nil) else {
             
             let alert = UIAlertController(title: "Error", message: "Please make sure you have both a title text and an audio recording!", preferredStyle: .alert)

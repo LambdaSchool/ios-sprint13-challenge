@@ -26,13 +26,21 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotationView")
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        zoomToUserLocation()
+        addAnnotation()
+    }
+    
     // MARK: - Methods
     
     func addAnnotation() {
         let myPin = MKPointAnnotation()
         if let myCoordinate = experienceController?.newExperiences?.coordinate {
             myPin.coordinate = myCoordinate
-        } else if let annotationText = experienceController?.newExperiences?.postTitle {
+        }
+        if let annotationText = experienceController?.newExperiences?.postTitle {
             myPin.title = annotationText
         }
         mapView.addAnnotation(myPin)
