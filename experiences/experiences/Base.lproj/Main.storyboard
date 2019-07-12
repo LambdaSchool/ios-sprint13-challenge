@@ -73,7 +73,13 @@
                                     <constraint firstAttribute="height" constant="44" id="VGm-LJ-F3a"/>
                                 </constraints>
                                 <items>
-                                    <navigationItem title="New Experience" id="DUW-b7-5j6"/>
+                                    <navigationItem title="New Experience" id="DUW-b7-5j6">
+                                        <barButtonItem key="leftBarButtonItem" title="Back" id="Gsm-sw-nbE">
+                                            <connections>
+                                                <action selector="back:" destination="3p9-H1-N9G" id="i3M-Dg-7C6"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="0nR-Gt-Wgd">
@@ -111,6 +117,9 @@
                                         </state>
                                         <connections>
                                             <action selector="recordButtonPressed:" destination="3p9-H1-N9G" eventType="touchUpInside" id="RIW-13-PyX"/>
+                                            <segue destination="yxb-PA-gBl" kind="popoverPresentation" popoverAnchorView="PAR-hq-v3Q" id="iPH-fF-dSN">
+                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                            </segue>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -140,6 +149,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eNe-F2-7wK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1945" y="139"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Bhl-aP-JtK">
+            <objects>
+                <viewController id="yxb-PA-gBl" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qc8-aR-23w">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="hzv-Ts-Mlh"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="K3R-rr-gxI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2790" y="139"/>
         </scene>
     </scenes>
 </document>

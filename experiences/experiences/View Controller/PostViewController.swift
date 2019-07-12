@@ -27,22 +27,21 @@ class PostViewController: UIViewController {
 	
 	func prepareForRecord() {
 		imageView.image = currentImage!
+		recordButton.isEnabled = true
 		recordButton.backgroundColor = .red
 	}
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "back", style: .plain, target: self, action: #selector(back))
-		
-		
+		recordButton.isEnabled = false
 	}
 	
-	
-	
-	@objc func back() {
+	@IBAction func back(_ sender: Any) {
 		dismiss(animated: true, completion: nil)
 	}
 	
+	
+
 	@IBAction func addPosterButtonPressed(_ sender: Any) {
 		guard let title = titleTextField.text, !title.isEmpty else {
 			NSLog("title is empty")
@@ -53,7 +52,13 @@ class PostViewController: UIViewController {
 	}
 	
 	@IBAction func recordButtonPressed(_ sender: Any) {
+		guard currentImage != nil else {
+			NSLog("currentImage is empty")
+			return
+		}
+		
 		print("recordButtonPressed")
+		
 	}
 	
 	func addPhotoRequest() {
