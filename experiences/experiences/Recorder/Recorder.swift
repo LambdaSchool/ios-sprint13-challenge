@@ -24,8 +24,6 @@ class Recorder: NSObject {
 		super.init()
 	}
 	
-	
-	/// create url for record, create recorder, start  recorder
 	func startRecord(with name: String) {
 		let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
 		
