@@ -8,10 +8,13 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
 class ExperiencesViewController: UIViewController {
 
     // MARK: - Properties
+    
+    let locationManager = CLLocationManager()
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var journalButton: UIButton!
@@ -20,31 +23,42 @@ class ExperiencesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        mapView.delegate = self
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotationView")
-        locateUser()
+        self.locationManager.requestAlwaysAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.startUpdatingLocation()
+        }
+        mapView.delegate = self
+        mapView.mapType = .standard
+        mapView.isZoomEnabled = true
+        mapView.isScrollEnabled = true
+        if let usersLocation = mapView.userLocation.location?.coordinate {
+            mapView.setCenter(usersLocation, animated: true)
+        }
     }
-    
-    func locateUser() {
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse
-        {
-            mapView.showsUserLocation = true
-            if let location = CLLocationManager().location?.coordinate {
-                let region = MKCoordinateRegion(center: location, latitudinalMeters: 5000, longitudinalMeters: 5000)
-                mapView.setRegion(region, animated: true)
-            }
-        } 
-    }
-
-
 }
 
-extension ExperiencesViewController: MKMapViewDelegate {
+extension ExperiencesViewController: MKMapViewDelegate, CLLocationManagerDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let experience = annotation as? Experience else { return nil }
         let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceAnnotationView", for: experience) as! MKMarkerAnnotationView
         annotationView.glyphImage = UIImage(named: "Journal")
         return annotationView
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+        mapView.mapType = MKMapType.standard
+        let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        let region = MKCoordinateRegion(center: locValue, span: span)
+        mapView.setRegion(region, animated: true)
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = locValue
+        annotation.title = "You are here!"
+        annotation.subtitle = "current location"
+        mapView.addAnnotation(annotation)
     }
 }
