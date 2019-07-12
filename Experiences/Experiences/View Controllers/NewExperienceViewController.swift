@@ -18,18 +18,23 @@ class NewExperienceViewController: UIViewController {
         }
     }
     
+    
     private let filter = CIFilter(name: "CIColorControls")
     private let context = CIContext(options: nil)
+    
+    lazy private var recorder = Recorder()
     
     
     // MARK: - Outlets
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var addImageButton: UIButton!
+    @IBOutlet weak var recordButton: UIButton!
     
     // MARK: - View states
     override func viewDidLoad() {
         super.viewDidLoad()
+        recorder.delegate = self
 
         // Do any additional setup after loading the view.
     }
@@ -64,8 +69,9 @@ class NewExperienceViewController: UIViewController {
         self.present(sourceSelect, animated: true, completion: nil)
     }
     
-    // Add Record button
+    // Record Audio button
     @IBAction func recordButtonTapped(_ sender: Any) {
+       recorder.toggleRecording()
     }
     
     
@@ -120,6 +126,10 @@ class NewExperienceViewController: UIViewController {
         else { imageView.image = nil }
     }
     
+    func updateRecordButtonTitle() {
+         recordButton.setTitle(recorder.isRecording ? "Stop Recording" : "Record", for: .normal)
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -170,5 +180,11 @@ extension UIImage {
         return UIGraphicsImageRenderer(size: size, format: imageRendererFormat).image { context in
             draw(at: .zero)
         }
+    }
+}
+
+extension NewExperienceViewController: RecorderDelegate {
+    func recorderDidChangeState(recorder: Recorder) {
+        updateRecordButtonTitle()
     }
 }

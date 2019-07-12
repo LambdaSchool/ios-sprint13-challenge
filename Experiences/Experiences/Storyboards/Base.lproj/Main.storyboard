@@ -87,7 +87,6 @@
                                                 <state key="normal" title="Add Poster Image"/>
                                                 <connections>
                                                     <action selector="addPosterImageButtonTapped:" destination="ZRI-ts-FMk" eventType="touchUpInside" id="jne-nb-qmg"/>
-                                                    <segue destination="mlj-Qp-SHA" kind="show" id="zn3-MM-zAc"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3s6-NQ-mx1">
@@ -115,12 +114,17 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="New Experience" id="zOO-cB-xCE">
-                        <barButtonItem key="rightBarButtonItem" title="Next" id="7aZ-pa-ly4"/>
+                        <barButtonItem key="rightBarButtonItem" title="Next" id="7aZ-pa-ly4">
+                            <connections>
+                                <segue destination="xCy-tr-sPP" kind="show" id="AP8-bl-oJY"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="addImageButton" destination="Knt-qF-zp9" id="n2O-RM-WQp"/>
                         <outlet property="imageView" destination="QMr-o3-hTX" id="dTF-WA-P3z"/>
+                        <outlet property="recordButton" destination="3s6-NQ-mx1" id="aZC-OM-pQM"/>
                         <outlet property="titleTextField" destination="eNW-Fo-K5B" id="SWa-sW-ZNx"/>
                     </connections>
                 </viewController>
@@ -128,20 +132,46 @@
             </objects>
             <point key="canvasLocation" x="1605.7971014492755" y="782.8125"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="mHC-RD-nmq">
+        <!--Video Recording-->
+        <scene sceneID="7ph-kb-dzm">
             <objects>
-                <viewController id="mlj-Qp-SHA" customClass="ViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="5JD-tD-OI4">
+                <viewController id="xCy-tr-sPP" customClass="VideoPlaybackViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="23n-yy-Ukp">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="756"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SMS-3b-UbP" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="756"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uCn-7l-ugg">
+                                        <rect key="frame" x="148" y="549" width="119" height="116"/>
+                                        <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Button" image="Record"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="uCn-7l-ugg" secondAttribute="bottom" constant="91" id="I2u-81-XYa"/>
+                                    <constraint firstItem="uCn-7l-ugg" firstAttribute="leading" secondItem="SMS-3b-UbP" secondAttribute="leading" constant="148" id="YhF-ZR-1XA"/>
+                                    <constraint firstAttribute="trailing" secondItem="uCn-7l-ugg" secondAttribute="trailing" constant="147" id="nr4-GY-yqT"/>
+                                    <constraint firstItem="uCn-7l-ugg" firstAttribute="top" secondItem="SMS-3b-UbP" secondAttribute="top" constant="549" id="sKv-V7-AZ3"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="Iie-4q-eXI"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="SMS-3b-UbP" secondAttribute="bottom" id="WQ4-Fv-C68"/>
+                            <constraint firstItem="SMS-3b-UbP" firstAttribute="top" secondItem="EZa-Ri-f9U" secondAttribute="top" id="jYH-ot-J3Q"/>
+                            <constraint firstItem="SMS-3b-UbP" firstAttribute="trailing" secondItem="EZa-Ri-f9U" secondAttribute="trailing" id="uDd-yr-auZ"/>
+                            <constraint firstItem="SMS-3b-UbP" firstAttribute="leading" secondItem="EZa-Ri-f9U" secondAttribute="leading" id="vrE-gK-gCs"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="EZa-Ri-f9U"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Video Recording" id="Bhr-2G-SIR"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="FJm-gh-gmm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jd5-Mh-jY9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2310" y="782"/>
+            <point key="canvasLocation" x="2307.2463768115945" y="784.82142857142856"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="yb5-Cr-wlA">
@@ -163,4 +193,7 @@
             <point key="canvasLocation" x="134.78260869565219" y="782.8125"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Record" width="116" height="116"/>
+    </resources>
 </document>
