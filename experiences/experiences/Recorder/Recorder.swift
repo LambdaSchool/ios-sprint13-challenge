@@ -37,13 +37,13 @@ class Recorder: NSObject {
 			NSLog("Error trying to AVAudioRecorder: \(error)")
 		}
 		
-		guard let audioRecorder = audioRecorder else {
-			print("error with audioRecorder!")
-			return
-		}
-		audioRecorder.delegate = self
-		audioRecorder.record()
-		print(documentDirectory)
+//		guard let audioRecorder = audioRecorder else {
+//			print("error with audioRecorder!")
+//			return
+//		} 
+		audioRecorder?.delegate = self
+		audioRecorder?.record()
+		print(fileUrl!)
 	}
 	
 	func stop() {

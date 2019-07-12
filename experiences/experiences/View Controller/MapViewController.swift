@@ -32,19 +32,13 @@ class MapViewController: UIViewController {
 		super.viewWillAppear(animated)
 		
 		mapview.reloadInputViews()
-		
 		mapview.delegate = self
-		
 		mapview?.addAnnotations(experienceController.experinces)
-		
-		
-		mapview.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnotationView")
+		mapview.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnotationView")		
 	}
 
 	@IBAction func postButtonPressed(_ sender: Any) {
-		print("post")
 	}
-	
 	
 	func requestLocationAccess() {
 		let status = CLLocationManager.authorizationStatus()
@@ -88,20 +82,23 @@ extension MapViewController: MKMapViewDelegate {
 		return annotationView
 	}
 	
+	func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+		audioPlayer?.pause()
+		audioPlayer = nil
+	}
+	
 	func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
 		
 		guard let fileTitle = view.annotation?.title  else { return }
 		let fileString = String(fileTitle!)
-		print(fileString)
-		audioPlayer = AudioPlayer(name: fileString)
+		
+				audioPlayer =  AudioPlayer(name: fileString)
+		
+		if let duration = audioPlayer?.duration {
+			print(duration)
+			
+		}
 		audioPlayer?.play()
-		
-		
-//		print("didSelect view \(view.annotation?.title as! String)")
-//		if let ex = view.annotation as? Experience {
-//			print(ex)
-//		}
-		
 	}
 	
 

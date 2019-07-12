@@ -37,31 +37,31 @@ class PostViewController: UIViewController {
 		
 	}
 	
-	// Mark: For Testing Video
-//	override func viewDidAppear(_ animated: Bool) {
-//		super.viewDidAppear(animated)
-//		if let currentExperienceVideo = experienceController?.experinces.last?.video {
-//			if let url = URL(string: currentExperienceVideo) {
-//				playMovie(url: url)
-//			}
+//	 Mark: For Testing Video
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+//		if let currentExperience = experienceController?.experinces.last?.title {
+//			let player = AudioPlayer(name: currentExperience)
+//			player.play()
+//			print(player.duration!)
 //		}
-//
-//	}
-//
-//
-//	func playMovie(url: URL) {
-//		let player = AVPlayer(url: url)
-//		let playerLayer = AVPlayerLayer(player: player)
-////		var topRect = self.view.bounds
-////		topRect.size.width = topRect.width / 4
-////		topRect.size.height = topRect.height / 4
-////		topRect.origin.y = view.layoutMargins.top
-//		playerLayer.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-//
-//		view.layer.addSublayer(playerLayer)
-//
-//		player.play()
-//	}
+
+	}
+
+
+	func playMovie(url: URL) {
+		let player = AVPlayer(url: url)
+		let playerLayer = AVPlayerLayer(player: player)
+//		var topRect = self.view.bounds
+//		topRect.size.width = topRect.width / 4
+//		topRect.size.height = topRect.height / 4
+//		topRect.origin.y = view.layoutMargins.top
+		playerLayer.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+
+		view.layer.addSublayer(playerLayer)
+
+		player.play()
+	}
 
 	
 	@IBAction func back(_ sender: Any) {

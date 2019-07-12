@@ -8,7 +8,6 @@
 
 import AVFoundation
 
-
 class AudioPlayer: NSObject {
 	let name: String
 	private var audioPlayer: AVAudioPlayer?
@@ -26,11 +25,22 @@ class AudioPlayer: NSObject {
 		
 		do {
 			audioPlayer = try AVAudioPlayer(contentsOf: url)
+			audioPlayer?.delegate = self
 		} catch {
 			NSLog("audioPlayer: \(error)")
 		}
+		audioPlayer?.play()
+		print(url)
 	}
 	
+	func play() {
+		setupPlayer()
+	}
+	
+	func pause() {
+		audioPlayer?.pause()
+	}
+
 	var isPlaying: Bool {
 		return audioPlayer?.isPlaying ?? false
 	}
@@ -43,20 +53,18 @@ class AudioPlayer: NSObject {
 		return audioPlayer?.duration
 	}
 	
-	func play() {
-		setupPlayer()
-		audioPlayer?.play()
-	}
-	
-	func pause() {
-		audioPlayer?.pause()
-	}
 }
 
 extension AudioPlayer: AVAudioPlayerDelegate {
+	
+	func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+		if let error = error {
+			fatalError("audioPlayerDecodeErrorDidOccur: \(error)")
+		}
+	}
 	func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
 		NotificationCenter.default.post(name: .audioPlayerDidFinishPlaying, object: nil)
-		print(audioPlayerDidFinishPlaying)
+		print("audioPlayerDidFinishPlaying")
 	}
 }
 

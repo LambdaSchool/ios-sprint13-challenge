@@ -16,6 +16,4 @@ class ExperienceController {
 	func addExperience(experience: Experience) {
 		experinces.append(experience)
 	}
-
-	
 }
