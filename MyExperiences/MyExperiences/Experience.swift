@@ -15,22 +15,20 @@ class Experience: NSObject, MKAnnotation {
     var audio: URL?
     var video: URL?
     var image: UIImage?
-    var location: CLLocationCoordinate2D
+    var coordinate: CLLocationCoordinate2D
 
-    init(title: String?, audio: URL?, image: UIImage?, video: URL?, location: CLLocationCoordinate2D) {
+    init(title: String?, audio: URL?, image: UIImage?, video: URL?, coordinate: CLLocationCoordinate2D) {
 
         self.title = title
         self.audio = audio
         self.video = video
         self.image = image
-        self.location = location
+        self.coordinate = coordinate
 
 
     }
 
-    var coordinate: CLLocationCoordinate2D {
-        return self.coordinate
-    }
+
 
 
 
