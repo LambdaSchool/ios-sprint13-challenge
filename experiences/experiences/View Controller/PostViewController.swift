@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import AVFoundation
 
 
 class PostViewController: UIViewController {
@@ -34,10 +35,34 @@ class PostViewController: UIViewController {
         super.viewDidLoad()
 		recordButton.isEnabled = false
 		
-		if let currentExperienceVideo = experienceController?.experinces.last?.video {
-			print(currentExperienceVideo)
-		}
 	}
+	
+	// Mark: For Testing Video
+//	override func viewDidAppear(_ animated: Bool) {
+//		super.viewDidAppear(animated)
+//		if let currentExperienceVideo = experienceController?.experinces.last?.video {
+//			if let url = URL(string: currentExperienceVideo) {
+//				playMovie(url: url)
+//			}
+//		}
+//
+//	}
+//
+//
+//	func playMovie(url: URL) {
+//		let player = AVPlayer(url: url)
+//		let playerLayer = AVPlayerLayer(player: player)
+////		var topRect = self.view.bounds
+////		topRect.size.width = topRect.width / 4
+////		topRect.size.height = topRect.height / 4
+////		topRect.origin.y = view.layoutMargins.top
+//		playerLayer.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+//
+//		view.layer.addSublayer(playerLayer)
+//
+//		player.play()
+//	}
+
 	
 	@IBAction func back(_ sender: Any) {
 		dismiss(animated: true, completion: nil)
@@ -108,18 +133,3 @@ extension PostViewController: UINavigationControllerDelegate, UIImagePickerContr
 	}
 }
 
-//	func playMovie(url: URL) {
-//		//file:///var/mobile/Containers/Data/Application/0A67F7FF-DA54-41C1-A49D-28AAF6B5AFD5/Documents/movie.mov
-//		player = AVPlayer(url: url)
-//		let playerLayer = AVPlayerLayer(player: player)
-//		var topRect = self.view.bounds
-//		topRect.size.width = topRect.width / 4
-//		topRect.size.height = topRect.height / 4
-//		topRect.origin.y = view.layoutMargins.top
-//
-//		playerLayer.frame = topRect
-//
-//		view.layer.addSublayer(playerLayer)
-//
-//		player.play()
-//	}

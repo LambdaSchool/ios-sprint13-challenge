@@ -141,8 +141,6 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
 	}
 	
 	func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
-		print(outputFileURL)
-		
 		guard let currentLoaction = experienceController?.currentLocation, let fileTitle = fileTitle else {
 			NSLog("fileTitle and CurrentLocation Not set")
 			return
