@@ -145,11 +145,13 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
 			NSLog("fileTitle and CurrentLocation Not set")
 			return
 		}
+		
 		let experience = Experience(title: fileTitle, coordinate: currentLoaction)
 		experience.video = String(outputFileURL.absoluteString)
 		experienceController?.addExperience(experience: experience)
 		
-		dismiss(animated: true, completion: nil)
+		navigationController?.popToRootViewController(animated: true)
+//		dismiss(animated: true, completion: nil)
 	}
 }
 
