@@ -118,4 +118,56 @@ class AddVideoViewController: UIViewController {
         videoURL = url
         return url
     }
+    
+    func updateViews() {
+        if fileOutput.isRecording {
+            recordButton.setImage(#imageLiteral(resourceName: "Capture_Butt1"), for: .normal)
+            recordButton.tintColor = UIColor.black
+        } else {
+            recordButton.setImage(#imageLiteral(resourceName: "Capture_Butt"), for: .normal)
+            recordButton.tintColor = UIColor.red
+        }
+    }
+    
+    @IBAction func recordButtonPressed(_ sender: Any) {
+        
+        if fileOutput.isRecording {
+            fileOutput.stopRecording()
+        } else {
+            fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
+        }
+    }
+    
+    @IBAction func saveButtonTapped(_ sender: Any) {
+        guard let experienceController = experienceController,
+        let currentLocation = currentLocation,
+        let recordedURL = recordedURL,
+        let image = image,
+        let experienceName = experienceName,
+        let videoURL = videoURL
+        else { return }
+        
+        experienceController.createExperiences(experiencesName: experienceName,
+                                               image: image,
+                                               audioURL: recordedURL,
+                                               videoURL: videoURL,
+                                               location: currentLocation)
+        
+        navigationController?.popToRootViewController(animated: true)
+        
+    }
+}
+
+extension AddVideoViewController: AVCaptureFileOutputRecordingDelegate {
+    func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+        
+        self.updateViews()
+    }
+    
+    func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
+        DispatchQueue.main.async {
+            self.updateViews()
+        }
+    }
+
 }

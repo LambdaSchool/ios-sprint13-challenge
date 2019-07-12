@@ -16,11 +16,13 @@ class Experience: NSObject {
     let image: UIImage
     let videoURL: URL
     let audioURL: URL
+    let location: CLLocation
     
-    init(experienceName: String, image: UIImage, videoURL: URL, audioURL: URL) {
+    init(experienceName: String, image: UIImage, videoURL: URL, audioURL: URL, location: CLLocation) {
         self.experienceName = experienceName
         self.image = image
         self.videoURL = videoURL
         self.audioURL = audioURL
+        self.location = location
     }
 }

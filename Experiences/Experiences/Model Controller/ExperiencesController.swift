@@ -14,12 +14,13 @@ class ExperienceController {
     
     var experiences: [Experience] = []
     
-    func createExperiences(experiencesName: String, image: UIImage, audioURL: URL, videoURL: URL) {
+    func createExperiences(experiencesName: String, image: UIImage, audioURL: URL, videoURL: URL, location: CLLocation) {
         
         let newExperience = Experience(experienceName: experiencesName,
                                        image: image,
                                        videoURL: videoURL,
-                                       audioURL: audioURL)
+                                       audioURL: audioURL,
+                                       location: location)
         
         experiences.append(newExperience)
     }
