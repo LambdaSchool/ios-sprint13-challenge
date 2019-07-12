@@ -67,6 +67,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="New Experience" id="Y1H-hR-NyD">
                         <barButtonItem key="rightBarButtonItem" title="Next" id="mqi-nA-NVz">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <segue destination="VIs-3X-Pyi" kind="show" identifier="AddVideo" id="QGL-fF-Bwz"/>
                             </connections>
@@ -86,12 +87,12 @@
         <!--Video Recording-->
         <scene sceneID="Unh-B3-UwB">
             <objects>
-                <viewController id="VIs-3X-Pyi" sceneMemberID="viewController">
+                <viewController id="VIs-3X-Pyi" customClass="VideoViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4lE-Ib-3ue">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yad-xG-mVG" customClass="CameraPreviewView" customModule="ios_sprint13_challenge" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yad-xG-mVG" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="140" width="414" height="722"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mQu-ih-aRo">
@@ -103,6 +104,9 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <color key="tintColor" red="0.47780197860000001" green="0.66714483499999999" blue="0.92617577309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="Record"/>
+                                        <connections>
+                                            <action selector="toggleRecord:" destination="VIs-3X-Pyi" eventType="touchUpInside" id="pWw-Z9-ITY"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -122,8 +126,17 @@
                         <viewLayoutGuide key="safeArea" id="G6J-72-fN8"/>
                     </view>
                     <navigationItem key="navigationItem" title="Video Recording" id="6Jr-ff-jK8">
-                        <barButtonItem key="rightBarButtonItem" title="Done" id="tid-Ku-Pbc"/>
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="tid-Ku-Pbc">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="save:" destination="VIs-3X-Pyi" id="l0Y-Gm-b6J"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="previewView" destination="yad-xG-mVG" id="fGr-3R-g6T"/>
+                        <outlet property="recordButton" destination="mQu-ih-aRo" id="V2E-Ac-fmt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XqT-HH-mB5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -173,6 +186,9 @@
                                     <constraint firstAttribute="width" constant="50" id="OCo-Hc-sHN"/>
                                 </constraints>
                                 <state key="normal" image="plus"/>
+                                <connections>
+                                    <segue destination="elg-Ub-I1P" kind="presentation" id="905-SN-mJ3"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -189,7 +205,6 @@
                     <navigationItem key="navigationItem" title="Experiences" id="9sV-Qb-ydO"/>
                     <connections>
                         <outlet property="mapView" destination="1bX-XB-x9m" id="6jV-IB-Dqq"/>
-                        <segue destination="elg-Ub-I1P" kind="presentation" id="hql-b7-ume"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4HS-Uq-TC4" userLabel="First Responder" sceneMemberID="firstResponder"/>
