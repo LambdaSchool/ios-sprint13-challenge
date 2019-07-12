@@ -7,9 +7,14 @@
 //
 
 import UIKit
+import MapKit
 
 class ExperiencesViewController: UIViewController {
-
+    
+    // MARK: - Outlets
+    
+    @IBOutlet weak var mapView: MKMapView!
+    
     // MARK: - View states
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -27,6 +32,16 @@ class ExperiencesViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = false;
     }
+    
+//    // MARK: - Functions
+//    func updateViews() {
+//
+//    }
+    
+    // MARK: - Actions
+    @IBAction func addNewExperienceButtonTapped(_ sender: Any) {
+    }
+    
 
 
 }
