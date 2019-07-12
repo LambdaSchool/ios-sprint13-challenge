@@ -26,6 +26,7 @@ class MapViewController: UIViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		mapview.delegate = self
+		
 		mapview?.addAnnotations(experienceController.experinces)
 		experienceController.currentLocation = locationManager.location?.coordinate
 		
@@ -60,11 +61,13 @@ class MapViewController: UIViewController {
 
 extension MapViewController: MKMapViewDelegate {
 	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-		if annotation is MKUserLocation { return nil }
-		
+//		if annotation is MKUserLocation { return nil }
+	
 		return nil
 	}
 	
 	
-	
+	func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+		
+	}
 }
