@@ -1,5 +1,5 @@
 //
-//  Experience.swift
+//  Experience+Map.swift
 //  experiences
 //
 //  Created by Hector Steven on 7/12/19.
@@ -9,10 +9,8 @@
 import Foundation
 import MapKit
 
-class Experience: NSObject {
-	var title: String?
-	var subtitle: String?
-	var coordinate: CLLocationCoordinate2D?
-	
+
+extension Experience: MKAnnotation {
 	
 }
+

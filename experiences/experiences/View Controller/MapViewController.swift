@@ -11,6 +11,7 @@ import MapKit
 
 class MapViewController: UIViewController {
 	let locationManager = CLLocationManager()
+	var experiences: [Experience] = []
 	
 	@IBOutlet var mapview: MKMapView!
 	@IBOutlet var postButton: UIButton!
@@ -18,6 +19,13 @@ class MapViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		requestLocationAccess()
+		
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		mapview.delegate = self
+		mapview?.addAnnotations(experiences)
 		
 	}
 
@@ -41,3 +49,10 @@ class MapViewController: UIViewController {
 	}
 }
 
+extension MapViewController: MKMapViewDelegate {
+	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+		if annotation is MKUserLocation { return nil }
+		
+		return nil
+	}
+}
