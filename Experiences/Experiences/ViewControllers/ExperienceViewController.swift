@@ -91,6 +91,23 @@ class ExperienceViewController: UIViewController, UIImagePickerControllerDelegat
         
         return documentDirectory.appendingPathComponent(UUID().uuidString).appendingPathExtension("caf")
     }
+    
+    private func updateButton() {
+        let playAudioTitle = isPlaying ? "Stop Playing" : "Play"
+        playAudioButton.setTitle(playAudioTitle, for: .normal)
+        
+        let recordAudioTitle = isRecording ? "Stop Recording" : "Record"
+        recordAudioButton.setTitle(recordAudioTitle, for: .normal)
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        updateButton()
+    }
+    
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        updateButton()
+        recordingURL = recorder.url
+    }
     /*
     // MARK: - Navigation
 
@@ -107,11 +124,11 @@ class ExperienceViewController: UIViewController, UIImagePickerControllerDelegat
     }
     
     @IBAction func recordAudioButtonTapped(_ sender: Any) {
-        
+        updateButton()
     }
     
     @IBAction func playAudioRecordingButtonTapped(_ sender: Any) {
-        
+        updateButton()
     }
     
     @IBAction func addVideoButtonTapped(_ sender: Any) {
