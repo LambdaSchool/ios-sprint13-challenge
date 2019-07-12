@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreLocation
+import MapKit
 import UIKit
 
 class Experience: NSObject {
@@ -25,4 +26,18 @@ class Experience: NSObject {
         self.audioURL = audioURL
         self.location = location
     }
+}
+
+extension Experience: MKAnnotation {
+    var coordinate: CLLocationCoordinate2D {
+        return location.coordinate
+    }
+    
+    var title: String? {
+        get {
+            return experienceName
+        }
+    }
+    
+    
 }

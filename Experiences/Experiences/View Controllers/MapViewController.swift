@@ -23,6 +23,17 @@ class MapViewController: UIViewController {
         super.viewWillAppear(animated)
         
         navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        locationManager = CLLocationManager()
+        locationManager?.delegate = self
+        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
+        
+        mapView.addAnnotations(experienceController.experiences)
+        mapView.register(ExperienceAnnotationView.self,
+                         forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        mapView.delegate = self
+        
+        startLocationServices()
     }
     
     override func viewDidLoad() {
