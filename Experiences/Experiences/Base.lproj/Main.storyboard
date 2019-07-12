@@ -97,6 +97,7 @@
                                 <connections>
                                     <action selector="recordVideoClicked:" destination="oPr-kg-4Gd" eventType="touchUpInside" id="cBx-zv-Wow"/>
                                     <action selector="recordVideoPressed:" destination="oPr-kg-4Gd" eventType="touchUpInside" id="WWg-ot-XIW"/>
+                                    <segue destination="KGb-kg-0M8" kind="presentation" identifier="RecordVideoSegue" id="CKJ-th-gxg"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -139,6 +140,50 @@
             </objects>
             <point key="canvasLocation" x="2061" y="38"/>
         </scene>
+        <!--Video Recording View Controller-->
+        <scene sceneID="3HO-k8-AKU">
+            <objects>
+                <viewController id="KGb-kg-0M8" customClass="VideoRecordingViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2dP-mU-GVC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="An4-Zl-AgG" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uq8-kg-gXF">
+                                        <rect key="frame" x="149" y="761" width="116" height="116"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" image="Record"/>
+                                        <connections>
+                                            <action selector="recordButtonPressed:" destination="KGb-kg-0M8" eventType="touchUpInside" id="PDF-5E-YHj"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="An4-Zl-AgG" firstAttribute="leading" secondItem="aN7-ef-21I" secondAttribute="leading" id="8dL-hb-whI"/>
+                            <constraint firstItem="An4-Zl-AgG" firstAttribute="top" secondItem="2dP-mU-GVC" secondAttribute="top" id="GTV-Bv-fpu"/>
+                            <constraint firstAttribute="bottom" secondItem="An4-Zl-AgG" secondAttribute="bottom" id="cyf-oY-W3D"/>
+                            <constraint firstItem="An4-Zl-AgG" firstAttribute="centerX" secondItem="2dP-mU-GVC" secondAttribute="centerX" id="pOp-Ed-WgS"/>
+                            <constraint firstItem="An4-Zl-AgG" firstAttribute="centerY" secondItem="2dP-mU-GVC" secondAttribute="centerY" id="xUE-kv-1Nt"/>
+                            <constraint firstItem="An4-Zl-AgG" firstAttribute="trailing" secondItem="aN7-ef-21I" secondAttribute="trailing" id="yxU-p8-cSa"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="aN7-ef-21I"/>
+                    </view>
+                    <connections>
+                        <outlet property="cameraPreviewView" destination="An4-Zl-AgG" id="mp1-7y-Ue5"/>
+                        <outlet property="recordButton" destination="uq8-kg-gXF" id="K02-kS-VmS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fbU-W7-YIk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2824.6376811594205" y="37.5"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="qyh-Xd-XKN">
             <objects>
@@ -158,4 +203,7 @@
             <point key="canvasLocation" x="231.8840579710145" y="37.5"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Record" width="116" height="116"/>
+    </resources>
 </document>
