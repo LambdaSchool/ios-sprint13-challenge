@@ -13,6 +13,7 @@ import AVFoundation
 
 class MapViewController: UIViewController {
 	var videoPlayer: AVPlayer?
+	var audioPlayer: AudioPlayer?
 	
 	let experienceController = ExperienceController()
 	
@@ -73,10 +74,13 @@ extension MapViewController: MKMapViewDelegate {
 		guard let experience = annotation as? Experience else { return nil }
 		
 		let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceAnotationView", for: annotation) as! MKMarkerAnnotationView
+		
+//		annotationView.glyphImage = experience.image!
 		annotationView.glyphTintColor = .white
 		annotationView.markerTintColor = .black
 		annotationView.canShowCallout = true
-	
+		
+		
 		let dv = DetailView(frame: .zero)
 		dv.experience = experience
 		annotationView.detailCalloutAccessoryView = dv
@@ -84,9 +88,20 @@ extension MapViewController: MKMapViewDelegate {
 		return annotationView
 	}
 	
-	func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-		guard let vc = view as? DetailView  else { return }
-		print(vc.experience?.video!)
+	func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+		
+		guard let fileTitle = view.annotation?.title  else { return }
+		let fileString = String(fileTitle!)
+		print(fileString)
+		audioPlayer = AudioPlayer(name: fileString)
+		audioPlayer?.play()
+		
+		
+//		print("didSelect view \(view.annotation?.title as! String)")
+//		if let ex = view.annotation as? Experience {
+//			print(ex)
+//		}
+		
 	}
 	
 

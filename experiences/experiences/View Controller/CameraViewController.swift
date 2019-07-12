@@ -52,6 +52,7 @@ class CameraViewController: UIViewController {
 		
 		if fileOutput.isRecording {
 			fileOutput.stopRecording()
+			audioRecorder?.stop()
 		} else {
 			audioRecorder = Recorder()
 			audioRecorder?.startRecord(with: fileTitle)

@@ -56,6 +56,7 @@ class AudioPlayer: NSObject {
 extension AudioPlayer: AVAudioPlayerDelegate {
 	func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
 		NotificationCenter.default.post(name: .audioPlayerDidFinishPlaying, object: nil)
+		print(audioPlayerDidFinishPlaying)
 	}
 }
 
