@@ -15,10 +15,10 @@ class NewExperienceViewController: UIViewController {
     
     var originalImage: UIImage? {
         didSet {
-            
+            updateImage()
         }
     }
-    private let filter = CIFilter(name: "CIPhotoEffectNoir")
+    private let filter = CIFilter(name: "CIPhotoEffectNoir")!
     private let context = CIContext(options: nil)
     lazy private var recorder = Recorder()
     
@@ -32,21 +32,19 @@ class NewExperienceViewController: UIViewController {
     
     func updateImage() {
         if let originalImage = originalImage {
-            imageView.image = image(byFiltering: originalImage)
-            addPosterImageButton.isHidden = true
+            imageView.image = image(byFiltering: originalImage.imageByScaling(toSize: view.bounds.size)!)
         } else {
             imageView.image = nil
         }
     }
     
     private func image(byFiltering image: UIImage) -> UIImage {
-        guard let cgImage = originalImage?.cgImage else { return image }
+        guard let cgImage = image.cgImage else { return image }
         let ciImage = CIImage(cgImage: cgImage)
-        filter?.setValue(ciImage, forKey: "inputImage")
-        guard let outputCIImage = filter?.outputImage else { return image }
+        filter.setValue(ciImage, forKey: "inputImage")
+        guard let outputCIImage = filter.outputImage else { return image }
         guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
         return UIImage(cgImage: outputCGImage)
-        
     }
     
     private func updateViews() {
@@ -62,21 +60,6 @@ class NewExperienceViewController: UIViewController {
         imagePicker.sourceType = .photoLibrary
         imagePicker.delegate = self
         present(imagePicker, animated: true, completion: nil)
-        
-        guard let originalImage = originalImage else { return }
-        let processedImage = image(byFiltering: originalImage)
-        PHPhotoLibrary.requestAuthorization { (status) in
-            guard status == .authorized else { return }
-            PHPhotoLibrary.shared().performChanges({
-                PHAssetCreationRequest.creationRequestForAsset(from: processedImage)
-            }, completionHandler: { (success, error) in
-                if let error = error {
-                    NSLog("Error saving photo: \(error)")
-                    return
-                }
-                NSLog("Saved photo!")
-            })
-        }
     }
     
     @IBAction func recordButtonPressed(_ sender: Any) {
@@ -89,8 +72,9 @@ extension NewExperienceViewController: UIImagePickerControllerDelegate, UINaviga
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.originalImage] as? UIImage {
             originalImage = image
+            addPosterImageButton.isHidden = true
+            picker.dismiss(animated: true, completion: nil)
         }
-        picker.dismiss(animated: true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

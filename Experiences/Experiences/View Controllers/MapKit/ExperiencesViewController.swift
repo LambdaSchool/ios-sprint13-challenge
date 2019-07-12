@@ -58,7 +58,7 @@ extension ExperiencesViewController: MKMapViewDelegate, CLLocationManagerDelegat
         let annotation = MKPointAnnotation()
         annotation.coordinate = locValue
         annotation.title = "You are here!"
-        annotation.subtitle = "current location"
         mapView.addAnnotation(annotation)
     }
+
 }
