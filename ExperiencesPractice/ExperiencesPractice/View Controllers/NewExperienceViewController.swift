@@ -19,25 +19,24 @@ class NewExperienceViewController: UIViewController {
     
     let authorizationStatus = PHPhotoLibrary.authorizationStatus()
     let context = CIContext(options: nil)
+    var filteredImage: UIImage?
     
-    
-
-    
+    lazy private var recorder = Recorder()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        recorder.delegate = self
     }
     
     @IBAction func addImageButtonTapped(_ sender: Any) {
         
         // authorization from user to access image-Picker
         establishAuthorization()
+        // showing filtered photo is done in establishedAuthorization, fix later for readability
         
-        
-        // updateView() or simply display image here since other things aren't happening
+        // add filteredImage to model
         
     }
     
@@ -81,9 +80,24 @@ class NewExperienceViewController: UIViewController {
         present(imagePicker, animated: true, completion: nil)
     }
     
-    private func filterAndPresentImage(image: UIImage) {
+    @IBAction func audioRecordButtonTapped(_ sender: Any) {
+        
+        // check if recorder already running, stop recorder if true, ow continue...
+        
+        //ensure access to recording functionality
+        
+        // get access to microphone instance
+        
+        // set up a recieving url to hold the file
+        
+        // record the audio and toggle button to "Stop Recording"
+        recorder
+        
+        // store audio file in model
         
     }
+    
+    
     
     func updateViews() {
         
@@ -132,7 +146,7 @@ extension NewExperienceViewController: UIImagePickerControllerDelegate, UINaviga
         
         guard let imageFilterPETonal = CIFilter(name: "CIPhotoEffectTonal") else { return }
         
-        let filteredImage = imageRender(byFiltering: image, with: imageFilterPETonal)
+        filteredImage = imageRender(byFiltering: image, with: imageFilterPETonal)
         
         imageView.image = filteredImage
         
