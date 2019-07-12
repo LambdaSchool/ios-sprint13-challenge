@@ -14,8 +14,12 @@ class PostViewController: UIViewController {
 	
     override func viewDidLoad() {
         super.viewDidLoad()
+		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "back", style: .plain, target: self, action: #selector(back))
+		
     }
-	
+	@objc func back() {
+		dismiss(animated: true, completion: nil)
+	}
 	@IBAction func addPosterButtonPressed(_ sender: Any) {
 		print("addPosterButtonPressed")
 	}
