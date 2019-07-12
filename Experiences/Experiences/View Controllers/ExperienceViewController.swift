@@ -57,6 +57,10 @@ class ExperienceViewController: UIViewController {
         return UIImage(cgImage: outputCGImage)
         
     }
+ 
+    @IBAction func textFieldEnter(_ sender: Any) {
+        print("title: \(titleTextField.text)")
+    }
     
 
     @IBAction func choosePhotoButtonTapped(_ sender: Any) {

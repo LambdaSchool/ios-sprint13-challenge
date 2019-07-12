@@ -38,6 +38,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="zW6-f8-GHe" id="p6c-w1-zSj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -59,6 +62,9 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="textFieldEnter:" destination="44Q-a9-Jav" eventType="editingDidEndOnExit" id="kHl-lO-I0R"/>
+                                        </connections>
                                     </textField>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="JWO-UE-dwr">
                                         <rect key="frame" x="0.0" y="38" width="382" height="592"/>
@@ -93,7 +99,7 @@
                     <navigationItem key="navigationItem" title="New Experience" id="2Uc-Ty-WFj">
                         <barButtonItem key="rightBarButtonItem" title="Next" id="EK6-ob-jN7">
                             <connections>
-                                <segue destination="Sg4-Ha-DVU" kind="presentation" identifier="CameraSegue" id="a0j-Ue-MaS"/>
+                                <segue destination="Sg4-Ha-DVU" kind="show" identifier="CameraSegue" id="a0j-Ue-MaS"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -107,20 +113,60 @@
             </objects>
             <point key="canvasLocation" x="1846" y="119"/>
         </scene>
-        <!--Camera View Controller-->
+        <!--Title-->
         <scene sceneID="cdG-4d-8hO">
             <objects>
                 <viewController id="Sg4-Ha-DVU" customClass="CameraViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="c7g-EB-nWM">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="76C-cd-y54" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0MC-Ez-js2">
+                                        <rect key="frame" x="157" y="736" width="100" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="BPe-nH-CtN"/>
+                                            <constraint firstAttribute="height" constant="100" id="p6O-cF-AtT"/>
+                                        </constraints>
+                                        <state key="normal" image="Record"/>
+                                        <connections>
+                                            <action selector="recordButtonPressed:" destination="Sg4-Ha-DVU" eventType="touchUpInside" id="jgD-FD-SwQ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="0MC-Ez-js2" secondAttribute="bottom" constant="60" id="2k4-0Q-Jnt"/>
+                                    <constraint firstItem="0MC-Ez-js2" firstAttribute="centerX" secondItem="76C-cd-y54" secondAttribute="centerX" id="bZk-oD-QYU"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="76C-cd-y54" firstAttribute="trailing" secondItem="HPt-LX-ngq" secondAttribute="trailing" id="3Ay-Bg-30e"/>
+                            <constraint firstItem="76C-cd-y54" firstAttribute="top" secondItem="c7g-EB-nWM" secondAttribute="top" id="Da1-Yf-NaP"/>
+                            <constraint firstAttribute="bottom" secondItem="76C-cd-y54" secondAttribute="bottom" id="gDK-qb-m9c"/>
+                            <constraint firstItem="76C-cd-y54" firstAttribute="leading" secondItem="HPt-LX-ngq" secondAttribute="leading" id="zsl-Wg-qa3"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="HPt-LX-ngq"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Title" id="1hi-qI-rtZ">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="ZHl-0y-TCL">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="Sg4-Ha-DVU" id="7Zk-N6-Nmg"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="cameraView" destination="76C-cd-y54" id="7TF-o8-edY"/>
+                        <outlet property="recordButton" destination="0MC-Ez-js2" id="ubq-gy-JL2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bVT-Js-GU3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2629" y="119"/>
+            <point key="canvasLocation" x="2628.985507246377" y="118.52678571428571"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="s2i-he-h7T">
@@ -141,4 +187,7 @@
             <point key="canvasLocation" x="283" y="119"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Record" width="116" height="116"/>
+    </resources>
 </document>
