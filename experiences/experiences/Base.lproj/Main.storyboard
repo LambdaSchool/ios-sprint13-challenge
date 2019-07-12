@@ -32,7 +32,7 @@
                                 </state>
                                 <connections>
                                     <action selector="postButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Euz-xJ-CMj"/>
-                                    <segue destination="yT8-Xe-Wx7" kind="show" id="rN8-pT-lsJ"/>
+                                    <segue destination="3p9-H1-N9G" kind="show" identifier="PostViewController" id="adR-Xl-UCw"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -67,8 +67,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <navigationBar contentMode="scaleToFill" largeTitles="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CiN-x3-I7G">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="VGm-LJ-F3a"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem title="New Experience" id="DUW-b7-5j6"/>
+                                </items>
+                            </navigationBar>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="0nR-Gt-Wgd">
-                                <rect key="frame" x="8" y="148" width="398" height="303"/>
+                                <rect key="frame" x="8" y="96" width="398" height="303"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XpX-q3-c5y">
                                         <rect key="frame" x="0.0" y="0.0" width="398" height="30"/>
@@ -84,7 +93,7 @@
                                             <constraint firstAttribute="width" secondItem="huT-KC-FcM" secondAttribute="height" multiplier="398:189" id="E7D-9c-36t"/>
                                         </constraints>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DIV-8J-Xgr">
+                                    <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DIV-8J-Xgr">
                                         <rect key="frame" x="0.0" y="235" width="398" height="30"/>
                                         <color key="backgroundColor" red="0.027450980390000001" green="0.54901960780000003" blue="0.3294117647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Add Poster Image">
@@ -106,16 +115,18 @@
                                     </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="0nR-Gt-Wgd" secondAttribute="height" multiplier="398:303" id="nTx-Fa-72I"/>
+                                    <constraint firstAttribute="width" secondItem="0nR-Gt-Wgd" secondAttribute="height" multiplier="398:303" id="q7y-Og-wrC"/>
                                 </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="0nR-Gt-Wgd" firstAttribute="top" secondItem="ERT-5v-3lu" secondAttribute="top" constant="8" id="JMn-SK-wfx"/>
-                            <constraint firstItem="ERT-5v-3lu" firstAttribute="trailing" secondItem="0nR-Gt-Wgd" secondAttribute="trailing" constant="8" id="TKd-XB-fQV"/>
-                            <constraint firstItem="0nR-Gt-Wgd" firstAttribute="centerX" secondItem="RAv-1e-3CV" secondAttribute="centerX" id="bCw-EK-WdL"/>
-                            <constraint firstItem="0nR-Gt-Wgd" firstAttribute="leading" secondItem="ERT-5v-3lu" secondAttribute="leading" constant="8" id="rSx-RI-UrT"/>
+                            <constraint firstItem="CiN-x3-I7G" firstAttribute="centerX" secondItem="0nR-Gt-Wgd" secondAttribute="centerX" id="HVT-hX-Hgp"/>
+                            <constraint firstItem="0nR-Gt-Wgd" firstAttribute="leading" secondItem="ERT-5v-3lu" secondAttribute="leading" constant="8" id="PiC-VN-HO0"/>
+                            <constraint firstItem="0nR-Gt-Wgd" firstAttribute="top" secondItem="CiN-x3-I7G" secondAttribute="bottom" constant="8" id="idv-DW-gZ0"/>
+                            <constraint firstItem="CiN-x3-I7G" firstAttribute="top" secondItem="ERT-5v-3lu" secondAttribute="top" id="llY-2S-8WL"/>
+                            <constraint firstItem="ERT-5v-3lu" firstAttribute="trailing" secondItem="0nR-Gt-Wgd" secondAttribute="trailing" constant="8" id="mgT-5E-mC3"/>
+                            <constraint firstItem="CiN-x3-I7G" firstAttribute="leading" secondItem="RAv-1e-3CV" secondAttribute="leading" id="qe5-GU-qmf"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ERT-5v-3lu"/>
                     </view>
@@ -127,25 +138,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eNe-F2-7wK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2813.04347826087" y="138.61607142857142"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="zuA-QV-0fh">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="yT8-Xe-Wx7" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="Z96-4i-E3P">
-                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="3p9-H1-N9G" kind="relationship" relationship="rootViewController" id="GyY-N7-mdE"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cI5-KN-hF5" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1902.8985507246377" y="138.61607142857142"/>
+            <point key="canvasLocation" x="1945" y="139"/>
         </scene>
     </scenes>
 </document>

@@ -32,7 +32,6 @@ class MapViewController: UIViewController {
 
 	@IBAction func postButtonPressed(_ sender: Any) {
 		print("post")
-		print((locationManager.location?.coordinate)!)
 	}
 	
 	
@@ -48,6 +47,16 @@ class MapViewController: UIViewController {
 			locationManager.requestWhenInUseAuthorization()
 		}
 	}
+	
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == "PostViewController" {
+			guard let vc = segue.destination as? PostViewController,
+				let location = locationManager.location?.coordinate else { return }
+			vc.postLocation = location
+			
+		}
+	}
+	
 }
 
 extension MapViewController: MKMapViewDelegate {

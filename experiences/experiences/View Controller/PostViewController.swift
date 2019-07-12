@@ -20,10 +20,15 @@ class PostViewController: UIViewController {
         super.viewDidLoad()
 		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "back", style: .plain, target: self, action: #selector(back))
 		
-    }
+		print(postLocation)
+	}
+	
+	
+	
 	@objc func back() {
 		dismiss(animated: true, completion: nil)
 	}
+	
 	@IBAction func addPosterButtonPressed(_ sender: Any) {
 		guard let title = titleTextField.text, !title.isEmpty else {
 			NSLog("title is empty")
@@ -39,6 +44,7 @@ class PostViewController: UIViewController {
 	
 	func addPhotoRequest() {
 		imageView.image = nil
+		
 		guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
 			fatalError("AddPhoto error")
 		}
@@ -52,12 +58,12 @@ class PostViewController: UIViewController {
 }
 
 extension PostViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+	
 	func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
 		picker.dismiss(animated: true)
 	}
 	
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-		
 		picker.dismiss(animated: true) {
 			if let image = info[.originalImage] as? UIImage {
 				DispatchQueue.main.async {
