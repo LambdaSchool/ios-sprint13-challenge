@@ -128,7 +128,9 @@ class Image_AudioViewController: UIViewController, AVAudioPlayerDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AddVideo" {
-            
+            guard let videoVC = segue.destination as? VideoViewController else { return }
+            videoVC.experienceController = experienceController
+            videoVC.experience = experience
         }
     }
     
