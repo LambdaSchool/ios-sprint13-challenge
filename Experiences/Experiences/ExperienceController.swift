@@ -10,11 +10,15 @@ import UIKit
 
 class ExperienceController {
     
-    var experience: Experience?
+    var experiences: [Experience] = []
     
     func createExperience(title: String, audio: URL, video: URL, image: UIImage) {
         let newExperience = Experience(audio: audio, video: video, image: image, title: title)
         
-        experience = newExperience
+//        experiences.append(newExperience)
     }
+    
+    //save an experience
+    //append to experiences
+    
 }

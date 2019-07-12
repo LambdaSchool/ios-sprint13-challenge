@@ -11,7 +11,7 @@ import UIKit
 
 class Experience: NSObject {
     var audio: URL
-    var video: URL
+    var video: URL 
     var image: UIImage
     var title: String
 

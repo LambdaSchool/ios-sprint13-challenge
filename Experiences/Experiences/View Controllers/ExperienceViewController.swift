@@ -11,6 +11,9 @@ import Photos
 
 class ExperienceViewController: UIViewController {
     
+    var experienceController = ExperienceController()
+    var experience: Experience!
+    
     var originalImage: UIImage? {
         didSet {
             updateImage()
@@ -54,12 +57,14 @@ class ExperienceViewController: UIViewController {
         guard let outputCIImage = filter?.outputImage else { return image }
       
         guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
+        experience?.image = UIImage(cgImage: outputCGImage)
         return UIImage(cgImage: outputCGImage)
         
     }
  
     @IBAction func textFieldEnter(_ sender: Any) {
         print("title: \(titleTextField.text)")
+        experience?.title = titleTextField.text ?? "New Experience"
     }
     
 

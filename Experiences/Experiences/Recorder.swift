@@ -40,6 +40,7 @@ class Recorder: NSObject {
         
         audioRecorder?.record()
         // ASSIGN THE FILE URL TO THE MODEL AUDIO ??!!!!?? here????
+        
         notifyDelegate()
     }
     

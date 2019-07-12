@@ -121,6 +121,8 @@ class CameraViewController: UIViewController {
  
     @IBAction func saveButtonTapped(_ sender: Any) {
         //assign the video url to models video
+        // Gather all of the Experience data (image, audio, video, title) and create an experience to use in the mapViewController.
+        
         
         navigationController?.popToRootViewController(animated: true)
     }
