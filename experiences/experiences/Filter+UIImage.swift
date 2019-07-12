@@ -10,11 +10,11 @@ import UIKit
 
 
 extension UIImage {
-	func myCIColorControlsFilter(image: UIImage) -> UIImage{
+	func myCIColorControlsFilter() -> UIImage{
 		let filter = CIFilter(name: "CIColorControls")
 		let context = CIContext(options: nil)
 		
-		guard let cgImage = image.cgImage else { return image}
+		guard let cgImage = self.cgImage else { return self}
 		let ciImage = CIImage(cgImage: cgImage)
 		filter?.setValue(ciImage, forKey: kCIInputImageKey)
 		filter?.setValue(1.05, forKey: kCIInputSaturationKey)
@@ -23,10 +23,10 @@ extension UIImage {
 		
 		guard let outputImage = filter?.outputImage else {
 			NSLog("error")
-			return image
+			return self
 		}
 		
-		guard let outputCGImage = context.createCGImage(outputImage,from: outputImage.extent) else { return image }
+		guard let outputCGImage = context.createCGImage(outputImage,from: outputImage.extent) else { return self }
 		
 		return UIImage(cgImage: outputCGImage)
 	}

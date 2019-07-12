@@ -10,8 +10,9 @@ import UIKit
 import MapKit
 
 class MapViewController: UIViewController {
+	let experienceController = ExperienceController()
+	
 	let locationManager = CLLocationManager()
-	var experiences: [Experience] = []
 	
 	@IBOutlet var mapview: MKMapView!
 	@IBOutlet var postButton: UIButton!
@@ -25,7 +26,7 @@ class MapViewController: UIViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		mapview.delegate = self
-		mapview?.addAnnotations(experiences)
+		mapview?.addAnnotations(experienceController.experinces)
 		
 	}
 
