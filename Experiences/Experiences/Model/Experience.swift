@@ -6,16 +6,16 @@
 //  Copyright © 2019 Mitchell Budge. All rights reserved.
 //
 
-/*
+
 import Foundation
 import CoreLocation
 import MapKit
 
-class Experience: NSObject, MKAnnotation {
+class Experience: NSObject {
     
-    var coordinate: CLLocationCoordinate2D {
-        return geometry.location
-    }
+    /*
+    
+    var coordinate: CLLocationCoordinate2D?
     
     var title: String? {
         return properties.place
@@ -63,5 +63,6 @@ class Experience: NSObject, MKAnnotation {
             location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         }
     }
+    */
 }
-*/
+

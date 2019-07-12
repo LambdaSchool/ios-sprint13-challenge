@@ -7,9 +7,17 @@
 //
 
 import UIKit
+import MapKit
 
 class ExperiencesViewController: UIViewController {
 
+    // MARK: - Properties
+    
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var journalButton: UIButton!
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -18,3 +26,12 @@ class ExperiencesViewController: UIViewController {
 
 }
 
+extension ExperiencesViewController: MKMapViewDelegate {
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let experience = annotation as? Experience else { return nil }
+        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceAnnotationView", for: annotation) as! MKMarkerAnnotationView
+        
+        return annotationView
+    }
+}
