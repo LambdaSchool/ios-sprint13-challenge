@@ -9,6 +9,10 @@
 import UIKit
 import Photos
 //import CoreImage
+import AVFoundation
+protocol RecorderDelegate {
+    func recorderDidChangeState(recorder: Recorder)
+}
 
 class NewExperienceViewController: UIViewController {
 
@@ -19,7 +23,13 @@ class NewExperienceViewController: UIViewController {
     
     let authorizationStatus = PHPhotoLibrary.authorizationStatus()
     let context = CIContext(options: nil)
+    
+    
+    // these are the values which go into the model...
     var filteredImage: UIImage?
+         //  record.fileURL
+    
+    
     
     lazy private var recorder = Recorder()
     
@@ -91,21 +101,11 @@ class NewExperienceViewController: UIViewController {
         // set up a recieving url to hold the file
         
         // record the audio and toggle button to "Stop Recording"
-        recorder
+        recorder.toggleRecording()
         
         // store audio file in model
         
     }
-    
-    
-    
-    func updateViews() {
-        
-        // display image if returning from image selection
-        
-    }
-    
-    
 
     /*
     // MARK: - Navigation
@@ -132,6 +132,11 @@ class NewExperienceViewController: UIViewController {
         return UIImage(cgImage: outputCGImage)
         
     }
+    
+    private func updateViews() {
+
+        audioRecordButton.setTitle(recorder.isRecording ? "Stop Recording" : "Record Audio", for: .normal)
+    }
 
 }
 
@@ -157,5 +162,14 @@ extension NewExperienceViewController: UIImagePickerControllerDelegate, UINaviga
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+
+extension NewExperienceViewController: RecorderDelegate {
+    
+    func recorderDidChangeState(recorder: Recorder) {
+        
+        updateViews()
     }
 }
