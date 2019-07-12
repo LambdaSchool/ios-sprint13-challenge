@@ -10,12 +10,18 @@ import UIKit
 import MapKit
 
 class MapViewController: UIViewController {
-
+	@IBOutlet var mapview: MKMapView!
+	@IBOutlet var postButton: UIButton!
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
 	}
 
-
+	@IBAction func postButtonPressed(_ sender: Any) {
+		print("post")
+	
+	}
+	
 }
 
