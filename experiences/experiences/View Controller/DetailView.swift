@@ -9,5 +9,5 @@
 import UIKit
 
 class DetailView: UIView {
-
+	var experience: Experience?
 }

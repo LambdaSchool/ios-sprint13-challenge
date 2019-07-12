@@ -149,9 +149,7 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
 		let experience = Experience(title: fileTitle, coordinate: currentLoaction)
 		experience.video = String(outputFileURL.absoluteString)
 		experienceController?.addExperience(experience: experience)
-		
-		navigationController?.popToRootViewController(animated: true)
-//		dismiss(animated: true, completion: nil)
+		dismiss(animated: true, completion: nil)
 	}
 }
 
