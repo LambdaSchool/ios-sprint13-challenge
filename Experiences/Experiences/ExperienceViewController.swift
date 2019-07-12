@@ -16,7 +16,7 @@ class ExperienceViewController: UIViewController {
             updateImage()
         }
     }
-    
+    lazy private var recorder = Recorder()
     private let filter = CIFilter(name: "CIPhotoEffectMono")
     private let context = CIContext(options: nil)
     @IBOutlet weak var imageView: UIImageView!
@@ -26,7 +26,13 @@ class ExperienceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        recorder.delegate = self
+        
         // Do any additional setup after loading the view.
+    }
+    
+    private func updateViews() {
+        recordButton.setTitle(recorder.isRecording ? "Stop" : "Record", for: .normal)
     }
     
     func updateImage() {
@@ -64,6 +70,7 @@ class ExperienceViewController: UIViewController {
     }
     
     @IBAction func recordButtonTapped(_ sender: Any) {
+        recorder.toggleRecording()
     }
     
 
@@ -79,5 +86,11 @@ extension ExperienceViewController: UIImagePickerControllerDelegate, UINavigatio
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
+    }
+}
+
+extension ExperienceViewController: RecorderDelegate {
+    func recorderDidChangeState(recorder: Recorder) {
+        updateViews()
     }
 }

@@ -9,8 +9,16 @@
 import UIKit
 
 
-//class Experience: NSObject {
-//    let audio: URL
-//    let video: URL
-//    let image: UIImage
-//}
+class Experience: NSObject {
+    var audio: URL
+    var video: URL
+    var image: UIImage
+    var title: String
+
+    init(audio: URL, video: URL, image: UIImage, title: String) {
+        self.audio = audio
+        self.video = video
+        self.image = image
+        self.title = title
+    }
+}
