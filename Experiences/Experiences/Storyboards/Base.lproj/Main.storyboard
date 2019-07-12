@@ -57,7 +57,7 @@
         <!--New Experience-->
         <scene sceneID="csG-Bl-mIU">
             <objects>
-                <viewController id="KgB-7g-h42" sceneMemberID="viewController">
+                <viewController id="KgB-7g-h42" customClass="NewExperienceViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tH9-uU-gh7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -77,10 +77,16 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XiH-Nc-RUL">
                                 <rect key="frame" x="16" y="313" width="382" height="30"/>
                                 <state key="normal" title="Add Image To Experience"/>
+                                <connections>
+                                    <action selector="addImageButtonTapped:" destination="KgB-7g-h42" eventType="touchUpInside" id="mL2-kL-vgL"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3E0-9u-54g">
                                 <rect key="frame" x="182.5" y="487" width="49" height="30"/>
                                 <state key="normal" title="Record"/>
+                                <connections>
+                                    <action selector="recordButtonTapped:" destination="KgB-7g-h42" eventType="touchUpInside" id="JNB-o5-emy"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -100,6 +106,12 @@
                         <viewLayoutGuide key="safeArea" id="p7K-aD-v9q"/>
                     </view>
                     <navigationItem key="navigationItem" title="New Experience" id="7Xm-Ug-3Zf"/>
+                    <connections>
+                        <outlet property="addImageButton" destination="XiH-Nc-RUL" id="ebq-LP-hPO"/>
+                        <outlet property="experienceNameTextField" destination="vUU-Gz-EBC" id="OZn-0Q-3NA"/>
+                        <outlet property="imageView" destination="4Xq-Ja-IAL" id="Aeg-jb-Vax"/>
+                        <outlet property="recordButton" destination="3E0-9u-54g" id="T7K-Pf-BAA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FHa-6D-ntz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
