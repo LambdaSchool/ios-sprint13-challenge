@@ -15,8 +15,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     // MAvar - Properties
     
     var experienceController = ExperienceController()
-    @IBOutlet weak var mapView: MKMapView!
     
+     @IBOutlet weak var mapView: MKMapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()

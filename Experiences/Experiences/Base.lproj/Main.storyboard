@@ -13,7 +13,7 @@
         <!--New Experience-->
         <scene sceneID="gT5-Ry-VTN">
             <objects>
-                <viewController id="p2v-qp-Sey" sceneMemberID="viewController">
+                <viewController id="p2v-qp-Sey" customClass="Image_AudioViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oAj-nv-TGJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -34,12 +34,18 @@
                                 <rect key="frame" x="20" y="530" width="374" height="30"/>
                                 <color key="tintColor" red="0.47780197860000001" green="0.66714483499999999" blue="0.92617577309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Record"/>
+                                <connections>
+                                    <action selector="recordAudio:" destination="p2v-qp-Sey" eventType="touchUpInside" id="7dl-Gd-xZZ"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FgD-pY-STd">
                                 <rect key="frame" x="20" y="332" width="374" height="30"/>
                                 <state key="normal" title="Add Image">
                                     <color key="titleColor" red="0.47780197860000001" green="0.66714483499999999" blue="0.92617577309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="addImage:" destination="p2v-qp-Sey" eventType="touchUpInside" id="TKH-wJ-6q4"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -66,6 +72,12 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="addImageButton" destination="FgD-pY-STd" id="JR8-S1-75p"/>
+                        <outlet property="imageView" destination="4NI-DU-6lJ" id="xk9-Xj-Wi9"/>
+                        <outlet property="recordAudioButton" destination="Npx-7B-MeT" id="rsp-vU-Soj"/>
+                        <outlet property="titleTextField" destination="KOn-ql-H4O" id="uW0-PF-yAx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kk5-Ro-nT7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -176,6 +188,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Experiences" id="9sV-Qb-ydO"/>
                     <connections>
+                        <outlet property="mapView" destination="1bX-XB-x9m" id="6jV-IB-Dqq"/>
                         <segue destination="elg-Ub-I1P" kind="presentation" id="hql-b7-ume"/>
                     </connections>
                 </viewController>
