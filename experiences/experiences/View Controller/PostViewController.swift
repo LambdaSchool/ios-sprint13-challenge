@@ -12,15 +12,29 @@ import MapKit
 
 class PostViewController: UIViewController {
 	var postLocation: CLLocationCoordinate2D?
+	var experienceController: ExperienceController?
 	
+	@IBOutlet var recordButton: UIButton!
 	@IBOutlet var titleTextField: UITextField!
 	@IBOutlet var imageView: UIImageView!
+	
+	var currentImage: UIImage? {
+		didSet {
+			print("Prepare for record")
+			prepareForRecord()
+		}
+	}
+	
+	func prepareForRecord() {
+		imageView.image = currentImage!
+		recordButton.backgroundColor = .red
+	}
 	
     override func viewDidLoad() {
         super.viewDidLoad()
 		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "back", style: .plain, target: self, action: #selector(back))
 		
-		print(postLocation)
+		
 	}
 	
 	
@@ -66,9 +80,7 @@ extension PostViewController: UINavigationControllerDelegate, UIImagePickerContr
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 		picker.dismiss(animated: true) {
 			if let image = info[.originalImage] as? UIImage {
-				DispatchQueue.main.async {
-					self.imageView?.image = image.myCIColorControlsFilter()
-				}
+				self.currentImage = image.myCIColorControlsFilter()
 			}
 		}
 	}

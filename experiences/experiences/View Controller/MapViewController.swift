@@ -52,8 +52,9 @@ class MapViewController: UIViewController {
 		if segue.identifier == "PostViewController" {
 			guard let vc = segue.destination as? PostViewController,
 				let location = locationManager.location?.coordinate else { return }
+
+			vc.experienceController = experienceController
 			vc.postLocation = location
-			
 		}
 	}
 	
