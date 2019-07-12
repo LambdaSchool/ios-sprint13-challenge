@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xUz-Zm-1hZ">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Experiences Map View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ExperiencesMapViewController" customModule="ExperiencesPractice" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="FI5-tw-xsL">
+                                <rect key="frame" x="0.0" y="140" width="414" height="722"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="FI5-tw-xsL" secondAttribute="bottom" id="2gl-Ue-6nV"/>
+                            <constraint firstItem="FI5-tw-xsL" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="PEb-0J-nhx"/>
+                            <constraint firstItem="FI5-tw-xsL" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="hQ9-1D-8b5"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="FI5-tw-xsL" secondAttribute="trailing" id="yjq-C8-zah"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="6tO-kc-pUq">
+                        <barButtonItem key="rightBarButtonItem" title="+Experience" id="tNw-2w-e30">
+                            <connections>
+                                <segue destination="Sxk-l8-fBR" kind="show" id="m3O-xp-S7B"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="997" y="127"/>
+        </scene>
+        <!--New Experience-->
+        <scene sceneID="0nr-d6-zxW">
+            <objects>
+                <viewController id="Sxk-l8-fBR" customClass="NewExperienceViewController" customModule="ExperiencesPractice" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="VUX-nK-bU0">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6ra-9i-oFz">
+                                <rect key="frame" x="37" y="140" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wOe-HD-egZ">
+                                <rect key="frame" x="146" y="314" width="122" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Add Poster Image"/>
+                                <connections>
+                                    <action selector="addImageButtonTapped:" destination="Sxk-l8-fBR" eventType="touchUpInside" id="Wej-aK-HQr"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SgH-zz-BdM">
+                                <rect key="frame" x="161" y="406" width="92" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Record Audio"/>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vzw-yg-xsB">
+                                <rect key="frame" x="87" y="178" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="u69-bh-56s"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="New Experience" id="VQz-n7-yUB">
+                        <barButtonItem key="rightBarButtonItem" title="Video" id="rpY-cI-JtA">
+                            <connections>
+                                <segue destination="tD0-Js-8MF" kind="show" id="XcY-Q0-rhA"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="addPictureButton" destination="wOe-HD-egZ" id="FIr-0K-nrP"/>
+                        <outlet property="audioRecordButton" destination="SgH-zz-BdM" id="OVI-Ib-mJy"/>
+                        <outlet property="experienceTitleTextField" destination="6ra-9i-oFz" id="jA2-S4-hmd"/>
+                        <outlet property="imageView" destination="Vzw-yg-xsB" id="P15-Tb-AGx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xvK-iI-90r" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1732" y="131"/>
+        </scene>
+        <!--Video Recording-->
+        <scene sceneID="YTA-Ud-Vaz">
+            <objects>
+                <viewController id="tD0-Js-8MF" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="FjD-FZ-Vxc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m3w-nI-Fyv">
+                                <rect key="frame" x="0.0" y="140" width="414" height="756"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pCc-RW-UZV">
+                                <rect key="frame" x="157" y="730" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="dDJ-Mt-aFl"/>
+                                    <constraint firstAttribute="width" constant="100" id="ggs-NB-JLa"/>
+                                </constraints>
+                                <state key="normal" image="Record"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="m3w-nI-Fyv" firstAttribute="trailing" secondItem="COq-OU-XwT" secondAttribute="trailing" id="9BT-wh-xYL"/>
+                            <constraint firstAttribute="bottom" secondItem="m3w-nI-Fyv" secondAttribute="bottom" id="FWB-FV-Y23"/>
+                            <constraint firstItem="pCc-RW-UZV" firstAttribute="centerX" secondItem="FjD-FZ-Vxc" secondAttribute="centerX" id="HUB-xh-r7L"/>
+                            <constraint firstItem="COq-OU-XwT" firstAttribute="bottom" secondItem="pCc-RW-UZV" secondAttribute="bottom" constant="32" id="MNF-x0-fjb"/>
+                            <constraint firstItem="m3w-nI-Fyv" firstAttribute="top" secondItem="COq-OU-XwT" secondAttribute="top" id="pGZ-Ot-u5P"/>
+                            <constraint firstItem="m3w-nI-Fyv" firstAttribute="leading" secondItem="COq-OU-XwT" secondAttribute="leading" id="sea-YH-YnE"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="COq-OU-XwT"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Video Recording" id="NDu-Hb-a6e">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="bK6-Zz-nxK"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jdk-6s-S3K" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2550.7246376811595" y="130.58035714285714"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="YAE-d7-cA9">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xUz-Zm-1hZ" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="8Ke-xS-DCc">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="IKH-9J-AIT"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a97-Cb-9w1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="238" y="127"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Record" width="116" height="116"/>
+    </resources>
+</document>
