@@ -7,14 +7,21 @@
 //
 
 import UIKit
+import MapKit
 import AVFoundation
 
 class VideoRecordingViewController: UIViewController {
 
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
-    var experienceController: ExperienceController?
     private var player: AVPlayer!
+    var videoURL: URL?
+    var experienceController: ExperienceController?
+    var experienceTitle: String?
+    var audioURL: URL?
+    var image: UIImage?
+    var location: CLLocationCoordinate2D?
+
 
     weak var cameraView: CameraPreviewView!
     @IBOutlet weak var recordButton: UIButton!
@@ -60,10 +67,25 @@ class VideoRecordingViewController: UIViewController {
         cameraView.session = captureSession
 
 
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
+        view.addGestureRecognizer(tapGesture)
+
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    @objc func handleTapGesture(_ tapGesture: UITapGestureRecognizer) {
+        // play the movie
+        print("Play movie")
+        if let player = player {
+            player.seek(to: CMTime.zero)
+            player.play()
+        }
+
+
+
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         captureSession.startRunning()
     }
 
@@ -71,6 +93,8 @@ class VideoRecordingViewController: UIViewController {
         super.viewDidDisappear(animated)
         captureSession.stopRunning()
     }
+
+
 
 
 
@@ -106,6 +130,22 @@ class VideoRecordingViewController: UIViewController {
         }
     }
 
+    func playMovie(url: URL) {
+
+        player = AVPlayer(url: url)
+        let playerLayer = AVPlayerLayer(player: player)
+        var topRect = self.view.bounds
+        topRect.size.width = topRect.width / 4
+        topRect.size.height = topRect.height / 4
+        topRect.origin.y = view.layoutMargins.top
+
+        playerLayer.frame = topRect
+
+        view.layer.addSublayer(playerLayer)
+
+        player.play()
+    }
+
 
 
     @IBAction func recordButtonPressed(_ sender: Any) {
@@ -121,7 +161,17 @@ class VideoRecordingViewController: UIViewController {
 
     @IBAction func saveButtonTapped(_ sender: Any) {
 
-        self.navigationController?.popToRootViewController(animated: true)
+        guard let experienceController = experienceController else { return }
+        guard let image = image else { return }
+        guard let audioURL = audioURL else { return }
+        guard let coordinates = location else { return }
+        guard let title = experienceTitle else { return }
+        guard let videoURL = videoURL else { return }
+        experienceController.createExperience(title: title, audio: audioURL, video: videoURL, image: image, coordinate: coordinates)
+
+
+        self.dismiss(animated: true, completion: nil)
+
     
     }
 
@@ -139,7 +189,7 @@ extension VideoRecordingViewController: AVCaptureFileOutputRecordingDelegate {
 
         DispatchQueue.main.async {
             self.updateViews()
-           
+            self.playMovie(url: outputFileURL)
         }
     }
 }

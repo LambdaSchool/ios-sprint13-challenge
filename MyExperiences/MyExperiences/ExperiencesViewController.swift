@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreImage
+import AVFoundation
 import Photos
 
 class ExperiencesViewController: UIViewController, RecorderDelegate, PlayerDelegate {
@@ -24,7 +25,7 @@ class ExperiencesViewController: UIViewController, RecorderDelegate, PlayerDeleg
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     var expController: ExperienceController?
-    
+    var experience: Experience?
     let recorder = Recorder()
     let player = Player()
     let filter = CIFilter(name: "CIGaussianBlur")
@@ -47,7 +48,16 @@ class ExperiencesViewController: UIViewController, RecorderDelegate, PlayerDeleg
        // set delegates before I forget
         recorder.delegate = self
         player.delegate = self
+
+        if let experience = experience {
+            imageView.image = experience.image
+        }
+
     }
+
+
+
+
 
     
     @IBAction func chooseImage(_ sender: Any) {
@@ -152,7 +162,36 @@ class ExperiencesViewController: UIViewController, RecorderDelegate, PlayerDeleg
         imagePicker.sourceType = .photoLibrary
         present(imagePicker, animated: true, completion: nil)
     }
-    
+
+    @IBAction func nextButtonTapped(_ sender: Any) {
+
+        let status = AVCaptureDevice.authorizationStatus(for: .video)
+
+        switch status {
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { (granted) in
+                if granted == false {
+                    fatalError("Please request user enable camera in Settings > Privacy")
+                }
+                DispatchQueue.main.async {
+                    self.showCamera()
+                }
+            }
+        case .restricted:
+            fatalError("Please inform the user they cannot use app due to parental restrictions")
+        case .denied:
+            fatalError("Please request user to enable camera usage in Settings > Privacy")
+        case .authorized:
+            showCamera()
+        @unknown default:
+            fatalError()
+        }
+    }
+
+    private func showCamera() {
+        performSegue(withIdentifier: "ToVideoView", sender: self)
+    }
+
 
 
 

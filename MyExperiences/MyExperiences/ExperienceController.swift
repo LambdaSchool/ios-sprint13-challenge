@@ -16,23 +16,16 @@ class ExperienceController {
      var experiences: [Experience] = []
 
     var newExperience: Experience?
-    var location: CLLocationCoordinate2D!
+   // var location: CLLocationCoordinate2D!
 
     func createExperience(title: String?, audio: URL?, video: URL?, image: UIImage?, coordinate: CLLocationCoordinate2D) {
 
-        let newExp = Experience(title: title, audio: audio, image: image, video: video, coordinate: coordinate)
+        let newExp = Experience(title: title, audio: audio, image: image, video: video, location: coordinate)
 
         newExperience = newExp
        experiences.append(newExp)
     }
 
-
-
-    func addVideo(to experience: Experience, video: URL?) {
-
-        experience.video = video
-
-    }
 
 
 

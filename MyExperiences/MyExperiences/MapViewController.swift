@@ -17,6 +17,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     let locationManager = CLLocationManager()
     var location: CLLocationCoordinate2D!
     var expController = ExperienceController()
+    let regionInMeters: Double = 10000
 
     
 
@@ -24,42 +25,61 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupLocationManager()
+
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotationView")
 
-        mapView.addAnnotations(expController.experiences)
+        
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        mapView.addAnnotations(expController.experiences)
+    func setupLocationManager() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
-    func updateViews() {
 
-        let annotations = mapView.annotations
+    func checkLocationServices() {
 
-        mapView.removeAnnotations(annotations)
+        if CLLocationManager.locationServicesEnabled() {
+            setupLocationManager()
+            checkLocationAuthorization()
 
-        if expController.newExperience != nil {
+        }
+    }
 
-            mapView.addAnnotation(expController.newExperience!)
-
-            let pin = MKPointAnnotation()
-            if let coordinate1 = expController.newExperience?.coordinate {
-                pin.coordinate = coordinate1
+    func checkLocationAuthorization() {
+        switch CLLocationManager.authorizationStatus() {
+        case .authorizedWhenInUse:
+            mapView.showsUserLocation = true
+            if expController.experiences.count > 0 {
+                centerViewOnUserLocation()
             }
 
-            if let annotationTitle = expController.newExperience?.title {
-                pin.title = annotationTitle
-            }
-            mapView.addAnnotation(pin)
+        case .denied:
+            presentInformationalAlertController(title: "Error", message: "Must enable location in settings")
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted:
+            presentInformationalAlertController(title: "Error", message: "You've been Rescricted!")
+        case .authorizedAlways:
+            mapView.showsUserLocation = true
+        @unknown default:
+            break
+        }
+    }
+
+
+
+    func centerViewOnUserLocation() {
+        if let location = locationManager.location?.coordinate {
+            var region = MKCoordinateRegion(center: location, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
+            mapView.setRegion(region, animated: true)
         }
     }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard let experience = annotation as? Experience else { return nil }
+       // guard let experience = annotation as? Experience else { return nil }
 
-        let experienceView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceAnnotationView", for: experience) as! MKMarkerAnnotationView
+        let experienceView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceAnnotationView", for: annotation) as! MKMarkerAnnotationView
 
         experienceView.glyphText = expController.newExperience?.title
         experienceView.markerTintColor = .red
@@ -78,6 +98,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
  */
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "" {
+            
+        }
+    }
+
 
 }
 
@@ -94,11 +120,7 @@ extension MapViewController: CLLocationManagerDelegate {
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        location = locations.first?.coordinate
 
-        if locations.first != nil {
-            expController.location = location
-        }
     }
 
 }
