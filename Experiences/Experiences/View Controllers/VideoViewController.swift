@@ -113,9 +113,7 @@ class VideoViewController: UIViewController, AVCaptureFileOutputRecordingDelegat
         captureSession.commitConfiguration()
         
         self.captureSession = captureSession
-        print("hello3")
         view1.videoPreviewLayer.session = captureSession
-        print("hello4")
     }
     
     private func newRecordingURL() -> URL {
