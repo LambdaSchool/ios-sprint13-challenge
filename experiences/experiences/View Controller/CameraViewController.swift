@@ -147,8 +147,9 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
 			NSLog("fileTitle and CurrentLocation Not set")
 			return
 		}
-		
-		experienceController?.addExperience(title: fileTitle, coordinate: currentLoaction)
+		let experience = Experience(title: fileTitle, coordinate: currentLoaction)
+		experience.video = String(outputFileURL.absoluteString)
+		experienceController?.addExperience(experience: experience)
 		
 		dismiss(animated: true, completion: nil)
 	}
@@ -156,19 +157,4 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
 
 
 
-//	func playMovie(url: URL) {
-//		//file:///var/mobile/Containers/Data/Application/0A67F7FF-DA54-41C1-A49D-28AAF6B5AFD5/Documents/movie.mov
-//		player = AVPlayer(url: url)
-//		let playerLayer = AVPlayerLayer(player: player)
-//		var topRect = self.view.bounds
-//		topRect.size.width = topRect.width / 4
-//		topRect.size.height = topRect.height / 4
-//		topRect.origin.y = view.layoutMargins.top
-//
-//		playerLayer.frame = topRect
-//
-//		view.layer.addSublayer(playerLayer)
-//
-//		player.play()
-//	}
 

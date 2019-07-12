@@ -33,6 +33,10 @@ class PostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		recordButton.isEnabled = false
+		
+		if let currentExperienceVideo = experienceController?.experinces.last?.video {
+			print(currentExperienceVideo)
+		}
 	}
 	
 	@IBAction func back(_ sender: Any) {
@@ -103,3 +107,19 @@ extension PostViewController: UINavigationControllerDelegate, UIImagePickerContr
 		}
 	}
 }
+
+//	func playMovie(url: URL) {
+//		//file:///var/mobile/Containers/Data/Application/0A67F7FF-DA54-41C1-A49D-28AAF6B5AFD5/Documents/movie.mov
+//		player = AVPlayer(url: url)
+//		let playerLayer = AVPlayerLayer(player: player)
+//		var topRect = self.view.bounds
+//		topRect.size.width = topRect.width / 4
+//		topRect.size.height = topRect.height / 4
+//		topRect.origin.y = view.layoutMargins.top
+//
+//		playerLayer.frame = topRect
+//
+//		view.layer.addSublayer(playerLayer)
+//
+//		player.play()
+//	}

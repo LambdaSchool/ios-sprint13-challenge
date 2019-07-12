@@ -31,7 +31,7 @@ class MapViewController: UIViewController {
 		mapview.delegate = self
 		
 		mapview?.addAnnotations(experienceController.experinces)
-		experienceController.currentLocation = locationManager.location?.coordinate
+		
 		
 		mapview.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnotationView")
 	}
@@ -57,6 +57,7 @@ class MapViewController: UIViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == "PostViewController" {
 			guard let vc = segue.destination as? PostViewController else { return }
+			experienceController.currentLocation = locationManager.location?.coordinate
 			vc.experienceController = experienceController
 		}
 	}
@@ -66,6 +67,11 @@ class MapViewController: UIViewController {
 extension MapViewController: MKMapViewDelegate {
 	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 		let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceAnotationView", for: annotation) as! MKMarkerAnnotationView
+		
+		
+
+		
+		
 		annotationView.glyphTintColor = .white
 		annotationView.markerTintColor = .black
 		annotationView.canShowCallout = true

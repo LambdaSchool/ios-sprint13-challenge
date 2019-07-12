@@ -13,9 +13,8 @@ class ExperienceController {
 	
 	var currentLocation: CLLocationCoordinate2D?
 	
-	func addExperience(title: String, coordinate: CLLocationCoordinate2D) {
-		let experince = Experience(title: title, coordinate: coordinate)
-		experinces.append(experince)
+	func addExperience(experience: Experience) {
+		experinces.append(experience)
 	}
 	
 }
