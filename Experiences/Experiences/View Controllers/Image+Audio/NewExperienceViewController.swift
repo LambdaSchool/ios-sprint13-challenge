@@ -14,11 +14,14 @@ class NewExperienceViewController: UIViewController {
 
     // MARK: - Properties
     
+    var experienceController: ExperienceController?
+    var coordinate: CLLocationCoordinate2D?
     var originalImage: UIImage? {
         didSet {
             updateImage()
         }
     }
+    var image: UIImage?
     private let filter = CIFilter(name: "CIPhotoEffectNoir")!
     private let context = CIContext(options: nil)
     private var recorder: AVAudioRecorder?
@@ -94,6 +97,20 @@ class NewExperienceViewController: UIViewController {
         }
         updateViews()
     }
+    
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AddVideoSegue" {
+            guard let videoVC = segue.destination as? VideoRecordingViewController else { return }
+            videoVC.experienceController = experienceController
+            videoVC.coordinate = coordinate
+            videoVC.name = titleTextField.text
+            videoVC.image = originalImage
+            videoVC.audio = audio
+        }
+    }
+    
 }
 
 extension NewExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate, AVAudioRecorderDelegate {

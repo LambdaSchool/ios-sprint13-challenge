@@ -14,14 +14,14 @@ import MapKit
 class Experience: NSObject, MKAnnotation {
     
     var coordinate: CLLocationCoordinate2D
-    var title: String?
+    var name: String?
     var image: UIImage?
     var audio: URL?
     var video: URL?
     
-    init(coordinate: CLLocationCoordinate2D, title: String?, image: UIImage?, audio: URL?, video: URL?) {
+    init(coordinate: CLLocationCoordinate2D, name: String?, image: UIImage?, audio: URL?, video: URL?) {
         self.coordinate = coordinate
-        self.title = title
+        self.name = name
         self.image = image
         self.audio = audio
         self.video = video

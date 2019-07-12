@@ -11,10 +11,12 @@ import MapKit
 import CoreLocation
 
 class ExperiencesViewController: UIViewController {
-
+    
     // MARK: - Properties
     
+    let experienceController = ExperienceController()
     let locationManager = CLLocationManager()
+    var coordinate: CLLocationCoordinate2D?
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var journalButton: UIButton!
@@ -38,6 +40,17 @@ class ExperiencesViewController: UIViewController {
             mapView.setCenter(usersLocation, animated: true)
         }
     }
+    
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AddExperienceSegue" {
+            guard let newExpVC = segue.destination as? NewExperienceViewController else { return }
+            newExpVC.experienceController = experienceController
+            newExpVC.coordinate = coordinate
+        }
+    }
+    
 }
 
 extension ExperiencesViewController: MKMapViewDelegate, CLLocationManagerDelegate {
@@ -57,8 +70,9 @@ extension ExperiencesViewController: MKMapViewDelegate, CLLocationManagerDelegat
         mapView.setRegion(region, animated: true)
         let annotation = MKPointAnnotation()
         annotation.coordinate = locValue
-        annotation.title = "You are here!"
+        annotation.title = experienceController.experience?.name
         mapView.addAnnotation(annotation)
+        coordinate = annotation.coordinate
     }
-
+    
 }

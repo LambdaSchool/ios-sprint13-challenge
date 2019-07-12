@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import CoreLocation
 
 class VideoRecordingViewController: UIViewController {
 
@@ -16,6 +17,11 @@ class VideoRecordingViewController: UIViewController {
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     private var player: AVPlayer!
+    var experienceController: ExperienceController?
+    var coordinate: CLLocationCoordinate2D?
+    var name: String?
+    var image: UIImage?
+    var audio: URL?
     var video: URL?
     
     @IBOutlet weak var cameraPreviewView: CameraPreviewView!
@@ -119,6 +125,15 @@ class VideoRecordingViewController: UIViewController {
     }
     
     @IBAction func saveButtonPressed(_ sender: Any) {
+        guard let experienceController = experienceController,
+            let coordinate = coordinate,
+            let name = name,
+            let image = image,
+            let audio = audio,
+            let video = video else { return }
+        let newExperience = Experience(coordinate: coordinate, name: name, image: image, audio: audio, video: video)
+        print(newExperience)
+        experienceController.createExperience(coordinate: coordinate, name: name, image: image, audio: audio, video: video)
         navigationController?.popToRootViewController(animated: true)
     }
 }
