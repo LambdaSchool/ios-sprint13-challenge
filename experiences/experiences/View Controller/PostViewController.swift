@@ -28,3 +28,8 @@ class PostViewController: UIViewController {
 		print("recordButtonPressed")
 	}
 }
+
+//import Photos
+//import ImageIO
+
+
