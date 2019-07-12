@@ -25,6 +25,9 @@ class MapViewController: UIViewController {
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		
+		mapview.reloadInputViews()
+		
 		mapview.delegate = self
 		
 		mapview?.addAnnotations(experienceController.experinces)
