@@ -13,6 +13,7 @@ class ExperienceController {
     
     var latestExperience: Experience?
     var experiences: [Experience] = []
+    
 
     func newExperience(title: String, audioURL: URL?, videoURL: URL?, image: URL?, coordinate: CLLocationCoordinate2D) {
         

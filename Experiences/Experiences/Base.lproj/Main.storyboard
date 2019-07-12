@@ -51,7 +51,7 @@
         <!--New Experience-->
         <scene sceneID="aLZ-bi-hcV">
             <objects>
-                <viewController id="oPr-kg-4Gd" customClass="NewExperienceViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="oPr-kg-4Gd" customClass="ExperienceViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dcq-iB-JnX">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -60,16 +60,28 @@
                                 <rect key="frame" x="32" y="489" width="350" height="30"/>
                                 <state key="normal" title="Add Image"/>
                                 <connections>
-                                    <action selector="addImagePressed:" destination="oPr-kg-4Gd" eventType="touchUpInside" id="7sQ-hO-Lbw"/>
+                                    <action selector="addImageClicked:" destination="oPr-kg-4Gd" eventType="touchUpInside" id="OlW-W1-gHb"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6VZ-7h-lKH">
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="99t-mA-leb">
                                 <rect key="frame" x="32" y="545" width="350" height="30"/>
-                                <state key="normal" title="Record Audio"/>
-                                <connections>
-                                    <action selector="recordAudioPressed:" destination="oPr-kg-4Gd" eventType="touchUpInside" id="PoK-tY-KCZ"/>
-                                </connections>
-                            </button>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6VZ-7h-lKH">
+                                        <rect key="frame" x="0.0" y="0.0" width="175" height="30"/>
+                                        <state key="normal" title="Record Audio"/>
+                                        <connections>
+                                            <action selector="recordAudioClicked:" destination="oPr-kg-4Gd" eventType="touchUpInside" id="Fg0-Km-qHA"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Qd-vG-vmf">
+                                        <rect key="frame" x="175" y="0.0" width="175" height="30"/>
+                                        <state key="normal" title="Play Audio"/>
+                                        <connections>
+                                            <action selector="playAudioButtonPressed:" destination="oPr-kg-4Gd" eventType="touchUpInside" id="1JU-mB-fBJ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Otc-Ph-2O5">
                                 <rect key="frame" x="16" y="433" width="382" height="30"/>
                                 <nil key="textColor"/>
@@ -83,6 +95,7 @@
                                 <rect key="frame" x="32" y="601" width="350" height="30"/>
                                 <state key="normal" title="Record Video"/>
                                 <connections>
+                                    <action selector="recordVideoClicked:" destination="oPr-kg-4Gd" eventType="touchUpInside" id="cBx-zv-Wow"/>
                                     <action selector="recordVideoPressed:" destination="oPr-kg-4Gd" eventType="touchUpInside" id="WWg-ot-XIW"/>
                                 </connections>
                             </button>
@@ -90,15 +103,15 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Otc-Ph-2O5" firstAttribute="leading" secondItem="u0l-pJ-6rX" secondAttribute="leading" constant="16" id="EX0-QW-A4z"/>
-                            <constraint firstItem="g87-p4-FeI" firstAttribute="top" secondItem="6VZ-7h-lKH" secondAttribute="bottom" constant="26" id="MPl-IV-edp"/>
                             <constraint firstItem="e8n-U5-mub" firstAttribute="leading" secondItem="u0l-pJ-6rX" secondAttribute="leading" constant="16" id="NSy-30-vI4"/>
-                            <constraint firstItem="6VZ-7h-lKH" firstAttribute="leading" secondItem="u0l-pJ-6rX" secondAttribute="leading" constant="32" id="Nfw-tk-Mlz"/>
                             <constraint firstItem="e8n-U5-mub" firstAttribute="top" secondItem="u0l-pJ-6rX" secondAttribute="top" constant="16" id="OXh-su-TuC"/>
+                            <constraint firstItem="u0l-pJ-6rX" firstAttribute="trailing" secondItem="99t-mA-leb" secondAttribute="trailing" constant="32" id="PTO-MN-XrT"/>
                             <constraint firstItem="Otc-Ph-2O5" firstAttribute="centerY" secondItem="dcq-iB-JnX" secondAttribute="centerY" id="RGj-Ip-qW6"/>
+                            <constraint firstItem="99t-mA-leb" firstAttribute="top" secondItem="Ir9-Ro-o1z" secondAttribute="bottom" constant="26" id="Vw7-Oe-Vko"/>
                             <constraint firstItem="u0l-pJ-6rX" firstAttribute="trailing" secondItem="e8n-U5-mub" secondAttribute="trailing" constant="16" id="ZqF-C6-QrX"/>
-                            <constraint firstItem="u0l-pJ-6rX" firstAttribute="trailing" secondItem="6VZ-7h-lKH" secondAttribute="trailing" constant="32" id="Zsu-O0-cpR"/>
                             <constraint firstItem="Ir9-Ro-o1z" firstAttribute="leading" secondItem="u0l-pJ-6rX" secondAttribute="leading" constant="32" id="aDr-80-Ech"/>
-                            <constraint firstItem="6VZ-7h-lKH" firstAttribute="top" secondItem="Ir9-Ro-o1z" secondAttribute="bottom" constant="26" id="gNR-SD-2J5"/>
+                            <constraint firstItem="g87-p4-FeI" firstAttribute="top" secondItem="99t-mA-leb" secondAttribute="bottom" constant="26" id="di5-6H-xQJ"/>
+                            <constraint firstItem="99t-mA-leb" firstAttribute="leading" secondItem="u0l-pJ-6rX" secondAttribute="leading" constant="32" id="goG-EL-2Qp"/>
                             <constraint firstItem="Ir9-Ro-o1z" firstAttribute="top" secondItem="Otc-Ph-2O5" secondAttribute="bottom" constant="26" id="n5W-yf-zdE"/>
                             <constraint firstItem="u0l-pJ-6rX" firstAttribute="trailing" secondItem="g87-p4-FeI" secondAttribute="trailing" constant="32" id="oug-ip-wUs"/>
                             <constraint firstItem="Otc-Ph-2O5" firstAttribute="top" secondItem="e8n-U5-mub" secondAttribute="bottom" constant="16" id="qyD-Of-ol1"/>
@@ -109,11 +122,17 @@
                         <viewLayoutGuide key="safeArea" id="u0l-pJ-6rX"/>
                     </view>
                     <navigationItem key="navigationItem" title="New Experience" id="K0A-Xh-2Hf">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="VXQ-Fe-17b"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="VXQ-Fe-17b">
+                            <connections>
+                                <action selector="saveButtonClicked:" destination="oPr-kg-4Gd" id="CMf-fX-CAi"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="imageView" destination="e8n-U5-mub" id="M2P-Kb-3NS"/>
-                        <outlet property="titleTextField" destination="Otc-Ph-2O5" id="Rjg-OM-b80"/>
+                        <outlet property="imageView" destination="e8n-U5-mub" id="cWe-ss-BKp"/>
+                        <outlet property="playAudioButton" destination="2Qd-vG-vmf" id="5TA-gU-w0z"/>
+                        <outlet property="recordAudioButton" destination="6VZ-7h-lKH" id="tmt-Wo-TAy"/>
+                        <outlet property="titleTextField" destination="Otc-Ph-2O5" id="Mln-b2-S9f"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mBo-Oe-wrk" userLabel="First Responder" sceneMemberID="firstResponder"/>
