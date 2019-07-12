@@ -16,6 +16,7 @@ class VideoRecordingViewController: UIViewController {
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     private var player: AVPlayer!
+    var video: URL?
     
     @IBOutlet weak var cameraPreviewView: CameraPreviewView!
     @IBOutlet weak var recordStopButton: UIButton!
@@ -105,16 +106,21 @@ class VideoRecordingViewController: UIViewController {
         topRect.size.width = topRect.width / 4
         topRect.size.height = topRect.height / 4
         playerLayer.frame = topRect
-        
         view.layer.addSublayer(playerLayer)
-        
         player.play()
     }
     
     @IBAction func recordStopButtonPressed(_ sender: Any) {
-        
+        if fileOutput.isRecording {
+            fileOutput.stopRecording()
+        } else {
+            fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
+        }
     }
-
+    
+    @IBAction func saveButtonPressed(_ sender: Any) {
+        navigationController?.popToRootViewController(animated: true)
+    }
 }
 
 extension VideoRecordingViewController: AVCaptureFileOutputRecordingDelegate {
@@ -129,6 +135,7 @@ extension VideoRecordingViewController: AVCaptureFileOutputRecordingDelegate {
         DispatchQueue.main.async {
             self.updateViews()
             self.playMovie(url: outputFileURL)
+            self.video = outputFileURL
         }
     }
 }

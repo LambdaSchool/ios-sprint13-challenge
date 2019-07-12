@@ -8,6 +8,7 @@
 
 import UIKit
 import Photos
+import AVFoundation
 
 class NewExperienceViewController: UIViewController {
 
@@ -20,7 +21,11 @@ class NewExperienceViewController: UIViewController {
     }
     private let filter = CIFilter(name: "CIPhotoEffectNoir")!
     private let context = CIContext(options: nil)
-    lazy private var recorder = Recorder()
+    private var recorder: AVAudioRecorder?
+    var isRecording: Bool {
+        return recorder?.isRecording ?? false
+    }
+    var audio: URL?
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var addPosterImageButton: UIButton!
@@ -29,6 +34,11 @@ class NewExperienceViewController: UIViewController {
     
     
     // MARK: - Methods
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        recorder?.delegate = self
+    }
     
     func updateImage() {
         if let originalImage = originalImage {
@@ -47,10 +57,6 @@ class NewExperienceViewController: UIViewController {
         return UIImage(cgImage: outputCGImage)
     }
     
-    private func updateViews() {
-        recordButton.setTitle(recorder.isRecording ? "Stop Recording" : "Record", for: .normal)
-    }
-    
     @IBAction func addPosterImageButtonPressed(_ sender: Any) {
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
             NSLog("The photo library is unavailable")
@@ -62,12 +68,35 @@ class NewExperienceViewController: UIViewController {
         present(imagePicker, animated: true, completion: nil)
     }
     
+    func updateViews() {
+        let recordButtonText = isRecording ? "Stop recording" : "Start recording"
+        recordButton.setTitle(recordButtonText, for: .normal)
+    }
+    
+    private func newRecordingURL() -> URL {
+        let documentsDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        let audioURL = documentsDirectory.appendingPathComponent(UUID().uuidString).appendingPathExtension("caf")
+        return audioURL
+    }
+    
     @IBAction func recordButtonPressed(_ sender: Any) {
-        recorder.toggleRecording()
+        if isRecording {
+            recorder?.stop()
+            return
+        }
+        do {
+            let format = AVAudioFormat(standardFormatWithSampleRate: 44100.0, channels: 2)!
+            recorder = try AVAudioRecorder(url: newRecordingURL(), format: format)
+            recorder?.record()
+            recorder?.delegate = self
+        } catch {
+            NSLog("Unable to record: \(error)")
+        }
+        updateViews()
     }
 }
 
-extension NewExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate, RecorderDelegate {
+extension NewExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate, AVAudioRecorderDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.originalImage] as? UIImage {
@@ -81,8 +110,9 @@ extension NewExperienceViewController: UIImagePickerControllerDelegate, UINaviga
         picker.dismiss(animated: true, completion: nil)
     }
     
-    func recorderDidChangeState(recorder: Recorder) {
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         updateViews()
+        audio = recorder.url
     }
-
+    
 }
