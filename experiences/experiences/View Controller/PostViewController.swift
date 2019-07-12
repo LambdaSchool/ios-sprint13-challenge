@@ -11,7 +11,6 @@ import MapKit
 
 
 class PostViewController: UIViewController {
-	var postLocation: CLLocationCoordinate2D?
 	var experienceController: ExperienceController?
 	
 	@IBOutlet var recordButton: UIButton!
@@ -74,6 +73,20 @@ class PostViewController: UIViewController {
 		imagePicker.delegate = self
 		present(imagePicker, animated: true)
 	}
+	
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == "CameraViewController" {
+			guard let vc = segue.destination as? CameraViewController,
+				let fileTitle = titleTextField.text, !fileTitle.isEmpty else {
+				NSLog("title is empty")
+				return
+			}
+			
+			vc.fileTitle = fileTitle
+			vc.experienceController = experienceController
+		}
+	}
+	
 }
 
 extension PostViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {

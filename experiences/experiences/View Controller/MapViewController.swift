@@ -27,6 +27,7 @@ class MapViewController: UIViewController {
 		super.viewWillAppear(animated)
 		mapview.delegate = self
 		mapview?.addAnnotations(experienceController.experinces)
+		experienceController.currentLocation = locationManager.location?.coordinate
 		
 	}
 
@@ -50,11 +51,8 @@ class MapViewController: UIViewController {
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == "PostViewController" {
-			guard let vc = segue.destination as? PostViewController,
-				let location = locationManager.location?.coordinate else { return }
-
+			guard let vc = segue.destination as? PostViewController else { return }
 			vc.experienceController = experienceController
-			vc.postLocation = location
 		}
 	}
 	

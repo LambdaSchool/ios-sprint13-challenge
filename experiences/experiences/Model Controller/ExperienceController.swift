@@ -11,6 +11,8 @@ import MapKit
 class ExperienceController {
 	private (set) var experinces: [Experience] = []
 	
+	var currentLocation: CLLocationCoordinate2D?
+	
 	func addExperience(title: String, coordinate: CLLocationCoordinate2D) {
 		let experince = Experience(title: title, coordinate: coordinate)
 		experinces.append(experince)
