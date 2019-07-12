@@ -16,6 +16,8 @@ class CameraViewController: UIViewController {
 	var experienceController: ExperienceController?
 	var fileTitle: String?
 	
+	var audioRecorder: Recorder?
+	
 	
 	lazy private var captureSession = AVCaptureSession()
 	lazy private var fileOutput = AVCaptureMovieFileOutput()
@@ -51,6 +53,8 @@ class CameraViewController: UIViewController {
 		if fileOutput.isRecording {
 			fileOutput.stopRecording()
 		} else {
+			audioRecorder = Recorder()
+			audioRecorder?.startRecord(with: fileTitle)
 			fileOutput.startRecording(to: newRecordingURL(fileTitle: fileTitle), recordingDelegate: self)
 		}
 	}
