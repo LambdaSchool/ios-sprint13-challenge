@@ -133,10 +133,17 @@ class ExperienceViewController: UIViewController, UIImagePickerControllerDelegat
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        if segue.identifier == "toVideoVC" {
+            let destinationVC = segue.destination as? VideoRecordingViewController
+            guard let image = imageView.image,
+                let audioURL = recordingURL else { return }
+            
+            destinationVC?.audioURL = audioURL
+            destinationVC?.imageURL = saveImage(image: image)
+            destinationVC?.titleTextString = titleTextField.text
+        }
     }
 
-    
     // MARK: - IBAction Properties
     @IBAction func addImageButtonTapped(_ sender: Any) {
         
