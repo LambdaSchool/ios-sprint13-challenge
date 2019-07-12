@@ -192,6 +192,14 @@ class ExperiencesViewController: UIViewController, RecorderDelegate, PlayerDeleg
         performSegue(withIdentifier: "ToVideoView", sender: self)
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ToVideoView" {
+            guard let VideoVC = segue.destination as? VideoRecordingViewController else { return }
+
+            VideoVC.experienceController = expController
+        }
+    }
+
 
 
 
