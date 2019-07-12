@@ -21,6 +21,13 @@ class NewExperienceViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    // Dismiss keyboard after typing in textfield
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+        super.touchesBegan(touches, with: event)
+    }
+    
+    
     // MARK: Actions
     // Add Poster image button
     @IBAction func addPosterImageButtonTapped(_ sender: Any) {
