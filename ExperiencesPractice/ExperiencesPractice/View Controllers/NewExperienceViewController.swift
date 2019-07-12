@@ -24,12 +24,9 @@ class NewExperienceViewController: UIViewController {
     let authorizationStatus = PHPhotoLibrary.authorizationStatus()
     let context = CIContext(options: nil)
     
-    
     // these are the values which go into the model...
     var filteredImage: UIImage?
          //  record.fileURL
-    
-    
     
     lazy private var recorder = Recorder()
     
@@ -93,29 +90,16 @@ class NewExperienceViewController: UIViewController {
     @IBAction func audioRecordButtonTapped(_ sender: Any) {
         
         // check if recorder already running, stop recorder if true, ow continue...
-        
         //ensure access to recording functionality
-        
         // get access to microphone instance
-        
         // set up a recieving url to hold the file
-        
         // record the audio and toggle button to "Stop Recording"
+        
         recorder.toggleRecording()
         
-        // store audio file in model
+        //TODO: store audio file in model
         
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     private func imageRender(byFiltering image: UIImage, with filter: CIFilter) -> UIImage {
         // let ciImage = originalImage?.ciImage Won't work from the Photo Library!

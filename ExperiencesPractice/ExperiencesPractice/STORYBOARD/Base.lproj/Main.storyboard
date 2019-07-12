@@ -103,14 +103,27 @@
         <!--Video Recording-->
         <scene sceneID="YTA-Ud-Vaz">
             <objects>
-                <viewController id="tD0-Js-8MF" sceneMemberID="viewController">
+                <viewController id="tD0-Js-8MF" customClass="VideoCaptureViewController" customModule="ExperiencesPractice" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FjD-FZ-Vxc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m3w-nI-Fyv">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m3w-nI-Fyv" customClass="CameraPreviewView" customModule="ExperiencesPractice" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="140" width="414" height="756"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qRT-nZ-dU7">
+                                        <rect key="frame" x="184" y="486" width="46" height="30"/>
+                                        <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="recordButtonPressed:" destination="tD0-Js-8MF" eventType="touchUpInside" id="Pru-Mh-yhf"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="qRT-nZ-dU7" firstAttribute="centerX" secondItem="m3w-nI-Fyv" secondAttribute="centerX" id="qjg-oo-HIh"/>
+                                    <constraint firstAttribute="bottom" secondItem="qRT-nZ-dU7" secondAttribute="bottom" constant="240" id="uHF-yq-lhf"/>
+                                </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pCc-RW-UZV">
                                 <rect key="frame" x="157" y="730" width="100" height="100"/>
@@ -118,7 +131,11 @@
                                     <constraint firstAttribute="height" constant="100" id="dDJ-Mt-aFl"/>
                                     <constraint firstAttribute="width" constant="100" id="ggs-NB-JLa"/>
                                 </constraints>
+                                <color key="tintColor" red="0.88821648320000002" green="0.32062744069999999" blue="0.31437832110000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" image="Record"/>
+                                <connections>
+                                    <action selector="recordButtonTapped:" destination="tD0-Js-8MF" eventType="touchUpInside" id="gBL-am-OQH"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -133,10 +150,19 @@
                         <viewLayoutGuide key="safeArea" id="COq-OU-XwT"/>
                     </view>
                     <navigationItem key="navigationItem" title="Video Recording" id="NDu-Hb-a6e">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="bK6-Zz-nxK"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="bK6-Zz-nxK">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="8gu-GH-rfr" id="9zo-5c-5Ew"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="cameraView" destination="m3w-nI-Fyv" id="HJd-Zd-1dJ"/>
+                        <outlet property="recordButton" destination="pCc-RW-UZV" id="BfA-dH-lZN"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jdk-6s-S3K" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="8gu-GH-rfr" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2550.7246376811595" y="130.58035714285714"/>
         </scene>
