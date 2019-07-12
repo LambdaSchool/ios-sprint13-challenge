@@ -131,11 +131,11 @@ class VideoRecordingViewController: UIViewController {
             let image = image,
             let audio = audio,
             let video = video else { return }
-        let newExperience = Experience(coordinate: coordinate, name: name, image: image, audio: audio, video: video)
-        print(newExperience)
         experienceController.createExperience(coordinate: coordinate, name: name, image: image, audio: audio, video: video)
         navigationController?.popToRootViewController(animated: true)
     }
+    
+    
 }
 
 extension VideoRecordingViewController: AVCaptureFileOutputRecordingDelegate {

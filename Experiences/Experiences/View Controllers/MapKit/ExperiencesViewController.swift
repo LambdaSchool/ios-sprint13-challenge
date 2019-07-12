@@ -41,6 +41,22 @@ class ExperiencesViewController: UIViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        addAnnotation()
+    }
+    
+    func addAnnotation() {
+        let myPin = MKPointAnnotation()
+        if let myCoordinate = experienceController.experience?.coordinate {
+            myPin.coordinate = myCoordinate
+        }
+        if let annotationText = experienceController.experience?.name {
+            myPin.title = annotationText
+        }
+        mapView.addAnnotation(myPin)
+    }
+    
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -59,6 +75,9 @@ extension ExperiencesViewController: MKMapViewDelegate, CLLocationManagerDelegat
         guard let experience = annotation as? Experience else { return nil }
         let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceAnnotationView", for: experience) as! MKMarkerAnnotationView
         annotationView.glyphImage = UIImage(named: "Journal")
+        annotationView.glyphText = experience.name
+        annotationView.glyphTintColor = .white
+        annotationView.titleVisibility = .visible
         return annotationView
     }
     
@@ -70,8 +89,6 @@ extension ExperiencesViewController: MKMapViewDelegate, CLLocationManagerDelegat
         mapView.setRegion(region, animated: true)
         let annotation = MKPointAnnotation()
         annotation.coordinate = locValue
-        annotation.title = experienceController.experience?.name
-        mapView.addAnnotation(annotation)
         coordinate = annotation.coordinate
     }
     
