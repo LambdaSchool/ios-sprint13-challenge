@@ -78,6 +78,19 @@ class ExperienceViewController: UIViewController, UIImagePickerControllerDelegat
         return UIImage(cgImage: cgImages)
     }
 
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    private func newRecordingURL() -> URL {
+        let documentDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        
+        return documentDirectory.appendingPathComponent(UUID().uuidString).appendingPathExtension("caf")
+    }
     /*
     // MARK: - Navigation
 
