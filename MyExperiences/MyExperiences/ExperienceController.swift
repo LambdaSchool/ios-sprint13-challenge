@@ -11,6 +11,8 @@ import MapKit
 
 class ExperienceController {
 
+    static let shared = ExperienceController()
+
      var experiences: [Experience] = []
 
     var newExperience: Experience?

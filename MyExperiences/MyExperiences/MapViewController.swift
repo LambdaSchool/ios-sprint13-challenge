@@ -16,7 +16,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     let locationManager = CLLocationManager()
     var location: CLLocationCoordinate2D!
-    var expController = ExperienceController()
+    var expController = ExperienceController.shared
 
     
 
