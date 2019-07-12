@@ -12,6 +12,7 @@ class NewExperienceViewController: UIViewController {
     
     // MARK: - Outlets
     @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var imageView: UIImageView!
     
     // MARK: - View states
     override func viewDidLoad() {
