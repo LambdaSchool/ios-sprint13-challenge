@@ -8,6 +8,7 @@
 
 import UIKit
 import Photos
+import AVFoundation
 
 class NewExperienceViewController: UIViewController {
     
@@ -74,9 +75,43 @@ class NewExperienceViewController: UIViewController {
        recorder.toggleRecording()
     }
     
+    // Next Button tapped to Record Video
+    @IBAction func nextButtonTapped(_ sender: Any) {
+        // Make sure we have access to the camera
+        let status = AVCaptureDevice.authorizationStatus(for: .video)
+        
+        // Switch on the authorization status
+        switch status {
+        case .notDetermined:
+            // we have not asked the user for permission
+            
+            // request access
+            AVCaptureDevice.requestAccess(for: .video) { (granted) in
+                if granted == false {
+                    fatalError("Please request user enable camera in Settings > Privacy")
+                }
+                
+                DispatchQueue.main.async {
+                    self.showCamera()
+                }
+            }
+            
+        case .restricted:
+            // we don't have permission from the user because of parental controls
+            fatalError("Please inform the user they cannot use app due to parental restrictions")
+        case .denied:
+            // we asked for permission, but the user said no
+            fatalError("Please request user to enable camera usage in Settings > Privacy")
+        case .authorized:
+            // we asked for permission and they said yes.
+            showCamera()
+        }
+    }
+    
+    
     
     // MARK: - Functions
-    private func selectImageFromPhotoLibrary(_ photoSource: String) {
+   func selectImageFromPhotoLibrary(_ photoSource: String) {
         if photoSource == "Photo Library" {
             guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
                 NSLog("The photo library is not available")
@@ -117,7 +152,7 @@ class NewExperienceViewController: UIViewController {
         return UIImage(cgImage: outputCGImage)
     }
     
-    func updateImage() {
+    private func updateImage() {
         // Make sure we have an image
         if let originalImage = originalImage {
             imageView.image = image(byFiltering: originalImage)
@@ -130,15 +165,9 @@ class NewExperienceViewController: UIViewController {
          recordButton.setTitle(recorder.isRecording ? "Stop Recording" : "Record", for: .normal)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func showCamera() {
+        performSegue(withIdentifier: "ShowCamera", sender: self)
     }
-    */
 
 }
 
