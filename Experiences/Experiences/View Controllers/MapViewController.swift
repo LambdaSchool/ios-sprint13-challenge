@@ -62,7 +62,7 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func addExperienceButtonTapped(_ sender: Any) {
-        print("Added Experience")
+        performSegue(withIdentifier: "showExperienceCreation", sender: self)
     }
     
 }
