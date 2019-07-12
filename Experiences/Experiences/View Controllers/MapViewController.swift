@@ -15,6 +15,7 @@ class MapViewController: UIViewController {
     var locationManager: CLLocationManager?
     var currentLocation: CLLocation?
     var didSetPosition = false
+    var experienceController = ExperienceController()
 
     @IBOutlet weak var mapView: MKMapView!
     
@@ -26,6 +27,17 @@ class MapViewController: UIViewController {
         locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         
         startLocationServices()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showExperienceCreation" {
+            guard let navViewController = segue.destination as? UINavigationController,
+            let newExperienceViewController = navViewController.viewControllers.first as? NewExperienceViewController
+            else { return }
+            
+            newExperienceViewController.experienceController = experienceController
+            newExperienceViewController.currentLocation = currentLocation
+        }
     }
     
     private func startLocationServices() {
