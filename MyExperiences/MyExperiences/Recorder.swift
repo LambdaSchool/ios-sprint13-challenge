@@ -6,6 +6,9 @@
 //  Copyright © 2019 Diante Lewis-Jolley. All rights reserved.
 //
 
+
+    // NO LONGER NEEDED SINCE IT'S BEING CREATED IN THE VIEWCONTROLLER
+/*
 import Foundation
 import AVFoundation
 
@@ -78,4 +81,4 @@ extension Recorder: AVAudioRecorderDelegate {
 
 }
 
-
+*/

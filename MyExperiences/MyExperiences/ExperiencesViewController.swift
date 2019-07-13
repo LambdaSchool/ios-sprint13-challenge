@@ -11,26 +11,36 @@ import CoreImage
 import AVFoundation
 import Photos
 
-class ExperiencesViewController: UIViewController, RecorderDelegate, PlayerDelegate {
-    func recorderDidChangeState(_ recorder: Recorder) {
-        updateViews()
-    }
+class ExperiencesViewController: UIViewController, AVAudioRecorderDelegate {
 
-    func playerDidChangeState(_ player: Player) {
-        updateViews()
-    }
+    /*
+     func recorderDidChangeState(_ recorder: Recorder) {
+     updateViews()
+     }
 
+     func playerDidChangeState(_ player: Player) {
+     updateViews()
+     }
+     */
 
-    @IBOutlet weak var recordButton: UIButton!
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleTextField: UITextField!
-    var expController: ExperienceController?
-    var experience: Experience?
-    let recorder = Recorder()
+    // var experience: Experience?
+
+    // Recreating Recorder in the ViewController for easier access to the FileURL
+    // let recorder = Recorder()
+
+    // MARK: - Properties
+
     let player = Player()
     let filter = CIFilter(name: "CIGaussianBlur")
     let context = CIContext(options: nil)
+    var expController: ExperienceController?
+    var recordingURL: URL?
+    var location: CLLocationCoordinate2D?
     var filterImage: UIImage?
+    private var recorder: AVAudioRecorder?
+    var isRecording: Bool {
+        return recorder?.isRecording ?? false
+    }
 
 
     private var originalImage: UIImage? {
@@ -39,27 +49,25 @@ class ExperiencesViewController: UIViewController, RecorderDelegate, PlayerDeleg
         }
     }
 
+    // Mark: - Outlets
+
+    @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var titleTextField: UITextField!
+
+
+
 
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-       // set delegates before I forget
-        recorder.delegate = self
-        player.delegate = self
-
-        if let experience = experience {
-            imageView.image = experience.image
-        }
 
     }
 
 
 
-
-
-    
     @IBAction func chooseImage(_ sender: Any) {
 
         let authorizationStatus = PHPhotoLibrary.authorizationStatus()
@@ -90,7 +98,7 @@ class ExperiencesViewController: UIViewController, RecorderDelegate, PlayerDeleg
     
     @IBAction func recordButtonTapped(_ sender: Any) {
 
-        recorder.toggleRecording()
+        record()
     }
 
 
@@ -104,17 +112,57 @@ class ExperiencesViewController: UIViewController, RecorderDelegate, PlayerDeleg
         imageView.image = imageFilter(byFiltering: image)
 
 
+    }
 
+    private func record() {
+
+        if isRecording {
+            recorder?.stop()
+            updateViews()
+
+        } else {
+            do {
+                let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 2)!
+
+                recorder = try AVAudioRecorder(url: newRecordingURL(), format: format)
+                // Sanity Check
+                // print(newRecordingURL())
+                recorder?.record()
+                recorder?.delegate = self
+                updateViews()
+
+            } catch {
+                NSLog("Error recording: \(error)")
+                return
+
+            }
+        }
+    }
+
+
+    private func newRecordingURL() -> URL {
+
+        // Need a new URL file to record to
+        let fileManager = FileManager.default
+        let documents = try! fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+
+        //fileName with "caf" extension
+        let fileName = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: [.withInternetDateTime])
+
+      let url = documents.appendingPathComponent(fileName).appendingPathExtension("caf")
+
+        recordingURL = url
+        return url
 
     }
 
 
     private func updateViews() {
 
-        let isRecording = recorder.isRecording
+        // let isRecording = recorder.isRecording
         recordButton.setTitle(isRecording ? "Stop" : "Record", for: .normal)
 
-        let isPlaying = player.isPlaying
+        //let isPlaying = player.isPlaying
 
 
     }
@@ -140,7 +188,7 @@ class ExperiencesViewController: UIViewController, RecorderDelegate, PlayerDeleg
 
         guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent)  else { return image }
         
-             let filteredImage = UIImage(cgImage: cgImage)
+        let filteredImage = UIImage(cgImage: cgImage)
 
 
         return filteredImage
@@ -194,9 +242,14 @@ class ExperiencesViewController: UIViewController, RecorderDelegate, PlayerDeleg
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ToVideoView" {
-            guard let VideoVC = segue.destination as? VideoRecordingViewController else { return }
+            guard let VideoVC = segue.destination as? VideoRecordingViewController,
+            let image = imageView.image else { return }
 
             VideoVC.experienceController = expController
+            VideoVC.audioURL = recordingURL
+            VideoVC.image = image
+            VideoVC.experienceTitle = titleTextField.text
+            VideoVC.location = location
         }
     }
 

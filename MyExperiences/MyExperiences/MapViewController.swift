@@ -50,6 +50,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         switch CLLocationManager.authorizationStatus() {
         case .authorizedWhenInUse:
             mapView.showsUserLocation = true
+            centerViewOnUserLocation()
+            locationManager.startUpdatingLocation()
             if expController.experiences.count > 0 {
                 centerViewOnUserLocation()
             }
@@ -71,7 +73,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
     func centerViewOnUserLocation() {
         if let location = locationManager.location?.coordinate {
-            var region = MKCoordinateRegion(center: location, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
+            let region = MKCoordinateRegion(center: location, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
             mapView.setRegion(region, animated: true)
         }
     }
@@ -103,7 +105,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             guard let ExpVC = segue.destination as? ExperiencesViewController else { return }
 
             ExpVC.expController = expController
-            expController.currentLocation = locationManager.location?.coordinate
+            ExpVC.location = locationManager.location?.coordinate
             
         }
     }
