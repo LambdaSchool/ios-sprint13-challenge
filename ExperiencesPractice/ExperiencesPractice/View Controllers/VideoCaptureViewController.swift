@@ -18,7 +18,11 @@ class VideoCaptureViewController: UIViewController {
     @IBOutlet weak var cameraView: CameraPreviewView!
     @IBOutlet weak var recordButton: UIButton!
     
+    var experienceMapViewController = ExperiencesMapViewController()
     
+    var videoURL: URL?
+    
+    var experience: Experience?
     
 
     override func viewDidLoad() {
@@ -48,6 +52,8 @@ class VideoCaptureViewController: UIViewController {
         case .authorized:
             // we asked for permission and they said yes.
             showCamera()
+        @unknown default:
+            fatalError()
         }
 
     }
@@ -137,10 +143,10 @@ class VideoCaptureViewController: UIViewController {
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let name = UUID().uuidString
         print("name: \(name)")
-        let url = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
-        print("Url: \(url)")
+        let videoURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
+        print("Url: \(videoURL)")
         
-        return url
+        return videoURL
     }
     
     
@@ -153,33 +159,21 @@ class VideoCaptureViewController: UIViewController {
             recordButton.tintColor = UIColor.red
         }
     }
+
     
-    
+
     @IBAction func saveButtonTapped(_ sender: Any) {
+    
+        // use video file to create experience: done in fileOutput extension below
         
-        // use video file to create experience
+        //experienceMapViewController.createExperience(experience: experience!)
         
-        // create experience from experienceController
-        
+        navigationController?.popToRootViewController(animated: true)
         // add coordinates for current location
         
         // pop to mapController to display markers w titles
-        
-        
-        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 
@@ -195,6 +189,8 @@ extension VideoCaptureViewController: AVCaptureFileOutputRecordingDelegate {
     
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         
+        guard let url = videoURL else { return }
+        experience?.videoRecording = url
         self.updateViews()
 
     }

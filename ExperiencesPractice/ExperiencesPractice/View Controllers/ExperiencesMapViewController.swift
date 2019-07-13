@@ -13,6 +13,8 @@ class ExperiencesMapViewController: UIViewController {
     
     var experiences: [Experience] = []
     
+    //let fiveDataPiecesMissingOne
+    
     @IBOutlet weak var mapView: MKMapView!
     
     
@@ -25,14 +27,14 @@ class ExperiencesMapViewController: UIViewController {
         mapView.addAnnotations(experiences)
     }
     
-    func createExperience(name: String, image: UIImage, audioRecording: URL, videoRecording: URL, longitude: Double, latitude: Double) {
+    func createExperience(experience: Experience) {
         
-        let newExperience = Experience(name: name, image: image, audioRecording: audioRecording, videoRecording: videoRecording, longitude: longitude, latitude: latitude)
+         //let newExperience = Experience(name: name, image: image, audioRecording: audioRecording, videoRecording: videoRecording, longitude: longitude, latitude: latitude)
         
-        experiences.append(newExperience)
+        experiences.append(experience)
         
     }
-
+             //name: String, image: UIImage, audioRecording: URL, videoRecording: URL, longitude: Double, latitude: Double
 
 }
 

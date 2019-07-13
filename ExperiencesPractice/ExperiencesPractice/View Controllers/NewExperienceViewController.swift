@@ -17,6 +17,9 @@ protocol RecorderDelegate {
 class NewExperienceViewController: UIViewController {
 
     @IBOutlet weak var experienceTitleTextField: UITextField!
+    @IBOutlet weak var longitudeTextField: UITextField!
+    @IBOutlet weak var latitudeTextField: UITextField!
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var addPictureButton: UIButton!
     @IBOutlet weak var audioRecordButton: UIButton!
@@ -29,6 +32,8 @@ class NewExperienceViewController: UIViewController {
          //  record.fileURL
     
     lazy private var recorder = Recorder()
+    
+    var experience: Experience?
     
     
     override func viewDidLoad() {
@@ -121,6 +126,35 @@ class NewExperienceViewController: UIViewController {
 
         audioRecordButton.setTitle(recorder.isRecording ? "Stop Recording" : "Record Audio", for: .normal)
     }
+    
+
+     // MARK: - Navigation
+    
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "VideoSegue" {
+            if let vidcapVC = segue.destination as? VideoCaptureViewController {
+                
+                guard let lat = Double(latitudeTextField.text!),
+                    let long = Double(longitudeTextField.text!),
+                    let nam = experienceTitleTextField.text else { return }
+                
+//                self.experience = Experience(name: nam, image: filteredImage!, audioRecording: //recorder.fileURL!,longitude: long, latitude: lat)
+                // videoRecording: nil,
+                
+                self.experience?.name = nam
+                self.experience?.location = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                self.experience?.audioRecording = recorder.fileURL
+                self.experience?.image = filteredImage
+                
+                experienceTitleTextField.text = ""
+                longitudeTextField.text = ""
+                latitudeTextField.text = ""
+                
+                vidcapVC.experience = experience
+            }
+        }
+     }
+
 
 }
 

@@ -13,21 +13,21 @@ import CoreLocation
 
 class Experience: NSObject {
     
-    let name: String
-    let image: UIImage?
-    let audioRecording: URL?
-    let videoRecording: URL?
-    let location: CLLocationCoordinate2D
+    var name: String
+    var image: UIImage?
+    var audioRecording: URL?
+    var videoRecording: URL?
+    var location: CLLocationCoordinate2D
     
-    init(name: String, image: UIImage, audioRecording: URL, videoRecording: URL, longitude: Double, latitude: Double) {
+    init(name: String, image: UIImage, audioRecording: URL, longitude: Double, latitude: Double) {
         self.name = name
         self.image = image
         self.audioRecording = audioRecording
-        self.videoRecording = videoRecording
+        //self.videoRecording = videoRecording
         // need to input user's current location or...
         self.location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
-    
+    // videoRecording: URL,
 }
 
 

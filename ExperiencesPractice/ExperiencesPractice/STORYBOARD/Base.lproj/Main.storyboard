@@ -54,62 +54,55 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="fpD-u4-woC">
-                                <rect key="frame" x="0.0" y="140" width="414" height="438"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="center" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="fpD-u4-woC">
+                                <rect key="frame" x="0.0" y="140" width="240" height="438"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="experience name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6ra-9i-oFz">
-                                        <rect key="frame" x="141.5" y="0.0" width="131.5" height="30"/>
+                                        <rect key="frame" x="54.5" y="0.0" width="131.5" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter longitude [int: 0-180]" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g5A-QV-PDy">
-                                        <rect key="frame" x="109" y="62" width="196.5" height="30"/>
+                                        <rect key="frame" x="22" y="62" width="196.5" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter latitude [int: 0-90]" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gXj-nR-szL">
-                                        <rect key="frame" x="118" y="124" width="178" height="30"/>
+                                        <rect key="frame" x="31" y="124" width="178" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vzw-yg-xsB">
-                                        <rect key="frame" x="87" y="186" width="240" height="128"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vzw-yg-xsB">
+                                        <rect key="frame" x="0.0" y="186" width="240" height="128"/>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wOe-HD-egZ">
-                                        <rect key="frame" x="146" y="346" width="122" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wOe-HD-egZ">
+                                        <rect key="frame" x="59" y="346" width="122" height="30"/>
                                         <state key="normal" title="Add Poster Image"/>
                                         <connections>
                                             <action selector="addImageButtonTapped:" destination="Sxk-l8-fBR" eventType="touchUpInside" id="Wej-aK-HQr"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SgH-zz-BdM">
-                                        <rect key="frame" x="161" y="408" width="92" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SgH-zz-BdM">
+                                        <rect key="frame" x="74" y="408" width="92" height="30"/>
                                         <state key="normal" title="Record Audio"/>
                                         <connections>
                                             <action selector="audioRecordButtonTapped:" destination="Sxk-l8-fBR" eventType="touchUpInside" id="RHx-Fv-mUg"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="438" id="7pL-23-ib9"/>
-                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="fpD-u4-woC" firstAttribute="leading" secondItem="u69-bh-56s" secondAttribute="leading" id="WLT-gV-IGx"/>
-                            <constraint firstItem="fpD-u4-woC" firstAttribute="top" secondItem="u69-bh-56s" secondAttribute="top" id="ZJX-jT-Opm"/>
-                            <constraint firstItem="u69-bh-56s" firstAttribute="trailing" secondItem="fpD-u4-woC" secondAttribute="trailing" id="fZB-PH-eNO"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="u69-bh-56s"/>
                     </view>
                     <navigationItem key="navigationItem" title="New Experience" id="VQz-n7-yUB">
                         <barButtonItem key="rightBarButtonItem" title="Video" id="rpY-cI-JtA">
                             <connections>
-                                <segue destination="tD0-Js-8MF" kind="show" id="XcY-Q0-rhA"/>
+                                <segue destination="tD0-Js-8MF" kind="show" identifier="VideoSegue" id="XcY-Q0-rhA"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -118,6 +111,8 @@
                         <outlet property="audioRecordButton" destination="SgH-zz-BdM" id="OVI-Ib-mJy"/>
                         <outlet property="experienceTitleTextField" destination="6ra-9i-oFz" id="jA2-S4-hmd"/>
                         <outlet property="imageView" destination="Vzw-yg-xsB" id="P15-Tb-AGx"/>
+                        <outlet property="latitudeTextField" destination="gXj-nR-szL" id="vDx-7l-Tpb"/>
+                        <outlet property="longitudeTextField" destination="g5A-QV-PDy" id="jBo-Wd-fRm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xvK-iI-90r" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -134,20 +129,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m3w-nI-Fyv" customClass="CameraPreviewView" customModule="ExperiencesPractice" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="140" width="414" height="756"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qRT-nZ-dU7">
-                                        <rect key="frame" x="184" y="486" width="46" height="30"/>
-                                        <state key="normal" title="Button"/>
-                                        <connections>
-                                            <action selector="recordButtonPressed:" destination="tD0-Js-8MF" eventType="touchUpInside" id="Pru-Mh-yhf"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstItem="qRT-nZ-dU7" firstAttribute="centerX" secondItem="m3w-nI-Fyv" secondAttribute="centerX" id="qjg-oo-HIh"/>
-                                    <constraint firstAttribute="bottom" secondItem="qRT-nZ-dU7" secondAttribute="bottom" constant="240" id="uHF-yq-lhf"/>
-                                </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pCc-RW-UZV">
                                 <rect key="frame" x="157" y="730" width="100" height="100"/>
@@ -176,7 +158,7 @@
                     <navigationItem key="navigationItem" title="Video Recording" id="NDu-Hb-a6e">
                         <barButtonItem key="rightBarButtonItem" title="Save" id="bK6-Zz-nxK">
                             <connections>
-                                <action selector="saveButtonTapped:" destination="8gu-GH-rfr" id="9zo-5c-5Ew"/>
+                                <action selector="saveButtonTapped:" destination="tD0-Js-8MF" id="scQ-wJ-8Hm"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -186,7 +168,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jdk-6s-S3K" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="8gu-GH-rfr" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2550.7246376811595" y="130.58035714285714"/>
         </scene>
