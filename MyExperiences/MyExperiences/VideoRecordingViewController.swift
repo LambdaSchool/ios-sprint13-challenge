@@ -7,10 +7,14 @@
 //
 
 import UIKit
-import MapKit
 import AVFoundation
+import CoreLocation
 
 class VideoRecordingViewController: UIViewController {
+
+
+    
+
 
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
@@ -22,13 +26,14 @@ class VideoRecordingViewController: UIViewController {
     var image: UIImage?
     var location: CLLocationCoordinate2D?
 
+    // Mark: - Outlets
 
-    weak var cameraView: CameraPreviewView!
-    @IBOutlet weak var recordButton: UIButton!
-    
+    @IBOutlet var recordButton: UIButton!
+    @IBOutlet var cameraView: CameraPreviewView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        recordButton.tintColor = .red
         let camera = bestCamera()
 
         guard let cameraInput = try? AVCaptureDeviceInput(device: camera) else {
@@ -66,26 +71,26 @@ class VideoRecordingViewController: UIViewController {
 
         cameraView.session = captureSession
 
-
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
         view.addGestureRecognizer(tapGesture)
 
+
+
+        guard let location = location else { return }
+        print(location)
     }
 
     @objc func handleTapGesture(_ tapGesture: UITapGestureRecognizer) {
-        // play the movie
         print("Play movie")
         if let player = player {
             player.seek(to: CMTime.zero)
             player.play()
         }
-
-
-
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         captureSession.startRunning()
     }
 
@@ -93,16 +98,7 @@ class VideoRecordingViewController: UIViewController {
         super.viewDidDisappear(animated)
         captureSession.stopRunning()
     }
-
-
-
-
-
     private func bestCamera() -> AVCaptureDevice {
-        if let device = AVCaptureDevice.default(.builtInDualCamera, for: .video, position: .back) {
-            return device
-        }
-
         if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
             return device
         }
@@ -112,84 +108,84 @@ class VideoRecordingViewController: UIViewController {
 
     func newRecordingURL() -> URL {
 
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let documentsDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
 
-        let name = "movie"  
-        let url = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
+        let name = "Movie"
+        let url = documentsDir.appendingPathComponent(name).appendingPathExtension("mov")
         print("Url: \(url)")
+        videoURL = url
         return url
+
     }
 
     func updateViews() {
         if fileOutput.isRecording {
             recordButton.setImage(UIImage(named: "Stop"), for: .normal)
-            recordButton.tintColor = UIColor.red
         } else {
             recordButton.setImage(UIImage(named: "Record"), for: .normal)
-            recordButton.tintColor = UIColor.red
         }
     }
 
     func playMovie(url: URL) {
-
         player = AVPlayer(url: url)
         let playerLayer = AVPlayerLayer(player: player)
         var topRect = self.view.bounds
         topRect.size.width = topRect.width / 4
         topRect.size.height = topRect.height / 4
-        topRect.origin.y = view.layoutMargins.top
-
+        topRect.origin.y = view.layoutMargins.top + 16
+        topRect.origin.x = view.layoutMargins.left + 16
         playerLayer.frame = topRect
 
         view.layer.addSublayer(playerLayer)
 
         player.play()
+
+
     }
 
+    @IBAction func saveButtonPressed(_ sender: Any) {
+        guard let experienceController = experienceController,
+            let image = image,
+            let audioURL = audioURL,
+            let coordinates = location,
+            let experienceTitle = experienceTitle,
+            let videoURL = videoURL else { return }
 
+        experienceController.createExperience(title: experienceTitle, audio: audioURL, video: videoURL, image: image, coordinate: coordinates)
+
+        navigationController?.popToRootViewController(animated: true)
+
+    }
 
     @IBAction func recordButtonPressed(_ sender: Any) {
-        print("Record")
+      
 
         if fileOutput.isRecording {
             fileOutput.stopRecording()
         } else {
             fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
         }
+
     }
 
 
-    @IBAction func saveButtonTapped(_ sender: Any) {
-
-        guard let experienceController = experienceController else { return }
-        guard let image = image else { return }
-        guard let audioURL = audioURL else { return }
-        guard let coordinates = location else { return }
-        guard let title = experienceTitle else { return }
-        guard let videoURL = videoURL else { return }
-        experienceController.createExperience(title: title, audio: audioURL, video: videoURL, image: image, coordinate: coordinates)
-
-
-        self.dismiss(animated: true, completion: nil)
-
-    
-    }
 
 }
 
+
 extension VideoRecordingViewController: AVCaptureFileOutputRecordingDelegate {
     func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
-
         DispatchQueue.main.async {
             self.updateViews()
         }
     }
 
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
-
         DispatchQueue.main.async {
             self.updateViews()
             self.playMovie(url: outputFileURL)
+            self.videoURL = outputFileURL
+
         }
     }
 }

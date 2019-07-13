@@ -11,19 +11,16 @@ import MapKit
 
 class ExperienceController {
 
-   // static let shared = ExperienceController()
-
      var experiences: [Experience] = []
-    var currentLocation: CLLocationCoordinate2D?
 
-    var newExperience: Experience?
+
+   // var newExperience: Experience?
    // var location: CLLocationCoordinate2D!
 
-    func createExperience(title: String?, audio: URL?, video: URL?, image: UIImage?, coordinate: CLLocationCoordinate2D) {
+    func createExperience(title: String?, audio: URL, video: URL, image: UIImage, coordinate: CLLocationCoordinate2D) {
 
         let newExp = Experience(title: title, audio: audio, image: image, video: video, coordinate: coordinate)
 
-        newExperience = newExp
        experiences.append(newExp)
     }
 

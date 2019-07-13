@@ -27,9 +27,20 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
         setupLocationManager()
 
+
+
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotationView")
 
-        
+        DispatchQueue.main.async {
+            self.mapView.addAnnotations(self.expController.experiences)
+        }
+
+
     }
 
     func setupLocationManager() {
@@ -83,7 +94,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
         let experienceView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceAnnotationView", for: annotation) as! MKMarkerAnnotationView
 
-        experienceView.glyphText = expController.newExperience?.title
+
         experienceView.markerTintColor = .red
 
         return experienceView
