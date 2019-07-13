@@ -83,8 +83,8 @@ extension MapViewController: MKMapViewDelegate {
 	}
 	
 	func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-		audioPlayer?.pause()
-		audioPlayer = nil
+//		audioPlayer?.pause()
+//		audioPlayer = nil
 	}
 	
 	func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -92,7 +92,7 @@ extension MapViewController: MKMapViewDelegate {
 		guard let fileTitle = view.annotation?.title  else { return }
 		let fileString = String(fileTitle!)
 		
-				audioPlayer =  AudioPlayer(name: fileString)
+		audioPlayer =  AudioPlayer(name: fileString)
 		
 		if let duration = audioPlayer?.duration {
 			print(duration)

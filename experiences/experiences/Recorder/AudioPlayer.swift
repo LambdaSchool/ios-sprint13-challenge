@@ -29,6 +29,7 @@ class AudioPlayer: NSObject {
 		} catch {
 			NSLog("audioPlayer: \(error)")
 		}
+		
 		audioPlayer?.play()
 		print(url)
 	}
