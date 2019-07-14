@@ -28,6 +28,8 @@ class VideoCaptureViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        experience?.name = "test"
+        
         let status = AVCaptureDevice.authorizationStatus(for: .video)
         
         switch status {

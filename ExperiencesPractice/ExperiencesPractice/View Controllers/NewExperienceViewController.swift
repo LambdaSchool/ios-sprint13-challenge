@@ -104,6 +104,7 @@ class NewExperienceViewController: UIViewController {
         
         //TODO: store audio file in model
         
+        
     }
     
     private func imageRender(byFiltering image: UIImage, with filter: CIFilter) -> UIImage {
@@ -136,15 +137,17 @@ class NewExperienceViewController: UIViewController {
                 
                 guard let lat = Double(latitudeTextField.text!),
                     let long = Double(longitudeTextField.text!),
+                    let image = filteredImage,
+                    let audioRecording = recorder.fileURL,
                     let nam = experienceTitleTextField.text else { return }
                 
-//                self.experience = Experience(name: nam, image: filteredImage!, audioRecording: //recorder.fileURL!,longitude: long, latitude: lat)
+                self.experience = Experience(name: nam, image: image, audioRecording: audioRecording, longitude: long, latitude: lat)
                 // videoRecording: nil,
                 
-                self.experience?.name = nam
-                self.experience?.location = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                self.experience?.audioRecording = recorder.fileURL
-                self.experience?.image = filteredImage
+//                vidcapVC.experience?.name = nam
+//                vidcapVC.experience?.location = CLLocationCoordinate2D(latitude: lat, longitude: long)
+//                vidcapVC.experience?.audioRecording = recorder.fileURL
+//                vidcapVC.experience?.image = filteredImage
                 
                 experienceTitleTextField.text = ""
                 longitudeTextField.text = ""
