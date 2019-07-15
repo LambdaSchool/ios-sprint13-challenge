@@ -9,36 +9,24 @@
 import UIKit
 import MapKit
 
-class ExperiencesMapViewController: UIViewController {
+class ExperiencesMapViewController: UIViewController, MKMapViewDelegate {
     
     var experiences: [Experience] = []
     
-    
     var count = 0
-    let newestAnnotation = MKPointAnnotation()
-    
+
     @IBOutlet weak var mapView: MKMapView!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
-
-        
-//        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotationView")
-//
-//        mapView.addAnnotations(experiences)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
         if count == 0 {
-            print("viewDidAppear first time")
             
-            mapView.delegate = self
+            //mapView.delegate = self
+            let newestAnnotation = MKPointAnnotation()
             newestAnnotation.title = "SmooveTest"
-            newestAnnotation.coordinate = CLLocationCoordinate2D(latitude: 40.04, longitude: 74.05)
+            newestAnnotation.coordinate = CLLocationCoordinate2D(latitude: 51.507222, longitude: -0.1275)
             mapView.addAnnotation(newestAnnotation)
             
             count += 1
@@ -57,32 +45,22 @@ class ExperiencesMapViewController: UIViewController {
         
     }
              //name: String, image: UIImage, audioRecording: URL, videoRecording: URL, longitude: Double, latitude: Double
-
-}
-
-
-
-
-extension ExperiencesMapViewController: MKMapViewDelegate {
+    
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-
-        guard let experience = annotation as? Experience else { return nil }
-
-        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceAnnotationView", for: annotation) as! MKMarkerAnnotationView
-
-        annotationView.glyphImage = UIImage(named: "ExperienceIcon")
-        annotationView.glyphTintColor = .white
-        annotationView.markerTintColor = .blue
-
-        annotationView.canShowCallout = true
-        let detailView = ExperienceDetailView(frame: .zero)
-        detailView.experience = experience
-        annotationView.detailCalloutAccessoryView = detailView
-
+        guard annotation is MKPointAnnotation else { return nil }
+        
+        let identifier = "ExperienceAnnoationView"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+        
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView!.canShowCallout = true
+        } else {
+            annotationView!.annotation = annotation
+        }
         return annotationView
     }
-
-
 }
+
 
