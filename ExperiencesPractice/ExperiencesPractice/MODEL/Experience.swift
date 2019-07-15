@@ -19,6 +19,7 @@ class Experience: NSObject {
     var videoRecording: URL?
     var location: CLLocationCoordinate2D
     
+    // This init used before Video has been shot
     init(name: String, image: UIImage, audioRecording: URL, longitude: Double, latitude: Double) {
         self.name = name
         self.image = image
@@ -27,7 +28,16 @@ class Experience: NSObject {
         // need to input user's current location or...
         self.location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
-    // videoRecording: URL,
+    
+    // This init is for AFTER the video has been shot
+    init(name: String, image: UIImage, audioRecording: URL, videoRecording: URL, longitude: Double, latitude: Double) {
+        self.name = name
+        self.image = image
+        self.audioRecording = audioRecording
+        self.videoRecording = videoRecording
+        // need to input user's current location or...
+        self.location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
 }
 
 

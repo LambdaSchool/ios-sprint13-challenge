@@ -21,15 +21,18 @@ class VideoCaptureViewController: UIViewController {
     var experienceMapViewController = ExperiencesMapViewController()
     
     var videoURL: URL?
+//    {
+//        didSet {
+//            updateViews()
+//        }
+//    }
     
     var experience: Experience?
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        experience?.name = "test"
-        
+
         let status = AVCaptureDevice.authorizationStatus(for: .video)
         
         switch status {
@@ -134,6 +137,8 @@ class VideoCaptureViewController: UIViewController {
 
         if fileOutput.isRecording {
             fileOutput.stopRecording()
+            experience?.videoRecording = videoURL
+            updateViews()
         } else {
             fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
         }
@@ -155,10 +160,10 @@ class VideoCaptureViewController: UIViewController {
     func updateViews() {
         if fileOutput.isRecording {
             recordButton.setImage(UIImage(named: "Stop"), for: .normal)
-            recordButton.tintColor = UIColor.black
+            recordButton.tintColor = UIColor.blue
         } else {
             recordButton.setImage(UIImage(named: "Record"), for: .normal)
-            recordButton.tintColor = UIColor.red
+            recordButton.tintColor = UIColor.red                                  // my record images never show color, why?
         }
     }
 
@@ -168,12 +173,15 @@ class VideoCaptureViewController: UIViewController {
     
         // use video file to create experience: done in fileOutput extension below
         
-        //experienceMapViewController.createExperience(experience: experience!)
+        guard let lat = experience?.location.latitude,
+            let long = experience?.location.longitude,
+            let image = experience?.image,
+            let audioRecording = experience?.audioRecording,
+            let nam = experience?.name else { return }
+        
+        experienceMapViewController.createExperience(name: nam, image: image, audioRecording: audioRecording, longitude: long, latitude: lat, videoRecording: videoURL!)
         
         navigationController?.popToRootViewController(animated: true)
-        // add coordinates for current location
-        
-        // pop to mapController to display markers w titles
     }
     
 }
@@ -184,16 +192,17 @@ class VideoCaptureViewController: UIViewController {
 extension VideoCaptureViewController: AVCaptureFileOutputRecordingDelegate {
     func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
         
-        //DispatchQueue.main.async {
+        DispatchQueue.main.async {
             self.updateViews()
-        //}
+        }
     }
     
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         
-        guard let url = videoURL else { return }
-        experience?.videoRecording = url
-        self.updateViews()
+        videoURL = outputFileURL
+        DispatchQueue.main.async {
+            self.updateViews()
+        }
 
     }
 }

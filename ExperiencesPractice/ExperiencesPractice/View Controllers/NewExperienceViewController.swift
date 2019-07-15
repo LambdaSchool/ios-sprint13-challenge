@@ -141,13 +141,10 @@ class NewExperienceViewController: UIViewController {
                     let audioRecording = recorder.fileURL,
                     let nam = experienceTitleTextField.text else { return }
                 
+                // videoRecording still nil here
                 self.experience = Experience(name: nam, image: image, audioRecording: audioRecording, longitude: long, latitude: lat)
-                // videoRecording: nil,
                 
-//                vidcapVC.experience?.name = nam
-//                vidcapVC.experience?.location = CLLocationCoordinate2D(latitude: lat, longitude: long)
-//                vidcapVC.experience?.audioRecording = recorder.fileURL
-//                vidcapVC.experience?.image = filteredImage
+
                 
                 experienceTitleTextField.text = ""
                 longitudeTextField.text = ""

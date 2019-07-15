@@ -13,7 +13,9 @@ class ExperiencesMapViewController: UIViewController {
     
     var experiences: [Experience] = []
     
-    //let fiveDataPiecesMissingOne
+    
+    var count = 0
+    let newestAnnotation = MKPointAnnotation()
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -21,17 +23,37 @@ class ExperiencesMapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        mapView.delegate = self
-        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotationView")
+
+
         
-        mapView.addAnnotations(experiences)
+//        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotationView")
+//
+//        mapView.addAnnotations(experiences)
     }
     
-    func createExperience(experience: Experience) {
+    override func viewDidAppear(_ animated: Bool) {
         
-         //let newExperience = Experience(name: name, image: image, audioRecording: audioRecording, videoRecording: videoRecording, longitude: longitude, latitude: latitude)
+        if count == 0 {
+            print("viewDidAppear first time")
+            
+            mapView.delegate = self
+            newestAnnotation.title = "SmooveTest"
+            newestAnnotation.coordinate = CLLocationCoordinate2D(latitude: 40.04, longitude: 74.05)
+            mapView.addAnnotation(newestAnnotation)
+            
+            count += 1
+        } else {
+            mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotationView")
+            mapView.addAnnotations(experiences)
+        }
+    }
+    
+    func createExperience(name: String, image: UIImage, audioRecording: URL, longitude: Double, latitude: Double, videoRecording: URL) {
         
-        experiences.append(experience)
+         let newExperience = Experience(name: name, image: image, audioRecording: audioRecording, videoRecording: videoRecording, longitude: longitude, latitude: latitude)
+        
+        
+        experiences.append(newExperience)
         
     }
              //name: String, image: UIImage, audioRecording: URL, videoRecording: URL, longitude: Double, latitude: Double
@@ -42,26 +64,25 @@ class ExperiencesMapViewController: UIViewController {
 
 
 extension ExperiencesMapViewController: MKMapViewDelegate {
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        // create an annotation view
-        
+
         guard let experience = annotation as? Experience else { return nil }
-        
+
         let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceAnnotationView", for: annotation) as! MKMarkerAnnotationView
-        
+
         annotationView.glyphImage = UIImage(named: "ExperienceIcon")
         annotationView.glyphTintColor = .white
         annotationView.markerTintColor = .blue
-        
+
         annotationView.canShowCallout = true
         let detailView = ExperienceDetailView(frame: .zero)
         detailView.experience = experience
         annotationView.detailCalloutAccessoryView = detailView
 
-        
         return annotationView
     }
-    
-    
+
+
 }
 
