@@ -14,7 +14,7 @@ import AVFoundation
 class NewExperienceViewController: UIViewController {
     
     // MARK: - Properties
-    var experience: Experience?
+    var experienceTitle: String = ""
     
     var originalImage: UIImage? {
         didSet {
@@ -46,7 +46,7 @@ class NewExperienceViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
         super.touchesBegan(touches, with: event)
-        experience?.myTitle = titleTextField.text ?? "A new experience"
+       experienceTitle = titleTextField.text ?? "A new experience"
     }
     
     
@@ -171,7 +171,16 @@ class NewExperienceViewController: UIViewController {
     }
     
     func showCamera() {
-        performSegue(withIdentifier: "ShowCamera", sender: self)
+      //  performSegue(withIdentifier: "ShowCamera", sender: self)
+        
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        
+        guard let destinationViewController = mainStoryboard.instantiateViewController(withIdentifier: "ShowCamera") as? CameraViewController
+            else { print("Could not find the Camera VC"); return}
+        print("In experience.  The title is: \(experienceTitle)")
+        destinationViewController.experienceTitle = experienceTitle
+        
+        self.navigationController?.pushViewController(destinationViewController, animated: true)
     }
     
 

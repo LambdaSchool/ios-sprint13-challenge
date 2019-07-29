@@ -47,14 +47,7 @@ class ExperiencesViewController: UIViewController {
     // MARK: - Functions
     private func configureLocationServices() {
         locationManager.delegate = self
-        
         // Save the authorizaation status in a variable
-//        let status = CLLocationManager.authorizationStatus()
-//
-//        // Request always authorization from user to track their location.
-//        if status == .notDetermined {
-//            locationManager.requestWhenInUseAuthorization()
-//        } else if status == .authorizedWhenInUse {
         if status == .authorizedWhenInUse {
             beginLocationUpdates(locationManager: locationManager)
         }

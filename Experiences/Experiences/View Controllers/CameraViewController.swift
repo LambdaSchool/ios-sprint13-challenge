@@ -66,8 +66,7 @@ class CameraViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // Hide the navigation bar
-    //    self.navigationController?.navigationBar.isHidden = true;
+        print("The title is \(String(describing: experienceTitle))")
     }
     
     
