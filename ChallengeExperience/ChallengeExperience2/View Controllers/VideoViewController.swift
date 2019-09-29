@@ -1,6 +1,6 @@
 //
 //  VideoViewController.swift
-//  ChallengeExperience
+//  ChallengeExperience2
 //
 //  Created by Michael Flowers on 9/28/19.
 //  Copyright © 2019 Michael Flowers. All rights reserved.
@@ -68,17 +68,13 @@ class VideoViewController: UIViewController {
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
         //transition back to home viewController that will show annotation
         //this is where you CREATE AN EXPERIENCE -> APPEND TO THE ARRAY -> SO THAT THE TITLE CAN BE DISPLAYED ON THE MAP AS AN ANNOTATION.
-        
-        //App is buggy sometimes it has lat and long, sometimes it doesnt. That's why I've broken out the guard statment to make sure to hit the error at the right place
-        print(coordinate?.latitude)
-        print(coordinate?.longitude)
-        
+      
         guard let experienceController = experienceController else { print("error1") ; return }
         guard let imageData = imageData else { print("error2") ; return }
         guard let audioURL = audioURL else { print("error3") ; return }
         guard let videoURL = videoRecorder.recordingURL else { print("error4") ; return }
         guard let title = experienceName else { print("error5") ; return }
-        guard let location = coordinate else { print("error6") ; print("location properties, latitude: \(coordinate?.latitude), longitutde: \(coordinate?.longitude)"); return }
+        guard let location = coordinate else { print("error6") ; return }
      
         experienceController.createExperience(with: title, imageData: imageData, video: videoURL, audio: audioURL, location: location)
         self.navigationController?.popToRootViewController(animated: true)

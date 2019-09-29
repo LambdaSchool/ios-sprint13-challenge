@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  ChallengeExperience
+//  ChallengeExperience2
 //
 //  Created by Michael Flowers on 9/28/19.
 //  Copyright © 2019 Michael Flowers. All rights reserved.
@@ -15,15 +15,16 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     let experienceController = ExperienceController()
     
     @IBOutlet weak var mapView: MKMapView!
-    private lazy var location = CLLocationManager()
+    private lazy var locationManager = CLLocationManager()
     var coordinate: CLLocationCoordinate2D?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         requestAuthorization()
         mapView.delegate = self
-        location.delegate = self
-        coordinate = location.location?.coordinate
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotationView")
     }
     
@@ -34,7 +35,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     func requestAuthorization(){
         //ask permission to use location, make applicable changes in info.plist
-        location.requestWhenInUseAuthorization()
+        locationManager.requestWhenInUseAuthorization()
         
         //check to see which permission they've allowed.
         let status = CLLocationManager.authorizationStatus()
@@ -53,6 +54,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         @unknown default:
             fatalError()
         }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let latitude = locations[0].coordinate.latitude
+        let longitude = locations[0].coordinate.longitude
+        coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
     
     @IBAction func buttonPressed(_ sender: UIButton) {

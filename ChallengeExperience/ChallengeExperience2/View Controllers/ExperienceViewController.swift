@@ -1,6 +1,6 @@
 //
 //  ExperienceViewController.swift
-//  ChallengeExperience
+//  ChallengeExperience2
 //
 //  Created by Michael Flowers on 9/28/19.
 //  Copyright © 2019 Michael Flowers. All rights reserved.
@@ -33,6 +33,7 @@ class ExperienceViewController: UIViewController {
         guard let title = titleTextField.text, !title.isEmpty else { print("no title"); return ""}
         return title
     }
+    
     var originalImage: UIImage? {
         didSet {
             //when this is set, update it to filter
@@ -74,13 +75,14 @@ class ExperienceViewController: UIViewController {
     
     //pass the information to VidoeViewController
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if segue.identifier == "ToVideo" {
-            guard let destionatVC = segue.destination as? VideoViewController, let unwrappedImageData = imageData, let unwrappedAudioURL = recorder.fileURL else { print("SEGUE didnt work"); return }
+            guard let destionatVC = segue.destination as? VideoViewController, let unwrappedImageData = imageData, let unwrappedAudioURL = recorder.fileURL, let location = coordinate else { print("SEGUE didnt work"); return }
             destionatVC.imageData = unwrappedImageData
             destionatVC.audioURL = unwrappedAudioURL
             destionatVC.experienceName = experienceTitle
             destionatVC.experienceController = experienceController
-            destionatVC.coordinate = coordinate
+            destionatVC.coordinate = location
         }
     }
     
@@ -90,7 +92,6 @@ class ExperienceViewController: UIViewController {
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else { print("the Photo library is not available."); return }
         
         let imagePicker = UIImagePickerController()
-        
         imagePicker.sourceType = .photoLibrary
         imagePicker.delegate = self
         present(imagePicker, animated: true, completion: nil)
