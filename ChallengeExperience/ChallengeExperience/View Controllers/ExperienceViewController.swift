@@ -2,7 +2,7 @@
 //  ExperienceViewController.swift
 //  ChallengeExperience
 //
-//  Created by Michael Flowers on 7/11/19.
+//  Created by Michael Flowers on 9/28/19.
 //  Copyright © 2019 Michael Flowers. All rights reserved.
 //
 
@@ -150,7 +150,6 @@ class ExperienceViewController: UIViewController {
         if let originalImage = originalImage {
             imageView.image = image(byFiltering: originalImage)
             imageData = originalImage.pngData()
-            print("This is the iamgeData: \(String(describing: imageData?.description))")
             addPosterImageProperties.isHidden = true
         } else {
             imageView.image = nil
@@ -158,7 +157,6 @@ class ExperienceViewController: UIViewController {
             addPosterImageProperties.isHidden = false
         }
     }
-    
 }
 
 extension ExperienceViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {

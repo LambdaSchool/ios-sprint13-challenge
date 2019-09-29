@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  ChallengeExperience
 //
-//  Created by Michael Flowers on 7/11/19.
+//  Created by Michael Flowers on 9/28/19.
 //  Copyright © 2019 Michael Flowers. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
     let experienceController = ExperienceController()
     
@@ -22,22 +22,14 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         requestAuthorization()
         mapView.delegate = self
-        mapView.showsUserLocation = true
         location.delegate = self
-        
         coordinate = location.location?.coordinate
-        
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnnotationView")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         addAnnotation()
-    }
-    
-    func trying(){
-        
     }
     
     func requestAuthorization(){
@@ -49,24 +41,18 @@ class MapViewController: UIViewController {
         
         switch status {
         case .authorizedWhenInUse:
-            mapView.showsUserLocation = true
             break
         case .denied:
-//            alert()
             break
         case .notDetermined:
-//            alert()
             break
         case .restricted:
-//            alert()
             break
         case .authorizedAlways:
             break
+        @unknown default:
+            fatalError()
         }
-    }
-    
-    func alert(){
-        //TODO: If you have time then you can create an alert
     }
     
     @IBAction func buttonPressed(_ sender: UIButton) {
@@ -81,23 +67,13 @@ class MapViewController: UIViewController {
         }
     }
     
-    func addAnnotation(){
+     func addAnnotation(){
         for annotation in experienceController.experiences {
             let mkPointAnnotation = MKPointAnnotation()
             mkPointAnnotation.coordinate = annotation.coordinate
-            mkPointAnnotation.title = annotation.name
+            mkPointAnnotation.title = experienceController.experiences.first?.name
             mapView.addAnnotation(annotation)
         }
     }
-}
-
-extension MapViewController: MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        return nil
-    }
-    
-}
-
-extension MapViewController: CLLocationManagerDelegate {
 }
 
