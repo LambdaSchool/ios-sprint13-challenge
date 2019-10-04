@@ -62,6 +62,9 @@
                                 <rect key="frame" x="20" y="108" width="374" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="textFieldChanged:" destination="ckW-1q-Bg3" eventType="editingChanged" id="LK8-eP-s6O"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1CW-f9-NWw">
                                 <rect key="frame" x="20" y="206" width="374" height="36"/>
@@ -82,16 +85,26 @@
                                     <action selector="recordButton:" destination="ckW-1q-Bg3" eventType="touchUpInside" id="jEz-eh-8FT"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m3b-6h-1eG">
+                                <rect key="frame" x="274.5" y="433" width="119.5" height="30"/>
+                                <state key="normal" title="Preview"/>
+                                <connections>
+                                    <action selector="previewButtonPressed:" destination="ckW-1q-Bg3" eventType="touchUpInside" id="JRD-4E-fpl"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="1CW-f9-NWw" firstAttribute="leading" secondItem="h3e-6o-bkU" secondAttribute="leading" constant="20" id="8kU-c5-GRs"/>
                             <constraint firstItem="h3e-6o-bkU" firstAttribute="trailing" secondItem="1CW-f9-NWw" secondAttribute="trailing" constant="20" id="DoM-OU-u4D"/>
                             <constraint firstItem="KXr-6c-iGW" firstAttribute="centerX" secondItem="ujl-Ch-ptT" secondAttribute="centerX" id="MaU-na-VQ7"/>
+                            <constraint firstItem="h3e-6o-bkU" firstAttribute="trailing" secondItem="m3b-6h-1eG" secondAttribute="trailing" constant="20" id="NXq-Og-YFU"/>
                             <constraint firstItem="jT4-hC-Uof" firstAttribute="leading" secondItem="h3e-6o-bkU" secondAttribute="leading" constant="20" id="TpK-AI-x0a"/>
                             <constraint firstItem="1CW-f9-NWw" firstAttribute="centerY" secondItem="ujl-Ch-ptT" secondAttribute="centerY" multiplier="0.5" id="UOl-bP-CC3"/>
                             <constraint firstItem="h3e-6o-bkU" firstAttribute="trailing" secondItem="jT4-hC-Uof" secondAttribute="trailing" constant="20" id="eje-Ya-TNq"/>
+                            <constraint firstItem="m3b-6h-1eG" firstAttribute="leading" secondItem="KXr-6c-iGW" secondAttribute="trailing" constant="20" id="sjA-Hc-eum"/>
                             <constraint firstItem="jT4-hC-Uof" firstAttribute="top" secondItem="h3e-6o-bkU" secondAttribute="top" constant="20" id="tlD-oo-AHR"/>
+                            <constraint firstItem="m3b-6h-1eG" firstAttribute="centerY" secondItem="ujl-Ch-ptT" secondAttribute="centerY" id="u5d-WF-bRO"/>
                             <constraint firstItem="KXr-6c-iGW" firstAttribute="centerY" secondItem="ujl-Ch-ptT" secondAttribute="centerY" id="uOf-Zx-Wku"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="h3e-6o-bkU"/>
@@ -105,8 +118,10 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="previewButton" destination="m3b-6h-1eG" id="Kwa-ix-bd5"/>
                         <outlet property="recordButton" destination="KXr-6c-iGW" id="c98-to-ocb"/>
                         <outlet property="recordDurationLabel" destination="1CW-f9-NWw" id="13I-O6-hAr"/>
+                        <outlet property="saveButton" destination="sxs-Uo-rp3" id="fFr-rF-qcZ"/>
                         <outlet property="titleTextField" destination="jT4-hC-Uof" id="ncm-he-1wM"/>
                     </connections>
                 </viewController>
