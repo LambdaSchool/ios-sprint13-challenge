@@ -29,6 +29,11 @@ class AudioPlayer: NSObject {
         audioPlayer = try AVAudioPlayer(data: data)
         audioPlayer?.delegate = self
     }
+    func load(url: URL)throws {
+        //audioPlayer = nil
+        audioPlayer = try AVAudioPlayer(contentsOf: url)
+        audioPlayer?.delegate = self
+    }
     
     private func play() {
         audioPlayer?.play()

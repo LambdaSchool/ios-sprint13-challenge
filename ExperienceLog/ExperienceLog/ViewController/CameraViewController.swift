@@ -166,6 +166,7 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         DispatchQueue.main.async {
             self.updateViews()
             self.playMovie(url: outputFileURL)
+            self.videoURL = outputFileURL
             self.doneButton.isEnabled = true
             
         }

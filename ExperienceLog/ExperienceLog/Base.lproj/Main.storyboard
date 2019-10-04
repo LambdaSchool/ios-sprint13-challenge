@@ -221,67 +221,83 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TEQ-dM-2lb">
-                                <rect key="frame" x="20" y="192" width="374" height="384.5"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Srs-5m-61P">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="384.5"/>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstItem="Srs-5m-61P" firstAttribute="top" secondItem="TEQ-dM-2lb" secondAttribute="top" id="9y5-ZV-geV"/>
-                                    <constraint firstItem="Srs-5m-61P" firstAttribute="leading" secondItem="TEQ-dM-2lb" secondAttribute="leading" id="FEc-Ex-bMo"/>
-                                    <constraint firstAttribute="bottom" secondItem="Srs-5m-61P" secondAttribute="bottom" id="Ge7-A7-oug"/>
-                                    <constraint firstAttribute="trailing" secondItem="Srs-5m-61P" secondAttribute="trailing" id="ulW-eP-Xhk"/>
-                                </constraints>
-                            </view>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter title here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pO5-OA-ZJW">
                                 <rect key="frame" x="20" y="128" width="374" height="34"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" notEnabled="YES"/>
+                                </accessibility>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="OLg-AT-SLa">
-                                <rect key="frame" x="20" y="622" width="374" height="150"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OLg-AT-SLa">
+                                <rect key="frame" x="20" y="672" width="374" height="100"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="150" id="INQ-24-Yfr"/>
+                                    <constraint firstAttribute="height" constant="100" id="INQ-24-Yfr"/>
                                 </constraints>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OQW-0W-IgW">
-                                <rect key="frame" x="20" y="586.5" width="44" height="25.5"/>
+                                <rect key="frame" x="20" y="636.5" width="44" height="25.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ncK-5a-v57">
-                                <rect key="frame" x="192" y="792" width="30" height="30"/>
-                                <state key="normal" title="Play"/>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="cqS-qK-oEm">
+                                <rect key="frame" x="171" y="792" width="72" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ncK-5a-v57">
+                                        <rect key="frame" x="0.0" y="0.0" width="72" height="30"/>
+                                        <state key="normal" title="Play Audio"/>
+                                        <connections>
+                                            <action selector="playAudioButtonTapped:" destination="w9n-1j-rqe" eventType="touchUpInside" id="XMg-fi-D6S"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6dQ-Bc-Svu">
+                                        <rect key="frame" x="0.0" y="38" width="72" height="12"/>
+                                        <state key="normal" title="Play Video"/>
+                                        <connections>
+                                            <action selector="playVideoButtonTapped:" destination="w9n-1j-rqe" eventType="touchUpInside" id="EoC-qU-ftA"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="8bZ-Ca-KPx"/>
+                                </constraints>
+                            </stackView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Srs-5m-61P">
+                                <rect key="frame" x="20" y="182" width="374" height="434.5"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="TEQ-dM-2lb" firstAttribute="top" secondItem="pO5-OA-ZJW" secondAttribute="bottom" constant="30" id="46X-io-Wip"/>
+                            <constraint firstItem="cqS-qK-oEm" firstAttribute="top" secondItem="OLg-AT-SLa" secondAttribute="bottom" constant="20" id="17K-Fk-Lfj"/>
+                            <constraint firstItem="OQW-0W-IgW" firstAttribute="top" secondItem="Srs-5m-61P" secondAttribute="bottom" constant="20" id="8qx-Sx-TDP"/>
                             <constraint firstItem="pO5-OA-ZJW" firstAttribute="leading" secondItem="NOs-TG-SR4" secondAttribute="leading" constant="20" id="Crx-HJ-Q5K"/>
-                            <constraint firstItem="NOs-TG-SR4" firstAttribute="bottom" secondItem="ncK-5a-v57" secondAttribute="bottom" constant="40" id="Ebk-eM-BF8"/>
+                            <constraint firstItem="Srs-5m-61P" firstAttribute="top" secondItem="pO5-OA-ZJW" secondAttribute="bottom" constant="20" id="DaE-ot-7Gj"/>
                             <constraint firstItem="OLg-AT-SLa" firstAttribute="top" secondItem="OQW-0W-IgW" secondAttribute="bottom" constant="10" id="Hnn-IO-dch"/>
                             <constraint firstItem="OLg-AT-SLa" firstAttribute="leading" secondItem="NOs-TG-SR4" secondAttribute="leading" constant="20" id="JCB-Kk-8ZU"/>
                             <constraint firstItem="OQW-0W-IgW" firstAttribute="leading" secondItem="NOs-TG-SR4" secondAttribute="leading" constant="20" id="KUB-kp-1YA"/>
+                            <constraint firstItem="cqS-qK-oEm" firstAttribute="centerX" secondItem="h5S-tm-sEJ" secondAttribute="centerX" id="L1y-aj-NXg"/>
                             <constraint firstItem="pO5-OA-ZJW" firstAttribute="top" secondItem="NOs-TG-SR4" secondAttribute="top" constant="40" id="SeP-qs-GHG"/>
-                            <constraint firstItem="ncK-5a-v57" firstAttribute="centerX" secondItem="h5S-tm-sEJ" secondAttribute="centerX" id="T4d-3E-DBY"/>
-                            <constraint firstItem="ncK-5a-v57" firstAttribute="top" secondItem="OLg-AT-SLa" secondAttribute="bottom" constant="20" id="YzN-ZF-a4v"/>
-                            <constraint firstItem="NOs-TG-SR4" firstAttribute="trailing" secondItem="TEQ-dM-2lb" secondAttribute="trailing" constant="20" id="ZO7-nv-irY"/>
-                            <constraint firstItem="OQW-0W-IgW" firstAttribute="top" secondItem="TEQ-dM-2lb" secondAttribute="bottom" constant="10" id="esm-We-i7x"/>
+                            <constraint firstItem="NOs-TG-SR4" firstAttribute="trailing" secondItem="Srs-5m-61P" secondAttribute="trailing" constant="20" id="cCU-XI-ElW"/>
+                            <constraint firstItem="NOs-TG-SR4" firstAttribute="bottom" secondItem="cqS-qK-oEm" secondAttribute="bottom" constant="20" id="kdQ-rg-L4n"/>
                             <constraint firstItem="NOs-TG-SR4" firstAttribute="trailing" secondItem="pO5-OA-ZJW" secondAttribute="trailing" constant="20" id="lRr-5O-EyM"/>
                             <constraint firstItem="NOs-TG-SR4" firstAttribute="trailing" secondItem="OLg-AT-SLa" secondAttribute="trailing" constant="20" id="ueS-GF-U5O"/>
-                            <constraint firstItem="TEQ-dM-2lb" firstAttribute="leading" secondItem="NOs-TG-SR4" secondAttribute="leading" constant="20" id="w30-z8-d3m"/>
+                            <constraint firstItem="Srs-5m-61P" firstAttribute="leading" secondItem="NOs-TG-SR4" secondAttribute="leading" constant="20" id="yg6-Tg-wVq"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="NOs-TG-SR4"/>
                     </view>
                     <navigationItem key="navigationItem" id="EDe-EO-rwf"/>
+                    <connections>
+                        <outlet property="imageView" destination="Srs-5m-61P" id="lVE-bW-Wib"/>
+                        <outlet property="noteTextView" destination="OLg-AT-SLa" id="7jY-wh-EdY"/>
+                        <outlet property="playAudioButton" destination="ncK-5a-v57" id="Ii6-4T-SEO"/>
+                        <outlet property="playVideoButton" destination="6dQ-Bc-Svu" id="pvX-eD-rOk"/>
+                        <outlet property="titleTextField" destination="pO5-OA-ZJW" id="G3H-eM-0wk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3ND-nf-yVg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

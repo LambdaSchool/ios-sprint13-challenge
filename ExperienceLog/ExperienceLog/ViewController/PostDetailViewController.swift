@@ -7,27 +7,68 @@
 //
 
 import UIKit
+import AVFoundation
+import AVKit
 
 class PostDetailViewController: UIViewController {
     
+    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var noteTextView: UITextView!
+    @IBOutlet weak var playAudioButton: UIButton!
+    @IBOutlet weak var playVideoButton: UIButton!
+    
     var post: Post!
+    let audioPlayer = AudioPlayer()
+    var videoPlayer: AVPlayer!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(post)
+        setupViews()
+        
+        
+        if let audio = post.audioURL {
+            playAudioButton.isHidden = false
+            do {
+                try audioPlayer.load(url: audio)
+                audioPlayer.delegate = self
+            } catch {
+                print("cant init audio player")
+            }
+        } else {
+            playAudioButton.isHidden = true
+        }
+        if let video = post.videoURL {
+            playVideoButton.isHidden = false
+            videoPlayer = AVPlayer(url: video)
+        } else {
+            playVideoButton.isHidden = true
+        }
 
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func setupViews() {
+        titleTextField.text = post.title
+        imageView.image = post.image
+        noteTextView.text = post.note
+        
     }
-    */
-
+    @IBAction func playAudioButtonTapped(_ sender: Any) {
+        print("play audio")
+        audioPlayer.playPause()
+    }
+    @IBAction func playVideoButtonTapped(_ sender: Any) {
+        print("play video")
+        let avplayerVC = AVPlayerViewController()
+        avplayerVC.player = videoPlayer
+        present(avplayerVC, animated: true)
+    }
+    
+}
+extension PostDetailViewController: AudioPlayerDelegate {
+    func playerStateDidChange() {
+        let buttonName = audioPlayer.isPlaying ? "Pause" : "Play Audio"
+        playAudioButton.setTitle(buttonName, for: .normal)
+    }
 }
