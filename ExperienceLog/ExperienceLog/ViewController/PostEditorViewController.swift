@@ -18,6 +18,8 @@ class PostEditorViewController: UIViewController {
     @IBOutlet weak var noteTextView: UITextView!
     @IBOutlet weak var recordButton: UIButton!
     
+    private let context = CIContext(options:nil)
+    private let colorControlFilter = CIFilter(name: "CIColorControls")!
     var imagePicker: UIImagePickerController!
     var postController: PostController!
     var audioURL: URL?
@@ -106,6 +108,23 @@ class PostEditorViewController: UIViewController {
         self.present(alertcontroller, animated: true)
     }
     
+    private func colorControlFilterImage(_ image: UIImage) -> UIImage {
+        //let CIImage = image.ciImage //nil, not going to work
+        guard let cgImage = image.cgImage else { fatalError("No image available for filtering")}
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        colorControlFilter.setValue(ciImage, forKey: kCIInputImageKey)
+        colorControlFilter.setValue(0.5, forKey: kCIInputBrightnessKey)
+        
+        
+        guard let outputCIImage = colorControlFilter.outputImage else { fatalError("cant make out put CI image") }
+        //outputCIImage.cgImage // nil with a CIImage
+        
+        //render the image
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else { fatalError("cant make out put CG image")}
+        return UIImage(cgImage: outputCGImage)
+    }
+    
     
 }
 
@@ -121,7 +140,7 @@ extension PostEditorViewController: UIImagePickerControllerDelegate, UINavigatio
            
            guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
            
-           imageView.image = image
+           imageView.image = colorControlFilterImage(image)
        }
 }
 
