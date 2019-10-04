@@ -75,7 +75,14 @@ class AudioViewController: UIViewController, ExperienceControllerAccessor {
 	}
 
 	@IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
+		guard let title = titleTextField.text,
+			let lastLocation = experienceController?.locationManager.lastLocation,
+			let mediaURL = audioPlayer?.currentFile
+			else { return }
 
+		audioPlayer = nil
+		experienceController?.createExperience(titled: title, tempMediaURL: mediaURL, type: .audio, latitude: lastLocation.latitude, longitude: lastLocation.longitude)
+		navigationController?.popViewController(animated: true)
 	}
 
 	@IBAction func previewButtonPressed(_ sender: UIButton) {

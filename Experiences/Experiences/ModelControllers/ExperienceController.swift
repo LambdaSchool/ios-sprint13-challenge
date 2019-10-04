@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-enum ExperienceType: String {
+enum ExperienceType: String, CaseIterable {
 	case photo
 	case video
 	case audio
@@ -23,9 +23,24 @@ class ExperienceController {
 
 	/// only access from main thread
 	private(set) var experiences: [Experience] = []
+	let locationManager = LocationRequester()
 
 	init() {
 		updateExperiences()
+		locationManager.requestAuth()
+		locationManager.startTrackingLocation()
+		setupFolders()
+	}
+
+	private func setupFolders() {
+		guard let documentsFolder = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { fatalError("Something went catastrophically wrong.") }
+		do {
+			for type in ExperienceType.allCases {
+				try FileManager.default.createDirectory(at: documentsFolder.appendingPathComponent(type.rawValue), withIntermediateDirectories: true, attributes: nil)
+			}
+		} catch {
+			NSLog("Error creating directory: \(error)")
+		}
 	}
 	
 	func createExperience(titled title: String, tempMediaURL: URL, type: ExperienceType, latitude: Double, longitude: Double) {
@@ -40,15 +55,16 @@ class ExperienceController {
 		}
 
 		let context = CoreDataStack.shared.mainContext
-		context.perform {
+		context.performAndWait {
 			Experience(title: title, mediaURL: destination, longitude: longitude, latitude: latitude, context: context)
+			try? CoreDataStack.shared.save(context: context)
 		}
 		updateExperiences()
 	}
 
 	private func updateExperiences() {
 		let moc = CoreDataStack.shared.mainContext
-		moc.perform {
+		moc.performAndWait {
 			do {
 				let fetchRequest: NSFetchRequest<Experience> = Experience.fetchRequest()
 				let experiences = try moc.fetch(fetchRequest)

@@ -14,7 +14,6 @@ class MapViewController: UIViewController, ExperienceControllerAccessor {
 	@IBOutlet var newExperienceButton: UIButton!
 	@IBOutlet var mapView: MKMapView!
 
-	let locationManager = LocationRequester()
 	var experienceController: ExperienceController?
 
 	override func viewDidLoad() {
@@ -22,7 +21,6 @@ class MapViewController: UIViewController, ExperienceControllerAccessor {
 		// Do any additional setup after loading the view.
 		newExperienceButton.layer.cornerRadius = 10
 
-		locationManager.requestAuth()
 	}
 
 	override func viewDidAppear(_ animated: Bool) {
@@ -44,7 +42,7 @@ class MapViewController: UIViewController, ExperienceControllerAccessor {
 	private func showExperienceSelectionPrompt() {
 		let alertVC = UIAlertController(title: "Capture", message: "What would be the best way to capture this experience?", preferredStyle: .alert)
 
-		if locationManager.isAuthorized {
+		if experienceController?.locationManager.isAuthorized == true {
 			let photoAction = UIAlertAction(title: "Photograph", style: .default) { _ in
 				self.showVCIdentifiedBy("PhotographViewController")
 			}
@@ -54,14 +52,17 @@ class MapViewController: UIViewController, ExperienceControllerAccessor {
 			let videoAction = UIAlertAction(title: "Video", style: .default) { _ in
 				self.showVCIdentifiedBy("VideoViewController")
 			}
-			alertVC.addAction(photoAction)
 			alertVC.addAction(audioAction)
+			alertVC.addAction(photoAction)
 			alertVC.addAction(videoAction)
 		} else {
 			alertVC.message = "Location services need to be enabled to do anything practical with this app. If you denied access, go to your device settings and rethink what you've done."
 			alertVC.addAction(UIAlertAction(title: "Fiiiiiiine", style: .cancel))
 		}
 
+		if experienceController?.locationManager.lastLocation == nil {
+			experienceController?.locationManager.singleLocationRequest()
+		}
 
 		present(alertVC, animated: true)
 	}
