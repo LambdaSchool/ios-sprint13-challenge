@@ -110,12 +110,6 @@ class VideoRecordViewController: UIViewController {
         if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
             return device
         } else {
-            print("No ultra wide camera found on back")
-        }
-
-        if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
-            return device
-        } else {
             fatalError("No cameras on device (or you're running in the simulator)")
         }
     }
@@ -169,7 +163,7 @@ class VideoRecordViewController: UIViewController {
         } else {
             recordButton.tintColor = .systemPink
         }
-
+        
         saveButton.layer.cornerRadius = saveButton.frame.height / 2
     }
 
