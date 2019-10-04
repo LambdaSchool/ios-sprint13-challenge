@@ -10,14 +10,17 @@ import UIKit
 import MapKit
 
 class MapViewController: UIViewController {
-
+    
+    @IBOutlet weak var mapView: MKMapView!
     let postController = PostController()
+    var post: Post!
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapView.delegate = self
 
         // Do any additional setup after loading the view.
     }
-    @IBOutlet weak var mapView: MKMapView!
+
     @IBAction func addButtonTapped(_ sender: Any) {
         performSegue(withIdentifier: "PostEditorShowSegue", sender: self)
     }
@@ -25,6 +28,10 @@ class MapViewController: UIViewController {
         if segue.identifier == "PostEditorShowSegue" {
             guard let postEditorVC = segue.destination as? PostEditorViewController else { fatalError("cant make PostEditorVC") }
             postEditorVC.postController = postController
+        }
+        if segue.identifier == "PostDetailShowSegue" {
+            guard let postDetailVC = segue.destination as? PostDetailViewController else { fatalError("cant make PostDetailVC") }
+            postDetailVC.post = post
         }
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -46,4 +53,12 @@ class MapViewController: UIViewController {
         }
     }
     
+}
+extension MapViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard let postAnnotaion = view.annotation as? PostAnnotation else { return }
+        let post = postAnnotaion.post
+        self.post = post
+        performSegue(withIdentifier: "PostDetailShowSegue", sender: self)
+    }
 }

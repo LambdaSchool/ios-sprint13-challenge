@@ -113,7 +113,7 @@ class CameraViewController: UIViewController {
         recordButton.isHidden = true
         cameraView.isHidden = true
         
-        let tap = UIGestureRecognizer(target: self, action: #selector(replay))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(replay))
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(tap)
         
@@ -128,6 +128,7 @@ class CameraViewController: UIViewController {
         
     }
     @objc private func replay() {
+        print("replay")
         player.seek(to: .zero)
         player.play()
     }
