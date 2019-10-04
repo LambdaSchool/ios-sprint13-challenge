@@ -24,7 +24,7 @@
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title your experience..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="c7Q-bN-J2F">
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                             </textField>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mBU-NS-L2E">
                                                 <rect key="frame" x="0.0" y="61" width="374" height="250"/>
@@ -63,6 +63,9 @@
                                                                 <state key="normal" image="play.circle" catalog="system">
                                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="20"/>
                                                                 </state>
+                                                                <connections>
+                                                                    <action selector="playAudioTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WuF-S2-gqG"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                     </stackView>
@@ -105,6 +108,9 @@
                                                                 <state key="normal" image="play.circle" catalog="system">
                                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="20"/>
                                                                 </state>
+                                                                <connections>
+                                                                    <action selector="playVideoTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eq9-kF-N5t"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                     </stackView>
@@ -151,6 +157,9 @@
                                         <state key="normal" image="video" catalog="system">
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="20"/>
                                         </state>
+                                        <connections>
+                                            <segue destination="5kg-le-67q" kind="presentation" identifier="VideoModalSegue" id="IKi-yn-HKj"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -187,6 +196,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1311.5942028985507" y="-646.20535714285711"/>
+        </scene>
+        <!--VideoRecord-->
+        <scene sceneID="ad7-fR-iiA">
+            <objects>
+                <viewControllerPlaceholder storyboardName="VideoRecord" id="5kg-le-67q" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hxv-st-Mlj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1644" y="-252"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="tM1-lT-wne">

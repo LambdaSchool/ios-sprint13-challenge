@@ -1,7 +1,87 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13142" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5NC-l0-9cj">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12042"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <scenes/>
+    <scenes>
+        <!--Video Record View Controller-->
+        <scene sceneID="biE-1u-5Iy">
+            <objects>
+                <viewController interfaceStyle="dark" id="5NC-l0-9cj" customClass="VideoRecordViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Dad-xQ-2we">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3lB-mh-oio" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H1n-m4-oJZ">
+                                        <rect key="frame" x="177.5" y="759" width="59" height="57"/>
+                                        <color key="tintColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" image="largecircle.fill.circle" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="50"/>
+                                        </state>
+                                        <state key="selected" image="stop.circle" catalog="system"/>
+                                        <connections>
+                                            <action selector="recordButtonTapped:" destination="5NC-l0-9cj" eventType="touchUpInside" id="DGU-ed-t62"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mOs-KS-jCD">
+                                        <rect key="frame" x="296.5" y="774" width="52" height="27"/>
+                                        <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                        <color key="tintColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
+                                        <state key="normal" title="Save"/>
+                                        <connections>
+                                            <action selector="saveTapped:" destination="5NC-l0-9cj" eventType="touchUpInside" id="N98-6D-W9l"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6wd-gF-e1j">
+                                        <rect key="frame" x="184.5" y="30" width="45" height="27"/>
+                                        <color key="tintColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" image="chevron.compact.down" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="40"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="mOs-KS-jCD" firstAttribute="leading" secondItem="H1n-m4-oJZ" secondAttribute="trailing" constant="60" id="K5X-0a-C7Q"/>
+                                    <constraint firstItem="H1n-m4-oJZ" firstAttribute="centerX" secondItem="3lB-mh-oio" secondAttribute="centerX" id="KsN-wL-odT"/>
+                                    <constraint firstItem="6wd-gF-e1j" firstAttribute="centerX" secondItem="3lB-mh-oio" secondAttribute="centerX" id="TLA-Cx-V2u"/>
+                                    <constraint firstItem="mOs-KS-jCD" firstAttribute="centerY" secondItem="H1n-m4-oJZ" secondAttribute="centerY" id="VRc-Jp-yii"/>
+                                    <constraint firstAttribute="bottom" secondItem="H1n-m4-oJZ" secondAttribute="bottom" constant="80" id="lXb-Lx-D8d"/>
+                                    <constraint firstItem="6wd-gF-e1j" firstAttribute="top" secondItem="3lB-mh-oio" secondAttribute="top" constant="30" id="xDJ-o9-8dZ"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="3lB-mh-oio" firstAttribute="leading" secondItem="KxJ-Il-94j" secondAttribute="leading" id="VVn-3T-psb"/>
+                            <constraint firstItem="3lB-mh-oio" firstAttribute="trailing" secondItem="KxJ-Il-94j" secondAttribute="trailing" id="kS0-X4-ifu"/>
+                            <constraint firstAttribute="bottom" secondItem="3lB-mh-oio" secondAttribute="bottom" id="l9r-hU-h8l"/>
+                            <constraint firstItem="3lB-mh-oio" firstAttribute="top" secondItem="Dad-xQ-2we" secondAttribute="top" id="oDY-j0-cVO"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="KxJ-Il-94j"/>
+                    </view>
+                    <connections>
+                        <outlet property="cameraView" destination="3lB-mh-oio" id="knu-3b-tIc"/>
+                        <outlet property="recordButton" destination="H1n-m4-oJZ" id="Tp9-Kq-E1n"/>
+                        <outlet property="saveButton" destination="mOs-KS-jCD" id="sdr-h5-GU0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="va3-A2-DFi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="144.92753623188406" y="148.66071428571428"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="chevron.compact.down" catalog="system" width="64" height="20"/>
+        <image name="largecircle.fill.circle" catalog="system" width="64" height="62"/>
+        <image name="stop.circle" catalog="system" width="64" height="62"/>
+    </resources>
 </document>
