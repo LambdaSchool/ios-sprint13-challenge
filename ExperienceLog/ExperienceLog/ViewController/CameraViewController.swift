@@ -20,6 +20,7 @@ class CameraViewController: UIViewController {
     @IBOutlet var recordButton: UIButton!
     @IBOutlet var cameraView: CameraPreviewView!
     @IBOutlet weak var doneButton: UIBarButtonItem!
+
     
     var post: Post?
     var postController: PostController!
@@ -107,6 +108,29 @@ class CameraViewController: UIViewController {
         self.navigationController?.popToRootViewController(animated: true)
         
     }
+    private func playMovie(url: URL) {
+        
+        recordButton.isHidden = true
+        cameraView.isHidden = true
+        
+        let tap = UIGestureRecognizer(target: self, action: #selector(replay))
+        view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(tap)
+        
+        player = AVPlayer(url: url)
+        
+        let playerLayer = AVPlayerLayer(player: player)
+        playerLayer.frame = view.frame
+        
+        view.layer.addSublayer(playerLayer)
+        
+        player.play()
+        
+    }
+    @objc private func replay() {
+        player.seek(to: .zero)
+        player.play()
+    }
     
     func record() {
         if fileOutput.isRecording {
@@ -140,6 +164,7 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         DispatchQueue.main.async {
             self.updateViews()
+            self.playMovie(url: outputFileURL)
             self.doneButton.isEnabled = true
             
         }
