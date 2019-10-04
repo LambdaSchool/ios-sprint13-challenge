@@ -10,10 +10,12 @@ import UIKit
 import Photos
 
 class PhotographViewController: UIViewController, ExperienceControllerAccessor {
-	@IBOutlet var imageView: UIImageView!
-	@IBOutlet var takePhotoButton: UIButton!
-	@IBOutlet var filterCollectionView: UICollectionView!
-	@IBOutlet var strengthSlider: UISlider!
+	@IBOutlet private var imageView: UIImageView!
+	@IBOutlet private var takePhotoButton: UIButton!
+	@IBOutlet private var filterCollectionView: UICollectionView!
+	@IBOutlet private var strengthSlider: UISlider!
+	@IBOutlet private var titleTextField: UITextField!
+	@IBOutlet private var saveButton: UIBarButtonItem!
 
 	var experienceController: ExperienceController?
 	lazy var filters: [MyFilter] = {
@@ -68,6 +70,15 @@ class PhotographViewController: UIViewController, ExperienceControllerAccessor {
 		if let image = scaledImage {
 			imageView.image = filterImage(image)
 		}
+		saveButtonEnableLogic()
+	}
+
+	private func saveButtonEnableLogic() {
+		if originalImage != nil && titleTextField.text?.isEmpty == false {
+			saveButton.isEnabled = true
+		} else {
+			saveButton.isEnabled = false
+		}
 	}
 
 	@IBAction func takePhotoButtonPressed(_ sender: UIButton) {
@@ -103,11 +114,35 @@ class PhotographViewController: UIViewController, ExperienceControllerAccessor {
 		present(imagePicker, animated: true, completion: nil)
 	}
 
+	@IBAction func textFieldChanged(_ sender: UITextField) {
+		saveButtonEnableLogic()
+	}
+
 	@IBAction func strengthSliderChanged(_ sender: UISlider) {
 		updateImage()
 	}
 
 	@IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
+		guard let title = titleTextField.text,
+			let lastLocation = experienceController?.locationManager.lastLocation,
+			let image = originalImage
+			else { return }
+
+		let filteredImage = filterImage(image)
+		let mediaURL = URL(fileURLWithPath: NSTemporaryDirectory())
+			.appendingPathComponent(UUID().uuidString)
+			.appendingPathExtension("jpg")
+		guard let imageData = filteredImage.jpegData(compressionQuality: 0.65) else { return }
+
+		do {
+			try imageData.write(to: mediaURL)
+		} catch {
+			NSLog("Error writing image data to disk: \(error)")
+			return
+		}
+
+		experienceController?.createExperience(titled: title, tempMediaURL: mediaURL, type: .photo, latitude: lastLocation.latitude, longitude: lastLocation.longitude)
+		navigationController?.popViewController(animated: true)
 	}
 
 	func filterImage(_ image: UIImage) -> UIImage {
