@@ -11,7 +11,7 @@ import UIKit
 class FilterCollectionViewCell: UICollectionViewCell {
 	private let context = CIContext(options: nil)
 
-	var filter: CIFilter? {
+	var filter: MyFilter? {
 		didSet {
 			updateViews()
 		}
@@ -29,10 +29,18 @@ class FilterCollectionViewCell: UICollectionViewCell {
 		guard let filter = filter, let image = image else { return }
 
 		guard let ciImage = CIImage(image: image) else { fatalError("No Image available") }
-		filter.setValue(ciImage, forKey: kCIInputImageKey)
+//		filter.setValue(ciImage, forKey: kCIInputImageKey)
+		filter.inputImage = ciImage
+		filter.strength = 1
 		#warning("set filter settings")
 
-		guard let ciImageResult = filter.outputImage, let cgImageResult = context.createCGImage(ciImageResult, from: CGRect(origin: .zero, size: image.size)) else { fatalError("No output image") }
+		guard let ciImageResult = filter.outputImage,
+			let cgImageResult = context.createCGImage(ciImageResult, from: CGRect(origin: .zero, size: image.size))
+			else {
+				NSLog("Error filtering image")
+				imageView.image = image
+				return 
+		}
 		imageView.image = UIImage(cgImage: cgImageResult)
 	}
 }

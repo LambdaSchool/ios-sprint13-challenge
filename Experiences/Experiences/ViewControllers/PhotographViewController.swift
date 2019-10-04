@@ -15,8 +15,8 @@ class PhotographViewController: UIViewController {
 	@IBOutlet var filterCollectionView: UICollectionView!
 	@IBOutlet var strengthSlider: UISlider!
 
-	lazy var filters: [CIFilter] = {
-		[]
+	lazy var filters: [MyFilter] = {
+		[HashtagNoFilter(), SepiaFilter(), DreamFilter()]
 	}()
 	private let context = CIContext(options: nil)
 	var selectedFilter: CIFilter?
@@ -49,6 +49,8 @@ class PhotographViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+		filterCollectionView.delegate = self
+		filterCollectionView.dataSource = self
 	}
 
 	

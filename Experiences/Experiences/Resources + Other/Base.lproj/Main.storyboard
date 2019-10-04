@@ -158,7 +158,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="128" id="0bU-Yt-AaI"/>
                                         </constraints>
-                                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="WbX-QV-nxc">
+                                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="WbX-QV-nxc">
                                             <size key="itemSize" width="135" height="135"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -166,7 +166,7 @@
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FilterCell" id="5cA-ys-vPR" customClass="FilterCollectionViewCell" customModule="Experiences" customModuleProvider="target">
-                                                <rect key="frame" x="20" y="0.0" width="135" height="135"/>
+                                                <rect key="frame" x="20" y="-3.5" width="135" height="135"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="95d-TQ-G6V">
                                                     <rect key="frame" x="0.0" y="0.0" width="135" height="135"/>
@@ -175,14 +175,19 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EZo-N8-Pcg">
                                                             <rect key="frame" x="0.0" y="0.0" width="135" height="135"/>
                                                             <subviews>
-                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="C1V-Tv-JER">
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="C1V-Tv-JER">
                                                                     <rect key="frame" x="0.0" y="0.0" width="135" height="135"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" secondItem="C1V-Tv-JER" secondAttribute="height" multiplier="1:1" id="4T6-w7-wVT"/>
+                                                                    </constraints>
                                                                 </imageView>
                                                             </subviews>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstItem="C1V-Tv-JER" firstAttribute="top" secondItem="EZo-N8-Pcg" secondAttribute="top" id="5rw-tw-ium"/>
                                                                 <constraint firstAttribute="bottom" secondItem="C1V-Tv-JER" secondAttribute="bottom" id="SBs-xD-ySc"/>
+                                                                <constraint firstAttribute="width" constant="128" id="ULg-ys-Lv4"/>
+                                                                <constraint firstAttribute="height" constant="128" id="ZdH-p0-TWh"/>
                                                                 <constraint firstItem="C1V-Tv-JER" firstAttribute="leading" secondItem="EZo-N8-Pcg" secondAttribute="leading" id="cio-7N-hDh"/>
                                                                 <constraint firstAttribute="trailing" secondItem="C1V-Tv-JER" secondAttribute="trailing" id="hEj-CW-gDa"/>
                                                             </constraints>
