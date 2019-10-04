@@ -106,6 +106,9 @@ class PhotographViewController: UIViewController {
 		updateImage()
 	}
 
+	@IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
+	}
+
 	func filterImage(_ image: UIImage) -> UIImage {
 		guard let filter = selectedFilter, let ciImage = CIImage(image: image) else { return image }
 
