@@ -9,22 +9,21 @@
 import UIKit
 
 class AudioViewController: UIViewController {
+	@IBOutlet var recordButton: UIButton!
+	@IBOutlet var titleTextField: UITextField!
+	@IBOutlet var recordDurationLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+		setupRecordLabel()
     }
-    
 
-    /*
-    // MARK: - Navigation
+	private func setupRecordLabel() {
+		let font = UIFont.monospacedDigitSystemFont(ofSize: 48, weight: .medium)
+		recordDurationLabel.font = font
+	}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+	@IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
+	}
 }

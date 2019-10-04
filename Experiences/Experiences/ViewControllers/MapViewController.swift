@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import MapKit
 
 class MapViewController: UIViewController {
 	@IBOutlet var newExperienceButton: UIButton!
+	@IBOutlet var mapView: MKMapView!
 
 	let locationManager = LocationRequester()
 
@@ -33,7 +35,7 @@ class MapViewController: UIViewController {
 
 			}
 			let audioAction = UIAlertAction(title: "Audio", style: .default) { _ in
-				
+				self.showVCIdentifiedBy("AudioViewController")
 			}
 			let videoAction = UIAlertAction(title: "Video", style: .default) { _ in
 				
@@ -48,6 +50,12 @@ class MapViewController: UIViewController {
 
 
 		present(alertVC, animated: true)
+	}
+
+	private func showVCIdentifiedBy(_ identifer: String) {
+//		let storyboard = storyboard?.insta
+		guard let vc = storyboard?.instantiateViewController(withIdentifier: identifer) else { return }
+		navigationController?.pushViewController(vc, animated: true)
 	}
 }
 

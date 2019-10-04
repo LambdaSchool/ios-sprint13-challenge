@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="JEg-I2-RaW">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" showsScale="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JEg-I2-RaW">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="amY-0L-9Wq">
@@ -42,6 +42,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="uOe-rT-Mmx"/>
                     <connections>
+                        <outlet property="mapView" destination="JEg-I2-RaW" id="v8i-Rf-Ngg"/>
                         <outlet property="newExperienceButton" destination="amY-0L-9Wq" id="A5i-wN-lcI"/>
                     </connections>
                 </viewController>
@@ -49,16 +50,57 @@
             </objects>
             <point key="canvasLocation" x="1047.8260869565217" y="137.94642857142856"/>
         </scene>
-        <!--View Controller-->
+        <!--Capture Audio Experience-->
         <scene sceneID="qFo-Qj-uu6">
             <objects>
-                <viewController id="ckW-1q-Bg3" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AudioViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ckW-1q-Bg3" customClass="AudioViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ujl-Ch-ptT">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jT4-hC-Uof">
+                                <rect key="frame" x="20" y="108" width="374" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1CW-f9-NWw">
+                                <rect key="frame" x="20" y="206" width="374" height="36"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KXr-6c-iGW">
+                                <rect key="frame" x="149" y="390" width="116" height="116"/>
+                                <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="Record"/>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="1CW-f9-NWw" firstAttribute="leading" secondItem="h3e-6o-bkU" secondAttribute="leading" constant="20" id="8kU-c5-GRs"/>
+                            <constraint firstItem="h3e-6o-bkU" firstAttribute="trailing" secondItem="1CW-f9-NWw" secondAttribute="trailing" constant="20" id="DoM-OU-u4D"/>
+                            <constraint firstItem="KXr-6c-iGW" firstAttribute="centerX" secondItem="ujl-Ch-ptT" secondAttribute="centerX" id="MaU-na-VQ7"/>
+                            <constraint firstItem="jT4-hC-Uof" firstAttribute="leading" secondItem="h3e-6o-bkU" secondAttribute="leading" constant="20" id="TpK-AI-x0a"/>
+                            <constraint firstItem="1CW-f9-NWw" firstAttribute="centerY" secondItem="ujl-Ch-ptT" secondAttribute="centerY" multiplier="0.5" id="UOl-bP-CC3"/>
+                            <constraint firstItem="h3e-6o-bkU" firstAttribute="trailing" secondItem="jT4-hC-Uof" secondAttribute="trailing" constant="20" id="eje-Ya-TNq"/>
+                            <constraint firstItem="jT4-hC-Uof" firstAttribute="top" secondItem="h3e-6o-bkU" secondAttribute="top" constant="20" id="tlD-oo-AHR"/>
+                            <constraint firstItem="KXr-6c-iGW" firstAttribute="centerY" secondItem="ujl-Ch-ptT" secondAttribute="centerY" id="uOf-Zx-Wku"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="h3e-6o-bkU"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Capture Audio Experience" id="CI4-FU-qxd">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="sxs-Uo-rp3">
+                            <connections>
+                                <action selector="saveButtonPressed:" destination="ckW-1q-Bg3" id="GFi-qq-cRW"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="recordButton" destination="KXr-6c-iGW" id="c98-to-ocb"/>
+                        <outlet property="recordDurationLabel" destination="1CW-f9-NWw" id="13I-O6-hAr"/>
+                        <outlet property="titleTextField" destination="jT4-hC-Uof" id="ncm-he-1wM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pQW-uS-c8e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -83,4 +125,7 @@
             <point key="canvasLocation" x="137.68115942028987" y="137.94642857142856"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Record" width="116" height="116"/>
+    </resources>
 </document>
