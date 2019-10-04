@@ -82,7 +82,7 @@ class PhotographViewController: UIViewController, ExperienceControllerAccessor {
 	}
 
 	@IBAction func takePhotoButtonPressed(_ sender: UIButton) {
-		let authorizationStatus = PHPhotoLibrary.authorizationStatus()
+		let authorizationStatus = AVCaptureDevice.authorizationStatus(for: .video)
 
 		switch authorizationStatus {
 		case .authorized:
@@ -103,14 +103,14 @@ class PhotographViewController: UIViewController, ExperienceControllerAccessor {
 	}
 
 	private func presentImagePickerController() {
-		guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+		guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
 			NSLog("Can't access camera")
 			return
 		}
 
 		let imagePicker = UIImagePickerController()
 		imagePicker.delegate = self
-		imagePicker.sourceType = .photoLibrary
+		imagePicker.sourceType = .camera
 		present(imagePicker, animated: true, completion: nil)
 	}
 
