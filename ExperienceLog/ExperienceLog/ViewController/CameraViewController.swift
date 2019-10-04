@@ -9,26 +9,28 @@
 import UIKit
 import AVFoundation
 
-protocol CameraViewControllerDelegate {
-    func passURLToPostEditorVC(url: URL)
-}
+
 
 class CameraViewController: UIViewController {
     
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     private var player: AVPlayer!
-    
-    var delegate: CameraViewControllerDelegate?
 
     @IBOutlet var recordButton: UIButton!
     @IBOutlet var cameraView: CameraPreviewView!
+    @IBOutlet weak var doneButton: UIBarButtonItem!
+    
+    var post: Post?
+    var postController: PostController!
+    var videoURL: URL?
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCamera()
         updateViews()
+        doneButton.isEnabled = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -98,6 +100,14 @@ class CameraViewController: UIViewController {
     @IBAction func recordButtonPressed(_ sender: Any) {
         record()
     }
+    @IBAction func donePressed(_ sender: UIBarButtonItem) {
+        guard let post = post else { fatalError("no post pass to camera") }
+        post.videoURL = self.videoURL
+        postController.createNewPost(title: post.title, image: post.image, videoURL: post.videoURL, audioURL: post.audioURL, latitude: post.latitude, longitude: post.longitude, note: post.note)
+        self.navigationController?.popToRootViewController(animated: true)
+        
+    }
+    
     func record() {
         if fileOutput.isRecording {
             fileOutput.stopRecording()
@@ -130,10 +140,7 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         DispatchQueue.main.async {
             self.updateViews()
-            self.dismiss(animated: true) {
-                self.delegate?.passURLToPostEditorVC(url: outputFileURL)
-            }
-           
+            self.doneButton.isEnabled = true
             
         }
         

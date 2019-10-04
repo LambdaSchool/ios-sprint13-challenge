@@ -98,6 +98,8 @@ class PostEditorViewController: UIViewController {
         let alertcontroller = UIAlertController(title: "Add a video to the experience?", message: nil, preferredStyle: .alert)
         let yesAction = UIAlertAction(title: "yes", style: .default) { (_) in
             self.performSegue(withIdentifier: "CameraShowSegue", sender: self)
+            
+            
         }
         let noAction = UIAlertAction(title: "no", style: .default) { (_) in
             self.postController.createNewPost(title: title, image: self.imageView.image, videoURL: nil, audioURL: self.audioURL, latitude: self.locationHelper.latitude, longitude: self.locationHelper.longitude, note: self.noteTextView.text)
@@ -106,6 +108,16 @@ class PostEditorViewController: UIViewController {
         alertcontroller.addAction(yesAction)
         alertcontroller.addAction(noAction)
         self.present(alertcontroller, animated: true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "CameraShowSegue" {
+            guard let cameraVC = segue.destination as? CameraViewController else { fatalError(" cant make camera vc") }
+            guard let title = titleTextField.text else { return }
+            let post = Post(title: title, image: self.imageView.image, videoURL: nil, audioURL: self.audioURL, latitude: self.locationHelper.latitude, longitude: self.locationHelper.longitude, note: self.noteTextView.text)
+            cameraVC.post = post
+            cameraVC.postController = postController
+        }
     }
     
     private func colorControlFilterImage(_ image: UIImage) -> UIImage {
