@@ -105,12 +105,8 @@ class VideoRecordingViewController: UIViewController {
 	}
 
 	// MARK: - IBActions
-	@IBAction func recordButtonDown(_ sender: UIButton) {
-		videoHelper?.startRecording()
-	}
-
 	@IBAction func recordButtonUp(_ sender: UIButton) {
-		videoHelper?.stopRecording()
+		videoHelper?.recordToggle()
 	}
 
 	@IBAction func playButtonPressed(_ sender: UIButton) {
