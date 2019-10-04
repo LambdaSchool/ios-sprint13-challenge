@@ -8,13 +8,14 @@
 
 import UIKit
 
-class AudioViewController: UIViewController {
+class AudioViewController: UIViewController, ExperienceControllerAccessor {
 	@IBOutlet private var recordButton: UIButton!
 	@IBOutlet private var titleTextField: UITextField!
 	@IBOutlet private var recordDurationLabel: UILabel!
 	@IBOutlet private var previewButton: UIButton!
 	@IBOutlet private var saveButton: UIBarButtonItem!
 
+	var experienceController: ExperienceController?
 	private lazy var timeFormatter: DateComponentsFormatter = {
 		let formatting = DateComponentsFormatter()
 		formatting.unitsStyle = .positional // 00:00

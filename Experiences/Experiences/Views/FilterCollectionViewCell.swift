@@ -29,10 +29,8 @@ class FilterCollectionViewCell: UICollectionViewCell {
 		guard let filter = filter, let image = image else { return }
 
 		guard let ciImage = CIImage(image: image) else { fatalError("No Image available") }
-//		filter.setValue(ciImage, forKey: kCIInputImageKey)
 		filter.inputImage = ciImage
 		filter.strength = 1
-		#warning("set filter settings")
 
 		guard let ciImageResult = filter.outputImage,
 			let cgImageResult = context.createCGImage(ciImageResult, from: CGRect(origin: .zero, size: image.size))

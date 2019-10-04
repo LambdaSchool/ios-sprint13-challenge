@@ -9,12 +9,13 @@
 import UIKit
 import Photos
 
-class PhotographViewController: UIViewController {
+class PhotographViewController: UIViewController, ExperienceControllerAccessor {
 	@IBOutlet var imageView: UIImageView!
 	@IBOutlet var takePhotoButton: UIButton!
 	@IBOutlet var filterCollectionView: UICollectionView!
 	@IBOutlet var strengthSlider: UISlider!
 
+	var experienceController: ExperienceController?
 	lazy var filters: [MyFilter] = {
 		[HashtagNoFilter(), InstantFilter(), SepiaFilter(), DreamFilter()]
 	}()

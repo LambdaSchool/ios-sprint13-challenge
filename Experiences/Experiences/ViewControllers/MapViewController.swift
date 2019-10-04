@@ -8,12 +8,14 @@
 
 import UIKit
 import MapKit
+import CoreData
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, ExperienceControllerAccessor {
 	@IBOutlet var newExperienceButton: UIButton!
 	@IBOutlet var mapView: MKMapView!
 
 	let locationManager = LocationRequester()
+	var experienceController: ExperienceController?
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -21,6 +23,18 @@ class MapViewController: UIViewController {
 		newExperienceButton.layer.cornerRadius = 10
 
 		locationManager.requestAuth()
+	}
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		showExperiences()
+	}
+
+	private func showExperiences() {
+		guard let experienceController = experienceController else { return }
+		mapView.removeAnnotations(mapView.annotations)
+
+		mapView.addAnnotations(experienceController.experiences)
 	}
 
 	@IBAction func catalogNewExperienceButtonPressed(_ sender: UIButton) {

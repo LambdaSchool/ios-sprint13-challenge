@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class VideoRecordingViewController: UIViewController {
+class VideoRecordingViewController: UIViewController, ExperienceControllerAccessor {
 	/// hide this when video is recording - makes it really hard to accidentally NOT record
 	@IBOutlet private var indicatorContainer: UIView!
 	@IBOutlet private var recordButton: UIButton!
@@ -18,6 +18,7 @@ class VideoRecordingViewController: UIViewController {
 	@IBOutlet private var videoPreviewView: VideoPlayerView!
 	@IBOutlet private var titleTextField: UITextField!
 
+	var experienceController: ExperienceController?
 	var videoHelper: VideoSessionManager?
 	private var lastRecording: URL? {
 		didSet {
