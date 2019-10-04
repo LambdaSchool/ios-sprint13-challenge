@@ -54,6 +54,6 @@ extension LocationRequester: CLLocationManagerDelegate {
 	}
 
 	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-		print("Failed with error: \(error)")
+		print("Location request failed with error: \(error)")
 	}
 }
