@@ -31,6 +31,13 @@ class MapVC: UIViewController {
 		setupMap()
 	}
 	
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if let searchVC = segue.destination as? SearchTableVC {
+			searchVC.mapView = mapView
+			searchVC.delegate = self
+		}
+	}
+	
 	// MARK: - IBActions
 	
 	@IBAction func addBtnTapped(_ sender: Any) {
@@ -44,22 +51,13 @@ class MapVC: UIViewController {
 	@IBAction func mapLongPressed(_ sender: UILongPressGestureRecognizer) {
 		let location = sender.location(in: mapView)
 		let coordinate = mapView.convert(location,toCoordinateFrom: mapView)
-
-		// Add annotation:
-		let annotation = MKPointAnnotation()
-		annotation.coordinate = coordinate
-		mapView.addAnnotation(annotation)
+		
+		createAnnotation(at: coordinate)
 	}
 	// MARK: - Helpers
 	
 	private func setupMap() {
-		self.locationManager.requestWhenInUseAuthorization()
-
-		if CLLocationManager.locationServicesEnabled() {
-			locationManager.delegate = self
-			locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-			locationManager.startUpdatingLocation()
-		}
+		locationManager.requestWhenInUseAuthorization()
 		
 		mapView.delegate = self
 		
@@ -74,6 +72,12 @@ class MapVC: UIViewController {
         let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
 		
 		mapView.setRegion(region, animated: true)
+	}
+	
+	private func createAnnotation(at coordinate: CLLocationCoordinate2D) {
+		let annotation = MKPointAnnotation()
+		annotation.coordinate = coordinate
+		mapView.addAnnotation(annotation)
 	}
 }
 
@@ -99,8 +103,8 @@ extension MapVC: MKMapViewDelegate {
 	}
 }
 
-extension MapVC: CLLocationManagerDelegate {
-	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-
+extension MapVC: SearchTableVCDelegate {
+	func didSelectLocation(_ location: CLLocation) {
+		createAnnotation(at: location.coordinate)
 	}
 }
