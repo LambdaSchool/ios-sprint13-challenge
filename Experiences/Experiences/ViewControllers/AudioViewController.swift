@@ -20,11 +20,29 @@ class AudioViewController: UIViewController {
 		formatting.allowedUnits = [.minute, .second]
 		return formatting
 	}()
+	lazy var audioRecorder: AudioRecorder = {
+		let recorder = AudioRecorder()
+		recorder.delegate = self
+		return recorder
+	}()
+
+	private func updateViews() {
+		recordButton.isSelected = audioRecorder.isRecording
+		updateTimeLabel()
+	}
+
+	private func updateTimeLabel() {
+		let minSec = timeFormatter.string(from: audioRecorder.currentTime)
+		let milli = Int((audioRecorder.currentTime * 100).truncatingRemainder(dividingBy: 100))
+		let milliStr = String(format: "%02i", milli)
+		recordDurationLabel.text = "\(minSec ?? "").\(milliStr)"
+	}
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
 		setupRecordLabel()
+		updateViews()
     }
 
 	private func setupRecordLabel() {
@@ -33,9 +51,24 @@ class AudioViewController: UIViewController {
 	}
 
 	@IBAction func recordButton(_ sender: UIButton) {
+		audioRecorder.toggleRecording()
 	}
 
 	@IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
 
+	}
+}
+
+extension AudioViewController: AudioRecorderDelegate {
+	func recorderDidChangeState(_ recorder: AudioRecorder) {
+		updateViews()
+	}
+
+	func recorderDidFinishSavingFile(_ recorder: AudioRecorder, url: URL) {
+		updateViews()
+	}
+
+	func recorderLoopUpdated(_ recorder: AudioRecorder) {
+		updateTimeLabel()
 	}
 }
