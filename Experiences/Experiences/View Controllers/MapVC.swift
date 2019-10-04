@@ -8,7 +8,6 @@
 
 import UIKit
 import MapKit
-import CoreLocation
 
 class MapVC: UIViewController {
 
@@ -22,6 +21,9 @@ class MapVC: UIViewController {
 	// MARK: - Properties
 	
 	let locationManager = CLLocationManager()
+	var userLocation: CLLocation? {
+		mapView.userLocation.location
+	}
 	
 	// MARK: - Life Cycle
 	
@@ -29,6 +31,12 @@ class MapVC: UIViewController {
 		super.viewDidLoad()
 		
 		setupMap()
+	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		
+		focusMapRegion(over: userLocation)
 	}
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -45,14 +53,19 @@ class MapVC: UIViewController {
 	}
 	
 	@IBAction func currentLocationBtnTapped(_ sender: Any) {
-		FocusOnUserLocation()
+		focusMapRegion(over: userLocation)
 	}
 	
 	@IBAction func mapLongPressed(_ sender: UILongPressGestureRecognizer) {
-		let location = sender.location(in: mapView)
-		let coordinate = mapView.convert(location,toCoordinateFrom: mapView)
-		
-		createAnnotation(at: coordinate)
+		switch sender.state {
+		case .ended:
+			let location = sender.location(in: mapView)
+			let coordinate = mapView.convert(location,toCoordinateFrom: mapView)
+			
+			createAnnotation(at: coordinate)
+		default:
+			break
+		}
 	}
 	// MARK: - Helpers
 	
@@ -61,12 +74,13 @@ class MapVC: UIViewController {
 		
 		mapView.delegate = self
 		
-		FocusOnUserLocation()
+		focusMapRegion(over: userLocation)
 	}
 	
-	private func FocusOnUserLocation() {
-		guard let userLocation = mapView.userLocation.location else { return }
-		let userCoordinate = userLocation.coordinate
+	private func focusMapRegion(over location: CLLocation?) {
+		guard let someLocation = location else { return }
+		
+		let userCoordinate = someLocation.coordinate
 		
 		let center = CLLocationCoordinate2D(latitude: userCoordinate.latitude, longitude: userCoordinate.longitude)
         let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
@@ -120,5 +134,6 @@ extension MapVC: MKMapViewDelegate {
 extension MapVC: SearchTableVCDelegate {
 	func didSelectLocation(_ location: CLLocation) {
 		createAnnotation(at: location.coordinate)
+		focusMapRegion(over: location)
 	}
 }
