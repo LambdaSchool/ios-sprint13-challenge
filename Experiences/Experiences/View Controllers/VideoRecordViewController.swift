@@ -167,7 +167,7 @@ class VideoRecordViewController: UIViewController {
         if recordButton.isSelected {
             recordButton.tintColor = .systemRed
         } else {
-            recordButton.tintColor = .systemTeal
+            recordButton.tintColor = .systemPink
         }
 
         saveButton.layer.cornerRadius = saveButton.frame.height / 2
