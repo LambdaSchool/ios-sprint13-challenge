@@ -7,29 +7,39 @@
 //
 
 import UIKit
+import Photos
+import CoreImage
 
 class NewExperienceViewController: UIViewController {
 
     // MARK: - Outlets & Properties
 
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var audioContainerView: UIView!
-    @IBOutlet weak var videoContainerView: UIView!
-    @IBOutlet weak var audioFileLabel: UILabel!
-    @IBOutlet weak var videoFileLabel: UILabel!
-    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet private weak var imageContainerView: UIView!
+    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var audioContainerView: UIView!
+    @IBOutlet private weak var videoContainerView: UIView!
+    @IBOutlet private weak var audioFileLabel: UILabel!
+    @IBOutlet private weak var videoFileLabel: UILabel!
+    @IBOutlet private weak var titleTextField: UITextField!
+    @IBOutlet private weak var blackAndWhiteButton: UIButton!
+    @IBOutlet private weak var bwButtonContainerView: UIView!
 
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        titleTextField.delegate = self
     }
 
     // MARK: - Actions
 
     @IBAction func photoButtonTapped(_ sender: UIButton) {
         imageActionSheet()
+    }
+
+    @IBAction func bwButtonTapped(_ sender: UIButton) {
+        
     }
 
     @IBAction func playAudioTapped(_ sender: UIButton) {
@@ -57,14 +67,27 @@ class NewExperienceViewController: UIViewController {
         [imageView, audioContainerView, videoContainerView].forEach { $0?.layer.cornerRadius = 8 }
         let tapDissmissKeyboard = UITapGestureRecognizer(target: self, action: #selector(tapDismissKeyboard(_:)))
         view.addGestureRecognizer(tapDissmissKeyboard)
+        bwButtonContainerView.layer.cornerRadius = 6
+        toggleHide(hideElements: true)
+    }
 
+    private func toggleHide(hideElements: Bool) {
+        if hideElements {
+            imageView.isHidden = true
+            imageContainerView.isHidden = true
+            blackAndWhiteButton.isHidden = true
+        } else {
+            imageView.isHidden = false
+            imageContainerView.isHidden = false
+            blackAndWhiteButton.isHidden = false
+        }
     }
 
     private func imageActionSheet() {
         let photoOptionsController = UIAlertController(title: "Choose how you'd like to add a photo", message: nil, preferredStyle: .actionSheet)
 
         let libraryAction = UIAlertAction(title: "Photo Library", style: .default) { _ in
-            // Picker controller code
+            self.requestPhotoLibraryAccess()
         }
 
         let cameraAction = UIAlertAction(title: "Camera", style: .default) { _ in
@@ -72,9 +95,69 @@ class NewExperienceViewController: UIViewController {
         }
 
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-
         [libraryAction, cameraAction, cancelAction].forEach { photoOptionsController.addAction($0) }
         present(photoOptionsController, animated: true, completion: nil)
     }
 
+    private func presentImagePickerController() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            presentInformationalAlertController(title: "Error", message: "The photo library is unavailable")
+            return
+        }
+
+        DispatchQueue.main.async {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+    }
+
+    private func requestPhotoLibraryAccess() {
+        let authorizationStatus = PHPhotoLibrary.authorizationStatus()
+
+        switch authorizationStatus {
+        case .authorized:
+            presentImagePickerController()
+        case .notDetermined:
+            PHPhotoLibrary.requestAuthorization { (status) in
+                guard status == .authorized else {
+                    NSLog("User did not authorize access to the photo library")
+                    self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
+                    return
+                }
+                self.presentImagePickerController()
+            }
+        case .denied:
+            self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
+        case .restricted:
+            self.presentInformationalAlertController(title: "Error", message: "Unable to access the photo library. Your device's restrictions do not allow access.")
+        default:
+            break
+        }
+        presentImagePickerController()
+    }
+}
+
+extension NewExperienceViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        titleTextField.resignFirstResponder()
+    }
+}
+
+extension NewExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        toggleHide(hideElements: false)
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
+
+        imageView.image = image
+//        originalImage = image
+//        setImageViewHeight(with: image.ratio)
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
 }
