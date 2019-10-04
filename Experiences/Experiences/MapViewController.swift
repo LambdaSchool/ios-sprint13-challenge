@@ -11,10 +11,14 @@ import UIKit
 class MapViewController: UIViewController {
 	@IBOutlet var newExperienceButton: UIButton!
 
+	let locationManager = LocationRequester()
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
 		newExperienceButton.layer.cornerRadius = 10
+
+		locationManager.requestAuth()
 	}
 
 	@IBAction func catalogNewExperienceButtonPressed(_ sender: UIButton) {
@@ -24,18 +28,25 @@ class MapViewController: UIViewController {
 	private func showExperienceSelectionPrompt() {
 		let alertVC = UIAlertController(title: "Capture", message: "What would be the best way to capture this experience?", preferredStyle: .alert)
 
-		let photoAction = UIAlertAction(title: "Photograph", style: .default) { _ in
+		if locationManager.isAuthorized {
+			let photoAction = UIAlertAction(title: "Photograph", style: .default) { _ in
 
+			}
+			let audioAction = UIAlertAction(title: "Audio", style: .default) { _ in
+				
+			}
+			let videoAction = UIAlertAction(title: "Video", style: .default) { _ in
+				
+			}
+			alertVC.addAction(photoAction)
+			alertVC.addAction(audioAction)
+			alertVC.addAction(videoAction)
+		} else {
+			alertVC.message = "Location services need to be enabled to do anything practical with this app. If you denied access, go to your device settings and rethink what you've done."
+			alertVC.addAction(UIAlertAction(title: "Fiiiiiiine", style: .cancel))
 		}
-		let audioAction = UIAlertAction(title: "Audio", style: .default) { _ in
 
-		}
-		let videoAction = UIAlertAction(title: "Video", style: .default) { _ in
 
-		}
-		alertVC.addAction(photoAction)
-		alertVC.addAction(audioAction)
-		alertVC.addAction(videoAction)
 		present(alertVC, animated: true)
 	}
 }
