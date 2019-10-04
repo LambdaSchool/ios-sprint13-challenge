@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Photos
 
 class PhotographViewController: UIViewController {
 	@IBOutlet var imageView: UIImageView!
@@ -30,7 +31,7 @@ class PhotographViewController: UIViewController {
 			var maxSize = imageView.bounds.size
 			maxSize = CGSize(width: maxSize.width * scale, height: maxSize.height * scale)
 			scaledImage = image.imageByScaling(toSize: maxSize)
-			var collectionViewSize = CGSize(width: collectionViewHeight * scale, height: collectionViewHeight * scale)
+			let collectionViewSize = CGSize(width: collectionViewHeight * scale, height: collectionViewHeight * scale)
 			collectionViewImage = image.imageByScaling(toSize: collectionViewSize)
 		}
 	}
@@ -57,6 +58,39 @@ class PhotographViewController: UIViewController {
 		}
 	}
 
+	@IBAction func takePhotoButtonPressed(_ sender: UIButton) {
+		let authorizationStatus = PHPhotoLibrary.authorizationStatus()
+
+		switch authorizationStatus {
+		case .authorized:
+			presentImagePickerController()
+		case .notDetermined:
+			PHPhotoLibrary.requestAuthorization { status in
+				guard status == .authorized else {
+					NSLog("User did not authorize access to the photo library")
+					return
+				}
+				DispatchQueue.main.async {
+					self.presentImagePickerController()
+				}
+			}
+		default:
+			NSLog("No permission for camera/photo library")
+		}
+	}
+
+	private func presentImagePickerController() {
+		guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+			NSLog("Can't access camera")
+			return
+		}
+
+		let imagePicker = UIImagePickerController()
+		imagePicker.delegate = self
+		imagePicker.sourceType = .photoLibrary
+		present(imagePicker, animated: true, completion: nil)
+	}
+
 	@IBAction func strengthSliderChanged(_ sender: UISlider) {
 		updateImage()
 	}
@@ -70,7 +104,17 @@ class PhotographViewController: UIViewController {
 
 		return UIImage(cgImage: cgImageResult)
 	}
+}
 
+extension PhotographViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+		takePhotoButton.setTitle("", for: .normal)
+
+		picker.dismiss(animated: true)
+
+		guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
+		originalImage = image
+	}
 }
 
 extension PhotographViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {

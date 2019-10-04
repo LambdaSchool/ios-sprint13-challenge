@@ -32,7 +32,7 @@ class MapViewController: UIViewController {
 
 		if locationManager.isAuthorized {
 			let photoAction = UIAlertAction(title: "Photograph", style: .default) { _ in
-
+				self.showVCIdentifiedBy("PhotographViewController")
 			}
 			let audioAction = UIAlertAction(title: "Audio", style: .default) { _ in
 				self.showVCIdentifiedBy("AudioViewController")
@@ -53,7 +53,6 @@ class MapViewController: UIViewController {
 	}
 
 	private func showVCIdentifiedBy(_ identifer: String) {
-//		let storyboard = storyboard?.insta
 		guard let vc = storyboard?.instantiateViewController(withIdentifier: identifer) else { return }
 		navigationController?.pushViewController(vc, animated: true)
 	}
