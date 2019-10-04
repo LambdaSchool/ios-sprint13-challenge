@@ -16,10 +16,14 @@ class PhotographViewController: UIViewController {
 	@IBOutlet var strengthSlider: UISlider!
 
 	lazy var filters: [MyFilter] = {
-		[HashtagNoFilter(), SepiaFilter(), DreamFilter()]
+		[HashtagNoFilter(), InstantFilter(), SepiaFilter(), DreamFilter()]
 	}()
 	private let context = CIContext(options: nil)
-	var selectedFilter: CIFilter?
+	var selectedFilter: MyFilter? {
+		didSet {
+			updateImage()
+		}
+	}
 
 	private var collectionViewHeight: CGFloat {
 		filterCollectionView.frame.size.height
@@ -51,10 +55,15 @@ class PhotographViewController: UIViewController {
         super.viewDidLoad()
 		filterCollectionView.delegate = self
 		filterCollectionView.dataSource = self
+
+		strengthSlider.minimumValue = 0
+		strengthSlider.value = 1
+		strengthSlider.maximumValue = 3
 	}
 
 	
 	private func updateImage() {
+		strengthSlider.maximumValue = selectedFilter?.maxValue ?? 3
 		if let image = scaledImage {
 			imageView.image = filterImage(image)
 		}
@@ -100,7 +109,8 @@ class PhotographViewController: UIViewController {
 	func filterImage(_ image: UIImage) -> UIImage {
 		guard let filter = selectedFilter, let ciImage = CIImage(image: image) else { return image }
 
-		filter.setValue(ciImage, forKey: kCIInputImageKey)
+		filter.inputImage = ciImage
+		filter.strength = Double(strengthSlider.value)
 
 		guard let ciImageResult = filter.outputImage, let cgImageResult = context.createCGImage(ciImageResult, from: CGRect(origin: .zero, size: image.size)) else { fatalError("No output image") }
 
@@ -131,11 +141,13 @@ extension PhotographViewController: UICollectionViewDelegate, UICollectionViewDa
 
 		filterCell.image = collectionViewImage
 		filterCell.filter = filters[indexPath.item]
+		filterCell.filter?.strength = Double(strengthSlider.value)
 		return filterCell
 	}
 
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+		guard let filterCell = collectionView.cellForItem(at: indexPath) as? FilterCollectionViewCell else { return }
+		selectedFilter = filterCell.filter
 	}
 
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

@@ -12,6 +12,7 @@ protocol MyFilter: AnyObject {
 	var inputImage: CIImage? { get set }
 	var strength: Double { get set }
 	var outputImage: CIImage? { get }
+	var maxValue: Float { get }
 }
 
 class SepiaFilter: MyFilter {
@@ -20,6 +21,7 @@ class SepiaFilter: MyFilter {
 	var outputImage: CIImage? {
 		return filterImage()
 	}
+	let maxValue: Float = 2
 
 	init(inputImage: CIImage? = nil) {
 		self.inputImage = inputImage
@@ -47,6 +49,7 @@ class DreamFilter: MyFilter {
 	var outputImage: CIImage? {
 		return filterImage()
 	}
+	let maxValue: Float = 2
 
 	init(inputImage: CIImage? = nil) {
 		self.inputImage = inputImage
@@ -76,6 +79,7 @@ class HashtagNoFilter: MyFilter {
 	var outputImage: CIImage? {
 		return filterImage()
 	}
+	let maxValue: Float = 1
 
 	init(inputImage: CIImage? = nil) {
 		self.inputImage = inputImage
@@ -83,6 +87,36 @@ class HashtagNoFilter: MyFilter {
 
 	private func filterImage() -> CIImage? {
 		return inputImage
+	}
+}
+
+class InstantFilter: MyFilter {
+	var inputImage: CIImage?
+	var strength: Double = 1
+	var outputImage: CIImage? {
+		return filterImage()
+	}
+	let maxValue: Float = 1
+
+	init(inputImage: CIImage? = nil) {
+		self.inputImage = inputImage
+	}
+
+	private func filterImage() -> CIImage? {
+		let instantFilter = CIFilter(name: "CIPhotoEffectInstant")
+
+		instantFilter?.setValue(inputImage, forKey: kCIInputImageKey)
+
+		let opacityFilter = CIFilter(name: "CIConstantColorGenerator")
+		let color = CIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(strength))
+		opacityFilter?.setValue(color, forKey: kCIInputColorKey)
+
+		let overComposite = CIFilter(name: "CIBlendWithAlphaMask")
+		overComposite?.setValue(instantFilter?.outputImage, forKey: kCIInputImageKey)
+		overComposite?.setValue(inputImage, forKey: kCIInputBackgroundImageKey)
+		overComposite?.setValue(opacityFilter?.outputImage, forKey: kCIInputMaskImageKey)
+
+		return overComposite?.outputImage
 	}
 }
 
