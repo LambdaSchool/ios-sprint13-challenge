@@ -17,6 +17,7 @@ class VideoRecordingViewController: UIViewController, ExperienceControllerAccess
 	@IBOutlet private var cameraPreviewView: CameraPreviewView!
 	@IBOutlet private var videoPreviewView: VideoPlayerView!
 	@IBOutlet private var titleTextField: UITextField!
+	@IBOutlet private var saveButton: UIBarButtonItem!
 
 	var experienceController: ExperienceController?
 	var videoHelper: VideoSessionManager?
@@ -54,6 +55,15 @@ class VideoRecordingViewController: UIViewController, ExperienceControllerAccess
 		recordButton.isHidden = videoPreviewView.isPlaying
 		recordButton.isSelected = videoHelper?.isRecording ?? false
 		videoPreviewView.isHidden = !videoPreviewView.isPlaying
+		saveButtonEnableLogic()
+	}
+
+	private func saveButtonEnableLogic() {
+		if lastRecording != nil && titleTextField.text?.isEmpty == false {
+			saveButton.isEnabled = true
+		} else {
+			saveButton.isEnabled = false
+		}
 	}
 
 	private func setupCamera() {
@@ -115,6 +125,17 @@ class VideoRecordingViewController: UIViewController, ExperienceControllerAccess
 	}
 
 	@IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
+		guard let title = titleTextField.text,
+			let lastLocation = experienceController?.locationManager.lastLocation,
+			let mediaURL = lastRecording
+			else { return }
+
+		experienceController?.createExperience(titled: title, tempMediaURL: mediaURL, type: .video, latitude: lastLocation.latitude, longitude: lastLocation.longitude)
+		navigationController?.popViewController(animated: true)
+	}
+
+	@IBAction func titleTextFieldChanged(_ sender: UITextField) {
+		saveButtonEnableLogic()
 	}
 
 
@@ -125,7 +146,6 @@ class VideoRecordingViewController: UIViewController, ExperienceControllerAccess
 			videoPreviewView.loadMovie(url: lastRecording)
 		}
 	}
-
 }
 
 extension VideoRecordingViewController: VideoSessionManagerDelegate {
