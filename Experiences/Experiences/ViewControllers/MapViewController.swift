@@ -38,7 +38,7 @@ class MapViewController: UIViewController {
 				self.showVCIdentifiedBy("AudioViewController")
 			}
 			let videoAction = UIAlertAction(title: "Video", style: .default) { _ in
-				
+				self.showVCIdentifiedBy("VideoViewController")
 			}
 			alertVC.addAction(photoAction)
 			alertVC.addAction(audioAction)
