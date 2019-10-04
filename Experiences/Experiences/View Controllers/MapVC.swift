@@ -41,7 +41,7 @@ class MapVC: UIViewController {
 	// MARK: - IBActions
 	
 	@IBAction func addBtnTapped(_ sender: Any) {
-		
+		newExperianceTypeSheet()
 	}
 	
 	@IBAction func currentLocationBtnTapped(_ sender: Any) {
@@ -78,6 +78,20 @@ class MapVC: UIViewController {
 		let annotation = MKPointAnnotation()
 		annotation.coordinate = coordinate
 		mapView.addAnnotation(annotation)
+	}
+	
+	private func newExperianceTypeSheet() {
+		let alert = UIAlertController(title: "Experience Type", message: "Select what type of experiance to make", preferredStyle: .actionSheet)
+		let audioAction = UIAlertAction(title: "Audio", style: .default) { _ in
+			self.performSegue(withIdentifier: "AudioVCSegue", sender: nil)
+		}
+		let videoAction = UIAlertAction(title: "Video", style: .default) { _ in
+			self.performSegue(withIdentifier: "CameraVCSegue", sender: nil)
+		}
+		let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+		
+		[audioAction, videoAction, cancelAction].forEach({ alert.addAction($0) })
+		present(alert, animated: true, completion: nil)
 	}
 }
 
