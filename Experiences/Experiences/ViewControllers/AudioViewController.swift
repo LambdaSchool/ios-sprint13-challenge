@@ -13,6 +13,14 @@ class AudioViewController: UIViewController {
 	@IBOutlet var titleTextField: UITextField!
 	@IBOutlet var recordDurationLabel: UILabel!
 
+	private lazy var timeFormatter: DateComponentsFormatter = {
+		let formatting = DateComponentsFormatter()
+		formatting.unitsStyle = .positional // 00:00
+		formatting.zeroFormattingBehavior = .pad
+		formatting.allowedUnits = [.minute, .second]
+		return formatting
+	}()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,6 +32,10 @@ class AudioViewController: UIViewController {
 		recordDurationLabel.font = font
 	}
 
+	@IBAction func recordButton(_ sender: UIButton) {
+	}
+
 	@IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
+
 	}
 }
