@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MapViewController.swift
 //  Experiences
 //
 //  Created by Marlon Raskin on 10/4/19.
@@ -7,14 +7,16 @@
 //
 
 import UIKit
+import MapKit
 
-class ViewController: UIViewController {
+class MapViewController: UIViewController {
+
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+
+
     }
 
-
 }
-
