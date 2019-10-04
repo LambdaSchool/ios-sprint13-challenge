@@ -7,16 +7,20 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--MapVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MapVC" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="V9o-2S-RSc">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V9o-2S-RSc">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="6ND-I0-Z1R" appends="YES" id="JV6-SY-cdH"/>
+                                </connections>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gmV-be-i9A">
                                 <rect key="frame" x="346" y="796.5" width="48" height="45.5"/>
@@ -24,6 +28,9 @@
                                 <state key="normal" image="location.fill" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="40"/>
                                 </state>
+                                <connections>
+                                    <action selector="currentLocationBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dIN-Sb-Cr4"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zd2-Ja-Ekc">
                                 <rect key="frame" x="345" y="730.5" width="49" height="46"/>
@@ -31,15 +38,31 @@
                                 <state key="normal" image="square.and.pencil" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="40"/>
                                 </state>
+                                <connections>
+                                    <action selector="addBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="47d-Bs-hKa"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PiV-K4-LO0">
+                                <rect key="frame" x="348" y="667.5" width="46" height="43"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="magnifyingglass" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="40"/>
+                                </state>
+                                <connections>
+                                    <action selector="addBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Muv-f8-pY2"/>
+                                    <segue destination="s6g-sn-0uI" kind="presentation" id="KUL-Lt-oOf"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="PiV-K4-LO0" secondAttribute="trailing" constant="20" id="APY-5k-Vlt"/>
                             <constraint firstItem="V9o-2S-RSc" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="I8e-tK-3dI"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="V9o-2S-RSc" secondAttribute="bottom" id="Kxh-Ty-Sgx"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Zd2-Ja-Ekc" secondAttribute="trailing" constant="20" id="S6m-5Y-UqM"/>
                             <constraint firstItem="V9o-2S-RSc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Sos-6Z-qiz"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="gmV-be-i9A" secondAttribute="bottom" constant="20" id="d3x-FD-pIy"/>
+                            <constraint firstItem="Zd2-Ja-Ekc" firstAttribute="top" secondItem="PiV-K4-LO0" secondAttribute="bottom" constant="20" id="eg0-zk-2Bw"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="gmV-be-i9A" secondAttribute="trailing" constant="20" id="gQQ-W3-gHh"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="V9o-2S-RSc" secondAttribute="trailing" id="sZL-j7-1UM"/>
                             <constraint firstItem="gmV-be-i9A" firstAttribute="top" secondItem="Zd2-Ja-Ekc" secondAttribute="bottom" constant="20" id="vAt-rf-fyV"/>
@@ -49,11 +72,20 @@
                     <navigationItem key="navigationItem" id="5KV-u6-l4o"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="addBtn" destination="Zd2-Ja-Ekc" id="8bT-pI-wJQ"/>
+                        <outlet property="currentLocationBtn" destination="gmV-be-i9A" id="O6U-mI-p27"/>
+                        <outlet property="mapLongPressGesture" destination="6ND-I0-Z1R" id="3ty-Ia-cb6"/>
+                        <outlet property="mapView" destination="V9o-2S-RSc" id="DL3-o3-n6O"/>
                         <segue destination="h9S-KA-aoD" kind="presentation" id="tiT-Ua-l86"/>
                         <segue destination="SBx-f3-1Yc" kind="presentation" id="ovm-vy-BNg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="6ND-I0-Z1R">
+                    <connections>
+                        <action selector="mapLongPressed:" destination="BYZ-38-t0r" id="cTh-6J-B01"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1047.8260869565217" y="138.61607142857142"/>
         </scene>
@@ -273,6 +305,7 @@
     <resources>
         <image name="Record" width="116" height="116"/>
         <image name="location.fill" catalog="system" width="64" height="60"/>
+        <image name="magnifyingglass" catalog="system" width="64" height="60"/>
         <image name="play.circle.fill" catalog="system" width="64" height="62"/>
         <image name="square.and.pencil" catalog="system" width="64" height="58"/>
         <image name="x.circle" catalog="system" width="64" height="62"/>
