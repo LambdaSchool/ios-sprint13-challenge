@@ -24,6 +24,7 @@ class MapVC: UIViewController {
 	var userLocation: CLLocation? {
 		mapView.userLocation.location
 	}
+	var experiences = [Experience]()
 	
 	// MARK: - Life Cycle
 	
@@ -73,6 +74,7 @@ class MapVC: UIViewController {
 		locationManager.requestWhenInUseAuthorization()
 		
 		mapView.delegate = self
+		mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceView")
 		
 		focusMapRegion(over: userLocation)
 	}
@@ -89,9 +91,11 @@ class MapVC: UIViewController {
 	}
 	
 	private func createAnnotation(at coordinate: CLLocationCoordinate2D) {
-		let annotation = MKPointAnnotation()
-		annotation.coordinate = coordinate
-		mapView.addAnnotation(annotation)
+//		let annotation = MKPointAnnotation()
+//		annotation.coordinate = coordinate
+		
+		let newExperience = Experience(caption: "Cool!", location: coordinate, videoUrl: nil, audioUrl: nil)
+		mapView.addAnnotation(newExperience)
 	}
 	
 	private func newExperianceTypeSheet() {
@@ -111,17 +115,16 @@ class MapVC: UIViewController {
 
 extension MapVC: MKMapViewDelegate {
 	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-		guard annotation is MKPointAnnotation else { return nil }
+		guard let experience = annotation as? Experience else { return nil }
 
-		let identifier = "Annotation"
-		var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+		let identifier = "ExperienceView"
+		guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView else { return  nil }
 
-		if annotationView == nil {
-			annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-			annotationView!.canShowCallout = true
-		} else {
-			annotationView!.annotation = annotation
-		}
+		annotationView.canShowCallout = true
+		
+		let detailView = PinDetailsView(frame: .zero)
+		detailView.experience = experience
+		annotationView.detailCalloutAccessoryView = detailView
 
 		return annotationView
 	}
