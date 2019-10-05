@@ -8,7 +8,6 @@
 
 import UIKit
 import MapKit
-import CoreLocation
 
 class MapViewController: UIViewController {
     
@@ -19,13 +18,6 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.requestWhenInUseAuthorization()
-
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.startUpdatingLocation()
-        }
-
     }
 
     override func viewDidAppear(_ animated: Bool) {

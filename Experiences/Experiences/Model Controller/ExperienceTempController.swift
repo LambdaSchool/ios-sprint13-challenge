@@ -6,7 +6,7 @@
 //  Copyright © 2019 Marlon Raskin. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class ExperienceTempController {
 
@@ -14,9 +14,9 @@ class ExperienceTempController {
 
     var experiences: [ExperienceTemp] = []
 
-    func createExperience(title: String, imageURL: URL?, audioURL: URL?, videoURL: URL?, latitude: Double, longitude: Double) {
+    func createExperience(title: String, image: Data?, audioURL: URL?, videoURL: URL?, latitude: Double, longitude: Double) {
 
-        let experience = ExperienceTemp(title: title, imageURL: imageURL, audioURL: audioURL, videoURL: videoURL, latitude: latitude, longitude: longitude)
+        let experience = ExperienceTemp(title: title, image: image, audioURL: audioURL, videoURL: videoURL, latitude: latitude, longitude: longitude)
 
         experiences.append(experience)
     }

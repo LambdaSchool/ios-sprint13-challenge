@@ -9,6 +9,7 @@
 import UIKit
 import Photos
 import CoreImage
+import CoreLocation
 
 protocol NewExperienceViewControllerDelegate: AnyObject {
     func newExperience(hasBeenCreated: Bool)
@@ -35,6 +36,11 @@ class NewExperienceViewController: UIViewController {
     private let context = CIContext(options: nil)
     private let monoFilter = CIFilter(name: "CIPhotoEffectMono")!
 
+    var locationManager = CLLocationManager()
+    var currentLocation: CLLocation?
+
+    weak var delegate: NewExperienceViewControllerDelegate?
+
     private var originalImage: UIImage? {
         didSet {
             guard let image = originalImage else { return }
@@ -50,6 +56,9 @@ class NewExperienceViewController: UIViewController {
 //            updateImage()
         }
     }
+    var videoURL: URL?
+    var audioURL: URL?
+    var saveImage: UIImage?
 
     // MARK: - Lifecycle
 
@@ -57,6 +66,8 @@ class NewExperienceViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         titleTextField.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+
     }
 
     // MARK: - Actions
@@ -66,8 +77,21 @@ class NewExperienceViewController: UIViewController {
             emptySaveAlert()
         }
 
-        guard let title = titleTextField.text else { return }
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+            CLLocationManager.authorizationStatus() == .authorizedAlways {
+            currentLocation = locationManager.location
+        }
 
+        guard let location = currentLocation else { return }
+        guard let title = titleTextField.text else { return }
+        if let audioURL = audioURL,
+            let videoURL = videoURL,
+            let image = saveImage?.pngData() {
+            experienceController.createExperience(title: title, image: image, audioURL: audioURL, videoURL: videoURL, latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        }
+
+        delegate?.newExperience(hasBeenCreated: true)
+        print(experienceController.experiences.count)
     }
 
     @IBAction func photoButtonTapped(_ sender: UIButton) {
@@ -230,7 +254,7 @@ extension NewExperienceViewController: UIImagePickerControllerDelegate, UINaviga
         picker.dismiss(animated: true, completion: nil)
         toggleHide(hideElements: false)
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-
+        saveImage = image
         imageView.image = image
         originalImage = image
 //        setImageViewHeight(with: image.ratio)
@@ -243,10 +267,12 @@ extension NewExperienceViewController: UIImagePickerControllerDelegate, UINaviga
 
 extension NewExperienceViewController: VideoRecordViewControllerDelegate, AudioRecordViewControllerDelegate {
     func didAddAudioComment(AudioRecordViewController: AudioRecordViewController, audioURL: URL) {
+        self.audioURL = audioURL
         audioFileLabel.text = audioURL.absoluteString
     }
 
     func videoRecordViewControllerDelegate(_ videoRecordViewController: VideoRecordViewController, didFinishRecordingWith url: URL) {
+        self.videoURL = url
         videoFileLabel.text = url.absoluteString
     }
 }

@@ -6,7 +6,7 @@
 //  Copyright © 2019 Marlon Raskin. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import MapKit
 
 class ExperienceTemp: NSObject, MKAnnotation {
@@ -16,16 +16,16 @@ class ExperienceTemp: NSObject, MKAnnotation {
     }
 
     let title: String?
-    let imageURL: URL?
+    let image: Data?
     let audioURL: URL?
     let videoURL: URL?
     let latitude: Double
     let longitude: Double
     let timestamp: Date
 
-    init(title: String, imageURL: URL?, audioURL: URL?, videoURL: URL?, latitude: Double, longitude: Double, timestamp: Date = Date()) {
+    init(title: String, image: Data?, audioURL: URL?, videoURL: URL?, latitude: Double, longitude: Double, timestamp: Date = Date()) {
         self.title = title
-        self.imageURL = imageURL
+        self.image = image
         self.audioURL = audioURL
         self.videoURL = videoURL
         self.latitude = latitude
