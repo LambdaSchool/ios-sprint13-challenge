@@ -11,7 +11,7 @@ import CoreData
 import MapKit
 
 extension Experience {
-    convenience init(title: String, imageURL: URL?, audioURL: URL?, videoURL: URL?, latitude: Double, longitude: Double, context: NSManagedObjectContext) {
+    @discardableResult convenience init(title: String, imageURL: URL?, audioURL: URL?, videoURL: URL?, latitude: Double, longitude: Double, context: NSManagedObjectContext) {
         self.init(context: context)
         self.title = title
         self.imageURL = imageURL

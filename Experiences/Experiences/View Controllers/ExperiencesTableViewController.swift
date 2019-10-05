@@ -15,6 +15,12 @@ class ExperiencesTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
+        tableView.reloadData()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
 
     let testArray = ["Experience One", "Experience Two", "Experience Three", "Experience Four", "Experience Five", "Experience Six"]
