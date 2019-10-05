@@ -29,6 +29,12 @@ class ExperienceListTableTableViewController: UITableViewController {
 		return fetchedResultsController
 	}()
 
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if let playbackVC = segue.destination as? PlaybackViewController {
+			guard let indexPath = tableView.indexPathForSelectedRow else { return }
+			playbackVC.experience = fetchedResultsController.object(at: indexPath)
+		}
+	}
 }
 
 // MARK: - tableview stuff

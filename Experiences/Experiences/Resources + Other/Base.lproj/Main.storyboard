@@ -146,6 +146,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="QJp-yE-FF0" kind="show" id="wmJ-ox-vb7"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -159,13 +162,104 @@
             </objects>
             <point key="canvasLocation" x="1926.0869565217392" y="847.09821428571422"/>
         </scene>
+        <!--Playback View Controller-->
+        <scene sceneID="cKp-nM-Gws">
+            <objects>
+                <viewController id="QJp-yE-FF0" customClass="PlaybackViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="i2B-K0-Bny">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yuw-VA-Vxr" userLabel="container">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bN2-Rv-Eeh">
+                                        <rect key="frame" x="157" y="398" width="100" height="100"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CbM-gS-rdG">
+                                                <rect key="frame" x="27" y="35" width="46" height="30"/>
+                                                <state key="normal" title="Button"/>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="0mo-ZE-yeo"/>
+                                            <constraint firstAttribute="width" constant="100" id="200-95-vrF"/>
+                                            <constraint firstItem="CbM-gS-rdG" firstAttribute="centerY" secondItem="bN2-Rv-Eeh" secondAttribute="centerY" id="KuI-vY-cig"/>
+                                            <constraint firstItem="CbM-gS-rdG" firstAttribute="centerX" secondItem="bN2-Rv-Eeh" secondAttribute="centerX" id="SLq-n1-MOK"/>
+                                        </constraints>
+                                    </view>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qt7-q6-3Nc">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                    </imageView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KTS-29-ckK" customClass="VideoPlayerView" customModule="Experiences" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LTh-xo-B6S">
+                                        <rect key="frame" x="20" y="756" width="82" height="37"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vhf-0a-45Z">
+                                                <rect key="frame" x="20" y="8" width="42" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.53686179577464788" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="Vhf-0a-45Z" secondAttribute="bottom" constant="8" id="18y-e8-vOV"/>
+                                            <constraint firstItem="Vhf-0a-45Z" firstAttribute="leading" secondItem="LTh-xo-B6S" secondAttribute="leading" constant="20" id="8bH-Fa-MJw"/>
+                                            <constraint firstItem="Vhf-0a-45Z" firstAttribute="top" secondItem="LTh-xo-B6S" secondAttribute="top" constant="8" id="OHU-hd-MCr"/>
+                                            <constraint firstAttribute="trailing" secondItem="Vhf-0a-45Z" secondAttribute="trailing" constant="20" id="Ue8-Uo-3kX"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="KTS-29-ckK" secondAttribute="bottom" id="794-ZA-3l9"/>
+                                    <constraint firstItem="LTh-xo-B6S" firstAttribute="leading" secondItem="yuw-VA-Vxr" secondAttribute="leading" constant="20" id="7h1-Kv-ZEm"/>
+                                    <constraint firstAttribute="trailing" secondItem="qt7-q6-3Nc" secondAttribute="trailing" id="7s2-eM-7K7"/>
+                                    <constraint firstItem="KTS-29-ckK" firstAttribute="top" secondItem="yuw-VA-Vxr" secondAttribute="top" id="Boe-kD-PXW"/>
+                                    <constraint firstItem="KTS-29-ckK" firstAttribute="leading" secondItem="yuw-VA-Vxr" secondAttribute="leading" id="LH7-s4-Ad4"/>
+                                    <constraint firstAttribute="trailing" secondItem="KTS-29-ckK" secondAttribute="trailing" id="Ltz-Xg-yAK"/>
+                                    <constraint firstItem="qt7-q6-3Nc" firstAttribute="top" secondItem="yuw-VA-Vxr" secondAttribute="top" id="TVM-SF-YUK"/>
+                                    <constraint firstItem="qt7-q6-3Nc" firstAttribute="leading" secondItem="yuw-VA-Vxr" secondAttribute="leading" id="aPB-L4-cGK"/>
+                                    <constraint firstAttribute="bottom" secondItem="qt7-q6-3Nc" secondAttribute="bottom" id="pqj-Om-ETs"/>
+                                    <constraint firstItem="bN2-Rv-Eeh" firstAttribute="centerX" secondItem="yuw-VA-Vxr" secondAttribute="centerX" id="rLL-sI-xRO"/>
+                                    <constraint firstItem="bN2-Rv-Eeh" firstAttribute="centerY" secondItem="yuw-VA-Vxr" secondAttribute="centerY" id="yPh-vL-Pzi"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="yuw-VA-Vxr" firstAttribute="top" secondItem="i2B-K0-Bny" secondAttribute="top" id="71C-oH-28E"/>
+                            <constraint firstAttribute="trailing" secondItem="yuw-VA-Vxr" secondAttribute="trailing" id="8H6-mL-V9I"/>
+                            <constraint firstItem="LTh-xo-B6S" firstAttribute="bottom" secondItem="xhV-91-dNn" secondAttribute="bottom" constant="-20" id="BHm-Wt-IN3"/>
+                            <constraint firstAttribute="bottom" secondItem="yuw-VA-Vxr" secondAttribute="bottom" id="SJy-mc-OwA"/>
+                            <constraint firstItem="yuw-VA-Vxr" firstAttribute="leading" secondItem="i2B-K0-Bny" secondAttribute="leading" id="iEZ-7b-1qW"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="xhV-91-dNn"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="t2h-FX-Yl6"/>
+                    <connections>
+                        <outlet property="audioContainer" destination="bN2-Rv-Eeh" id="78j-Gj-2rE"/>
+                        <outlet property="imageView" destination="qt7-q6-3Nc" id="ZN4-wD-O4A"/>
+                        <outlet property="labelContainer" destination="LTh-xo-B6S" id="TTD-T2-9Nb"/>
+                        <outlet property="titleLabel" destination="Vhf-0a-45Z" id="mZg-7R-0iW"/>
+                        <outlet property="videoPlayerView" destination="KTS-29-ckK" id="jUo-G4-J3x"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jnd-nS-vlq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2799" y="847"/>
+        </scene>
         <!--Movie-->
         <scene sceneID="hOg-Az-qPL">
             <objects>
                 <viewControllerPlaceholder storyboardIdentifier="VideoViewController" storyboardName="Movie" id="5Al-QR-MjW" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2zA-WS-Rpk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3108.6956521739135" y="637.5"/>
+            <point key="canvasLocation" x="3136" y="445"/>
         </scene>
         <!--Capture Photograph Experience-->
         <scene sceneID="W3d-93-SIh">

@@ -60,7 +60,7 @@ class DreamFilter: MyFilter {
 
 		bloomFilter?.setValue(inputImage, forKey: kCIInputImageKey)
 		bloomFilter?.setValue(strength * 14.43 as NSNumber, forKey: kCIInputIntensityKey)
-		bloomFilter?.setValue(strength * 0.5835 as NSNumber, forKey: kCIInputRadiusKey)
+		bloomFilter?.setValue(strength * 0.5 as NSNumber, forKey: kCIInputRadiusKey)
 
 		let vibranceFilter = CIFilter(name: "CIVibrance")
 

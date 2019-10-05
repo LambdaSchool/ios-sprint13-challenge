@@ -12,6 +12,25 @@ import MapKit
 
 extension Experience {
 
+	var experienceType: ExperienceType? {
+		if mediaURL?.lastPathComponent.hasSuffix("caf") == true {
+			return ExperienceType.audio
+		}
+		if mediaURL?.lastPathComponent.hasSuffix("mov") == true {
+			return ExperienceType.video
+		}
+		if mediaURL?.lastPathComponent.hasSuffix("jpg") == true {
+			return ExperienceType.photo
+		}
+		return nil
+	}
+
+	var fullURL: URL? {
+		guard let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
+		guard let mediaURL = mediaURL else { return nil }
+		return documents.appendingPathComponent(mediaURL.path)
+	}
+
 	@discardableResult convenience init(title: String, mediaURL: URL, longitude: Double, latitude: Double, id: UUID = UUID(), context: NSManagedObjectContext) {
 		self.init(context: context)
 		self.title = title

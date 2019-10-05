@@ -56,7 +56,8 @@ class ExperienceController {
 
 		let context = CoreDataStack.shared.mainContext
 		context.performAndWait {
-			Experience(title: title, mediaURL: destination, longitude: longitude, latitude: latitude, context: context)
+			let savedURL = URL(fileURLWithPath: type.rawValue).appendingPathComponent(name)
+			Experience(title: title, mediaURL: savedURL, longitude: longitude, latitude: latitude, context: context)
 			try? CoreDataStack.shared.save(context: context)
 		}
 		updateExperiences()
