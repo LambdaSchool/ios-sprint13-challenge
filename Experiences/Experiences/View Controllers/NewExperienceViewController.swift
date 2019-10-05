@@ -10,6 +10,10 @@ import UIKit
 import Photos
 import CoreImage
 
+protocol NewExperienceViewControllerDelegate: AnyObject {
+    func newExperience(hasBeenCreated: Bool)
+}
+
 class NewExperienceViewController: UIViewController {
 
     // MARK: - Outlets & Properties
@@ -24,7 +28,10 @@ class NewExperienceViewController: UIViewController {
     @IBOutlet private weak var titleTextField: UITextField!
     @IBOutlet private weak var blackAndWhiteButton: UIButton!
     @IBOutlet private weak var bwButtonContainerView: UIView!
+    @IBOutlet private weak var micIcon: UIButton!
+    @IBOutlet private weak var videoIcon: UIButton!
 
+    let experienceController = ExperienceTempController.shared
     private let context = CIContext(options: nil)
     private let monoFilter = CIFilter(name: "CIPhotoEffectMono")!
 
@@ -54,6 +61,15 @@ class NewExperienceViewController: UIViewController {
 
     // MARK: - Actions
 
+    @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
+        if titleTextField.text == nil || titleTextField.text == "" {
+            emptySaveAlert()
+        }
+
+        guard let title = titleTextField.text else { return }
+
+    }
+
     @IBAction func photoButtonTapped(_ sender: UIButton) {
         imageActionSheet()
     }
@@ -78,6 +94,13 @@ class NewExperienceViewController: UIViewController {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "VideoModalSegue" {
+            guard let videoVC = segue.destination as? VideoRecordViewController else { return }
+            videoVC.delegate = self
+        } else if segue.identifier == "AudioModalSegue" {
+            guard let audioVC = segue.destination as? AudioRecordViewController else { return }
+            audioVC.delegate = self
+        }
     }
 
 
@@ -89,6 +112,13 @@ class NewExperienceViewController: UIViewController {
         view.addGestureRecognizer(tapDissmissKeyboard)
         bwButtonContainerView.layer.cornerRadius = 6
         toggleHide(hideElements: true)
+    }
+
+    private func animateMicIcon() {
+        micIcon.tintColor = .systemOrange
+        UIView.animate(withDuration: 2, delay: 1.2, options: [.curveEaseInOut], animations: {
+            self.micIcon.tintColor = .secondaryLabel
+        }, completion: nil)
     }
 
     private func toggleHide(hideElements: Bool) {
@@ -124,6 +154,13 @@ class NewExperienceViewController: UIViewController {
     func setImageViewHeight(with aspectRatio: CGFloat) {
         imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
         view.layoutSubviews()
+    }
+
+    private func emptySaveAlert() {
+        let saveAlert = UIAlertController(title: "Whoops! There's no title", message: "Give your documented experience a good title! You'll thank yourself later!", preferredStyle: .alert)
+        let okayAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        saveAlert.addAction(okayAction)
+        present(saveAlert, animated: true, completion: nil)
     }
 
     private func imageActionSheet() {
@@ -189,7 +226,6 @@ extension NewExperienceViewController: UITextFieldDelegate {
 }
 
 extension NewExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
         toggleHide(hideElements: false)
@@ -202,5 +238,15 @@ extension NewExperienceViewController: UIImagePickerControllerDelegate, UINaviga
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension NewExperienceViewController: VideoRecordViewControllerDelegate, AudioRecordViewControllerDelegate {
+    func didAddAudioComment(AudioRecordViewController: AudioRecordViewController, audioURL: URL) {
+        audioFileLabel.text = audioURL.absoluteString
+    }
+
+    func videoRecordViewControllerDelegate(_ videoRecordViewController: VideoRecordViewController, didFinishRecordingWith url: URL) {
+        videoFileLabel.text = url.absoluteString
     }
 }

@@ -9,7 +9,7 @@
 import UIKit
 
 protocol AudioRecordViewControllerDelegate: AnyObject {
-    func didAddAudioComment(AudioRecordViewController: AudioRecordViewController, addedComment: Bool)
+    func didAddAudioComment(AudioRecordViewController: AudioRecordViewController, audioURL: URL)
 }
 
 class AudioRecordViewController: UIViewController {
@@ -54,7 +54,9 @@ class AudioRecordViewController: UIViewController {
     // MARK: - IBActions
 
     @IBAction func saveTapped(_ sender: UIButton) {
-
+        guard let audioURL = url else { return }
+        send(url: audioURL)
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func recordButtonTapped(_ sender: UIButton) {
@@ -111,13 +113,16 @@ class AudioRecordViewController: UIViewController {
         }
     }
 
+    private func send(url: URL) {
+        delegate?.didAddAudioComment(AudioRecordViewController: self, audioURL: url)
+    }
+
     // MARK: - Setup
 
     func setupFontForTimeLabels() {
         currentTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: currentTimeLabel.font.pointSize, weight: .regular)
         durationLabel.font = UIFont.monospacedDigitSystemFont(ofSize: durationLabel.font.pointSize, weight: .regular)
     }
-
 }
 
 extension AudioRecordViewController: AudioPlayerDelegate {

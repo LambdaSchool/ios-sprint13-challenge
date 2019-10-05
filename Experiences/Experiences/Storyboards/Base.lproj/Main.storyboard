@@ -88,7 +88,7 @@
                                                                 <color key="tintColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <state key="normal" image="mic" catalog="system"/>
                                                             </button>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Audio File" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nH6-rK-PTS">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Audio File" textAlignment="natural" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nH6-rK-PTS">
                                                                 <rect key="frame" x="45" y="0.0" width="239" height="50"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
@@ -133,7 +133,7 @@
                                                                 <color key="tintColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <state key="normal" image="video" catalog="system"/>
                                                             </button>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Video File" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cx2-NC-NgI">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Video File" textAlignment="natural" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cx2-NC-NgI">
                                                                 <rect key="frame" x="45" y="0.0" width="239" height="50"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
@@ -230,8 +230,11 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="New Experience" id="6qU-Lh-EYN">
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="checkmark.circle" catalog="system" id="DJP-hw-qnk">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="DJP-hw-qnk">
                             <color key="tintColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="BYZ-38-t0r" id="zfz-lJ-xc9"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -242,9 +245,11 @@
                         <outlet property="imageContainerView" destination="b6s-cs-BkZ" id="Z0u-DA-rWT"/>
                         <outlet property="imageHeightConstraint" destination="mPE-QT-tW4" id="m0f-p2-MsV"/>
                         <outlet property="imageView" destination="mBU-NS-L2E" id="O3K-aV-lNW"/>
+                        <outlet property="micIcon" destination="Fv2-Du-HHO" id="oe6-bL-Iz6"/>
                         <outlet property="titleTextField" destination="c7Q-bN-J2F" id="4IZ-VF-o4c"/>
                         <outlet property="videoContainerView" destination="b3g-AJ-L8D" id="Sz6-WH-whf"/>
                         <outlet property="videoFileLabel" destination="Cx2-NC-NgI" id="fP8-GI-be8"/>
+                        <outlet property="videoIcon" destination="CRC-Fb-hJc" id="P5s-HE-s0r"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -410,7 +415,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="checkmark.circle" catalog="system" width="64" height="62"/>
         <image name="list.bullet" catalog="system" width="64" height="44"/>
         <image name="location.fill" catalog="system" width="64" height="60"/>
         <image name="map" catalog="system" width="64" height="58"/>

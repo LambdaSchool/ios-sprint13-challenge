@@ -10,6 +10,8 @@ import UIKit
 
 class ExperiencesTableViewController: UITableViewController {
 
+    let experienceTempController = ExperienceTempController.shared
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
@@ -24,14 +26,15 @@ class ExperiencesTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return testArray.count
+        return experienceTempController.experiences.count
     }
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ExperienceCell", for: indexPath)
 
-        cell.textLabel?.text = testArray[indexPath.row]
+        let experience = experienceTempController.experiences[indexPath.row]
+        cell.textLabel?.text = experience.title
 
         return cell
     }

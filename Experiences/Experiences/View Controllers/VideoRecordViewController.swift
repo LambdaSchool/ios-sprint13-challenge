@@ -9,6 +9,10 @@
 import UIKit
 import AVFoundation
 
+protocol VideoRecordViewControllerDelegate: AnyObject {
+    func videoRecordViewControllerDelegate(_ videoRecordViewController: VideoRecordViewController, didFinishRecordingWith url: URL)
+}
+
 class VideoRecordViewController: UIViewController {
 
     // MARK: - Properties & Outlets
@@ -16,6 +20,9 @@ class VideoRecordViewController: UIViewController {
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     private var player: AVPlayer?
+    var videoURL: URL?
+
+    weak var delegate: VideoRecordViewControllerDelegate?
 
     @IBOutlet private weak var cameraView: CameraPreviewView!
     @IBOutlet private weak var recordButton: UIButton!
@@ -51,7 +58,9 @@ class VideoRecordViewController: UIViewController {
     }
 
     @IBAction func saveTapped(_ sender: UIButton) {
-
+        guard let url = videoURL else { return }
+        delegate?.videoRecordViewControllerDelegate(self, didFinishRecordingWith: chosenURL(url: url))
+        dismiss(animated: true, completion: nil)
     }
 
     // MARK: - Video Control Functions
@@ -167,8 +176,22 @@ class VideoRecordViewController: UIViewController {
         saveButton.layer.cornerRadius = saveButton.frame.height / 2
     }
 
+    private func chosenURL(url: URL) -> URL {
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime]
+
+//        let name = formatter.string(from: Date())
+        let urlStr = url.absoluteString
+        let fileURL = documentsDirectory.appendingPathComponent(urlStr)
+        print(fileURL.path)
+        return fileURL
+    }
+
     private func newTempURL(withFileExtension fileExtension: String? = nil) -> URL {
         let tempDir = URL(fileURLWithPath: NSTemporaryDirectory())
+        videoURL = tempDir
         let name = UUID().uuidString
         let tempFile = tempDir.appendingPathComponent(name).appendingPathExtension(fileExtension ?? "")
 
@@ -178,7 +201,7 @@ class VideoRecordViewController: UIViewController {
 
 extension VideoRecordViewController: AVCaptureFileOutputRecordingDelegate {
     func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
-
+        videoURL = fileURL
         DispatchQueue.main.async {
             self.updateViews()
         }
