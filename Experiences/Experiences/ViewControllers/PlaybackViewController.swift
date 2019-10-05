@@ -16,6 +16,8 @@ class PlaybackViewController: UIViewController {
 	@IBOutlet private var labelContainer: UIView!
 	@IBOutlet private var titleLabel: UILabel!
 
+	var audioPlayer: AudioPlayer?
+
 	var experience: Experience? {
 		didSet {
 			updateViews()
@@ -62,5 +64,10 @@ class PlaybackViewController: UIViewController {
 	private func updateAudio(experience: Experience) {
 		guard let url = experience.fullURL else { return }
 		audioContainer.isHidden = false
+		audioPlayer = try? AudioPlayer(with: url)
+	}
+
+	@IBAction func playAudioPressed(_ sender: UIButton) {
+		audioPlayer?.playPause()
 	}
 }
