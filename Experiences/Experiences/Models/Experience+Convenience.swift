@@ -19,6 +19,7 @@ extension Experience {
 		self.longitude = longitude
 		self.latitude = latitude
 		self.id = id
+		self.timestamp = Date()
 	}
 }
 

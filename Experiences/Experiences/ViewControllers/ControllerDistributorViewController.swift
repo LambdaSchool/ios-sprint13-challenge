@@ -8,8 +8,8 @@
 
 import UIKit
 
-class ControllerDistributorViewController: UINavigationController {
-	let experienceController = ExperienceController()
+class ControllerDistributorViewController: UINavigationController, ExperienceControllerAccessor {
+	var experienceController: ExperienceController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
