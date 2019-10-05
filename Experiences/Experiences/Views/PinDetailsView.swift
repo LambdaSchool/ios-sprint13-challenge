@@ -12,11 +12,12 @@ class PinDetailsView: UIView {
 
 	// MARK: - IBOutlets
 	
+	@IBOutlet weak var captionLbl: UILabel!
+	@IBOutlet weak var dateLbl: UILabel!
+	@IBOutlet weak var mediaBtn: UIButton!
 	
 	// MARK: - Properties
 	
-    private let descriptionLabel = UILabel()
-    private let dateLabel = UILabel()
     private lazy var dateFormatter: DateFormatter = {
         let result = DateFormatter()
         result.dateStyle = .short
@@ -29,35 +30,29 @@ class PinDetailsView: UIView {
 		}
 	}
 	
-	// MARK: - Life Cycle
-	
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        let DescDateStackView = UIStackView(arrangedSubviews: [descriptionLabel, dateLabel])
-        DescDateStackView.spacing = UIStackView.spacingUseSystem
-        
-        DescDateStackView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(DescDateStackView)
-        DescDateStackView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        DescDateStackView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-        DescDateStackView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        DescDateStackView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError()
-    }
-	
 	// MARK: - IBActions
 	
+	@IBAction func mediaBtnTapped(_ sender: Any) {
+		print("Switching to media")
+	}
 	
 	// MARK: - Helpers
 	
     private func updateSubviews() {
         guard let experience = experience else { return }
 		
-		descriptionLabel.text = experience.description
-		dateLabel.text = dateFormatter.string(from: experience.timestamp)
+		captionLbl.text = experience.caption
+		dateLbl.text = dateFormatter.string(from: experience.timestamp)
+		
+		if experience.audioUrl != nil {
+			let image = UIImage(systemName: "ear")
+			mediaBtn.setImage(image, for: .normal)
+		} else if experience.videoUrl != nil {
+			let image = UIImage(systemName: "video")
+			mediaBtn.setImage(image, for: .normal)
+		} else {
+			let image = UIImage(systemName: "xmark.icloud.fill")
+			mediaBtn.setImage(image, for: .normal)
+		}
     }
 }

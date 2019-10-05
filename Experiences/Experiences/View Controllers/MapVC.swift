@@ -17,6 +17,7 @@ class MapVC: UIViewController {
 	@IBOutlet weak var addBtn: UIButton!
 	@IBOutlet weak var currentLocationBtn: UIButton!
 	@IBOutlet var mapLongPressGesture: UILongPressGestureRecognizer!
+	@IBOutlet var customCalloutView: PinDetailsView!
 	
 	// MARK: - Properties
 	
@@ -113,6 +114,8 @@ class MapVC: UIViewController {
 	}
 }
 
+// MARK: - MapView Delegate
+
 extension MapVC: MKMapViewDelegate {
 	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 		guard let experience = annotation as? Experience else { return nil }
@@ -122,9 +125,8 @@ extension MapVC: MKMapViewDelegate {
 
 		annotationView.canShowCallout = true
 		
-		let detailView = PinDetailsView(frame: .zero)
-		detailView.experience = experience
-		annotationView.detailCalloutAccessoryView = detailView
+		customCalloutView.experience = experience
+		annotationView.detailCalloutAccessoryView = customCalloutView
 
 		return annotationView
 	}
@@ -133,6 +135,8 @@ extension MapVC: MKMapViewDelegate {
 		
 	}
 }
+
+// MARK: - SearchTableVC Delegate
 
 extension MapVC: SearchTableVCDelegate {
 	func didSelectLocation(_ location: CLLocation) {
