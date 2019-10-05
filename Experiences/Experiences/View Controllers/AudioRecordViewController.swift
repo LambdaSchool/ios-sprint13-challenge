@@ -73,8 +73,6 @@ class AudioRecordViewController: UIViewController {
 
     private func setupUI() {
         playerContainerView.layer.cornerRadius = 12
-//        playerContainerView.layer.borderWidth = 1.5
-//        playerContainerView.layer.borderColor = UIColor.systemGray.cgColor
         playerContainerView.layer.shadowColor = UIColor.black.cgColor
         playerContainerView.layer.shadowRadius = 12
         playerContainerView.layer.shadowOpacity = 0.3

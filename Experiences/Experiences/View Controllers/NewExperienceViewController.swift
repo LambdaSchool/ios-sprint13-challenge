@@ -16,6 +16,7 @@ class NewExperienceViewController: UIViewController {
 
     @IBOutlet private weak var imageContainerView: UIView!
     @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var audioContainerView: UIView!
     @IBOutlet private weak var videoContainerView: UIView!
     @IBOutlet private weak var audioFileLabel: UILabel!
@@ -23,6 +24,25 @@ class NewExperienceViewController: UIViewController {
     @IBOutlet private weak var titleTextField: UITextField!
     @IBOutlet private weak var blackAndWhiteButton: UIButton!
     @IBOutlet private weak var bwButtonContainerView: UIView!
+
+    private let context = CIContext(options: nil)
+    private let monoFilter = CIFilter(name: "CIPhotoEffectMono")!
+
+    private var originalImage: UIImage? {
+        didSet {
+            guard let image = originalImage else { return }
+            var maxSize = imageView.bounds.size
+            let scale = UIScreen.main.scale
+            maxSize = CGSize(width: maxSize.width * scale, height: maxSize.height * scale)
+            scaledImage = image.imageByScaling(toSize: maxSize)
+        }
+    }
+
+    private var scaledImage:UIImage? {
+        didSet {
+//            updateImage()
+        }
+    }
 
     // MARK: - Lifecycle
 
@@ -39,7 +59,7 @@ class NewExperienceViewController: UIViewController {
     }
 
     @IBAction func bwButtonTapped(_ sender: UIButton) {
-        
+        updateImage()
     }
 
     @IBAction func playAudioTapped(_ sender: UIButton) {
@@ -81,6 +101,29 @@ class NewExperienceViewController: UIViewController {
             imageContainerView.isHidden = false
             blackAndWhiteButton.isHidden = false
         }
+    }
+
+        private func updateImage() {
+            if let image = originalImage {
+                imageView.image = filterMonoImage(image)
+            } else {
+                //  TODO: set to nil? clear it?
+            }
+        }
+
+    private func filterMonoImage(_ image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage else { fatalError("No image available for filtering") }
+        let ciImage = CIImage(cgImage: cgImage)
+        monoFilter.setValue(ciImage, forKey: kCIInputImageKey)
+        guard let outputCIImage = monoFilter.outputImage else { return image }
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else { return image }
+
+        return UIImage(cgImage: outputCGImage)
+    }
+
+    func setImageViewHeight(with aspectRatio: CGFloat) {
+        imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
+        view.layoutSubviews()
     }
 
     private func imageActionSheet() {
@@ -153,7 +196,7 @@ extension NewExperienceViewController: UIImagePickerControllerDelegate, UINaviga
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
 
         imageView.image = image
-//        originalImage = image
+        originalImage = image
 //        setImageViewHeight(with: image.ratio)
     }
 

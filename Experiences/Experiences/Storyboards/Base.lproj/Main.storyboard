@@ -171,57 +171,60 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="m20-2u-Gmt">
-                                <rect key="frame" x="30" y="748.5" width="354" height="24.5"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="KjK-hg-622">
+                                <rect key="frame" x="20" y="700.5" width="374" height="82.5"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F8S-9L-cPy">
-                                        <rect key="frame" x="0.0" y="1" width="98" height="22.5"/>
-                                        <color key="tintColor" systemColor="systemIndigoColor" red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" image="photo" catalog="system">
-                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="20"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="photoButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="b1Z-v5-eyJ"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v2j-tY-jTb">
-                                        <rect key="frame" x="128" y="0.0" width="98" height="24.5"/>
-                                        <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" image="mic" catalog="system">
-                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="20"/>
-                                        </state>
-                                        <connections>
-                                            <segue destination="bXZ-DS-SOD" kind="presentation" identifier="AudioModalSegue" id="Jg7-bx-RcJ"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3fl-sb-Yc3">
-                                        <rect key="frame" x="256" y="1.5" width="98" height="22"/>
-                                        <color key="tintColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" image="video" catalog="system">
-                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="20"/>
-                                        </state>
-                                        <connections>
-                                            <segue destination="5kg-le-67q" kind="presentation" identifier="VideoModalSegue" id="IKi-yn-HKj"/>
-                                        </connections>
-                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add a photo, audio recording, or video" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bgR-km-QI7">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="m20-2u-Gmt">
+                                        <rect key="frame" x="0.0" y="58" width="374" height="24.5"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F8S-9L-cPy">
+                                                <rect key="frame" x="0.0" y="1" width="104.5" height="22.5"/>
+                                                <color key="tintColor" systemColor="systemIndigoColor" red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" image="photo" catalog="system">
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="20"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="photoButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="b1Z-v5-eyJ"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v2j-tY-jTb">
+                                                <rect key="frame" x="134.5" y="0.0" width="105" height="24.5"/>
+                                                <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" image="mic" catalog="system">
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="20"/>
+                                                </state>
+                                                <connections>
+                                                    <segue destination="bXZ-DS-SOD" kind="presentation" identifier="AudioModalSegue" id="Jg7-bx-RcJ"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3fl-sb-Yc3">
+                                                <rect key="frame" x="269.5" y="1.5" width="104.5" height="22"/>
+                                                <color key="tintColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" image="video" catalog="system">
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="20"/>
+                                                </state>
+                                                <connections>
+                                                    <segue destination="5kg-le-67q" kind="presentation" identifier="VideoModalSegue" id="IKi-yn-HKj"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add a photo, audio recording, or video" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bgR-km-QI7">
-                                <rect key="frame" x="76" y="690.5" width="262.5" height="18"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="bgR-km-QI7" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="HhI-8J-1wk"/>
+                            <constraint firstItem="KjK-hg-622" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="HCI-76-THo"/>
                             <constraint firstItem="Ux8-LK-t2c" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="HsX-20-3sL"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="m20-2u-Gmt" secondAttribute="bottom" constant="40" id="Nxn-Nv-e6h"/>
-                            <constraint firstItem="m20-2u-Gmt" firstAttribute="top" secondItem="bgR-km-QI7" secondAttribute="bottom" constant="40" id="Rdn-WR-j3m"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="m20-2u-Gmt" secondAttribute="trailing" constant="30" id="fO6-yq-Gwp"/>
-                            <constraint firstItem="m20-2u-Gmt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="gYZ-Ie-k8b"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KjK-hg-622" secondAttribute="trailing" constant="20" id="ozc-0E-rj6"/>
                             <constraint firstItem="Ux8-LK-t2c" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="raJ-TH-fsy"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="KjK-hg-622" secondAttribute="bottom" constant="30" id="xte-S8-Dhi"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Ux8-LK-t2c" secondAttribute="trailing" constant="20" id="yVg-4k-9dP"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -237,6 +240,7 @@
                         <outlet property="blackAndWhiteButton" destination="Bf5-0u-h2h" id="ayY-Ff-d6n"/>
                         <outlet property="bwButtonContainerView" destination="8B8-X6-txa" id="UDd-eq-fy8"/>
                         <outlet property="imageContainerView" destination="b6s-cs-BkZ" id="Z0u-DA-rWT"/>
+                        <outlet property="imageHeightConstraint" destination="mPE-QT-tW4" id="m0f-p2-MsV"/>
                         <outlet property="imageView" destination="mBU-NS-L2E" id="O3K-aV-lNW"/>
                         <outlet property="titleTextField" destination="c7Q-bN-J2F" id="4IZ-VF-o4c"/>
                         <outlet property="videoContainerView" destination="b3g-AJ-L8D" id="Sz6-WH-whf"/>
