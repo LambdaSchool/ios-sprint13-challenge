@@ -14,9 +14,9 @@ class ExperienceTempController {
 
     var experiences: [ExperienceTemp] = []
 
-    func createExperience(title: String, image: Data?, audioURL: URL?, videoURL: URL?, latitude: Double, longitude: Double) {
+    func createExperience(header: String, image: Data?, audioURL: URL?, videoURL: URL?, latitude: Double, longitude: Double) {
 
-        let experience = ExperienceTemp(title: title, image: image, audioURL: audioURL, videoURL: videoURL, latitude: latitude, longitude: longitude)
+        let experience = ExperienceTemp(title: header, image: image, audioURL: audioURL, videoURL: videoURL, latitude: latitude, longitude: longitude)
 
         experiences.append(experience)
     }

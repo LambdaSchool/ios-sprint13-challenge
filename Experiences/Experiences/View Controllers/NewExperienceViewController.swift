@@ -84,7 +84,7 @@ class NewExperienceViewController: UIViewController {
 
         guard let location = currentLocation else { return }
         guard let title = titleTextField.text else { return }
-        experienceController.createExperience(title: title, image: saveImage?.pngData(), audioURL: audioURL, videoURL: videoURL, latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        experienceController.createExperience(header: title, image: saveImage?.pngData(), audioURL: audioURL, videoURL: videoURL, latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
 
         delegate?.newExperience(hasBeenCreated: true)
         print(experienceController.experiences.count)

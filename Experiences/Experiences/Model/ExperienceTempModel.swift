@@ -9,13 +9,9 @@
 import UIKit
 import MapKit
 
-class ExperienceTemp: NSObject, MKAnnotation {
+class ExperienceTemp: NSObject {
 
-    var coordinate: CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-    }
-
-    let title: String?
+    let header: String?
     let image: Data?
     let audioURL: URL?
     let videoURL: URL?
@@ -24,12 +20,33 @@ class ExperienceTemp: NSObject, MKAnnotation {
     let timestamp: Date
 
     init(title: String, image: Data?, audioURL: URL?, videoURL: URL?, latitude: Double, longitude: Double, timestamp: Date = Date()) {
-        self.title = title
+        self.header = title
         self.image = image
         self.audioURL = audioURL
         self.videoURL = videoURL
         self.latitude = latitude
         self.longitude = longitude
         self.timestamp = timestamp
+    }
+
+    private lazy var dateFormatter: DateFormatter = {
+         let result = DateFormatter()
+         result.dateStyle = .short
+         result.timeStyle = .short
+         return result
+     }()
+}
+
+extension ExperienceTemp: MKAnnotation {
+    var coordinate: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
+
+    var title: String? {
+        header
+    }
+
+    var subtitle: String? {
+        dateFormatter.string(from: timestamp)
     }
 }

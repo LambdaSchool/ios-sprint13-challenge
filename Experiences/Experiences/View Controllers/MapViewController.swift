@@ -13,11 +13,16 @@ class MapViewController: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
 
+    let experienceController = ExperienceTempController.shared
+
     let locationManager = CLLocationManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.requestWhenInUseAuthorization()
+        loadExperiences()
+        mapView.delegate = self
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceView")
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -27,6 +32,17 @@ class MapViewController: UIViewController {
 
     @IBAction func currentLocationTapped(_ sender: UIButton) {
         getUserCurrentLocation()
+    }
+
+    func loadExperiences() {
+        mapView.removeAnnotations(experienceController.experiences)
+//        if let firstExperience = experienceController.experiences.first {
+//            let span = MKCoordinateSpan(latitudeDelta: 2, longitudeDelta: 2)
+//            let region = MKCoordinateRegion(center: firstExperience.coordinate, span: span)
+//
+//            mapView.setRegion(region, animated: true)
+//        }
+        mapView.addAnnotations(experienceController.experiences)
     }
 
     func getUserCurrentLocation() {
@@ -40,6 +56,20 @@ class MapViewController: UIViewController {
 
 }
 
-extension MapViewController: CLLocationManagerDelegate {
-
+extension MapViewController: MKMapViewDelegate {
+//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//
+//        guard let experience = annotation as? ExperienceTemp else { fatalError("Invalid type") }
+//        guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceView") as? MKMarkerAnnotationView else { fatalError("Incorrect view is registered") }
+//
+//        annotationView.glyphImage = UIImage(systemName: "doc.richtext")
+//        annotationView.markerTintColor = .systemPink
+//
+//        annotationView.canShowCallout = true
+//        let detailView = ExperienceMapDetailView(frame: .zero)
+//        detailView.experience = experience
+//        annotationView.detailCalloutAccessoryView = detailView
+//
+//        return annotationView
+//    }
 }

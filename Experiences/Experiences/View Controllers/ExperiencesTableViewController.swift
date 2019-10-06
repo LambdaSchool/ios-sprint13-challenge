@@ -40,7 +40,7 @@ class ExperiencesTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ExperienceCell", for: indexPath)
 
         let experience = experienceTempController.experiences[indexPath.row]
-        cell.textLabel?.text = experience.title
+        cell.textLabel?.text = experience.header
 
         return cell
     }

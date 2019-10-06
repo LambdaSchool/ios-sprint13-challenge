@@ -50,8 +50,8 @@ class ExperienceMapDetailView: UIView {
 
     private func updateSubviews() {
         guard let experience = experience else { return }
-        let title = experience.title
-        titleLabel.text = title
+        let header = experience.header
+        titleLabel.text = header
         dateLabel.text = dateFormatter.string(from: experience.timestamp)
         titleLabel.font = .systemFont(ofSize: 17)
         titleLabel.textColor = .label
