@@ -88,6 +88,9 @@ class NewExperienceViewController: UIViewController {
 
         delegate?.newExperience(hasBeenCreated: true)
         print(experienceController.experiences.count)
+        resetElements()
+        toggleHide(hideElements: true)
+        newExperienceAlert()
     }
 
     @IBAction func photoButtonTapped(_ sender: UIButton) {
@@ -134,11 +137,10 @@ class NewExperienceViewController: UIViewController {
         toggleHide(hideElements: true)
     }
 
-    private func animateMicIcon() {
-        micIcon.tintColor = .systemOrange
-        UIView.animate(withDuration: 2, delay: 1.2, options: [.curveEaseInOut], animations: {
-            self.micIcon.tintColor = .secondaryLabel
-        }, completion: nil)
+    private func resetElements() {
+        audioFileLabel.text = "Add Audio File"
+        videoFileLabel.text = "Add Video File"
+        titleTextField.text = ""
     }
 
     private func toggleHide(hideElements: Bool) {
@@ -181,6 +183,13 @@ class NewExperienceViewController: UIViewController {
         let okayAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         saveAlert.addAction(okayAction)
         present(saveAlert, animated: true, completion: nil)
+    }
+
+    private func newExperienceAlert() {
+        let experienceAddedAlert = UIAlertController(title: "Your experience has been added!", message: nil, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        experienceAddedAlert.addAction(okAction)
+        present(experienceAddedAlert, animated: true, completion: nil)
     }
 
     private func imageActionSheet() {
