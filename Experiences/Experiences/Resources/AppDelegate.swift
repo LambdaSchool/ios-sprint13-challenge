@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AVFoundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegate {
@@ -15,23 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
-        let session = AVAudioSession.sharedInstance()
-        session.requestRecordPermission { granted in
-            guard granted == true else {
-                print("We need mircrophone access")
-                return
-            }
-
-            do {
-                try session.setCategory(.playAndRecord, mode: .default, options: [])
-                try session.overrideOutputAudioPort(.speaker)
-                try session.setActive(true, options: [])
-            } catch {
-                NSLog("Error setting up audio session: \(error)")
-            }
-        }
-
         return true
     }
 

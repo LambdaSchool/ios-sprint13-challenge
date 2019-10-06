@@ -39,6 +39,14 @@ class AudioPlayer: NSObject {
     // MARK: - Init()
 
     override init() {
+        let session = AVAudioSession.sharedInstance()
+        do {
+            try session.setCategory(.playAndRecord, mode: .default, options: [])
+            try session.overrideOutputAudioPort(.speaker)
+            try session.setActive(true, options: [])
+        } catch {
+            NSLog("Error setting up audio session: \(error)")
+        }
         super.init()
     }
 
