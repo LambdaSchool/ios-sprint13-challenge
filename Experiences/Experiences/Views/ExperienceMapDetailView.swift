@@ -17,7 +17,6 @@ class ExperienceMapDetailView: UIView {
         return result
     }()
 
-    private let titleLabel = UILabel()
     private let dateLabel = UILabel()
 
     var experience: ExperienceTemp? {
@@ -30,9 +29,9 @@ class ExperienceMapDetailView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        titleLabel.setContentHuggingPriority(.defaultLow+1, for: .horizontal)
+        dateLabel.setContentHuggingPriority(.defaultLow+1, for: .horizontal)
 
-        let labelStackView = UIStackView(arrangedSubviews: [titleLabel, dateLabel])
+        let labelStackView = UIStackView(arrangedSubviews: [dateLabel])
         labelStackView.spacing = UIStackView.spacingUseSystem
         labelStackView.axis = .vertical
 
@@ -50,11 +49,7 @@ class ExperienceMapDetailView: UIView {
 
     private func updateSubviews() {
         guard let experience = experience else { return }
-        let header = experience.header
-        titleLabel.text = header
         dateLabel.text = dateFormatter.string(from: experience.timestamp)
-        titleLabel.font = .systemFont(ofSize: 17)
-        titleLabel.textColor = .label
         dateLabel.font = .systemFont(ofSize: 14)
         dateLabel.textColor = .secondaryLabel
     }

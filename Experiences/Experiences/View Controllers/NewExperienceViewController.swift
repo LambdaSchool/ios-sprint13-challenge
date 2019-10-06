@@ -10,6 +10,7 @@ import UIKit
 import Photos
 import CoreImage
 import CoreLocation
+import AVFoundation
 
 protocol NewExperienceViewControllerDelegate: AnyObject {
     func newExperience(hasBeenCreated: Bool)
@@ -200,7 +201,7 @@ class NewExperienceViewController: UIViewController {
         }
 
         let cameraAction = UIAlertAction(title: "Camera", style: .default) { _ in
-            // Camera code goes here
+            self.requestCameraAccess()
         }
 
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -219,6 +220,21 @@ class NewExperienceViewController: UIViewController {
             imagePicker.delegate = self
             imagePicker.sourceType = .photoLibrary
             self.present(imagePicker, animated: true, completion: nil)
+        }
+    }
+
+    private func presentCamera() {
+        guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+            presentInformationalAlertController(title: "Error", message: "The camera is unavailable")
+            return
+        }
+
+        DispatchQueue.main.async {
+            let camera = UIImagePickerController()
+            camera.delegate = self
+            camera.sourceType = .camera
+            camera.modalPresentationStyle = .automatic
+            self.present(camera, animated: true, completion: nil)
         }
     }
 
@@ -245,6 +261,37 @@ class NewExperienceViewController: UIViewController {
             break
         }
         presentImagePickerController()
+    }
+
+    private func requestCameraAccess() {
+        let authStatus = AVCaptureDevice.authorizationStatus(for: .video)
+        switch authStatus {
+        case .authorized:
+            presentCamera()
+        case .denied:
+            self.presentInformationalAlertController(title: "Error", message: "In order to use the camera, you must allow this application access to it.")
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { (granted) in
+                guard granted == true else {
+                    NSLog("User did not authorize access to the camera")
+                    self.presentInformationalAlertController(title: "Error", message: "In order to use the camera, you must allow this application access to it.")
+                    return
+                }
+                self.presentCamera()
+            }
+        default:
+            break
+        }
+    }
+
+    func alertPromptToAllowCameraAccessViaSettings() {
+        let alert = UIAlertController(title: "Would Like To Access the Camera", message: "Please grant permission to use the Camera", preferredStyle: .alert )
+        alert.addAction(UIAlertAction(title: "Open Settings", style: .cancel) { alert in
+            if let appSettingsURL = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(appSettingsURL)
+            }
+        })
+        present(alert, animated: true, completion: nil)
     }
 }
 
