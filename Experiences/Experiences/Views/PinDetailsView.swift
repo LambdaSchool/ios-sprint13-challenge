@@ -39,20 +39,27 @@ class PinDetailsView: UIView {
 	// MARK: - Helpers
 	
     private func updateSubviews() {
-        guard let experience = experience else { return }
+//        guard let experience = experience else { return }
 		
-		captionLbl.text = experience.caption
-		dateLbl.text = dateFormatter.string(from: experience.timestamp)
-		
-		if experience.audioUrl != nil {
-			let image = UIImage(systemName: "ear")
-			mediaBtn.setImage(image, for: .normal)
-		} else if experience.videoUrl != nil {
-			let image = UIImage(systemName: "video")
-			mediaBtn.setImage(image, for: .normal)
+		if let experience = experience {
+			captionLbl.text = experience.caption
+			dateLbl.text = dateFormatter.string(from: experience.timestamp)
+			
+			if experience.audioUrl != nil {
+				let image = UIImage(systemName: "ear")
+				mediaBtn.setImage(image, for: .normal)
+			} else if experience.videoUrl != nil {
+				let image = UIImage(systemName: "video")
+				mediaBtn.setImage(image, for: .normal)
+			} else {
+				let image = UIImage(systemName: "xmark.icloud.fill")
+				mediaBtn.setImage(image, for: .normal)
+			}
 		} else {
-			let image = UIImage(systemName: "xmark.icloud.fill")
-			mediaBtn.setImage(image, for: .normal)
+			captionLbl.isHidden = true
+			dateLbl.isHidden = true
+			mediaBtn.setImage(nil, for: .normal)
+			mediaBtn.setTitle("Add Experience", for: .normal)
 		}
     }
 }

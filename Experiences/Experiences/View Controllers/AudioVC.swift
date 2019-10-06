@@ -8,9 +8,9 @@
 
 import UIKit
 
-//protocol AudioCommentDelegate {
-//	func didPostAudio(newComment: Comment?)
-//}
+protocol AudioVCDelegate {
+	func didPostAudio(with url: URL, caption: String)
+}
 
 class AudioVC: UIViewController {
 
@@ -19,6 +19,7 @@ class AudioVC: UIViewController {
 	@IBOutlet weak var progressView: UIProgressView!
 	@IBOutlet weak var elapsedTimeLabel: UILabel!
 	@IBOutlet weak var durationLabel: UILabel!
+	@IBOutlet weak var captionTextField: UITextField!
 	@IBOutlet weak var previewButton: UIButton!
 	@IBOutlet weak var recordButton: UIButton!
 	@IBOutlet weak var postButton: UIButton!
@@ -39,7 +40,7 @@ class AudioVC: UIViewController {
 		return Float(player.elapsedTime / player.duration) * 100
 	}
 	private var audioURL: URL?
-	
+	var delegate: AudioVCDelegate?
 	
 	// MARK: - Life Cycle
 	
@@ -52,6 +53,7 @@ class AudioVC: UIViewController {
 																   weight: .regular)
 		
 		recorder.delegate = self
+		captionTextField.delegate = self
 		
 		#warning("Clean up file manager")
 		let documentDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -59,6 +61,11 @@ class AudioVC: UIViewController {
 		
 		postButton.isEnabled = false
 		updateViews()
+	}
+	
+	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+		super.touchesBegan(touches, with: event)
+		view.endEditing(true)
 	}
 	
 	// MARK: - IBActions
@@ -73,9 +80,9 @@ class AudioVC: UIViewController {
 	}
 	
 	@IBAction func postBtnTapped(_ sender: Any) {
-		guard let url = audioURL,
-			let audioData = try? Data(contentsOf: url) else { return }
+		guard let url = audioURL, let caption = captionTextField.text else { return }
 		
+		delegate?.didPostAudio(with: url, caption: caption)
 		dismiss(animated: true, completion: nil)
 	}
 	
@@ -118,10 +125,20 @@ extension AudioVC: AudioRecorderDelegate {
 				player = try AudioPlayer(with: url)
 				player?.delegate = self
 				audioURL = url
-				postButton.isEnabled = true
+				updateViews()
 			} catch {
 				NSLog("Could not play recording")
 			}
+		}
+	}
+}
+
+extension AudioVC: UITextFieldDelegate {
+	func textFieldDidChangeSelection(_ textField: UITextField) {
+		if textField.text == nil || textField.text == "" {
+			postButton.isEnabled = false
+		} else {
+			postButton.isEnabled = true
 		}
 	}
 }

@@ -9,6 +9,10 @@
 import UIKit
 import AVFoundation
 
+protocol CameraVCDelegate {
+	func didPostVideo(with url: URL, caption: String)
+}
+
 class CameraVC: UIViewController {
 
 	// MARK: - IBOutlets
@@ -25,6 +29,7 @@ class CameraVC: UIViewController {
 	private var player: AVPlayer?
 	private var videoUrl: URL?
 	private var playerLayer: AVPlayerLayer?
+	var delegate: CameraVCDelegate?
 	
 	// MARK: - Life Cycle
 	
@@ -66,10 +71,10 @@ class CameraVC: UIViewController {
 		
 		let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
 		let postAction = UIAlertAction(title: "Post", style: .default) { (_) in
-			guard let description = alert.textFields?.first?.text, description != "" else { return }
-			guard let url = self.videoUrl,
-			let videoData = try? Data(contentsOf: url) else { return }
+			guard let url = self.videoUrl, let caption = alert.textFields?.first?.text, caption != "" else { return }
 			
+			self.delegate?.didPostVideo(with: url, caption: caption)
+			self.dismiss(animated: true, completion: nil)
 		}
 		
 		[cancelAction, postAction].forEach({ alert.addAction($0) })

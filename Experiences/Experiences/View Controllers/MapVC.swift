@@ -16,16 +16,17 @@ class MapVC: UIViewController {
 	@IBOutlet weak var mapView: MKMapView!
 	@IBOutlet weak var addBtn: UIButton!
 	@IBOutlet weak var currentLocationBtn: UIButton!
-	@IBOutlet var mapLongPressGesture: UILongPressGestureRecognizer!
+//	@IBOutlet var mapLongPressGesture: UILongPressGestureRecognizer!
 	@IBOutlet var customCalloutView: PinDetailsView!
 	
 	// MARK: - Properties
 	
-	let locationManager = CLLocationManager()
-	var userLocation: CLLocation? {
+	private let locationManager = CLLocationManager()
+	private var userLocation: CLLocation? {
 		mapView.userLocation.location
 	}
-	var experiences = [Experience]()
+	private var experiences = [Experience]()
+	private var newExperience: Experience?
 	
 	// MARK: - Life Cycle
 	
@@ -45,6 +46,10 @@ class MapVC: UIViewController {
 		if let searchVC = segue.destination as? SearchTableVC {
 			searchVC.mapView = mapView
 			searchVC.delegate = self
+		} else if let cameraVC = segue.destination as? CameraVC {
+			cameraVC.delegate = self
+		} else if let audioVC = segue.destination as? AudioVC {
+			audioVC.delegate = self
 		}
 	}
 	
@@ -58,17 +63,18 @@ class MapVC: UIViewController {
 		focusMapRegion(over: userLocation)
 	}
 	
-	@IBAction func mapLongPressed(_ sender: UILongPressGestureRecognizer) {
-		switch sender.state {
-		case .ended:
-			let location = sender.location(in: mapView)
-			let coordinate = mapView.convert(location,toCoordinateFrom: mapView)
-			
-			createAnnotation(at: coordinate)
-		default:
-			break
-		}
-	}
+//	@IBAction func mapLongPressed(_ sender: UILongPressGestureRecognizer) {
+//		switch sender.state {
+//		case .ended:
+//			let location = sender.location(in: mapView)
+//			let coordinate = mapView.convert(location,toCoordinateFrom: mapView)
+//
+//			createAnnotation(at: coordinate)
+//		default:
+//			break
+//		}
+//	}
+	
 	// MARK: - Helpers
 	
 	private func setupMap() {
@@ -91,11 +97,10 @@ class MapVC: UIViewController {
 		mapView.setRegion(region, animated: true)
 	}
 	
-	private func createAnnotation(at coordinate: CLLocationCoordinate2D) {
-//		let annotation = MKPointAnnotation()
-//		annotation.coordinate = coordinate
+	private func createAnnotation() {
+		guard let exp = newExperience else { return }
+		let newExperience = Experience(caption: exp.caption, location: exp.coordinate, videoUrl: exp.videoUrl, audioUrl: exp.audioUrl)
 		
-		let newExperience = Experience(caption: "Cool!", location: coordinate, videoUrl: nil, audioUrl: nil)
 		mapView.addAnnotation(newExperience)
 	}
 	
@@ -130,17 +135,34 @@ extension MapVC: MKMapViewDelegate {
 
 		return annotationView
 	}
-
-	func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-		
-	}
 }
 
 // MARK: - SearchTableVC Delegate
 
 extension MapVC: SearchTableVCDelegate {
 	func didSelectLocation(_ location: CLLocation) {
-		createAnnotation(at: location.coordinate)
 		focusMapRegion(over: location)
+		newExperience = Experience(location: location.coordinate)
+		newExperianceTypeSheet()
+	}
+}
+
+// MARK: - CameraVC Delegate
+
+extension MapVC: CameraVCDelegate {
+	func didPostVideo(with url: URL, caption: String) {
+		newExperience?.videoUrl = url
+		newExperience?.caption = caption
+		createAnnotation()
+	}
+}
+
+// MARK: - AudioVC Delegate
+
+extension MapVC: AudioVCDelegate {
+	func didPostAudio(with url: URL, caption: String) {
+		newExperience?.audioUrl = url
+		newExperience?.caption = caption
+		createAnnotation()
 	}
 }

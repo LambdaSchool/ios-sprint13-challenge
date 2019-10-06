@@ -89,8 +89,8 @@ class SearchTableVC: UITableViewController {
 		let searchItem = searchItems[indexPath.row]
 		let location = CLLocation(latitude: searchItem.placemark.coordinate.latitude, longitude: searchItem.placemark.coordinate.longitude)
 		
-		delegate?.didSelectLocation(location)
 		dismiss(animated: true, completion: nil)
+		delegate?.didSelectLocation(location)
 	}
 }
 
