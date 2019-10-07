@@ -12,6 +12,6 @@ import UIKit
 extension UIAlertController {
     override open func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.view.tintColor = .systemIndigo
+        self.view.tintColor = .systemTeal
     }
 }

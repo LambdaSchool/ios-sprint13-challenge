@@ -11,5 +11,9 @@ import CoreData
 
 class ExperienceController {
 
-//    func createExperience(title: String, imageURL: URL, audioURL: URL, videoURL: URL, latitude: Double, longitude: Double, context: NSManagedO)
+    func createExperience(title: String, imageURL: URL, audioURL: URL, videoURL: URL, latitude: Double, longitude: Double, context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
+        context.performAndWait {
+            // Do something here.
+        }
+    }
 }

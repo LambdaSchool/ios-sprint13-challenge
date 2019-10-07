@@ -23,8 +23,6 @@ class ExperiencesTableViewController: UITableViewController {
         tableView.reloadData()
     }
 
-    let testArray = ["Experience One", "Experience Two", "Experience Three", "Experience Four", "Experience Five", "Experience Six"]
-
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -37,10 +35,10 @@ class ExperiencesTableViewController: UITableViewController {
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ExperienceCell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ExperienceCell", for: indexPath) as? ExperienceTableViewCell else { return UITableViewCell() }
 
         let experience = experienceTempController.experiences[indexPath.row]
-        cell.textLabel?.text = experience.header
+        cell.experience = experience
 
         return cell
     }
@@ -69,15 +67,6 @@ class ExperiencesTableViewController: UITableViewController {
 
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let experienceVC = segue.destination as? NewExperienceViewController else { return }
-        experienceVC.delegate = self as? NewExperienceViewControllerDelegate
-    }
-}
 
-extension ExperiencesTableViewController: NewExperienceViewControllerDelegate {
-    func newExperience(hasBeenCreated: Bool) {
-        if hasBeenCreated {
-            tableView.reloadData()
-        }
     }
 }

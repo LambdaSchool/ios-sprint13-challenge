@@ -60,7 +60,7 @@ class NewExperienceViewController: UIViewController {
 
     private var scaledImage:UIImage? {
         didSet {
-//            updateImage()
+            //updateImage()
         }
     }
     var videoURL: URL?
@@ -74,7 +74,10 @@ class NewExperienceViewController: UIViewController {
         setupUI()
         titleTextField.delegate = self
         locationManager.requestWhenInUseAuthorization()
+    }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
 
     // MARK: - Actions
@@ -82,22 +85,22 @@ class NewExperienceViewController: UIViewController {
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
         if titleTextField.text == nil || titleTextField.text == "" {
             emptySaveAlert()
+        } else if titleTextField.text != nil && titleTextField.text != "" {
+            if CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+                CLLocationManager.authorizationStatus() == .authorizedAlways {
+                currentLocation = locationManager.location
+            }
+
+            guard let location = currentLocation else { return }
+            guard let title = titleTextField.text else { return }
+            experienceController.createExperience(header: title, image: saveImage?.pngData(), audioURL: audioURL, videoURL: videoURL, latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+
+            delegate?.newExperience(hasBeenCreated: true)
+            print(experienceController.experiences.count)
+            resetElements()
+            toggleHide(hideElements: true)
+            newExperienceAlert()
         }
-
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
-            CLLocationManager.authorizationStatus() == .authorizedAlways {
-            currentLocation = locationManager.location
-        }
-
-        guard let location = currentLocation else { return }
-        guard let title = titleTextField.text else { return }
-        experienceController.createExperience(header: title, image: saveImage?.pngData(), audioURL: audioURL, videoURL: videoURL, latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-
-        delegate?.newExperience(hasBeenCreated: true)
-        print(experienceController.experiences.count)
-        resetElements()
-        toggleHide(hideElements: true)
-        newExperienceAlert()
     }
 
     @IBAction func photoButtonTapped(_ sender: UIButton) {
@@ -136,7 +139,7 @@ class NewExperienceViewController: UIViewController {
         if titleTextField.text == "" &&
             audioURL == nil &&
             videoURL == nil &&
-            saveImage == nil {
+            imageView.image == nil {
             clearAllButton.isEnabled = false
         }
     }
@@ -278,7 +281,8 @@ class NewExperienceViewController: UIViewController {
             camera.delegate = self
             camera.sourceType = .camera
             camera.modalPresentationStyle = .automatic
-            self.present(camera, animated: true, completion: nil)
+            self.present(camera, animated: true)
+            self.imageView.isHidden = false
         }
     }
 
@@ -313,7 +317,7 @@ class NewExperienceViewController: UIViewController {
         case .authorized:
             presentCamera()
         case .denied:
-            self.presentInformationalAlertController(title: "Error", message: "In order to use the camera, you must allow this application access to it.")
+            alertPromptToAllowCameraAccessViaSettings()
         case .notDetermined:
             AVCaptureDevice.requestAccess(for: .video) { (granted) in
                 guard granted == true else {
@@ -329,7 +333,7 @@ class NewExperienceViewController: UIViewController {
     }
 
     func alertPromptToAllowCameraAccessViaSettings() {
-        let alert = UIAlertController(title: "Would Like To Access the Camera", message: "Please grant permission to use the Camera", preferredStyle: .alert )
+        let alert = UIAlertController(title: "In order to use this feature, access to the camera is needed", message: "Please grant permission to use the Camera", preferredStyle: .alert )
         alert.addAction(UIAlertAction(title: "Open Settings", style: .cancel) { alert in
             if let appSettingsURL = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(appSettingsURL)
@@ -350,12 +354,11 @@ extension NewExperienceViewController: UIImagePickerControllerDelegate, UINaviga
         picker.dismiss(animated: true, completion: nil)
         toggleHide(hideElements: false)
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        saveImage = image
         imageView.image = image
         originalImage = image
+        setImageViewHeight(with: image.ratio)
         photoFileLabel.text = "Tap to change photo"
         viewPhotoButton.tintColor = .systemGreen
-//        setImageViewHeight(with: image.ratio)
     }
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
