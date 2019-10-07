@@ -25,13 +25,19 @@ class NewExperienceViewController: UIViewController {
     @IBOutlet private weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var audioContainerView: UIView!
     @IBOutlet private weak var videoContainerView: UIView!
+    @IBOutlet private weak var photoContainerView: UIView!
     @IBOutlet private weak var audioFileLabel: UILabel!
     @IBOutlet private weak var videoFileLabel: UILabel!
+    @IBOutlet private weak var photoFileLabel: UILabel!
     @IBOutlet private weak var titleTextField: UITextField!
     @IBOutlet private weak var blackAndWhiteButton: UIButton!
     @IBOutlet private weak var bwButtonContainerView: UIView!
     @IBOutlet private weak var micIcon: UIButton!
     @IBOutlet private weak var videoIcon: UIButton!
+    @IBOutlet private weak var audioPlayButton: UIButton!
+    @IBOutlet private weak var videoPlayButton: UIButton!
+    @IBOutlet private weak var viewPhotoButton: UIButton!
+    @IBOutlet private weak var clearAllButton: UIBarButtonItem!
 
     let experienceController = ExperienceTempController.shared
     private let context = CIContext(options: nil)
@@ -110,8 +116,29 @@ class NewExperienceViewController: UIViewController {
         
     }
 
+    @IBAction func clearAllFieldsButton(_ sender: UIBarButtonItem) {
+        let clearAllAlert = UIAlertController(title: "Are you sure you want to clear all?", message: "This will start this experience from scratch", preferredStyle: .actionSheet)
+        let clearAllAction = UIAlertAction(title: "Clear All", style: .destructive) { _ in
+            self.resetElements()
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        [clearAllAction, cancelAction].forEach { clearAllAlert.addAction($0) }
+        present(clearAllAlert, animated: true, completion: nil)
+    }
+
     @objc private func tapDismissKeyboard(_ tapGesture: UITapGestureRecognizer) {
         titleTextField.resignFirstResponder()
+    }
+
+    @IBAction func textFieldDidChange(_ sender: UITextField) {
+        clearAllButton.isEnabled = true
+        if titleTextField.text == "" &&
+            audioURL == nil &&
+            videoURL == nil &&
+            saveImage == nil {
+            clearAllButton.isEnabled = false
+        }
     }
 
 
@@ -131,28 +158,45 @@ class NewExperienceViewController: UIViewController {
     // MARK: - Helper Functions
 
     private func setupUI() {
-        [imageView, audioContainerView, videoContainerView].forEach { $0?.layer.cornerRadius = 8 }
+        [imageView, audioContainerView, videoContainerView, photoContainerView].forEach { $0?.layer.cornerRadius = 8 }
         let tapDissmissKeyboard = UITapGestureRecognizer(target: self, action: #selector(tapDismissKeyboard(_:)))
         view.addGestureRecognizer(tapDissmissKeyboard)
         bwButtonContainerView.layer.cornerRadius = 6
         toggleHide(hideElements: true)
+        audioPlayButton.tintColor = .secondaryLabel
+        videoPlayButton.tintColor = .secondaryLabel
+        viewPhotoButton.tintColor = .secondaryLabel
     }
 
     private func resetElements() {
-        audioFileLabel.text = "Add Audio File"
-        videoFileLabel.text = "Add Video File"
+        toggleHide(hideElements: true)
+        audioFileLabel.text = "Tap to add Audio"
+        videoFileLabel.text = "Tap to add Video"
+        photoFileLabel.text = "Tap to add Photo"
         titleTextField.text = ""
+        imageView.image = nil
+        audioURL = nil
+        videoURL = nil
+        saveImage = nil
     }
 
     private func toggleHide(hideElements: Bool) {
         if hideElements {
-            imageView.isHidden = true
-            imageContainerView.isHidden = true
-            blackAndWhiteButton.isHidden = true
+            UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 3, initialSpringVelocity: 5, options: [.curveEaseInOut], animations: {
+                self.imageView.isHidden = true
+                self.imageContainerView.isHidden = true
+                self.bwButtonContainerView.isHidden = true
+                self.blackAndWhiteButton.isHidden = true
+                self.clearAllButton.isEnabled = false
+                self.viewPhotoButton.tintColor = .secondaryLabel
+                self.videoPlayButton.tintColor = .secondaryLabel
+                self.audioPlayButton.tintColor = .secondaryLabel
+            }, completion: nil)
         } else {
             imageView.isHidden = false
             imageContainerView.isHidden = false
             blackAndWhiteButton.isHidden = false
+            bwButtonContainerView.isHidden = false
         }
     }
 
@@ -309,6 +353,8 @@ extension NewExperienceViewController: UIImagePickerControllerDelegate, UINaviga
         saveImage = image
         imageView.image = image
         originalImage = image
+        photoFileLabel.text = "Tap to change photo"
+        viewPhotoButton.tintColor = .systemGreen
 //        setImageViewHeight(with: image.ratio)
     }
 
@@ -320,11 +366,13 @@ extension NewExperienceViewController: UIImagePickerControllerDelegate, UINaviga
 extension NewExperienceViewController: VideoRecordViewControllerDelegate, AudioRecordViewControllerDelegate {
     func didAddAudioComment(AudioRecordViewController: AudioRecordViewController, audioURL: URL) {
         self.audioURL = audioURL
-        audioFileLabel.text = audioURL.absoluteString
+        audioFileLabel.text = "Tap to re-record audio"
+        audioPlayButton.tintColor = .systemGreen
     }
 
     func videoRecordViewControllerDelegate(_ videoRecordViewController: VideoRecordViewController, didFinishRecordingWith url: URL) {
         self.videoURL = url
-        videoFileLabel.text = url.absoluteString
+        videoFileLabel.text = "Tap to re-record video"
+        videoPlayButton.tintColor = .systemGreen
     }
 }

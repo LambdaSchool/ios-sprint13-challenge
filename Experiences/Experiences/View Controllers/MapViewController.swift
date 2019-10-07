@@ -13,6 +13,9 @@ import CoreLocation
 class MapViewController: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var showLocationButton: UIButton!
+    @IBOutlet weak var goToCurrentLocationButton: UIButton!
+    @IBOutlet weak var buttonContainerView: UIView!
 
     let experienceController = ExperienceTempController.shared
 
@@ -30,17 +33,29 @@ class MapViewController: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         mapView.delegate = self
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceView")
+        buttonContainerView.layer.cornerRadius = 10
+
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        getUserCurrentLocation()
         loadExperiences()
     }
 
-    @IBAction func currentLocationTapped(_ sender: UIButton) {
+    @IBAction func goToCurrentLocation(_ sender: UIButton) {
+        if mapView.showsUserLocation == true {
+            getUserCurrentLocation()
+        }
+    }
+
+
+    @IBAction func showCurrentLocationTapped(_ sender: UIButton) {
         mapView.showsUserLocation.toggle()
-        getUserCurrentLocation()
+        if mapView.showsUserLocation == false {
+            showLocationButton.setImage(UIImage(systemName: "location.slash.fill"), for: .normal)
+        } else {
+            showLocationButton.setImage(UIImage(systemName: "location.fill"), for: .normal)
+        }
     }
 
     func loadExperiences() {
