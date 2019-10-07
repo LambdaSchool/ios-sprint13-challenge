@@ -63,9 +63,24 @@ class NewExperienceViewController: UIViewController {
             //updateImage()
         }
     }
-    var videoURL: URL?
-    var audioURL: URL?
-    var saveImage: UIImage?
+    
+    var videoURL: URL? {
+        didSet {
+            clearAllButton.isEnabled = true
+        }
+    }
+
+    var audioURL: URL? {
+        didSet {
+            clearAllButton.isEnabled = true
+        }
+    }
+
+    var saveImage: UIImage? {
+        didSet {
+            clearAllButton.isEnabled = true
+        }
+    }
 
     // MARK: - Lifecycle
 
@@ -282,7 +297,7 @@ class NewExperienceViewController: UIViewController {
             camera.sourceType = .camera
             camera.modalPresentationStyle = .automatic
             self.present(camera, animated: true)
-            self.imageView.isHidden = false
+//            self.imageView.isHidden = false
         }
     }
 
@@ -354,9 +369,11 @@ extension NewExperienceViewController: UIImagePickerControllerDelegate, UINaviga
         picker.dismiss(animated: true, completion: nil)
         toggleHide(hideElements: false)
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
+        imageView.isHidden = false
         imageView.image = image
         originalImage = image
-        setImageViewHeight(with: image.ratio)
+        saveImage = image
+//        setImageViewHeight(with: image.ratio)
         photoFileLabel.text = "Tap to change photo"
         viewPhotoButton.tintColor = .systemGreen
     }
