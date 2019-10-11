@@ -79,6 +79,7 @@ class AudioRecordViewController: UIViewController {
         playerContainerView.layer.shadowRadius = 12
         playerContainerView.layer.shadowOpacity = 0.3
         saveButton.layer.cornerRadius = saveButton.frame.height / 2
+        saveButton.layer.cornerCurve = .continuous
     }
 
     private func updateSlider() {

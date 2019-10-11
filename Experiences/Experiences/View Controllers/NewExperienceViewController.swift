@@ -177,6 +177,8 @@ class NewExperienceViewController: UIViewController {
 
     private func setupUI() {
         [imageView, audioContainerView, videoContainerView, photoContainerView].forEach { $0?.layer.cornerRadius = 8 }
+        [imageView, audioContainerView, videoContainerView, photoContainerView].forEach { $0?.layer.cornerCurve = .continuous }
+
         let tapDissmissKeyboard = UITapGestureRecognizer(target: self, action: #selector(tapDismissKeyboard(_:)))
         view.addGestureRecognizer(tapDissmissKeyboard)
         bwButtonContainerView.layer.cornerRadius = 6

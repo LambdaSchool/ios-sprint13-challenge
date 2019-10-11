@@ -34,7 +34,7 @@ class MapViewController: UIViewController {
         mapView.delegate = self
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceView")
         buttonContainerView.layer.cornerRadius = 10
-
+        buttonContainerView.layer.cornerCurve = .continuous
     }
 
     override func viewDidAppear(_ animated: Bool) {
