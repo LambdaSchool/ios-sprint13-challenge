@@ -38,6 +38,8 @@ class NewExperienceViewController: UIViewController {
     @IBOutlet private weak var videoPlayButton: UIButton!
     @IBOutlet private weak var viewPhotoButton: UIButton!
     @IBOutlet private weak var clearAllButton: UIBarButtonItem!
+    @IBOutlet private weak var stackView: UIStackView!
+    @IBOutlet private weak var scrollView: UIScrollView!
 
     let experienceController = ExperienceTempController.shared
     private let context = CIContext(options: nil)
@@ -89,6 +91,7 @@ class NewExperienceViewController: UIViewController {
         setupUI()
         titleTextField.delegate = self
         locationManager.requestWhenInUseAuthorization()
+        setupStackView()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -174,6 +177,17 @@ class NewExperienceViewController: UIViewController {
 
 
     // MARK: - Helper Functions
+
+    private func setupStackView() {
+        scrollView.addSubview(stackView)
+        scrollView.alwaysBounceVertical = true
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
+        stackView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+        stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+    }
 
     private func setupUI() {
         [imageView, audioContainerView, videoContainerView, photoContainerView].forEach { $0?.layer.cornerRadius = 8 }
@@ -375,7 +389,7 @@ extension NewExperienceViewController: UIImagePickerControllerDelegate, UINaviga
         imageView.image = image
         originalImage = image
         saveImage = image
-//        setImageViewHeight(with: image.ratio)
+        setImageViewHeight(with: image.ratio)
         photoFileLabel.text = "Tap to change photo"
         viewPhotoButton.tintColor = .systemGreen
     }
