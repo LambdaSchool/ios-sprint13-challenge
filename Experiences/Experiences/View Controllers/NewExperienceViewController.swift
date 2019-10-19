@@ -90,8 +90,7 @@ class NewExperienceViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         titleTextField.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        setupStackView()
+        locationManager.requestWhenInUseAuthorization() 
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -177,17 +176,6 @@ class NewExperienceViewController: UIViewController {
 
 
     // MARK: - Helper Functions
-
-    private func setupStackView() {
-        scrollView.addSubview(stackView)
-        scrollView.alwaysBounceVertical = true
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
-        stackView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
-        stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-    }
 
     private func setupUI() {
         [imageView, audioContainerView, videoContainerView, photoContainerView].forEach { $0?.layer.cornerRadius = 8 }

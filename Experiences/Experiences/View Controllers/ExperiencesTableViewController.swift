@@ -67,6 +67,11 @@ class ExperiencesTableViewController: UITableViewController {
 
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
+        if segue.identifier == "ShowExpDetail" {
+            guard let detailVC = segue.destination as? ExperienceDetailViewController else { return }
+            guard let indexPath = tableView.indexPathForSelectedRow else { return }
+            let experience = experienceTempController.experiences[indexPath.row]
+            detailVC.experience = experience
+        }
     }
 }
