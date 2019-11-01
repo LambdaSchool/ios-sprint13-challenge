@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Exp Map View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ExpMapViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="NDa-W8-Tm8">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dfF-Zr-Jbf">
+                                <rect key="frame" x="329" y="758" width="65" height="84"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="84" id="JMN-G0-DrL"/>
+                                    <constraint firstAttribute="width" constant="65" id="mub-GO-WlN"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="60"/>
+                                <state key="normal" title="📝"/>
+                                <connections>
+                                    <action selector="addNewExpButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yLe-vP-YXi"/>
+                                    <segue destination="gbb-Ot-xTd" kind="show" identifier="ShowNewExpSegue" id="SLW-9H-2dp"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dfF-Zr-Jbf" secondAttribute="trailing" constant="20" id="1Mt-C7-7IO"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="NDa-W8-Tm8" secondAttribute="trailing" id="JgN-x5-NlU"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="NDa-W8-Tm8" secondAttribute="bottom" id="OtX-EY-CfX"/>
+                            <constraint firstItem="NDa-W8-Tm8" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="ml7-e8-zXe"/>
+                            <constraint firstItem="NDa-W8-Tm8" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="vxF-qa-sU7"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="dfF-Zr-Jbf" secondAttribute="bottom" constant="20" id="yb0-aO-Y05"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="experiencesMapView" destination="NDa-W8-Tm8" id="KOE-ar-oWp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="137.94642857142856"/>
+        </scene>
+        <!--Experience View Controller-->
+        <scene sceneID="8PX-7r-7MR">
+            <objects>
+                <viewController id="gbb-Ot-xTd" customClass="ExperienceViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="uGK-JO-fVo">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="4P6-ld-uwf"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="ZkN-9b-NCN"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RmO-Qs-akQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1003" y="138"/>
+        </scene>
+    </scenes>
+</document>
