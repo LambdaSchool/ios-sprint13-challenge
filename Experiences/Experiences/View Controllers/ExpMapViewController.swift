@@ -18,12 +18,10 @@ class ExpMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
     
     @IBOutlet weak var experiencesMapView: MKMapView!
     
-    
     @IBAction func addNewExpButton(_ sender: UIButton) {
         self.performSegue(withIdentifier: "ShowNewExpSegue", sender: nil)
     }
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
@@ -44,7 +42,7 @@ class ExpMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
     override func viewWillAppear() {
         super.viewWillAppear(animated)
         mapView.removeAnnotations(mapView.annotations)
-        let annotations = mapView.annotations.compactMap({ $0 as? (your model object type) })
+        let annotations = mapView.annotations.compactMap({ $0 as? ExperienceAnnotation })
             mapView.addAnnotations(annotations)
         mapView.addAnnotations(annotations)
     }
@@ -74,7 +72,7 @@ class ExpMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowNewExpSegue" {
             let destinationVC = segue.destination as? ExperienceViewController
-            destinationVC?.expController = expController
+            destinationVC?.experienceController = experienceController
         }
     }
 }

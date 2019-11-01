@@ -32,14 +32,39 @@ class ExperienceViewController: UIViewController {
     }
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var instantFilterLabel: UILabel!
     @IBOutlet weak var instantFilterSwitch: UISwitch!
+    @IBOutlet weak var noirFilterLabel: UILabel!
     @IBOutlet weak var noirFilterSwitch: UISwitch!
+    @IBOutlet weak var vibranceLabel: UILabel!
     @IBOutlet weak var vibranceSlider: UISlider!
     
-    @IBAction func nextButtonTapped(_ sender: UIBarButtonItem) {
+    @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
+        view.endEditing(true)
+        guard let imageData = imageView.image?.jpegData(compressionQuality: 0.1),
+            let title = titleTextField.text, title != "" else {
+                presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a title before saving.")
+                return
+        }
+        
+        let completion: (Bool) -> Void = { (success) in
+            guard success else {
+                DispatchQueue.main.async {
+                    self.presentInformationalAlertController(title: "Error", message: "Unable to create experience. Try again.")
+                }
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+        Location.shared.getCurrentLocation { (coordinate) in
+            self.experienceController.createExp(with: title, image: self.image!, geotag: coordinate)
+        }
     }
     
-    @IBAction func addExpButtonTapped(_ sender: UIButton) {
+    @IBAction func addExpPhotoButtonTapped(_ sender: UIButton) {
         let authorizationStatus = PHPhotoLibrary.authorizationStatus()
             switch authorizationStatus {
             case .authorized:
@@ -83,6 +108,12 @@ class ExperienceViewController: UIViewController {
         setImageViewHeight(with: image.ratio)
         originalImage = image
         addExpButton.setTitle("", for: [])
+        instantFilterLabel.isHidden = true
+        noirFilterLabel.isHidden = true
+        vibranceLabel.isHidden = true
+        instantFilterSwitch.isHidden = true
+        noirFilterSwitch.isHidden = true
+        vibranceSlider.isHidden = true
     }
     
     private func presentImagePickerController() {
