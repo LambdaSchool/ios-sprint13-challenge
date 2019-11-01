@@ -20,7 +20,7 @@ class AddExperienceViewController: UIViewController {
     @IBOutlet weak var experienceImageView: UIImageView!
     @IBOutlet weak var playAudioButton: UIButton!
     
-    var experienceDelegate: ExperienceDelegate?
+    var delegate: ExperienceDelegate?
     
     private let context = CIContext(options: nil)
     
@@ -92,7 +92,16 @@ class AddExperienceViewController: UIViewController {
     }
     
     @IBAction func nextButtonTapped(_ sender: UIBarButtonItem) {
+        guard let title = titleTextField.text else {
+            print("Title gotta be there homie")
+            return
+        }
+        guard let image = experienceImageView.image else {
+            print("Image is required, sorry man. I dont make the rules")
+            return
+        }
         
+        delegate?.newExperienceCreated(Experience(title: title, image: image))
         dismiss(animated: true, completion: nil)
     }
     

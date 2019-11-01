@@ -52,6 +52,13 @@ class MapExperiencesViewController: UIViewController, MKMapViewDelegate {
             fatalError("Location services/permission status unknown. Please update to latest version of the app")
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let experienceVC = segue.destination as? AddExperienceViewController else { return }
+        if segue.identifier == "ModelAddExperienceSegue" {
+            experienceVC.delegate = self
+        }
+    }
 }
 
 extension MapExperiencesViewController: CLLocationManagerDelegate {
@@ -69,5 +76,12 @@ extension MapExperiencesViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         NSLog("Location manager failed with error: \(error)")
+    }
+}
+
+extension MapExperiencesViewController: ExperienceDelegate {
+    func newExperienceCreated(_ experience: Experience) {
+        guard let location = locationManager.location else { return }
+        experience.geotag = location.coordinate
     }
 }
