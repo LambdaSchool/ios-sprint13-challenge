@@ -72,6 +72,9 @@
                                 <state key="normal" title="Add Experience Photo">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="addExpButtonTapped:" destination="gbb-Ot-xTd" eventType="touchUpInside" id="Z9m-5I-c30"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="9NA-9r-iQH" userLabel="Vertical Stack View">
                                 <rect key="frame" x="20" y="271.5" width="374" height="516.5"/>
@@ -82,22 +85,13 @@
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Bje-V4-whl">
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="375"/>
                                             </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RGX-KB-krN">
-                                                <rect key="frame" x="0.0" y="0.0" width="374" height="375"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
-                                                <state key="normal" title="Choose an image..."/>
-                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="Bje-V4-whl" secondAttribute="bottom" id="9fc-V7-pGL"/>
                                             <constraint firstAttribute="height" constant="375" id="UT9-yZ-TQw"/>
                                             <constraint firstItem="Bje-V4-whl" firstAttribute="leading" secondItem="5AV-Qp-h0J" secondAttribute="leading" id="euZ-jR-3Fl"/>
-                                            <constraint firstItem="RGX-KB-krN" firstAttribute="width" secondItem="Bje-V4-whl" secondAttribute="width" id="ffQ-NR-gFc"/>
-                                            <constraint firstItem="RGX-KB-krN" firstAttribute="centerX" secondItem="Bje-V4-whl" secondAttribute="centerX" id="g9T-Oh-qlH"/>
-                                            <constraint firstItem="RGX-KB-krN" firstAttribute="top" secondItem="Bje-V4-whl" secondAttribute="top" id="hnV-uI-Tst"/>
                                             <constraint firstAttribute="trailing" secondItem="Bje-V4-whl" secondAttribute="trailing" id="iMg-Yc-hpQ"/>
-                                            <constraint firstItem="RGX-KB-krN" firstAttribute="height" secondItem="Bje-V4-whl" secondAttribute="height" id="nB8-6J-fGO"/>
                                             <constraint firstItem="Bje-V4-whl" firstAttribute="top" secondItem="5AV-Qp-h0J" secondAttribute="top" id="nib-9a-Swl"/>
                                         </constraints>
                                     </view>
@@ -126,9 +120,15 @@
                                                 <subviews>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="EwV-Js-Gx0">
                                                         <rect key="frame" x="0.0" y="0.0" width="51" height="31"/>
+                                                        <connections>
+                                                            <action selector="instantFilter:" destination="gbb-Ot-xTd" eventType="valueChanged" id="VtB-Zg-adc"/>
+                                                        </connections>
                                                     </switch>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="EnO-BT-HAR">
                                                         <rect key="frame" x="0.0" y="39" width="51" height="31"/>
+                                                        <connections>
+                                                            <action selector="noirFilter:" destination="gbb-Ot-xTd" eventType="valueChanged" id="tfU-dC-rMK"/>
+                                                        </connections>
                                                     </switch>
                                                 </subviews>
                                             </stackView>
@@ -145,6 +145,9 @@
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="g6a-Eb-NbK">
                                                 <rect key="frame" x="118" y="0.0" width="258" height="32.5"/>
+                                                <connections>
+                                                    <action selector="vibranceFilter:" destination="gbb-Ot-xTd" eventType="valueChanged" id="vHg-JU-tAr"/>
+                                                </connections>
                                             </slider>
                                         </subviews>
                                     </stackView>
@@ -168,10 +171,20 @@
                         <viewLayoutGuide key="safeArea" id="4P6-ld-uwf"/>
                     </view>
                     <navigationItem key="navigationItem" title="New Experience" largeTitleDisplayMode="always" id="ZkN-9b-NCN">
-                        <barButtonItem key="rightBarButtonItem" title="Next" id="xHG-x4-qoT"/>
+                        <barButtonItem key="rightBarButtonItem" title="Next" id="xHG-x4-qoT">
+                            <connections>
+                                <action selector="nextButtonTapped:" destination="gbb-Ot-xTd" id="gGL-uJ-j8v"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="addExpButton" destination="qkr-WF-GQS" id="DJz-DX-yUM"/>
+                        <outlet property="imageHeightConstraint" destination="Bje-V4-whl" id="fQu-WK-SIW"/>
+                        <outlet property="imageView" destination="Bje-V4-whl" id="ph7-xS-ejt"/>
+                        <outlet property="instantFilterSwitch" destination="EwV-Js-Gx0" id="maC-BE-99Y"/>
+                        <outlet property="noirFilterSwitch" destination="EnO-BT-HAR" id="xjD-Rm-3RW"/>
+                        <outlet property="titleTextField" destination="9FI-0t-pXM" id="Uay-bz-MiS"/>
+                        <outlet property="vibranceSlider" destination="g6a-Eb-NbK" id="SVx-JU-Wee"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RmO-Qs-akQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

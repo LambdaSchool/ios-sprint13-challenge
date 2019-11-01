@@ -63,7 +63,7 @@ class ExpMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        NSLog(“Location manager failed with error: \(error)”)
+        NSLog("Location manager failed with error: \(error)")
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
