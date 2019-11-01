@@ -107,8 +107,8 @@ extension MapExperiencesViewController: MKMapViewDelegate {
 }
 
 extension MapExperiencesViewController: ExperienceDelegate {
-    func newExperience(name: String, image: UIImage) {
-        let experience = Experience(name: name, image: image, coordinate: userLocation)
+    func newExperience(name: String, image: UIImage?, audio: URL?) {
+        let experience = Experience(name: name, image: image, audio: audio, coordinate: userLocation)
         mapView.addAnnotation(experience as MKAnnotation)
         mapViewShouldUpdate = true
         print(mapView.annotations.count)

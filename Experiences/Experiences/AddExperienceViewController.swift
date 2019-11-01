@@ -12,7 +12,7 @@ import Photos
 import MapKit
 
 protocol ExperienceDelegate {
-    func newExperience(name: String, image: UIImage)
+    func newExperience(name: String, image: UIImage?, audio: URL?)
 }
 
 class AddExperienceViewController: UIViewController {
@@ -20,8 +20,14 @@ class AddExperienceViewController: UIViewController {
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var experienceImageView: UIImageView!
     @IBOutlet weak var playAudioButton: UIButton!
+    @IBOutlet weak var recordButton: UIButton!
+    
+    var player = Player()
+    var recorder = Recorder()
     
     var delegate: ExperienceDelegate?
+    
+    var audioURL: URL?
     
     private let context = CIContext(options: nil)
     
@@ -44,8 +50,13 @@ class AddExperienceViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        playAudioButton.isHidden = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        recorder.delegate = self
+        player.delegate = self
     }
     
     private func updateImage() {
@@ -84,37 +95,38 @@ class AddExperienceViewController: UIViewController {
     }
     
     @IBAction func recordAudio(_ sender: UIButton) {
-        
+        recorder.toggleRecoring()
+        if let url = recorder.fileURL, !recorder.isRecording {
+            self.player = Player(url: url)
+            player.delegate = self
+            player.play()
+            audioURL = url
+            updateViews()
+        }
     }
     
     @IBAction func toggleAudio(_ sender: UIButton) {
-        
+        player.playPause()
+        updateViews()
     }
     
     @IBAction func nextButtonTapped(_ sender: UIBarButtonItem) {
-        guard let name = titleTextField.text else {
+        guard let name = titleTextField.text, !name.isEmpty else {
             print("Title gotta be there homie")
             return
         }
-        guard let image = experienceImageView.image else {
-            print("Image is required, sorry man. I dont make the rules")
-            return
-        }
         
-        delegate?.newExperience(name: name, image: image)
+        delegate?.newExperience(name: name, image: experienceImageView.image, audio: nil)
         navigationController?.popViewController(animated: true)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func updateViews() {
+        let playTitle = player.isPlaying ? "pause.fill" : "play.fill"
+        playAudioButton.setImage(UIImage(systemName: playTitle), for: .normal)
+        
+        let recordTitle = recorder.isRecording ? "Stop Recording" : "Record Audio"
+        recordButton.setTitle(recordTitle, for: .normal)
     }
-    */
-
 }
 
 extension AddExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -129,4 +141,19 @@ extension AddExperienceViewController: UIImagePickerControllerDelegate, UINaviga
         
         picker.dismiss(animated: true)
     }
+}
+
+extension AddExperienceViewController: PlayerDelegate {
+    func playerDidChangeState(_ player: Player) {
+        updateViews()
+    }
+}
+
+extension AddExperienceViewController: RecorderDelegate {
+    func recorderDidChangeState(_ recorder: Recorder) {
+        updateViews()
+    }
+    
+    func recorderDidSaveFile(_ recorder: Recorder) {}
+    
 }

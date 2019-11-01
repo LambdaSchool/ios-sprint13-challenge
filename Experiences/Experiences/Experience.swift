@@ -13,7 +13,7 @@ import MapKit
 class Experience: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     let name: String
-    let image: UIImage
+    let image: UIImage?
     var audio: URL?
     var video: URL?
     
@@ -21,7 +21,7 @@ class Experience: NSObject, MKAnnotation {
         name
     }
     
-    init(name: String, image: UIImage, audio: URL? = nil, video: URL? = nil, coordinate: CLLocationCoordinate2D) {
+    init(name: String, image: UIImage?, audio: URL?, video: URL? = nil, coordinate: CLLocationCoordinate2D) {
         self.name = name
         self.image = image
         self.audio = audio
