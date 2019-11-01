@@ -19,9 +19,16 @@ class NewExperienceViewController: UIViewController {
     @IBOutlet weak var imageViewContainer: UIView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var selectImageButton: UIButton!
+    @IBOutlet weak var playAudioRecordingButton: UIButton!
+    @IBOutlet weak var recordAudioButton: UIButton!
     
     let experienceController = ExperienceController()
     let imagePicker = UIImagePickerController()
+    var player: Player = Player(url: nil)
+    var recorder: Recorder = Recorder()
+    var imageToSave: Data?
+    var audioRecordingToSave: String?
+    var videoRecordingToSave: String?
     
     private let context = CIContext(options: nil)
     private let sepiaFilter = CIFilter(name: "CISepiaTone")!
@@ -30,6 +37,9 @@ class NewExperienceViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        player.delegate = self
+        recorder.delegate = self
+        playAudioRecordingButton.isHidden = true
     }
     
     //MARK: - Methods
@@ -102,6 +112,10 @@ class NewExperienceViewController: UIViewController {
     }
     
     @IBAction func recordButtonTapped(_ sender: UIButton) {
+        recorder.toggleRecording()
+    }
+    @IBAction func playAudioRecordingTapped(_ sender: UIButton) {
+        player.playPause()
     }
     
 }
@@ -111,15 +125,50 @@ class NewExperienceViewController: UIViewController {
 extension NewExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         selectImageButton.isHidden = true
-        
         picker.dismiss(animated: true, completion: nil)
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        let filteredImage = filterImage(image: image)
+        
+        var scaledSize = imageView.bounds.size
+        let scale = UIScreen.main.scale
+        
+        scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
+        guard let scaledImage = image.imageByScaling(toSize: scaledSize) else { return }
+        
+        let filteredImage = filterImage(image: scaledImage)
         imageView.image = filteredImage
+        if let imageData = filteredImage?.pngData() {
+            imageToSave = imageData
+        }
+        
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
+}
+
+extension NewExperienceViewController: RecorderDelegate {
+    func recorderDidChangeState(recorder: Recorder) {
+        let recordButtonTitle = recorder.isRecording ? "Stop Recording" : "Record Comment"
+        recordAudioButton.setTitle(recordButtonTitle, for: .normal)
+    }
+    
+    func recorderDidSaveFile(recorder: Recorder) {
+        if let url = recorder.url, recorder.isRecording == false {
+            player = Player(url: url)
+            player.delegate = self
+            playAudioRecordingButton.isHidden = false
+            audioRecordingToSave = "\(url)"
+        }
+    }
+}
+
+extension NewExperienceViewController: PlayerDelegate {
+    func playerDidChangeState(player: Player) {
+        let playButtonTitle = player.isPlaying ? "Pause" : "Play"
+        playAudioRecordingButton.setTitle(playButtonTitle, for: .normal)
+    }
+    
+    
 }

@@ -96,18 +96,27 @@
                                     <constraint firstItem="uaW-NF-gsr" firstAttribute="leading" secondItem="XmH-4b-kIM" secondAttribute="leading" id="yva-Zo-Uqq"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qM7-ZG-99Y">
+                                <rect key="frame" x="192" y="490" width="30" height="30"/>
+                                <state key="normal" title="Play"/>
+                                <connections>
+                                    <action selector="playAudioRecordingTapped:" destination="xZS-Eo-7Np" eventType="touchUpInside" id="Dqe-1V-tHL"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="XmH-4b-kIM" firstAttribute="top" secondItem="arf-nv-TYG" secondAttribute="bottom" constant="8" id="2ar-Gd-tWj"/>
                             <constraint firstItem="SsO-Nu-2w0" firstAttribute="trailing" secondItem="arf-nv-TYG" secondAttribute="trailing" constant="20" id="3q1-EL-rX3"/>
                             <constraint firstItem="t5l-cQ-FzT" firstAttribute="top" secondItem="XmH-4b-kIM" secondAttribute="bottom" constant="8" id="6iF-Ge-iL8"/>
+                            <constraint firstItem="SsO-Nu-2w0" firstAttribute="bottom" secondItem="qM7-ZG-99Y" secondAttribute="bottom" constant="288" id="EWD-Rd-Uqb"/>
                             <constraint firstItem="arf-nv-TYG" firstAttribute="leading" secondItem="SsO-Nu-2w0" secondAttribute="leading" constant="20" id="Fb0-Jc-InQ"/>
                             <constraint firstItem="SsO-Nu-2w0" firstAttribute="trailing" secondItem="XmH-4b-kIM" secondAttribute="trailing" constant="20" id="MVX-O5-VwL"/>
                             <constraint firstItem="XmH-4b-kIM" firstAttribute="leading" secondItem="SsO-Nu-2w0" secondAttribute="leading" constant="20" id="Pr6-lV-jAK"/>
-                            <constraint firstItem="SsO-Nu-2w0" firstAttribute="bottom" secondItem="t5l-cQ-FzT" secondAttribute="bottom" constant="326" id="bc8-J3-VNK"/>
+                            <constraint firstItem="qM7-ZG-99Y" firstAttribute="top" secondItem="t5l-cQ-FzT" secondAttribute="bottom" constant="8" id="U9Q-dy-S5J"/>
                             <constraint firstItem="t5l-cQ-FzT" firstAttribute="leading" secondItem="SsO-Nu-2w0" secondAttribute="leading" constant="183" id="lTI-bA-5zE"/>
                             <constraint firstItem="arf-nv-TYG" firstAttribute="top" secondItem="SsO-Nu-2w0" secondAttribute="top" constant="10" id="qFT-6A-Vki"/>
+                            <constraint firstItem="qM7-ZG-99Y" firstAttribute="leading" secondItem="SsO-Nu-2w0" secondAttribute="leading" constant="192" id="xVX-VW-OMB"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="SsO-Nu-2w0"/>
                     </view>
@@ -121,6 +130,8 @@
                     <connections>
                         <outlet property="imageView" destination="uaW-NF-gsr" id="DLe-b1-j0P"/>
                         <outlet property="imageViewContainer" destination="XmH-4b-kIM" id="91E-rq-ZWS"/>
+                        <outlet property="playAudioRecordingButton" destination="qM7-ZG-99Y" id="u8A-eG-AFj"/>
+                        <outlet property="recordAudioButton" destination="t5l-cQ-FzT" id="RH3-UD-SBI"/>
                         <outlet property="selectImageButton" destination="xIl-My-Trr" id="1jb-3x-3EZ"/>
                         <outlet property="titleTextField" destination="arf-nv-TYG" id="OCd-6T-R3x"/>
                     </connections>
