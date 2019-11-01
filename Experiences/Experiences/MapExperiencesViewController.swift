@@ -16,6 +16,10 @@ class MapExperiencesViewController: UIViewController {
     
     let locationManager = CLLocationManager()
     
+    var mapViewShouldUpdate = false
+    
+    var userLocation = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,8 +36,17 @@ class MapExperiencesViewController: UIViewController {
         super.viewWillAppear(animated)
         
         let annotations = mapView.annotations.compactMap({ $0 as? Experience })
-        mapView.addAnnotations(annotations as [MKAnnotation])
+        mapView.addAnnotations(annotations)
         mapView.showAnnotations(annotations, animated: true)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if mapViewShouldUpdate {
+            let region = MKCoordinateRegion(center: userLocation, latitudinalMeters: 100_000, longitudinalMeters: 100_000)
+            mapView.setRegion(region, animated: true)
+            mapViewShouldUpdate = false
+        }
     }
     
     private func checkLocationAuthorization() {
@@ -70,6 +83,7 @@ extension MapExperiencesViewController: CLLocationManagerDelegate {
         let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         let region = MKCoordinateRegion(center: center, latitudinalMeters: 1_000_000, longitudinalMeters: 1_000_000)
         mapView.setRegion(region, animated: true)
+        userLocation = location.coordinate
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -81,17 +95,6 @@ extension MapExperiencesViewController: CLLocationManagerDelegate {
     }
 }
 
-extension MapExperiencesViewController: ExperienceDelegate {
-    func newExperience(name: String, image: UIImage) {
-        guard let location = locationManager.location else { return }
-        let experience = Experience(name: name, image: image, coordinate: location.coordinate)
-        mapView.addAnnotation(experience as MKAnnotation)
-        let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 100_000, longitudinalMeters: 100_000)
-        mapView.setRegion(region, animated: true)
-        print(mapView.annotations.count)
-    }
-}
-
 extension MapExperiencesViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceView") as? MKMarkerAnnotationView else { fatalError("It's an experience") }
@@ -100,5 +103,14 @@ extension MapExperiencesViewController: MKMapViewDelegate {
         annotationView.canShowCallout = true
         
         return annotationView
+    }
+}
+
+extension MapExperiencesViewController: ExperienceDelegate {
+    func newExperience(name: String, image: UIImage) {
+        let experience = Experience(name: name, image: image, coordinate: userLocation)
+        mapView.addAnnotation(experience as MKAnnotation)
+        mapViewShouldUpdate = true
+        print(mapView.annotations.count)
     }
 }
