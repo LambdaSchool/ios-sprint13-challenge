@@ -22,7 +22,7 @@ class NewExperienceViewController: UIViewController {
     @IBOutlet weak var playAudioRecordingButton: UIButton!
     @IBOutlet weak var recordAudioButton: UIButton!
     
-    let experienceController = ExperienceController()
+    var experienceController: ExperienceController?
     let imagePicker = UIImagePickerController()
     var player: Player = Player(url: nil)
     var recorder: Recorder = Recorder()
@@ -101,6 +101,10 @@ class NewExperienceViewController: UIViewController {
     }
     
     private func showCamera() {
+        if titleTextField.text == "" {
+            //throw alert
+            return
+        }
         checkVideoAuthorization()
         performSegue(withIdentifier: "ShowCamera", sender: self)
     }
@@ -110,9 +114,11 @@ class NewExperienceViewController: UIViewController {
             guard let cameraVC = segue.destination as? CameraViewController,
                   let audioToSave = audioRecordingToSave,
                   let imageToSave = imageToSave else { return }
+            
             cameraVC.experienceController = experienceController
             cameraVC.audioToSave = audioToSave
             cameraVC.imageToSave = imageToSave
+            cameraVC.experienceTitle = titleTextField.text
         }
     }
     

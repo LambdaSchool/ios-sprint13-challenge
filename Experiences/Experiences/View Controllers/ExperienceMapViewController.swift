@@ -14,22 +14,35 @@ class ExperienceMapViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     
     @IBOutlet weak var addExperienceButton: UIButton!
+    let experienceController = ExperienceController()
+    
+    let annotationReuseIdentifier = "ExperienceAnnotation"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        mapView.delegate = self
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: annotationReuseIdentifier)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        mapView.removeAnnotations(mapView.annotations)
+        
+        let annotations = experienceController.experiences.compactMap({ ExperienceAnnotation(experience: $0) })
+        
+        mapView.addAnnotations(annotations)
+    }
 
-    /*
+    
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        guard let newExperienceVC = segue.destination as? NewExperienceViewController else { return }
+        newExperienceVC.experienceController = experienceController
     }
-    */
+    
     @IBAction func addExperienceButtonTapped(_ sender: UIButton) {
     }
     

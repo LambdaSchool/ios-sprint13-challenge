@@ -20,6 +20,7 @@ class CameraViewController: UIViewController {
     var imageToSave: Data?
     var audioToSave: String?
     var videoToSave: String?
+    var experienceTitle: String?
     
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
@@ -102,10 +103,45 @@ class CameraViewController: UIViewController {
         }
         fatalError("ERROR: No audio device")
     }
+    
+    func newRecordingURL() -> URL {
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime]
+        
+        let name = formatter.string(from: Date())
+        let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
+        
+        return fileURL
+    }
 
     @IBAction func recordButtonTapped(_ sender: UIButton) {
     }
     
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
+        guard let experienceController = experienceController,
+              let title = experienceTitle,
+              let audio = audioToSave,
+              let image = imageToSave,
+              let video = videoToSave else { return }
+        Location.shared.getCurrentLocation { (coordinate) in
+            experienceController.createExperience(with: title, image: image, audioCommentURL: audio, geotag: coordinate!)
+        }
+        
+    }
+}
+
+extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
+    func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+        if let error = error {
+            print("File recording error: \(error)")
+        }
+        print("didFinishRecordingTo: \(outputFileURL)")
+        
+        videoToSave = "\(outputFileURL)"
+    }
+    
+    func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
     }
 }
