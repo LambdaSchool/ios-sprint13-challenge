@@ -17,8 +17,17 @@ class ViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     
     override func viewWillAppear(_ animated: Bool) {
+        centerMapOnLocation()
         let annotations = mapView.annotations.compactMap({ $0 as? Experience })
         mapView.addAnnotations(annotations)
+    }
+    
+    private func centerMapOnLocation() {
+        if let mapCenter = locationManager.location?.coordinate {
+            let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+            let region = MKCoordinateRegion(center: mapCenter, span: span)
+            mapView.setRegion(region, animated: false)
+        }
     }
     
     override func viewDidLoad() {
@@ -32,8 +41,10 @@ class ViewController: UIViewController {
         let status = CLLocationManager.authorizationStatus()
         switch status {
         case .notDetermined:
-            locationManager.requestWhenInUseAuthorization() case .authorizedWhenInUse:
+            locationManager.requestWhenInUseAuthorization()
+        case .authorizedWhenInUse:
             locationManager.requestLocation()
+            centerMapOnLocation()
         default:
             break
         }
