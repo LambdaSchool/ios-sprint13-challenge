@@ -24,7 +24,7 @@ class ExpMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        mapView.delegate = self
+        experiencesMapView.delegate = self
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         let status = CLLocationManager.authorizationStatus()
@@ -36,15 +36,15 @@ class ExpMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
             default:
             break
         }
-        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: annotationReuseIdentifier)
+        experiencesMapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: annotationReuseIdentifier)
     }
     
-    override func viewWillAppear() {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        mapView.removeAnnotations(mapView.annotations)
-        let annotations = mapView.annotations.compactMap({ $0 as? ExperienceAnnotation })
-            mapView.addAnnotations(annotations)
-        mapView.addAnnotations(annotations)
+        experiencesMapView.removeAnnotations(experiencesMapView.annotations)
+        let annotations = experiencesMapView.annotations.compactMap({ $0 as? ExperienceAnnotation })
+            experiencesMapView.addAnnotations(annotations)
+        experiencesMapView.addAnnotations(annotations)
     }
         
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
