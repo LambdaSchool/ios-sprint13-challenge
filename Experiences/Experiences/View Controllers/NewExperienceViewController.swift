@@ -26,6 +26,7 @@ class NewExperienceViewController: UIViewController {
     let imagePicker = UIImagePickerController()
     var player: Player?
     var recorder: Recorder = Recorder()
+    var currentLocation: CLLocationCoordinate2D?
     
     var imageToSave: Data?
     var audioRecordingToSave: String?
@@ -112,12 +113,14 @@ class NewExperienceViewController: UIViewController {
         if segue.identifier == "ShowCamera" {
             guard let cameraVC = segue.destination as? CameraViewController,
                   let audioToSave = audioRecordingToSave,
-                  let imageToSave = imageToSave else { return }
+                  let imageToSave = imageToSave,
+                  let currentLocation = currentLocation  else { return }
             
             cameraVC.experienceController = experienceController
             cameraVC.audioToSave = audioToSave
             cameraVC.imageToSave = imageToSave
             cameraVC.experienceTitle = titleTextField.text
+            cameraVC.currentLocation = currentLocation
         }
     }
     

@@ -8,19 +8,19 @@
 
 import UIKit
 import AVFoundation
+import CoreLocation
 
 class CameraViewController: UIViewController {
-
+    
     @IBOutlet weak var cameraView: CameraPreviewView!
     @IBOutlet weak var recordButton: UIButton!
-    
-    
     
     var experienceController: ExperienceController?
     var imageToSave: Data?
     var audioToSave: String?
     var videoToSave: String?
     var experienceTitle: String?
+    var currentLocation: CLLocationCoordinate2D?
     
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
@@ -78,9 +78,9 @@ class CameraViewController: UIViewController {
         
         
         captureSession.commitConfiguration()
-
+        
     }
-
+    
     private func bestBackCamera() -> AVCaptureDevice {
         if let device = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) {
             return device
@@ -89,7 +89,7 @@ class CameraViewController: UIViewController {
         }
         fatalError("ERROR: No cameras on the device or you are running on the Simulator")
     }
-
+    
     private func bestFrontCamera() -> AVCaptureDevice {
         if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) {
             return device
@@ -115,18 +115,19 @@ class CameraViewController: UIViewController {
         
         return fileURL
     }
-
+    
     @IBAction func recordButtonTapped(_ sender: UIButton) {
     }
     
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
         guard let experienceController = experienceController,
-              let title = experienceTitle,
-              let audio = audioToSave,
-              let image = imageToSave else { return }
-        Location.shared.getCurrentLocation { (coordinate) in
-            experienceController.createExperience(with: title, image: image, audioCommentURL: audio, geotag: coordinate!)
-        }
+            let title = experienceTitle,
+            let audio = audioToSave,
+            let image = imageToSave,
+            let currentLocation = currentLocation else { return }
+        
+        experienceController.createExperience(with: title, image: image, audioCommentURL: audio, geotag: currentLocation)
+        
         navigationController?.popToRootViewController(animated: true)
     }
 }

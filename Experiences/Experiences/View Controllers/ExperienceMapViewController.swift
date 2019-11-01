@@ -15,6 +15,7 @@ class ExperienceMapViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var addExperienceButton: UIButton!
     let experienceController = ExperienceController()
+    var currentLocation: CLLocationCoordinate2D?
     
     let annotationReuseIdentifier = "ExperienceAnnotation"
     
@@ -22,6 +23,9 @@ class ExperienceMapViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         mapView.delegate = self
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: annotationReuseIdentifier)
+        Location.shared.getCurrentLocation { (coordinate) in
+            self.currentLocation = coordinate
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,12 +63,9 @@ class ExperienceMapViewController: UIViewController, MKMapViewDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AddExperienceSegue" {
-            guard let newExperienceVC = segue.destination as? NewExperienceViewController else {
-                print("error getting controller ")
-                return
-                
-            }
+            guard let newExperienceVC = segue.destination as? NewExperienceViewController else { return }
             newExperienceVC.experienceController = experienceController
+            newExperienceVC.currentLocation = currentLocation
         }
     }
     
