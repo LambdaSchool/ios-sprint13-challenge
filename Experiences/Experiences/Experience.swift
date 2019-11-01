@@ -8,19 +8,20 @@
 
 import UIKit
 import CoreLocation
+import MapKit
 
-class Experience: NSObject {
-    let title: String
+class Experience: NSObject, MKAnnotation {
+    var coordinate: CLLocationCoordinate2D
+    let name: String
     let image: UIImage
     var audio: URL?
     var video: URL?
-    var geotag: CLLocationCoordinate2D?
     
-    init(title: String, image: UIImage, audio: URL? = nil, video: URL? = nil, geotag: CLLocationCoordinate2D? = nil) {
-        self.title = title
+    init(name: String, image: UIImage, audio: URL? = nil, video: URL? = nil, coordinate: CLLocationCoordinate2D) {
+        self.name = name
         self.image = image
         self.audio = audio
         self.video = video
-        self.geotag = geotag
+        self.coordinate = coordinate
     }
 }

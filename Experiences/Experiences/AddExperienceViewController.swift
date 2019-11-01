@@ -9,9 +9,10 @@
 import UIKit
 import CoreImage
 import Photos
+import MapKit
 
 protocol ExperienceDelegate {
-    func newExperienceCreated(_ experience: Experience)
+    func newExperience(name: String, image: UIImage)
 }
 
 class AddExperienceViewController: UIViewController {
@@ -92,7 +93,7 @@ class AddExperienceViewController: UIViewController {
     }
     
     @IBAction func nextButtonTapped(_ sender: UIBarButtonItem) {
-        guard let title = titleTextField.text else {
+        guard let name = titleTextField.text else {
             print("Title gotta be there homie")
             return
         }
@@ -101,7 +102,7 @@ class AddExperienceViewController: UIViewController {
             return
         }
         
-        delegate?.newExperienceCreated(Experience(title: title, image: image))
+        delegate?.newExperience(name: name, image: image)
         navigationController?.popViewController(animated: true)
     }
     

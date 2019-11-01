@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class MapExperiencesViewController: UIViewController {
+class MapExperiencesViewController: UIViewController, MKMapViewDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     
@@ -32,7 +32,7 @@ class MapExperiencesViewController: UIViewController {
         super.viewWillAppear(animated)
         
         let annotations = mapView.annotations.compactMap({ $0 as? Experience })
-        mapView.addAnnotations(annotations as! [MKAnnotation])
+        mapView.addAnnotations(annotations as [MKAnnotation])
     }
     
     private func checkLocationAuthorization() {
@@ -83,20 +83,9 @@ extension MapExperiencesViewController: CLLocationManagerDelegate {
 }
 
 extension MapExperiencesViewController: ExperienceDelegate {
-    func newExperienceCreated(_ experience: Experience) {
+    func newExperience(name: String, image: UIImage) {
         guard let location = locationManager.location else { return }
-        experience.geotag = location.coordinate
-        guard let an = experience as? MKAnnotation else { return }
-        mapView.addAnnotation(an)
-    }
-}
-
-extension MapExperiencesViewController: MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceView") as? MKMarkerAnnotationView else { fatalError("It's quack") }
-        
-        annotationView.canShowCallout = true
-        
-        return annotationView
+        let experience = Experience(name: name, image: image, coordinate: location.coordinate)
+        mapView.addAnnotation(experience as MKAnnotation)
     }
 }
