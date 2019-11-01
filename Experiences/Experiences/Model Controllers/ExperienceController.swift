@@ -13,7 +13,8 @@ import CoreLocation
 class ExperienceController {
     var experiences: [Experience] = []
     
-    func createExp(with title: String, image: UIImage, timestamp: Date = Date(), geotag: CLLocationCoordinate2D?) {
-        let experience = Experience(title: title, image: image, timestamp: timestamp, geotag: geotag)
+    func createExp(with title: String, image: UIImage, timestamp: Date = Date(), geotag: CLLocationCoordinate2D?, completion: @escaping (Bool) -> Void = { _ in }) {
+        let _ = Experience(title: title, image: image, timestamp: timestamp, geotag: geotag)
+        completion(true)
     }
 }

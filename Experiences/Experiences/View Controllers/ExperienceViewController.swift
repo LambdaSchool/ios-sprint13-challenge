@@ -12,7 +12,7 @@ import Photos
 
 class ExperienceViewController: UIViewController {
     
-    var experienceController: ExperienceController!
+    var experienceController: ExperienceController?
     var experience: Experience?
     var imageData: Data?
     var image: UIImage?
@@ -22,12 +22,10 @@ class ExperienceViewController: UIViewController {
     private let photoEffectNoirFilter = CIFilter(name: "CIPhotoEffectNoir")!
     private let vibranceFilter = CIFilter(name: "CIVibrance")!
 
-    
-    
     @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var addExpButton: UIButton! {
+    @IBOutlet weak var addExpPhotoButton: UIButton! {
         didSet {
-            addExpButton.layer.cornerRadius = addExpButton.bounds.size.height/2
+            addExpPhotoButton.layer.cornerRadius = addExpPhotoButton.bounds.size.height/2
         }
     }
     @IBOutlet weak var imageView: UIImageView!
@@ -54,13 +52,15 @@ class ExperienceViewController: UIViewController {
                 }
                 return
             }
-            
+
             DispatchQueue.main.async {
                 self.navigationController?.popViewController(animated: true)
+                #warning("Why isn't this popping???")
             }
         }
         Location.shared.getCurrentLocation { (coordinate) in
-            self.experienceController.createExp(with: title, image: self.image!, geotag: coordinate)
+            guard let image = self.image, let experienceController = self.experienceController else { return }
+            experienceController.createExp(with: title, image: image, geotag: coordinate, completion: completion)
         }
     }
     
@@ -88,32 +88,31 @@ class ExperienceViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setImageViewHeight(with: 1.0)
+        //setImageViewHeight(with: 1.0)
         originalImage = imageView.image
         updateViews()
     }
 
-    func setImageViewHeight(with aspectRatio: CGFloat) {
-        imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
-        view.layoutSubviews()
-    }
+//    func setImageViewHeight(with aspectRatio: CGFloat) {
+//        imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
+//        view.layoutSubviews()
+//    }
     
     func updateViews() {
         guard let imageData = imageData,
             let image = UIImage(data: imageData) else {
-                title = "New Post"
+                title = "New Experience"
                 return
         }
         title = experience?.title
-        setImageViewHeight(with: image.ratio)
+        //setImageViewHeight(with: image.ratio)
         originalImage = image
-        addExpButton.setTitle("", for: [])
-        instantFilterLabel.isHidden = true
-        noirFilterLabel.isHidden = true
-        vibranceLabel.isHidden = true
-        instantFilterSwitch.isHidden = true
-        noirFilterSwitch.isHidden = true
-        vibranceSlider.isHidden = true
+//        instantFilterLabel.isHidden = true
+//        noirFilterLabel.isHidden = true
+//        vibranceLabel.isHidden = true
+//        instantFilterSwitch.isHidden = true
+//        noirFilterSwitch.isHidden = true
+//        vibranceSlider.isHidden = true
     }
     
     private func presentImagePickerController() {
@@ -190,12 +189,13 @@ class ExperienceViewController: UIViewController {
 extension ExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        addExpButton.setTitle("Choose a different photo", for: [])
+        addExpPhotoButton.setTitle("Choose a different photo", for: [])
         picker.dismiss(animated: true, completion: nil)
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         originalImage = image
         imageView.image = image
-        setImageViewHeight(with: image.ratio)
+        self.image = image
+//        setImageViewHeight(with: image.ratio)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

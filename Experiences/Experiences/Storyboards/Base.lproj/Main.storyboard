@@ -27,7 +27,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="60"/>
                                 <state key="normal" title="📝"/>
                                 <connections>
-                                    <action selector="addNewExpButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yLe-vP-YXi"/>
                                     <segue destination="TOe-eb-hLd" kind="show" identifier="ShowNewExpSegue" id="SLW-9H-2dp"/>
                                 </connections>
                             </button>
@@ -54,7 +53,7 @@
         <!--New Experience-->
         <scene sceneID="8PX-7r-7MR">
             <objects>
-                <viewController id="gbb-Ot-xTd" customClass="ExperienceViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="gbb-Ot-xTd" customClass="ExperienceViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uGK-JO-fVo">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -73,7 +72,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="addExpButtonTapped:" destination="gbb-Ot-xTd" eventType="touchUpInside" id="Z9m-5I-c30"/>
+                                    <action selector="addExpPhotoButtonTapped:" destination="gbb-Ot-xTd" eventType="touchUpInside" id="gcc-Ly-a0F"/>
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="9NA-9r-iQH" userLabel="Vertical Stack View">
@@ -178,7 +177,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="addExpButton" destination="qkr-WF-GQS" id="DJz-DX-yUM"/>
+                        <outlet property="addExpPhotoButton" destination="qkr-WF-GQS" id="DJz-DX-yUM"/>
                         <outlet property="imageHeightConstraint" destination="Bje-V4-whl" id="fQu-WK-SIW"/>
                         <outlet property="imageView" destination="Bje-V4-whl" id="ph7-xS-ejt"/>
                         <outlet property="instantFilterLabel" destination="gdK-gR-cry" id="36a-oW-kbH"/>
@@ -197,11 +196,11 @@
         <!--Navigation Controller-->
         <scene sceneID="hPc-wo-f92">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TOe-eb-hLd" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="TOe-eb-hLd" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="oim-ei-gRn"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="BLj-0n-1xc">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
