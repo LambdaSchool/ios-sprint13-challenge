@@ -9,6 +9,13 @@
 import UIKit
 
 class ExperienceViewController: UIViewController {
+    
+    
+    @IBOutlet weak var addExpButton: UIButton! {
+        didSet {
+            addExpButton.layer.cornerRadius = addExpButton.bounds.size.height/2
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -13,13 +13,14 @@ import CoreLocation
 class ExpMapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     let locationManager = CLLocationManager()
-    var expController: ExpController!
+    var experienceController: ExperienceController!
     let annotationReuseIdentifier = "ExpAnnotation"
     
     @IBOutlet weak var experiencesMapView: MKMapView!
     
     
     @IBAction func addNewExpButton(_ sender: UIButton) {
+        self.performSegue(withIdentifier: "ShowNewExpSegue", sender: nil)
     }
     
 
@@ -74,7 +75,6 @@ class ExpMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
         if segue.identifier == "ShowNewExpSegue" {
             let destinationVC = segue.destination as? ExperienceViewController
             destinationVC?.expController = expController
-            
         }
     }
 }
