@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class MapExperiencesViewController: UIViewController, MKMapViewDelegate {
+class MapExperiencesViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     
@@ -19,6 +19,9 @@ class MapExperiencesViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceView")
+        
+        mapView.delegate = self
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         
@@ -83,5 +86,17 @@ extension MapExperiencesViewController: ExperienceDelegate {
     func newExperienceCreated(_ experience: Experience) {
         guard let location = locationManager.location else { return }
         experience.geotag = location.coordinate
+        guard let an = experience as? MKAnnotation else { return }
+        mapView.addAnnotation(an)
+    }
+}
+
+extension MapExperiencesViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceView") as? MKMarkerAnnotationView else { fatalError("It's quack") }
+        
+        annotationView.canShowCallout = true
+        
+        return annotationView
     }
 }

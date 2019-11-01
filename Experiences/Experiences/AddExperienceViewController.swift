@@ -102,7 +102,7 @@ class AddExperienceViewController: UIViewController {
         }
         
         delegate?.newExperienceCreated(Experience(title: title, image: image))
-        dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
     
     /*
