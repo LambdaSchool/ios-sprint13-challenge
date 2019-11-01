@@ -26,9 +26,9 @@ class NewExperienceViewController: UIViewController {
     let imagePicker = UIImagePickerController()
     var player: Player = Player(url: nil)
     var recorder: Recorder = Recorder()
+    
     var imageToSave: Data?
     var audioRecordingToSave: String?
-    var videoRecordingToSave: String?
     
     private let context = CIContext(options: nil)
     private let sepiaFilter = CIFilter(name: "CISepiaTone")!
@@ -43,16 +43,6 @@ class NewExperienceViewController: UIViewController {
     }
     
     //MARK: - Methods
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
     private func filterImage(image: UIImage) -> UIImage? {
         guard let cgImage = image.cgImage else { return nil }
@@ -79,6 +69,51 @@ class NewExperienceViewController: UIViewController {
         imagePicker.sourceType = .photoLibrary
         
         present(imagePicker, animated: true, completion: nil)
+    }
+    private func checkVideoAuthorization() {
+        
+        // AVCaptureDevice
+        let status = AVCaptureDevice.authorizationStatus(for: .video)
+        
+        switch status {
+        case .notDetermined: // user hasn't made a decision
+            // request permission
+            requestVideoPermission()
+        case .restricted: // Parental controls are disabling video
+            fatalError("Present UI to user informing them to enable video to use this app")
+        case .denied: // The user said no (might not be intentional, depends on how you ask)
+            fatalError("Present UI on how to re-enable video for this app in Settings > Privacy")
+        case .authorized: // User said yes, we can use video
+            showCamera()
+        @unknown default:
+            fatalError("AVFoundation unexpected new status code")
+        }
+    }
+    
+    private func requestVideoPermission() {
+        AVCaptureDevice.requestAccess(for: .video) { (granted) in
+            guard granted == true else { fatalError("Present UI on how to enable Settings > Privacy") }
+            
+            DispatchQueue.main.async {
+                self.showCamera()
+            }
+        }
+    }
+    
+    private func showCamera() {
+        checkVideoAuthorization()
+        performSegue(withIdentifier: "ShowCamera", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowCamera" {
+            guard let cameraVC = segue.destination as? CameraViewController,
+                  let audioToSave = audioRecordingToSave,
+                  let imageToSave = imageToSave else { return }
+            cameraVC.experienceController = experienceController
+            cameraVC.audioToSave = audioToSave
+            cameraVC.imageToSave = imageToSave
+        }
     }
     
     //MARK: - IBActions
@@ -117,7 +152,6 @@ class NewExperienceViewController: UIViewController {
     @IBAction func playAudioRecordingTapped(_ sender: UIButton) {
         player.playPause()
     }
-    
 }
 
 // MARK: - Extensions

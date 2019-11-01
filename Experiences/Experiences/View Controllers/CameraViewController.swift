@@ -7,29 +7,101 @@
 //
 
 import UIKit
+import AVFoundation
 
 class CameraViewController: UIViewController {
 
-    @IBOutlet weak var cameraView: UIView!
-    @IBOutlet weak var recordButton: UIView!
+    @IBOutlet weak var cameraView: CameraPreviewView!
+    @IBOutlet weak var recordButton: UIButton!
     
+    
+    
+    var experienceController: ExperienceController?
+    var imageToSave: Data?
+    var audioToSave: String?
+    var videoToSave: String?
+    
+    lazy private var captureSession = AVCaptureSession()
+    lazy private var fileOutput = AVCaptureMovieFileOutput()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        print("Start capture session")
+        captureSession.startRunning()
     }
-    */
+    
+    private func setUpSession() {
+        
+        captureSession.beginConfiguration()
+        
+        // Add the camera input
+        let camera = bestBackCamera()
+        
+        guard let cameraInput = try? AVCaptureDeviceInput(device: camera) else {
+            fatalError("Cannot create a device input from camera")
+        }
+        
+        guard captureSession.canAddInput(cameraInput) else {
+            fatalError("Cannot add camera to capture session")
+        }
+        captureSession.addInput(cameraInput)
+        
+        
+        // Set video mode
+        if captureSession.canSetSessionPreset(.hd4K3840x2160) {
+            captureSession.sessionPreset = .hd4K3840x2160
+            print("4K support!!!")
+        }
+        
+        // Add the audio input
+        // Add audio input
+        let microphone = bestAudio()
+        guard let audioInput = try? AVCaptureDeviceInput(device: microphone) else {
+            fatalError("Can't create input from microphone")
+        }
+        guard captureSession.canAddInput(audioInput) else {
+            fatalError("Can't add audio input")
+        }
+        captureSession.addInput(audioInput)
+        
+        // TODO: Add recording
+        guard captureSession.canAddOutput(fileOutput) else {
+            fatalError("Cannot record video to a movie file")
+        }
+        captureSession.addOutput(fileOutput)
+        
+        
+        captureSession.commitConfiguration()
+
+    }
+
+    private func bestBackCamera() -> AVCaptureDevice {
+        if let device = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) {
+            return device
+        } else if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
+            return device
+        }
+        fatalError("ERROR: No cameras on the device or you are running on the Simulator")
+    }
+
+    private func bestFrontCamera() -> AVCaptureDevice {
+        if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) {
+            return device
+        }
+        fatalError("ERROR: No cameras on the device or you are running on the Simulator")
+    }
+    
+    private func bestAudio() -> AVCaptureDevice {
+        if let device = AVCaptureDevice.default(for: .audio) {
+            return device
+        }
+        fatalError("ERROR: No audio device")
+    }
 
     @IBAction func recordButtonTapped(_ sender: UIButton) {
     }
