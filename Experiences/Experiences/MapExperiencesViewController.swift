@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class MapExperiencesViewController: UIViewController, MKMapViewDelegate {
+class MapExperiencesViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     
@@ -20,7 +20,7 @@ class MapExperiencesViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceView")
-        
+        print(mapView.annotations.count)
         mapView.delegate = self
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -33,24 +33,23 @@ class MapExperiencesViewController: UIViewController, MKMapViewDelegate {
         
         let annotations = mapView.annotations.compactMap({ $0 as? Experience })
         mapView.addAnnotations(annotations as [MKAnnotation])
+        mapView.showAnnotations(annotations, animated: true)
     }
     
     private func checkLocationAuthorization() {
         switch CLLocationManager.authorizationStatus() {
         case .authorizedAlways, .authorizedWhenInUse:
-            mapView.showsUserLocation = true
+            locationManager.requestLocation()
         case .denied:
             let alert = UIAlertController(title: "Location Permissions Disabled", message: "It looks like location permissions are disabled. Please enable them in settings.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
-            mapView.showsUserLocation = false
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
         case .restricted:
             let alert = UIAlertController(title: "Location is Restricted", message: "Please get access from your administrator.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
-            mapView.showsUserLocation = false
         @unknown default:
             fatalError("Location services/permission status unknown. Please update to latest version of the app")
         }
@@ -69,7 +68,7 @@ extension MapExperiencesViewController: CLLocationManagerDelegate {
         print("I'm running!")
         guard let location = locations.last else { return }
         let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-        let region = MKCoordinateRegion(center: center, latitudinalMeters: 10_000, longitudinalMeters: 10_000)
+        let region = MKCoordinateRegion(center: center, latitudinalMeters: 1_000_000, longitudinalMeters: 1_000_000)
         mapView.setRegion(region, animated: true)
     }
     
@@ -87,5 +86,19 @@ extension MapExperiencesViewController: ExperienceDelegate {
         guard let location = locationManager.location else { return }
         let experience = Experience(name: name, image: image, coordinate: location.coordinate)
         mapView.addAnnotation(experience as MKAnnotation)
+        let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 100_000, longitudinalMeters: 100_000)
+        mapView.setRegion(region, animated: true)
+        print(mapView.annotations.count)
+    }
+}
+
+extension MapExperiencesViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceView") as? MKMarkerAnnotationView else { fatalError("It's an experience") }
+        
+        annotationView.tintColor = .red
+        annotationView.canShowCallout = true
+        
+        return annotationView
     }
 }

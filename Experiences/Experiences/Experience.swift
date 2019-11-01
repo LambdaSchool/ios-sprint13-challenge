@@ -17,6 +17,10 @@ class Experience: NSObject, MKAnnotation {
     var audio: URL?
     var video: URL?
     
+    var title: String? {
+        name
+    }
+    
     init(name: String, image: UIImage, audio: URL? = nil, video: URL? = nil, coordinate: CLLocationCoordinate2D) {
         self.name = name
         self.image = image

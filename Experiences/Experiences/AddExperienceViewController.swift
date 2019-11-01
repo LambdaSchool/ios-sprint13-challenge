@@ -55,7 +55,6 @@ class AddExperienceViewController: UIViewController {
     }
     
     private func presentImagePickerController() {
-
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
             NSLog("The photo library is not available")
             return
