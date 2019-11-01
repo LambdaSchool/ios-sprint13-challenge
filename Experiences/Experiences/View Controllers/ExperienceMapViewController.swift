@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class ExperienceMapViewController: UIViewController {
+class ExperienceMapViewController: UIViewController, MKMapViewDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     
@@ -26,12 +26,31 @@ class ExperienceMapViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        mapView.removeAnnotations(mapView.annotations)
-        
-        let annotations = experienceController.experiences.compactMap({ ExperienceAnnotation(experience: $0) })
-        
+        fetchAnnotations()
+    }
+    
+    func fetchAnnotations() {
+        var annotations: [MKAnnotation] = []
+        for experience in experienceController.experiences {
+            if let experienceAnnotation = ExperienceAnnotation(experience: experience) {
+                annotations.append(experienceAnnotation)
+            }
+        }
         mapView.addAnnotations(annotations)
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        if annotation is MKUserLocation {
+            return nil
+        }
+        
+        guard let av = mapView.dequeueReusableAnnotationView(withIdentifier: annotationReuseIdentifier, for: annotation) as? MKMarkerAnnotationView else { return nil }
+        
+        av.titleVisibility = .adaptive
+        av.subtitleVisibility = .adaptive
+        
+        return av
     }
 
     
@@ -39,8 +58,14 @@ class ExperienceMapViewController: UIViewController {
 
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let newExperienceVC = segue.destination as? NewExperienceViewController else { return }
-        newExperienceVC.experienceController = experienceController
+        if segue.identifier == "AddExperienceSegue" {
+            guard let newExperienceVC = segue.destination as? NewExperienceViewController else {
+                print("error getting controller ")
+                return
+                
+            }
+            newExperienceVC.experienceController = experienceController
+        }
     }
     
     @IBAction func addExperienceButtonTapped(_ sender: UIButton) {

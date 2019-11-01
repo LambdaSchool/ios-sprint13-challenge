@@ -24,7 +24,7 @@ class NewExperienceViewController: UIViewController {
     
     var experienceController: ExperienceController?
     let imagePicker = UIImagePickerController()
-    var player: Player = Player(url: nil)
+    var player: Player?
     var recorder: Recorder = Recorder()
     
     var imageToSave: Data?
@@ -37,7 +37,6 @@ class NewExperienceViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        player.delegate = self
         recorder.delegate = self
         playAudioRecordingButton.isHidden = true
     }
@@ -156,7 +155,7 @@ class NewExperienceViewController: UIViewController {
         recorder.toggleRecording()
     }
     @IBAction func playAudioRecordingTapped(_ sender: UIButton) {
-        player.playPause()
+        player?.playPause()
     }
 }
 
@@ -197,7 +196,8 @@ extension NewExperienceViewController: RecorderDelegate {
     func recorderDidSaveFile(recorder: Recorder) {
         if let url = recorder.url, recorder.isRecording == false {
             player = Player(url: url)
-            player.delegate = self
+            player?.delegate = self
+            sleep(2)
             playAudioRecordingButton.isHidden = false
             audioRecordingToSave = "\(url)"
         }

@@ -123,12 +123,11 @@ class CameraViewController: UIViewController {
         guard let experienceController = experienceController,
               let title = experienceTitle,
               let audio = audioToSave,
-              let image = imageToSave,
-              let video = videoToSave else { return }
+              let image = imageToSave else { return }
         Location.shared.getCurrentLocation { (coordinate) in
             experienceController.createExperience(with: title, image: image, audioCommentURL: audio, geotag: coordinate!)
         }
-        
+        navigationController?.popToRootViewController(animated: true)
     }
 }
 
