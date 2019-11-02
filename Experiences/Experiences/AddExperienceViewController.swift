@@ -10,6 +10,7 @@ import UIKit
 import CoreImage
 import Photos
 import MapKit
+import AVFoundation
 
 protocol ExperienceDelegate {
     func newExperience(name: String, image: UIImage?, audio: URL?)
@@ -50,6 +51,8 @@ class AddExperienceViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        requestMicrophonePermission()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,6 +60,24 @@ class AddExperienceViewController: UIViewController {
         
         recorder.delegate = self
         player.delegate = self
+    }
+    
+    func requestMicrophonePermission() {
+        let session = AVAudioSession.sharedInstance()
+        session.requestRecordPermission { granted in
+            guard granted == true else {
+                print("ERROR: App needs microphone access")
+                return
+            }
+
+            do {
+                try session.setCategory(.playAndRecord, mode: .default, options: [])
+                try session.overrideOutputAudioPort(.speaker)
+                try session.setActive(true, options: [])
+            } catch {
+                NSLog("Error setting up audio session: \(error)")
+            }
+        }
     }
     
     private func updateImage() {
