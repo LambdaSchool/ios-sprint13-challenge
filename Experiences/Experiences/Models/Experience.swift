@@ -10,15 +10,17 @@ import Foundation
 import UIKit
 import CoreLocation
 
-class Experience {
+class Experience: NSObject {
     var title: String
-    var image: UIImage
+    var image: Data
+    var audioURL: String
     var timestamp: Date
     var geotag: CLLocationCoordinate2D?
     
-    init(title: String, image: UIImage, timestamp: Date = Date(), geotag: CLLocationCoordinate2D?) {
+    init(title: String, image: Data, audioURL: String, timestamp: Date = Date(), geotag: CLLocationCoordinate2D?) {
         self.title = title
         self.image = image
+        self.audioURL = audioURL
         self.timestamp = timestamp
         self.geotag = geotag
     }

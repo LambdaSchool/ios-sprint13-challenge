@@ -12,20 +12,38 @@ import Photos
 
 class ExperienceViewController: UIViewController {
     
+    // MARK: - Properties
+    
     var experienceController: ExperienceController?
     var experience: Experience?
     var imageData: Data?
     var image: UIImage?
     var originalImage: UIImage?
+    var player: Player?
+    var recorder: Recorder = Recorder()
+    var audioRecording: String?
+    var currentLocation: CLLocationCoordinate2D?
     private let context = CIContext(options: nil)
     private let photoEffectInstantFilter = CIFilter(name: "CIPhotoEffectInstant")!
     private let photoEffectNoirFilter = CIFilter(name: "CIPhotoEffectNoir")!
     private let vibranceFilter = CIFilter(name: "CIVibrance")!
+    
+    // MARK: - Outlets
 
     @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var addExpPhotoButton: UIButton! {
+    @IBOutlet weak var addPhotoButton: UIButton! {
         didSet {
-            addExpPhotoButton.layer.cornerRadius = addExpPhotoButton.bounds.size.height/2
+            addPhotoButton.layer.cornerRadius = addPhotoButton.bounds.size.height/2
+        }
+    }
+    @IBOutlet weak var recordAudioButton: UIButton! {
+        didSet {
+            recordAudioButton.layer.cornerRadius = recordAudioButton.bounds.size.height/2
+        }
+    }
+    @IBOutlet weak var playAudioButton: UIButton! {
+        didSet {
+            playAudioButton.layer.cornerRadius = playAudioButton.bounds.size.height/2
         }
     }
     @IBOutlet weak var imageView: UIImageView!
@@ -37,34 +55,13 @@ class ExperienceViewController: UIViewController {
     @IBOutlet weak var vibranceLabel: UILabel!
     @IBOutlet weak var vibranceSlider: UISlider!
     
-    @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
-        view.endEditing(true)
-        guard let imageData = imageView.image?.jpegData(compressionQuality: 0.1),
-            let title = titleTextField.text, title != "" else {
-                presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a title before saving.")
-                return
-        }
-        
-        let completion: (Bool) -> Void = { (success) in
-            guard success else {
-                DispatchQueue.main.async {
-                    self.presentInformationalAlertController(title: "Error", message: "Unable to create experience. Try again.")
-                }
-                return
-            }
+    // MARK: - Actions
 
-            DispatchQueue.main.async {
-                self.navigationController?.popViewController(animated: true)
-                #warning("Why isn't this popping???")
-            }
-        }
-        Location.shared.getCurrentLocation { (coordinate) in
-            guard let image = self.image, let experienceController = self.experienceController else { return }
-            experienceController.createExp(with: title, image: image, geotag: coordinate, completion: completion)
-        }
+    @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
+        print("Save button")
     }
     
-    @IBAction func addExpPhotoButtonTapped(_ sender: UIButton) {
+    @IBAction func addPhotoButtonTapped(_ sender: UIButton) {
         let authorizationStatus = PHPhotoLibrary.authorizationStatus()
             switch authorizationStatus {
             case .authorized:
@@ -83,49 +80,18 @@ class ExperienceViewController: UIViewController {
             case .restricted:
                 self.presentInformationalAlertController(title: "Error", message: "Unable to access the photo library. Your device's restrictions do not allow access.")
             }
-            presentImagePickerController()
-        }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        //setImageViewHeight(with: 1.0)
-        originalImage = imageView.image
-        updateViews()
-    }
-
-//    func setImageViewHeight(with aspectRatio: CGFloat) {
-//        imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
-//        view.layoutSubviews()
-//    }
-    
-    func updateViews() {
-        guard let imageData = imageData,
-            let image = UIImage(data: imageData) else {
-                title = "New Experience"
-                return
-        }
-        title = experience?.title
-        //setImageViewHeight(with: image.ratio)
-        originalImage = image
-//        instantFilterLabel.isHidden = true
-//        noirFilterLabel.isHidden = true
-//        vibranceLabel.isHidden = true
-//        instantFilterSwitch.isHidden = true
-//        noirFilterSwitch.isHidden = true
-//        vibranceSlider.isHidden = true
+        presentImagePickerController()
     }
     
-    private func presentImagePickerController() {
-        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
-            presentInformationalAlertController(title: "Error", message: "The photo library is unavailable")
-            return
-        }
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
-        present(imagePicker, animated: true, completion: nil)
+    
+    @IBAction func recordAudioButtonTapped(_ sender: UIButton) {
+        recorder.toggleRecording()
     }
-
+    
+    @IBAction func playAudioButtonTapped(_ sender: UIButton) {
+        player?.playPause()
+    }
+    
     @IBAction func instantFilter(_ sender: UISwitch) {
         if instantFilterSwitch.isOn == true {
             if let image = imageView.image {
@@ -156,6 +122,37 @@ class ExperienceViewController: UIViewController {
         }
     }
     
+    // MARK: - Lifecycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        recorder.delegate = self
+        originalImage = imageView.image
+        //updateViews()
+    }
+    
+    func updateViews() {
+        guard let imageData = imageData,
+            let image = UIImage(data: imageData) else {
+                title = "New Experience"
+                return
+        }
+        title = experience?.title
+        originalImage = image
+    }
+    
+    // MARK: - Methods
+    
+    private func presentImagePickerController() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            presentInformationalAlertController(title: "Error", message: "The photo library is unavailable")
+            return
+        }
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
+    }
     
     private func photoEffectInstantFilterImage(_ image: UIImage) -> UIImage? {
         guard let cgImage = image.cgImage else { return nil }
@@ -186,16 +183,17 @@ class ExperienceViewController: UIViewController {
     }
 }
 
+// MARK: - Extensions
+
 extension ExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        addExpPhotoButton.setTitle("Choose a different photo", for: [])
+        addPhotoButton.setTitle("Choose a different photo", for: [])
         picker.dismiss(animated: true, completion: nil)
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         originalImage = image
         imageView.image = image
         self.image = image
-//        setImageViewHeight(with: image.ratio)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -207,10 +205,32 @@ extension ExperienceViewController {
     func presentInformationalAlertController(title: String?, message: String?, dismissActionCompletion: ((UIAlertAction) -> Void)? = nil, completion: (() -> Void)? = nil) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let dismissAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: dismissActionCompletion)
-        
         alertController.addAction(dismissAction)
-        
         present(alertController, animated: true, completion: completion)
+    }
+}
+
+extension ExperienceViewController: RecorderDelegate {
+    func recorderDidChangeState(recorder: Recorder) {
+        let recordButtonTitle = recorder.isRecording ? "Stop Recording" : "Record Audio"
+        recordAudioButton.setTitle(recordButtonTitle, for: .normal)
+    }
+    
+    func recorderDidSaveFile(recorder: Recorder) {
+        if let url = recorder.url, recorder.isRecording == false {
+            player = Player(url: url)
+            player?.delegate = self
+            sleep(2)
+            playAudioButton.isHidden = false
+            audioRecording = "\(url)"
+        }
+    }
+}
+
+extension ExperienceViewController: PlayerDelegate {
+    func playerDidChangeState(player: Player) {
+        let playButtonTitle = player.isPlaying ? "Pause Audio" : "Play Audio"
+        playAudioButton.setTitle(playButtonTitle, for: .normal)
     }
 }
 

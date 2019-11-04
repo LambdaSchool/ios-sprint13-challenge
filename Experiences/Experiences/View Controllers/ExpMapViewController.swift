@@ -10,11 +10,12 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class ExpMapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+class ExpMapViewController: UIViewController, MKMapViewDelegate {
     
+    let experienceController = ExperienceController()
     let locationManager = CLLocationManager()
-    var experienceController: ExperienceController = ExperienceController()
     let annotationReuseIdentifier = "ExpAnnotation"
+    var currentLocation: CLLocationCoordinate2D?
     
     @IBOutlet weak var experiencesMapView: MKMapView!
     
@@ -22,26 +23,20 @@ class ExpMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
     override func viewDidLoad() {
         super.viewDidLoad()
         experiencesMapView.delegate = self
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-        let status = CLLocationManager.authorizationStatus()
-        switch status {
-            case .notDetermined:
-                locationManager.requestWhenInUseAuthorization()
-            case .authorizedWhenInUse:
-                locationManager.requestLocation()
-            default:
-            break
-        }
         experiencesMapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: annotationReuseIdentifier)
+        Location.shared.getCurrentLocation { (coordinate) in
+                self.currentLocation = coordinate
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        experiencesMapView.removeAnnotations(experiencesMapView.annotations)
+        fetchAnnotations()
+    }
+    
+    func fetchAnnotations() {
         let annotations = experiencesMapView.annotations.compactMap({ $0 as? ExperienceAnnotation })
-            experiencesMapView.addAnnotations(annotations)
-        experiencesMapView.addAnnotations(annotations)
+        experiencesMapView.addAnnotations(annotations as! [MKAnnotation])
     }
         
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -52,18 +47,6 @@ class ExpMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
         annotationView.titleVisibility = .adaptive
         annotationView.subtitleVisibility = .adaptive
         return annotationView
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        NSLog("Location manager failed with error: \(error)")
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        guard status == .authorizedWhenInUse else { return }
-        locationManager.requestLocation()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
