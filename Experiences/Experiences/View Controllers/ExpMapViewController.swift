@@ -36,7 +36,7 @@ class ExpMapViewController: UIViewController, MKMapViewDelegate {
     
     func fetchAnnotations() {
         let annotations = experiencesMapView.annotations.compactMap({ $0 as? ExperienceAnnotation })
-        experiencesMapView.addAnnotations(annotations as! [MKAnnotation])
+        experiencesMapView.addAnnotations(annotations as [MKAnnotation])
     }
         
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {

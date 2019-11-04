@@ -212,7 +212,7 @@ extension ExperienceViewController {
 
 extension ExperienceViewController: RecorderDelegate {
     func recorderDidChangeState(recorder: Recorder) {
-        let recordButtonTitle = recorder.isRecording ? "Stop Recording" : "Record Audio"
+        let recordButtonTitle = recorder.isRecording ? "Stop" : "Record Audio"
         recordAudioButton.setTitle(recordButtonTitle, for: .normal)
     }
     
