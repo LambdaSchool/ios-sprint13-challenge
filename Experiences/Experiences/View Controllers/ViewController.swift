@@ -32,7 +32,10 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupMapView()
+    }
+    
+    private func setupMapView () {
         mapView.delegate = self
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceView")
         
@@ -47,6 +50,19 @@ class ViewController: UIViewController {
             centerMapOnLocation()
         default:
             break
+        }
+    }
+    
+    @IBAction func longPress(_ sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
+            let alert = UIAlertController(title: "Add Experience?", message: "Do you want to add an Experience here?", preferredStyle: .actionSheet)
+            let actionOK = UIAlertAction(title: "Yes", style: .default) { (_) in
+                //TODO: Add annotation
+            }
+            let actionCancel = UIAlertAction(title: "No", style: .destructive, handler: nil)
+            alert.addAction(actionOK)
+            alert.addAction(actionCancel)
+            present(alert, animated: true, completion: nil)
         }
     }
 }
