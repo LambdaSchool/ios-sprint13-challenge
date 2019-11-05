@@ -63,7 +63,9 @@ class ExperienceViewController: UIViewController {
             let title = titleTextField.text,
             let image = image,
             let audioRecording = audioRecording else { return }
-        experienceController.createExp(with: title, image: image, audioURL: audioRecording, timestamp: Date(), geotag: currentLocation)
+        Location.shared.getCurrentLocation { (currentLocation) in
+            experienceController.createExp(with: title, image: image, audioURL: audioRecording, timestamp: Date(), geotag: currentLocation)
+        }
         dismiss(animated: true, completion: nil)
     }
     
