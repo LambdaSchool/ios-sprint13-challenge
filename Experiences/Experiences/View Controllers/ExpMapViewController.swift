@@ -15,7 +15,7 @@ class ExpMapViewController: UIViewController, MKMapViewDelegate {
     let experienceController = ExperienceController()
     let locationManager = CLLocationManager()
     let annotationReuseIdentifier = "ExpAnnotation"
-    var currentLocation: CLLocationCoordinate2D?
+    var currentLocation = CLLocationCoordinate2D()
     
     @IBOutlet weak var experiencesMapView: MKMapView!
     
@@ -50,7 +50,7 @@ class ExpMapViewController: UIViewController, MKMapViewDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ShowNewExpSegue" {
+        if segue.identifier == "ModalNewExpSegue" {
             let destinationVC = segue.destination as? UINavigationController
             
             let nextVC = destinationVC?.viewControllers[0] as? ExperienceViewController

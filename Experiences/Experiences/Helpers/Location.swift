@@ -33,7 +33,7 @@ class Location: NSObject, CLLocationManagerDelegate {
         }
     }
     
-    func getCurrentLocation(completion: @escaping (CLLocationCoordinate2D?) -> Void) {
+    func getCurrentLocation(completion: @escaping (CLLocationCoordinate2D) -> Void) {
         requestLocationAuthorization()
         group = DispatchGroup()
         group?.enter()
@@ -41,7 +41,7 @@ class Location: NSObject, CLLocationManagerDelegate {
         group?.notify(queue: .main) {
             let coordinate = self.locationManager.location?.coordinate
             self.group = nil
-            completion(coordinate)
+            completion(coordinate ?? CLLocationCoordinate2D(latitude: 0, longitude: 0))
         }
     }
     

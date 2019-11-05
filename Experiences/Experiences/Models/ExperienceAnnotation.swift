@@ -16,8 +16,7 @@ class ExperienceAnnotation: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
 
     init?(experience: Experience) {
-        guard let coordinate = experience.geotag else { return nil }
         self.title = experience.title
-        self.coordinate = coordinate
+        self.coordinate = experience.geotag
     }
 }

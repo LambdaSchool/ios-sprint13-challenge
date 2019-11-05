@@ -16,13 +16,13 @@ class ExperienceViewController: UIViewController {
     
     var experienceController: ExperienceController?
     var experience: Experience?
-    var imageData: Data?
+    //var imageData: Data?
     var image: UIImage?
     var originalImage: UIImage?
     var player: Player?
     var recorder: Recorder = Recorder()
     var audioRecording: String?
-    var currentLocation: CLLocationCoordinate2D?
+    var currentLocation = CLLocationCoordinate2D()
     private let context = CIContext(options: nil)
     private let photoEffectInstantFilter = CIFilter(name: "CIPhotoEffectInstant")!
     private let photoEffectNoirFilter = CIFilter(name: "CIPhotoEffectNoir")!
@@ -59,6 +59,12 @@ class ExperienceViewController: UIViewController {
 
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
         print("Save button")
+        guard let experienceController = experienceController,
+            let title = titleTextField.text,
+            let image = image,
+            let audioRecording = audioRecording else { return }
+        experienceController.createExp(with: title, image: image, audioURL: audioRecording, timestamp: Date(), geotag: currentLocation)
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func addPhotoButtonTapped(_ sender: UIButton) {
@@ -131,15 +137,15 @@ class ExperienceViewController: UIViewController {
         //updateViews()
     }
     
-    func updateViews() {
-        guard let imageData = imageData,
-            let image = UIImage(data: imageData) else {
-                title = "New Experience"
-                return
-        }
-        title = experience?.title
-        originalImage = image
-    }
+//    func updateViews() {
+//        guard let imageData = imageData,
+//            let image = UIImage(data: imageData) else {
+//                title = "New Experience"
+//                return
+//        }
+//        title = experience?.title
+//        originalImage = image
+//    }
     
     // MARK: - Methods
     
