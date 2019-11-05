@@ -66,6 +66,32 @@
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="TnD-1B-8vM" secondAttribute="height" multiplier="1:0.75" id="SHp-JF-XEb"/>
                                 </constraints>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MediaCell" textLabel="rAA-LG-1fn" detailTextLabel="rIw-vH-ZvQ" style="IBUITableViewCellStyleSubtitle" id="lij-ib-kFt">
+                                        <rect key="frame" x="0.0" y="28" width="398" height="55.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lij-ib-kFt" id="ho4-Lf-K3k">
+                                            <rect key="frame" x="0.0" y="0.0" width="398" height="55.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rAA-LG-1fn">
+                                                    <rect key="frame" x="20" y="10" width="33.5" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rIw-vH-ZvQ">
+                                                    <rect key="frame" x="20" y="31.5" width="44" height="14.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                             </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="UjP-28-LCb">
                                 <rect key="frame" x="8" y="96" width="398" height="76"/>
@@ -114,9 +140,12 @@
                                 <rect key="frame" x="362" y="182" width="36" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Add"/>
+                                <connections>
+                                    <action selector="addTapped:" destination="DB9-UE-c4u" eventType="touchUpInside" id="aN8-RV-wQd"/>
+                                </connections>
                             </button>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ga0-od-acy">
-                                <rect key="frame" x="8" y="527" width="398" height="327"/>
+                                <rect key="frame" x="8" y="526.5" width="398" height="327.5"/>
                                 <connections>
                                     <segue destination="uQr-nf-bjp" kind="embed" id="A6W-Du-VKn"/>
                                 </connections>
@@ -144,6 +173,12 @@
                         <viewLayoutGuide key="safeArea" id="9kj-19-rkT"/>
                     </view>
                     <navigationItem key="navigationItem" title="Add Experience" id="cdS-yO-I2E"/>
+                    <connections>
+                        <outlet property="descriptionTF" destination="Cm6-fO-0I5" id="Nqt-8T-9Ut"/>
+                        <outlet property="tableView" destination="TnD-1B-8vM" id="MnZ-7b-fji"/>
+                        <outlet property="titleTF" destination="HWY-vq-vzh" id="Doa-At-4GD"/>
+                        <outlet property="uiView" destination="ga0-od-acy" id="SbU-c4-JeL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tyE-DM-UTi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -172,23 +207,71 @@
             <objects>
                 <viewController id="uQr-nf-bjp" customClass="ContainerViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6Xk-FQ-oEM">
-                        <rect key="frame" x="0.0" y="0.0" width="398" height="327"/>
+                        <rect key="frame" x="0.0" y="0.0" width="398" height="327.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="3Mm-51-3xo"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9yP-1V-6MW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2204" y="272"/>
         </scene>
-        <!--View Controller-->
+        <!--Add Media Type View Controller-->
         <scene sceneID="ihD-gB-7rS">
             <objects>
-                <viewController id="XR2-iR-4tD" sceneMemberID="viewController">
+                <viewController id="XR2-iR-4tD" customClass="AddMediaTypeViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6NF-np-133">
                         <rect key="frame" x="0.0" y="0.0" width="398" height="327"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="WcD-Ax-x5x">
+                                <rect key="frame" x="20" y="64" width="358" height="243"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bbd-2k-PZ9">
+                                        <rect key="frame" x="147" y="0.0" width="64" height="61"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <state key="normal" title="Image"/>
+                                        <connections>
+                                            <action selector="buttonTapped:" destination="XR2-iR-4tD" eventType="touchUpInside" id="d5o-sS-TC4"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tOB-bf-E9x">
+                                        <rect key="frame" x="148.5" y="61" width="61" height="60.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <state key="normal" title="Audio"/>
+                                        <connections>
+                                            <action selector="buttonTapped:" destination="XR2-iR-4tD" eventType="touchUpInside" id="Rev-v3-iMS"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="64V-dj-aw1">
+                                        <rect key="frame" x="148.5" y="121.5" width="61" height="61"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <state key="normal" title="Video"/>
+                                        <connections>
+                                            <action selector="buttonTapped:" destination="XR2-iR-4tD" eventType="touchUpInside" id="fwQ-WM-pyU"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ZP-ZX-eLp">
+                                        <rect key="frame" x="142.5" y="182.5" width="73" height="60.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="buttonTapped:" destination="XR2-iR-4tD" eventType="touchUpInside" id="pcv-vL-ZbN"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="7St-IH-RIJ" firstAttribute="trailing" secondItem="WcD-Ax-x5x" secondAttribute="trailing" constant="20" id="03j-le-mQM"/>
+                            <constraint firstItem="WcD-Ax-x5x" firstAttribute="leading" secondItem="7St-IH-RIJ" secondAttribute="leading" constant="20" id="AGh-f8-ABK"/>
+                            <constraint firstItem="WcD-Ax-x5x" firstAttribute="top" secondItem="7St-IH-RIJ" secondAttribute="top" constant="20" id="q3s-om-cZU"/>
+                            <constraint firstItem="7St-IH-RIJ" firstAttribute="bottom" secondItem="WcD-Ax-x5x" secondAttribute="bottom" constant="20" id="xnc-v3-76J"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="7St-IH-RIJ"/>
                     </view>
                     <size key="freeformSize" width="398" height="327"/>

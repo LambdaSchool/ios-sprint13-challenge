@@ -8,12 +8,35 @@
 
 import UIKit
 
+protocol ExperienceViewControllerDelegate {
+    func mediaAdded()
+}
+
 class ExperienceViewController: UIViewController {
 
+    @IBOutlet weak var titleTF: UITextField!
+    @IBOutlet weak var descriptionTF: UITextField!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var uiView: ContainerViewController!
+    
+    var experience: Experience?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateViews()
     }
-
+    
+    func updateViews() {
+        guard let experience = experience else { return }
+        tableView.reloadData()
+        titleTF.text = experience.title
+        descriptionTF.text = experience.subtitle
+    }
+    
+    @IBAction func addTapped(_ sender: Any) {
+        uiView.addMedia()
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -27,15 +50,24 @@ class ExperienceViewController: UIViewController {
 }
 
 extension ExperienceViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //TODO: - Fill out after modelcontroller connected
-        return 0
+        return experience?.media.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //TODO: - Fill out after modelcontroller connected
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MediaCell", for: indexPath)
+        if let experience = experience {
+            cell.textLabel?.text = experience.media[indexPath.row].mediaType.rawValue
+            cell.detailTextLabel?.text = experience.media[indexPath.row].date.formattedString()
+        }
+        return cell
     }
-    
-    
+}
+
+extension ExperienceViewController: ExperienceViewControllerDelegate {
+    func mediaAdded() {
+        tableView.reloadData()
+    }
 }

@@ -8,20 +8,45 @@
 
 import UIKit
 
+protocol ContainerViewControllerDelegate {
+    func removeView()
+    func openView(for mediaType: MediaType)
+}
+
 class ContainerViewController: UIViewController {
 
+    var media: Media?
+    var delegate: ExperienceViewControllerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
+    func addMedia() {
+        add(asChildViewController: addMediaTypeViewController)
+    }
+    
+    private lazy var addMediaTypeViewController: AddMediaTypeViewController = {
+        // Load Storyboard
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+
+        // Instantiate View Controller
+        var viewController = storyboard.instantiateViewController(withIdentifier: "AddMediaTypeViewController") as! AddMediaTypeViewController
+
+        // Add View Controller as Child View Controller
+        self.add(asChildViewController: viewController)
+
+        return viewController
+    }()
+    
     private lazy var audioPlayerViewController: AudioPlayerViewController = {
         // Load Storyboard
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
 
         // Instantiate View Controller
-        var viewController = storyboard.instantiateViewController(withIdentifier: "AudioPlayerViewController") as! AudioPlayeViewController
+        var viewController = storyboard.instantiateViewController(withIdentifier: "AudioPlayerViewController") as! AudioPlayerViewController
 
         // Add View Controller as Child View Controller
         self.add(asChildViewController: viewController)
@@ -109,4 +134,21 @@ class ContainerViewController: UIViewController {
     }
     */
 
+}
+
+extension ContainerViewController: ContainerViewControllerDelegate {
+    func removeView() {
+        remove(asChildViewController: addMediaTypeViewController)
+    }
+    
+    func openView(for mediaType: MediaType) {
+        switch mediaType {
+        case .audio:
+            add(asChildViewController: audioRecorderViewController)
+        case .image:
+            break
+        case .video:
+            add(asChildViewController: videoRecorderViewController)
+        }
+    }
 }

@@ -8,10 +8,10 @@
 
 import Foundation
 
-enum MediaType {
-    case audio
-    case video
-    case image
+enum MediaType: String {
+    case audio = "Audio"
+    case video = "Video"
+    case image = "Image"
 }
 
 class Media {
