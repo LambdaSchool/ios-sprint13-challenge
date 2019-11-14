@@ -8,19 +8,20 @@
 
 import Foundation
 
-enum MediaType: String {
+enum MediaType: String, CaseIterable {
     case audio = "Audio"
     case video = "Video"
     case image = "Image"
+    static let types: [String] = ["Audio", "Video", "Image"]
 }
 
 class Media {
     let mediaType: MediaType
-    let mediaURL: URL
+    let mediaURL: URL?
     let mediaData: Data?
     let date: Date
     
-    init (mediaType: MediaType, url: URL, data: Data? = nil, date: Date = Date()) {
+    init (mediaType: MediaType, url: URL?, data: Data? = nil, date: Date = Date()) {
         self.mediaType = mediaType
         self.mediaData = data
         self.mediaURL = url

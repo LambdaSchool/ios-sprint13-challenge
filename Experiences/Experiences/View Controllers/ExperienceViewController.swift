@@ -7,22 +7,28 @@
 //
 
 import UIKit
+import CoreLocation
 
 protocol ExperienceViewControllerDelegate {
-    func mediaAdded()
+    func mediaAdded(media: Media)
 }
 
 class ExperienceViewController: UIViewController {
+    
+    var experienceController: ExperienceController?
+    var experience: Experience?
+    var coordinate: CLLocationCoordinate2D!
+    var selectedMedia: Media?
 
     @IBOutlet weak var titleTF: UITextField!
     @IBOutlet weak var descriptionTF: UITextField!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var uiView: ContainerViewController!
     
-    var experience: Experience?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.dataSource = self
+        tableView.delegate = self
         updateViews()
     }
     
@@ -34,19 +40,62 @@ class ExperienceViewController: UIViewController {
     }
     
     @IBAction func addTapped(_ sender: Any) {
-        uiView.addMedia()
+        let alert = UIAlertController(title: "Add Media", message: "Which type?", preferredStyle: .actionSheet)
+        for type in MediaType.allCases {
+            alert.addAction(UIAlertAction(title: type.rawValue, style: .default, handler: { (action) in
+                DispatchQueue.main.async {
+                    switch MediaType(rawValue: action.title!) {
+                    case .audio:
+                        self.performSegue(withIdentifier: "AudioSegue", sender: self)
+                    case .image:
+                        self.performSegue(withIdentifier: "ImageSegue", sender: self)
+                    case .video:
+                        self.performSegue(withIdentifier: "VideoSegue", sender: self)
+                    default:
+                        break
+                    }
+                }
+            }))
+        }
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(alert, animated: true)
     }
     
-    /*
+    @IBAction func saveTapped(_ sender: Any) {
+        guard let title = titleTF.text,
+            let description = descriptionTF.text,
+            let coordinate = coordinate,
+            let controller = experienceController else { return }
+        if let experience = experience {
+            experience.title = title
+            experience.subtitle = description
+            controller.add(newExperience: experience)
+        } else {
+            controller.add(newExperience: Experience(title: title, subtitle: description, coordinate: coordinate))
+        }
+        navigationController?.popViewController(animated: true)
+    }
+    
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        switch segue.identifier {
+        case "ImageSegue":
+            let vc = segue.destination as! ImageViewController
+            vc.delegate = self
+            vc.media = selectedMedia
+        case "VideoSegue":
+            let vc = segue.destination as! VideoViewController
+            vc.delegate = self
+            vc.media = selectedMedia
+        case "AudioSegue":
+            let vc = segue.destination as! AudioViewController
+            vc.delegate = self
+            vc.media = selectedMedia
+        default:
+            break
+        }
     }
-    */
-
 }
 
 extension ExperienceViewController: UITableViewDelegate, UITableViewDataSource {
@@ -64,10 +113,31 @@ extension ExperienceViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedMedia = experience?.media[indexPath.row]
+        switch selectedMedia?.mediaType {
+        case .audio:
+            self.performSegue(withIdentifier: "AudioSegue", sender: self)
+        case .image:
+            self.performSegue(withIdentifier: "ImageSegue", sender: self)
+        case .video:
+            self.performSegue(withIdentifier: "VideoSegue", sender: self)
+        default:
+            break
+        }
+    }
 }
 
 extension ExperienceViewController: ExperienceViewControllerDelegate {
-    func mediaAdded() {
-        tableView.reloadData()
+    func mediaAdded(media: Media) {
+        let title = self.titleTF.text ?? ""
+        let subtitle = self.descriptionTF.text ?? ""
+        experience = Experience(title: title, subtitle: subtitle, coordinate: coordinate)
+        //experienceController?.add(newExperience: newExperience)
+        experience?.addMedia(mediaType: media.mediaType, url: media.mediaURL, data: media.mediaData)
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 }

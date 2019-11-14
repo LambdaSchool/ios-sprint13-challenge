@@ -8,14 +8,14 @@
 
 import UIKit
 
-protocol ContainerViewControllerDelegate {
-    func removeView()
-    func openView(for mediaType: MediaType)
-}
-
 class ContainerViewController: UIViewController {
 
     var media: Media?
+    var mediaType: MediaType?{
+        didSet{
+            
+        }
+    }
     var delegate: ExperienceViewControllerDelegate?
     
     override func viewDidLoad() {
@@ -24,16 +24,39 @@ class ContainerViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    func addMedia() {
-        add(asChildViewController: addMediaTypeViewController)
+    func handleMedia() {
+        guard let type = mediaType else { return }
+        switch type {
+        case .audio:
+            add(asChildViewController: audioViewController)
+        case .image:
+            
+            break
+        case .video:
+            break
+        }
     }
     
-    private lazy var addMediaTypeViewController: AddMediaTypeViewController = {
+    private lazy var audioViewController: AudioViewController = {
         // Load Storyboard
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
 
         // Instantiate View Controller
-        var viewController = storyboard.instantiateViewController(withIdentifier: "AddMediaTypeViewController") as! AddMediaTypeViewController
+        var viewController = storyboard.instantiateViewController(withIdentifier: "AudioPlayerViewController") as! AudioViewController
+
+        // Add View Controller as Child View Controller
+        self.add(asChildViewController: viewController)
+
+        return viewController
+    }()
+
+    
+    private lazy var videoViewController: VideoViewController = {
+        // Load Storyboard
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+
+        // Instantiate View Controller
+        var viewController = storyboard.instantiateViewController(withIdentifier: "VideoPlayerController") as! VideoViewController
 
         // Add View Controller as Child View Controller
         self.add(asChildViewController: viewController)
@@ -41,57 +64,18 @@ class ContainerViewController: UIViewController {
         return viewController
     }()
     
-    private lazy var audioPlayerViewController: AudioPlayerViewController = {
-        // Load Storyboard
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+    private lazy var imageViewController: ImageViewController = {
+           // Load Storyboard
+           let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
 
-        // Instantiate View Controller
-        var viewController = storyboard.instantiateViewController(withIdentifier: "AudioPlayerViewController") as! AudioPlayerViewController
+           // Instantiate View Controller
+           var viewController = storyboard.instantiateViewController(withIdentifier: "VideoRecorderViewController") as! ImageViewController
 
-        // Add View Controller as Child View Controller
-        self.add(asChildViewController: viewController)
+           // Add View Controller as Child View Controller
+           self.add(asChildViewController: viewController)
 
-        return viewController
-    }()
-
-    private lazy var audioRecorderViewController: AudioRecorderViewController = {
-        // Load Storyboard
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-
-        // Instantiate View Controller
-        var viewController = storyboard.instantiateViewController(withIdentifier: "AudioRecorderViewController") as! AudioRecorderViewController
-
-        // Add View Controller as Child View Controller
-        self.add(asChildViewController: viewController)
-
-        return viewController
-    }()
-    
-    private lazy var videoPlayerViewController: VideoPlayerViewController = {
-        // Load Storyboard
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-
-        // Instantiate View Controller
-        var viewController = storyboard.instantiateViewController(withIdentifier: "VideoPlayerController") as! VideoPlayerViewController
-
-        // Add View Controller as Child View Controller
-        self.add(asChildViewController: viewController)
-
-        return viewController
-    }()
-
-    private lazy var videoRecorderViewController: VideoRecorderViewController = {
-        // Load Storyboard
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-
-        // Instantiate View Controller
-        var viewController = storyboard.instantiateViewController(withIdentifier: "VideoRecorderViewController") as! VideoRecorderViewController
-
-        // Add View Controller as Child View Controller
-        self.add(asChildViewController: viewController)
-
-        return viewController
-    }()
+           return viewController
+       }()
 
     private func add(asChildViewController viewController: UIViewController) {
         // Add Child View Controller
@@ -134,21 +118,4 @@ class ContainerViewController: UIViewController {
     }
     */
 
-}
-
-extension ContainerViewController: ContainerViewControllerDelegate {
-    func removeView() {
-        remove(asChildViewController: addMediaTypeViewController)
-    }
-    
-    func openView(for mediaType: MediaType) {
-        switch mediaType {
-        case .audio:
-            add(asChildViewController: audioRecorderViewController)
-        case .image:
-            break
-        case .video:
-            add(asChildViewController: videoRecorderViewController)
-        }
-    }
 }

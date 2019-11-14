@@ -21,7 +21,7 @@ class Experience: NSObject, MKAnnotation {
         self.coordinate = coordinate
     }
     
-    func addMedia (mediaType: MediaType, url: URL, data: Data? = nil) {
+    func addMedia (mediaType: MediaType, url: URL?, data: Data? = nil) {
         media.append(Media(mediaType: mediaType, url: url, data: data))
     }
 }

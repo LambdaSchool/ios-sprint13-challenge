@@ -13,13 +13,16 @@ import CoreLocation
 class ViewController: UIViewController {
     
     let locationManager = CLLocationManager()
+    var experienceController = ExperienceController()
+    var touchLocation: CLLocationCoordinate2D?
 
     @IBOutlet weak var mapView: MKMapView!
     
     override func viewWillAppear(_ animated: Bool) {
-        centerMapOnLocation()
-        let annotations = mapView.annotations.compactMap({ $0 as? Experience })
-        mapView.addAnnotations(annotations)
+        //centerMapOnLocation()
+        //let annotations = mapView.annotations.compactMap({ $0 as? Experience })
+        mapView.addAnnotations(experienceController.experiences)
+        mapView.showAnnotations(experienceController.experiences, animated: true)
     }
     
     private func centerMapOnLocation() {
@@ -58,6 +61,10 @@ class ViewController: UIViewController {
             let alert = UIAlertController(title: "Add Experience?", message: "Do you want to add an Experience here?", preferredStyle: .actionSheet)
             let actionOK = UIAlertAction(title: "Yes", style: .default) { (_) in
                 //TODO: Add annotation
+                let touchLocation = sender.location(in: self.mapView)
+                let locationCoordinate = self.mapView.convert(touchLocation, toCoordinateFrom: self.mapView)
+                self.touchLocation = locationCoordinate
+                self.performSegue(withIdentifier: "AddExperienceSegue", sender: self)
             }
             let actionCancel = UIAlertAction(title: "No", style: .destructive, handler: nil)
             alert.addAction(actionOK)
@@ -65,10 +72,28 @@ class ViewController: UIViewController {
             present(alert, animated: true, completion: nil)
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let vc = segue.destination as? ExperienceViewController else { return }
+        vc.experienceController = self.experienceController
+        switch segue.identifier {
+        case "AddExperienceSegue":
+            vc.coordinate =  touchLocation //locationManager.location?.coordinate
+        case "ViewExperienceSegue":
+            guard let experience = sender as? Experience else { return }
+            vc.experience = experience
+            break
+        default:
+            break
+        }
+    }
 }
 
 extension ViewController: MKMapViewDelegate {
-    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard let experience = view.annotation as? Experience else { return }
+        self.performSegue(withIdentifier: "ViewExperienceSegue", sender: experience)
+    }
 }
 
 extension ViewController: CLLocationManagerDelegate {
