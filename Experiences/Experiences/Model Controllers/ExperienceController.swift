@@ -7,11 +7,16 @@
 //
 
 import Foundation
+import MapKit
 
 class ExperienceController {
     var experiences: [Experience] = []
     
     func add (newExperience: Experience) {
         experiences.append(newExperience)
+    }
+    
+    func update(exerience: Experience, title: String, subtitle: String, coordinate: CLLocationCoordinate2D) {
+        
     }
 }

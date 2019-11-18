@@ -10,6 +10,7 @@ import UIKit
 
 class ImageViewController: UIViewController, UINavigationControllerDelegate {
     
+    //MARK: - Properties
     enum ImageSource {
         case photoLibrary
         case camera
@@ -18,26 +19,82 @@ class ImageViewController: UIViewController, UINavigationControllerDelegate {
     var media: Media?
     var delegate: ExperienceViewControllerDelegate?
     var imagePicker: UIImagePickerController!
+    var imageTaken: UIImage?
+    let context = CIContext(options: nil)
+    var filteredImage: UIImage?
 
+    //MARK: - IBOutlets
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var filterSegmented: UISegmentedControl!
     
-    
+    //MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
-    }
-    
-    private func updateViews() {
-        guard let media = media else { return }
-        if let mediaData = media.mediaData {
-            guard let imageData = UIImage(data: mediaData) else { return }
-            imageView.image = imageData
+        if media == nil {
+            takePhoto()
         } else {
-            //TODO: - Get from URL?
+            if let media = media,
+                let mediaData = media.mediaData {
+                imageTaken = UIImage(data:mediaData)
+            }
         }
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        //media = nil
+    }
+
+    //MARK: - IBActions
     @IBAction func takePhotoTapped(_ sender: Any) {
+        takePhoto()
+    }
+    
+    @IBAction func filterChanged(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0: //None
+            filteredImage = nil
+        case 1: //Spepia
+            guard let image = imageTaken,
+                let filteredImage = sepiaEffectFilter(image) else { return }
+            self.filteredImage = filteredImage
+        case 2: //B&W
+            guard let image = imageTaken,
+                let filteredImage = bwEffectFilter(image) else { return }
+            self.filteredImage = filteredImage
+        default:
+            break
+        }
+        updateViews()
+    }
+    
+    @IBAction func saveTapped(_ sender: Any) {
+        guard let delegate = delegate else {
+            print("No Delegate!")
+            return
+        }
+        var imageToSave: UIImage
+        if let image = filteredImage
+        {
+            imageToSave = image
+        } else if let image = imageTaken {
+            imageToSave = image
+        } else {
+            navigationController?.popViewController(animated: true)
+            return
+        }
+        if let media = self.media {
+            media.updatedDate = Date()
+            media.mediaData = imageToSave.jpegData(compressionQuality: 90)
+        } else {
+            let newMedia = Media(mediaType: .image, url: nil, data: imageToSave.jpegData(compressionQuality: 90), date: Date())
+            delegate.mediaAdded(media: newMedia)
+        }
+        navigationController?.popViewController(animated: true)
+    }
+
+    //MARK: - Private Methods
+    private func takePhoto() {
         guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
             selectImageFrom(.photoLibrary)
             return
@@ -45,14 +102,20 @@ class ImageViewController: UIViewController, UINavigationControllerDelegate {
         selectImageFrom(.camera)
     }
     
-    @IBAction func saveTapped(_ sender: Any) {
-        guard let delegate = delegate,
-            let media = media else {
-            print("Image not found!")
-            return
+    private func updateViews() {
+        if let media = media {
+            if let mediaData = media.mediaData {
+                guard let image = UIImage(data: mediaData) else { return }
+                imageView.image = image
+            } else {
+                //TODO: - Get from URL?
+            }
         }
-        delegate.mediaAdded(media: media)
-        navigationController?.popViewController(animated: true)
+        if let image = filteredImage {
+            imageView.image = image
+        } else if let image = imageTaken {
+            imageView.image = image
+        }
     }
     
     private func showAlertWith(title: String, message: String){
@@ -73,19 +136,28 @@ class ImageViewController: UIViewController, UINavigationControllerDelegate {
         present(imagePicker, animated: true, completion: nil)
     }
     
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func sepiaEffectFilter(_ image: UIImage) -> UIImage? {
+        guard   let filter = CIFilter(name: "CISepiaTone"),
+                let originalImage = CIImage(image: image) else { return nil }
+        
+        filter.setValue(originalImage, forKey: kCIInputImageKey)
+        guard   let outputImage = filter.outputImage,
+                let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else { return nil }
+        return UIImage(cgImage: cgImage).flattened
     }
-    */
-
+    
+    private func bwEffectFilter(_ image: UIImage) -> UIImage? {
+        guard   let filter = CIFilter(name: "CIPhotoEffectMono"),
+                let originalImage = CIImage(image: image) else { return nil }
+        
+        filter.setValue(originalImage, forKey: kCIInputImageKey)
+        guard   let outputImage = filter.outputImage,
+                let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else { return nil }
+        return UIImage(cgImage: cgImage).flattened
+    }
 }
 
+//MARK: - Extensions
 extension ImageViewController: UIImagePickerControllerDelegate{
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]){
@@ -94,7 +166,17 @@ extension ImageViewController: UIImagePickerControllerDelegate{
             print("Image not found!")
             return
         }
-        imageView.image = selectedImage
-        media = Media(mediaType: .image, url: nil, data: selectedImage.jpegData(compressionQuality: 90), date: Date())
+        imageTaken = selectedImage.flattened
+        updateViews()
+    }
+}
+
+extension UIImage {
+    // Renders the image if the pixel data was rotated due to orientation of camera
+    var flattened: UIImage {
+        if imageOrientation == .up { return self }
+        return UIGraphicsImageRenderer(size: size, format: imageRendererFormat).image { context in
+            draw(at: .zero)
+        }
     }
 }

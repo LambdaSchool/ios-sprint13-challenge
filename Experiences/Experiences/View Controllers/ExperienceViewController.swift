@@ -19,7 +19,8 @@ class ExperienceViewController: UIViewController {
     var experience: Experience?
     var coordinate: CLLocationCoordinate2D!
     var selectedMedia: Media?
-
+    var addedMedia: [Media]?
+    
     @IBOutlet weak var titleTF: UITextField!
     @IBOutlet weak var descriptionTF: UITextField!
     @IBOutlet weak var tableView: UITableView!
@@ -29,6 +30,9 @@ class ExperienceViewController: UIViewController {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
+        if let experience = experience {
+            self.coordinate = experience.coordinate
+        }
         updateViews()
     }
     
@@ -46,11 +50,11 @@ class ExperienceViewController: UIViewController {
                 DispatchQueue.main.async {
                     switch MediaType(rawValue: action.title!) {
                     case .audio:
-                        self.performSegue(withIdentifier: "AudioSegue", sender: self)
+                        self.performSegue(withIdentifier: "addAudioSegue", sender: self)
                     case .image:
-                        self.performSegue(withIdentifier: "ImageSegue", sender: self)
+                        self.performSegue(withIdentifier: "addImageSegue", sender: self)
                     case .video:
-                        self.performSegue(withIdentifier: "VideoSegue", sender: self)
+                        self.performSegue(withIdentifier: "addVideoSegue", sender: self)
                     default:
                         break
                     }
@@ -69,7 +73,9 @@ class ExperienceViewController: UIViewController {
         if let experience = experience {
             experience.title = title
             experience.subtitle = description
-            controller.add(newExperience: experience)
+            experience.updatedTimeStamp = Date()
+            //This experience already exists in the array
+            //controller.add(newExperience: experience)
         } else {
             controller.add(newExperience: Experience(title: title, subtitle: description, coordinate: coordinate))
         }
@@ -77,18 +83,27 @@ class ExperienceViewController: UIViewController {
     }
     
     // MARK: - Navigation
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
-        case "ImageSegue":
+        case "addImageSegue":
+            let vc = segue.destination as! ImageViewController
+            vc.delegate = self
+        case "showImageSegue":
             let vc = segue.destination as! ImageViewController
             vc.delegate = self
             vc.media = selectedMedia
-        case "VideoSegue":
+        case "addVideoSegue":
+            let vc = segue.destination as! VideoViewController
+            vc.delegate = self
+        case "showVideoSegue":
             let vc = segue.destination as! VideoViewController
             vc.delegate = self
             vc.media = selectedMedia
-        case "AudioSegue":
+        case "addAudioSegue":
+            let vc = segue.destination as! AudioViewController
+            vc.delegate = self
+        case "showAudioSegue":
             let vc = segue.destination as! AudioViewController
             vc.delegate = self
             vc.media = selectedMedia
@@ -98,6 +113,7 @@ class ExperienceViewController: UIViewController {
     }
 }
 
+// MARK: - Extensions
 extension ExperienceViewController: UITableViewDelegate, UITableViewDataSource {
     
     
@@ -109,7 +125,7 @@ extension ExperienceViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MediaCell", for: indexPath)
         if let experience = experience {
             cell.textLabel?.text = experience.media[indexPath.row].mediaType.rawValue
-            cell.detailTextLabel?.text = experience.media[indexPath.row].date.formattedString()
+            cell.detailTextLabel?.text = experience.media[indexPath.row].updatedDate?.formattedString() ?? experience.media[indexPath.row].createdDate.formattedString()
         }
         return cell
     }
@@ -118,11 +134,11 @@ extension ExperienceViewController: UITableViewDelegate, UITableViewDataSource {
         selectedMedia = experience?.media[indexPath.row]
         switch selectedMedia?.mediaType {
         case .audio:
-            self.performSegue(withIdentifier: "AudioSegue", sender: self)
+            self.performSegue(withIdentifier: "showAudioSegue", sender: self)
         case .image:
-            self.performSegue(withIdentifier: "ImageSegue", sender: self)
+            self.performSegue(withIdentifier: "showImageSegue", sender: self)
         case .video:
-            self.performSegue(withIdentifier: "VideoSegue", sender: self)
+            self.performSegue(withIdentifier: "showVideoSegue", sender: self)
         default:
             break
         }
@@ -131,13 +147,21 @@ extension ExperienceViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension ExperienceViewController: ExperienceViewControllerDelegate {
     func mediaAdded(media: Media) {
-        let title = self.titleTF.text ?? ""
-        let subtitle = self.descriptionTF.text ?? ""
-        experience = Experience(title: title, subtitle: subtitle, coordinate: coordinate)
-        //experienceController?.add(newExperience: newExperience)
-        experience?.addMedia(mediaType: media.mediaType, url: media.mediaURL, data: media.mediaData)
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
+        if let experience = experience {
+            experience.addMedia(media: media)
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        } else {
+            let title = self.titleTF.text ?? ""
+            let subtitle = self.descriptionTF.text ?? ""
+            let newExperience = Experience(title: title, subtitle: subtitle, coordinate: coordinate)
+            experienceController?.add(newExperience: newExperience)
+            experience = newExperience
+            experience?.addMedia(media: media)
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
     }
 }

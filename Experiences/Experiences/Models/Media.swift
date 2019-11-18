@@ -8,6 +8,7 @@
 
 import Foundation
 
+//MARK: - Properties
 enum MediaType: String, CaseIterable {
     case audio = "Audio"
     case video = "Video"
@@ -16,31 +17,44 @@ enum MediaType: String, CaseIterable {
 }
 
 class Media {
+    //MARK: - Properties
     let mediaType: MediaType
-    let mediaURL: URL?
-    let mediaData: Data?
-    let date: Date
+    var mediaURL: URL?
+    var mediaData: Data?
+    let createdDate: Date
+    var updatedDate: Date?
     
+    //MARK: - View Lifecycle
     init (mediaType: MediaType, url: URL?, data: Data? = nil, date: Date = Date()) {
         self.mediaType = mediaType
         self.mediaData = data
         self.mediaURL = url
-        self.date = date
+        self.createdDate = date
     }
     
-    func play (completion: @escaping (_ error: Error?) -> Void = { _ in }) {
-        completion(nil)
-    }
     
-    func pause (completion: @escaping (_ error: Error?) -> Void = { _ in }) {
-        completion(nil)
-    }
-    
-    func stop (completion: @escaping (_ error: Error?) -> Void = { _ in }) {
-        completion(nil)
-    }
-    
-    func togglePlayPause (completion: @escaping (_ error: Error?) -> Void = { _ in }) {
-        completion(nil)
-    }
+//TODO: - Work on this approach later
+//    func play (completion: @escaping (_ error: Error?) -> Void = { _ in }) {
+//        completion(nil)
+//        switch self.mediaType {
+//        case .audio:
+//            break
+//        case .video:
+//            break
+//        case .image:
+//            break
+//        }
+//    }
+//
+//    func pause (completion: @escaping (_ error: Error?) -> Void = { _ in }) {
+//        completion(nil)
+//    }
+//
+//    func stop (completion: @escaping (_ error: Error?) -> Void = { _ in }) {
+//        completion(nil)
+//    }
+//
+//    func togglePlayPause (completion: @escaping (_ error: Error?) -> Void = { _ in }) {
+//        completion(nil)
+//    }
 }
