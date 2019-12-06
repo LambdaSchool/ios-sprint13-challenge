@@ -72,7 +72,7 @@ extension ExperienceViewController: LocationControllerDelegate {
             let title = titleTextField.text,
             !title.isEmpty else { return }
         
-        experienceController?.createExperience(title: title, coordinate: coordinate, imageURL: nil, audioURL: nil)
+        experienceController?.createExperience(title: title, coordinate: coordinate, videoURL: nil, audioURL: nil)
         navigationController?.popViewController(animated: true)
     }
 }
