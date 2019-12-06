@@ -23,11 +23,10 @@ class MapViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadPosts()
+        loadExperiences()
     }
     
-    private func loadPosts() {
-        
+    private func loadExperiences() {
         mapView.removeAnnotations(mapView.annotations)
         mapView.addAnnotations(experienceController?.experiences ?? [])
         
