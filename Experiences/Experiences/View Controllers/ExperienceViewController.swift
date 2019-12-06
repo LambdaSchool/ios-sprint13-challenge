@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import Photos
 
 class ExperienceViewController: UIViewController {
     
@@ -18,6 +19,7 @@ class ExperienceViewController: UIViewController {
     @IBOutlet weak var recordAudioButton: UIButton!
     @IBOutlet weak var playAudioButton: UIButton!
     @IBOutlet weak var nextButton: UIBarButtonItem!
+    @IBOutlet weak var chooseImageButton: UIButton!
     
     //MARK: Properties
     
@@ -29,7 +31,25 @@ class ExperienceViewController: UIViewController {
 
         titleTextField.delegate = self
         locationController.delegate = self
-        nextButton.isEnabled = false
+        
+        updateViews()
+    }
+    
+    //MARK: Private
+    
+    private func updateViews() {
+        nextButton.isEnabled = !(titleTextField.text?.isEmpty ?? true)
+        chooseImageButton.isHidden = imageView.image != nil
+    }
+    
+    private func presentImagePickerController() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else { return }
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        
+        present(imagePicker, animated: true, completion: nil)
     }
     
     //MARK: Actions
@@ -42,6 +62,29 @@ class ExperienceViewController: UIViewController {
     
     @IBAction func nextTapped(_ sender: UIBarButtonItem) {
         locationController.requestLocation()
+    }
+    
+    @IBAction func chooseImage(_ sender: UIButton) {
+        let authorizationStatus = PHPhotoLibrary.authorizationStatus()
+        
+        switch authorizationStatus {
+        case .authorized:
+            presentImagePickerController()
+        case .notDetermined:
+            PHPhotoLibrary.requestAuthorization { status in
+                if status == .authorized {
+                    DispatchQueue.main.async {
+                        self.presentImagePickerController()
+                    }
+                }
+            }
+        case .restricted:
+            break
+        case .denied:
+            break
+        @unknown default:
+            break
+        }
     }
     
     /*
@@ -60,7 +103,7 @@ extension ExperienceViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         
-        nextButton.isEnabled = !(textField.text?.isEmpty ?? true)
+        updateViews()
         
         return true
     }
@@ -74,5 +117,20 @@ extension ExperienceViewController: LocationControllerDelegate {
         
         experienceController?.createExperience(title: title, coordinate: coordinate, videoURL: nil, audioURL: nil)
         navigationController?.popViewController(animated: true)
+    }
+}
+
+extension ExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
+        imageView.image = image
+        
+        updateViews()
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
     }
 }

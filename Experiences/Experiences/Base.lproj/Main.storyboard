@@ -125,9 +125,17 @@
                                     <action selector="playAudio:" destination="v8s-8m-TpT" eventType="touchUpInside" id="hYV-20-Zkl"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HT9-vd-gb2">
+                                <rect key="frame" x="20" y="141" width="280" height="280"/>
+                                <state key="normal" title="Choose an image..."/>
+                                <connections>
+                                    <action selector="chooseImage:" destination="v8s-8m-TpT" eventType="touchUpInside" id="5rV-DX-auv"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="HT9-vd-gb2" firstAttribute="height" secondItem="fcE-3m-0Vb" secondAttribute="height" id="1Ya-2C-CeN"/>
                             <constraint firstItem="khf-xz-fo4" firstAttribute="trailing" secondItem="g8W-r3-0u1" secondAttribute="trailing" constant="20" id="CMQ-CV-26i"/>
                             <constraint firstItem="fcE-3m-0Vb" firstAttribute="leading" secondItem="khf-xz-fo4" secondAttribute="leading" constant="20" id="JKm-pT-hyQ"/>
                             <constraint firstItem="g8W-r3-0u1" firstAttribute="leading" secondItem="khf-xz-fo4" secondAttribute="leading" constant="20" id="Mjb-PH-jHl"/>
@@ -135,9 +143,12 @@
                             <constraint firstItem="khf-xz-fo4" firstAttribute="trailing" secondItem="fcE-3m-0Vb" secondAttribute="trailing" constant="20" id="NLJ-aV-LeF"/>
                             <constraint firstItem="Efa-OD-N7B" firstAttribute="top" secondItem="jGz-Q5-H7l" secondAttribute="bottom" constant="8" id="c2v-G9-gtW"/>
                             <constraint firstItem="Efa-OD-N7B" firstAttribute="centerX" secondItem="LDf-il-bt3" secondAttribute="centerX" id="c7a-0q-h9e"/>
+                            <constraint firstItem="HT9-vd-gb2" firstAttribute="centerX" secondItem="fcE-3m-0Vb" secondAttribute="centerX" id="hF0-le-ICl"/>
                             <constraint firstItem="jGz-Q5-H7l" firstAttribute="centerX" secondItem="LDf-il-bt3" secondAttribute="centerX" id="itg-Ue-iYU"/>
                             <constraint firstItem="g8W-r3-0u1" firstAttribute="top" secondItem="khf-xz-fo4" secondAttribute="top" constant="8" id="pjF-Ud-03I"/>
+                            <constraint firstItem="HT9-vd-gb2" firstAttribute="centerY" secondItem="fcE-3m-0Vb" secondAttribute="centerY" id="qbx-Lm-wsA"/>
                             <constraint firstItem="fcE-3m-0Vb" firstAttribute="top" secondItem="g8W-r3-0u1" secondAttribute="bottom" constant="8" id="wPL-5U-9oa"/>
+                            <constraint firstItem="HT9-vd-gb2" firstAttribute="width" secondItem="fcE-3m-0Vb" secondAttribute="width" id="ytA-kh-uqn"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="khf-xz-fo4"/>
                     </view>
@@ -149,6 +160,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="chooseImageButton" destination="HT9-vd-gb2" id="k2s-Bs-PJ4"/>
                         <outlet property="imageView" destination="fcE-3m-0Vb" id="NaD-Su-Jhc"/>
                         <outlet property="nextButton" destination="NlH-IU-Jgm" id="Zfa-TD-9bv"/>
                         <outlet property="playAudioButton" destination="Efa-OD-N7B" id="62B-7s-GSy"/>
