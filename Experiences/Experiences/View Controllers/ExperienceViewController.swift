@@ -25,6 +25,8 @@ class ExperienceViewController: UIViewController {
     
     var experienceController: ExperienceController?
     let locationController = LocationController()
+    private let noirFilter = CIFilter(name: "CIPhotoEffectNoir")!
+    private let context = CIContext(options: nil)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -131,7 +133,20 @@ extension ExperienceViewController: UIImagePickerControllerDelegate, UINavigatio
         picker.dismiss(animated: true, completion: nil)
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        imageView.image = image
+        
+        guard let cgImage = image.cgImage else { return }
+        
+        var ciImage = CIImage(cgImage: cgImage)
+        
+        noirFilter.setValue(ciImage, forKey: "inputImage")
+        if let outputCIImage = noirFilter.outputImage {
+            ciImage = outputCIImage
+        }
+        
+        let bounds = CGRect(origin: CGPoint.zero, size: image.size)
+        guard let outputCGImage = context.createCGImage(ciImage, from: bounds) else { return }
+        
+        imageView.image = UIImage(cgImage: outputCGImage)
         
         updateViews()
     }
