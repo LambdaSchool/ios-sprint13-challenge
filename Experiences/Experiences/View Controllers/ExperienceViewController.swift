@@ -39,6 +39,8 @@ class ExperienceViewController: UIViewController {
     var isRecording: Bool {
         return audioRecorder?.isRecording ?? false
     }
+    
+    var videoURL: URL?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +53,7 @@ class ExperienceViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        deletePreviousRecordings()
+        deletePreviousVideoRecording()
     }
     
     //MARK: Private
@@ -75,7 +77,7 @@ class ExperienceViewController: UIViewController {
         present(imagePicker, animated: true, completion: nil)
     }
     
-    private func deletePreviousRecordings() {
+    private func deletePreviousAudioRecording() {
         let fileManager = FileManager.default
         
         do {
@@ -84,7 +86,20 @@ class ExperienceViewController: UIViewController {
                 self.audioURL = nil
             }
         } catch {
-            NSLog("Error deleting previous recordings: \(error)")
+            NSLog("Error deleting previous audio recording: \(error)")
+        }
+    }
+    
+    private func deletePreviousVideoRecording() {
+        let fileManager = FileManager.default
+        
+        do {
+            if let recordURL = videoURL {
+                try fileManager.removeItem(at: recordURL)
+                self.videoURL = nil
+            }
+        } catch {
+            NSLog("Error deleting previous video recording: \(error)")
         }
     }
     
@@ -92,7 +107,7 @@ class ExperienceViewController: UIViewController {
         let fileManager = FileManager.default
         
         // Delete the previous recording so they don't pile up in the file system
-        deletePreviousRecordings()
+        deletePreviousAudioRecording()
         
         // Path to save in the Documents directory
         let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -156,7 +171,7 @@ class ExperienceViewController: UIViewController {
     }
     
     @IBAction func nextTapped(_ sender: UIBarButtonItem) {
-        locationController.requestLocation()
+        //locationController.requestLocation()
     }
     
     @IBAction func chooseImage(_ sender: UIButton) {
@@ -182,15 +197,15 @@ class ExperienceViewController: UIViewController {
         }
     }
     
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if let cameraVC = segue.destination as? CameraViewController {
+            cameraVC.experienceController = experienceController
+            cameraVC.delegate = self
+        }
     }
-    */
 
 }
 
@@ -220,11 +235,12 @@ extension ExperienceViewController: LocationControllerDelegate {
             imageData = image.pngData()
         }
         
-        experienceController?.createExperience(title: title, coordinate: coordinate, videoURL: nil, audioURL: audioURL, imageData: imageData)
+        experienceController?.createExperience(title: title, coordinate: coordinate, videoURL: videoURL, audioURL: audioURL, imageData: imageData)
         
         audioURL = nil
+        videoURL = nil
         
-        navigationController?.popViewController(animated: true)
+        navigationController?.popToRootViewController(animated: true)
     }
 }
 
@@ -291,5 +307,17 @@ extension ExperienceViewController: AVAudioPlayerDelegate {
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         updateViews()
+    }
+}
+
+extension ExperienceViewController: CameraViewControllerDelegate {
+    func setRecordURL(_ recordURL: URL) {
+        videoURL = recordURL
+        locationController.requestLocation()
+    }
+    
+    func saveWithNoVideo() {
+        deletePreviousVideoRecording()
+        locationController.requestLocation()
     }
 }

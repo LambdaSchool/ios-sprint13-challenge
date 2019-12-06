@@ -175,6 +175,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Next" id="NlH-IU-Jgm">
                             <connections>
                                 <action selector="nextTapped:" destination="v8s-8m-TpT" id="aKb-X7-FGa"/>
+                                <segue destination="2Db-qQ-i5E" kind="show" id="GRc-Wq-COU"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -190,6 +191,59 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="haA-dE-IUa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2035" y="-613"/>
+        </scene>
+        <!--Record a Video-->
+        <scene sceneID="3bI-3P-KYN">
+            <objects>
+                <viewController id="2Db-qQ-i5E" customClass="CameraViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="F6t-0s-oeU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q1b-Ij-tik" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44" width="320" height="475"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4da-zN-Zn9">
+                                <rect key="frame" x="110" y="359" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="OSq-iJ-6pg"/>
+                                    <constraint firstAttribute="width" constant="100" id="n9z-Ow-d8T"/>
+                                </constraints>
+                                <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="Record"/>
+                                <state key="selected" image="Stop"/>
+                                <connections>
+                                    <action selector="recordButtonTapped:" destination="2Db-qQ-i5E" eventType="touchUpInside" id="1Rh-oH-eUZ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="cAb-yK-NUp" firstAttribute="bottom" secondItem="4da-zN-Zn9" secondAttribute="bottom" constant="60" id="0ub-ze-d8i"/>
+                            <constraint firstItem="4da-zN-Zn9" firstAttribute="centerX" secondItem="F6t-0s-oeU" secondAttribute="centerX" id="8kC-2P-6gr"/>
+                            <constraint firstItem="cAb-yK-NUp" firstAttribute="trailing" secondItem="Q1b-Ij-tik" secondAttribute="trailing" id="Nrg-Hs-dey"/>
+                            <constraint firstItem="cAb-yK-NUp" firstAttribute="bottom" secondItem="Q1b-Ij-tik" secondAttribute="bottom" id="bHs-Fn-M9W"/>
+                            <constraint firstItem="Q1b-Ij-tik" firstAttribute="top" secondItem="cAb-yK-NUp" secondAttribute="top" id="l3l-Rl-pvr"/>
+                            <constraint firstItem="Q1b-Ij-tik" firstAttribute="leading" secondItem="cAb-yK-NUp" secondAttribute="leading" id="ptu-HL-lzp"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="cAb-yK-NUp"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Record a Video" largeTitleDisplayMode="never" id="2Nj-9W-2QV">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="5gm-c7-dDY">
+                            <connections>
+                                <action selector="doneButtonTapped:" destination="2Db-qQ-i5E" id="mD6-k4-DLq"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="cameraView" destination="Q1b-Ij-tik" id="eXW-La-L2v"/>
+                        <outlet property="recordButton" destination="4da-zN-Zn9" id="0JO-sP-qmc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Kbv-xB-EbR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2878" y="-614"/>
         </scene>
         <!--Experiences-->
         <scene sceneID="7EA-OG-LEC">
@@ -212,6 +266,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Record" width="116" height="116"/>
+        <image name="Stop" width="116" height="116"/>
         <image name="map" catalog="system" width="64" height="56"/>
         <image name="sun.min" catalog="system" width="64" height="60"/>
     </resources>

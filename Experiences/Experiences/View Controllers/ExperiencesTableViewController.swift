@@ -49,6 +49,8 @@ class ExperiencesTableViewController: UITableViewController {
         
         if experience?.audioURL != nil {
             cell.detailTextLabel?.text = "▶️"
+        } else {
+            cell.detailTextLabel?.text = nil
         }
         
         return cell
