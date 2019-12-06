@@ -220,7 +220,10 @@ extension ExperienceViewController: LocationControllerDelegate {
             imageData = image.pngData()
         }
         
-        experienceController?.createExperience(title: title, coordinate: coordinate, videoURL: nil, audioURL: nil, imageData: imageData)
+        experienceController?.createExperience(title: title, coordinate: coordinate, videoURL: nil, audioURL: audioURL, imageData: imageData)
+        
+        audioURL = nil
+        
         navigationController?.popViewController(animated: true)
     }
 }

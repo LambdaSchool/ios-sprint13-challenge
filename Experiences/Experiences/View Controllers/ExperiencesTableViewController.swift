@@ -7,11 +7,15 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ExperiencesTableViewController: UITableViewController {
     
     var experienceController: ExperienceController?
-
+    
+    var audioPlayer: AVAudioPlayer?
+    var audioPlayerIndexPath: IndexPath?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -38,8 +42,13 @@ class ExperiencesTableViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ExperienceCell", for: indexPath)
         cell.textLabel?.text = experience?.title
+        
         if let imageData = experience?.imageData {
             cell.imageView?.image = UIImage(data: imageData)
+        }
+        
+        if experience?.audioURL != nil {
+            cell.detailTextLabel?.text = "▶️"
         }
         
         return cell
@@ -77,6 +86,39 @@ class ExperiencesTableViewController: UITableViewController {
         return true
     }
     */
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        guard let experience = experienceController?.experiences[indexPath.row],
+            let audioURL = experience.audioURL,
+            let cell = tableView.cellForRow(at: indexPath) else { return }
+        
+        audioPlayer?.stop()
+        resetPlayingCell()
+        
+        do {
+            let audioPlayer = try AVAudioPlayer(contentsOf: audioURL)
+            audioPlayer.play()
+            audioPlayer.delegate = self
+            
+            self.audioPlayer = audioPlayer
+            audioPlayerIndexPath = indexPath
+            
+            cell.detailTextLabel?.text = "⏸"
+        } catch {
+            NSLog("Error getting audio player: \(error)")
+        }
+    }
+    
+    //MARK: Private
+    
+    private func resetPlayingCell() {
+        if let indexPath = audioPlayerIndexPath,
+            let cell = tableView.cellForRow(at: indexPath) {
+            cell.detailTextLabel?.text = "▶️"
+        }
+    }
 
     // MARK: - Navigation
 
@@ -87,4 +129,18 @@ class ExperiencesTableViewController: UITableViewController {
         }
     }
 
+}
+
+//MARK: Audio Player Delegate
+
+extension ExperiencesTableViewController: AVAudioPlayerDelegate {
+    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        if let error = error {
+            NSLog("Playback error: \(error)")
+        }
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        resetPlayingCell()
+    }
 }
