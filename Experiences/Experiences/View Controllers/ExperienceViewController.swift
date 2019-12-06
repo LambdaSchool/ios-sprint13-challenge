@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 import Photos
+import AVFoundation
 
 class ExperienceViewController: UIViewController {
     
@@ -25,8 +26,19 @@ class ExperienceViewController: UIViewController {
     
     var experienceController: ExperienceController?
     let locationController = LocationController()
+    
     private let noirFilter = CIFilter(name: "CIPhotoEffectNoir")!
     private let context = CIContext(options: nil)
+    
+    var audioPlayer: AVAudioPlayer?
+    var audioRecorder: AVAudioRecorder?
+    var audioURL: URL?
+    var isPlaying: Bool {
+        return audioPlayer?.isPlaying ?? false
+    }
+    var isRecording: Bool {
+        return audioRecorder?.isRecording ?? false
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,11 +49,20 @@ class ExperienceViewController: UIViewController {
         updateViews()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        deletePreviousRecordings()
+    }
+    
     //MARK: Private
     
     private func updateViews() {
         nextButton.isEnabled = !(titleTextField.text?.isEmpty ?? true)
+        
         chooseImageButton.isHidden = imageView.image != nil
+        
+        recordAudioButton.isSelected = isRecording
+        playAudioButton.isSelected = isPlaying
     }
     
     private func presentImagePickerController() {
@@ -54,12 +75,84 @@ class ExperienceViewController: UIViewController {
         present(imagePicker, animated: true, completion: nil)
     }
     
+    private func deletePreviousRecordings() {
+        let fileManager = FileManager.default
+        
+        do {
+            if let recordURL = audioURL {
+                try fileManager.removeItem(at: recordURL)
+                self.audioURL = nil
+            }
+        } catch {
+            NSLog("Error deleting previous recordings: \(error)")
+        }
+    }
+    
+    private func record() {
+        let fileManager = FileManager.default
+        
+        // Delete the previous recording so they don't pile up in the file system
+        deletePreviousRecordings()
+        
+        // Path to save in the Documents directory
+        let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        
+        // Filename ISO8601 .caf
+        let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: [.withInternetDateTime])
+        let file = documentsDirectory
+            .appendingPathComponent(name)
+            .appendingPathExtension("caf")
+        
+        print(file)
+        
+        // 44.1 KHz
+        let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
+        audioRecorder = try! AVAudioRecorder(url: file, format: format)
+        audioURL = file
+        audioRecorder?.delegate = self
+        audioRecorder?.record()
+        updateViews()
+    }
+    
+    private func stopRecording() {
+        audioRecorder?.stop()
+        updateViews()
+    }
+    
+    func recordToggle() {
+        if isRecording {
+            stopRecording()
+        } else {
+            record()
+        }
+    }
+    
+    private func play() {
+        audioPlayer?.play()
+        updateViews()
+    }
+    
+    private func stopPlayback() {
+        audioPlayer?.stop()
+        updateViews()
+    }
+    
+    private func playToggle() {
+        if isPlaying {
+            stopPlayback()
+        } else {
+            play()
+        }
+    }
+    
     //MARK: Actions
     
     @IBAction func recordAudio(_ sender: UIButton) {
+        recordToggle()
     }
     
     @IBAction func playAudio(_ sender: UIButton) {
+        playToggle()
     }
     
     @IBAction func nextTapped(_ sender: UIBarButtonItem) {
@@ -101,6 +194,8 @@ class ExperienceViewController: UIViewController {
 
 }
 
+//MARK: Text Field Delegate
+
 extension ExperienceViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -110,6 +205,8 @@ extension ExperienceViewController: UITextFieldDelegate {
         return true
     }
 }
+
+//MARK: Location Controller Delegate
 
 extension ExperienceViewController: LocationControllerDelegate {
     func update(locations: [CLLocation]) {
@@ -127,6 +224,8 @@ extension ExperienceViewController: LocationControllerDelegate {
         navigationController?.popViewController(animated: true)
     }
 }
+
+//MARK: Image Picker Controller Delegate
 
 extension ExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -153,5 +252,41 @@ extension ExperienceViewController: UIImagePickerControllerDelegate, UINavigatio
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+//MARK: Audio Recorder Delegate
+
+extension ExperienceViewController: AVAudioRecorderDelegate {
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
+        if let error = error {
+            NSLog("Record error: \(error)")
+        }
+    }
+    
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        if let recordURL = audioURL {
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: recordURL)
+                audioPlayer?.delegate = self
+            } catch {
+                NSLog("Error loading recorded audio for playback: \(error)")
+            }
+        }
+        updateViews()
+    }
+}
+
+//MARK: Audio Player Delegate
+
+extension ExperienceViewController: AVAudioPlayerDelegate {
+    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        if let error = error {
+            NSLog("Playback error: \(error)")
+        }
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        updateViews()
     }
 }
