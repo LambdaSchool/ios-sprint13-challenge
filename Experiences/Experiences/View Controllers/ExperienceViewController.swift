@@ -29,6 +29,7 @@ class ExperienceViewController: UIViewController {
 
         titleTextField.delegate = self
         locationController.delegate = self
+        nextButton.isEnabled = false
     }
     
     //MARK: Actions
@@ -58,6 +59,10 @@ class ExperienceViewController: UIViewController {
 extension ExperienceViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        
+        nextButton.isEnabled = !(textField.text?.isEmpty ?? true)
+        
+        return true
     }
 }
 
