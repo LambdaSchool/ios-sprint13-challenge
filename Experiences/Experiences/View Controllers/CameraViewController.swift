@@ -136,6 +136,13 @@ class CameraViewController: UIViewController {
         return fileURL
     }
     
+    @IBAction func saveExperience(_ sender: UIBarButtonItem) {
+        DispatchQueue.main.async {
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    
     private func updateViews() {
         recordButton.isSelected = fileOutput.isRecording
     }
