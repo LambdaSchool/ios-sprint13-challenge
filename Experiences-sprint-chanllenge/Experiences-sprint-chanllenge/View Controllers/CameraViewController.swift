@@ -22,7 +22,7 @@ class CameraViewController: UIViewController {
     
     var player: AVPlayer!
     var playerLayer: AVPlayerLayer?
-
+    
     var experienceController: ExperienceController?
     var experienceTitle: String?
     var imageData: Data?
@@ -43,16 +43,16 @@ class CameraViewController: UIViewController {
         
         // Ask for Authorisation from the User.
         self.locationManager.requestAlwaysAuthorization()
-
+        
         // For use in foreground
         self.locationManager.requestWhenInUseAuthorization()
-
+        
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
         }
-
+        
     }
     
     @objc func handleTapGuesture(_ tapGesture: UITapGestureRecognizer) {
@@ -186,8 +186,38 @@ class CameraViewController: UIViewController {
         player.play()
     }
     @IBAction func saveButtonPressed(_ sender: Any) {
+        guard let experienceController = experienceController,
+            let experienceTitle = experienceTitle,
+            let imageData = imageData,
+            let audioURL = audioURL,
+            let videoURL = videoURL,
+            let latitude = latitude,
+            let longitude = longitude else {
+                print("Unable to save.")
+                return
+        }
         
+        let newExperience = Experience(latitude: latitude, longitude: longitude, experienceTitle: experienceTitle, imageData: imageData, audioURL: audioURL, videoURL: videoURL)
+        experienceController.experiences.append(newExperience)
+        
+//        guard let navController = navigationController else { return }
+//
+//        var mapViewController: MapViewController?
+//        for i in navController.viewControllers.indices {
+//            if let mapVC = navController.viewControllers[i] as? MapViewController {
+//                mapViewController = mapVC
+//                break
+//            }
+//        }
+//        guard let mapVC = mapViewController else { return }
+//        navController.popToViewController(mapVC, animated: true)
+        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
     }
+    
+    @IBAction func cancelButtonPressed(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 extension CameraViewController: AVCaptureFileOutputRecordingDelegate {

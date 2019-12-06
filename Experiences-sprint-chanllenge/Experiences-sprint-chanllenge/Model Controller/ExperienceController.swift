@@ -10,6 +10,4 @@ import Foundation
 
 class ExperienceController {
     var experiences: [Experience] = []
-    
-    
 }

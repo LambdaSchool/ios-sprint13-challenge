@@ -252,6 +252,9 @@ class AddExperienceViewController: UIViewController {
         performSegue(withIdentifier: "VideoRecordSegue", sender: self)
         
     }
+    @IBAction func cancelButtonPressed(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
     
 
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

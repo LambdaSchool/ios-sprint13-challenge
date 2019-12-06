@@ -32,7 +32,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Item" image="square.and.pencil" catalog="system" id="S0m-NS-dXa">
                             <connections>
                                 <action selector="createNewExperience:" destination="SX5-F7-R92" id="O6W-lf-JgY"/>
-                                <segue destination="Hzh-9n-U4x" kind="presentation" modalPresentationStyle="fullScreen" id="1Zb-jE-1Nr"/>
+                                <segue destination="Hzh-9n-U4x" kind="presentation" identifier="NewExperienceSegue" modalPresentationStyle="fullScreen" id="1Zb-jE-1Nr"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -56,10 +56,14 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                                 <items>
                                     <navigationItem title="New Experience" id="4DP-FG-lQi">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="U43-gU-faK">
+                                            <connections>
+                                                <action selector="cancelButtonPressed:" destination="Hzh-9n-U4x" id="0LH-Al-93F"/>
+                                            </connections>
+                                        </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" title="Next" id="G0I-Pl-YAU">
                                             <connections>
                                                 <action selector="showLivePreview:" destination="Hzh-9n-U4x" id="ch3-ob-VAh"/>
-                                                <segue destination="a3U-bX-51X" kind="presentation" identifier="VideoRecordSegue" modalPresentationStyle="fullScreen" id="dCh-8T-YqA"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -182,12 +186,13 @@
                         <outlet property="timeElapsedLabel" destination="RRJ-W8-JdL" id="bR2-GZ-Aeo"/>
                         <outlet property="timeRemainingLabel" destination="4H3-Ei-YO5" id="j9G-f1-9Xg"/>
                         <outlet property="titleTextField" destination="LKs-Q6-Dr3" id="nOA-St-i64"/>
+                        <segue destination="a3U-bX-51X" kind="presentation" identifier="VideoRecordSegue" modalPresentationStyle="fullScreen" id="g2M-QB-ntv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Viy-Uw-0BU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="GgQ-g9-cc2" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1018.840579710145" y="-321.42857142857139"/>
+            <point key="canvasLocation" x="1038" y="-321"/>
         </scene>
         <!--Video Recording-->
         <scene sceneID="kW8-dq-cbu">
@@ -201,6 +206,11 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                                 <items>
                                     <navigationItem title="Record Your Experience!" id="3nG-H0-Fp2">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="ULl-vY-FXK">
+                                            <connections>
+                                                <action selector="cancelButtonPressed:" destination="a3U-bX-51X" id="y2M-44-Yap"/>
+                                            </connections>
+                                        </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="geJ-qd-JL3">
                                             <connections>
                                                 <action selector="saveButtonPressed:" destination="a3U-bX-51X" id="plb-0c-WcU"/>

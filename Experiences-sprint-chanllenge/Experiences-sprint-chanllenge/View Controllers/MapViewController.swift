@@ -25,6 +25,11 @@ class MapViewController: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchExperiences()
+    }
+    
     private func fetchExperiences() {
         let experiences = experienceController.experiences
         DispatchQueue.main.async {
@@ -71,8 +76,17 @@ extension MapViewController: MKMapViewDelegate {
         annotationView.glyphImage = UIImage(data: experience.imageData)
         
         // play video recording in detail view
-        
+        annotationView.canShowCallout = true
+        let detailView = MapDetailView()
+        detailView.experience = experience
+        annotationView.detailCalloutAccessoryView = detailView
         
         return annotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard let mapDetailView = view.detailCalloutAccessoryView as? MapDetailView else { return }
+        
+        mapDetailView.player?.play()
     }
 }
