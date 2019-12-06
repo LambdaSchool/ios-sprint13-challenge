@@ -20,7 +20,14 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         checkLocationServices()
+        mapView.delegate = self
+        
+        // Testing
+        var currentLocation = getCenterLocation(for: mapView)
+        
+        createAnnotation(title: "location", latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
     }
     
     func setupLocationManager() {
@@ -70,6 +77,23 @@ class MapViewController: UIViewController {
         }
     }
     
+    
+    
+    func getCenterLocation(for mapView: MKMapView) -> CLLocation {
+        let latitude = mapView.centerCoordinate.latitude
+        let longitude = mapView.centerCoordinate.longitude
+        
+        return CLLocation(latitude: latitude, longitude: longitude)
+    }
+    
+    func createAnnotation(title: String, latitude: Double, longitude: Double) {
+        let location = MKPointAnnotation()
+        
+        location.title = title
+        location.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        mapView.addAnnotation(location)
+    }
+    
 
     /*
     // MARK: - Navigation
@@ -103,4 +127,24 @@ extension MapViewController: CLLocationManagerDelegate {
         
         checkLocationAuthorization()
     }
+}
+
+extension MapViewController: MKMapViewDelegate {
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard annotation is MKPointAnnotation else { return nil }
+
+        let identifier = "Annotation"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView!.canShowCallout = true
+        } else {
+            annotationView!.annotation = annotation
+        }
+
+        return annotationView
+    }
+
 }
