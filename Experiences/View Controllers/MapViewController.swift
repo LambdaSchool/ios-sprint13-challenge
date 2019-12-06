@@ -78,7 +78,6 @@ class MapViewController: UIViewController {
     }
     
     
-    
     func getCenterLocation(for mapView: MKMapView) -> CLLocation {
         let latitude = mapView.centerCoordinate.latitude
         let longitude = mapView.centerCoordinate.longitude
@@ -105,8 +104,6 @@ class MapViewController: UIViewController {
     }
     */
     
-
-
 }
 
 extension MapViewController: CLLocationManagerDelegate {
