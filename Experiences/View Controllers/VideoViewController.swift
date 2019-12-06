@@ -121,13 +121,17 @@ class VideoViewController: UIViewController {
     //Recording feature:
     
     @IBAction func recordButtonTapped(_ sender: UIButton) {
+        toggleRecord()
     }
     
     private func toggleRecord() {
         if fileOutput.isRecording {
             fileOutput.stopRecording()
+            recordButton.setImage(UIImage(named: "Record"), for: .normal)
+
         } else {
             fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
+            recordButton.setImage(UIImage(named: "Stop"), for: .normal)
         }
     }
     
