@@ -23,6 +23,7 @@ class CameraViewController: UIViewController {
     var player: AVPlayer!
     var playerLayer: AVPlayerLayer?
 
+    var experienceController: ExperienceController?
     var experienceTitle: String?
     var imageData: Data?
     var audioURL: URL?
@@ -183,6 +184,9 @@ class CameraViewController: UIViewController {
         view.layer.addSublayer(playerLayer!)
         
         player.play()
+    }
+    @IBAction func saveButtonPressed(_ sender: Any) {
+        
     }
 }
 

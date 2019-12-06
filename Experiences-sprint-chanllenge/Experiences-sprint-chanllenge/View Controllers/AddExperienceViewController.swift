@@ -243,24 +243,27 @@ class AddExperienceViewController: UIViewController {
             return
         }
         
-        guard let imageData = image?.pngData(), let audioURL = recordedURL else {
+        guard let _ = image?.pngData(), let _ = recordedURL else {
             self.presentInformationalAlertController(title: "Image and voice record required", message: "Please select an image and record you voice")
             return
         }
         
         // perform segue
+        performSegue(withIdentifier: "VideoRecordSegue", sender: self)
         
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
+
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
+        if segue.identifier == "VideoRecordSegue" {
+            if let cameraVC = segue.destination as? CameraViewController {
+                cameraVC.experienceController = experienceController
+                cameraVC.experienceTitle = titleTextField.text
+                cameraVC.imageData = image?.pngData()
+                cameraVC.audioURL = recordedURL
+            }
+        }
      }
-     */
     
 }
 

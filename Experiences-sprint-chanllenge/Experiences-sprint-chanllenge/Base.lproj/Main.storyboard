@@ -59,7 +59,7 @@
                                         <barButtonItem key="rightBarButtonItem" title="Next" id="G0I-Pl-YAU">
                                             <connections>
                                                 <action selector="showLivePreview:" destination="Hzh-9n-U4x" id="ch3-ob-VAh"/>
-                                                <segue destination="a3U-bX-51X" kind="presentation" modalPresentationStyle="fullScreen" id="dCh-8T-YqA"/>
+                                                <segue destination="a3U-bX-51X" kind="presentation" identifier="VideoRecordSegue" modalPresentationStyle="fullScreen" id="dCh-8T-YqA"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -201,7 +201,11 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                                 <items>
                                     <navigationItem title="Record Your Experience!" id="3nG-H0-Fp2">
-                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="geJ-qd-JL3"/>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="geJ-qd-JL3">
+                                            <connections>
+                                                <action selector="saveButtonPressed:" destination="a3U-bX-51X" id="plb-0c-WcU"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
