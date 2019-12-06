@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Map View Controller-->
         <scene sceneID="LrG-26-Ez5">
             <objects>
-                <viewController id="SX5-F7-R92" sceneMemberID="viewController">
+                <viewController id="SX5-F7-R92" customClass="MapViewController" customModule="Experiences_sprint_chanllenge" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xtJ-9N-35d">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -31,10 +31,14 @@
                     <navigationItem key="navigationItem" id="hjJ-0k-zfx">
                         <barButtonItem key="rightBarButtonItem" title="Item" image="square.and.pencil" catalog="system" id="S0m-NS-dXa">
                             <connections>
-                                <segue destination="Hzh-9n-U4x" kind="show" id="9AX-eW-yUa"/>
+                                <action selector="createNewExperience:" destination="SX5-F7-R92" id="O6W-lf-JgY"/>
+                                <segue destination="Hzh-9n-U4x" kind="show" identifier="NewExperienceSegue" id="9AX-eW-yUa"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="iNl-dF-4fq" id="MaG-UM-6aV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PGO-gz-99w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
