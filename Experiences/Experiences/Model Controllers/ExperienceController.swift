@@ -15,4 +15,9 @@ class ExperienceController {
         let experience = Experience(title: title, coordinate: coordinate, imageURL: imageURL, audioURL: audioURL)
         experiences.append(experience)
     }
+    
+    func removeExperience(at index: Int) {
+        experiences.remove(at: index)
+    }
+    
 }
