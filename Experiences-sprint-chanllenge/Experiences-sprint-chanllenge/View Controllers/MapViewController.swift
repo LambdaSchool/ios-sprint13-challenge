@@ -21,6 +21,8 @@ class MapViewController: UIViewController {
         mapView.delegate = self
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceView")
 
+        fetchExperiences()
+        
     }
     
     private func fetchExperiences() {
@@ -40,7 +42,9 @@ class MapViewController: UIViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "NewExperienceSegue" {
-            
+            if let addExperienceVC =  segue.destination as? AddExperienceViewController {
+                addExperienceVC.experienceController = experienceController
+            }
         }
     }
     
