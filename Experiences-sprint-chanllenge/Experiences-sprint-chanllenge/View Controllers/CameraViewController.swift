@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import MapKit
 
 class CameraViewController: UIViewController {
     
@@ -17,12 +18,17 @@ class CameraViewController: UIViewController {
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     
-    var player: AVPlayer!
+    let locationManager = CLLocationManager()
     
+    var player: AVPlayer!
+    var playerLayer: AVPlayerLayer?
+
     var experienceTitle: String?
     var imageData: Data?
     var audioURL: URL?
     var videoURL: URL?
+    var latitude: CLLocationDegrees?
+    var longitude: CLLocationDegrees?
     
     
     override func viewDidLoad() {
@@ -33,6 +39,19 @@ class CameraViewController: UIViewController {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGuesture(_:)))
         view.addGestureRecognizer(tapGesture)
+        
+        // Ask for Authorisation from the User.
+        self.locationManager.requestAlwaysAuthorization()
+
+        // For use in foreground
+        self.locationManager.requestWhenInUseAuthorization()
+
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
+
     }
     
     @objc func handleTapGuesture(_ tapGesture: UITapGestureRecognizer) {
@@ -134,6 +153,7 @@ class CameraViewController: UIViewController {
         if fileOutput.isRecording {
             fileOutput.stopRecording()
         } else {
+            playerLayer?.removeFromSuperlayer()
             fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
         }
     }
@@ -154,14 +174,13 @@ class CameraViewController: UIViewController {
     func playMovie(url: URL) {
         player = AVPlayer(url: url)
         
-        // Adds new layer every time, need a polish
-        let playerLayer = AVPlayerLayer(player: player)
+        playerLayer = AVPlayerLayer(player: player)
         var topRect = view.bounds
-        topRect.size.height = topRect.height / 4
-        topRect.size.width = topRect.width / 4
-        topRect.origin.y = view.layoutMargins.top
-        playerLayer.frame = topRect
-        view.layer.addSublayer(playerLayer)
+        topRect.size.height = topRect.height / 1.5
+        topRect.size.width = topRect.width / 1.5
+        topRect.origin.y = view.safeAreaInsets.top
+        playerLayer?.frame = topRect
+        view.layer.addSublayer(playerLayer!)
         
         player.play()
     }
@@ -180,5 +199,13 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
     
     func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
         updateViews()
+    }
+}
+
+extension CameraViewController: CLLocationManagerDelegate{
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        latitude = locValue.latitude
+        longitude = locValue.longitude
     }
 }
