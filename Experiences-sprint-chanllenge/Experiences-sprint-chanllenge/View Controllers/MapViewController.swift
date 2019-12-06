@@ -68,12 +68,7 @@ extension MapViewController: MKMapViewDelegate {
         }
         
         // change pin to be the images
-        do {
-            let imageData = try Data(contentsOf: experience.imageURL)
-            annotationView.glyphImage = UIImage(data: imageData)
-        } catch {
-            fatalError("Invalid image URL for annotation glyph image.")
-        }
+        annotationView.glyphImage = UIImage(data: experience.imageData)
         
         // play video recording in detail view
         

@@ -14,15 +14,15 @@ class Experience: NSObject {
     let latitude: Double
     let longitude: Double
     let experienceTitle: String
-    let imageURL: URL
+    let imageData: Data
     let audioURL: URL
     let videoURL: URL
     
-    init(latitude: Double, longitude: Double, experienceTitle: String, imageURL: URL, audioURL: URL, videoURL: URL) {
+    init(latitude: Double, longitude: Double, experienceTitle: String, imageData: Data, audioURL: URL, videoURL: URL) {
         self.latitude = latitude
         self.longitude = longitude
         self.experienceTitle = experienceTitle
-        self.imageURL = imageURL
+        self.imageData = imageData
         self.audioURL = audioURL
         self.videoURL = videoURL
     }

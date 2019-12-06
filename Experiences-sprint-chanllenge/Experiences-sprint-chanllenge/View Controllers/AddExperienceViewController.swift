@@ -13,6 +13,36 @@ class AddExperienceViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var addImageButton: UIButton!
+    @IBOutlet weak var titleTextField: UITextField!
+    
+    // Audio
+    @IBOutlet weak var audioSlider: UISlider!
+    @IBOutlet weak var timeElapsedLabel: UILabel!
+    @IBOutlet weak var timeRemainingLabel: UILabel!
+    @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var recordButton: UIButton!
+    
+    // Playback properties
+    var audioPlayer: AVAudioPlayer?
+    var timer: Timer?
+    var isPlaying: Bool {
+        return audioPlayer?.isPlaying ?? false
+    }
+    
+    // Recording properties
+    var audioRecorder: AVAudioRecorder?
+    var recordedURL: URL?
+    var isRecording: Bool {
+        return audioRecorder?.isRecording ?? false
+    }
+    
+    private lazy var timeFormatter: DateComponentsFormatter = {
+        let formatting = DateComponentsFormatter()
+        formatting.unitsStyle = .positional
+        formatting.zeroFormattingBehavior = .pad
+        formatting.allowedUnits = [.minute, .second]
+        return formatting
+    }()
     
     private let context = CIContext(options: nil)
     var experienceController: ExperienceController?
@@ -21,13 +51,52 @@ class AddExperienceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
+        timeElapsedLabel.font = UIFont.monospacedDigitSystemFont(ofSize: timeElapsedLabel.font.pointSize, weight: .regular)
+        timeRemainingLabel.font = UIFont.monospacedDigitSystemFont(ofSize: timeRemainingLabel.font.pointSize, weight: .regular)
+
+        audioPlayer?.delegate = self
+        titleTextField.delegate = self
+        
+        updateViews()
     }
     
     private func updateViews() {
-        guard let image = image else { return }
+        // image
+        if let image = image {
+            imageView.image = image
+        }
         
-        imageView.image = filterImage(image)
+        // audio
+        playButton.isSelected = isPlaying
+        
+        let elapsedTime = audioPlayer?.currentTime ?? 0
+        timeElapsedLabel.text = timeFormatter.string(from: elapsedTime)
+        
+        audioSlider.minimumValue = 0
+        audioSlider.maximumValue = Float(audioPlayer?.duration ?? 0)
+        audioSlider.value = Float(elapsedTime)
+        
+        if let totalTime = audioPlayer?.duration {
+            let remainingTime = totalTime - elapsedTime
+            timeRemainingLabel.text = timeFormatter.string(from: remainingTime)
+        } else if let recordingTime = audioRecorder?.currentTime {
+            timeRemainingLabel.text = timeFormatter.string(from: recordingTime)
+        } else {
+            timeRemainingLabel.text = timeFormatter.string(from: 0)
+        }
+        
+        recordButton.isSelected = isRecording
+        
+        if !isPlaying && !isRecording {
+            playButton.isEnabled = true
+            recordButton.isEnabled = true
+        } else if isPlaying && !isRecording {
+            playButton.isEnabled = true
+            recordButton.isEnabled = false
+        } else if !isPlaying && isRecording {
+            playButton.isEnabled = false
+            recordButton.isEnabled = true
+        }
     }
     
     private func filterImage(_ image: UIImage) -> UIImage {
@@ -43,6 +112,70 @@ class AddExperienceViewController: UIViewController {
         guard let outputCGImage = context.createCGImage(outputCIImage, from: bounds) else { return image }
         
         return UIImage(cgImage: outputCGImage)
+    }
+    
+    // Playback
+    private func playPause() {
+        if isPlaying {
+            audioPlayer?.pause()
+            cancelTimer()
+            updateViews()
+        } else {
+            audioPlayer?.play()
+            startTimer()
+            updateViews()
+        }
+    }
+    
+    private func startTimer() {
+        cancelTimer()
+        timer = Timer.scheduledTimer(timeInterval: 0.03, target: self, selector: #selector(updateTimer(timer:)), userInfo: nil, repeats: true)
+    }
+    
+    private func cancelTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
+    
+    @objc private func updateTimer(timer: Timer) {
+        updateViews()
+    }
+    
+    // Record
+    private func record() {
+        // Path to save in the documents direcgtory
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        
+        // Filename (ISO8601 format for time) .caf extension (core audio file)
+        let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: [.withInternetDateTime])
+        
+        // 2019-12-03T10:42:35-08:00.caf
+        let file = documentsDirectory.appendingPathComponent(name).appendingPathExtension("caf")
+        
+        print("Record URL: \(file)")
+        // Audio Quality 44.1KHz
+        let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
+        
+        // Start a recoding
+        audioRecorder = try! AVAudioRecorder(url: file, format: format)
+        audioRecorder?.delegate = self
+        audioRecorder?.record()
+        cancelTimer()
+        startTimer()
+    }
+    
+    private func stopRecodring() {
+        audioRecorder?.stop()
+        audioRecorder = nil
+        cancelTimer()
+    }
+    
+    private func toggleRecord() {
+        if isRecording {
+            stopRecodring()
+        } else {
+            record()
+        }
     }
     
     @IBAction func addImage(_ sender: Any) {
@@ -76,8 +209,6 @@ class AddExperienceViewController: UIViewController {
     }
     
     private func presentImagePickerController() {
-        
-        
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary){
             DispatchQueue.main.async {
                 let imagePicker = UIImagePickerController()
@@ -97,6 +228,28 @@ class AddExperienceViewController: UIViewController {
         } else {
             self.presentInformationalAlertController(title: "Error", message: "The photo library or the camera is unavailable.")
         }
+    }
+    
+    @IBAction func playButtonPressed(_ sender: Any) {
+        playPause()
+    }
+    @IBAction func recordButtonPressed(_ sender: Any) {
+        toggleRecord()
+    }
+    
+    @IBAction func showLivePreview(_ sender: Any) {
+        guard let title = titleTextField.text, !title.isEmpty else {
+            self.presentInformationalAlertController(title: "Title Required", message: "Please enter a title for the experience")
+            return
+        }
+        
+        guard let imageData = image?.pngData(), let audioURL = recordedURL else {
+            self.presentInformationalAlertController(title: "Image and voice record required", message: "Please select an image and record you voice")
+            return
+        }
+        
+        // perform segue
+        
     }
     
     /*
@@ -120,12 +273,51 @@ extension AddExperienceViewController: UIImagePickerControllerDelegate, UINaviga
         picker.dismiss(animated: true, completion: nil)
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        self.image = image
+        self.image = filterImage(image)
         
         updateViews()
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension AddExperienceViewController: AVAudioPlayerDelegate {
+    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        if let error = error {
+            print("Audio playback error: \(error)")
+        }
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        updateViews()
+    }
+}
+
+extension AddExperienceViewController: AVAudioRecorderDelegate {
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
+        if let error = error {
+            print("Audio record error: \(error)")
+        }
+    }
+    
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        if flag == true {
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: recorder.url)
+                recordedURL = recorder.url
+            } catch {
+                print("Error while finishing recording: \(error)")
+            }
+        }
+        updateViews()
+    }
+}
+
+extension AddExperienceViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
 }
