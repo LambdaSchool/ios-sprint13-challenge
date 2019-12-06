@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class CameraViewController: UIViewController {
+class VideoViewController: UIViewController {
 
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
@@ -172,7 +172,7 @@ class CameraViewController: UIViewController {
 
 }
 
-extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
+extension VideoViewController: AVCaptureFileOutputRecordingDelegate {
     
     
     func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
