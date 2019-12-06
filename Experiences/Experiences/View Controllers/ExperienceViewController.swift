@@ -115,7 +115,13 @@ extension ExperienceViewController: LocationControllerDelegate {
             let title = titleTextField.text,
             !title.isEmpty else { return }
         
-        experienceController?.createExperience(title: title, coordinate: coordinate, videoURL: nil, audioURL: nil)
+        var imageData: Data?
+        
+        if let image = imageView.image {
+            imageData = image.pngData()
+        }
+        
+        experienceController?.createExperience(title: title, coordinate: coordinate, videoURL: nil, audioURL: nil, imageData: imageData)
         navigationController?.popViewController(animated: true)
     }
 }

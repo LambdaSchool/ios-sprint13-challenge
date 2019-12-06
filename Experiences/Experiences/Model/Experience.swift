@@ -15,10 +15,11 @@ class Experience: NSObject, MKAnnotation {
     var audioURL: URL?
     var imageData: Data?
     
-    init(title: String, coordinate: CLLocationCoordinate2D, videoURL: URL? = nil, audioURL: URL? = nil) {
+    init(title: String, coordinate: CLLocationCoordinate2D, videoURL: URL? = nil, audioURL: URL? = nil, imageData: Data? = nil) {
         self.title = title
         self.videoURL = videoURL
         self.audioURL = audioURL
         self.coordinate = coordinate
+        self.imageData = imageData
     }
 }

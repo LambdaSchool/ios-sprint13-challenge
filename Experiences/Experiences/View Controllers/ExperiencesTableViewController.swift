@@ -38,6 +38,9 @@ class ExperiencesTableViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ExperienceCell", for: indexPath)
         cell.textLabel?.text = experience?.title
+        if let imageData = experience?.imageData {
+            cell.imageView?.image = UIImage(data: imageData)
+        }
         
         return cell
     }
