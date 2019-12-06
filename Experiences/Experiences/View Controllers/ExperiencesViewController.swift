@@ -8,6 +8,7 @@
 
 import UIKit
 import Photos
+import AVFoundation
 
 class ExperiencesViewController: UIViewController {
     
@@ -19,9 +20,8 @@ class ExperiencesViewController: UIViewController {
     // MARK: - Outlets
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var videoPlayerView: UIView!
+    @IBOutlet weak var videoPlayerView: VideoContainerView!
     @IBOutlet weak var addFilterButton: UIButton!
-    @IBOutlet weak var addAudioButton: UIButton!
     @IBOutlet weak var addVideoButton: UIButton!
     @IBOutlet weak var chooseImageButton: UIButton!
     
@@ -35,8 +35,12 @@ class ExperiencesViewController: UIViewController {
     func updateViews() {
         guard imageView.image == nil else { return }
         addFilterButton.isHidden = true
-        addAudioButton.isHidden = true
-        addVideoButton.isHidden = true
+        
+        let playButtonTitle = isPlaying ? "Pause" : "Play"
+        playButton.setTitle(playButtonTitle, for: .normal)
+        
+        let recordButtonTitle = isRecording ? "Stop Recording" : "Record"
+        recordButton.setTitle(recordButtonTitle, for: .normal)
     }
     
     // MARK: - Actions
@@ -64,7 +68,6 @@ class ExperiencesViewController: UIViewController {
         }
         presentImagePickerController()
     }
-    
     
     func presentInformationalAlertController(title: String?, message: String?, dismissActionCompletion: ((UIAlertAction) -> Void)? = nil, completion: (() -> Void)? = nil) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -151,15 +154,127 @@ class ExperiencesViewController: UIViewController {
     @IBAction func saveExperience(_ sender: UIBarButtonItem) {
         view.endEditing(true)
         
-        guard let imageData = imageView.image?.jpegData(compressionQuality: 0.1),
-            let title = titleTextField.text, title != "" else {
-                presentInformationalAlertController(title: "Uh-Oh!", message: "Make sure you add a photo and a title before saving.")
-                return
-        }
+        
         DispatchQueue.main.async {
+            
             self.navigationController?.popViewController(animated: true)
         }
     }
+    
+    // MARK: - Video
+    
+    @IBAction func addVideo(_ sender: UIButton) {
+        requestPermissionAndShowCamera()
+    }
+    
+    private func requestPermissionAndShowCamera() {
+        let status = AVCaptureDevice.authorizationStatus(for: .video)
+        
+        switch status {
+            
+        case .notDetermined: // First time user has seen the dialog, we don't have per
+            requestPermission()
+        case .restricted: // Parental Controler
+            fatalError("Video is disabled for parental controls")
+        case .denied: // User said no or accidental no
+            fatalError("Tell user they need to enable Privacy for Video/Camera")
+        case .authorized: // User said yes
+            showCamera()
+        @unknown default:
+            fatalError("A new status was added that we need to handle")
+        }
+    }
+    
+    private func requestPermission() {
+        AVCaptureDevice.requestAccess(for: .video) { (granted) in
+            guard granted else {
+                fatalError("Tell user they need to enable Privacy for Video/Camera")
+            }
+            DispatchQueue.main.async { [weak self] in
+                self?.showCamera()
+            }
+        }
+    }
+    private func showCamera() {
+        //performSegue(withIdentifier: "AddVideo", sender: self)
+    }
+
+    // MARK: - Audio
+    
+    var audioPlayer: AVAudioPlayer?
+    var audioRecorder: AVAudioRecorder?
+    var isPlaying: Bool {
+        audioPlayer?.isPlaying ?? false
+    }
+    var isRecording: Bool {
+        audioRecorder?.isRecording ?? false
+    }
+    var recordURL: URL?
+    
+    @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var playButton: UIButton!
+    
+    @IBAction func recordButtonPressed(_ sender: UIButton) {
+        recordToggle()
+    }
+    
+    func recordToggle() {
+        if isRecording {
+            stopRecording()
+        } else {
+            record()
+        }
+    }
+    
+    func record() {
+        // Path to save in the Documents directory
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        
+        // Filename (ISO8601 format for time) .caf (Core Audio File)
+        let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: [.withInternetDateTime])
+        
+        let file = documentsDirectory.appendingPathComponent(name).appendingPathExtension("caf")
+        // 44.1 KHz
+        
+        print("Record URL: \(file)")
+        let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
+        
+        // Start a recording
+        audioRecorder = try! AVAudioRecorder(url: file, format: format)
+        recordURL = file
+        audioRecorder?.delegate = self
+        audioRecorder?.record()
+        updateViews()
+    }
+    
+    func stopRecording() {
+        audioRecorder?.stop()
+        audioRecorder = nil
+        updateViews()
+    }
+    
+    @IBAction func playbuttonPressed(_ sender: UIButton) {
+        playToggle()
+    }
+    
+    func playToggle() {
+        if isPlaying {
+            pause()
+        } else {
+            play()
+        }
+    }
+    
+    func play() {
+        audioPlayer?.play()
+        updateViews()
+    }
+    
+    func pause() {
+        audioPlayer?.pause()
+        updateViews()
+    }
+    
     
     /*
      // MARK: - Navigation
@@ -171,6 +286,36 @@ class ExperiencesViewController: UIViewController {
      }
      */
     
+}
+
+extension ExperiencesViewController: AVAudioPlayerDelegate {
+    
+    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        if let error = error {
+            print("Audio playback error: \(error)")
+        }
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        updateViews()  // TODO: Is this on the main thread?
+    }
+}
+
+extension ExperiencesViewController: AVAudioRecorderDelegate {
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
+        if let error = error {
+            print("Record error: \(error)")
+        }
+    }
+    
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        print("Recording finished")
+        // TODO: Create player with new file URL
+        
+        if let recordURL = recordURL {
+            audioPlayer = try! AVAudioPlayer(contentsOf: recordURL)
+        }
+    }
 }
 
 extension ExperiencesViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
