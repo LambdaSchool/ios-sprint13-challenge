@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import MapKit
 
 class AddExperienceViewController: UIViewController {
     
@@ -36,6 +37,13 @@ class AddExperienceViewController: UIViewController {
     @IBAction func videoButtonTapped(_ sender: UIButton) {
         requestPermissionAndShowCamera()
     }
+    
+    func createNewExperience() {
+        
+        guard let title = titleTextView.text else { return }
+//        let experience = Experience(video: <#T##URL?#>, image: <#T##UIImage?#>, title: <#T##String#>, description: <#T##String?#>, latitude: <#T##String#>, longitude: <#T##String#>)
+    }
+    
     
     // MARK: Video Access
     

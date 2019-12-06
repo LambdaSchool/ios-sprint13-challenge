@@ -14,6 +14,7 @@ class VideoViewController: UIViewController {
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     var player: AVPlayer!
+    var experience: Experience?
     
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var cameraView: CameraPreviewView!
@@ -124,6 +125,10 @@ class VideoViewController: UIViewController {
         toggleRecord()
     }
     
+    
+    @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
+    }
+    
     private func toggleRecord() {
         if fileOutput.isRecording {
             fileOutput.stopRecording()
@@ -151,7 +156,7 @@ class VideoViewController: UIViewController {
     }
     
     
-    // This will create a new vie everytime you use it, so you need to polish this
+    // This will create a new view everytime you use it. Polish this
     func playMovie(url: URL) {
         player = AVPlayer(url: url)
         let playerLayer = AVPlayerLayer(player: player)
@@ -163,6 +168,8 @@ class VideoViewController: UIViewController {
         view.layer.addSublayer(playerLayer)
         player.play()
     }
+    
+    
 
     /*
     // MARK: - Navigation
@@ -190,11 +197,15 @@ extension VideoViewController: AVCaptureFileOutputRecordingDelegate {
         if let error = error {
             print("Error saving video: \(error)")
         }
-        //its gonna print what's in the sandbox
-        print("Video: \(outputFileURL.path)")
-        updateViews()
         
-        playMovie(url: outputFileURL)
+        let newVideo = outputFileURL
+        
+        experience?.video = newVideo
+        updateViews()
+        playMovie(url: newVideo)
+        
+        //its gonna print what's in the sandbox
+        print("Video: \(newVideo.path)")
     }
     
 }

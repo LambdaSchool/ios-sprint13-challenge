@@ -10,12 +10,10 @@ import Foundation
 import UIKit
 
 struct Experience {
-    var audio: URL
-    var video: URL
-    var image: UIImage
+    var video: URL?
+    var image: UIImage?
     var title: String
-    var description : String
+    var description : String?
     var latitude: String
     var longitude: String
-    
 }

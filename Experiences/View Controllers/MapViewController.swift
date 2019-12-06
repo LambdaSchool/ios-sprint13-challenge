@@ -14,6 +14,7 @@ class MapViewController: UIViewController {
     //MARK: Properties
     let locationManager = CLLocationManager()
     let regionInMeters: Double = 10_000
+    var experience: Experience?
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -82,10 +83,13 @@ class MapViewController: UIViewController {
         let latitude = mapView.centerCoordinate.latitude
         let longitude = mapView.centerCoordinate.longitude
         
+//        createAnnotation(title: mapView., latitude: <#T##Double#>, longitude: <#T##Double#>)
+        
         return CLLocation(latitude: latitude, longitude: longitude)
     }
     
     func createAnnotation(title: String, latitude: Double, longitude: Double) {
+        
         let location = MKPointAnnotation()
         
         location.title = title
