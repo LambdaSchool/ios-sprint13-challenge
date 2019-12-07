@@ -23,5 +23,4 @@ class CameraPreviewView: UIView {
         get { return videoPlayerView.session }
         set { videoPlayerView.session = newValue }
     }
-    
 }

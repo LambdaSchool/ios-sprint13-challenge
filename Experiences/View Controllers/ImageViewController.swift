@@ -76,7 +76,6 @@ class ImageViewController: UIViewController {
     private func savePhoto() {
         guard let originalImage = originalImage else {
             return //TODO: Warn the user that there is no image to save?
-            
         }
         
         let processedImage = filterImage(originalImage)
@@ -162,5 +161,4 @@ extension ImageViewController: UIImagePickerControllerDelegate, UINavigationCont
         
         picker.dismiss(animated: true, completion: nil)
     }
-    
 }

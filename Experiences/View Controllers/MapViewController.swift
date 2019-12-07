@@ -17,17 +17,18 @@ class MapViewController: UIViewController {
     var experienceController = ExperienceController()
     var coordinates = CLLocationCoordinate2D()
     var experienceTitle = ""
-
     
     @IBOutlet weak var mapView: MKMapView!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         checkLocationServices()
         mapView.delegate = self
-
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        checkToAddAnnotation()
     }
     
     func setupLocationManager() {
@@ -43,16 +44,26 @@ class MapViewController: UIViewController {
         }
     }
     
-    //Whatever latitude and longitude you give it, that's where it will place a pin
-    @objc func addAnnotation() {
+    func checkToAddAnnotation() {
         
-        
-        let newLocationAnnotation = MKPointAnnotation()
-        newLocationAnnotation.title = experienceTitle
-        newLocationAnnotation.coordinate = CLLocationCoordinate2D(latitude: coordinates.latitude, longitude: coordinates.longitude)
-        
-        mapView.addAnnotation(newLocationAnnotation)
-        print("Added Annotation of new experience to map")
+        if experienceTitle != "" {
+            
+            let newLocationAnnotation = MKPointAnnotation()
+            newLocationAnnotation.title = experienceTitle
+            newLocationAnnotation.coordinate = CLLocationCoordinate2D(latitude: coordinates.latitude, longitude: coordinates.longitude)
+            
+            DispatchQueue.main.async {
+                self.mapView.addAnnotation(newLocationAnnotation)
+                self.mapView.showAnnotations(self.mapView.annotations, animated: true)
+            
+            }
+//            var annotationsArray = self.mapView.annotations.compactMap( { $0.title == experienceTitle })
+//                if annotationsArray == nil {
+//                    print("NO ANNOTATIONS!!")
+//                }
+            
+            print("Added Annotation of new experience to map")
+        }
     }
     
     // Checking if location services are even permited in the entire device
@@ -89,7 +100,6 @@ class MapViewController: UIViewController {
         }
     }
     
-    
     func getCenterLocation(for mapView: MKMapView) -> CLLocation {
         let latitude = mapView.centerCoordinate.latitude
         let longitude = mapView.centerCoordinate.longitude
@@ -98,34 +108,6 @@ class MapViewController: UIViewController {
         
         return CLLocation(latitude: latitude, longitude: longitude)
     }
-    
-
-    
-    
-    
-    // MARK: Listen for Notifications with Observers!
-    
-
-//    func addObserver() {
-//        NotificationCenter.default.addObserver(self, selector: #selector(addAnnotation), name: .newLocation, object: <#T##Any?#>)
-////        experienceTitle = objectTitele ^^
-//    }
-//    
-    
-    
-    
-//    // Changing background color
-//    func addObservers() {
-//        NotificationCenter.default.addObserver(self, selector: #selector(changeToRed), name: .newLocation, object: )
-//}
-//        NotificationCenter.default.addObserver(self, selector: #selector(changeToBlue), name: .blue, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(changeToGreen), name: .green, object: nil)
-//    }
-//
-
-    
-    
-    
     
     // MARK: - Navigation
     
@@ -137,10 +119,10 @@ class MapViewController: UIViewController {
             if let addExperienceVC = segue.destination as? AddExperienceViewController {
                 addExperienceVC.experienceController = self.experienceController
                 addExperienceVC.coordinates = self.coordinates
+                addExperienceVC.newExperienceDelegate = self
             }
         }
     }
-    
 }
 
 extension MapViewController: CLLocationManagerDelegate {
@@ -166,7 +148,9 @@ extension MapViewController: CLLocationManagerDelegate {
 extension MapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
         guard annotation is MKPointAnnotation else { return nil }
+        let pinImage = UIImage(named: "mapPin")
 
         let identifier = "Annotation"
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
@@ -174,11 +158,20 @@ extension MapViewController: MKMapViewDelegate {
         if annotationView == nil {
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             annotationView!.canShowCallout = true
+            annotationView?.image = pinImage
+
         } else {
             annotationView!.annotation = annotation
+            annotationView?.image = pinImage
         }
 
         return annotationView
     }
+}
 
+extension MapViewController: NewExperienceDelegate {
+    
+    func createdExeprience(title: String) {
+        experienceTitle = title
+    }
 }

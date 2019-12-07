@@ -14,18 +14,16 @@ class AddExperienceViewController: UIViewController {
     
     var experienceController: ExperienceController?
     var coordinates: CLLocationCoordinate2D?
+    var newExperienceDelegate: NewExperienceDelegate! //MapVC
 
-    
     @IBOutlet weak var titleTextView: UITextField!
     @IBOutlet weak var descriptionTextView: UITextView!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
     }
-    
     
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
         
@@ -37,7 +35,10 @@ class AddExperienceViewController: UIViewController {
         
         experienceController.createExperience(title: title, note: note, coordinates: cooordinates)
         
-        NotificationCenter.default.post(name: .newLocation, object: self, userInfo: ["Location" : title])
+        // MARK: Delegate
+        newExperienceDelegate.createdExeprience(title: title)
+
+//        NotificationCenter.default.post(name: .newLocation, object: self, userInfo: ["Location" : title])
         //    NotificationCenter.default.post(name: .blue, object: self)
         navigationController?.popToRootViewController(animated: true)
     }
@@ -48,7 +49,6 @@ class AddExperienceViewController: UIViewController {
     @IBAction func videoButtonTapped(_ sender: UIButton) {
         requestPermissionAndShowCamera()
     }
-    
     
     
     // MARK: Video Access
@@ -85,7 +85,6 @@ class AddExperienceViewController: UIViewController {
             DispatchQueue.main.async { [weak self] in
                 self?.showCamera()
             }
-            
         }
     }
     
@@ -94,13 +93,8 @@ class AddExperienceViewController: UIViewController {
         performSegue(withIdentifier: "RecordVideoSegue", sender: self)
     }
     
-
 //    NotificationCenter.default.post(name: .blue, object: self)
 
-    
-    
-    
-    
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -120,4 +114,9 @@ class AddExperienceViewController: UIViewController {
             }
         }
     }
+}
+
+protocol NewExperienceDelegate {
+    
+    func createdExeprience(title: String)
 }

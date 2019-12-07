@@ -16,7 +16,6 @@ class VideoViewController: UIViewController {
     var player: AVPlayer!
     var experienceController: ExperienceController?
 
-    
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var cameraView: CameraPreviewView!
     
@@ -28,7 +27,6 @@ class VideoViewController: UIViewController {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
         view.addGestureRecognizer(tapGesture)
-        
     }
     
     @objc func handleTapGesture(_ tapGesture: UITapGestureRecognizer) {
@@ -50,7 +48,6 @@ class VideoViewController: UIViewController {
             player.play()
         }
     }
-    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -107,7 +104,6 @@ class VideoViewController: UIViewController {
         fatalError("No audio")
     }
     
-    
     private func bestCamera() -> AVCaptureDevice {
         if let device = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) {
             return device
@@ -120,7 +116,7 @@ class VideoViewController: UIViewController {
         fatalError("No camera on the device (or you are running on an iPhone)")
     }
     
-    //Recording feature:
+    //MARK: Recording feature:
     
     @IBAction func recordButtonTapped(_ sender: UIButton) {
         toggleRecord()
@@ -157,7 +153,6 @@ class VideoViewController: UIViewController {
         recordButton.isSelected = fileOutput.isRecording
     }
     
-    
     // This will create a new view everytime you use it. Polish this
     func playMovie(url: URL) {
         player = AVPlayer(url: url)
@@ -170,17 +165,14 @@ class VideoViewController: UIViewController {
         view.layer.addSublayer(playerLayer)
         player.play()
     }
-
 }
 
 extension VideoViewController: AVCaptureFileOutputRecordingDelegate {
-    
     
     func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         
         updateViews()
     }
-    
     
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         
@@ -197,5 +189,4 @@ extension VideoViewController: AVCaptureFileOutputRecordingDelegate {
         //its gonna print what's in the sandbox
         print("Video: \(newVideo.path)")
     }
-    
 }

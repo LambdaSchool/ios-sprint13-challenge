@@ -16,8 +16,6 @@ class ExperienceController {
     var video: URL?
     var image: UIImage?
     var coordinates: CLLocationCoordinate2D?
-//    var latitude: String?
-//    var longitude: String?
 
     func createExperience(title: String, note: String?, coordinates: CLLocationCoordinate2D) {
         
@@ -44,16 +42,6 @@ class ExperienceController {
             } else {
                 print("Experience \(testingExperience.title) does NOT have an image")
             }
-            
         }
     }
-    
-//    func addCoordinatesToExperience(latitude: String, longitude: String) {
-//        self.latitude = latitude
-//
-//        self.longitude = longitude
-//        print("Added coordinates to experience")
-//
-//    }
-    
 }
