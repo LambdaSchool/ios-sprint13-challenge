@@ -14,8 +14,7 @@ class MapViewController: UIViewController {
     //MARK: Properties
     let locationManager = CLLocationManager()
     let regionInMeters: Double = 10_000
-    var experience: Experience?
-    var experienceController: ExperienceController?
+    var experienceController = ExperienceController()
 
     
     @IBOutlet weak var mapView: MKMapView!
@@ -99,16 +98,19 @@ class MapViewController: UIViewController {
         mapView.addAnnotation(location)
     }
     
-
-    /*
+    
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "CreateExperienceSegue" {
+            
+            if let addExperienceVC = segue.destination as? AddExperienceViewController {
+                addExperienceVC.experienceController = self.experienceController
+            }
+        }
     }
-    */
     
 }
 

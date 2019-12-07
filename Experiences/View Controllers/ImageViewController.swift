@@ -104,7 +104,7 @@ class ImageViewController: UIViewController {
             }
         }
         experienceController?.image = processedImage
-        navigationController?.popToRootViewController(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     

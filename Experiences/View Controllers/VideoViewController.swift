@@ -128,7 +128,7 @@ class VideoViewController: UIViewController {
     
     
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
-        navigationController?.popToRootViewController(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     private func toggleRecord() {

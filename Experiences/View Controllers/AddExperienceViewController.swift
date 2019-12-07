@@ -12,7 +12,7 @@ import MapKit
 
 class AddExperienceViewController: UIViewController {
     
-    var experienceController = ExperienceController()
+    var experienceController: ExperienceController?
     
     @IBOutlet weak var titleTextView: UITextField!
     @IBOutlet weak var descriptionTextView: UITextView!
@@ -27,9 +27,12 @@ class AddExperienceViewController: UIViewController {
     
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
         
-        guard let title = titleTextView.text else { return }
+        guard let title = titleTextView.text,
+            let experienceController = experienceController else { return }
         
         experienceController.createExperience(title: title, description: descriptionTextView.text ?? "")
+        
+        navigationController?.popToRootViewController(animated: true)
     }
     
     @IBAction func pictureButtonTapped(_ sender: UIButton) {
@@ -85,10 +88,10 @@ class AddExperienceViewController: UIViewController {
     }
     
     
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "ChooseImageSegue" {
             
@@ -97,20 +100,11 @@ class AddExperienceViewController: UIViewController {
             }
         }
             
-         else if segue.identifier == "RecordVideoSegue" {
+        else if segue.identifier == "RecordVideoSegue" {
             
             if let videoVC = segue.destination as? VideoViewController {
                 videoVC.experienceController = self.experienceController
             }
         }
-            
-        else if segue.identifier == "ShowMapSegue" {
-            
-            if let mapVC = segue.destination as? MapViewController {
-                mapVC.experienceController = self.experienceController
-                
-            }
-        }
-     }
-    
+    }
 }

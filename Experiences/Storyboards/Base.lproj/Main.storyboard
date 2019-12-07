@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BiQ-c9-U1Y">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qGK-VS-hnR">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="NAT-cF-n25">
-                                <rect key="frame" x="10" y="160" width="394" height="642"/>
+                                <rect key="frame" x="10" y="108" width="394" height="694"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Nr1-CG-Vin">
                                         <rect key="frame" x="0.0" y="0.0" width="394" height="24"/>
@@ -44,20 +44,20 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="U89-6s-bbi">
-                                        <rect key="frame" x="0.0" y="88" width="394" height="258"/>
+                                        <rect key="frame" x="0.0" y="88" width="394" height="310"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What Type of Post?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Be-eB-lbt">
-                                        <rect key="frame" x="0.0" y="366" width="394" height="36"/>
+                                        <rect key="frame" x="0.0" y="418" width="394" height="36"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="6lm-JL-tav">
-                                        <rect key="frame" x="0.0" y="422" width="394" height="220"/>
+                                        <rect key="frame" x="0.0" y="474" width="394" height="220"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ua2-0X-i9m">
                                                 <rect key="frame" x="0.0" y="0.0" width="394" height="40"/>
@@ -99,9 +99,6 @@
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                                         <state key="normal" title="📌"/>
-                                                        <connections>
-                                                            <segue destination="5SR-ng-sqi" kind="show" identifier="ShowMapSegue" id="6UA-7i-lII"/>
-                                                        </connections>
                                                     </button>
                                                 </subviews>
                                             </stackView>
@@ -133,7 +130,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="88u-GB-zLl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-52.173913043478265" y="-23.4375"/>
+            <point key="canvasLocation" x="143" y="-5"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="npX-ia-5y5">
@@ -144,26 +141,42 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="7nY-CR-0EY">
-                                <rect key="frame" x="20" y="140" width="374" height="722"/>
+                                <rect key="frame" x="20" y="88" width="374" height="774"/>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9jY-B9-eY7">
+                                <rect key="frame" x="30" y="814" width="354" height="48"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
+                                <state key="normal" title="Add New Experience">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="5Sj-Qp-Vob" kind="show" identifier="CreateExperienceSegue" id="IdG-fo-OEc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="7nY-CR-0EY" firstAttribute="top" secondItem="brf-uU-tDG" secondAttribute="topMargin" id="Cyl-Et-ctN"/>
                             <constraint firstAttribute="trailingMargin" secondItem="7nY-CR-0EY" secondAttribute="trailing" id="G0f-VN-OKN"/>
+                            <constraint firstItem="9jY-B9-eY7" firstAttribute="leading" secondItem="brf-uU-tDG" secondAttribute="leadingMargin" constant="10" id="Mlw-dw-Iwr"/>
                             <constraint firstItem="7nY-CR-0EY" firstAttribute="leading" secondItem="brf-uU-tDG" secondAttribute="leadingMargin" id="QQD-ee-Yjz"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="9jY-B9-eY7" secondAttribute="trailing" constant="10" id="RVm-W9-Npe"/>
                             <constraint firstItem="D8a-zZ-G2R" firstAttribute="bottom" secondItem="7nY-CR-0EY" secondAttribute="bottom" id="ZHf-i0-Bib"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="9jY-B9-eY7" secondAttribute="bottom" id="aoc-fl-9tg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="D8a-zZ-G2R"/>
                     </view>
-                    <navigationItem key="navigationItem" id="htZ-pv-4FZ"/>
+                    <navigationItem key="navigationItem" id="htZ-pv-4FZ">
+                        <barButtonItem key="rightBarButtonItem" title="Add New Expereince" id="dwf-Wz-hS4"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="7nY-CR-0EY" id="nFq-iR-ZDF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PpA-pD-Kn1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="841" y="-23"/>
+            <point key="canvasLocation" x="-665" y="-1"/>
         </scene>
         <!--Image View Controller-->
         <scene sceneID="aOp-gk-Rd2">
@@ -174,7 +187,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="96" translatesAutoresizingMaskIntoConstraints="NO" id="mEH-af-Vui">
-                                <rect key="frame" x="10" y="148" width="394" height="674"/>
+                                <rect key="frame" x="10" y="96" width="394" height="726"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="aMV-Yc-eHJ">
                                         <rect key="frame" x="0.0" y="0.0" width="394" height="394"/>
@@ -208,7 +221,7 @@
                                         </subviews>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="agV-63-THb">
-                                        <rect key="frame" x="0.0" y="616" width="394" height="58"/>
+                                        <rect key="frame" x="0.0" y="616" width="394" height="110"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <state key="normal" title="Save Photo"/>
                                         <connections>
@@ -252,10 +265,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cpd-AU-XKd" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
-                                <rect key="frame" x="20" y="140" width="374" height="722"/>
+                                <rect key="frame" x="20" y="88" width="374" height="774"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iOY-Nx-t44">
-                                        <rect key="frame" x="129" y="556" width="116" height="116"/>
+                                        <rect key="frame" x="129" y="608" width="116" height="116"/>
                                         <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="Record"/>
                                         <state key="selected" image="Stop">
@@ -299,22 +312,22 @@
             <point key="canvasLocation" x="841" y="-739"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="k07-kN-R9W">
+        <scene sceneID="HGO-BV-sBu">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="BiQ-c9-U1Y" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qGK-VS-hnR" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="Ajh-8K-VbF">
-                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bWV-84-WgD">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="5Sj-Qp-Vob" kind="relationship" relationship="rootViewController" id="8nr-Fa-hT3"/>
+                        <segue destination="5SR-ng-sqi" kind="relationship" relationship="rootViewController" id="Psk-Fo-jUT"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0fZ-NN-51O" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="upl-Hf-UYB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-962.31884057971024" y="-23.4375"/>
+            <point key="canvasLocation" x="-1549" y="-8"/>
         </scene>
     </scenes>
     <resources>
