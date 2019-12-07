@@ -15,6 +15,8 @@ class MapViewController: UIViewController {
     let locationManager = CLLocationManager()
     let regionInMeters: Double = 10_000
     var experienceController = ExperienceController()
+    var coordinates = CLLocationCoordinate2D()
+    var experienceTitle = ""
 
     
     @IBOutlet weak var mapView: MKMapView!
@@ -25,11 +27,7 @@ class MapViewController: UIViewController {
         
         checkLocationServices()
         mapView.delegate = self
-        
-        // Testing
-        var currentLocation = getCenterLocation(for: mapView)
-        
-        createAnnotation(title: "location", latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
+
     }
     
     func setupLocationManager() {
@@ -43,6 +41,18 @@ class MapViewController: UIViewController {
             let region = MKCoordinateRegion.init(center: location, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
             mapView.setRegion(region, animated: true)
         }
+    }
+    
+    //Whatever latitude and longitude you give it, that's where it will place a pin
+    @objc func addAnnotation() {
+        
+        
+        let newLocationAnnotation = MKPointAnnotation()
+        newLocationAnnotation.title = experienceTitle
+        newLocationAnnotation.coordinate = CLLocationCoordinate2D(latitude: coordinates.latitude, longitude: coordinates.longitude)
+        
+        mapView.addAnnotation(newLocationAnnotation)
+        print("Added Annotation of new experience to map")
     }
     
     // Checking if location services are even permited in the entire device
@@ -83,20 +93,38 @@ class MapViewController: UIViewController {
     func getCenterLocation(for mapView: MKMapView) -> CLLocation {
         let latitude = mapView.centerCoordinate.latitude
         let longitude = mapView.centerCoordinate.longitude
-        
-//        createAnnotation(title: mapView., latitude: <#T##Double#>, longitude: <#T##Double#>)
+        coordinates.latitude = latitude
+        coordinates.longitude = longitude
         
         return CLLocation(latitude: latitude, longitude: longitude)
     }
     
-    func createAnnotation(title: String, latitude: Double, longitude: Double) {
-        
-        let location = MKPointAnnotation()
-        
-        location.title = title
-        location.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        mapView.addAnnotation(location)
-    }
+
+    
+    
+    
+    // MARK: Listen for Notifications with Observers!
+    
+
+//    func addObserver() {
+//        NotificationCenter.default.addObserver(self, selector: #selector(addAnnotation), name: .newLocation, object: <#T##Any?#>)
+////        experienceTitle = objectTitele ^^
+//    }
+//    
+    
+    
+    
+//    // Changing background color
+//    func addObservers() {
+//        NotificationCenter.default.addObserver(self, selector: #selector(changeToRed), name: .newLocation, object: )
+//}
+//        NotificationCenter.default.addObserver(self, selector: #selector(changeToBlue), name: .blue, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(changeToGreen), name: .green, object: nil)
+//    }
+//
+
+    
+    
     
     
     // MARK: - Navigation
@@ -108,6 +136,7 @@ class MapViewController: UIViewController {
             
             if let addExperienceVC = segue.destination as? AddExperienceViewController {
                 addExperienceVC.experienceController = self.experienceController
+                addExperienceVC.coordinates = self.coordinates
             }
         }
     }

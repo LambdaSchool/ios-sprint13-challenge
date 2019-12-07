@@ -8,18 +8,20 @@
 
 import Foundation
 import UIKit
+import  MapKit
 
 class ExperienceController {
     
     var experiences: [Experience] = []
     var video: URL?
     var image: UIImage?
-    var latitude: String?
-    var longitude: String?
+    var coordinates: CLLocationCoordinate2D?
+//    var latitude: String?
+//    var longitude: String?
 
-    func createExperience(title: String, description: String?) {
+    func createExperience(title: String, note: String?, coordinates: CLLocationCoordinate2D) {
         
-        let newExperience = Experience(video: video, image: image, title: title, description: description, latitude: latitude, longitude: longitude)
+        let newExperience = Experience(video: video, image: image, title: title, note: note, latitude: coordinates.latitude, longitude: coordinates.longitude)
         
         experiences.append(newExperience)
         print("Experience with title \(newExperience.title) was created!")
@@ -42,15 +44,16 @@ class ExperienceController {
             } else {
                 print("Experience \(testingExperience.title) does NOT have an image")
             }
+            
         }
     }
     
-    func addCoordinatesToExperience(latitude: String, longitude: String) {
-        self.latitude = latitude
-        
-        self.longitude = longitude
-        print("Added coordinates to experience")
-        
-    }
+//    func addCoordinatesToExperience(latitude: String, longitude: String) {
+//        self.latitude = latitude
+//
+//        self.longitude = longitude
+//        print("Added coordinates to experience")
+//
+//    }
     
 }

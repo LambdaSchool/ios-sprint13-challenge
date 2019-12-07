@@ -13,6 +13,8 @@ import MapKit
 class AddExperienceViewController: UIViewController {
     
     var experienceController: ExperienceController?
+    var coordinates: CLLocationCoordinate2D?
+
     
     @IBOutlet weak var titleTextView: UITextField!
     @IBOutlet weak var descriptionTextView: UITextView!
@@ -28,10 +30,15 @@ class AddExperienceViewController: UIViewController {
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
         
         guard let title = titleTextView.text,
-            let experienceController = experienceController else { return }
+            let experienceController = experienceController,
+            let cooordinates = coordinates else { return }
         
-        experienceController.createExperience(title: title, description: descriptionTextView.text ?? "")
+        let note = descriptionTextView.text
         
+        experienceController.createExperience(title: title, note: note, coordinates: cooordinates)
+        
+        NotificationCenter.default.post(name: .newLocation, object: self, userInfo: ["Location" : title])
+        //    NotificationCenter.default.post(name: .blue, object: self)
         navigationController?.popToRootViewController(animated: true)
     }
     
@@ -86,6 +93,12 @@ class AddExperienceViewController: UIViewController {
     private func showCamera() {
         performSegue(withIdentifier: "RecordVideoSegue", sender: self)
     }
+    
+
+//    NotificationCenter.default.post(name: .blue, object: self)
+
+    
+    
     
     
     // MARK: - Navigation
