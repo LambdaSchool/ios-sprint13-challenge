@@ -14,6 +14,6 @@ struct Experience {
     var image: UIImage?
     var title: String
     var description : String?
-    var latitude: String
-    var longitude: String
+    var latitude: String?
+    var longitude: String?
 }
