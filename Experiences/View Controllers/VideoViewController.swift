@@ -14,7 +14,8 @@ class VideoViewController: UIViewController {
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     var player: AVPlayer!
-    var experience: Experience?
+    var experienceController: ExperienceController?
+
     
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var cameraView: CameraPreviewView!
@@ -127,6 +128,7 @@ class VideoViewController: UIViewController {
     
     
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
+        navigationController?.popToRootViewController(animated: true)
     }
     
     private func toggleRecord() {
@@ -168,18 +170,6 @@ class VideoViewController: UIViewController {
         view.layer.addSublayer(playerLayer)
         player.play()
     }
-    
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
@@ -200,7 +190,7 @@ extension VideoViewController: AVCaptureFileOutputRecordingDelegate {
         
         let newVideo = outputFileURL
         
-        experience?.video = newVideo
+        experienceController?.video = newVideo
         updateViews()
         playMovie(url: newVideo)
         

@@ -19,6 +19,8 @@ class ImageViewController: UIViewController {
     private let context = CIContext(options: nil)
     private let sephiaFilter = CIFilter(name: "CISepiaTone")!  //Can Crash!
     
+    var experienceController: ExperienceController?
+    
     private var originalImage: UIImage? {
         didSet {
             
@@ -101,6 +103,7 @@ class ImageViewController: UIViewController {
                 print("Saved photo successfully")
             }
         }
+        experienceController?.image = processedImage
         navigationController?.popToRootViewController(animated: true)
     }
     
@@ -141,8 +144,6 @@ class ImageViewController: UIViewController {
             imageView.image = nil
         }
     }
-    
-    
 }
 
 extension ImageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -154,9 +155,7 @@ extension ImageViewController: UIImagePickerControllerDelegate, UINavigationCont
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         // set the image and update the display
-        
-        // TODO: Play with the edited image
-        
+            
         if let image = info[.originalImage] as? UIImage {
             originalImage = image
         }
