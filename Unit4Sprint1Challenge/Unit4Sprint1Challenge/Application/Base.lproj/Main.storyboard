@@ -44,21 +44,6 @@
             </objects>
             <point key="canvasLocation" x="1042.0289855072465" y="137.94642857142856"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="cnd-9a-z7U">
-            <objects>
-                <viewController id="nbj-YN-xLw" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="rT1-8p-qLC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="B5A-io-Lqa"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="FWm-v2-nhL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1846" y="-340"/>
-        </scene>
         <!--Image View Controller-->
         <scene sceneID="yRd-nc-KVb">
             <objects>
@@ -100,6 +85,13 @@
                                     <action selector="filterSelectionChanged:" destination="9Lc-m1-QzT" eventType="valueChanged" id="02H-Vn-xIn"/>
                                 </connections>
                             </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xNH-7Y-o7j">
+                                <rect key="frame" x="293" y="456" width="101" height="30"/>
+                                <state key="normal" title="Remove Image"/>
+                                <connections>
+                                    <action selector="removeButtonTapped:" destination="9Lc-m1-QzT" eventType="touchUpInside" id="2OU-ga-NTY"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -109,9 +101,11 @@
                             <constraint firstItem="ZzD-JF-WOf" firstAttribute="top" secondItem="CMS-k7-Yub" secondAttribute="bottom" constant="8" id="FFg-al-qug"/>
                             <constraint firstItem="0as-DV-F1G" firstAttribute="trailing" secondItem="CMS-k7-Yub" secondAttribute="trailing" id="FWS-sV-GDC"/>
                             <constraint firstItem="06P-CT-Mhw" firstAttribute="trailing" secondItem="CMS-k7-Yub" secondAttribute="trailing" constant="20" id="HqT-Pf-zLb"/>
+                            <constraint firstItem="xNH-7Y-o7j" firstAttribute="top" secondItem="ZzD-JF-WOf" secondAttribute="top" id="Su6-sX-cnE"/>
                             <constraint firstItem="CMS-k7-Yub" firstAttribute="leading" secondItem="06P-CT-Mhw" secondAttribute="leading" constant="20" id="Xu2-Vi-88D"/>
                             <constraint firstItem="06P-CT-Mhw" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ZzD-JF-WOf" secondAttribute="trailing" constant="8" id="aFG-uu-ldn"/>
                             <constraint firstItem="ZzD-JF-WOf" firstAttribute="leading" secondItem="CMS-k7-Yub" secondAttribute="leading" id="avB-Lp-QKo"/>
+                            <constraint firstItem="xNH-7Y-o7j" firstAttribute="trailing" secondItem="CMS-k7-Yub" secondAttribute="trailing" id="h9K-2F-cgj"/>
                             <constraint firstItem="CMS-k7-Yub" firstAttribute="top" secondItem="06P-CT-Mhw" secondAttribute="top" constant="20" id="swL-kp-gd2"/>
                             <constraint firstItem="0as-DV-F1G" firstAttribute="top" secondItem="ql5-rJ-AdS" secondAttribute="bottom" constant="8" id="wGD-3T-eai"/>
                         </constraints>
@@ -123,6 +117,7 @@
                         <outlet property="filterControl" destination="0as-DV-F1G" id="WaW-lT-7Ef"/>
                         <outlet property="imageHeightConstraint" destination="0qM-8a-XT8" id="yh1-rM-J5L"/>
                         <outlet property="imageView" destination="CMS-k7-Yub" id="Gez-zH-uZy"/>
+                        <outlet property="removeImageButton" destination="xNH-7Y-o7j" id="D3X-ZC-8s1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4C3-l1-VrV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

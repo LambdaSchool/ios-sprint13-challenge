@@ -49,3 +49,27 @@ class AddEditExperienceViewController: ShiftableViewController {
         navigationController?.popToRootViewController(animated: true)
     }
 }
+
+// MARK: - Delegates
+
+extension AddEditExperienceViewController: ImageVCDelegate {
+    func imageVCDidPickImage(withData data: Data?) {
+        self.imageData = data
+    }
+}
+
+extension AddEditExperienceViewController: VideoRecorderDelegate {
+    func videoRecorderDidFinishRecording(withData videoData: Data?) {
+        self.videoData = videoData
+    }
+
+    func videoRecorderDidDeleteRecording() {
+        self.videoData = nil
+    }
+}
+
+extension AddEditExperienceViewController: AudioVCDelegate {
+    func audioVCDidFinishRecording(with data: Data?) {
+        self.audioData = data
+    }
+}

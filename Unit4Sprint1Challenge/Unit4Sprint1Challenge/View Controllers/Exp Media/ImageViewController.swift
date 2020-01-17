@@ -10,7 +10,7 @@ import UIKit
 import Photos
 
 protocol ImageVCDelegate: AnyObject {
-    func imageVCDidPickImage(withData data: Data)
+    func imageVCDidPickImage(withData data: Data?)
 }
 
 class ImageViewController: UIViewController {
@@ -18,6 +18,7 @@ class ImageViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var filterControl: UISegmentedControl!
     @IBOutlet weak var addReplaceImageButton: UIButton!
+    @IBOutlet weak var removeImageButton: UIButton!
 
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
 
@@ -32,14 +33,26 @@ class ImageViewController: UIViewController {
 
     // MARK: - View Lifecycle
 
-    private func updateViews() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateViews()
+    }
 
+    private func updateViews() {
+        setFilter()
+        addReplaceImageButton
+            .setTitle(hasImage ? "Replace Image" : "Choose image", for: .normal)
+        removeImageButton.isEnabled = hasImage
     }
 
     // MARK: - Actions
 
     @IBAction func addReplaceImageTapped(_ sender: Any) {
         addReplaceImage()
+    }
+
+    @IBAction func removeButtonTapped(_ sender: Any) {
+        removeImage()
     }
 
     @IBAction func filterSelectionChanged(_ sender: Any) {
@@ -50,6 +63,11 @@ class ImageViewController: UIViewController {
         changeFilterSelection(
             to: ImageFilterer.FilterType.allCases[
                 filterControl.selectedSegmentIndex])
+    }
+
+    func removeImage() {
+        originalImage = nil
+        updateViews()
     }
 
     func addReplaceImage() {

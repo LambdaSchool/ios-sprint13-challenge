@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 
 protocol AudioVCDelegate: AnyObject {
-    func audioVCDidFinishRecording(withData: Data?)
+    func audioVCDidFinishRecording(with data: Data?)
 }
 
 class AudioViewController: UIViewController {
@@ -50,6 +50,7 @@ class AudioViewController: UIViewController {
 
     private func clearRecordedData() {
         audioPlayerControl.unloadAudio()
+        delegate?.audioVCDidFinishRecording(with: nil)
         updateViews()
     }
 
@@ -69,7 +70,7 @@ extension AudioViewController: AudioRecorderControlDelegate {
         _ recorderControl: AudioRecorderControl,
         didFinishRecordingSucessfully didFinishRecording: Bool
     ) {
-        delegate?.audioVCDidFinishRecording(withData: recorderControl.audioData)
+        delegate?.audioVCDidFinishRecording(with: recorderControl.audioData)
         setUpPlayer()
     }
 }
