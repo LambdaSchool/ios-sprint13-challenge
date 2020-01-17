@@ -45,14 +45,17 @@ class MapViewController: UIViewController {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "NewPostSegue",
-            let newPostVC = segue.destination as? AddEditExperienceViewController {
-            newPostVC.experienceController = self.experienceController
+        if let expVC = segue.destination as? AddEditExperienceViewController {
+            expVC.experienceController = self.experienceController
+            if segue.identifier == "EditPostSegue",
+                let experience = sender as? Experience {
+                expVC.experience = experience
+            }
         }
     }
 }
 
-// MARK: - MapView Delegate
+// MARK: - Delegates
 
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -69,5 +72,11 @@ extension MapViewController: MKMapViewDelegate {
         annotationView.detailCalloutAccessoryView = detailView
 
         return annotationView
+    }
+}
+
+extension MapViewController: ExperienceAnnotationViewDelegate {
+    func experienceWasSelected(_ experience: Experience) {
+        performSegue(withIdentifier: "EditPostSegue", sender: experience)
     }
 }

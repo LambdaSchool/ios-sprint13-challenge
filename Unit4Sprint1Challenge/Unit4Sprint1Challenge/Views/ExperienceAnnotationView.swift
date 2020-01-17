@@ -17,7 +17,7 @@ class ExperienceAnnotationView: UIView {
         didSet { updateSubviews() }
     }
 
-    private let titleLabel = UIButton()
+    private let titleButton = UIButton()
     private let dateLabel = UILabel()
 
     // MARK: - Init
@@ -33,7 +33,7 @@ class ExperienceAnnotationView: UIView {
     }
 
     private func setUp() {
-        let mainStackView = UIStackView(arrangedSubviews: [titleLabel, dateLabel])
+        let mainStackView = UIStackView(arrangedSubviews: [titleButton, dateLabel])
         mainStackView.axis = .vertical
         mainStackView.spacing = UIStackView.spacingUseSystem
 
@@ -50,7 +50,7 @@ class ExperienceAnnotationView: UIView {
     private func updateSubviews() {
         guard let annotation = experienceAnnotation else { return }
 
-        titleLabel.setTitle(annotation.title, for: .normal)
+        titleButton.setTitle(annotation.title, for: .normal)
         dateLabel.text = DateFormatter.mapAnnotationFormatter
             .string(from: annotation.timestamp)
     }
