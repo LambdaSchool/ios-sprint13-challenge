@@ -14,6 +14,7 @@ class PhotoViewController: UIViewController {
 	// --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 	// MARK: - Properties
 	var originalImage: UIImage?
+	let pickerController = UIImagePickerController()
 
 	var scaledImage: UIImage? {
 		didSet {
@@ -56,8 +57,6 @@ class PhotoViewController: UIViewController {
 		imagePicker.sourceType = .photoLibrary
 
 		present(imagePicker, animated: true, completion: nil)
-
-		popoverPresentationController
 	}
 
 	func setImageViewHeight(with aspectRatio: CGFloat) {
@@ -110,9 +109,10 @@ class PhotoViewController: UIViewController {
 
 
 extension PhotoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 
-		addPosterImageButton.setTitle("", for: [])
+		//addPosterImageButton.setTitle("", for: [])
 
 		guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
 
@@ -120,12 +120,19 @@ extension PhotoViewController: UIImagePickerControllerDelegate, UINavigationCont
 		originalImage = image
 
 		setImageViewHeight(with: image.ratio)
-		addPosterImageButton.isHidden = false
+		addPosterImageButton.isHidden = true
+
+		picker.dismiss(animated: true, completion: nil)
 
 	}
 
 	func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+
 		picker.dismiss(animated: true, completion: nil)
+
+		self.view.endEditing(true)
 	}
+
+
 }
 
