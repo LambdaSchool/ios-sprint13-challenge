@@ -111,7 +111,8 @@ class ImageViewController: UIViewController {
 
     func setImage(with data: Data?) {
         guard let data = data else { return }
-        imageView.image = UIImage(data: data)
+        originalImage = UIImage(data: data)
+        imageView.image = originalImage
     }
 
     // MARK: - Helpers

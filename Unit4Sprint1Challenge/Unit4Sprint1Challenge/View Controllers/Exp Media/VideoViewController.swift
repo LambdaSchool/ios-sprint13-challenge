@@ -131,6 +131,7 @@ class VideoViewController: UIViewController {
                 to: .newLocalVideoURL(),
                 recordingDelegate: self)
         }
+        updateViews()
     }
 
     func trashRecording() {
@@ -141,6 +142,7 @@ class VideoViewController: UIViewController {
             try? fm.trashItem(at: url, resultingItemURL: nil)
         }
         delegate?.videoRecorderDidDeleteRecording()
+        updateViews()
     }
 
     func setVideo(with data: Data?) {

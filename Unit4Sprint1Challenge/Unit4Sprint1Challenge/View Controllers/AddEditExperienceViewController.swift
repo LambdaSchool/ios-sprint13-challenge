@@ -35,8 +35,12 @@ class AddEditExperienceViewController: ShiftableViewController {
     }
 
     private func setUpViews() {
-        if let experience = experience {
-            
+        if let exp = experience {
+            titleTextField.text = exp.title
+            descriptionTextView.text = exp.text
+            imageData = exp.imageData
+            videoData = exp.videoData
+            audioData = exp.audioData
         }
     }
 

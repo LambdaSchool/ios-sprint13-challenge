@@ -140,32 +140,7 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KY7-SC-ebq" customClass="CameraPreviewView" customModule="Unit4Sprint1Challenge" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="88" width="414" height="788"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="txt-gB-1Fy">
-                                        <rect key="frame" x="304" y="743" width="102" height="37"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="15F-uv-a7I">
-                                                <rect key="frame" x="2" y="2" width="98" height="33"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <state key="normal" title="Delete Video">
-                                                    <color key="titleColor" red="0.0" green="0.84044721757042251" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </state>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" white="0.5" alpha="0.5013479312957746" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstItem="15F-uv-a7I" firstAttribute="centerY" secondItem="txt-gB-1Fy" secondAttribute="centerY" id="Awd-eD-ifK"/>
-                                            <constraint firstAttribute="width" secondItem="15F-uv-a7I" secondAttribute="width" constant="4" id="NmV-AA-Dvl"/>
-                                            <constraint firstAttribute="height" secondItem="15F-uv-a7I" secondAttribute="height" constant="4" id="e7O-7W-6jy"/>
-                                            <constraint firstItem="15F-uv-a7I" firstAttribute="centerX" secondItem="txt-gB-1Fy" secondAttribute="centerX" id="qaU-A4-pOv"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="txt-gB-1Fy" secondAttribute="trailing" constant="8" id="c4J-cP-8cs"/>
-                                    <constraint firstAttribute="bottom" secondItem="txt-gB-1Fy" secondAttribute="bottom" constant="8" id="lGY-EQ-2Vh"/>
-                                </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QhM-Jq-mzG">
                                 <rect key="frame" x="154" y="740" width="106" height="102"/>
@@ -174,7 +149,32 @@
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="90"/>
                                 </state>
                                 <state key="selected" image="stop.circle" catalog="system"/>
+                                <connections>
+                                    <action selector="recordButtonPressed:" destination="as2-oy-cqJ" eventType="touchUpInside" id="Tkz-1M-VhH"/>
+                                </connections>
                             </button>
+                            <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="txt-gB-1Fy">
+                                <rect key="frame" x="304" y="817" width="102" height="37"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="15F-uv-a7I">
+                                        <rect key="frame" x="2" y="2" width="98" height="33"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <state key="normal" title="Delete Video">
+                                            <color key="titleColor" red="0.0" green="0.84044721757042251" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="removeButtonTapped:" destination="as2-oy-cqJ" eventType="touchUpInside" id="5Zz-lc-Nrs"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.5" alpha="0.5013479312957746" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="15F-uv-a7I" firstAttribute="centerY" secondItem="txt-gB-1Fy" secondAttribute="centerY" id="Awd-eD-ifK"/>
+                                    <constraint firstAttribute="width" secondItem="15F-uv-a7I" secondAttribute="width" constant="4" id="NmV-AA-Dvl"/>
+                                    <constraint firstAttribute="height" secondItem="15F-uv-a7I" secondAttribute="height" constant="4" id="e7O-7W-6jy"/>
+                                    <constraint firstItem="15F-uv-a7I" firstAttribute="centerX" secondItem="txt-gB-1Fy" secondAttribute="centerX" id="qaU-A4-pOv"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -186,8 +186,10 @@
                             <constraint firstItem="B0a-2H-pBO" firstAttribute="leading" secondItem="ybQ-YQ-QTV" secondAttribute="leading" id="btv-97-Sy0"/>
                             <constraint firstItem="B0a-2H-pBO" firstAttribute="top" secondItem="ybQ-YQ-QTV" secondAttribute="top" id="fAt-sy-PO6"/>
                             <constraint firstItem="KY7-SC-ebq" firstAttribute="top" secondItem="ybQ-YQ-QTV" secondAttribute="top" id="iAa-lb-gGa"/>
+                            <constraint firstItem="ybQ-YQ-QTV" firstAttribute="bottom" secondItem="txt-gB-1Fy" secondAttribute="bottom" constant="8" id="kKf-h1-Tie"/>
                             <constraint firstItem="QhM-Jq-mzG" firstAttribute="centerX" secondItem="eCu-mV-rSJ" secondAttribute="centerX" id="mPT-Kv-1Eu"/>
                             <constraint firstAttribute="bottom" secondItem="B0a-2H-pBO" secondAttribute="bottom" constant="20" symbolic="YES" id="ntT-rz-zqR"/>
+                            <constraint firstItem="ybQ-YQ-QTV" firstAttribute="trailing" secondItem="txt-gB-1Fy" secondAttribute="trailing" constant="8" id="t9a-Oa-k9q"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ybQ-YQ-QTV"/>
                     </view>
