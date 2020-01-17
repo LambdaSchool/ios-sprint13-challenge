@@ -63,6 +63,8 @@ class ImageViewController: UIViewController {
         changeFilterSelection(
             to: ImageFilterer.FilterType.allCases[
                 filterControl.selectedSegmentIndex])
+        delegate?.imageVCDidPickImage(
+            withData: imageView.image?.jpegData(compressionQuality: 1.0))
     }
 
     func removeImage() {
@@ -102,6 +104,11 @@ class ImageViewController: UIViewController {
                 .filterImage(image,
                              withType: filterType)
         }
+    }
+
+    func setImage(with data: Data?) {
+        guard let data = data else { return }
+        imageView.image = UIImage(data: data)
     }
 
     // MARK: - Helpers
@@ -144,9 +151,12 @@ extension ImageViewController: UIImagePickerControllerDelegate {
         guard let image = info[UIImagePickerController.InfoKey.originalImage]
             as? UIImage
             else { return }
-        originalImage = image
-
+        let width = imageView.frame.width
+        let height = width * image.ratio
+        originalImage = image.imageByScaling(toSize: CGSize(width: width,
+                                                            height: height))
         setImageViewHeight(forAspectRatio: image.ratio)
+        updateViews()
     }
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

@@ -136,6 +136,12 @@ class VideoViewController: UIViewController {
         delegate?.videoRecorderDidDeleteRecording()
     }
 
+    func setVideo(with data: Data?) {
+        if let data = data {
+            try? videoView.loadVideo(data: data)
+        }
+    }
+
     // MARK: - Helper Methods
 
     private func setUpCamera() {

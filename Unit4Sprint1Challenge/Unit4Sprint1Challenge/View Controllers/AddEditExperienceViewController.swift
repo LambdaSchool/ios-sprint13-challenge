@@ -54,12 +54,15 @@ class AddEditExperienceViewController: ShiftableViewController {
         if segue.identifier == "ExpImageSegue" {
             let imageVC = segue.destination as? ImageViewController
             imageVC?.delegate = self
+            imageVC?.setImage(with: imageData)
         } else if segue.identifier == "ExpAudioSegue" {
             let audioVC = segue.destination as? AudioViewController
             audioVC?.delegate = self
+            audioVC?.setAudio(with: audioData)
         } else if segue.identifier == "ExpVideoSegue" {
             let videoVC = segue.destination as? VideoViewController
             videoVC?.delegate = self
+            videoVC?.setVideo(with: videoData)
         }
     }
 }

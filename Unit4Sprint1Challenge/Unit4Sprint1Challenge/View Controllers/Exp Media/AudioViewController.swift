@@ -34,6 +34,7 @@ class AudioViewController: UIViewController {
     }
 
     private func updateViews() {
+        guard isViewLoaded else { return }
         let hasRecordedData = (audioData != nil)
         audioRecordererControl.isHidden = hasRecordedData
         audioPlayerControl.isHidden = !hasRecordedData
@@ -47,6 +48,12 @@ class AudioViewController: UIViewController {
     }
 
     // MARK: - Methods
+
+    func setAudio(with data: Data?) {
+        if let data = data {
+            audioPlayerControl.loadAudio(from: data)
+        }
+    }
 
     private func clearRecordedData() {
         audioPlayerControl.unloadAudio()
