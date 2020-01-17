@@ -1,5 +1,5 @@
 //
-//  PostAnnotationView.swift
+//  ExperienceAnnotationView.swift
 //  LambdaTimeline
 //
 //  Created by Jon Bash on 2020-01-16.
@@ -13,11 +13,11 @@ protocol ExperienceAnnotationViewDelegate: AnyObject {
 }
 
 class ExperienceAnnotationView: UIView {
-    var experience: Experience? {
+    var experienceAnnotation: Experience.MapAnnotation? {
         didSet { updateSubviews() }
     }
 
-    private let titleLabel = UILabel()
+    private let titleLabel = UIButton()
     private let dateLabel = UILabel()
 
     // MARK: - Init
@@ -48,11 +48,10 @@ class ExperienceAnnotationView: UIView {
     // MARK: - Private
 
     private func updateSubviews() {
-        guard let experience = experience else { return }
+        guard let annotation = experienceAnnotation else { return }
 
-        let title = experience.title
-        titleLabel.text = title
+        titleLabel.setTitle(annotation.title, for: .normal)
         dateLabel.text = DateFormatter.mapAnnotationFormatter
-            .string(from: experience.timestamp)
+            .string(from: annotation.timestamp)
     }
 }
