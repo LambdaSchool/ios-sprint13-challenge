@@ -12,6 +12,7 @@ import MapKit
 class MapViewController: UIViewController {
 
     var experienceController: ExperienceController!
+    var locationHelper = LocationHelper()
 
     @IBOutlet weak var mapView: MKMapView!
 
@@ -47,6 +48,7 @@ class MapViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let expVC = segue.destination as? AddEditExperienceViewController {
             expVC.experienceController = self.experienceController
+            expVC.locationHelper = self.locationHelper
             if segue.identifier == "EditPostSegue",
                 let experience = sender as? Experience {
                 expVC.experience = experience

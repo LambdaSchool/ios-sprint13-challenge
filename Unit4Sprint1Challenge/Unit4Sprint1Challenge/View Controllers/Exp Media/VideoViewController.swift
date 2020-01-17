@@ -1,5 +1,5 @@
 //
-//  VideoRecorderViewController.swift
+//  VideoViewController.swift
 //  LambdaTimeline
 //
 //  Created by Jon Bash on 2020-01-15.
@@ -14,7 +14,7 @@ protocol VideoRecorderDelegate: AnyObject {
     func videoRecorderDidDeleteRecording()
 }
 
-class VideoRecorderViewController: UIViewController {
+class VideoViewController: UIViewController {
 
     // MARK: - Properties
 
@@ -180,7 +180,7 @@ class VideoRecorderViewController: UIViewController {
 
 // MARK: - Recording Delegate
 
-extension VideoRecorderViewController: AVCaptureFileOutputRecordingDelegate {
+extension VideoViewController: AVCaptureFileOutputRecordingDelegate {
     func fileOutput(
         _ output: AVCaptureFileOutput,
         didStartRecordingTo fileURL: URL,

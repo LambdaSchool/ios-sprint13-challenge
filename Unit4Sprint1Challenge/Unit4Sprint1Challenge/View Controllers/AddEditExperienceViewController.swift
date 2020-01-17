@@ -11,14 +11,13 @@ import UIKit
 class AddEditExperienceViewController: ShiftableViewController {
 
     var experienceController: ExperienceController!
+    var locationHelper: LocationHelper!
 
     var experience: Experience?
 
     var imageData: Data?
     var videoData: Data?
     var audioData: Data?
-
-    var locationHelper = LocationHelper()
 
     var hasExperienceData: Bool {
         (descriptionTextView.text != nil && !descriptionTextView.text.isEmpty) ||
@@ -47,6 +46,21 @@ class AddEditExperienceViewController: ShiftableViewController {
 
         experienceController.makeModel(experience)
         navigationController?.popToRootViewController(animated: true)
+    }
+
+    // MARK: - Navigation
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ExpImageSegue" {
+            let imageVC = segue.destination as? ImageViewController
+            imageVC?.delegate = self
+        } else if segue.identifier == "ExpAudioSegue" {
+            let audioVC = segue.destination as? AudioViewController
+            audioVC?.delegate = self
+        } else if segue.identifier == "ExpVideoSegue" {
+            let videoVC = segue.destination as? VideoViewController
+            videoVC?.delegate = self
+        }
     }
 }
 
