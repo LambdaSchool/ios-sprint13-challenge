@@ -1,5 +1,5 @@
 //
-//  TimelineTabBarController.swift
+//  MainNavigationController.swift
 //  LambdaTimeline
 //
 //  Created by Jon Bash on 2020-01-16.
@@ -8,6 +8,6 @@
 
 import UIKit
 
-class TimelineTabBarController: UITabBarController {
+class MainNavigationController: UINavigationController {
     let experienceController = ExperienceController()
 }
