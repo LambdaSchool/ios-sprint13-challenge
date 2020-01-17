@@ -16,6 +16,7 @@ class VideoPlayerView: UIView {
     var videoIsLoaded: Bool {
         player != nil && looper != nil
     }
+    var videoData: Data?
 
     private var player: AVQueuePlayer?
     private var looper: AVPlayerLooper?
