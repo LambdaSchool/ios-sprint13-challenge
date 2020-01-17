@@ -37,6 +37,7 @@ class LocationHelper: NSObject {
     override init() {
         super.init()
         locationManager.delegate = self
+        beginUpdatingLocation()
     }
 
     deinit {
@@ -53,6 +54,8 @@ class LocationHelper: NSObject {
         if let hasPermission = hasLocationPermission, hasPermission {
             locationManager.requestLocation()
             locationManager.startMonitoringSignificantLocationChanges()
+        } else if hasLocationPermission == nil {
+            requestLocationPermission()
         }
     }
 
