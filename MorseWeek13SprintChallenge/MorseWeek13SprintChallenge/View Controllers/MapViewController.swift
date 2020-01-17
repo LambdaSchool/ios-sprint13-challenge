@@ -31,11 +31,14 @@ class MapViewController: UIViewController {
         print(experinceController.experiences.count)
         if experinceController.experiences.count > 0,
             let photoURL = experinceController.experiences[0].photoURL,
-            let audioURL = experinceController.experiences[0].audioURL {
+            let audioURL = experinceController.experiences[0].audioURL,
+            let videoURL = experinceController.experiences[0].videoURL {
             let photoData = try? Data(contentsOf: photoURL)
             print("Image: \(UIImage(data: photoData!))")
             let audioData = try? Data(contentsOf: audioURL)
             print("Audio: \(audioData)")
+            let videoData = try? Data(contentsOf: videoURL)
+            print("Video: \(videoData)")
         }
         performSegue(withIdentifier: PropertyKeys.createExperienceSegue, sender: self)
     }

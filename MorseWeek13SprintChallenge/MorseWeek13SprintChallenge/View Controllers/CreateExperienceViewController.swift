@@ -27,6 +27,11 @@ class CreateExperienceViewController: UIViewController {
             savePhoto()
         }
     }
+    var experienceTitle: String?
+    var latitude: Double?
+    var longitude: Double?
+    var audioExtension: String?
+    var photoExtension: String?
     
     // MARK: - Lifecycle Methods
 
@@ -48,14 +53,19 @@ class CreateExperienceViewController: UIViewController {
     
     @IBAction func addVideoButtonTapped(_ sender: Any) {
         prepareExperience()
-        performSegue(withIdentifier: PropertyKeys.recordVideoSegue, sender: self)
+        print(experinceController?.experiences.count)
+        requestPermissionAndShowCamera()
     }
     
     func prepareExperience() {
         guard let title = titleTextField.text,
             !title.isEmpty else { return }
         
-        experinceController?.createExperience(title: title, latitude: lat(), longitude: long(), videoExtension: "", audioExtension: audio, photoExtension: image)
+        experienceTitle = title
+        latitude = lat()
+        longitude = long()
+        audioExtension = audio
+        photoExtension = image
     }
     
     func lat() -> Double {
@@ -160,23 +170,57 @@ class CreateExperienceViewController: UIViewController {
         return UIImage(cgImage: outputCGImage)
     }
     
-    /*
-     
-     
-     topSlider.value = 0
-     topSlider.minimumValue = -3.141592653589793
-     topSlider.maximumValue =
-     */
+    // MARK: - Video Permissions
     
+    private func requestPermissionAndShowCamera() {
+        let status = AVCaptureDevice.authorizationStatus(for: .video)
+        
+        switch status {
+        case .notDetermined:
+            requestPermission()
+        case .restricted:
+            fatalError("No video")
+        case .denied:
+            fatalError("Denied!")
+        case .authorized:
+            showCamera()
+        @unknown default:
+            fatalError("New case!")
+        }
+    }
+    
+    private func requestPermission() {
+        AVCaptureDevice.requestAccess(for: .video) { (granted) in
+            guard granted else {
+                fatalError("No permission")
+            }
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                
+                self.showCamera()
+            }
+        }
+    }
+    
+    private func showCamera() {
+        performSegue(withIdentifier: PropertyKeys.recordVideoSegue, sender: self)
+    }
     
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == PropertyKeys.recordVideoSegue {
             guard let recordVC = segue.destination as? RecordMovieViewController,
-                let experience = experience else { return }
+                let experienceTitle = experienceTitle,
+                let latitude = latitude,
+                let longitude = longitude else { return }
             recordVC.experienceController = experinceController
-            recordVC.experience = experience
+            
+            recordVC.experienceTitle = experienceTitle
+            recordVC.latitude = latitude
+            recordVC.longitude = longitude
+            recordVC.audioExtension = audioExtension
+            recordVC.photoExtension = photoExtension
         }
     }
 
@@ -211,12 +255,6 @@ extension CreateExperienceViewController: AVAudioRecorderDelegate {
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
         if let error = error {
             print("Record error: \(error)")
-        }
-    }
-    
-    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-        if let recordURL = recordURL {
-            print(try? Data(contentsOf: recordURL))
         }
     }
 }

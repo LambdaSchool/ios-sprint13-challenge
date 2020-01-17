@@ -15,7 +15,7 @@ class Experience: NSObject, Codable {
     let date: Date = Date()
     let latitude: Double
     let longitude: Double
-    let videoExtension: String
+    var videoExtension: String
     var videoURL: URL? {
         if videoExtension.isEmpty {
             return nil
