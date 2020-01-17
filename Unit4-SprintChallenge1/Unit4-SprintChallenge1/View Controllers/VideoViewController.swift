@@ -15,6 +15,7 @@ class VideoViewController: UIViewController {
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     var player: AVPlayer?
+    var entryController: EntryController?
 
     // MARK: - IBOutlets
     @IBOutlet weak var postButton: UIBarButtonItem!

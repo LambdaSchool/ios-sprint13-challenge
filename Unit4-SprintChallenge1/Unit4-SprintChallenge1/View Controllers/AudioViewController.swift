@@ -10,6 +10,7 @@ import UIKit
 
 class AudioViewController: UIViewController {
 
+    var entryController: EntryController?
     let audioPlayerController = AudioPlayerController()
     let audioRecorderController = AudioRecorderController()
 
