@@ -22,7 +22,7 @@ class VideoViewController: UIViewController {
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var cameraView: CameraPreviewView!
     @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var locationSwitch: UISwitch!
+    @IBOutlet weak var geotagSwitch: UISwitch!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -148,9 +148,21 @@ class VideoViewController: UIViewController {
         player?.play()
     }
 
-    // TODO: Write function to post a video
     private func postVideo() {
+        view.endEditing(true)
+
+        guard let title = titleTextField.text,
+            !title.isEmpty else {
+            presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a caption before posting.")
+            return
+        }
         
+        // TODO: IMPLEMENT LOCATION
+        if geotagSwitch.isOn {
+            self.entryController?.createPost(with: title, ofType: .image, location: nil)
+        } else {
+            self.entryController?.createPost(with: title, ofType: .image, location: nil)
+        }
     }
 
     // MARK: - IBActions

@@ -91,7 +91,7 @@ class ImageViewController: UIViewController {
         guard let _ = imageData,
             let title = titleTextField.text,
             !title.isEmpty else {
-            presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
+            presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a caption before posting.")
             return
         }
 
