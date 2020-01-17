@@ -19,10 +19,10 @@
                                 <rect key="frame" x="10" y="108" width="394" height="694"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Nr1-CG-Vin">
-                                        <rect key="frame" x="0.0" y="0.0" width="394" height="24"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="394" height="34"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mor-Ge-8b4">
-                                                <rect key="frame" x="0.0" y="0.0" width="60" height="24"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="60" height="34"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="60" id="AZX-k7-Cu6"/>
                                                 </constraints>
@@ -31,33 +31,96 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="G2T-He-PoG">
-                                                <rect key="frame" x="68" y="0.0" width="326" height="24"/>
+                                                <rect key="frame" x="68" y="0.0" width="326" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                         </subviews>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ata-NO-uN2">
-                                        <rect key="frame" x="0.0" y="44" width="394" height="24"/>
+                                        <rect key="frame" x="0.0" y="54" width="394" height="24"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="U89-6s-bbi">
-                                        <rect key="frame" x="0.0" y="88" width="394" height="310"/>
+                                        <rect key="frame" x="0.0" y="98" width="394" height="200"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="njs-uZ-2jK">
+                                        <rect key="frame" x="0.0" y="318" width="394" height="150"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zVq-Xd-Ns8">
+                                                <rect key="frame" x="0.0" y="30" width="394" height="90"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CFH-eK-qe7">
+                                                        <rect key="frame" x="0.0" y="0.0" width="394" height="30"/>
+                                                        <state key="normal" title="Record"/>
+                                                        <connections>
+                                                            <action selector="recordAudioButtonPressed:" destination="5Sj-Qp-Vob" eventType="touchUpInside" id="5gn-C2-MeP"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="90d-Hz-Fc2">
+                                                        <rect key="frame" x="0.0" y="30" width="394" height="30"/>
+                                                        <state key="normal" title="Play"/>
+                                                        <state key="selected" title="Pause"/>
+                                                        <connections>
+                                                            <action selector="playAudioButtonPressed:" destination="5Sj-Qp-Vob" eventType="touchUpInside" id="U6W-KL-nyD"/>
+                                                        </connections>
+                                                    </button>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="DPB-AX-8eB">
+                                                        <rect key="frame" x="0.0" y="60" width="394" height="30"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OTh-U4-iEV">
+                                                                <rect key="frame" x="0.0" y="0.0" width="36" height="30"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="vGJ-uG-dmZ">
+                                                                <rect key="frame" x="42" y="0.0" width="310" height="31"/>
+                                                            </slider>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dIg-ok-UHv">
+                                                                <rect key="frame" x="358" y="0.0" width="36" height="30"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="zVq-Xd-Ns8" secondAttribute="trailing" id="Ko2-WW-JG1"/>
+                                            <constraint firstItem="zVq-Xd-Ns8" firstAttribute="centerY" secondItem="njs-uZ-2jK" secondAttribute="centerY" id="NYR-Yl-EX8"/>
+                                            <constraint firstItem="zVq-Xd-Ns8" firstAttribute="leading" secondItem="njs-uZ-2jK" secondAttribute="leading" id="mKX-s1-qy5"/>
+                                            <constraint firstAttribute="height" constant="150" id="nDu-gK-e5J"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FLm-lM-6VH">
+                                        <rect key="frame" x="0.0" y="488" width="394" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="F4t-Le-XhM"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" title="Voice Comment"/>
+                                        <connections>
+                                            <action selector="voiceCommentButtonTapped:" destination="5Sj-Qp-Vob" eventType="touchUpInside" id="4wS-6f-0Jg"/>
+                                        </connections>
+                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What Type of Post?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Be-eB-lbt">
-                                        <rect key="frame" x="0.0" y="418" width="394" height="36"/>
+                                        <rect key="frame" x="0.0" y="548" width="394" height="36"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="6lm-JL-tav">
-                                        <rect key="frame" x="0.0" y="474" width="394" height="220"/>
+                                        <rect key="frame" x="0.0" y="604" width="394" height="90"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ua2-0X-i9m">
                                                 <rect key="frame" x="0.0" y="0.0" width="394" height="40"/>
@@ -82,25 +145,6 @@
                                                     <action selector="videoButtonTapped:" destination="5Sj-Qp-Vob" eventType="touchUpInside" id="PyM-SZ-9Rj"/>
                                                 </connections>
                                             </button>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="fQ9-qo-7TF">
-                                                <rect key="frame" x="0.0" y="100" width="394" height="120"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Location" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h7H-Fk-83J">
-                                                        <rect key="frame" x="0.0" y="0.0" width="394" height="30"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zgJ-JR-GgJ">
-                                                        <rect key="frame" x="0.0" y="40" width="394" height="80"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="80" id="xEL-6y-Uzi"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                                        <state key="normal" title="📌"/>
-                                                    </button>
-                                                </subviews>
-                                            </stackView>
                                         </subviews>
                                     </stackView>
                                 </subviews>
@@ -123,7 +167,12 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="audioSlider" destination="vGJ-uG-dmZ" id="IIt-xj-GH9"/>
+                        <outlet property="audioTimeLabel" destination="OTh-U4-iEV" id="iLS-cL-sYc"/>
+                        <outlet property="audioTimeRemainingLabel" destination="dIg-ok-UHv" id="g0o-Js-vzv"/>
                         <outlet property="descriptionTextView" destination="U89-6s-bbi" id="jXQ-OW-86Z"/>
+                        <outlet property="playAudioButton" destination="90d-Hz-Fc2" id="aqu-vf-KF6"/>
+                        <outlet property="recordAudioButton" destination="CFH-eK-qe7" id="HDS-FG-8QV"/>
                         <outlet property="titleTextView" destination="G2T-He-PoG" id="f9U-Dh-zFy"/>
                         <segue destination="4D1-Jq-Own" kind="show" identifier="RecordVideoSegue" id="Bfq-4a-PXN"/>
                     </connections>
