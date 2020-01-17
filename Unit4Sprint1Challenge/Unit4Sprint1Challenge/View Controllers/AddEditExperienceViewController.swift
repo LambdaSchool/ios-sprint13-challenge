@@ -53,14 +53,14 @@ class AddEditExperienceViewController: ShiftableViewController {
             let title = titleTextField.text, !title.isEmpty,
             hasExperienceData
             else { return }
-        let experience = Experience(title: title)
-        experience.imageData = imageData
-        experience.videoData = videoData
-        experience.audioData = audioData
-        experience.text = descriptionTextView.text
-        experience.geotag = locationHelper.currentLocation
+        let savingExp = self.experience ?? Experience(title: title)
+        savingExp.imageData = imageData
+        savingExp.videoData = videoData
+        savingExp.audioData = audioData
+        savingExp.text = descriptionTextView.text
+        savingExp.geotag = locationHelper.currentLocation
 
-        experienceController.makeModel(experience)
+        experienceController.makeModel(savingExp)
         navigationController?.popToRootViewController(animated: true)
     }
 
