@@ -25,6 +25,15 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         print(experinceController.experiences.count)
+        mapView.delegate = self
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: PropertyKeys.experienceView)
+//        mapView.addAnnotations(experinceController.experiences)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        mapView.addAnnotations(experinceController.experiences)
     }
 
     @IBAction func addExperienceTapped(_ sender: Any) {
@@ -54,3 +63,14 @@ class MapViewController: UIViewController {
     
 }
 
+extension MapViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        guard let experience = annotation as? Experience else { fatalError("No coordinates") }
+        guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: PropertyKeys.experienceView) as? MKMarkerAnnotationView else { fatalError("No view") }
+        
+        annotationView.canShowCallout = true
+        annotationView.annotation = experience
+        return annotationView
+    }
+}

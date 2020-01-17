@@ -11,4 +11,6 @@ import Foundation
 struct PropertyKeys {
     static let createExperienceSegue = "ShowCreateExperienceSegue"
     static let recordVideoSegue = "ShowRecordVideoSegue"
+    
+    static let experienceView = "ExperienceView"
 }

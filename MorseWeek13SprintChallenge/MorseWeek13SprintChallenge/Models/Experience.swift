@@ -10,7 +10,7 @@ import Foundation
 
 class Experience: NSObject, Codable {
     
-    let title: String
+    let name: String
     let id: String = UUID().uuidString
     let date: Date = Date()
     let latitude: Double
@@ -35,7 +35,7 @@ class Experience: NSObject, Codable {
     }
     
     init(title: String, latitude: Double, longitude: Double, videoExtension: String = "", audioExtension: String = "", photoExtension: String = "") {
-        self.title = title
+        self.name = title
         self.latitude = latitude
         self.longitude = longitude
         self.videoExtension = videoExtension
