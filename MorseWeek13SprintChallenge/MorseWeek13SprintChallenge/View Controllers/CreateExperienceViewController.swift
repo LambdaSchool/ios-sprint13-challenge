@@ -53,7 +53,6 @@ class CreateExperienceViewController: UIViewController {
     
     @IBAction func addVideoButtonTapped(_ sender: Any) {
         prepareExperience()
-        print(experinceController?.experiences.count)
         requestPermissionAndShowCamera()
     }
     
