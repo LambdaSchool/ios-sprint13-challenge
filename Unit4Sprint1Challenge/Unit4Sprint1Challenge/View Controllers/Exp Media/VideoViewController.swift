@@ -9,13 +9,9 @@
 import UIKit
 import AVFoundation
 
-// MARK: - Delegate
-
 protocol VideoRecorderDelegate: AnyObject {
-    func videoRecorder(
-        didFinishRecordingSucessfully success: Bool,
-        toURL videoURL: URL
-    )
+    func videoRecorderDidFinishRecording(withData videoData: Data?)
+    func videoRecorderDidDeleteRecording()
 }
 
 class VideoRecorderViewController: UIViewController {
@@ -25,10 +21,30 @@ class VideoRecorderViewController: UIViewController {
     private lazy var captureSession = AVCaptureSession()
     private lazy var fileOutput = AVCaptureMovieFileOutput()
 
-    weak var delegate: VideoRecorderDelegate?
+    @IBOutlet weak var cameraView: CameraPreviewView!
+    @IBOutlet weak var videoView: VideoPlayerView!
 
-    @IBOutlet var recordButton: UIButton!
-    @IBOutlet var cameraView: CameraPreviewView!
+    @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
+    @IBOutlet weak var deleteView: UIView!
+
+    private(set) var videoURL: URL? {
+        didSet {
+            if let url = videoURL {
+                videoView.loadVideo(url: url)
+            } else {
+                videoView.unloadVideo()
+            }
+        }
+    }
+    var videoData: Data? {
+        guard let url = videoURL else { return nil }
+        return try? Data(contentsOf: url)
+    }
+
+    var hasVideoData: Bool { videoData != nil }
+
+    weak var delegate: VideoRecorderDelegate?
 
     private var bestCamera: AVCaptureDevice {
         if #available(iOS 13.0, *),
@@ -78,6 +94,17 @@ class VideoRecorderViewController: UIViewController {
         captureSession.stopRunning()
     }
 
+    private func updateViews() {
+        recordButton.isSelected = fileOutput.isRecording
+
+        cameraView.isHidden = hasVideoData
+        recordButton.isHidden = hasVideoData
+
+        deleteView.isHidden = !hasVideoData
+        deleteView.isHidden = !hasVideoData
+        videoView.isHidden = !hasVideoData
+    }
+
     // MARK: - Actions
 
     @IBAction
@@ -85,7 +112,9 @@ class VideoRecorderViewController: UIViewController {
         toggleRecording()
     }
 
-    // MARK: - Helper Methods
+    @IBAction func removeButtonTapped(_ sender: Any) {
+        trashRecording()
+    }
 
     func toggleRecording() {
         if fileOutput.isRecording {
@@ -97,9 +126,17 @@ class VideoRecorderViewController: UIViewController {
         }
     }
 
-    private func updateViews() {
-        recordButton.isSelected = fileOutput.isRecording
+    func trashRecording() {
+        guard let url = videoURL else { return }
+        videoURL = nil
+        let fm = FileManager.default
+        if fm.isDeletableFile(atPath: url.path) {
+            try? fm.trashItem(at: url, resultingItemURL: nil)
+        }
+        delegate?.videoRecorderDidDeleteRecording()
     }
+
+    // MARK: - Helper Methods
 
     private func setUpCamera() {
         // get the best camera
@@ -149,7 +186,9 @@ extension VideoRecorderViewController: AVCaptureFileOutputRecordingDelegate {
         didStartRecordingTo fileURL: URL,
         from connections: [AVCaptureConnection]
     ) {
-        updateViews()
+        DispatchQueue.main.async {
+            self.updateViews()
+        }
     }
 
     func fileOutput(
@@ -160,17 +199,12 @@ extension VideoRecorderViewController: AVCaptureFileOutputRecordingDelegate {
     ) {
         if let error = error {
             print("Error with video recording: \(error)")
-            delegate?.videoRecorder(
-                didFinishRecordingSucessfully: false,
-                toURL: outputFileURL)
             return
         }
         print("finished recording video: \(outputFileURL.path)")
-        let thisDelegate = delegate // avoid `self`
-        self.dismiss(animated: true) {
-            thisDelegate?.videoRecorder(
-                didFinishRecordingSucessfully: true,
-                toURL: outputFileURL)
+        self.videoURL = outputFileURL
+        DispatchQueue.main.async {
+            self.updateViews()
         }
     }
 }
