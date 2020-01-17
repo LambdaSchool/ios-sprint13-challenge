@@ -48,7 +48,7 @@ class AudioViewController: UIViewController {
         recorder?.delegate = self
         timeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: timeLabel.font.pointSize, weight: .regular)
         timeRemainingLabel.font = UIFont.monospacedDigitSystemFont(ofSize: timeRemainingLabel.font.pointSize, weight: .regular)
-        recordButton.tintColor = .cyan
+        recordButton.tintColor = .systemGreen
         updateViews()
     }
     
@@ -103,7 +103,7 @@ class AudioViewController: UIViewController {
             if recorder.isRecording {
                 recordButton.tintColor = .red
             } else {
-                recordButton.tintColor = .cyan
+                recordButton.tintColor = .systemGreen
             }
         }
     }

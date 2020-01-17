@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="jHf-Nv-wdf">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
@@ -10,7 +10,7 @@
         <!--View Controller-->
         <scene sceneID="O8C-50-osk">
             <objects>
-                <viewController id="V9v-Gv-5ZL" customClass="ViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="V9v-Gv-5ZL" customClass="ViewController" customModule="Experiences_Sprint_Challenge" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AZZ-sI-1oV">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -56,7 +56,7 @@
         <!--Add Experience-->
         <scene sceneID="ALP-Ar-r4C">
             <objects>
-                <viewController id="dsg-ao-Dg3" customClass="ExperienceViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="dsg-ao-Dg3" customClass="ExperienceViewController" customModule="Experiences_Sprint_Challenge" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EmU-Lz-F1r">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -185,7 +185,7 @@
         <!--Audio-->
         <scene sceneID="1yR-ag-Krx">
             <objects>
-                <viewController id="emn-vX-bQ5" customClass="AudioViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="emn-vX-bQ5" customClass="AudioViewController" customModule="Experiences_Sprint_Challenge" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Yxv-uS-GVf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -274,21 +274,23 @@
         <!--Video-->
         <scene sceneID="MnN-WV-AeX">
             <objects>
-                <viewController id="Xkt-kl-WjC" customClass="VideoViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Xkt-kl-WjC" customClass="VideoViewController" customModule="Experiences_Sprint_Challenge" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jSY-iY-9Oi">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JUR-hG-1YN" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JUR-hG-1YN" customClass="CameraPreviewView" customModule="Experiences_Sprint_Challenge" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e2Z-1K-sxT">
-                                        <rect key="frame" x="191" y="824" width="32" height="32"/>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e2Z-1K-sxT">
+                                        <rect key="frame" x="168" y="784" width="79" height="70"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="e2Z-1K-sxT" secondAttribute="height" multiplier="1:1" id="KbV-nn-5Lu"/>
                                         </constraints>
-                                        <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" image="Record"/>
+                                        <color key="tintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" image="video.circle" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="50" scale="large" weight="regular"/>
+                                        </state>
                                         <connections>
                                             <action selector="recordButtonTapped:" destination="Xkt-kl-WjC" eventType="touchUpInside" id="PVS-tY-2bn"/>
                                         </connections>
@@ -312,6 +314,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Video" id="Blc-hS-3Rz">
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="H2C-vf-7Ze">
+                            <color key="tintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="saveTapped:" destination="Xkt-kl-WjC" id="oqT-FQ-E5h"/>
                             </connections>
@@ -324,12 +327,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9SC-1u-S0w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2628" y="850"/>
+            <point key="canvasLocation" x="2627.536231884058" y="849.77678571428567"/>
         </scene>
         <!--Image-->
         <scene sceneID="SZ2-Aq-ysM">
             <objects>
-                <viewController id="stj-2l-gva" customClass="ImageViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="stj-2l-gva" customClass="ImageViewController" customModule="Experiences_Sprint_Challenge" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ebD-zu-RR7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -415,12 +418,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Record" width="16" height="16"/>
         <image name="green add button" width="111" height="111"/>
         <image name="largecircle.fill.circle" catalog="system" width="64" height="60"/>
         <image name="mapbutton512h" width="512" height="512"/>
         <image name="play.circle" catalog="system" width="64" height="60"/>
         <image name="smallcircle.fill.circle" catalog="system" width="64" height="60"/>
+        <image name="video.circle" catalog="system" width="64" height="60"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="WPj-wL-cfC"/>

@@ -40,13 +40,15 @@ class ExperienceViewController: UIViewController {
         }
         updateViews()
     }
-    
+
     func updateViews() {
         guard let experience = experience else { return }
         tableView.reloadData()
         titleTF.text = experience.title
         descriptionTF.text = experience.subtitle
     }
+
+
     
 // MARK: Actions
     @IBAction func addTapped(_ sender: Any) {
@@ -169,3 +171,9 @@ extension ExperienceViewController: ExperienceViewControllerDelegate {
         }
     }
 }
+//// Override to support editing the table view.
+//func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//    if editingStyle == .delete {
+//        
+//    }
+//}
