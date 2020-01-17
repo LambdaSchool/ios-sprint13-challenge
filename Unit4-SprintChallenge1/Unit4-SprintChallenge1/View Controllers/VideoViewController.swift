@@ -9,6 +9,10 @@
 import UIKit
 import AVFoundation
 
+protocol VideoViewControllerDelegate {
+    func videoPostButtonWasTapped()
+}
+
 class VideoViewController: UIViewController {
 
     // MARK: - Properties
@@ -16,6 +20,7 @@ class VideoViewController: UIViewController {
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     var player: AVPlayer?
     var entryController: EntryController?
+    var delegate: VideoViewControllerDelegate?
 
     // MARK: - IBOutlets
     @IBOutlet weak var postButton: UIBarButtonItem!
@@ -161,9 +166,13 @@ class VideoViewController: UIViewController {
         if geotagSwitch.isOn {
             LocationHelper.shared.getCurrentLocation { (coordinate) in
                 self.entryController?.createPost(with: title, ofType: .image, location: coordinate)
+                self.delegate?.videoPostButtonWasTapped()
+                self.dismiss(animated: true, completion: nil)
             }
         } else {
             self.entryController?.createPost(with: title, ofType: .image, location: nil)
+            self.delegate?.videoPostButtonWasTapped()
+            self.dismiss(animated: true, completion: nil)
         }
     }
 

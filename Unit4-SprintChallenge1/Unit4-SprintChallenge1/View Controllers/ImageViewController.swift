@@ -9,10 +9,15 @@
 import UIKit
 import Photos
 
+protocol ImageViewControllerDelegate {
+    func imagePostButtonWasTapped()
+}
+
 class ImageViewController: UIViewController {
 
     var entryController: EntryController?
     var imageData: Data?
+    var delegate: ImageViewControllerDelegate?
 
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
@@ -88,8 +93,7 @@ class ImageViewController: UIViewController {
     private func postImage() {
         view.endEditing(true)
 
-        guard let _ = imageData,
-            let title = titleTextField.text,
+        guard let title = titleTextField.text,
             !title.isEmpty else {
             presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a caption before posting.")
             return
@@ -98,9 +102,13 @@ class ImageViewController: UIViewController {
         if geotagSwitch.isOn {
             LocationHelper.shared.getCurrentLocation { (coordinate) in
                 self.entryController?.createPost(with: title, ofType: .image, location: coordinate)
+                self.delegate?.imagePostButtonWasTapped()
+                self.dismiss(animated: true) {}
             }
         } else {
             self.entryController?.createPost(with: title, ofType: .image, location: nil)
+            delegate?.imagePostButtonWasTapped()
+            self.dismiss(animated: true, completion: nil)
         }
     }
 
@@ -161,7 +169,10 @@ extension ImageViewController: UIImagePickerControllerDelegate, UINavigationCont
 
         imageView.image = image
 
-//        isFilterOptionsHidden(false)
+//      isFilterOptionsHidden(false)
+
+        postButton.isEnabled = true
+        postButton.tintColor = UIColor.link
 
         let ratio = image.size.height / image.size.width
         setImageViewHeight(with: ratio)

@@ -13,11 +13,11 @@ class JournalTableViewController: UITableViewController {
 
     let entryController = EntryController()
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         tableView.reloadData()
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -88,17 +88,36 @@ class JournalTableViewController: UITableViewController {
         case "ModalImageSegue":
             if let destinationVC = segue.destination as? ImageViewController {
                 destinationVC.entryController = self.entryController
+                destinationVC.delegate = self
             }
         case "ModalAudioSegue":
             if let destinationVC = segue.destination as? AudioViewController {
                 destinationVC.entryController = self.entryController
+                destinationVC.delegate = self
             }
         case "ModalVideoSegue":
             if let destinationVC = segue.destination as? VideoViewController {
                 destinationVC.entryController = self.entryController
+                destinationVC.delegate = self
             }
         default:
             return
         }
     }
+}
+
+extension JournalTableViewController: ImageViewControllerDelegate, AudioViewControllerDelegate, VideoViewControllerDelegate {
+    func imagePostButtonWasTapped() {
+        tableView.reloadData()
+    }
+
+    func audioPostButtonWasTapped() {
+        tableView.reloadData()
+    }
+
+    func videoPostButtonWasTapped() {
+        tableView.reloadData()
+    }
+
+
 }

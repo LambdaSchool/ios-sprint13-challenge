@@ -8,12 +8,17 @@
 
 import UIKit
 
+protocol AudioViewControllerDelegate {
+    func audioPostButtonWasTapped()
+}
+
 class AudioViewController: UIViewController {
 
     var entryController: EntryController?
     let audioPlayerController = AudioPlayerController()
     let audioRecorderController = AudioRecorderController()
     var audioData: Data?
+    var delegate: AudioViewControllerDelegate?
 
     @IBOutlet weak var recordingAudioButton: UIButton!
     @IBOutlet weak var playbackAudioButton: UIButton!
@@ -83,7 +88,8 @@ class AudioViewController: UIViewController {
         guard let _ = audioData else { return }
         let title = "Audio Post"
         self.entryController?.createPost(with: title, ofType: .audio, location: nil)
-
+        delegate?.audioPostButtonWasTapped()
+        dismiss(animated: true, completion: nil)
     }
 
     @IBAction func playbackAudioTapped(_ sender: UIButton) {
