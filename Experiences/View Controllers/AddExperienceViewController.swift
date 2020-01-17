@@ -13,33 +13,31 @@ import MapKit
 class AddExperienceViewController: UIViewController {
     
     var experienceController: ExperienceController?
-    var coordinates: CLLocationCoordinate2D?
-    var newExperienceDelegate: NewExperienceDelegate! //MapVC
-
+    var geotag: CLLocationCoordinate2D?
+    let locationManager = CLLocationManager()
+    
     @IBOutlet weak var titleTextView: UITextField!
     @IBOutlet weak var descriptionTextView: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.hideKeyboardWhenTappedAround() 
+        self.hideKeyboardWhenTappedAround()
+        checkLocationAuthorization()
     }
     
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
         
+        getUserLocation()
+        
         guard let title = titleTextView.text,
             let experienceController = experienceController,
-            let cooordinates = coordinates else { return }
+            let geotag = geotag else { return }
         
         let note = descriptionTextView.text
         
-        experienceController.createExperience(title: title, note: note, coordinates: cooordinates)
+        experienceController.createExperience(title: title, note: note, geotag: geotag)
         
-        // MARK: Delegate
-        newExperienceDelegate.createdExeprience(title: title)
-
-//        NotificationCenter.default.post(name: .newLocation, object: self, userInfo: ["Location" : title])
-        //    NotificationCenter.default.post(name: .blue, object: self)
         navigationController?.popToRootViewController(animated: true)
     }
     
@@ -50,6 +48,43 @@ class AddExperienceViewController: UIViewController {
         requestPermissionAndShowCamera()
     }
     
+    func getUserLocation() {
+        
+        if let location = locationManager.location?.coordinate {
+            self.geotag = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+        }
+    }
+    
+    func setupLocationManager() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation() // Updates location as it moves
+
+//        locationManager.requestAlwaysAuthorization()
+//        locationManager.startMonitoringSignificantLocationChanges()
+    }
+    
+    func checkLocationAuthorization() {
+        
+        switch CLLocationManager.authorizationStatus() {
+            
+        case .authorizedWhenInUse :
+            setupLocationManager()
+
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization() // asking fro permission
+        case .restricted:
+            // TODO: Show alert letting know whats up
+            break
+        case .denied:
+            // TODO: Show alert instructing them how to turn on permission
+            break
+        case .authorizedAlways:
+            break
+        @unknown default:
+            break
+        }
+    }
     
     // MARK: Video Access
     
@@ -93,8 +128,6 @@ class AddExperienceViewController: UIViewController {
         performSegue(withIdentifier: "RecordVideoSegue", sender: self)
     }
     
-//    NotificationCenter.default.post(name: .blue, object: self)
-
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -116,7 +149,19 @@ class AddExperienceViewController: UIViewController {
     }
 }
 
-protocol NewExperienceDelegate {
+extension AddExperienceViewController: CLLocationManagerDelegate {
     
-    func createdExeprience(title: String)
+    // This func runs every time the user moves (re-locates)
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+//        print("locations = \(locValue.latitude) \(locValue.longitude)")
+        
+    }
+    
+    
+    // Runs everytime the authirization changes.
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        checkLocationAuthorization()
+    }
 }

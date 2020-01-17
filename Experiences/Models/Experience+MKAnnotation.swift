@@ -8,13 +8,13 @@
 
 import MapKit
 
-extension Experience: MKAnnotation {
-    
-    var coordinate: CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-    }
-
-    var subtitle: String? {
-        return note
-    }
-}
+//extension Experience: MKAnnotation {
+////    
+////    var coordinate: CLLocationCoordinate2D {
+////        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+////    }
+//
+//    var subtitle: String? {
+//        return note
+//    }
+//}

@@ -15,11 +15,13 @@ class ExperienceController {
     var experiences: [Experience] = []
     var video: URL?
     var image: UIImage?
-    var coordinates: CLLocationCoordinate2D?
+//    var coordinates: CLLocationCoordinate2D?
+    var geotag: CLLocationCoordinate2D?
 
-    func createExperience(title: String, note: String?, coordinates: CLLocationCoordinate2D) {
+    func createExperience(title: String, note: String?, geotag: CLLocationCoordinate2D?) {
         
-        let newExperience = Experience(video: video, image: image, title: title, note: note, latitude: coordinates.latitude, longitude: coordinates.longitude)
+        let newExperience = Experience(video: video, image: image, title: title, note: note, geotag: geotag)
+//        let newExperience = Experience(video: video, image: image, title: title, note: note, latitude: coordinates.latitude, longitude: coordinates.longitude)
         
         experiences.append(newExperience)
         print("Experience with title \(newExperience.title) was created!")
@@ -41,6 +43,13 @@ class ExperienceController {
                 
             } else {
                 print("Experience \(testingExperience.title) does NOT have an image")
+            }
+            
+            if geotag != nil {
+                print("Experience \(testingExperience.title) has a geotag!")
+                
+            } else {
+                print("Experience \(testingExperience.title) does NOT have a geotag")
             }
         }
     }
