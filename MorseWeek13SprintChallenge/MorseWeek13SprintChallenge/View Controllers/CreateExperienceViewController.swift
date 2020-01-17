@@ -99,6 +99,7 @@ class CreateExperienceViewController: UIViewController {
     var recordURL: URL?
     
     func record() {
+        audioRecorder = nil
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         audio = UUID().uuidString
         
@@ -128,7 +129,7 @@ class CreateExperienceViewController: UIViewController {
     }
     
     func updateAudioViews() {
-        let recordButtonTitle = isRecording ? "Stop Recording" : "Record New Audio"
+        let recordButtonTitle = isRecording ? "Stop Recording" : "Record Audio"
         recordButton.setTitle(recordButtonTitle, for: .normal)
     }
     
