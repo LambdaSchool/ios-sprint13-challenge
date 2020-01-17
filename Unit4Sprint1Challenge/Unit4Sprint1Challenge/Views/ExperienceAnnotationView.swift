@@ -17,7 +17,12 @@ class ExperienceAnnotationView: UIView {
         didSet { updateSubviews() }
     }
 
-    private let titleButton = UIButton()
+    private let titleButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("See content", for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
+        return button
+    }()
     private let dateLabel = UILabel()
 
     weak var delegate: ExperienceAnnotationViewDelegate?
@@ -35,7 +40,7 @@ class ExperienceAnnotationView: UIView {
     }
 
     private func setUp() {
-        let mainStackView = UIStackView(arrangedSubviews: [titleButton, dateLabel])
+        let mainStackView = UIStackView(arrangedSubviews: [dateLabel, titleButton])
         mainStackView.axis = .vertical
         mainStackView.spacing = UIStackView.spacingUseSystem
 
@@ -59,7 +64,6 @@ class ExperienceAnnotationView: UIView {
     private func updateSubviews() {
         guard let annotation = experienceAnnotation else { return }
 
-        titleButton.setTitle(annotation.title, for: .normal)
         dateLabel.text = DateFormatter.mapAnnotationFormatter
             .string(from: annotation.timestamp)
     }
