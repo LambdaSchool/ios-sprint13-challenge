@@ -20,6 +20,7 @@ class MapViewController: UIViewController {
         mapView.delegate = self
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "EntryView")
         // Do any additional setup after loading the view.
+        fetchEntries()
     }
 
     private func fetchEntries() {
