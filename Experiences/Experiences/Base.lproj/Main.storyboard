@@ -191,15 +191,11 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Image-3" translatesAutoresizingMaskIntoConstraints="NO" id="Uqs-jg-vEn">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="808.00000000000011"/>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WzC-Fg-pMY">
-                                <rect key="frame" x="20" y="94" width="374" height="620"/>
+                            <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="MpU-eP-3VS" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
+                                <rect key="frame" x="20" y="100" width="374" height="614"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MpU-eP-3VS" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
-                                        <rect key="frame" x="25" y="8" width="324" height="465"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="6vi-Xt-fOc">
-                                        <rect key="frame" x="33" y="473" width="308" height="139"/>
+                                        <rect key="frame" x="33" y="423" width="308" height="139"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Lg-On-LZM">
                                                 <rect key="frame" x="114" y="0.0" width="80" height="36"/>
@@ -239,31 +235,29 @@
                                         </constraints>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.91468311430000004" green="0.39546767980000003" blue="0.88254778150000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="MpU-eP-3VS" firstAttribute="centerX" secondItem="6vi-Xt-fOc" secondAttribute="centerX" id="1fo-pv-1fA"/>
-                                    <constraint firstItem="MpU-eP-3VS" firstAttribute="top" secondItem="WzC-Fg-pMY" secondAttribute="top" constant="8" id="3wj-mC-aBq"/>
-                                    <constraint firstAttribute="trailing" secondItem="6vi-Xt-fOc" secondAttribute="trailing" constant="33" id="PKU-JF-hk3"/>
-                                    <constraint firstItem="6vi-Xt-fOc" firstAttribute="top" secondItem="MpU-eP-3VS" secondAttribute="bottom" id="bzd-45-HkO"/>
-                                    <constraint firstAttribute="bottom" secondItem="6vi-Xt-fOc" secondAttribute="bottom" constant="8" id="dz6-3W-BZv"/>
-                                    <constraint firstItem="MpU-eP-3VS" firstAttribute="leading" secondItem="WzC-Fg-pMY" secondAttribute="leading" constant="25" id="lqy-Fn-gbk"/>
-                                    <constraint firstItem="6vi-Xt-fOc" firstAttribute="leading" secondItem="WzC-Fg-pMY" secondAttribute="leading" constant="33" id="por-0s-4aj"/>
+                                    <constraint firstItem="6vi-Xt-fOc" firstAttribute="centerX" secondItem="MpU-eP-3VS" secondAttribute="centerX" id="4N4-0p-kep"/>
+                                    <constraint firstAttribute="bottom" secondItem="6vi-Xt-fOc" secondAttribute="bottom" constant="52" id="yBH-bJ-LB6"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="WzC-Fg-pMY" firstAttribute="leading" secondItem="E2v-o3-EmZ" secondAttribute="leading" constant="20" id="7YV-3b-jKy"/>
                             <constraint firstItem="E2v-o3-EmZ" firstAttribute="bottom" secondItem="Uqs-jg-vEn" secondAttribute="bottom" constant="-33.999999999999886" id="8rV-Aa-uWs"/>
+                            <constraint firstItem="E2v-o3-EmZ" firstAttribute="trailing" secondItem="MpU-eP-3VS" secondAttribute="trailing" constant="20" id="91q-xD-EQr"/>
                             <constraint firstItem="E2v-o3-EmZ" firstAttribute="trailing" secondItem="Uqs-jg-vEn" secondAttribute="trailing" id="Uca-eG-fmc"/>
                             <constraint firstItem="Uqs-jg-vEn" firstAttribute="leading" secondItem="E2v-o3-EmZ" secondAttribute="leading" id="WIe-Fe-luP"/>
-                            <constraint firstItem="WzC-Fg-pMY" firstAttribute="top" secondItem="E2v-o3-EmZ" secondAttribute="top" constant="94" id="giG-ST-2Kq"/>
-                            <constraint firstItem="WzC-Fg-pMY" firstAttribute="centerY" secondItem="Uqs-jg-vEn" secondAttribute="centerY" id="obi-cB-jht"/>
+                            <constraint firstItem="E2v-o3-EmZ" firstAttribute="bottom" secondItem="MpU-eP-3VS" secondAttribute="bottom" constant="60" id="WOi-cj-zmw"/>
+                            <constraint firstItem="MpU-eP-3VS" firstAttribute="leading" secondItem="E2v-o3-EmZ" secondAttribute="leading" constant="20" id="dOX-Pe-m1r"/>
+                            <constraint firstItem="MpU-eP-3VS" firstAttribute="top" secondItem="E2v-o3-EmZ" secondAttribute="top" constant="100" id="ja7-cl-xMg"/>
                             <constraint firstItem="Uqs-jg-vEn" firstAttribute="top" secondItem="E2v-o3-EmZ" secondAttribute="top" id="s6w-io-SbC"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="E2v-o3-EmZ"/>
                     </view>
-                    <navigationItem key="navigationItem" id="hoY-cF-fHA"/>
+                    <navigationItem key="navigationItem" id="hoY-cF-fHA">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="nCg-PO-at4"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="cameraView" destination="MpU-eP-3VS" id="hzD-tP-7H6"/>
                         <outlet property="locationSwitch" destination="kxw-AB-7rA" id="7HA-gc-My9"/>
