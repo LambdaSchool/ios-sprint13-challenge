@@ -132,7 +132,15 @@ extension PhotoViewController: UIImagePickerControllerDelegate, UINavigationCont
 
 		self.view.endEditing(true)
 	}
-
-
 }
+
+extension PhotoViewController: UITextFieldDelegate {
+
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+		textField.resignFirstResponder()
+
+		return true
+	}
+}
+
 
