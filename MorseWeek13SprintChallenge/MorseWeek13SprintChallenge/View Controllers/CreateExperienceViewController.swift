@@ -7,37 +7,216 @@
 //
 
 import UIKit
+import AVFoundation
 
 class CreateExperienceViewController: UIViewController {
     
     // MARK: - Outlets
     @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var notesTextView: UITextView!
     @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var imageView: UIImageView!
     
     // MARK: - Properties
+    
+    var experinceController: ExperienceController?
+    var experience: Experience?
+    var audio = ""
+    var image = ""
+    var originalImage: UIImage? {
+        didSet {
+            savePhoto()
+        }
+    }
     
     // MARK: - Lifecycle Methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        titleTextField.delegate = self
     }
     
     // MARK: - Actions
     
+    @IBAction func addPhotoButtonTapped(_ sender: Any) {
+        presentImagePickerController()
+    }
+    
+    @IBAction func recordAudioButtonTapped(_ sender: Any) {
+        recordToggle()
+    }
+    
     @IBAction func addVideoButtonTapped(_ sender: Any) {
+        prepareExperience()
+        performSegue(withIdentifier: PropertyKeys.recordVideoSegue, sender: self)
+    }
+    
+    func prepareExperience() {
+        guard let title = titleTextField.text,
+            !title.isEmpty else { return }
+        
+        experinceController?.createExperience(title: title, latitude: lat(), longitude: long(), videoExtension: "", audioExtension: audio, photoExtension: image)
+    }
+    
+    func lat() -> Double {
+        return Double(Int.random(in: 47_200_953...48_083_626)) / 1_000_000
+    }
+    
+    func long() -> Double {
+        return Double(Int.random(in: (-122_564_484)...(-121_963_246))) / 1_000_000
+    }
+    
+    // MARK: - Alerts
+    
+    private func presentImagePickerController() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            print("Error: photo library is not available")
+            return
+        }
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    // MARK: - Audio
+    
+    var audioRecorder: AVAudioRecorder?
+    var isRecording: Bool {
+        audioRecorder?.isRecording ?? false
+    }
+    var recordURL: URL?
+    
+    func record() {
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        audio = UUID().uuidString
+        
+        let file = documentsDirectory.appendingPathComponent(audio).appendingPathExtension("caf")
+        
+        let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
+        
+        audioRecorder = try! AVAudioRecorder(url: file, format: format)
+        recordURL = file
+        audioRecorder?.delegate = self
+        audioRecorder?.record()
+        updateAudioViews()
+    }
+    
+    func stopRecording() {
+        audioRecorder?.stop()
+        audioRecorder = nil
+        updateAudioViews()
+    }
+    
+    func recordToggle() {
+        if isRecording {
+            stopRecording()
+        } else {
+            record()
+        }
+    }
+    
+    func updateAudioViews() {
+        let recordButtonTitle = isRecording ? "Stop Recording" : "Record New Audio"
+        recordButton.setTitle(recordButtonTitle, for: .normal)
+    }
+    
+    // MARK: - Image
+    
+    func savePhoto() {
+        guard let originalImage = originalImage else { return }
+        
+        let processedImage = filterImage(originalImage)
+        
+        guard let imageData = processedImage.pngData() else { return }
+        
+        self.image = UUID().uuidString
+        
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let fileURL = documentsDirectory.appendingPathComponent(image).appendingPathExtension("png")
+        
+        try? imageData.write(to: fileURL)
+    }
+    
+    private func filterImage(_ image: UIImage) -> UIImage {
+        
+        let filter = CIFilter(name: "CIHueAdjust")!
+        let context = CIContext(options: nil)
+        
+        guard let cgImage = image.cgImage else { return image }
+        
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        filter.setValue(Float(3.141592653589793), forKey: kCIInputAngleKey)
+        
+        guard let outputCIImage = filter.outputImage else { return image }
+        
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: CGPoint.zero, size: image.size)) else { return image }
+        
+        imageView.image = UIImage(cgImage: outputCGImage)
+        
+        return UIImage(cgImage: outputCGImage)
     }
     
     /*
+     
+     
+     topSlider.value = 0
+     topSlider.minimumValue = -3.141592653589793
+     topSlider.maximumValue =
+     */
+    
+    
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == PropertyKeys.recordVideoSegue {
+            guard let recordVC = segue.destination as? RecordMovieViewController,
+                let experience = experience else { return }
+            recordVC.experienceController = experinceController
+            recordVC.experience = experience
+        }
     }
-    */
 
+}
+
+// MARK: - Extensions
+
+extension CreateExperienceViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+        return true
+    }
+}
+
+extension CreateExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let image = info[.editedImage] as? UIImage {
+            originalImage = image
+        } else if let image = info[.originalImage] as? UIImage {
+            originalImage = image
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension CreateExperienceViewController: AVAudioRecorderDelegate {
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
+        if let error = error {
+            print("Record error: \(error)")
+        }
+    }
+    
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        if let recordURL = recordURL {
+            print(try? Data(contentsOf: recordURL))
+        }
+    }
 }

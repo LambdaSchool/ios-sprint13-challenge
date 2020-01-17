@@ -61,7 +61,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="pGb-BP-76x">
-                                <rect key="frame" x="20" y="108" width="374" height="361"/>
+                                <rect key="frame" x="20" y="108" width="374" height="747"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="JSh-9T-ahq">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="58.5"/>
@@ -72,38 +72,51 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vtQ-Wp-2D0">
+                                            <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="253" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vtQ-Wp-2D0">
                                                 <rect key="frame" x="0.0" y="24.5" width="374" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="jq9-fA-hfl">
-                                        <rect key="frame" x="0.0" y="88.5" width="374" height="152.5"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TW8-lm-Sur">
+                                        <rect key="frame" x="0.0" y="88.5" width="374" height="200"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s6Y-0X-Y9Y">
-                                                <rect key="frame" x="0.0" y="0.0" width="374" height="20.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="GQp-aN-jQ9">
-                                                <rect key="frame" x="0.0" y="24.5" width="374" height="128"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                            </textView>
+                                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cb8-eu-j0I">
+                                                <rect key="frame" x="145" y="85" width="84" height="30"/>
+                                                <state key="normal" title="Add a Photo"/>
+                                                <connections>
+                                                    <action selector="addPhotoButtonTapped:" destination="J2S-YJ-vzN" eventType="touchUpInside" id="H08-qu-IMw"/>
+                                                </connections>
+                                            </button>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="248" translatesAutoresizingMaskIntoConstraints="NO" id="24T-xe-zkj">
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="200"/>
+                                            </imageView>
                                         </subviews>
-                                    </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uDZ-bu-vPD">
-                                        <rect key="frame" x="0.0" y="271" width="374" height="30"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstItem="24T-xe-zkj" firstAttribute="height" secondItem="TW8-lm-Sur" secondAttribute="height" id="2rS-6Q-UQU"/>
+                                            <constraint firstItem="Cb8-eu-j0I" firstAttribute="centerX" secondItem="TW8-lm-Sur" secondAttribute="centerX" id="4TP-L6-3cO"/>
+                                            <constraint firstItem="Cb8-eu-j0I" firstAttribute="top" secondItem="TW8-lm-Sur" secondAttribute="top" constant="85" id="7Os-oP-wgf"/>
+                                            <constraint firstItem="Cb8-eu-j0I" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TW8-lm-Sur" secondAttribute="leading" id="MkC-8N-W37"/>
+                                            <constraint firstItem="24T-xe-zkj" firstAttribute="centerY" secondItem="TW8-lm-Sur" secondAttribute="centerY" id="W09-Qu-REc"/>
+                                            <constraint firstItem="24T-xe-zkj" firstAttribute="width" secondItem="TW8-lm-Sur" secondAttribute="width" id="Xhe-zX-N59"/>
+                                            <constraint firstItem="24T-xe-zkj" firstAttribute="centerX" secondItem="TW8-lm-Sur" secondAttribute="centerX" id="ZPU-GU-eOb"/>
+                                            <constraint firstAttribute="height" constant="200" id="drM-hd-HvK"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Cb8-eu-j0I" secondAttribute="trailing" id="h3m-a1-ZSH"/>
+                                            <constraint firstAttribute="bottom" secondItem="Cb8-eu-j0I" secondAttribute="bottom" constant="85" id="pYo-EY-HiR"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uDZ-bu-vPD">
+                                        <rect key="frame" x="0.0" y="318.5" width="374" height="30"/>
                                         <color key="tintColor" red="0.58072251080000004" green="0.066734083" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Record Audio"/>
+                                        <connections>
+                                            <action selector="recordAudioButtonTapped:" destination="J2S-YJ-vzN" eventType="touchUpInside" id="bN4-Fa-fsR"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vpR-yS-EBe">
-                                        <rect key="frame" x="0.0" y="331" width="374" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="753" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vpR-yS-EBe">
+                                        <rect key="frame" x="0.0" y="378.5" width="374" height="368.5"/>
                                         <state key="normal" title="Add a Video or Save Experience"/>
                                         <connections>
                                             <action selector="addVideoButtonTapped:" destination="J2S-YJ-vzN" eventType="touchUpInside" id="G5D-Ic-e3W"/>
@@ -111,13 +124,15 @@
                                     </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="361" id="gfR-oe-P00"/>
+                                    <constraint firstItem="TW8-lm-Sur" firstAttribute="centerX" secondItem="pGb-BP-76x" secondAttribute="centerX" id="4nR-Dj-wxK"/>
+                                    <constraint firstItem="TW8-lm-Sur" firstAttribute="width" secondItem="pGb-BP-76x" secondAttribute="width" id="RXE-nl-gHS"/>
                                 </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="pGb-BP-76x" firstAttribute="leading" secondItem="RHz-Mn-9c2" secondAttribute="leading" constant="20" id="4uc-L7-uh9"/>
+                            <constraint firstItem="pGb-BP-76x" firstAttribute="height" secondItem="RHz-Mn-9c2" secondAttribute="height" multiplier="0.965116" id="RdF-69-VwH"/>
                             <constraint firstItem="pGb-BP-76x" firstAttribute="top" secondItem="RHz-Mn-9c2" secondAttribute="top" constant="20" id="X3z-hi-KKY"/>
                             <constraint firstItem="RHz-Mn-9c2" firstAttribute="trailing" secondItem="pGb-BP-76x" secondAttribute="trailing" constant="20" id="wY8-tB-lkk"/>
                         </constraints>
@@ -125,10 +140,10 @@
                     </view>
                     <navigationItem key="navigationItem" title="Create an Experience" id="Ly6-KQ-cd7"/>
                     <connections>
-                        <outlet property="notesTextView" destination="GQp-aN-jQ9" id="KOy-ph-PLM"/>
+                        <outlet property="imageView" destination="24T-xe-zkj" id="SEA-rn-dEc"/>
                         <outlet property="recordButton" destination="uDZ-bu-vPD" id="N1A-hA-38j"/>
                         <outlet property="titleTextField" destination="vtQ-Wp-2D0" id="Nsk-VK-GbT"/>
-                        <segue destination="7zh-c6-ynf" kind="show" id="hvR-IG-hG0"/>
+                        <segue destination="7zh-c6-ynf" kind="show" identifier="ShowRecordVideoSegue" id="hvR-IG-hG0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j8V-DY-oIB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -170,7 +185,11 @@
                         <viewLayoutGuide key="safeArea" id="Lix-NH-wv9"/>
                     </view>
                     <navigationItem key="navigationItem" title="Record a Video" id="BrD-1d-PnR">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="Rug-Pk-5Ui"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="Rug-Pk-5Ui">
+                            <connections>
+                                <action selector="saveTapped:" destination="7zh-c6-ynf" id="QTw-0H-68y"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="cameraView" destination="8jr-AV-UAJ" id="V4K-Oj-XJq"/>

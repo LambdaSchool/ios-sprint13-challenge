@@ -10,9 +10,17 @@ import UIKit
 
 class RecordMovieViewController: UIViewController {
     
+    // MARK: - Outlets
+    
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var cameraView: CameraPreviewView!
     
+    // MARK: - Properties
+    
+    var experienceController: ExperienceController?
+    var experience: Experience?
+    
+    // MARK: - Lifecycle Methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +28,12 @@ class RecordMovieViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-
+    // MARK: - Actions
+    
+    @IBAction func saveTapped(_ sender: Any) {
+        navigationController?.popToRootViewController(animated: true)
+    }
+    
     /*
     // MARK: - Navigation
 

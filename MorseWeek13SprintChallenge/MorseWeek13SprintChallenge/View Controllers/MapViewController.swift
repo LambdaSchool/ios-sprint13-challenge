@@ -11,14 +11,42 @@ import MapKit
 
 class MapViewController: UIViewController {
     
+    // MARK: - Outlets
+    
     @IBOutlet weak var mapView: MKMapView!
+    
+    // MARK: - Properties
+    
+    let experinceController = ExperienceController()
+    
+    // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        print(experinceController.experiences.count)
     }
 
     @IBAction func addExperienceTapped(_ sender: Any) {
+        print(experinceController.experiences.count)
+        if experinceController.experiences.count > 0,
+            let photoURL = experinceController.experiences[0].photoURL,
+            let audioURL = experinceController.experiences[0].audioURL {
+            let photoData = try? Data(contentsOf: photoURL)
+            print("Image: \(UIImage(data: photoData!))")
+            let audioData = try? Data(contentsOf: audioURL)
+            print("Audio: \(audioData)")
+        }
+        performSegue(withIdentifier: PropertyKeys.createExperienceSegue, sender: self)
+    }
+    
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == PropertyKeys.createExperienceSegue {
+            guard let createVC = segue.destination as? CreateExperienceViewController else { return }
+            createVC.experinceController = experinceController
+        }
     }
     
 }
