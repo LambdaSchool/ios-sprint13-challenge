@@ -21,8 +21,6 @@ class AudioPlayerController: NSObject {
     func loadAudio(url: URL) {
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
-            audioPlayer?.delegate = self
-            audioPlayer?.prepareToPlay()
         } catch {
             print("Error loading in audio")
         }
@@ -62,18 +60,5 @@ class AudioPlayerController: NSObject {
     private func cancelTimer() {
         timer?.invalidate()
         timer = nil
-    }
-}
-
-extension AudioPlayerController: AVAudioPlayerDelegate {
-
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        print("Finished Playing")
-    }
-
-    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
-        if let error = error {
-            print("Audio Player error: \(error)")
-        }
     }
 }

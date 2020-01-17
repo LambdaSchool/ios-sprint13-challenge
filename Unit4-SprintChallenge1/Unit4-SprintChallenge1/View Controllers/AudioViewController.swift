@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 protocol AudioViewControllerDelegate {
     func audioPostButtonWasTapped()
@@ -75,6 +76,9 @@ class AudioViewController: UIViewController {
         do {
             audioData = try Data(contentsOf: recordURL)
             audioPlayerController.loadAudio(url: recordURL)
+            audioPlayerController.audioPlayer?.delegate = self
+            postButton.isEnabled = true
+            postButton.tintColor = UIColor.link
         } catch {
             print("Cant create audio data")
             return
@@ -109,7 +113,19 @@ class AudioViewController: UIViewController {
     @IBAction func cancelButtonTapped(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
+}
 
-    
-    
+
+extension AudioViewController: AVAudioPlayerDelegate {
+
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        updateViews()
+        print("Finished Playing")
+    }
+
+    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        if let error = error {
+            print("Audio Player error: \(error)")
+        }
+    }
 }
