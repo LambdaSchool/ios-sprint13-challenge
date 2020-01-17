@@ -18,8 +18,8 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let tabBarController = self.tabBarController as? TimelineTabBarController {
-            self.experienceController = tabBarController.experienceController
+        if let navController = self.navigationController as? MainNavigationController {
+            self.experienceController = navController.experienceController
         }
         mapView.delegate = self
         mapView.register(
@@ -41,12 +41,23 @@ class MapViewController: UIViewController {
                     longitudeDelta: 2)),
             animated: true)
     }
+
+    // MARK: - Navigation
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "NewPostSegue",
+            let newPostVC = segue.destination as? AddEditExperienceViewController {
+            newPostVC.experienceController = self.experienceController
+        }
+    }
 }
+
+// MARK: - MapView Delegate
 
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard
-            let postAnnotation = annotation as? Experience.MapAnnotation,
+            let experienceAnnotation = annotation as? Experience.MapAnnotation,
             let annotationView = mapView
                 .dequeueReusableAnnotationView(withIdentifier: "PostAnnotationView")
                 as? MKMarkerAnnotationView
@@ -54,7 +65,7 @@ extension MapViewController: MKMapViewDelegate {
 
         annotationView.canShowCallout = true
         let detailView = ExperienceAnnotationView()
-        detailView.experience = postAnnotation.experience
+        detailView.experienceAnnotation = experienceAnnotation
         annotationView.detailCalloutAccessoryView = detailView
 
         return annotationView
