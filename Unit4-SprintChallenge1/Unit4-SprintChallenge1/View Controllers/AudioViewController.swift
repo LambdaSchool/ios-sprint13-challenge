@@ -13,6 +13,7 @@ class AudioViewController: UIViewController {
     var entryController: EntryController?
     let audioPlayerController = AudioPlayerController()
     let audioRecorderController = AudioRecorderController()
+    var audioData: Data?
 
     @IBOutlet weak var recordingAudioButton: UIButton!
     @IBOutlet weak var playbackAudioButton: UIButton!
@@ -65,12 +66,24 @@ class AudioViewController: UIViewController {
     }
 
     func playbackAudioRecording() {
-        if let recordURL = audioRecorderController.recordURL {
+        guard let recordURL = audioRecorderController.recordURL else { return }
+        do {
+            audioData = try Data(contentsOf: recordURL)
             audioPlayerController.loadAudio(url: recordURL)
-        } else {
+        } catch {
+            print("Cant create audio data")
             return
         }
         audioPlayerController.playPause()
+    }
+
+    private func postAudio() {
+        view.endEditing(true)
+
+        guard let _ = audioData else { return }
+        let title = "Audio Post"
+        self.entryController?.createPost(with: title, ofType: .audio, location: nil)
+
     }
 
     @IBAction func playbackAudioTapped(_ sender: UIButton) {
@@ -83,10 +96,8 @@ class AudioViewController: UIViewController {
         updateViews()
     }
 
-
-    // TODO Implement posting
     @IBAction func postButtonTapped(_ sender: Any) {
-
+        postAudio()
     }
 
     @IBAction func cancelButtonTapped(_ sender: Any) {
