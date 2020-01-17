@@ -10,21 +10,93 @@ import UIKit
 
 class ContainerViewController: UIViewController {
 
+// MARK: Properties
+    var media: Media?
+    var mediaType: MediaType?{
+        didSet{
+            
+        }
+    }
+    var delegate: ExperienceViewControllerDelegate?
+
+// MARK: Methods
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func handleMedia() {
+        guard let type = mediaType else { return }
+        switch type {
+        case .audio:
+            add(asChildViewController: audioViewController)
+        case .image:
+            
+            break
+        case .video:
+            break
+        }
     }
-    */
+    
+    private lazy var audioViewController: AudioViewController = {
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        var viewController = storyboard.instantiateViewController(withIdentifier: "AudioPlayerViewController") as! AudioViewController
 
+        self.add(asChildViewController: viewController)
+
+            return viewController
+        }()
+
+    
+    private lazy var videoViewController: VideoViewController = {
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+
+        var viewController = storyboard.instantiateViewController(withIdentifier: "VideoPlayerController") as! VideoViewController
+
+        self.add(asChildViewController: viewController)
+
+            return viewController
+    }()
+    
+    private lazy var imageViewController: ImageViewController = {
+ 
+           let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+
+           var viewController = storyboard.instantiateViewController(withIdentifier: "VideoRecorderViewController") as! ImageViewController
+
+           self.add(asChildViewController: viewController)
+
+            return viewController
+       }()
+
+    private func add(asChildViewController viewController: UIViewController) {
+        // Add Child View Controller
+        addChild(viewController)
+
+        // Add Child View as Subview
+        view.addSubview(viewController.view)
+
+        // Configure Child View
+        viewController.view.frame = view.bounds
+        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
+        // Notify Child View Controller
+        viewController.didMove(toParent: self)
+    }
+
+    private func remove(asChildViewController viewController: UIViewController) {
+        // Notify Child View Controller
+        viewController.willMove(toParent: nil)
+
+        // Remove Child View From Superview
+        viewController.view.removeFromSuperview()
+
+        // Notify Child View Controller
+        viewController.removeFromParent()
+    }
+
+    private func updateView() {
+
+    }
 }
