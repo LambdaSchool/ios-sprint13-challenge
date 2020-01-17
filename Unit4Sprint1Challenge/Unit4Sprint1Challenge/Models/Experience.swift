@@ -27,7 +27,7 @@ class Experience {
 
     // MARK: - Init
 
-    init(title: String, timestamp: Date) {
+    init(title: String, timestamp: Date = Date()) {
         self.title = title
         self.timestamp = timestamp
     }
@@ -39,6 +39,7 @@ class Experience {
 
         var title: String? { experience.title }
         var coordinate: CLLocationCoordinate2D { experience.geotag! }
+        var timestamp: Date { experience.timestamp }
 
         init(experience: Experience) {
             self.experience = experience
