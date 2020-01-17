@@ -88,12 +88,55 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eHR-pr-bxC">
+                                <rect key="frame" x="137" y="476" width="140" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="140" id="Owo-Cl-Sb3"/>
+                                </constraints>
+                                <state key="normal" title="Playback Recording"/>
+                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="VRp-n2-KnM">
+                                <rect key="frame" x="20" y="406" width="374" height="30"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fq8-Bh-OHw">
+                                        <rect key="frame" x="0.0" y="0.0" width="36" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="C6f-dh-rRq">
+                                        <rect key="frame" x="49" y="0.0" width="276" height="31"/>
+                                    </slider>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gFL-b4-mOX">
+                                        <rect key="frame" x="338" y="0.0" width="36" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xbe-X2-lqh">
+                                <rect key="frame" x="152" y="336" width="110" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="110" id="WlZ-0J-tX1"/>
+                                </constraints>
+                                <state key="normal" title="Start recording">
+                                    <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="M27-ua-Ct8" firstAttribute="trailing" secondItem="ydX-am-Sxe" secondAttribute="trailing" id="D1K-Yl-i32"/>
+                            <constraint firstItem="eHR-pr-bxC" firstAttribute="centerX" secondItem="UMe-Ay-efh" secondAttribute="centerX" id="G06-5u-7i8"/>
+                            <constraint firstItem="xbe-X2-lqh" firstAttribute="centerX" secondItem="UMe-Ay-efh" secondAttribute="centerX" id="S8m-xG-dab"/>
                             <constraint firstItem="M27-ua-Ct8" firstAttribute="leading" secondItem="ydX-am-Sxe" secondAttribute="leading" id="VZ6-GH-Lk9"/>
+                            <constraint firstItem="ydX-am-Sxe" firstAttribute="trailing" secondItem="VRp-n2-KnM" secondAttribute="trailing" constant="20" id="ccx-JZ-kMx"/>
                             <constraint firstItem="M27-ua-Ct8" firstAttribute="top" secondItem="ydX-am-Sxe" secondAttribute="top" id="lLp-cE-CiV"/>
+                            <constraint firstItem="VRp-n2-KnM" firstAttribute="leading" secondItem="ydX-am-Sxe" secondAttribute="leading" constant="20" id="pMY-I7-oV4"/>
+                            <constraint firstItem="VRp-n2-KnM" firstAttribute="top" secondItem="xbe-X2-lqh" secondAttribute="bottom" constant="40" id="qQx-ME-TfI"/>
+                            <constraint firstItem="VRp-n2-KnM" firstAttribute="centerY" secondItem="UMe-Ay-efh" secondAttribute="centerY" id="upt-HP-K58"/>
+                            <constraint firstItem="eHR-pr-bxC" firstAttribute="top" secondItem="VRp-n2-KnM" secondAttribute="bottom" constant="40" id="xUU-Ld-n92"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ydX-am-Sxe"/>
                     </view>
@@ -103,7 +146,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hOC-de-Oov" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5471" y="-127"/>
+            <point key="canvasLocation" x="5469.5652173913049" y="-127.23214285714285"/>
         </scene>
         <!--Video View Controller-->
         <scene sceneID="bLZ-ah-aGB">

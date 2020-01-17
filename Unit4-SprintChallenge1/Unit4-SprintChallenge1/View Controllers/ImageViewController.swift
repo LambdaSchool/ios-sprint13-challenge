@@ -72,14 +72,16 @@ class ImageViewController: UIViewController {
             presentInformationalAlertController(title: "Error", message: "The photo library is unavailable")
             return
         }
+        
+        DispatchQueue.main.async {
+            let imagePicker = UIImagePickerController()
 
-        let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
 
-        imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary
 
-        imagePicker.sourceType = .photoLibrary
-
-        present(imagePicker, animated: true, completion: nil)
+            self.present(imagePicker, animated: true, completion: nil)
+        }
     }
 
     // TODO: Function to post image
