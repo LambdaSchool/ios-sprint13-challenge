@@ -122,6 +122,9 @@
                                 <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" image="Record"/>
                                 <state key="selected" image="Stop"/>
+                                <connections>
+                                    <action selector="recordButtonPressed:" destination="A7h-l6-dNM" eventType="touchUpInside" id="5qh-mK-HdL"/>
+                                </connections>
                             </button>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jps-tQ-HVM">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
@@ -145,7 +148,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Arn-oR-5Uy">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Arn-oR-5Uy" customClass="CameraPreviewView" customModule="Unit4_SprintChallenge1" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="130" width="414" height="459"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
@@ -185,7 +188,11 @@
                         <viewLayoutGuide key="safeArea" id="iXK-OH-DpR"/>
                     </view>
                     <connections>
+                        <outlet property="cameraView" destination="Arn-oR-5Uy" id="Ckc-5Y-9fO"/>
+                        <outlet property="locationSwitch" destination="cf2-vW-SfT" id="b4e-q8-Vjh"/>
                         <outlet property="postButton" destination="f5Z-fk-bbr" id="48I-At-tJX"/>
+                        <outlet property="recordButton" destination="eve-MV-hvt" id="vBq-E2-Mfh"/>
+                        <outlet property="titleTextField" destination="g0f-je-THC" id="YNg-M7-ipz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DqO-DR-ull" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
