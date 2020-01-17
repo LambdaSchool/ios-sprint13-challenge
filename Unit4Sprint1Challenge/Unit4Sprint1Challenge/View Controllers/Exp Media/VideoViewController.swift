@@ -41,6 +41,7 @@ class VideoViewController: UIViewController {
         guard let url = videoURL else { return nil }
         return try? Data(contentsOf: url)
     }
+    var savedVideoData: Data?
 
     var hasVideoData: Bool { videoData != nil }
 
@@ -82,6 +83,12 @@ class VideoViewController: UIViewController {
         cameraView.videoPlayerView.videoGravity = .resizeAspectFill
 
         setUpCamera()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setVideo(with: savedVideoData)
+        updateViews()
     }
 
     override func viewDidAppear(_ animated: Bool) {

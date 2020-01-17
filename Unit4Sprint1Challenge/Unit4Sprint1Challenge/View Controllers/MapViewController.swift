@@ -26,17 +26,23 @@ class MapViewController: UIViewController {
         mapView.register(
             MKMarkerAnnotationView.self,
             forAnnotationViewWithReuseIdentifier: "PostAnnotationView")
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setUpTags()
     }
 
     func setUpTags() {
-        let annotations = experienceController.models.compactMap { $0.mapAnnotation }
-        mapView.addAnnotations(annotations)
+        // TODO: make more efficient
+        mapView.removeAnnotations(experienceController.annotations)
+        mapView.addAnnotations(experienceController.annotations)
 
-        guard let firstAnnotation = annotations.first else { return }
+        guard let lastAnnotation = experienceController.annotations.last
+            else { return }
         mapView.setRegion(
             MKCoordinateRegion(
-                center: firstAnnotation.coordinate,
+                center: lastAnnotation.coordinate,
                 span: MKCoordinateSpan(
                     latitudeDelta: 2,
                     longitudeDelta: 2)),
@@ -69,8 +75,11 @@ extension MapViewController: MKMapViewDelegate {
             else { return nil }
 
         annotationView.canShowCallout = true
+
         let detailView = ExperienceAnnotationView()
         detailView.experienceAnnotation = experienceAnnotation
+        detailView.delegate = self
+
         annotationView.detailCalloutAccessoryView = detailView
 
         return annotationView
@@ -78,7 +87,7 @@ extension MapViewController: MKMapViewDelegate {
 }
 
 extension MapViewController: ExperienceAnnotationViewDelegate {
-    func experienceWasSelected(_ experience: Experience) {
+    func experienceWasSelected(_ experience: Experience?) {
         performSegue(withIdentifier: "EditPostSegue", sender: experience)
     }
 }

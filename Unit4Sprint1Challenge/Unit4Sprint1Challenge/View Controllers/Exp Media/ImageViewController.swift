@@ -25,6 +25,8 @@ class ImageViewController: UIViewController {
     private var imageFilterer = ImageFilterer()
     private(set) var originalImage: UIImage?
 
+    var savedImageData: Data?
+
     weak var delegate: ImageVCDelegate?
 
     var hasImage: Bool {
@@ -35,6 +37,7 @@ class ImageViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setImage(with: savedImageData)
         updateViews()
     }
 

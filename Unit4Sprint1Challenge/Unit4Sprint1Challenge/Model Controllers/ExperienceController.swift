@@ -10,8 +10,14 @@ import Foundation
 
 class ExperienceController {
     var models: [Experience] = []
+    
+    var annotations: [Experience.MapAnnotation] {
+        models.compactMap { $0.mapAnnotation }
+    }
 
     func makeModel(_ model: Experience) {
-
+        if !models.contains(where: { model === $0 }) {
+            models.append(model)
+        } // else it was edited in place
     }
 }

@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ExperienceAnnotationViewDelegate: AnyObject {
-    func experienceWasSelected(_ experience: Experience)
+    func experienceWasSelected(_ experience: Experience?)
 }
 
 class ExperienceAnnotationView: UIView {
@@ -19,6 +19,8 @@ class ExperienceAnnotationView: UIView {
 
     private let titleButton = UIButton()
     private let dateLabel = UILabel()
+
+    weak var delegate: ExperienceAnnotationViewDelegate?
 
     // MARK: - Init
 
@@ -43,9 +45,16 @@ class ExperienceAnnotationView: UIView {
         mainStackView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         mainStackView.topAnchor.constraint(equalTo: topAnchor).isActive = true
         mainStackView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+
+        titleButton.addTarget(self,
+                              action: #selector(titleTapped(_:)),
+                              for: .touchUpInside)
     }
 
-    // MARK: - Private
+    @objc
+    private func titleTapped(_ sender: Any?) {
+        delegate?.experienceWasSelected(experienceAnnotation?.experience)
+    }
 
     private func updateSubviews() {
         guard let annotation = experienceAnnotation else { return }

@@ -15,7 +15,8 @@ protocol AudioVCDelegate: AnyObject {
 
 class AudioViewController: UIViewController {
 
-    var audioData: Data? { audioRecordererControl.audioData }
+    var audioData: Data? { audioRecordererControl.audioData ?? savedAudioData }
+    var savedAudioData: Data?
 
     weak var delegate: AudioVCDelegate?
 
@@ -30,6 +31,11 @@ class AudioViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         audioRecordererControl.delegate = self
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setAudio(with: savedAudioData)
         updateViews()
     }
 
@@ -50,8 +56,8 @@ class AudioViewController: UIViewController {
     // MARK: - Methods
 
     func setAudio(with data: Data?) {
-        if let data = data {
-            audioPlayerControl.loadAudio(from: data)
+        if let audioData = data {
+            audioPlayerControl.loadAudio(from: audioData)
         }
     }
 
