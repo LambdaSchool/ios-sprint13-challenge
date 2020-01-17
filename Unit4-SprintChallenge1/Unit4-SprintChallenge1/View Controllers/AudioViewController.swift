@@ -63,8 +63,17 @@ class AudioViewController: UIViewController {
         timeRemainingLabel.text = timeFormatter.string(from: timeRemaining)
     }
 
-    @IBAction func playbackAudioTapped(_ sender: UIButton) {
+    func playbackAudioRecording() {
+        if let recordURL = audioRecorderController.recordURL {
+            audioPlayerController.loadAudio(url: recordURL)
+        } else {
+            return
+        }
         audioPlayerController.playPause()
+    }
+
+    @IBAction func playbackAudioTapped(_ sender: UIButton) {
+        playbackAudioRecording()
         updateViews()
     }
 
@@ -73,6 +82,8 @@ class AudioViewController: UIViewController {
         updateViews()
     }
 
+
+    // TODO Implement posting
     @IBAction func postButtonTapped(_ sender: Any) {
 
     }
@@ -80,5 +91,7 @@ class AudioViewController: UIViewController {
     @IBAction func cancelButtonTapped(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
+
+    
     
 }
