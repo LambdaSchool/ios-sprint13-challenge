@@ -32,8 +32,11 @@ class VideoViewController: UIViewController {
         didSet {
             if let url = videoURL {
                 videoView.loadVideo(url: url)
+                updateViews()
+                delegate?.videoRecorderDidFinishRecording(withData: videoData)
             } else {
                 videoView.unloadVideo()
+                updateViews()
             }
         }
     }
@@ -147,7 +150,10 @@ class VideoViewController: UIViewController {
 
     func setVideo(with data: Data?) {
         if let data = data {
-            try? videoView.loadVideo(data: data)
+            let url = URL.newLocalVideoURL()
+            try? data.write(to: url)
+            self.videoURL = url
+            // TODO: make more efficient
         }
     }
 
