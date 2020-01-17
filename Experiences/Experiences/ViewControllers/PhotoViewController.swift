@@ -52,10 +52,12 @@ class PhotoViewController: UIViewController {
 			return }
 
 		let imagePicker = UIImagePickerController()
-		imagePicker.delegate = (self as! UIImagePickerControllerDelegate & UINavigationControllerDelegate)
+		imagePicker.delegate = self
 		imagePicker.sourceType = .photoLibrary
 
 		present(imagePicker, animated: true, completion: nil)
+
+		popoverPresentationController
 	}
 
 	func setImageViewHeight(with aspectRatio: CGFloat) {
@@ -107,7 +109,7 @@ class PhotoViewController: UIViewController {
 
 
 
-extension PhotoViewController: UIImagePickerControllerDelegate {
+extension PhotoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 
 		addPosterImageButton.setTitle("", for: [])
@@ -118,6 +120,7 @@ extension PhotoViewController: UIImagePickerControllerDelegate {
 		originalImage = image
 
 		setImageViewHeight(with: image.ratio)
+		addPosterImageButton.isHidden = false
 
 	}
 
