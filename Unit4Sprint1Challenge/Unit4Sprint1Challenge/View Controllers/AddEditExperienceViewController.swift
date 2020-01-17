@@ -57,6 +57,7 @@ class AddEditExperienceViewController: ShiftableViewController {
         experience.imageData = imageData
         experience.videoData = videoData
         experience.audioData = audioData
+        experience.text = descriptionTextView.text
         experience.geotag = locationHelper.currentLocation
 
         experienceController.makeModel(experience)
