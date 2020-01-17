@@ -10,7 +10,8 @@ import UIKit
 import CoreImage
 
 class ImageFilterer {
-    enum FilterType: String {
+    enum FilterType: String, CaseIterable {
+        case none
         case tonal = "CIPhotoEffectTonal"
         case noir = "CIPhotoEffectNoir"
         case transfer = "CIPhotoEffectTransfer"
@@ -21,8 +22,11 @@ class ImageFilterer {
     private var context = CIContext(options: nil)
 
     func filterImage(_ image: UIImage, withType filterType: FilterType) -> UIImage {
-        guard let cgImage = image.cgImage
+        guard
+            let cgImage = image.cgImage,
+            filterType != .none
             else { return image }
+
         var ciImage = CIImage(cgImage: cgImage)
         let filter = CIFilter(
             name: filterType.rawValue,
@@ -30,6 +34,7 @@ class ImageFilterer {
         if let filterOutput = filter?.outputImage {
             ciImage = filterOutput
         }
+
         guard let outputCGImage = context.createCGImage(
             ciImage,
             from: CGRect(

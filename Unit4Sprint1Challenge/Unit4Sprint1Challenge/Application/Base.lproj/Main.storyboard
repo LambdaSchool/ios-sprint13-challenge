@@ -59,10 +59,10 @@
             </objects>
             <point key="canvasLocation" x="1846" y="-340"/>
         </scene>
-        <!--View Controller-->
+        <!--Image View Controller-->
         <scene sceneID="yRd-nc-KVb">
             <objects>
-                <viewController id="9Lc-m1-QzT" sceneMemberID="viewController">
+                <viewController id="9Lc-m1-QzT" customClass="ImageViewController" customModule="Unit4Sprint1Challenge" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="n8g-xm-AXK">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -76,6 +76,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZzD-JF-WOf">
                                 <rect key="frame" x="20" y="456" width="101" height="30"/>
                                 <state key="normal" title="Replace Image"/>
+                                <connections>
+                                    <action selector="addReplaceImageTapped:" destination="9Lc-m1-QzT" eventType="touchUpInside" id="vfl-ud-pE9"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filters" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ql5-rJ-AdS">
                                 <rect key="frame" x="183.5" y="494" width="47" height="21"/>
@@ -93,6 +96,9 @@
                                     <segment title="Fade"/>
                                     <segment title="Instant"/>
                                 </segments>
+                                <connections>
+                                    <action selector="filterSelectionChanged:" destination="9Lc-m1-QzT" eventType="valueChanged" id="02H-Vn-xIn"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -112,6 +118,12 @@
                         <viewLayoutGuide key="safeArea" id="06P-CT-Mhw"/>
                     </view>
                     <navigationItem key="navigationItem" id="19Z-nh-TFf"/>
+                    <connections>
+                        <outlet property="addReplaceImageButton" destination="ZzD-JF-WOf" id="Mov-RN-dM1"/>
+                        <outlet property="filterControl" destination="0as-DV-F1G" id="WaW-lT-7Ef"/>
+                        <outlet property="imageHeightConstraint" destination="0qM-8a-XT8" id="yh1-rM-J5L"/>
+                        <outlet property="imageView" destination="CMS-k7-Yub" id="Gez-zH-uZy"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4C3-l1-VrV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
