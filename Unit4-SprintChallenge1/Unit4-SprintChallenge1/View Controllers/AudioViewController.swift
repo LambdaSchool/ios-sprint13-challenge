@@ -10,6 +10,9 @@ import UIKit
 
 class AudioViewController: UIViewController {
 
+    let audioPlayerController = AudioPlayerController()
+    let audioRecorderController = AudioRecorderController()
+
     @IBOutlet weak var recordingAudioButton: UIButton!
     @IBOutlet weak var playbackAudioButton: UIButton!
     @IBOutlet weak var timeLabel: UILabel!
@@ -42,22 +45,32 @@ class AudioViewController: UIViewController {
     }
 
     private func updateViews() {
-        let playButtonTitle = isPlaying ? "Pause" : "Playback Recording"
+        let playButtonTitle = audioPlayerController.isPlaying ? "Pause" : "Playback Recording"
         playbackAudioButton.setTitle(playButtonTitle, for: .normal)
 
-        let elapsedTime = audioPlayer?.currentTime ?? 0
-        let duration = audioPlayer?.duration ?? 0
+        let elapsedTime = audioPlayerController.audioPlayer?.currentTime ?? 0
+        let duration = audioPlayerController.audioPlayer?.duration ?? 0
         timeLabel.text = timeFormatter.string(from: elapsedTime)
 
         timeSlider.minimumValue = 0
         timeSlider.maximumValue = Float(duration)
         timeSlider.value = Float(elapsedTime)
 
-        let recordButtonTitle = isRecording ? "Stop" : "Start Recording"
+        let recordButtonTitle = audioRecorderController.isRecording ? "Stop" : "Start Recording"
         recordingAudioButton.setTitle(recordButtonTitle, for: .normal)
 
         let timeRemaining = duration - elapsedTime
         timeRemainingLabel.text = timeFormatter.string(from: timeRemaining)
+    }
+
+    @IBAction func playbackAudioTapped(_ sender: UIButton) {
+        audioPlayerController.playPause()
+        updateViews()
+    }
+
+    @IBAction func recordAudioTapped(_ sender: UIButton) {
+        audioRecorderController.recordToggle()
+        updateViews()
     }
 
     @IBAction func postButtonTapped(_ sender: Any) {

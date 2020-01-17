@@ -94,6 +94,9 @@
                                     <constraint firstAttribute="width" constant="140" id="Owo-Cl-Sb3"/>
                                 </constraints>
                                 <state key="normal" title="Playback Recording"/>
+                                <connections>
+                                    <action selector="playbackAudioTapped:" destination="Ebg-uu-yJR" eventType="touchUpInside" id="4em-rs-DaR"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="VRp-n2-KnM">
                                 <rect key="frame" x="20" y="406" width="374" height="30"/>
@@ -123,6 +126,9 @@
                                 <state key="normal" title="Start recording">
                                     <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="recordAudioTapped:" destination="Ebg-uu-yJR" eventType="touchUpInside" id="Fug-Ui-Wdu"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -141,7 +147,12 @@
                         <viewLayoutGuide key="safeArea" id="ydX-am-Sxe"/>
                     </view>
                     <connections>
+                        <outlet property="playbackAudioButton" destination="eHR-pr-bxC" id="ECt-fR-Uoo"/>
                         <outlet property="postButton" destination="een-xb-POG" id="QeY-0G-MyH"/>
+                        <outlet property="recordingAudioButton" destination="xbe-X2-lqh" id="Qwz-NN-M9S"/>
+                        <outlet property="timeLabel" destination="Fq8-Bh-OHw" id="8Ek-EX-yRN"/>
+                        <outlet property="timeRemainingLabel" destination="gFL-b4-mOX" id="86x-QD-AjI"/>
+                        <outlet property="timeSlider" destination="C6f-dh-rRq" id="dgD-Mg-MAL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hOC-de-Oov" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
