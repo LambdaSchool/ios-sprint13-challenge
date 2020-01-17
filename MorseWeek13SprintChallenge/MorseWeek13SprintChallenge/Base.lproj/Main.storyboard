@@ -26,6 +26,9 @@
                                 </constraints>
                                 <color key="tintColor" red="0.49803921569999998" green="0.49803921569999998" blue="0.49803921569999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" image="Create"/>
+                                <connections>
+                                    <action selector="addExperienceTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Jhc-1l-jRt"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -41,6 +44,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="bQF-r1-R1Z"/>
                     <connections>
+                        <outlet property="mapView" destination="05f-F6-M5e" id="D1H-Rf-Eu7"/>
                         <segue destination="J2S-YJ-vzN" kind="show" identifier="ShowCreateExperienceSegue" id="AMA-hu-oeM"/>
                     </connections>
                 </viewController>
@@ -51,7 +55,7 @@
         <!--Create an Experience-->
         <scene sceneID="gnv-1U-85d">
             <objects>
-                <viewController id="J2S-YJ-vzN" sceneMemberID="viewController">
+                <viewController id="J2S-YJ-vzN" customClass="CreateExperienceViewController" customModule="MorseWeek13SprintChallenge" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QdR-Bz-hOY">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -101,6 +105,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vpR-yS-EBe">
                                         <rect key="frame" x="0.0" y="331" width="374" height="30"/>
                                         <state key="normal" title="Add a Video or Save Experience"/>
+                                        <connections>
+                                            <action selector="addVideoButtonTapped:" destination="J2S-YJ-vzN" eventType="touchUpInside" id="G5D-Ic-e3W"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -118,6 +125,9 @@
                     </view>
                     <navigationItem key="navigationItem" title="Create an Experience" id="Ly6-KQ-cd7"/>
                     <connections>
+                        <outlet property="notesTextView" destination="GQp-aN-jQ9" id="KOy-ph-PLM"/>
+                        <outlet property="recordButton" destination="uDZ-bu-vPD" id="N1A-hA-38j"/>
+                        <outlet property="titleTextField" destination="vtQ-Wp-2D0" id="Nsk-VK-GbT"/>
                         <segue destination="7zh-c6-ynf" kind="show" id="hvR-IG-hG0"/>
                     </connections>
                 </viewController>
@@ -128,21 +138,33 @@
         <!--Record a Video-->
         <scene sceneID="Ph8-By-MVN">
             <objects>
-                <viewController id="7zh-c6-ynf" sceneMemberID="viewController">
+                <viewController id="7zh-c6-ynf" customClass="RecordMovieViewController" customModule="MorseWeek13SprintChallenge" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Fk4-zZ-1pO">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8jr-AV-UAJ">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8jr-AV-UAJ" customClass="CameraPreviewView" customModule="MorseWeek13SprintChallenge" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="88" width="414" height="808"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kje-1U-10C">
+                                <rect key="frame" x="182" y="804" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="8WC-Na-XdY"/>
+                                    <constraint firstAttribute="width" constant="50" id="z3H-Ec-Gmh"/>
+                                </constraints>
+                                <color key="tintColor" red="0.58072251080000004" green="0.066734083" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="Record"/>
+                                <state key="selected" image="Stop"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="8jr-AV-UAJ" firstAttribute="width" secondItem="Fk4-zZ-1pO" secondAttribute="width" id="3DV-hn-ZJc"/>
                             <constraint firstItem="8jr-AV-UAJ" firstAttribute="centerX" secondItem="Fk4-zZ-1pO" secondAttribute="centerX" id="9EM-76-vaP"/>
                             <constraint firstItem="8jr-AV-UAJ" firstAttribute="height" secondItem="Fk4-zZ-1pO" secondAttribute="height" multiplier="0.901786" id="DGJ-0O-FUP"/>
+                            <constraint firstItem="Kje-1U-10C" firstAttribute="centerX" secondItem="Fk4-zZ-1pO" secondAttribute="centerX" id="Tiy-rd-tv0"/>
+                            <constraint firstItem="Lix-NH-wv9" firstAttribute="bottom" secondItem="Kje-1U-10C" secondAttribute="bottom" constant="8" id="plZ-ZF-ku2"/>
                             <constraint firstItem="8jr-AV-UAJ" firstAttribute="centerY" secondItem="Fk4-zZ-1pO" secondAttribute="centerY" constant="44" id="v0d-Jt-1Ba"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Lix-NH-wv9"/>
@@ -150,6 +172,10 @@
                     <navigationItem key="navigationItem" title="Record a Video" id="BrD-1d-PnR">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="Rug-Pk-5Ui"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="cameraView" destination="8jr-AV-UAJ" id="V4K-Oj-XJq"/>
+                        <outlet property="recordButton" destination="Kje-1U-10C" id="xKt-Wn-mXm"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U7w-HX-LPt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -176,5 +202,7 @@
     </scenes>
     <resources>
         <image name="Create" width="512" height="512"/>
+        <image name="Record" width="116" height="116"/>
+        <image name="Stop" width="116" height="116"/>
     </resources>
 </document>
