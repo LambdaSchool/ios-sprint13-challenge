@@ -44,7 +44,6 @@ class AddExperienceViewController: UIViewController {
         self.hideKeyboardWhenTappedAround()
         checkLocationAuthorization()
         
-//        loadAudio()
         updateViews()
         hideAudioButtons()
     }
@@ -266,11 +265,9 @@ class AddExperienceViewController: UIViewController {
             .appendingPathExtension("caf")
         recordURL = file
         print("record: \(file)")
+        experienceController?.audio = file
         
         let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)! // FIXME: do error handling
-        //20_000 KHZ per second = bad
-        // 44.1 KKz per second  = good
-        // 1 microphone
         
         audioRecorder = try! AVAudioRecorder(url: file, format: format)
         audioRecorder?.delegate = self
@@ -322,6 +319,8 @@ class AddExperienceViewController: UIViewController {
         }
     }
 }
+
+// MARK: Extensions
 
 extension AddExperienceViewController: CLLocationManagerDelegate {
     
