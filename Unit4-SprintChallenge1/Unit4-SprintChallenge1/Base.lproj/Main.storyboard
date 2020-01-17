@@ -224,8 +224,39 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title for Image:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0dP-9E-hGL">
+                                <rect key="frame" x="10" y="76" width="394" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tqX-IM-QeY">
+                                <rect key="frame" x="0.0" y="130" width="414" height="375"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GmT-BF-pSc">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="375"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D47-ek-cKY">
+                                        <rect key="frame" x="128.5" y="169.5" width="157" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <state key="normal" title="Chose an image..."/>
+                                        <connections>
+                                            <action selector="chooseImageTapped:" destination="JuR-MV-uk0" eventType="touchUpInside" id="OIa-kd-KUi"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="GmT-BF-pSc" secondAttribute="trailing" id="6Pg-nu-IEt"/>
+                                    <constraint firstItem="D47-ek-cKY" firstAttribute="centerY" secondItem="tqX-IM-QeY" secondAttribute="centerY" id="88u-V7-i93"/>
+                                    <constraint firstAttribute="height" constant="375" id="OI8-Xk-CHi"/>
+                                    <constraint firstItem="GmT-BF-pSc" firstAttribute="leading" secondItem="tqX-IM-QeY" secondAttribute="leading" id="RAS-8j-hJy"/>
+                                    <constraint firstItem="GmT-BF-pSc" firstAttribute="top" secondItem="tqX-IM-QeY" secondAttribute="top" id="j6y-UD-9Y8"/>
+                                    <constraint firstAttribute="bottom" secondItem="GmT-BF-pSc" secondAttribute="bottom" id="o0k-j3-XLE"/>
+                                    <constraint firstItem="D47-ek-cKY" firstAttribute="centerX" secondItem="tqX-IM-QeY" secondAttribute="centerX" id="u3Y-2p-7oz"/>
+                                </constraints>
+                            </view>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="JL7-Dj-w8U">
-                                <rect key="frame" x="20" y="550" width="374" height="31"/>
+                                <rect key="frame" x="20" y="525" width="374" height="31"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add geotag" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iv6-u0-jLY">
                                         <rect key="frame" x="0.0" y="0.0" width="275" height="31"/>
@@ -238,37 +269,30 @@
                                     </switch>
                                 </subviews>
                             </stackView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title for Image:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0dP-9E-hGL">
-                                <rect key="frame" x="10" y="76" width="394" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="f1t-fF-12Z">
-                                <rect key="frame" x="0.0" y="130" width="414" height="400"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="400" id="gfH-AB-OOX"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="0dP-9E-hGL" firstAttribute="leading" secondItem="FDh-Hv-rHS" secondAttribute="leading" constant="10" id="0P4-2y-PJR"/>
                             <constraint firstItem="FDh-Hv-rHS" firstAttribute="trailing" secondItem="0dP-9E-hGL" secondAttribute="trailing" constant="10" id="2Nk-C9-v3W"/>
                             <constraint firstItem="0dP-9E-hGL" firstAttribute="top" secondItem="EBb-rk-2Ey" secondAttribute="bottom" constant="20" id="809-co-47K"/>
-                            <constraint firstItem="JL7-Dj-w8U" firstAttribute="leading" secondItem="FDh-Hv-rHS" secondAttribute="leading" constant="20" id="Gq6-an-AcV"/>
-                            <constraint firstItem="f1t-fF-12Z" firstAttribute="top" secondItem="0dP-9E-hGL" secondAttribute="bottom" constant="20" id="LzR-vq-8UT"/>
-                            <constraint firstItem="f1t-fF-12Z" firstAttribute="leading" secondItem="FDh-Hv-rHS" secondAttribute="leading" id="SHW-HT-PhP"/>
+                            <constraint firstItem="tqX-IM-QeY" firstAttribute="leading" secondItem="FDh-Hv-rHS" secondAttribute="leading" id="IrG-ra-lTg"/>
+                            <constraint firstItem="tqX-IM-QeY" firstAttribute="top" secondItem="0dP-9E-hGL" secondAttribute="bottom" constant="20" id="MSE-LL-OJ1"/>
+                            <constraint firstItem="FDh-Hv-rHS" firstAttribute="trailing" secondItem="JL7-Dj-w8U" secondAttribute="trailing" constant="20" id="U7L-sw-IxE"/>
+                            <constraint firstItem="JL7-Dj-w8U" firstAttribute="leading" secondItem="FDh-Hv-rHS" secondAttribute="leading" constant="20" id="c4E-eW-WdM"/>
                             <constraint firstItem="EBb-rk-2Ey" firstAttribute="top" secondItem="FDh-Hv-rHS" secondAttribute="top" id="cfr-ks-LWd"/>
                             <constraint firstItem="EBb-rk-2Ey" firstAttribute="leading" secondItem="FDh-Hv-rHS" secondAttribute="leading" id="fkT-sO-zdr"/>
                             <constraint firstItem="EBb-rk-2Ey" firstAttribute="trailing" secondItem="FDh-Hv-rHS" secondAttribute="trailing" id="jc5-6S-yTJ"/>
-                            <constraint firstItem="JL7-Dj-w8U" firstAttribute="top" secondItem="f1t-fF-12Z" secondAttribute="bottom" constant="20" id="sZn-ln-kzI"/>
-                            <constraint firstItem="FDh-Hv-rHS" firstAttribute="trailing" secondItem="JL7-Dj-w8U" secondAttribute="trailing" constant="20" id="zux-oP-trg"/>
-                            <constraint firstItem="FDh-Hv-rHS" firstAttribute="trailing" secondItem="f1t-fF-12Z" secondAttribute="trailing" id="zwm-8a-XSB"/>
+                            <constraint firstItem="JL7-Dj-w8U" firstAttribute="top" secondItem="tqX-IM-QeY" secondAttribute="bottom" constant="20" id="ogB-AW-6aP"/>
+                            <constraint firstItem="FDh-Hv-rHS" firstAttribute="trailing" secondItem="tqX-IM-QeY" secondAttribute="trailing" id="r1Q-c0-Xcx"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="FDh-Hv-rHS"/>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="WtV-38-xdt"/>
                     <connections>
+                        <outlet property="chooseImageButton" destination="D47-ek-cKY" id="FAM-7p-ywH"/>
+                        <outlet property="geotagSwitch" destination="XLc-or-o7q" id="08R-ZP-Q7H"/>
+                        <outlet property="imageHeightConstraint" destination="OI8-Xk-CHi" id="sN4-NY-EDB"/>
+                        <outlet property="imageView" destination="GmT-BF-pSc" id="f1e-Eo-iGu"/>
                         <outlet property="postButton" destination="pjj-im-A9L" id="coQ-PZ-BIJ"/>
                     </connections>
                 </viewController>

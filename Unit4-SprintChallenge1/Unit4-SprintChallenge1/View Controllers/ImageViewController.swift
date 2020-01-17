@@ -7,35 +7,150 @@
 //
 
 import UIKit
+import Photos
 
 class ImageViewController: UIViewController {
 
+    var entryController: EntryController?
+    var imageData: Data?
+    
+    @IBOutlet weak var chooseImageButton: UIButton!
+    @IBOutlet weak var geotagSwitch: UISwitch!
+    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         postButton.isEnabled = false
         postButton.tintColor = UIColor.gray
 
+        setImageViewHeight(with: 1.0)
+        updateViews()
+
+    }
+
+    func setImageViewHeight(with aspectRatio: CGFloat) {
+
+        imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
+
+        view.layoutSubviews()
+    }
+
+    func updateViews() {
+
+        guard let imageData = imageData,
+            let image = UIImage(data: imageData) else {
+                title = "New Post"
+                //isFilterOptionsHidden(true)
+                return
+        }
+
+        //title = post?.title
+
+        let ratio = image.size.height / image.size.width
+        setImageViewHeight(with: ratio)
+
+        imageView.image = image
+
+        chooseImageButton.setTitle("", for: [])
+    }
+
+    private func scaleImage(_ image: UIImage) -> UIImage {
+
+        var scaledSize = imageView.bounds.size
+        // 1x, 2x, or 3x
+        let scale = UIScreen.main.scale
+        scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
+        // returning scaled image
+        return image.imageByScaling(toSize: scaledSize) ?? UIImage()
+    }
+
+    private func presentImagePickerController() {
+
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            presentInformationalAlertController(title: "Error", message: "The photo library is unavailable")
+            return
+        }
+
+        let imagePicker = UIImagePickerController()
+
+        imagePicker.delegate = self
+
+        imagePicker.sourceType = .photoLibrary
+
+        present(imagePicker, animated: true, completion: nil)
+    }
+
+    // TODO: Function to post image
+    private func postImage() {
+
+    }
+
+    private func chooseImage() {
+        let authorizationStatus = PHPhotoLibrary.authorizationStatus()
+
+        switch authorizationStatus {
+        case .authorized:
+            presentImagePickerController()
+        case .notDetermined:
+
+            PHPhotoLibrary.requestAuthorization { (status) in
+
+                guard status == .authorized else {
+                    NSLog("User did not authorize access to the photo library")
+                    self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
+                    return
+                }
+
+                self.presentImagePickerController()
+            }
+
+        case .denied:
+            self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
+        case .restricted:
+            self.presentInformationalAlertController(title: "Error", message: "Unable to access the photo library. Your device's restrictions do not allow access.")
+
+        @unknown default:
+            fatalError()
+        }
+        presentImagePickerController()
+    }
+
+    // MARK: - IBActions
+    @IBAction func chooseImageTapped(_ sender: Any) {
+        chooseImage()
     }
 
     @IBAction func postButtonTapped(_ sender: Any) {
-
+        postImage()
     }
 
     @IBAction func cancelButtonTapped(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
-    
 
-    /*
-    // MARK: - Navigation
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+extension ImageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+
+        chooseImageButton.setTitle("", for: [])
+
+        picker.dismiss(animated: true, completion: nil)
+
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
+
+        imageView.image = image
+
+//        isFilterOptionsHidden(false)
+
+        let ratio = image.size.height / image.size.width
+        setImageViewHeight(with: ratio)
     }
-    */
 
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
 }
