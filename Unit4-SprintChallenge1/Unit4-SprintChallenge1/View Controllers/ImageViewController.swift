@@ -97,7 +97,9 @@ class ImageViewController: UIViewController {
 
         // TODO: IMPLEMENT LOCATION
         if geotagSwitch.isOn {
-            self.entryController?.createPost(with: title, ofType: .image, location: nil)
+            LocationHelper.shared.getCurrentLocation { (coordinate) in
+                self.entryController?.createPost(with: title, ofType: .image, location: coordinate)
+            }
         } else {
             self.entryController?.createPost(with: title, ofType: .image, location: nil)
         }

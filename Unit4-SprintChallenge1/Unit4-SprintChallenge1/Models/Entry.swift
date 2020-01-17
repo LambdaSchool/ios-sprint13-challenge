@@ -15,14 +15,14 @@ enum MediaType: String {
     case video
 }
 
-class Entry {
+class Entry: NSObject {
 
-    var title: String?
+    var entryTitle: String?
     let mediaType: MediaType
     var geotag: CLLocationCoordinate2D?
 
     init(title: String?, mediaType: MediaType, geotag: CLLocationCoordinate2D?) {
-        self.title = title
+        self.entryTitle = title
         self.mediaType = mediaType
         self.geotag = geotag
     }
