@@ -28,12 +28,21 @@ class MapViewController: UIViewController {
         mapView.delegate = self
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: PropertyKeys.experienceView)
 //        mapView.addAnnotations(experinceController.experiences)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        guard let experience = experinceController.experiences.first else { return }
         
         mapView.addAnnotations(experinceController.experiences)
+        
+        let span = MKCoordinateSpan(latitudeDelta: 1.5, longitudeDelta: 1.5)
+        
+        let region = MKCoordinateRegion(center: experience.coordinate, span: span)
+        
+        mapView.setRegion(region, animated: true)
+        
     }
 
     @IBAction func addExperienceTapped(_ sender: Any) {
