@@ -18,13 +18,18 @@ class ImageViewController: UIViewController {
     var entryController: EntryController?
     var imageData: Data?
     var delegate: ImageViewControllerDelegate?
+    private var blackandwhiteFilter = CIFilter(name: "CIPhotoEffectNoir")
+    private var context = CIContext(options: nil)
 
+    // MARK: IBOutlets
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var geotagSwitch: UISwitch!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var postButton: UIBarButtonItem!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var blackandwhiteSwitch: UISwitch!
+    @IBOutlet weak var filterStackView: UIStackView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -142,6 +147,28 @@ class ImageViewController: UIViewController {
         presentImagePickerController()
     }
 
+    private func blackandwhiteEffectImage(_ image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage,
+            let blackandwhiteEffect = blackandwhiteFilter else { return image }
+
+        let ciImage = CIImage(cgImage: cgImage)
+
+        blackandwhiteEffect.setValue(ciImage, forKey: "inputImage")
+
+        guard let outputCIImage = blackandwhiteEffect.outputImage else { return image }
+
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: CGPoint.zero, size: image.size)) else { return image }
+
+        return UIImage(cgImage: outputCGImage)
+    }
+
+    private func blackandwhiteImage() {
+        guard let image = imageView.image else { return }
+        let scaledImage = scaleImage(image)
+
+        imageView.image = blackandwhiteEffectImage(scaledImage)
+    }
+
     // MARK: - IBActions
     @IBAction func chooseImageTapped(_ sender: Any) {
         chooseImage()
@@ -153,6 +180,10 @@ class ImageViewController: UIViewController {
 
     @IBAction func cancelButtonTapped(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+    }
+
+    @IBAction func blackandwhiteSwitch(_ sender: UISwitch) {
+        blackandwhiteImage()
     }
 
 }

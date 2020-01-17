@@ -4,6 +4,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -323,12 +324,44 @@
                                     </switch>
                                 </subviews>
                             </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ngN-I3-MkS" userLabel="Filters Stack View">
+                                <rect key="frame" x="20" y="576" width="374" height="59.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filters:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WdP-Hf-fcC">
+                                        <rect key="frame" x="0.0" y="0.0" width="53.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="DpZ-EE-Koq">
+                                        <rect key="frame" x="0.0" y="28.5" width="374" height="31"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Black &amp; White" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wn7-iG-bvR">
+                                                <rect key="frame" x="0.0" y="0.0" width="265" height="31"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9WG-bK-3rV">
+                                                <rect key="frame" x="325" y="0.0" width="51" height="31"/>
+                                                <connections>
+                                                    <action selector="blackandwhiteSwitch:" destination="JuR-MV-uk0" eventType="valueChanged" id="MUZ-gm-3H4"/>
+                                                </connections>
+                                            </switch>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="DpZ-EE-Koq" secondAttribute="trailing" id="VjK-eU-CY8"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="0dP-9E-hGL" firstAttribute="leading" secondItem="FDh-Hv-rHS" secondAttribute="leading" constant="10" id="0P4-2y-PJR"/>
                             <constraint firstItem="FDh-Hv-rHS" firstAttribute="trailing" secondItem="0dP-9E-hGL" secondAttribute="trailing" constant="10" id="2Nk-C9-v3W"/>
                             <constraint firstItem="0dP-9E-hGL" firstAttribute="top" secondItem="EBb-rk-2Ey" secondAttribute="bottom" constant="20" id="809-co-47K"/>
+                            <constraint firstItem="ngN-I3-MkS" firstAttribute="leading" secondItem="FDh-Hv-rHS" secondAttribute="leading" constant="20" id="Evg-xP-9ch"/>
                             <constraint firstItem="tqX-IM-QeY" firstAttribute="leading" secondItem="FDh-Hv-rHS" secondAttribute="leading" id="IrG-ra-lTg"/>
                             <constraint firstItem="tqX-IM-QeY" firstAttribute="top" secondItem="0dP-9E-hGL" secondAttribute="bottom" constant="20" id="MSE-LL-OJ1"/>
                             <constraint firstItem="FDh-Hv-rHS" firstAttribute="trailing" secondItem="JL7-Dj-w8U" secondAttribute="trailing" constant="20" id="U7L-sw-IxE"/>
@@ -338,6 +371,8 @@
                             <constraint firstItem="EBb-rk-2Ey" firstAttribute="trailing" secondItem="FDh-Hv-rHS" secondAttribute="trailing" id="jc5-6S-yTJ"/>
                             <constraint firstItem="JL7-Dj-w8U" firstAttribute="top" secondItem="tqX-IM-QeY" secondAttribute="bottom" constant="20" id="ogB-AW-6aP"/>
                             <constraint firstItem="FDh-Hv-rHS" firstAttribute="trailing" secondItem="tqX-IM-QeY" secondAttribute="trailing" id="r1Q-c0-Xcx"/>
+                            <constraint firstItem="ngN-I3-MkS" firstAttribute="top" secondItem="JL7-Dj-w8U" secondAttribute="bottom" constant="20" id="wxb-lr-RFV"/>
+                            <constraint firstItem="FDh-Hv-rHS" firstAttribute="trailing" secondItem="ngN-I3-MkS" secondAttribute="trailing" constant="20" id="zP6-4p-2ZL"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="FDh-Hv-rHS"/>
                     </view>

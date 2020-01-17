@@ -10,8 +10,6 @@ import Foundation
 import CoreLocation
 class EntryController {
 
-    static let shared = EntryController()
-
     var entries = [Entry]()
 
     func createPost(with title: String, ofType mediaType: MediaType, location geotag: CLLocationCoordinate2D?) {
