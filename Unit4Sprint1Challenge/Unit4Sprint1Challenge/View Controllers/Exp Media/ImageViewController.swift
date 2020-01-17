@@ -42,6 +42,9 @@ class ImageViewController: UIViewController {
     }
 
     private func updateViews() {
+        if let image = originalImage {
+            setImageViewHeight(forAspectRatio: image.ratio)
+        }
         setFilter()
         addReplaceImageButton
             .setTitle(hasImage ? "Replace Image" : "Choose image", for: .normal)
@@ -72,6 +75,8 @@ class ImageViewController: UIViewController {
 
     func removeImage() {
         originalImage = nil
+        savedImageData = nil
+        imageView.image = nil
         updateViews()
     }
 
@@ -159,7 +164,6 @@ extension ImageViewController: UIImagePickerControllerDelegate {
         let height = width * image.ratio
         originalImage = image.imageByScaling(toSize: CGSize(width: width,
                                                             height: height))
-        setImageViewHeight(forAspectRatio: image.ratio)
         updateViews()
     }
 
