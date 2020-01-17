@@ -28,7 +28,6 @@ class ImageViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var postButton: UIBarButtonItem!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var blackandwhiteSwitch: UISwitch!
     @IBOutlet weak var filterStackView: UIStackView!
 
     override func viewDidLoad() {
@@ -53,6 +52,7 @@ class ImageViewController: UIViewController {
         guard let imageData = imageData,
             let image = UIImage(data: imageData) else {
                 title = "New Post"
+                filterStackView.isHidden = true
                 //isFilterOptionsHidden(true)
                 return
         }
@@ -200,7 +200,7 @@ extension ImageViewController: UIImagePickerControllerDelegate, UINavigationCont
 
         imageView.image = image
 
-//      isFilterOptionsHidden(false)
+        filterStackView.isHidden = false
 
         postButton.isEnabled = true
         postButton.tintColor = UIColor.link
