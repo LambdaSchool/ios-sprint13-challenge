@@ -63,6 +63,8 @@ class AudioViewController: UIViewController {
 
     private func clearRecordedData() {
         audioPlayerControl.unloadAudio()
+        audioRecordererControl.clearData()
+        savedAudioData = nil
         delegate?.audioVCDidFinishRecording(with: nil)
         updateViews()
     }

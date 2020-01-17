@@ -97,12 +97,13 @@ class AudioRecorderControl: UIControl {
         print("recording to file: \(file)")
 
         do {
-            audioRecorder = try AVAudioRecorder(url: file, format: format)
+            let recorder = try AVAudioRecorder(url: file, format: format)
+            recorder.delegate = self
+            recorder.record()
+            audioRecorder = recorder
         } catch {
             print("error setting up audio recorder: \(error)")
         }
-        audioRecorder?.delegate = self
-        audioRecorder?.record()
         updateViews()
         startUIUpdateTimer()
     }
@@ -111,7 +112,17 @@ class AudioRecorderControl: UIControl {
         audioRecorder?.stop()
         audioRecorder = nil
         updateViews()
-        killUIUpdateTimer()
+    }
+
+    func clearData() {
+        stop()
+        audioRecorder?.deleteRecording()
+        let fm = FileManager.default
+        if let url = audioFileURL,
+            fm.isDeletableFile(atPath: url.path) {
+            try? fm.trashItem(at: url, resultingItemURL: nil)
+        }
+        self.audioFileURL = nil
     }
 
     // MARK: - Helper Methods
