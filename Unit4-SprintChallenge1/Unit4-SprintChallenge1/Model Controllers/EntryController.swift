@@ -7,10 +7,15 @@
 //
 
 import Foundation
-
+import CoreLocation
 class EntryController {
 
     var entries = [Entry]()
+
+    func createPost(with title: String, ofType mediaType: MediaType, location geotag: CLLocationCoordinate2D?) {
+        let entry = Entry(title: title, mediaType: mediaType, geotag: geotag)
+        entries.append(entry)
+    }
 
     
 }

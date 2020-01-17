@@ -13,7 +13,8 @@ class ImageViewController: UIViewController {
 
     var entryController: EntryController?
     var imageData: Data?
-    
+
+    @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var geotagSwitch: UISwitch!
     @IBOutlet weak var imageView: UIImageView!
@@ -72,7 +73,7 @@ class ImageViewController: UIViewController {
             presentInformationalAlertController(title: "Error", message: "The photo library is unavailable")
             return
         }
-        
+
         DispatchQueue.main.async {
             let imagePicker = UIImagePickerController()
 
@@ -84,9 +85,22 @@ class ImageViewController: UIViewController {
         }
     }
 
-    // TODO: Function to post image
     private func postImage() {
+        view.endEditing(true)
 
+        guard let _ = imageData,
+            let title = titleTextField.text,
+            !title.isEmpty else {
+            presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
+            return
+        }
+
+        // TODO: IMPLEMENT LOCATION
+        if geotagSwitch.isOn {
+            self.entryController?.createPost(with: title, ofType: .image, location: nil)
+        } else {
+            self.entryController?.createPost(with: title, ofType: .image, location: nil)
+        }
     }
 
     private func chooseImage() {
