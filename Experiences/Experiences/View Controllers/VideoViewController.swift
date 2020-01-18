@@ -8,12 +8,21 @@
 
 import UIKit
 import AVFoundation
+import CoreData
 
 class VideoViewController: UIViewController {
     
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     var player: AVPlayer?
+    
+    var df: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.timeZone = TimeZone.autoupdatingCurrent
+        formatter.dateFormat = "h:mm:ss | LLL dd, yyyy"
+        return formatter
+    }
+
     
     @IBOutlet weak var cameraView: CameraPreviewView!
     @IBOutlet weak var recordButton: UIButton!
@@ -37,9 +46,22 @@ class VideoViewController: UIViewController {
         }
     }
 
-
-    @IBAction func recordButtonPressed(_ sender: Any) {
+    @IBAction func recordTapped(_ sender: Any) {
         toggleRecording()
+    }
+    
+    @IBAction func saveTapped(_ sender: Any) {
+        
+        let experience = Experience(context: CoreDataStack.context)
+        
+        experience.title = videoTitleTextField.text
+        experience.latitude = ""
+        experience.longitude = ""
+        experience.mediaURL = fileOutput.outputFileURL
+        experience.mediaType = ".mp4"
+        experience.date = Date.currentTimeStamp
+        print(experience)
+        CoreDataStack.saveContext()
     }
     
     func playRecording() {
@@ -93,21 +115,13 @@ class VideoViewController: UIViewController {
 //            captureSession.setSessionPreset(.hd1920x1080)
             captureSession.sessionPreset = .hd1920x1080
         }
-        
-        //start stream
-        
-        
-        //Add inputs
-        
-        //Video input
+         
         guard captureSession.canAddOutput(fileOutput) else {
             fatalError("Can't setup the file output for the movie")
         }
         
         captureSession.addOutput(fileOutput)
-        
-        //Audio input
-        
+
         let microphone = bestAudio()
         guard let audioInput = try? AVCaptureDeviceInput(device: microphone) else {
             fatalError("Can't create input from microphone")
@@ -165,8 +179,7 @@ class VideoViewController: UIViewController {
         playerLayer.frame = topRect
         view.layer.addSublayer(playerLayer)
         player?.play()
-        
-        // TODO: Add delegate and repeat video if at end
+
     }
 }
 
@@ -184,7 +197,7 @@ extension VideoViewController: AVCaptureFileOutputRecordingDelegate {
   }
    
   func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
-    // update UI
+    
      updateViews()
   }
 }

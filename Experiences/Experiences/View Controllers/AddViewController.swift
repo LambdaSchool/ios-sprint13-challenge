@@ -19,6 +19,8 @@ class AddViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        showCamera()
     }
     
     @IBAction func videoButtonTapped(_ sender: Any) {
