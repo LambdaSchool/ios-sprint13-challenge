@@ -101,14 +101,14 @@
             <objects>
                 <viewController id="uGn-VE-CAc" customClass="AddViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Wtk-5c-LNn">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Image-2" translatesAutoresizingMaskIntoConstraints="NO" id="3Fp-Jw-BGh">
-                                <rect key="frame" x="0.0" y="44" width="414" height="808"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="36" translatesAutoresizingMaskIntoConstraints="NO" id="qW6-9o-aH7">
-                                <rect key="frame" x="20" y="424" width="374" height="355.5"/>
+                                <rect key="frame" x="20" y="380" width="374" height="355.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What type of Experience Would You Like To Add?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sFF-8t-Twu">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="67.5"/>
@@ -126,7 +126,7 @@
                                         <state key="normal" title="Video"/>
                                         <connections>
                                             <action selector="videoButtonTapped:" destination="uGn-VE-CAc" eventType="touchUpInside" id="9JI-Mw-KCt"/>
-                                            <segue destination="X1G-kI-2qo" kind="show" identifier="ShowCamera" id="edz-Fx-bUw"/>
+                                            <segue destination="X1G-kI-2qo" kind="show" identifier="ToVideoSegue" id="edz-Fx-bUw"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nRv-t6-UuW">
@@ -174,7 +174,6 @@
                         <outlet property="audioButton" destination="nRv-t6-UuW" id="2of-nD-orH"/>
                         <outlet property="imageButton" destination="pfh-2p-1oJ" id="S1g-nC-CiR"/>
                         <outlet property="videoButton" destination="0jB-pM-XrB" id="Ro6-uQ-gso"/>
-                        <segue destination="NHc-ss-Ct8" kind="show" identifier="ToAddSegue" id="p21-oF-8Qv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Usf-KU-eTx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -186,17 +185,17 @@
             <objects>
                 <viewController id="X1G-kI-2qo" customClass="VideoViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ufh-rA-tnD">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Image-3" translatesAutoresizingMaskIntoConstraints="NO" id="Uqs-jg-vEn">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                             </imageView>
                             <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="MpU-eP-3VS" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
-                                <rect key="frame" x="20" y="100" width="374" height="648"/>
+                                <rect key="frame" x="20" y="100" width="374" height="614"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="6vi-Xt-fOc">
-                                        <rect key="frame" x="8" y="478" width="358" height="154"/>
+                                        <rect key="frame" x="8" y="444" width="358" height="154"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Lg-On-LZM">
                                                 <rect key="frame" x="139" y="0.0" width="80" height="36"/>
@@ -307,32 +306,32 @@
             <objects>
                 <viewController id="lfo-6N-b9M" customClass="AudioViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="njB-7H-b6U">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Image" translatesAutoresizingMaskIntoConstraints="NO" id="biZ-sz-yez">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                             </imageView>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="634-fF-SyH">
                                 <rect key="frame" x="20" y="200" width="374" height="409"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="cJ7-lJ-snF">
-                                        <rect key="frame" x="8" y="9" width="358" height="183"/>
+                                        <rect key="frame" x="8" y="9" width="358" height="149"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LFb-AW-dgR">
-                                                <rect key="frame" x="0.0" y="0.0" width="36" height="183"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="36" height="149"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.91468311430000004" green="0.39546767980000003" blue="0.88254778150000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Br7-Bo-lcM">
-                                                <rect key="frame" x="51" y="0.0" width="256" height="184"/>
+                                                <rect key="frame" x="51" y="0.0" width="256" height="150"/>
                                                 <color key="minimumTrackTintColor" red="0.031683854669999997" green="0.77390610459999998" blue="0.91468311430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <color key="maximumTrackTintColor" red="0.91468311430000004" green="0.39546767980000003" blue="0.88254778150000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <color key="thumbTintColor" red="0.69732438139999997" green="0.77667487150000003" blue="0.3858386633" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aZC-ZZ-SfJ">
-                                                <rect key="frame" x="322" y="0.0" width="36" height="183"/>
+                                                <rect key="frame" x="322" y="0.0" width="36" height="149"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.031683854669999997" green="0.77390610459999998" blue="0.91468311430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -418,11 +417,11 @@
             <objects>
                 <viewController id="Mwg-V6-FyG" customClass="ImageViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gp0-DN-MTg">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Image-4" translatesAutoresizingMaskIntoConstraints="NO" id="2ku-qx-R8Z">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                             </imageView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mNn-k9-k3L">
                                 <rect key="frame" x="20" y="97" width="374" height="559"/>
@@ -450,23 +449,42 @@
             <objects>
                 <viewController modalPresentationStyle="fullScreen" id="NHc-ss-Ct8" customClass="NewMapViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bUS-9U-TiB">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="satellite" translatesAutoresizingMaskIntoConstraints="NO" id="vnC-zH-p9S">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="delegate" destination="NHc-ss-Ct8" id="Pip-vT-Siw"/>
                                 </connections>
                             </mapView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Longpress To Select Your Location" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VS4-AQ-g5X">
+                                <rect key="frame" x="20" y="20" width="374" height="26.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WsD-pd-sOS">
+                                <rect key="frame" x="310" y="744" width="84" height="34"/>
+                                <fontDescription key="fontDescription" type="system" weight="black" pointSize="18"/>
+                                <state key="normal" title="Continue"/>
+                                <connections>
+                                    <action selector="continueButtonTapped:" destination="NHc-ss-Ct8" eventType="touchUpInside" id="Ppt-Nn-LUU"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="vnC-zH-p9S" secondAttribute="bottom" id="0re-xm-IH3"/>
                             <constraint firstItem="vnC-zH-p9S" firstAttribute="top" secondItem="bUS-9U-TiB" secondAttribute="top" id="6Uv-wZ-iYK"/>
+                            <constraint firstItem="VS4-AQ-g5X" firstAttribute="leading" secondItem="Uxz-HB-hO3" secondAttribute="leading" constant="20" id="IDw-jM-1C9"/>
+                            <constraint firstAttribute="bottom" secondItem="WsD-pd-sOS" secondAttribute="bottom" constant="30" id="TFn-UF-WAM"/>
                             <constraint firstAttribute="trailing" secondItem="vnC-zH-p9S" secondAttribute="trailing" id="TeF-8H-5Iz"/>
                             <constraint firstItem="vnC-zH-p9S" firstAttribute="leading" secondItem="bUS-9U-TiB" secondAttribute="leading" id="Z0A-8k-1ef"/>
+                            <constraint firstItem="Uxz-HB-hO3" firstAttribute="trailing" secondItem="VS4-AQ-g5X" secondAttribute="trailing" constant="20" id="gdl-dY-7Uu"/>
+                            <constraint firstItem="VS4-AQ-g5X" firstAttribute="top" secondItem="Uxz-HB-hO3" secondAttribute="top" constant="20" id="k7E-tU-qey"/>
+                            <constraint firstItem="Uxz-HB-hO3" firstAttribute="trailing" secondItem="WsD-pd-sOS" secondAttribute="trailing" constant="20" id="rMt-UX-HPd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Uxz-HB-hO3"/>
                     </view>
@@ -475,12 +493,14 @@
                     </tabBarItem>
                     <navigationItem key="navigationItem" id="lQz-fB-vle"/>
                     <connections>
+                        <outlet property="continueButton" destination="WsD-pd-sOS" id="blL-B6-Soa"/>
                         <outlet property="mapView" destination="vnC-zH-p9S" id="W8p-aw-p8x"/>
+                        <segue destination="uGn-VE-CAc" kind="show" identifier="ToAddSegue" id="AkY-WN-TNs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jeM-AW-FSv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2980" y="46"/>
+            <point key="canvasLocation" x="2979.7101449275365" y="45.535714285714285"/>
         </scene>
     </scenes>
     <resources>
@@ -491,8 +511,5 @@
         <image name="equal.square" catalog="system" width="64" height="56"/>
         <image name="map" catalog="system" width="64" height="56"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="p21-oF-8Qv"/>
-    </inferredMetricsTieBreakers>
     <color key="tintColor" white="0.94348334369999998" alpha="1" colorSpace="calibratedWhite"/>
 </document>

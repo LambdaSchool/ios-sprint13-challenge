@@ -13,8 +13,22 @@ import CoreLocation
 class NewMapViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var continueButton: UIButton!
+    
+    @IBAction func continueButtonTapped(_ sender: Any) {
+        performSegue(withIdentifier: "ToAddSegue", sender: self)
+    }
+    
     
     let addViewController = AddViewController()
+    
+    var pressedLocation:CLLocation? = nil {
+        didSet{
+            continueButton.isEnabled = true
+            continueButton.isHighlighted = true
+            print("pressedLocation was set")
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +60,7 @@ class NewMapViewController: UIViewController, MKMapViewDelegate {
                 
                 let touchPoint = gestureReconizer.location(in: mapView)
                 let coordsFromTouchPoint = mapView.convert(touchPoint, toCoordinateFrom: mapView)
-                let location = CLLocation(latitude: coordsFromTouchPoint.latitude, longitude: coordsFromTouchPoint.longitude)
+                pressedLocation = CLLocation(latitude: coordsFromTouchPoint.latitude, longitude: coordsFromTouchPoint.longitude)
 //                myWaypoints.append(location)
                 print("Location:", coordsFromTouchPoint.latitude, coordsFromTouchPoint.longitude)
 
@@ -55,40 +69,39 @@ class NewMapViewController: UIViewController, MKMapViewDelegate {
                 wayAnnotation.title = "waypoint"
 //                myAnnotations.append(location)
 //                print(wayAnnotation)
-                
-                let alert = UIAlertController(title: "Add Experience?", message: "Would you like to add an Experience at your chosen location?", preferredStyle: .alert)
-                
-                let action = UIAlertAction(title: "Continue", style: .default) { (_) in
-                    let experienceLocation = location
-                    
-                    print(experienceLocation)
-
-                    
-                }
-                
-                let cancel = UIAlertAction(title: "Cancel", style: .destructive) { (_) in
-                    alert.dismiss(animated: true, completion: nil)
-                }
-                
-                alert.addAction(cancel)
-                alert.addAction(action)
-                
-                present(alert, animated: true, completion: nil)
+//                
+//                let alert = UIAlertController(title: "Add Experience?", message: "Would you like to add an Experience at your chosen location?", preferredStyle: .alert)
+//                
+//                let action = UIAlertAction(title: "Continue", style: .default) { (_) in
+//                        func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//                        if segue.identifier == "ToAddSegue" {
+//                            let destinationVC = segue.destination as? AddViewController
+//                            destinationVC?.transitioningDelegate = self as? UIViewControllerTransitioningDelegate
+//                        }
+//                    }
+//                }
+//                
+//                let cancel = UIAlertAction(title: "Cancel", style: .destructive) { (_) in
+//                    alert.dismiss(animated: true, completion: nil)
+//                }
+//                
+//                alert.addAction(cancel)
+//                alert.addAction(action)
+//                
+//                present(alert, animated: true, completion: nil)
             }
-        }
-    
-    func addExperience() {
-        performSegue(withIdentifier: "ToAddSegue", sender: self)
+            
     }
     
-    /*
      // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)  {
+        if segue.identifier == "ToAddSegue" {
+            guard let destinationVC = segue.destination as? AddViewController,
+                let pressedLocation = pressedLocation else { return }
+            
+            destinationVC.experienceLocation = pressedLocation
+        }
+        
+    }
 }

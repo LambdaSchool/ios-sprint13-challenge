@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import MapKit
 
 class AddViewController: UIViewController {
 
@@ -15,12 +16,15 @@ class AddViewController: UIViewController {
     @IBOutlet weak var audioButton: UIButton!
     @IBOutlet weak var imageButton: UIButton!
     
+    var experienceLocation: CLLocation?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
-        showCamera()
+//        showCamera()
+        print("Experience location from AddViewController", experienceLocation!)
     }
     
     @IBAction func videoButtonTapped(_ sender: Any) {
@@ -66,7 +70,7 @@ class AddViewController: UIViewController {
     
     
     func showCamera() {
-        performSegue(withIdentifier: "ToAddSegue", sender: self)
+        performSegue(withIdentifier: "ToVideoSegue", sender: self)
     }
     
     

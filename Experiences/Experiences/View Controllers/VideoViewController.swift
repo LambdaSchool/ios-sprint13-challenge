@@ -9,8 +9,11 @@
 import UIKit
 import AVFoundation
 import CoreData
+import MapKit
 
 class VideoViewController: UIViewController {
+    
+    var experienceLocation: CLLocation?
     
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()

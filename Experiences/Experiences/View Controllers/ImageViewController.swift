@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import MapKit
 
 class ImageViewController: UIViewController {
+    
+    var experienceLocation: CLLocation?
 
     override func viewDidLoad() {
         super.viewDidLoad()
