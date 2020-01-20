@@ -66,7 +66,7 @@ class AddViewController: UIViewController {
     
     
     func showCamera() {
-        performSegue(withIdentifier: "ShowCamera", sender: self)
+        performSegue(withIdentifier: "ToAddSegue", sender: self)
     }
     
     

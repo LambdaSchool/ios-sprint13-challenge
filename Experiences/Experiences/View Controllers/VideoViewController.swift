@@ -16,6 +16,8 @@ class VideoViewController: UIViewController {
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     var player: AVPlayer?
     
+    var date = Date()
+    
     var df: DateFormatter {
         let formatter = DateFormatter()
         formatter.timeZone = TimeZone.autoupdatingCurrent
@@ -27,7 +29,6 @@ class VideoViewController: UIViewController {
     @IBOutlet weak var cameraView: CameraPreviewView!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var videoTitleTextField: UITextField!
-    @IBOutlet weak var locationSwitch: UISwitch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +39,9 @@ class VideoViewController: UIViewController {
         // Add tap gesture to replay video (repeat loop)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(tapGesture:)))
         view.addGestureRecognizer(tapGesture)
+        
     }
+    
     @objc func handleTapGesture(tapGesture: UITapGestureRecognizer) {
         print("play movie")
         if tapGesture.state == .ended {
@@ -58,11 +61,13 @@ class VideoViewController: UIViewController {
         experience.latitude = ""
         experience.longitude = ""
         experience.mediaURL = fileOutput.outputFileURL
-        experience.mediaType = ".mp4"
+        experience.mediaType = ".mov"
         experience.date = Date.currentTimeStamp
         print(experience)
         CoreDataStack.saveContext()
     }
+    
+
     
     func playRecording() {
         if let player = player {
@@ -181,6 +186,7 @@ class VideoViewController: UIViewController {
         player?.play()
 
     }
+    
 }
 
 extension VideoViewController: AVCaptureFileOutputRecordingDelegate {
@@ -200,6 +206,21 @@ extension VideoViewController: AVCaptureFileOutputRecordingDelegate {
     
      updateViews()
   }
+}
+
+extension Date {
+    static var currentTimeStamp: Date {
+        return Date()
+    }
+}
+
+extension VideoViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+
+        videoTitleTextField.resignFirstResponder()
+        
+       return true
+    }
 }
 
 
