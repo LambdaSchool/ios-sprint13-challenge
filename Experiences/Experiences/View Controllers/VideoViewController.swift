@@ -57,14 +57,6 @@ class VideoViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(tapGesture:)))
         view.addGestureRecognizer(tapGesture)
         
-//        let fetchRequest: NSFetchRequest<Experience> = Experience.fetchRequest()
-//        do {
-//            let experiences = try CoreDataStack.context.fetch(fetchRequest)
-//            print(experiences)
-//        } catch {
-//            print(error)
-//        }
-        
     }
     
     @objc func handleTapGesture(tapGesture: UITapGestureRecognizer) {
