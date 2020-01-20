@@ -94,9 +94,13 @@ class VideoViewController: UIViewController {
         experience.mediaURL = experienceURL()
         experience.mediaType = ".mov"
         experience.date = Date.currentTimeStamp
+        print(experience)
         print(experience.mediaURL)
         print(experience.latitude)
         CoreDataStack.saveContext()
+        
+        self.navigationController?.popToRootViewController(animated: true)
+       
     }
     
     
