@@ -75,7 +75,14 @@ class AddViewController: UIViewController {
     }
     
     
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)  {
+        if segue.identifier == "ToVideoSegue" {
+            guard let destinationVC = segue.destination as? VideoViewController,
+                let experienceLocation = experienceLocation else { return }
+            
+            destinationVC.experienceLocation = experienceLocation
+        }
+    }
     
 
     

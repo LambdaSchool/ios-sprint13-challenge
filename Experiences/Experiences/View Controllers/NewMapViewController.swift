@@ -102,6 +102,5 @@ class NewMapViewController: UIViewController, MKMapViewDelegate {
             
             destinationVC.experienceLocation = pressedLocation
         }
-        
     }
 }

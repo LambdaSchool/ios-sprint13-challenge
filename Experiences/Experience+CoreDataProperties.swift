@@ -19,9 +19,9 @@ extension Experience {
 
     @NSManaged public var title: String?
     @NSManaged public var mediaURL: URL?
-    @NSManaged public var latitude: String?
+    @NSManaged public var latitude: Double
     @NSManaged public var mediaType: String?
-    @NSManaged public var longitude: String?
+    @NSManaged public var longitude: Double
     @NSManaged public var date: Date?
 
 }

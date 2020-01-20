@@ -28,7 +28,7 @@ class VideoViewController: UIViewController {
         return formatter
     }
     
-    let experienceURL = { () -> URL in 
+    let experienceURL = { () -> URL in
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         
         let formatter = ISO8601DateFormatter()
@@ -37,7 +37,7 @@ class VideoViewController: UIViewController {
         let name = formatter.string(from: Date())
         let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
         
-         return fileURL
+        return fileURL
     }
     
     @IBOutlet weak var cameraView: CameraPreviewView!
@@ -50,17 +50,20 @@ class VideoViewController: UIViewController {
         cameraView.videoPlayerView.videoGravity = .resizeAspectFill
         setupCamera()
         
+        print(experienceLocation!)
+        print(experienceLocation?.coordinate.latitude)
+        
         // Add tap gesture to replay video (repeat loop)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(tapGesture:)))
         view.addGestureRecognizer(tapGesture)
         
-        let fetchRequest: NSFetchRequest<Experience> = Experience.fetchRequest()
-        do {
-            let experiences = try CoreDataStack.context.fetch(fetchRequest)
-            print(experiences)
-        } catch {
-            print(error)
-        }
+//        let fetchRequest: NSFetchRequest<Experience> = Experience.fetchRequest()
+//        do {
+//            let experiences = try CoreDataStack.context.fetch(fetchRequest)
+//            print(experiences)
+//        } catch {
+//            print(error)
+//        }
         
     }
     
@@ -79,13 +82,20 @@ class VideoViewController: UIViewController {
         
         let experience = Experience(context: CoreDataStack.context)
         
+        guard let experienceLocation = experienceLocation else { return }
+        
+        let latitude = Double(experienceLocation.coordinate.latitude)
+        let longitude = Double(experienceLocation.coordinate.longitude)
+            
+        
         experience.title = videoTitleTextField.text
-        experience.latitude = ""
-        experience.longitude = ""
+        experience.latitude = latitude
+        experience.longitude = longitude
         experience.mediaURL = experienceURL()
         experience.mediaType = ".mov"
         experience.date = Date.currentTimeStamp
         print(experience.mediaURL)
+        print(experience.latitude)
         CoreDataStack.saveContext()
     }
     
