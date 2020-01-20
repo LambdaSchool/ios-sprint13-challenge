@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import MapKit
+import CoreData
 
 class AddViewController: UIViewController {
 
@@ -23,8 +24,8 @@ class AddViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-//        showCamera()
         print("Experience location from AddViewController", experienceLocation!)
+
     }
     
     @IBAction func videoButtonTapped(_ sender: Any) {

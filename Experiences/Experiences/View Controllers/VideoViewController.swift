@@ -27,7 +27,18 @@ class VideoViewController: UIViewController {
         formatter.dateFormat = "h:mm:ss | LLL dd, yyyy"
         return formatter
     }
-
+    
+    let experienceURL = { () -> URL in 
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime]
+        
+        let name = formatter.string(from: Date())
+        let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
+        
+         return fileURL
+    }
     
     @IBOutlet weak var cameraView: CameraPreviewView!
     @IBOutlet weak var recordButton: UIButton!
@@ -43,6 +54,14 @@ class VideoViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(tapGesture:)))
         view.addGestureRecognizer(tapGesture)
         
+        let fetchRequest: NSFetchRequest<Experience> = Experience.fetchRequest()
+        do {
+            let experiences = try CoreDataStack.context.fetch(fetchRequest)
+            print(experiences)
+        } catch {
+            print(error)
+        }
+        
     }
     
     @objc func handleTapGesture(tapGesture: UITapGestureRecognizer) {
@@ -51,7 +70,7 @@ class VideoViewController: UIViewController {
             playRecording()
         }
     }
-
+    
     @IBAction func recordTapped(_ sender: Any) {
         toggleRecording()
     }
@@ -63,14 +82,14 @@ class VideoViewController: UIViewController {
         experience.title = videoTitleTextField.text
         experience.latitude = ""
         experience.longitude = ""
-        experience.mediaURL = fileOutput.outputFileURL
+        experience.mediaURL = experienceURL()
         experience.mediaType = ".mov"
         experience.date = Date.currentTimeStamp
-        print(experience)
+        print(experience.mediaURL)
         CoreDataStack.saveContext()
     }
     
-
+    
     
     func playRecording() {
         if let player = player {
@@ -120,16 +139,16 @@ class VideoViewController: UIViewController {
         captureSession.addInput(cameraInput)
         
         if captureSession.canSetSessionPreset(.hd1920x1080) {
-//            captureSession.setSessionPreset(.hd1920x1080)
+            //            captureSession.setSessionPreset(.hd1920x1080)
             captureSession.sessionPreset = .hd1920x1080
         }
-         
+        
         guard captureSession.canAddOutput(fileOutput) else {
             fatalError("Can't setup the file output for the movie")
         }
         
         captureSession.addOutput(fileOutput)
-
+        
         let microphone = bestAudio()
         guard let audioInput = try? AVCaptureDeviceInput(device: microphone) else {
             fatalError("Can't create input from microphone")
@@ -168,12 +187,13 @@ class VideoViewController: UIViewController {
     /// Creates a new file URL in the documents directory
     private func newRecordingURL() -> URL {
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-
+        
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions = [.withInternetDateTime]
-
+        
         let name = formatter.string(from: Date())
         let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
+        
         return fileURL
     }
     
@@ -187,28 +207,23 @@ class VideoViewController: UIViewController {
         playerLayer.frame = topRect
         view.layer.addSublayer(playerLayer)
         player?.play()
-
+        
     }
     
 }
 
 extension VideoViewController: AVCaptureFileOutputRecordingDelegate {
-   
-  func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+    
+    func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         
-    if let error = error {
-        print(error)
+        if let error = error {
+            print(error)
+        }
+        print("Video: \(outputFileURL.path)")
+        updateViews()
+        
+        playMovie(url: outputFileURL)
     }
-    print("Video: \(outputFileURL.path)")
-    updateViews()
-    
-    playMovie(url: outputFileURL)
-  }
-   
-  func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
-    
-     updateViews()
-  }
 }
 
 extension Date {
@@ -219,10 +234,10 @@ extension Date {
 
 extension VideoViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-
+        
         videoTitleTextField.resignFirstResponder()
         
-       return true
+        return true
     }
 }
 
