@@ -12,7 +12,7 @@ import MapKit
 import CoreData
 
 class AddViewController: UIViewController {
-
+    
     @IBOutlet weak var videoButton: UIButton!
     @IBOutlet weak var audioButton: UIButton!
     @IBOutlet weak var imageButton: UIButton!
@@ -21,11 +21,11 @@ class AddViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         
         print("Experience location from AddViewController", experienceLocation!)
-
+        
     }
     
     @IBAction func videoButtonTapped(_ sender: Any) {
@@ -81,21 +81,28 @@ class AddViewController: UIViewController {
                 let experienceLocation = experienceLocation else { return }
             
             destinationVC.experienceLocation = experienceLocation
+        } else {
+            if segue.identifier == "ToImageSegue" {
+                guard let destinationVC = segue.destination as? ImageViewController,
+                    let experienceLocation = experienceLocation else { return }
+                
+                destinationVC.experienceLocation = experienceLocation
+            }
         }
     }
     
-
     
-
+    
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 

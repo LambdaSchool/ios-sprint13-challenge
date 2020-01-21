@@ -105,7 +105,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Image-2" translatesAutoresizingMaskIntoConstraints="NO" id="3Fp-Jw-BGh">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="808.00000000000011"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="36" translatesAutoresizingMaskIntoConstraints="NO" id="qW6-9o-aH7">
                                 <rect key="frame" x="20" y="380" width="374" height="355.5"/>
@@ -150,7 +150,7 @@
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                         <state key="normal" title="Image"/>
                                         <connections>
-                                            <segue destination="Mwg-V6-FyG" kind="show" id="7dF-FZ-uuy"/>
+                                            <segue destination="Mwg-V6-FyG" kind="show" identifier="ToImageSegue" id="7dF-FZ-uuy"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -189,7 +189,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Image-3" translatesAutoresizingMaskIntoConstraints="NO" id="Uqs-jg-vEn">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="808.00000000000011"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                             </imageView>
                             <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="MpU-eP-3VS" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
                                 <rect key="frame" x="20" y="100" width="374" height="614"/>
@@ -274,19 +274,21 @@
         <scene sceneID="OTo-sW-cv5">
             <objects>
                 <tableViewController interfaceStyle="light" id="WNC-WS-8Tc" customClass="TableViewTableViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="SWu-Ia-09c">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="SWu-Ia-09c">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="tintColor" red="0.43932459540000002" green="0.5" blue="0.85921730200000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="separatorColor" red="0.43932459540000002" green="0.5" blue="0.85921730200000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="sectionIndexColor" red="0.43932459540000002" green="0.5" blue="0.85921730200000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ExperienceCell" id="Lel-Oz-qbg">
-                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Lel-Oz-qbg" id="IIz-R2-EwO">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -547,7 +549,7 @@
                     <connections>
                         <outlet property="brightnessSider" destination="PUd-5p-qwW" id="ga1-hm-O2X"/>
                         <outlet property="contrastSlider" destination="0g1-tB-GSf" id="tDg-wv-WYc"/>
-                        <outlet property="imageTitle" destination="hJr-zw-eyf" id="3mf-bb-K9i"/>
+                        <outlet property="imageTitleTextField" destination="hJr-zw-eyf" id="3mf-bb-K9i"/>
                         <outlet property="imageView" destination="2kr-Sp-8xd" id="JEI-O7-M0X"/>
                         <outlet property="saturationSlider" destination="37P-qs-mMq" id="nbs-rI-GvN"/>
                         <outlet property="selectImageButton" destination="Ffn-Th-npj" id="TFn-9V-SHh"/>
