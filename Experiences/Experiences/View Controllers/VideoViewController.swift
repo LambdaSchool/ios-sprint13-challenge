@@ -50,9 +50,6 @@ class VideoViewController: UIViewController {
         cameraView.videoPlayerView.videoGravity = .resizeAspectFill
         setupCamera()
         
-        print(experienceLocation!)
-        print(experienceLocation?.coordinate.latitude)
-        
         // Add tap gesture to replay video (repeat loop)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(tapGesture:)))
         view.addGestureRecognizer(tapGesture)
@@ -86,9 +83,7 @@ class VideoViewController: UIViewController {
         experience.mediaURL = experienceURL()
         experience.mediaType = ".mov"
         experience.date = Date.currentTimeStamp
-        print(experience)
-        print(experience.mediaURL)
-        print(experience.latitude)
+
         CoreDataStack.saveContext()
         
         self.navigationController?.popToRootViewController(animated: true)

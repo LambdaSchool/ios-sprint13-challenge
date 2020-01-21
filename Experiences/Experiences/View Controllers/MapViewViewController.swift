@@ -65,7 +65,7 @@ extension MapViewViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
-        guard let experience = annotation as? Experience else {
+        guard annotation is Experience else {
             fatalError("FatalError.......")
         }
         
@@ -76,17 +76,8 @@ extension MapViewViewController: MKMapViewDelegate {
         
         // use a new icon
         
-        //        annotationView.glyphImage = UIImage(named: "QuakeIcon")
-        
-        // color it based on severity
-        
-        //        if quake.magnitude >= 5 {
-        //            annotationView.markerTintColor = .red
-        //        } else if quake.magnitude >= 3 && quake.magnitude < 5 {
-        //            annotationView.markerTintColor = .orange
-        //        } else {
-        //            annotationView.markerTintColor = .yellow
-        //        }
+                annotationView.glyphImage = UIImage(named: "Image-6")
+        annotationView.markerTintColor = .some(#colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1))
         
         // show popup
         ////
