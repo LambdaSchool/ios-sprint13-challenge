@@ -81,28 +81,16 @@ class AddViewController: UIViewController {
                 let experienceLocation = experienceLocation else { return }
             
             destinationVC.experienceLocation = experienceLocation
-        } else {
-            if segue.identifier == "ToImageSegue" {
+        } else if segue.identifier == "ToImageSegue" {
                 guard let destinationVC = segue.destination as? ImageViewController,
                     let experienceLocation = experienceLocation else { return }
                 
                 destinationVC.experienceLocation = experienceLocation
-            }
+        } else {
+            guard let destinationVC = segue.destination as? AudioViewController,
+                let experienceLocation = experienceLocation else { return }
+                           
+                destinationVC.experienceLocation = experienceLocation
+        }
         }
     }
-    
-    
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
-}
-
