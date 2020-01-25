@@ -19,6 +19,7 @@ class ExperiencesMapViewController: UIViewController {
     
     var experiences = [Experience]() {
         didSet {
+            
             let oldExperiences = Set(oldValue)
             let newExperiences = Set(experiences)
             let addedExperiences = Array(newExperiences.subtracting(oldExperiences))
@@ -100,6 +101,8 @@ extension ExperiencesMapViewController: MKMapViewDelegate {
         guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationReuseIdentifier, for: experience) as? MKMarkerAnnotationView else {
             fatalError("Missing registered map annotation view")
         }
+        
+        annotationView.annotation = annotation
         
         return annotationView
     }

@@ -125,7 +125,8 @@ class VideoRecordingViewController: UIViewController {
     }
     
     @IBAction func saveButtonTapped(_ sender: Any) {
-        
+        experienceController?.createExperience(with: "Test", latitude: 0, longitude: 0, image: nil, audioRecording: nil, videoRecording: nil)
+        navigationController?.popToRootViewController(animated: true)
     }
     
     private func requestPermissionAndShowCamera() {
