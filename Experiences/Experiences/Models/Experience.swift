@@ -10,7 +10,7 @@ import Foundation
 import MapKit
 
 class Experience: NSObject {
-    var title: String
+    var experienceTitle: String
     var latitude: Double
     var longitude: Double
     var image: UIImage?
@@ -18,12 +18,23 @@ class Experience: NSObject {
     var videoRecording: URL?
     
     internal init(title: String, latitude: Double, longitude: Double, image: UIImage?, audioRecording: URL?, videoRecording: URL?) {
-        self.title = title
+        self.experienceTitle = title
         self.latitude = latitude
         self.longitude = longitude
         self.image = image
         self.audioRecording = audioRecording
         self.videoRecording = videoRecording
+    }
+    
+}
+
+extension Experience: MKAnnotation {
+    var coordinate: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
+    
+    var title: String? {
+        experienceTitle
     }
     
 }

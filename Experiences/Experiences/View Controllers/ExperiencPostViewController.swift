@@ -19,26 +19,12 @@ class ExperiencPostViewController: UIViewController {
     @IBOutlet weak var experienceTitleTextField: UITextField!
     
     var experience: Experience?
-    let experienceController = ExperienceController()
-    
-    fileprivate let locationManager: CLLocationManager = {
-        let locationManager = CLLocationManager()
-        locationManager.requestWhenInUseAuthorization()
-        return locationManager
-    }()
-    
+    var experienceController: ExperienceController?
     var audioRecorder: AVAudioRecorder?
     var recordingURL: URL?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        getCurrentLocation()
-    }
-    
-    func getCurrentLocation() {
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startUpdatingLocation()
     }
     
     private func presentImagePickerController() {
@@ -159,20 +145,6 @@ extension ExperiencPostViewController: UIImagePickerControllerDelegate, UINaviga
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
-    }
-}
-
-// MARK: - Location Extension
-
-extension ExperiencPostViewController: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let locationValue: CLLocationCoordinate2D = locationManager.location?.coordinate else { return }
-        
-        locationManager.stopUpdatingLocation()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Error: \(error.localizedDescription)")
     }
 }
 
