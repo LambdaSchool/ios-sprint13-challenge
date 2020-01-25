@@ -29,6 +29,7 @@ class ExperienceViewController: UIViewController {
     //MARK: - Actions
     
     @IBAction func saveTapped(_ sender: Any) {
+        performSegue(withIdentifier: "saveSegue", sender: self)
     }
     
     @IBAction func addImageTapped(_ sender: Any) {
