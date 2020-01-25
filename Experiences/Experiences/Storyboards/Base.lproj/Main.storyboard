@@ -18,11 +18,25 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" showsScale="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vww-BD-q2b">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2fC-bX-R17">
+                                <rect key="frame" x="344" y="44" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="3TY-Yf-XKz"/>
+                                    <constraint firstAttribute="width" constant="50" id="PRr-MA-A90"/>
+                                    <constraint firstAttribute="width" secondItem="2fC-bX-R17" secondAttribute="height" multiplier="1:1" id="aiV-t8-ZhB"/>
+                                </constraints>
+                                <state key="normal" image="sunrise.fill" catalog="system"/>
+                                <connections>
+                                    <segue destination="IMi-jf-O8O" kind="presentation" identifier="newExperienceSegue" modalPresentationStyle="fullScreen" id="8Lf-On-Yaz"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="m3A-tz-9XE" firstAttribute="bottom" secondItem="vww-BD-q2b" secondAttribute="bottom" id="Dx0-2X-lSj"/>
                             <constraint firstItem="vww-BD-q2b" firstAttribute="leading" secondItem="m3A-tz-9XE" secondAttribute="leading" id="LQF-qP-qcS"/>
+                            <constraint firstItem="m3A-tz-9XE" firstAttribute="trailing" secondItem="2fC-bX-R17" secondAttribute="trailing" constant="20" id="OKG-qY-q3l"/>
+                            <constraint firstItem="2fC-bX-R17" firstAttribute="top" secondItem="m3A-tz-9XE" secondAttribute="top" id="Xj9-ol-be8"/>
                             <constraint firstItem="vww-BD-q2b" firstAttribute="top" secondItem="m3A-tz-9XE" secondAttribute="top" id="pYu-eT-qUb"/>
                             <constraint firstItem="m3A-tz-9XE" firstAttribute="trailing" secondItem="vww-BD-q2b" secondAttribute="trailing" id="smT-Ly-Ptt"/>
                         </constraints>
@@ -30,7 +44,6 @@
                     </view>
                     <connections>
                         <outlet property="mapView" destination="vww-BD-q2b" id="0MG-3h-XjT"/>
-                        <segue destination="IMi-jf-O8O" kind="presentation" identifier="newExperienceSegue" modalPresentationStyle="fullScreen" id="yoU-cV-GQW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CpE-E4-DhH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -105,6 +118,11 @@
                         <viewLayoutGuide key="safeArea" id="Fcf-QN-WOX"/>
                     </view>
                     <navigationItem key="navigationItem" title="New Experience" id="UFf-h2-p7R">
+                        <barButtonItem key="leftBarButtonItem" title="&lt;" id="jjU-77-kEj">
+                            <connections>
+                                <segue destination="4ug-Hc-La8" kind="presentation" identifier="backSegue" modalPresentationStyle="fullScreen" id="adi-ib-OHR"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Save" id="A0e-lV-seA">
                             <connections>
                                 <action selector="saveTapped:" destination="UCv-FR-BfO" id="t9h-B1-TNX"/>
@@ -115,6 +133,7 @@
                         <outlet property="cameraView" destination="eDL-Oa-Z3k" id="qJ7-T8-hGr"/>
                         <outlet property="imageView" destination="FMT-nl-2bP" id="hH5-Et-9sq"/>
                         <outlet property="titleTextField" destination="Pn3-rx-lmg" id="7rS-ry-Fcx"/>
+                        <segue destination="4ug-Hc-La8" kind="presentation" identifier="saveSegue" modalPresentationStyle="fullScreen" id="vYX-sf-Nxc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v78-Ys-Z6c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -140,4 +159,10 @@
             <point key="canvasLocation" x="1296" y="-24"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="sunrise.fill" catalog="system" width="64" height="48"/>
+    </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="vYX-sf-Nxc"/>
+    </inferredMetricsTieBreakers>
 </document>
