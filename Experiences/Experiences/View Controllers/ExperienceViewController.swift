@@ -15,6 +15,7 @@ class ExperienceViewController: UIViewController {
     
     //MARK: - Properties
     
+    //Photos
     private let context = CIContext()
     private let noirFilter = CIFilter.photoEffectNoir()
     var blackWhite: Bool = false
@@ -50,6 +51,7 @@ class ExperienceViewController: UIViewController {
     
     //MARK: - Methods
     
+    // Photos
     private func presentImagePickerController() {
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
             print("The photo library is not available")
@@ -62,7 +64,6 @@ class ExperienceViewController: UIViewController {
         
         present(imagePicker, animated: true, completion: nil)
     }
-    
     private func updateImage() {
         if let scaledImage = ciImage {
             noirButton.isSelected = blackWhite
@@ -71,7 +72,6 @@ class ExperienceViewController: UIViewController {
             imageView.image = nil
         }
     }
-    
     private func image(byFiltering inputImage: CIImage) -> UIImage {
         if noirButton.isSelected {
             noirFilter.inputImage = inputImage
@@ -89,17 +89,19 @@ class ExperienceViewController: UIViewController {
         performSegue(withIdentifier: "saveSegue", sender: self)
     }
     
+    // Photos
     @IBAction func addImageTapped(_ sender: Any) {
         presentImagePickerController()
     }
-    
-    @IBAction func recordTapped(_ sender: Any) {
-    }
-    
     @IBAction func blackWhiteTapped(_ sender: Any) {
         blackWhite = !blackWhite
         updateImage()
     }
+    
+    // Videos
+    @IBAction func recordTapped(_ sender: Any) {
+    }
+    
     
     //MARK: - Navigation
 
