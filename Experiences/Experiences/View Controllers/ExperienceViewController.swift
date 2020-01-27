@@ -24,7 +24,6 @@ class ExperienceViewController: UIViewController {
             guard let originalImage = originalImage, let cgImage = originalImage.cgImage else { return }
             
             ciImage = CIImage(cgImage: cgImage)
-            
         }
     }
     var ciImage: CIImage? {
@@ -67,6 +66,7 @@ class ExperienceViewController: UIViewController {
     private func updateImage() {
         if let scaledImage = ciImage {
             noirButton.isSelected = blackWhite
+            scaledImage.clampedToExtent()
             imageView.image = image(byFiltering: scaledImage)
         } else {
             imageView.image = nil
