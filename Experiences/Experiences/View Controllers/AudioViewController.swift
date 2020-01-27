@@ -17,6 +17,7 @@ class AudioViewController: UIViewController {
     
     var audioPlayer: AVAudioPlayer?
     var audioRecorder: AVAudioRecorder?
+    var postController: PostController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,6 +81,11 @@ class AudioViewController: UIViewController {
                 
                 present(alert, animated: true, completion: nil)
     }
+    
+    @IBAction func cancelPressed(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 extension AudioViewController: AVAudioRecorderDelegate {

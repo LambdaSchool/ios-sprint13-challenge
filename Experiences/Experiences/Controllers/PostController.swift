@@ -10,4 +10,8 @@ import Foundation
 
 class PostController {
     var posts: [Post] = []
+    
+    func savePost(_ post: Post) {
+        self.posts.append(post)
+    }
 }

@@ -19,6 +19,7 @@ class ImageViewController: UIViewController {
     @IBOutlet weak var saturationStackView: UIStackView!
     
     var post: Post?
+    var postController: PostController?
     
     var originalImage: UIImage? {
         didSet {
@@ -102,22 +103,23 @@ class ImageViewController: UIViewController {
     @IBAction func nextPressed(_ sender: Any) {
         let alert = UIAlertController(title: "Add a Title", message: nil, preferredStyle: .alert)
                 
-                var commentTextField: UITextField?
+                var titleTextField: UITextField?
                 
                 alert.addTextField { (textField) in
                     textField.placeholder = "Type your title"
-                    commentTextField = textField
+                    titleTextField = textField
                 }
                 
                 let addTitleAction = UIAlertAction(title: "Save", style: .default) { (_) in
                     
-                    guard let commentText = commentTextField?.text else { return }
+                    guard let title = titleTextField?.text,
+                        let image = self.imageView.image else { return }
                     
-        //            self.postController.addComment(with: .text(commentText), to: self.post!)
+                    let post = Post(title: title, media: .image(image: image), coordinate: CLLocationCoordinate2D())
                     
-                    DispatchQueue.main.async {
-        //                self.tableView.reloadData()
-                    }
+                    self.postController?.savePost(post)
+                    
+                    self.dismiss(animated: true, completion: nil)
                 }
                 
                 let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -126,6 +128,10 @@ class ImageViewController: UIViewController {
                 alert.addAction(cancelAction)
                 
                 present(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func cancelPressed(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     // MARK: Slider events
