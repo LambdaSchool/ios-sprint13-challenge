@@ -6,12 +6,22 @@
 //  Copyright © 2020 Vici Shaweddy. All rights reserved.
 //
 
-import Foundation
+import CoreLocation
 
 class PostController {
-    var posts: [Post] = []
+    private(set) var posts: [Post] = []
+    
+    var currentLocation: CLLocation?
+    var didChange: (([Post]) -> Void)?
     
     func savePost(_ post: Post) {
+        if let coordinate = currentLocation?.coordinate {
+            post.coordinate = coordinate
+        }
+            
         self.posts.append(post)
+        
+        // executing the closure above sending the array of Posts
+        self.didChange?(self.posts)
     }
 }

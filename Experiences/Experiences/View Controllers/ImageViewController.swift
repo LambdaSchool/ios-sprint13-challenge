@@ -20,6 +20,7 @@ class ImageViewController: UIViewController {
     
     var post: Post?
     var postController: PostController?
+    private let locationManager = CLLocationManager()
     
     var originalImage: UIImage? {
         didSet {
@@ -114,8 +115,8 @@ class ImageViewController: UIViewController {
                     
                     guard let title = titleTextField?.text,
                         let image = self.imageView.image else { return }
-                    
-                    let post = Post(title: title, media: .image(image: image), coordinate: CLLocationCoordinate2D())
+                                        
+                    let post = Post(title: title, media: .image(image: image))
                     
                     self.postController?.savePost(post)
                     

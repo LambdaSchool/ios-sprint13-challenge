@@ -10,22 +10,41 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class ExperiencesViewController: UIViewController {
+class ExperiencesViewController: UIViewController, CLLocationManagerDelegate {
     
     // MARK: - Outlets and Properties
     @IBOutlet weak var mapView: MKMapView!
     
     private let postController = PostController()
     private let locationManager = CLLocationManager()
+    private let annotationReuseIdentifier = "PostAnnotationView"
+    private var posts: [Post] = [] {
+        didSet {
+            let oldPosts = Set(oldValue)
+            let newPosts = Set(self.posts)
+            let addedPosts = Array(newPosts.subtracting(oldPosts))
+            let removedPosts = Array(oldPosts.subtracting(newPosts))
+            mapView.removeAnnotations(removedPosts)
+            mapView.addAnnotations(addedPosts)
+            mapView.showAnnotations(self.posts, animated: true)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // show user location
         self.mapView.showsUserLocation = true
-        mapView.delegate = self
-//        locationManager.delegate = self
+        self.mapView.delegate = self
+        self.mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: annotationReuseIdentifier)
         
+        self.locationManager.delegate = self
+        
+        self.postController.didChange = { posts in
+            self.posts = posts
+        }
+
+        locationManager.startUpdatingLocation()
         if CLLocationManager.authorizationStatus() != .authorizedWhenInUse {
             locationManager.requestWhenInUseAuthorization()
         }
@@ -36,6 +55,11 @@ class ExperiencesViewController: UIViewController {
             locationManager.startUpdatingLocation()
             locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
         }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location = locations.first
+        self.postController.currentLocation = location
     }
     
     @IBAction func videoPressed(_ sender: Any) {
@@ -76,8 +100,16 @@ extension ExperiencesViewController: MKMapViewDelegate {
         
     }
     
-//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//        return 
-//    }
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let post = annotation as? Post else { return nil }
+        
+        guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationReuseIdentifier, for: post) as? MKMarkerAnnotationView else {
+            fatalError("Missing registered map annotation view")
+        }
+        
+        annotationView.canShowCallout = true
+        annotationView.animatesWhenAdded = true
+        return annotationView
+    }
 }
 
