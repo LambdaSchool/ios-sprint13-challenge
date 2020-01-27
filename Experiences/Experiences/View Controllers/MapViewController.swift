@@ -16,8 +16,11 @@ class MapViewController: UIViewController {
     private let locationManager = CLLocationManager()
     private let annotationReuseIdentifier = "ExperienceAnnotation"
     
-    // Fix This!!!!!! vvvvvv
-    var annotations: [String] = []
+    var experiences: [Experience] = [] {
+        didSet {
+            mapView.addAnnotations(experiences)
+        }
+    }
     
     //MARK: - Outlets
     
@@ -32,27 +35,12 @@ class MapViewController: UIViewController {
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: annotationReuseIdentifier)
     }
     
-    //MARK: - Methods
-    
-    func fetchAnnotations() {
-        //FIX THIS
-    }
-    //MARK: - Actions
-    
-    //MARK: - Navigation
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    }
 }
 
 extension MapViewController: MKMapViewDelegate {
     
-    func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
-        fetchAnnotations()
-    }
-    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard let experience = annotation as? ExperienceAnnotation else { return nil }
+        guard let experience = annotation as? Experience else { return nil }
         
         guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationReuseIdentifier, for: experience) as? MKMarkerAnnotationView else {
             fatalError("Missing registered map annotation view.")

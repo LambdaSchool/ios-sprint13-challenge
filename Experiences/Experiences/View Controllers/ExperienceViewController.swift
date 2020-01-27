@@ -11,10 +11,14 @@ import CoreImage
 import CoreImage.CIFilterBuiltins
 import Photos
 import AVFoundation
+import MapKit
+import CoreLocation
 
-class ExperienceViewController: UIViewController {
+class ExperienceViewController: UIViewController, CLLocationManagerDelegate {
     
     //MARK: - Properties
+    
+    var experience: Experience?
     
     // Photos
     private let context = CIContext()
@@ -37,7 +41,11 @@ class ExperienceViewController: UIViewController {
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     var player: AVPlayer!
+    var videoURL: URL?
+    var audioURL: URL?
     
+    // Location
+    let locationManager = CLLocationManager()
     //MARK: - Outlets
     
     @IBOutlet weak var titleTextField: UITextField!
@@ -64,6 +72,17 @@ class ExperienceViewController: UIViewController {
         requestPermissionAndShowCamera()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
                cameraView.addGestureRecognizer(tapGesture)
+        
+        //Location
+        locationManager.requestWhenInUseAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
+        
+        //Place
+        self.titleTextField.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -252,7 +271,13 @@ class ExperienceViewController: UIViewController {
     //MARK: - Actions
     
     @IBAction func saveTapped(_ sender: Any) {
-        performSegue(withIdentifier: "saveSegue", sender: self)
+        guard let place = titleTextField.text, !place.isEmpty, let location = locationManager.location?.coordinate else { return }
+        
+        experience = Experience(place: place, image: ciImage, videoURL: videoURL, latitude: location.latitude, longitude: location.longitude)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.performSegue(withIdentifier: "saveSegue", sender: self)
+        }
     }
     
     // Photos
@@ -273,6 +298,11 @@ class ExperienceViewController: UIViewController {
     //MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "saveSegue" {
+            if let mapVC = segue.destination as? MapViewController, let experience = experience {
+                mapVC.experiences.append(experience)
+            }
+        }
     }
 
 }
@@ -310,6 +340,14 @@ extension ExperienceViewController: AVCaptureFileOutputRecordingDelegate {
         print("Video: \(outputFileURL.path)")
         updateViews()
         playMovie(url: outputFileURL)
+        self.videoURL = outputFileURL
     }
     
+}
+
+extension ExperienceViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
 }
