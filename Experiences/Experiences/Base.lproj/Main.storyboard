@@ -154,20 +154,20 @@
                                 <items>
                                     <navigationItem title="Add an Image" id="bWP-oW-uSD">
                                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="S93-zK-5yP"/>
-                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="72L-Lf-QKb"/>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="72L-Lf-QKb">
+                                            <connections>
+                                                <action selector="savePressed:" destination="CHh-gf-dpt" id="hZx-D1-iFw"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MIY-9M-n83">
-                                <rect key="frame" x="0.0" y="44" width="414" height="414"/>
-                                <color key="backgroundColor" systemColor="systemPurpleColor" red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="MIY-9M-n83" secondAttribute="height" multiplier="1:1" id="hwd-az-sLG"/>
-                                </constraints>
-                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Cc-t8-3of">
                                 <rect key="frame" x="103" y="698" width="208" height="30"/>
                                 <state key="normal" title="Add an Image from the Library"/>
+                                <connections>
+                                    <action selector="addImageFromLibraryPressed:" destination="CHh-gf-dpt" eventType="touchUpInside" id="ss8-Ab-G2S"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="eX2-n4-fFX" userLabel="Saturation Stack View">
                                 <rect key="frame" x="16" y="498" width="382" height="58.5"/>
@@ -180,6 +180,9 @@
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="5hf-PW-8qK">
                                         <rect key="frame" x="-2" y="28.5" width="386" height="31"/>
+                                        <connections>
+                                            <action selector="saturationChanged:" destination="CHh-gf-dpt" eventType="valueChanged" id="hPZ-fG-yIY"/>
+                                        </connections>
                                     </slider>
                                 </subviews>
                                 <constraints>
@@ -187,24 +190,35 @@
                                     <constraint firstItem="5hf-PW-8qK" firstAttribute="leading" secondItem="eX2-n4-fFX" secondAttribute="leading" id="eex-KC-M7e"/>
                                 </constraints>
                             </stackView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Muc-tq-1R9">
+                                <rect key="frame" x="0.0" y="44" width="414" height="414"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Muc-tq-1R9" secondAttribute="height" multiplier="1:1" id="OY3-mX-zD0"/>
+                                    <constraint firstAttribute="height" constant="414" id="geD-Nt-2ed"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="MIY-9M-n83" firstAttribute="leading" secondItem="7hw-9e-FpJ" secondAttribute="leading" id="4QL-Kv-whV"/>
+                            <constraint firstItem="eX2-n4-fFX" firstAttribute="centerX" secondItem="noZ-4p-fHL" secondAttribute="centerX" id="8Qj-ik-9tx"/>
                             <constraint firstItem="5Cc-t8-3of" firstAttribute="centerX" secondItem="rwg-LM-QRd" secondAttribute="centerX" id="Fc5-qD-nej"/>
                             <constraint firstItem="7hw-9e-FpJ" firstAttribute="trailing" secondItem="eX2-n4-fFX" secondAttribute="trailing" constant="16" id="JV8-hG-rQZ"/>
-                            <constraint firstItem="MIY-9M-n83" firstAttribute="leading" secondItem="7hw-9e-FpJ" secondAttribute="leading" id="OFY-yd-Nt0"/>
                             <constraint firstItem="noZ-4p-fHL" firstAttribute="top" secondItem="7hw-9e-FpJ" secondAttribute="top" id="RfB-MF-Z5h"/>
-                            <constraint firstItem="eX2-n4-fFX" firstAttribute="top" secondItem="MIY-9M-n83" secondAttribute="bottom" constant="40" id="bbr-a4-ie8"/>
-                            <constraint firstItem="MIY-9M-n83" firstAttribute="leading" secondItem="noZ-4p-fHL" secondAttribute="leading" id="dat-vp-3JO"/>
                             <constraint firstItem="eX2-n4-fFX" firstAttribute="leading" secondItem="7hw-9e-FpJ" secondAttribute="leading" constant="16" id="fAa-pe-b0D"/>
-                            <constraint firstItem="MIY-9M-n83" firstAttribute="trailing" secondItem="7hw-9e-FpJ" secondAttribute="trailing" id="p9J-cu-d8k"/>
+                            <constraint firstItem="7hw-9e-FpJ" firstAttribute="trailing" secondItem="Muc-tq-1R9" secondAttribute="trailing" id="gUF-EG-814"/>
+                            <constraint firstItem="eX2-n4-fFX" firstAttribute="top" secondItem="Muc-tq-1R9" secondAttribute="bottom" constant="40" id="h5b-qr-qsa"/>
+                            <constraint firstItem="Muc-tq-1R9" firstAttribute="top" secondItem="noZ-4p-fHL" secondAttribute="bottom" id="iAf-ft-VmX"/>
                             <constraint firstItem="7hw-9e-FpJ" firstAttribute="bottom" secondItem="5Cc-t8-3of" secondAttribute="bottom" constant="80" id="pbA-d5-8av"/>
-                            <constraint firstItem="MIY-9M-n83" firstAttribute="trailing" secondItem="noZ-4p-fHL" secondAttribute="trailing" id="rbf-Zg-NbT"/>
-                            <constraint firstItem="MIY-9M-n83" firstAttribute="top" secondItem="noZ-4p-fHL" secondAttribute="bottom" symbolic="YES" id="xwi-ci-IWc"/>
+                            <constraint firstItem="noZ-4p-fHL" firstAttribute="leading" secondItem="Muc-tq-1R9" secondAttribute="leading" id="qwB-Kf-JYX"/>
+                            <constraint firstItem="Muc-tq-1R9" firstAttribute="leading" secondItem="7hw-9e-FpJ" secondAttribute="leading" id="w8V-Cz-Czv"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7hw-9e-FpJ"/>
                     </view>
+                    <connections>
+                        <outlet property="imageView" destination="Muc-tq-1R9" id="CUZ-TK-rEy"/>
+                        <outlet property="saturationSlider" destination="5hf-PW-8qK" id="jtY-aq-TPB"/>
+                        <outlet property="saturationStackView" destination="eX2-n4-fFX" id="dQF-Qm-ASH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NuB-d9-io6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
