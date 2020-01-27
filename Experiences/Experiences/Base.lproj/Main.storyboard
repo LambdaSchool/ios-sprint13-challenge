@@ -114,6 +114,10 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <state key="normal" image="Microphone"/>
+                                <state key="selected" image="Stop"/>
+                                <connections>
+                                    <action selector="toggleRecording:" destination="9A2-We-Tfs" eventType="touchUpInside" id="CCI-aP-fAn"/>
+                                </connections>
                             </button>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="13m-ml-qCL">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -121,7 +125,11 @@
                                 <items>
                                     <navigationItem title="Record an Audio" id="lpA-kQ-hl6">
                                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="zRi-hN-0Fi"/>
-                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="GVF-Vs-Ftm"/>
+                                        <barButtonItem key="rightBarButtonItem" title="Next" id="GVF-Vs-Ftm">
+                                            <connections>
+                                                <action selector="nextPressed:" destination="9A2-We-Tfs" id="c0p-w2-tiX"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -133,6 +141,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4qx-Vj-siy"/>
                     </view>
+                    <connections>
+                        <outlet property="recordButton" destination="p7t-M0-Bgb" id="Yki-Oz-0LE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u5d-qM-2Tz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -154,9 +165,9 @@
                                 <items>
                                     <navigationItem title="Add an Image" id="bWP-oW-uSD">
                                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="S93-zK-5yP"/>
-                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="72L-Lf-QKb">
+                                        <barButtonItem key="rightBarButtonItem" title="Next" id="72L-Lf-QKb">
                                             <connections>
-                                                <action selector="savePressed:" destination="CHh-gf-dpt" id="hZx-D1-iFw"/>
+                                                <action selector="nextPressed:" destination="CHh-gf-dpt" id="QfH-4b-Xvy"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -237,7 +248,11 @@
                                 <items>
                                     <navigationItem title="Create a Video" id="E4U-Ul-jJN">
                                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Sk0-xu-C69"/>
-                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="wSV-4m-tUf"/>
+                                        <barButtonItem key="rightBarButtonItem" title="Next" id="wSV-4m-tUf">
+                                            <connections>
+                                                <action selector="nextPressed:" destination="bRF-fv-wKJ" id="tQf-Lo-9au"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -245,7 +260,7 @@
                                 <rect key="frame" x="149" y="612" width="116" height="116"/>
                                 <state key="normal" image="Record"/>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WAE-ic-dt0">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WAE-ic-dt0" customClass="PlaybackView" customModule="Experiences" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="56" width="414" height="414"/>
                                 <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -267,6 +282,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="F7Q-b6-qzI"/>
                     </view>
+                    <connections>
+                        <outlet property="playerView" destination="WAE-ic-dt0" id="kPh-3g-8W3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UeQ-Zq-6Mh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -294,5 +312,6 @@
     <resources>
         <image name="Microphone" width="384" height="384"/>
         <image name="Record" width="116" height="116"/>
+        <image name="Stop" width="116" height="116"/>
     </resources>
 </document>

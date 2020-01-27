@@ -97,9 +97,35 @@ class ImageViewController: UIViewController {
     
     @IBAction func addImageFromLibraryPressed(_ sender: Any) {
         self.presentImagePickerController()
-    }
-    
-    @IBAction func savePressed(_ sender: Any) {
+    }    
+
+    @IBAction func nextPressed(_ sender: Any) {
+        let alert = UIAlertController(title: "Add a Title", message: nil, preferredStyle: .alert)
+                
+                var commentTextField: UITextField?
+                
+                alert.addTextField { (textField) in
+                    textField.placeholder = "Type your title"
+                    commentTextField = textField
+                }
+                
+                let addTitleAction = UIAlertAction(title: "Save", style: .default) { (_) in
+                    
+                    guard let commentText = commentTextField?.text else { return }
+                    
+        //            self.postController.addComment(with: .text(commentText), to: self.post!)
+                    
+                    DispatchQueue.main.async {
+        //                self.tableView.reloadData()
+                    }
+                }
+                
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                
+                alert.addAction(addTitleAction)
+                alert.addAction(cancelAction)
+                
+                present(alert, animated: true, completion: nil)
     }
     
     // MARK: Slider events
