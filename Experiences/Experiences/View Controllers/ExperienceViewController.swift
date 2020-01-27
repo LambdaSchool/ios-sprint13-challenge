@@ -38,6 +38,9 @@ class ExperienceViewController: UIViewController {
     @IBAction func recordTapped(_ sender: Any) {
     }
     
+    @IBAction func blackWhiteTapped(_ sender: Any) {
+    }
+    
     //MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
