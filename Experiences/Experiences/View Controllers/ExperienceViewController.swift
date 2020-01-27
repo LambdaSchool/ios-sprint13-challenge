@@ -63,7 +63,7 @@ class ExperienceViewController: UIViewController {
         cameraView.videoPlayerView.videoGravity = .resize
         requestPermissionAndShowCamera()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
-               view.addGestureRecognizer(tapGesture)
+               cameraView.addGestureRecognizer(tapGesture)
     }
     
     override func viewDidAppear(_ animated: Bool) {
