@@ -20,8 +20,8 @@ class VideoViewController: UIViewController {
     var post: Post?
     var postController: PostController?
     var player: AVPlayer?
-    var audioPlayer: AVAudioPlayer?
     var playerView: PlaybackView?
+    var recordingURL: URL?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -111,39 +111,52 @@ class VideoViewController: UIViewController {
             self.fileOutput.stopRecording()
         } else {
             // start recording
-//            self.fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
+            self.fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
         }
+    }
+    
+    // Creates a new file URL in the documents directory
+    private func newRecordingURL() -> URL {
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime]
+
+        let name = formatter.string(from: Date())
+        let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
+        return fileURL
     }
     
     // MARK: - Actions
     
     @IBAction func nextPressed(_ sender: Any) {
         let alert = UIAlertController(title: "Add a Title", message: nil, preferredStyle: .alert)
-                
-                var commentTextField: UITextField?
-                
-                alert.addTextField { (textField) in
-                    textField.placeholder = "Type your title"
-                    commentTextField = textField
-                }
-                
-                let addTitleAction = UIAlertAction(title: "Save", style: .default) { (_) in
-                    
-                    guard let commentText = commentTextField?.text else { return }
-                    
-        //            self.postController.addComment(with: .text(commentText), to: self.post!)
-                    
-                    DispatchQueue.main.async {
-        //                self.tableView.reloadData()
-                    }
-                }
-                
-                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-                
-                alert.addAction(addTitleAction)
-                alert.addAction(cancelAction)
-                
-                present(alert, animated: true, completion: nil)
+        
+        var titleTextField: UITextField?
+        
+        alert.addTextField { (textField) in
+            textField.placeholder = "Type your title"
+            titleTextField = textField
+        }
+        
+        let addTitleAction = UIAlertAction(title: "Save", style: .default) { (_) in
+            
+            guard let title = titleTextField?.text,
+                let recordingURL = self.recordingURL else { return }
+            
+            let post = Post(title: title, media: .video(url: recordingURL))
+            
+            self.postController?.savePost(post)
+            
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(addTitleAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Actions
@@ -154,5 +167,18 @@ class VideoViewController: UIViewController {
     
     @IBAction func cancelPressed(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension VideoViewController: AVCaptureFileOutputRecordingDelegate {
+    func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
+        updateViews()
+    }
+    func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+        if let error = error {
+            print("Error saving video: \(error)")
+        }
+        print("Video: \(outputFileURL.path)")
+        updateViews()
     }
 }

@@ -103,32 +103,32 @@ class ImageViewController: UIViewController {
 
     @IBAction func nextPressed(_ sender: Any) {
         let alert = UIAlertController(title: "Add a Title", message: nil, preferredStyle: .alert)
-                
-                var titleTextField: UITextField?
-                
-                alert.addTextField { (textField) in
-                    textField.placeholder = "Type your title"
-                    titleTextField = textField
-                }
-                
-                let addTitleAction = UIAlertAction(title: "Save", style: .default) { (_) in
-                    
-                    guard let title = titleTextField?.text,
-                        let image = self.imageView.image else { return }
-                                        
-                    let post = Post(title: title, media: .image(image: image))
-                    
-                    self.postController?.savePost(post)
-                    
-                    self.dismiss(animated: true, completion: nil)
-                }
-                
-                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-                
-                alert.addAction(addTitleAction)
-                alert.addAction(cancelAction)
-                
-                present(alert, animated: true, completion: nil)
+        
+        var titleTextField: UITextField?
+        
+        alert.addTextField { (textField) in
+            textField.placeholder = "Type your title"
+            titleTextField = textField
+        }
+        
+        let addTitleAction = UIAlertAction(title: "Save", style: .default) { (_) in
+            
+            guard let title = titleTextField?.text,
+                let image = self.imageView.image else { return }
+            
+            let post = Post(title: title, media: .image(image: image))
+            
+            self.postController?.savePost(post)
+            
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(addTitleAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
     }
     
     @IBAction func cancelPressed(_ sender: Any) {

@@ -92,6 +92,13 @@ class ExperiencesViewController: UIViewController, CLLocationManagerDelegate {
                 imageVC.postController = self.postController
             }
         }
+        
+        if segue.identifier == "DetailSegue" {
+            if let detailVC = segue.destination as? DetailViewController {
+                detailVC.postController = self.postController
+                detailVC.post = sender as? Post
+            }
+        }
     }
 }
 
@@ -109,7 +116,15 @@ extension ExperiencesViewController: MKMapViewDelegate {
         
         annotationView.canShowCallout = true
         annotationView.animatesWhenAdded = true
+        annotationView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        
         return annotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        guard let post = view.annotation as? Post else { return }
+        
+        self.performSegue(withIdentifier: "DetailSegue", sender: post)
     }
 }
 
