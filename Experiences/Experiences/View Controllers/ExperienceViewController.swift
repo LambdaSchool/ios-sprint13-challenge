@@ -19,6 +19,7 @@ class ExperienceViewController: UIViewController, CLLocationManagerDelegate {
     //MARK: - Properties
     
     var experience: Experience?
+    var mapViewController = MapViewController()
     
     // Photos
     private let context = CIContext()
@@ -44,8 +45,6 @@ class ExperienceViewController: UIViewController, CLLocationManagerDelegate {
     var videoURL: URL?
     var audioURL: URL?
     
-    // Location
-    let locationManager = CLLocationManager()
     //MARK: - Outlets
     
     @IBOutlet weak var titleTextField: UITextField!
@@ -74,11 +73,10 @@ class ExperienceViewController: UIViewController, CLLocationManagerDelegate {
                cameraView.addGestureRecognizer(tapGesture)
         
         //Location
-        locationManager.requestWhenInUseAuthorization()
         if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.startUpdatingLocation()
+            mapViewController.locationManager.delegate = self
+            mapViewController.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            mapViewController.locationManager.startUpdatingLocation()
         }
         
         //Place
@@ -271,9 +269,9 @@ class ExperienceViewController: UIViewController, CLLocationManagerDelegate {
     //MARK: - Actions
     
     @IBAction func saveTapped(_ sender: Any) {
-        guard let place = titleTextField.text, !place.isEmpty, let location = locationManager.location?.coordinate else { return }
+        guard let place = titleTextField.text, !place.isEmpty, let location = mapViewController.locationManager.location else { return }
         
-        experience = Experience(place: place, image: ciImage, videoURL: videoURL, latitude: location.latitude, longitude: location.longitude)
+        experience = Experience(place: place, image: ciImage, videoURL: videoURL, latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.performSegue(withIdentifier: "saveSegue", sender: self)

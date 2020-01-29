@@ -13,7 +13,7 @@ class MapViewController: UIViewController {
     
     //MARK: - Properties
     
-    private let locationManager = CLLocationManager()
+    let locationManager = CLLocationManager()
     private let annotationReuseIdentifier = "ExperienceAnnotation"
     
     var experiences: [Experience] = [] {
