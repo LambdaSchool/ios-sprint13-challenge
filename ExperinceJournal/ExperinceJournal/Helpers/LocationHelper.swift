@@ -17,6 +17,8 @@ class LocationHelper: NSObject {
     
     override init() {
         super.init()
+        locationManager.delegate = self
+        requestUserLocationAuthorization()
     }
     
     func requestUserLocationAuthorization() {
