@@ -13,6 +13,9 @@ class DocumentsTableViewController: UITableViewController {
     
     private lazy var fetchedResultsController: NSFetchedResultsController<Experience> = {
         let fetchRequest: NSFetchRequest<Experience> = Experience.fetchRequest()
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor(key: "title", ascending: true)
+        ]
         let moc = CoreDataStack.shared.mainContext
         var frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: moc, sectionNameKeyPath: nil, cacheName: nil)
         try? frc.performFetch()
