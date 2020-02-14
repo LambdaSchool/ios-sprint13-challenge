@@ -6,9 +6,16 @@
 //  Copyright © 2020 Chad Rutherford. All rights reserved.
 //
 
+import CoreImage
+import CoreImage.CIFilterBuiltins
+import PhotosUI
 import UIKit
 
 class ExperienceRecordingViewController: UIViewController {
+    
+    let manager = AudioManager()
+    var audioFileURL: URL?
+    var context = CIContext(options: nil)
     
     let documentImageView: UIImageView = {
         let imageView = UIImageView()
@@ -38,6 +45,22 @@ class ExperienceRecordingViewController: UIViewController {
         return button
     }()
     
+    private var originalImage: UIImage? {
+        didSet {
+            guard let originalImage = originalImage else { return }
+            var scaledSize = documentImageView.bounds.size
+            let scale = UIScreen.main.scale
+            scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
+            scaledImage = originalImage.imageByScaling(toSize: scaledSize)
+        }
+    }
+    
+    private var scaledImage: UIImage? {
+        didSet {
+            updateImage()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigationBar()
@@ -49,13 +72,46 @@ class ExperienceRecordingViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = false
     }
     
+    private func configureRecordButton() {
+        recordButton.addTarget(self, action: #selector(recordTapped), for: .touchUpInside)
+    }
+    
+    private func configureImagePicker() {
+        documentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(chooseImage)))
+    }
+    
+    @objc private func chooseImage() {
+        
+    }
+    
+    @objc func recordTapped() {
+        manager.toggleRecordingMode()
+    }
+    
+    private func updateViews() {
+        let recordButtonTitle = manager.isRecording ? "Stop" : "Record"
+        recordButton.setTitle(recordButtonTitle, for: .normal)
+    }
+    
     @objc private func presentVideoScreen() {
         let experienceVideoVC = ExperienceVideoViewController()
+        guard let title = titleTextField.text,
+            !title.isEmpty,
+            let image = documentImageView.image,
+            let imageData = image.jpegData(compressionQuality: 0.7),
+            let audioFileURL = audioFileURL
+            else { return }
+        let imageURL = URL.makeNewImageURL(with: title)
+        try? imageData.write(to: imageURL)
+        let experience = Experience(title: title, timestamp: Date(), image: imageURL.absoluteString, audio: audioFileURL.absoluteString, video: "", latitude: 0, longitude: 0)
+        experienceVideoVC.experience = experience
         navigationController?.pushViewController(experienceVideoVC, animated: true)
+        
     }
     
     private func configure() {
         view.backgroundColor = .systemBackground
+        manager.delegate = self
         title = "Make a new memory"
         let padding: CGFloat = 20
         view.addSubview(documentImageView)
@@ -78,4 +134,53 @@ class ExperienceRecordingViewController: UIViewController {
             recordButton.widthAnchor.constraint(equalToConstant: 80)
         ])
     }
+    
+    private func filter(_ image: UIImage) -> UIImage? {
+        guard let cgImage = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+        let filter = CIFilter.photoEffectNoir()
+        filter.inputImage = ciImage
+        guard let outputCIImage = filter.outputImage else { return nil }
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else { return nil }
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    private func updateImage() {
+        if let scaledImage = scaledImage {
+            documentImageView.image = filter(scaledImage)
+        } else {
+            documentImageView.image = nil
+        }
+    }
+}
+
+extension ExperienceRecordingViewController: AudioManagerDelegate {
+    func isRecording() {
+        updateViews()
+    }
+    
+    func doneRecording(with url: URL) {
+        updateViews()
+        self.audioFileURL = url
+    }
+    
+    func didPlay() {
+        return
+    }
+    
+    func didPause() {
+        return
+    }
+    
+    func didFinishPlaying() {
+        return
+    }
+    
+    func didUpdate() {
+        return
+    }
+}
+
+extension ExperienceRecordingViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
 }
