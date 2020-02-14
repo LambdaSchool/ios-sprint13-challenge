@@ -10,6 +10,8 @@ import UIKit
 
 class RecordingViewController: UIViewController {
 
+    var experienceController: ExperienceController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

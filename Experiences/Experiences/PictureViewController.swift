@@ -10,7 +10,7 @@ import UIKit
 import Photos
 import CoreImage
 import CoreImage.CIFilterBuiltins
-
+import MapKit
 class PictureViewController: UIViewController {
 
     // MARK: - Properties
@@ -18,8 +18,11 @@ class PictureViewController: UIViewController {
     @IBOutlet weak var titleTextfield: UITextField!
     @IBOutlet weak var imageVIew: UIImageView!
     @IBOutlet weak var blurSLider: UISlider!
-    @IBOutlet weak var secondSlider: UISlider!
-    @IBOutlet weak var thirdSlider: UISlider!
+    @IBOutlet weak var vignetteSlider: UISlider!
+    @IBOutlet weak var contrastSlider: UISlider!
+    private let context = CIContext(options: nil)
+    var experienceController: ExperienceController?
+    let locationManager = CLLocationManager()
     var originalImage: UIImage? {
         didSet {
             updateImage()
@@ -40,24 +43,28 @@ class PictureViewController: UIViewController {
     }
     
     @IBAction func saveButtonPressed(_ sender: Any) {
-        
+        guard let title = titleTextfield.text, let image = imageVIew.image else { return }
+        let location = locationManager.location?.coordinate
+       experienceController?.createExperience(withTitle: title, image:image , audioRecording: nil, videoRecording: nil, location: location)
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func blurSliderMoved(_ sender: UISlider) {
-        
+        updateImage()
     }
     
     @IBAction func secondSLiderMoved(_ sender: UISlider) {
-        
+        updateImage()
     }
     
     @IBAction func thirdSliderMoved(_ sender: UISlider) {
-        
+        updateImage()
     }
     
     // MARK - Helper Methods
     private func updateImage() {
-        
+        guard let orginalImage = originalImage else { return }
+        imageVIew.image = filterImage(orginalImage)
     }
     
     private func presentActionSheet() {
@@ -74,9 +81,26 @@ class PictureViewController: UIViewController {
         self.present(alertVC, animated: true, completion: nil)
     }
     
-    private func filterImage( _ image: UIImage) -> UIImage? {
+    private func filterImage( _ image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage else { return image}
+        let ciImage = CIImage(cgImage: cgImage)
+        let blurFilter = CIFilter.gaussianBlur()
+        blurFilter.inputImage = ciImage
+        blurFilter.radius = blurSLider.value
         
-        return UIImage()
+        let vignetteFilter = CIFilter.vignette()
+        vignetteFilter.inputImage = blurFilter.outputImage
+        vignetteFilter.intensity = vignetteSlider.value
+        
+        let contrastFilter = CIFilter.colorControls()
+        contrastFilter.inputImage = vignetteFilter.outputImage
+        contrastFilter.contrast = contrastSlider.value
+        
+        guard  let outputCIImage = contrastFilter.outputImage else { return image}
+        
+        guard let CGImage = context.createCGImage(outputCIImage, from: CGRect(origin: CGPoint.zero, size: image.size)) else { return image }
+        let filteredImage = UIImage(cgImage: CGImage)
+        return filteredImage
     }
     
     private func camera() {
