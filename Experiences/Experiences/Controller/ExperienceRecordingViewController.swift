@@ -16,13 +16,16 @@ class ExperienceRecordingViewController: UIViewController {
     let manager = AudioManager()
     var audioFileURL: URL?
     var context = CIContext(options: nil)
+    var imageHeightConstraint: NSLayoutConstraint!
+    var hasBeenFiltered = false
     
-    let documentImageView: UIImageView = {
+    var documentImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.image = UIImage(named: "memories")
+        imageView.backgroundColor = .systemGray
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
@@ -40,18 +43,17 @@ class ExperienceRecordingViewController: UIViewController {
         button.layer.cornerRadius = 8
         button.clipsToBounds = true
         button.setTitle("Record", for: .normal)
+        button.setTitle("Stop", for: .selected)
         button.setTitleColor(UIColor.white, for: .normal)
         button.backgroundColor = .systemRed
+        button.addTarget(self, action: #selector(recordTapped), for: .touchUpInside)
         return button
     }()
     
     private var originalImage: UIImage? {
         didSet {
             guard let originalImage = originalImage else { return }
-            var scaledSize = documentImageView.bounds.size
-            let scale = UIScreen.main.scale
-            scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
-            scaledImage = originalImage.imageByScaling(toSize: scaledSize)
+            scaledImage = originalImage
         }
     }
     
@@ -63,7 +65,12 @@ class ExperienceRecordingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         configureNavigationBar()
+        configureImagePicker()
         configure()
     }
     
@@ -72,25 +79,63 @@ class ExperienceRecordingViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = false
     }
     
-    private func configureRecordButton() {
-        recordButton.addTarget(self, action: #selector(recordTapped), for: .touchUpInside)
-    }
-    
     private func configureImagePicker() {
         documentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(chooseImage)))
     }
     
     @objc private func chooseImage() {
+        let authorizationStatus = PHPhotoLibrary.authorizationStatus()
+        switch authorizationStatus {
+        case .authorized:
+            DispatchQueue.main.async { self.presentImagePickerController() }
+        case .notDetermined:
+            
+            PHPhotoLibrary.requestAuthorization { (status) in
+                
+                guard status == .authorized else {
+                    NSLog("User did not authorize access to the photo library")
+                    return
+                }
+                
+                DispatchQueue.main.async { self.presentImagePickerController() }
+            }
+            
+        case .denied:
+            NSLog("In order to access the photo library, you must allow this application access to it.")
+        case .restricted:
+            NSLog("Unable to access the photo library. Your device's restrictions do not allow access.")
+        @unknown default:
+            break
+        }
+    }
+    
+    private func presentImagePickerController() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            NSLog("The photo library is unavailable")
+            return
+        }
         
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
     }
     
     @objc func recordTapped() {
+        guard let title = titleTextField.text, !title.isEmpty else { return }
+        manager.title = title
+        print("Recording: \(manager.isRecording)")
         manager.toggleRecordingMode()
+        print("Recording: \(manager.isRecording)")
+        if !hasBeenFiltered {
+            originalImage = documentImageView.image
+            updateImage()
+            hasBeenFiltered.toggle()
+        }
     }
     
     private func updateViews() {
-        let recordButtonTitle = manager.isRecording ? "Stop" : "Record"
-        recordButton.setTitle(recordButtonTitle, for: .normal)
+        recordButton.isSelected = manager.isRecording
     }
     
     @objc private func presentVideoScreen() {
@@ -106,14 +151,15 @@ class ExperienceRecordingViewController: UIViewController {
         let experience = Experience(title: title, timestamp: Date(), image: imageURL.absoluteString, audio: audioFileURL.absoluteString, video: "", latitude: 0, longitude: 0)
         experienceVideoVC.experience = experience
         navigationController?.pushViewController(experienceVideoVC, animated: true)
-        
     }
     
     private func configure() {
         view.backgroundColor = .systemBackground
+        titleTextField.delegate = self
         manager.delegate = self
         title = "Make a new memory"
         let padding: CGFloat = 20
+        imageHeightConstraint = documentImageView.heightAnchor.constraint(equalToConstant: 180)
         view.addSubview(documentImageView)
         view.addSubview(titleTextField)
         view.addSubview(recordButton)
@@ -121,7 +167,7 @@ class ExperienceRecordingViewController: UIViewController {
             documentImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             documentImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             documentImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            documentImageView.heightAnchor.constraint(equalToConstant: 180),
+            imageHeightConstraint,
             
             titleTextField.topAnchor.constraint(equalTo: documentImageView.bottomAnchor, constant: padding),
             titleTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
@@ -152,6 +198,11 @@ class ExperienceRecordingViewController: UIViewController {
             documentImageView.image = nil
         }
     }
+    
+    func setImageViewHeight(with aspectRatio: CGFloat) {
+        imageHeightConstraint.constant = documentImageView.frame.size.width * aspectRatio
+        view.layoutSubviews()
+    }
 }
 
 extension ExperienceRecordingViewController: AudioManagerDelegate {
@@ -177,10 +228,25 @@ extension ExperienceRecordingViewController: AudioManagerDelegate {
     }
     
     func didUpdate() {
-        return
+        updateViews()
     }
 }
 
 extension ExperienceRecordingViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[.originalImage] as? UIImage else { return }
+        documentImageView.image = image
+        setImageViewHeight(with: image.ratio)
+        picker.dismiss(animated: true)
+    }
     
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+}
+
+extension ExperienceRecordingViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+    }
 }

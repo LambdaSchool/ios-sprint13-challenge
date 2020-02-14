@@ -24,7 +24,9 @@ extension UIImage {
         }
         
         return UIGraphicsImageRenderer(size: correctedSize, format: imageRendererFormat).image { context in
-            draw(in: CGRect(origin: .zero, size: correctedSize))
+            DispatchQueue.main.async {
+                self.draw(in: CGRect(origin: .zero, size: correctedSize))
+            }
         }
     }
     
@@ -34,5 +36,9 @@ extension UIImage {
         return UIGraphicsImageRenderer(size: size, format: imageRendererFormat).image { context in
             draw(at: .zero)
         }
+    }
+    
+    var ratio: CGFloat {
+        return size.height / size.width
     }
 }

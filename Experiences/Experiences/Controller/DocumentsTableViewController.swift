@@ -23,8 +23,12 @@ class DocumentsTableViewController: UITableViewController {
     }()
     
     override func viewDidLoad() {
-        configureTableViewController()
         setupTableView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        configureTableViewController()
     }
     
     private func configureTableViewController() {
