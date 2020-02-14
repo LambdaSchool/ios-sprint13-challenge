@@ -23,7 +23,19 @@ class DocumentsTableViewController: UITableViewController {
     }()
     
     override func viewDidLoad() {
+        configureTableViewController()
         setupTableView()
+    }
+    
+    private func configureTableViewController() {
+        view.backgroundColor = .systemBackground
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(presentRecordingScreen))
+    }
+    
+    @objc private func presentRecordingScreen() {
+        let experiencesRecordingVC = ExperienceRecordingViewController()
+        navigationController?.pushViewController(experiencesRecordingVC, animated: true)
     }
     
     private func setupTableView() {
