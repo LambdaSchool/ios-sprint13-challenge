@@ -17,6 +17,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
+        checkLocationServices()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,9 +52,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
+    
     private func checkLocationServices() {
         if CLLocationManager.locationServicesEnabled() {
             setupLocationManager()
+            checkAuthorization()
         } else {
             
         }
@@ -62,7 +65,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     private func checkAuthorization() {
         let status = CLLocationManager.authorizationStatus()
         switch status {
-            
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
         case .restricted:
@@ -83,9 +85,33 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         mapView.delegate = self
         mapView.addAnnotations(experienceController.experiences)
     }
+
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let identifier = "Experience"
+        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+        if annotationView == nil {
+            let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView.canShowCallout = true
+            
+        } else {
+            annotationView?.annotation = annotation
+            annotationView?.canShowCallout = true 
+        }
+        
+        return annotationView
+       }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+     
+    }
 }
 
 extension MapViewController: CLLocationManagerDelegate {
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
     }

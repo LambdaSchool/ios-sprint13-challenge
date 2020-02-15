@@ -122,7 +122,7 @@ class PictureViewController: UIViewController {
     }
 }
 
-extension PictureViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension PictureViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate  {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.originalImage] as? UIImage {
             self.originalImage = image

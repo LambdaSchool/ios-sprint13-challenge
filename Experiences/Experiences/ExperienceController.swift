@@ -14,8 +14,16 @@ class ExperienceController {
 private(set) var experiences: [Experience] = []
     
     func createExperience(withTitle title: String, image: UIImage?, audioRecording: URL?, videoRecording: URL?, location: CLLocationCoordinate2D? ) {
-           let experience = Experience(title: title, image: image, audioRecording: audioRecording, videoRecording: videoRecording,location: location)
-           experiences.append(experience)
-        print(location)
+        if location != nil {
+            let experience = Experience(title: title, image: image, audioRecording: audioRecording, videoRecording: videoRecording,location: location)
+            experiences.append(experience)
+            print(location)
+        }
+            let tempLocation = CLLocationCoordinate2D(latitude: 37.7749, longitude: 122.4194)
+            let experience = Experience(title: title, image: image, audioRecording: audioRecording, videoRecording: videoRecording,location: tempLocation)
+            experiences.append(experience)
+            print(location)
+        
        }
+    
 }
