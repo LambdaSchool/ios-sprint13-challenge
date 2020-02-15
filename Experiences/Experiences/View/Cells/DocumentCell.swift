@@ -56,11 +56,10 @@ class DocumentCell: UITableViewCell {
     private func updateViews() {
         guard let experience = experience,
             let image = experience.image,
-            let imageURL = URL(string: image),
-            let data = try? Data(contentsOf: imageURL),
-            let timestamp = experience.timestamp
+            let imageURL = URL(fileURLWithPath: image),
+            let imageFromFile = UIImage(contentsOfFile: imageURL.path)
             else { return }
-        documentImageView.image = UIImage(data: data)
+        documentImageView.image = imageFromFile
         titleLabel.text = experience.title
         timestampLabel.text = dateFormatter.string(from: timestamp)
         
