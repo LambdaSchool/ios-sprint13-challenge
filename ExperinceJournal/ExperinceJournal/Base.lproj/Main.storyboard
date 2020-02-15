@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dpc-pi-TKV">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
@@ -7,16 +7,80 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Image Post View Controller-->
         <scene sceneID="EUa-bZ-HmK">
             <objects>
-                <viewController id="Hd6-iH-mS4" sceneMemberID="viewController">
+                <viewController id="Hd6-iH-mS4" customClass="ImagePostViewController" customModule="ExperinceJournal" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZW4-6X-uaz">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3VD-pU-6ZQ">
+                                <rect key="frame" x="0.0" y="88" width="414" height="352"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="352" id="L12-Nq-ldR"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LNj-g3-sdr">
+                                <rect key="frame" x="152" y="249" width="110" height="30"/>
+                                <state key="normal" title="Select an Image"/>
+                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="RDD-le-In3">
+                                <rect key="frame" x="20" y="460" width="374" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="58N-ND-6wV">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="30"/>
+                                        <state key="normal" title="B/W"/>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="mFO-WQ-6Iu">
+                                <rect key="frame" x="28" y="498" width="358" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="354" id="yNJ-rl-8eJ"/>
+                                </constraints>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="add in a GeoLocation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zUt-NG-Ndf">
+                                <rect key="frame" x="30" y="553" width="161.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s7Z-8n-OS4">
+                                <rect key="frame" x="335" y="553" width="51" height="31"/>
+                            </switch>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="zUt-NG-Ndf" firstAttribute="top" secondItem="mFO-WQ-6Iu" secondAttribute="bottom" constant="25" id="1bM-Bi-KcY"/>
+                            <constraint firstItem="s7Z-8n-OS4" firstAttribute="top" secondItem="mFO-WQ-6Iu" secondAttribute="bottom" constant="25" id="6XM-i4-wAs"/>
+                            <constraint firstItem="zUt-NG-Ndf" firstAttribute="leading" secondItem="rIP-BS-wan" secondAttribute="leading" constant="30" id="8i5-tZ-a9A"/>
+                            <constraint firstItem="rIP-BS-wan" firstAttribute="trailing" secondItem="RDD-le-In3" secondAttribute="trailing" constant="20" id="9o4-AO-FLh"/>
+                            <constraint firstItem="mFO-WQ-6Iu" firstAttribute="top" secondItem="RDD-le-In3" secondAttribute="bottom" constant="8" id="BGK-kT-QFr"/>
+                            <constraint firstItem="s7Z-8n-OS4" firstAttribute="leading" secondItem="zUt-NG-Ndf" secondAttribute="trailing" constant="143.5" id="J6b-yG-yP1"/>
+                            <constraint firstItem="rIP-BS-wan" firstAttribute="trailing" secondItem="mFO-WQ-6Iu" secondAttribute="trailing" constant="30" id="RLD-lh-u5I"/>
+                            <constraint firstItem="3VD-pU-6ZQ" firstAttribute="top" secondItem="rIP-BS-wan" secondAttribute="top" id="WYQ-hF-ZPU"/>
+                            <constraint firstItem="3VD-pU-6ZQ" firstAttribute="centerY" secondItem="LNj-g3-sdr" secondAttribute="centerY" id="ali-EQ-Iir"/>
+                            <constraint firstItem="RDD-le-In3" firstAttribute="leading" secondItem="rIP-BS-wan" secondAttribute="leading" constant="20" id="b7V-r3-2O8"/>
+                            <constraint firstItem="mFO-WQ-6Iu" firstAttribute="leading" secondItem="rIP-BS-wan" secondAttribute="leading" constant="30" id="iys-uE-og3"/>
+                            <constraint firstItem="RDD-le-In3" firstAttribute="top" secondItem="3VD-pU-6ZQ" secondAttribute="bottom" constant="20" id="jhA-Mu-Pmc"/>
+                            <constraint firstItem="3VD-pU-6ZQ" firstAttribute="leading" secondItem="rIP-BS-wan" secondAttribute="leading" id="n2a-2n-W4Z"/>
+                            <constraint firstItem="3VD-pU-6ZQ" firstAttribute="centerX" secondItem="RDD-le-In3" secondAttribute="centerX" id="ss3-ld-9ZH"/>
+                            <constraint firstItem="3VD-pU-6ZQ" firstAttribute="centerX" secondItem="LNj-g3-sdr" secondAttribute="centerX" id="tGG-fE-v39"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="rIP-BS-wan"/>
                     </view>
+                    <navigationItem key="navigationItem" id="f3w-zs-HeM">
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="sEm-J4-phn"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="GeoTag" destination="s7Z-8n-OS4" id="ejO-VV-XV7"/>
+                        <outlet property="choseImageButton" destination="LNj-g3-sdr" id="8b4-qy-pJx"/>
+                        <outlet property="imageView" destination="3VD-pU-6ZQ" id="Ehz-TV-8xZ"/>
+                        <outlet property="postImageButton" destination="sEm-J4-phn" id="kNa-8R-Pma"/>
+                        <outlet property="selectImageButton" destination="LNj-g3-sdr" id="nRJ-R2-hdG"/>
+                        <outlet property="valueSlider" destination="mFO-WQ-6Iu" id="Epc-Yr-pzo"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QL8-y5-iD5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -47,7 +111,11 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Item" id="ibD-pr-RCG"/>
                     <navigationItem key="navigationItem" id="rAr-Ka-aRh">
-                        <barButtonItem key="rightBarButtonItem" image="plus" catalog="system" id="Jf5-eS-xJH"/>
+                        <barButtonItem key="rightBarButtonItem" image="plus" catalog="system" id="Jf5-eS-xJH">
+                            <connections>
+                                <segue destination="Hd6-iH-mS4" kind="show" identifier="ShowPostImageSegue" id="XkU-UL-guE"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2bg-yR-634" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
