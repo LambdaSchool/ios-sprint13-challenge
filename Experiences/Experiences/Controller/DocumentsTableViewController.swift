@@ -9,18 +9,18 @@
 import CoreData
 import UIKit
 
-class DocumentsTableViewController: UITableViewController {
+class DocumentsTableViewController: UIViewController {
     
     private lazy var fetchedResultsController: NSFetchedResultsController<Experience> = {
         let fetchRequest: NSFetchRequest<Experience> = Experience.fetchRequest()
-        fetchRequest.sortDescriptors = [
-            NSSortDescriptor(key: "title", ascending: true)
-        ]
+        fetchRequest.sortDescriptors = [ NSSortDescriptor(key: "title", ascending: true) ]
         let moc = CoreDataStack.shared.mainContext
         var frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: moc, sectionNameKeyPath: nil, cacheName: nil)
+        frc.delegate = self
         try? frc.performFetch()
         return frc
     }()
+    let tableView = UITableView()
     
     override func viewDidLoad() {
         setupTableView()
@@ -43,15 +43,22 @@ class DocumentsTableViewController: UITableViewController {
     }
     
     private func setupTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        view.addSubview(tableView)
+        tableView.frame = view.bounds
+        tableView.rowHeight = 96
         tableView.register(DocumentCell.self, forCellReuseIdentifier: DocumentCell.reuseID)
     }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+}
+
+extension DocumentsTableViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fetchedResultsController.fetchedObjects?.count ?? 0
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: DocumentCell.reuseID, for: indexPath) as? DocumentCell else { return UITableViewCell()}
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: DocumentCell.reuseID, for: indexPath) as? DocumentCell else { return UITableViewCell() }
         let experience = fetchedResultsController.object(at: indexPath)
         cell.experience = experience
         return cell

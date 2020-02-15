@@ -11,7 +11,7 @@ import Foundation
 extension URL {
     static func makeNewImageURL(with title: String) -> URL {
         guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { fatalError("Could not load documents directory") }
-        let fileURL = documentsDirectory.appendingPathComponent(title).appendingPathExtension("jpeg")
+        let fileURL = documentsDirectory.appendingPathComponent(title).appendingPathExtension("png")
         return fileURL
     }
     

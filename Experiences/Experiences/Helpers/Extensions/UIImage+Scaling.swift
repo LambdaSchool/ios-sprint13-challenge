@@ -41,4 +41,14 @@ extension UIImage {
     var ratio: CGFloat {
         return size.height / size.width
     }
+    
+    static func loadImageFromDocumentsDirectory(name: String) -> UIImage? {
+        let nsDocumentDirectory = FileManager.SearchPathDirectory.documentDirectory
+        let nsUserDomainMask = FileManager.SearchPathDomainMask.userDomainMask
+        let paths = NSSearchPathForDirectoriesInDomains(nsDocumentDirectory, nsUserDomainMask, true)
+        guard let dirPath = paths.first else { return nil }
+        let imageURL = URL(fileURLWithPath: dirPath).appendingPathComponent(name).appendingPathExtension("png")
+        let image = UIImage(contentsOfFile: imageURL.path)
+        return image
+    }
 }

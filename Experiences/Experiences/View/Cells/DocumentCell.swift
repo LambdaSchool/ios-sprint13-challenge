@@ -12,18 +12,23 @@ class DocumentCell: UITableViewCell {
     static let reuseID = "DocumentCell"
     let titleLabel: UILabel = {
         let label = UILabel()
+        label.frame = .zero
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.preferredFont(forTextStyle: .title1)
+        label.textColor = .label
         return label
     }()
     let timestampLabel: UILabel = {
         let label = UILabel()
+        label.frame = .zero
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.preferredFont(forTextStyle: .body)
+        label.textColor = .label
         return label
     }()
     let documentImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.frame = .zero
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 8
@@ -55,36 +60,38 @@ class DocumentCell: UITableViewCell {
     
     private func updateViews() {
         guard let experience = experience,
-            let image = experience.image,
-            let imageURL = URL(string: image),
-            let data = try? Data(contentsOf: imageURL),
-            let timestamp = experience.timestamp
+            let timestamp = experience.timestamp,
+            let title = experience.title,
+            let imageFromFile = UIImage.loadImageFromDocumentsDirectory(name: title)
             else { return }
-        documentImageView.image = UIImage(data: data)
-        titleLabel.text = experience.title
+        documentImageView.image = imageFromFile
+        titleLabel.text = title
         timestampLabel.text = dateFormatter.string(from: timestamp)
         
     }
     
+    
+    
     private func configure() {
-        addSubview(documentImageView)
-        addSubview(titleLabel)
-        addSubview(timestampLabel)
+        contentView.addSubview(documentImageView)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(timestampLabel)
         let padding: CGFloat = 12
         NSLayoutConstraint.activate([
-            documentImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            documentImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding),
-            documentImageView.heightAnchor.constraint(equalToConstant: 120),
+            documentImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            documentImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            documentImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
+            documentImageView.heightAnchor.constraint(equalToConstant: 80),
             documentImageView.widthAnchor.constraint(equalTo: documentImageView.heightAnchor),
             
-            titleLabel.topAnchor.constraint(equalTo: documentImageView.topAnchor),
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             titleLabel.leadingAnchor.constraint(equalTo: documentImageView.trailingAnchor, constant: 24),
-            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
             titleLabel.heightAnchor.constraint(equalToConstant: 40),
             
-            timestampLabel.bottomAnchor.constraint(equalTo: documentImageView.bottomAnchor),
+            timestampLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             timestampLabel.leadingAnchor.constraint(equalTo: documentImageView.trailingAnchor, constant: 24),
-            timestampLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding),
+            timestampLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
             timestampLabel.heightAnchor.constraint(equalToConstant: 40),
         ])
     }

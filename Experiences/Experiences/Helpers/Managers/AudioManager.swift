@@ -23,6 +23,7 @@ class AudioManager: NSObject {
     // MARK: - Properties
     var audioPlayer: AVAudioPlayer?
     var audioRecorder: AVAudioRecorder?
+    var recordingSession: AVAudioSession?
     var timer: Timer?
     weak var delegate: AudioManagerDelegate?
     var recordingURL: URL?
@@ -31,7 +32,6 @@ class AudioManager: NSObject {
         audioPlayer?.isPlaying ?? false
     }
     var isRecording: Bool {
-        print("Audio recorder: \(audioRecorder)")
         return audioRecorder?.isRecording ?? false
     }
     
@@ -64,27 +64,29 @@ class AudioManager: NSObject {
     // MARK: - Private
     private func startRecording() {
         let recordingURL = URL.makeNewAudioURL(with: title)
-        guard let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1) else { return }
+        let settings = [
+            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+            AVSampleRateKey: 12000,
+            AVNumberOfChannelsKey: 1,
+            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+        ]
+        
         do {
             self.recordingURL = recordingURL
-            audioRecorder = try AVAudioRecorder(url: recordingURL, format: format)
+            audioRecorder = try AVAudioRecorder(url: recordingURL, settings: settings)
             audioRecorder?.delegate = self
             audioRecorder?.record()
-            startTimer()
-            if isRecording { print("Recording: \(recordingURL)") }
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-                self.delegate?.isRecording()
-            }
+            if isRecording { print("Recording") }
+            delegate?.isRecording()
         } catch {
-            NSLog("Audio recording error: \(error.localizedDescription)")
+            stopRecording()
         }
     }
     
     private func stopRecording() {
         audioRecorder?.stop()
-        guard let url = recordingURL else { return }
+        audioRecorder = nil
         cancelTimer()
-        delegate?.doneRecording(with: url)
     }
     
     private func play() {
@@ -111,17 +113,25 @@ class AudioManager: NSObject {
     
     @objc private func updateTimer(_ timer: Timer) {
         delegate?.didUpdate()
-        print("isRecording: \(isRecording)")
     }
     
     private func requestRecordPermission() {
-        AVAudioSession.sharedInstance().requestRecordPermission { granted in
-            DispatchQueue.main.async {
-                guard granted else {
-                    fatalError("We need microphone access")
+        recordingSession = AVAudioSession.sharedInstance()
+        do {
+            try recordingSession?.setCategory(.playAndRecord, mode: .default)
+            try recordingSession?.overrideOutputAudioPort(.speaker)
+            try recordingSession?.setActive(true)
+            recordingSession?.requestRecordPermission { granted in
+                DispatchQueue.main.async {
+                    guard granted else {
+                        NSLog("Failed to record")
+                        return
+                    }
+                    self.startRecording()
                 }
-                self.startRecording()
             }
+        } catch {
+            NSLog("Failed to record")
         }
     }
     
@@ -148,7 +158,8 @@ extension AudioManager: AVAudioPlayerDelegate {
 
 extension AudioManager: AVAudioRecorderDelegate {
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-        print("Finished recording \(flag)")
+        guard let fileURL = recordingURL else { return }
+        delegate?.doneRecording(with: fileURL)
     }
     
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
