@@ -13,7 +13,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     private var experienceController = ExperienceController()
     let locationManager = CLLocationManager()
-    
+    let identifier = "Experience"
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
@@ -22,20 +22,21 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        configureViews()
-        print(experienceController.experiences.count)
+        configureViews()                                 
     }
+    
 //MARK: - actions
     @IBAction func addButtonPressed(_ sender: UIButton) {
         let alert = UIAlertController(title: "add", message: "choose which one you'd like to add", preferredStyle: .actionSheet)
-        let pictureAction = UIAlertAction(title: "picture/Video", style: .default) { (_) in
+        let canceAction = UIAlertAction(title: "cancel", style: .cancel, handler: nil)
+        let pictureAction = UIAlertAction(title: "Camera", style: .default) { (_) in
             guard let pictureVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PictureVC") as? PictureViewController else { return }
             pictureVC.modalPresentationStyle = .fullScreen
             pictureVC.experienceController = self.experienceController
             self.present(pictureVC, animated: true, completion: nil)
         }
         
-        let recordingAction = UIAlertAction(title: "audio Recording", style: .default) { (_) in
+        let recordingAction = UIAlertAction(title: "Recording", style: .default) { (_) in
             guard let recordingVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RecordingVC") as? RecordingViewController else { return }
             recordingVC.modalPresentationStyle = .fullScreen
             recordingVC.experienceController = self.experienceController
@@ -43,6 +44,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
         alert.addAction(pictureAction)
         alert.addAction(recordingAction)
+        alert.addAction(canceAction)
         
         present(alert, animated: true, completion: nil)
     }
@@ -84,24 +86,20 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     private func configureViews() {
         mapView.delegate = self
         mapView.addAnnotations(experienceController.experiences)
+      //  mapView.register(MKAnnotationView.self, forAnnotationViewWithReuseIdentifier: identifier)
+        
     }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        let identifier = "Experience"
-        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+       let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
         if annotationView != nil {
             annotationView?.annotation = annotation
             annotationView?.canShowCallout = true
         }
-        
         return annotationView
        }
     
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        
-    }
-    
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+    @IBAction func unwindToMapView(_ unwindSegue: UIStoryboardSegue) {
      
     }
 }

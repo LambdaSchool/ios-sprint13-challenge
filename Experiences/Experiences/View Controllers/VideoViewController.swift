@@ -107,7 +107,7 @@ class VideoViewController: UIViewController {
       }
 
     @IBAction func cancelButtonPressed(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+       
     }
     
       func toggleRecord() {

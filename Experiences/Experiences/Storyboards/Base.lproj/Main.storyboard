@@ -308,6 +308,7 @@
                             <constraint firstItem="K1W-rR-cyr" firstAttribute="top" secondItem="cDC-r2-snY" secondAttribute="bottom" constant="14" id="Yg7-ka-jtb"/>
                             <constraint firstItem="Xmi-K0-rw4" firstAttribute="leading" secondItem="Uvi-M7-a7z" secondAttribute="leading" constant="20" id="f91-HY-Lbm"/>
                             <constraint firstItem="cDC-r2-snY" firstAttribute="leading" secondItem="Uvi-M7-a7z" secondAttribute="leading" constant="20" id="htY-b2-fAK"/>
+                            <constraint firstItem="cDC-r2-snY" firstAttribute="top" secondItem="Xmi-K0-rw4" secondAttribute="bottom" constant="10" id="ir8-84-Zn3"/>
                             <constraint firstItem="awW-1s-6dY" firstAttribute="top" secondItem="IRB-FO-vob" secondAttribute="bottom" constant="15" id="jQJ-yz-HPz"/>
                             <constraint firstItem="Xmi-K0-rw4" firstAttribute="top" secondItem="Uvi-M7-a7z" secondAttribute="top" constant="20" id="jsr-8N-rMy"/>
                             <constraint firstItem="Uvi-M7-a7z" firstAttribute="trailing" secondItem="awW-1s-6dY" secondAttribute="trailing" constant="114" id="kC4-gV-0ht"/>
@@ -320,8 +321,11 @@
                     <navigationItem key="navigationItem" id="KI2-1c-x1t"/>
                     <connections>
                         <outlet property="clipSlider" destination="ZzF-qf-eL9" id="8ZC-lc-Hb8"/>
+                        <outlet property="playButton" destination="ahn-sl-bfR" id="UDv-Co-409"/>
+                        <outlet property="recordButton" destination="Cv6-si-eFP" id="iOf-AZ-rs1"/>
                         <outlet property="timeLengthLabel" destination="deo-9I-5Ej" id="vdv-LP-6O5"/>
                         <outlet property="timeRemainingLabel" destination="ggK-sn-jxC" id="p9E-z4-0k9"/>
+                        <outlet property="titleTextField" destination="cDC-r2-snY" id="QmL-cG-9TQ"/>
                         <outlet property="videoView" destination="eDB-iM-GMO" id="i70-QZ-7K2"/>
                     </connections>
                 </viewController>
@@ -347,21 +351,15 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NK5-JW-5UK">
-                                <rect key="frame" x="283" y="605" width="76" height="42"/>
+                                <rect key="frame" x="274" y="605" width="85" height="42"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <state key="normal" title="Cancel">
+                                <state key="normal" title="Dismiss">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
                                     <action selector="cancelButtonPressed:" destination="EN4-pP-u0f" eventType="touchUpInside" id="DUw-vA-h3z"/>
+                                    <segue destination="fOT-w2-UK4" kind="unwind" unwindAction="unwindToMapView:" id="RTR-zm-AEv"/>
                                 </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xOB-cF-y6Q">
-                                <rect key="frame" x="27" y="605" width="54" height="42"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <state key="normal" title="Save">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -369,9 +367,7 @@
                             <constraint firstItem="gpE-P0-GGX" firstAttribute="leading" secondItem="se7-gM-JJA" secondAttribute="leading" constant="131" id="0B4-kV-Zsx"/>
                             <constraint firstItem="se7-gM-JJA" firstAttribute="trailing" secondItem="gpE-P0-GGX" secondAttribute="trailing" constant="132" id="3xg-YB-QPg"/>
                             <constraint firstItem="se7-gM-JJA" firstAttribute="bottom" secondItem="NK5-JW-5UK" secondAttribute="bottom" constant="20" id="B7e-3D-BBr"/>
-                            <constraint firstItem="xOB-cF-y6Q" firstAttribute="leading" secondItem="se7-gM-JJA" secondAttribute="leading" constant="27" id="K1j-9D-8fm"/>
                             <constraint firstItem="se7-gM-JJA" firstAttribute="trailing" secondItem="NK5-JW-5UK" secondAttribute="trailing" constant="16" id="Zfc-Q6-gfX"/>
-                            <constraint firstItem="se7-gM-JJA" firstAttribute="bottom" secondItem="xOB-cF-y6Q" secondAttribute="bottom" constant="20" id="bQ3-kv-V4l"/>
                             <constraint firstItem="se7-gM-JJA" firstAttribute="bottom" secondItem="gpE-P0-GGX" secondAttribute="bottom" constant="42" id="e24-ma-XaN"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="se7-gM-JJA"/>
@@ -383,6 +379,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gby-2N-mu9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="fOT-w2-UK4" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2540" y="805.54722638680664"/>
         </scene>
