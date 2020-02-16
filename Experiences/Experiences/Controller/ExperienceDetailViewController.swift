@@ -6,4 +6,23 @@
 //  Copyright © 2020 Chad Rutherford. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class ExperienceDetailViewController: UIViewController {
+    
+    var experience: Experience? {
+        didSet {
+            updateViews()
+        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        updateViews()
+    }
+    
+    private func updateViews() {
+        guard let experience = experience, self.isViewLoaded else { return }
+        print(experience)
+    }
+}

@@ -91,12 +91,10 @@ class ExperienceRecordingViewController: UIViewController {
         case .notDetermined:
             
             PHPhotoLibrary.requestAuthorization { (status) in
-                
                 guard status == .authorized else {
                     NSLog("User did not authorize access to the photo library")
                     return
                 }
-                
                 DispatchQueue.main.async { self.presentImagePickerController() }
             }
             

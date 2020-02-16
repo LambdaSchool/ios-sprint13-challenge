@@ -63,6 +63,13 @@ extension DocumentsTableViewController: UITableViewDataSource, UITableViewDelega
         cell.experience = experience
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let experienceDetailVC = ExperienceDetailViewController(nibName: nil, bundle: nil)
+        let experience = fetchedResultsController.object(at: indexPath)
+        experienceDetailVC.experience = experience
+        navigationController?.pushViewController(experienceDetailVC, animated: true)
+    }
 }
 
 extension DocumentsTableViewController: NSFetchedResultsControllerDelegate {

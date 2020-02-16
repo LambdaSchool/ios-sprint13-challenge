@@ -12,6 +12,10 @@ import UIKit
 class ExperienceVideoViewController: UIViewController {
     
     var experience: Experience?
+    let videoRecordingManager = VideoRecordingManager()
+    private lazy var captureSession = AVCaptureSession()
+    private lazy var fileOutput = AVCaptureMovieFileOutput()
+    private var videoURL: URL?
     
     let cameraView: CameraPreviewView = {
         let cameraView = CameraPreviewView()
@@ -26,12 +30,10 @@ class ExperienceVideoViewController: UIViewController {
         button.setImage(UIImage(systemName: "smallcircle.fill.circle"), for: .normal)
         button.tintColor = .systemRed
         button.setPreferredSymbolConfiguration(.init(font: .systemFont(ofSize: 80), scale: .default), forImageIn: .normal)
+        button.addTarget(self, action: #selector(recordTapped), for: .touchUpInside)
         return button
     }()
     
-    private lazy var captureSession = AVCaptureSession()
-    private lazy var fileOutput = AVCaptureMovieFileOutput()
-    private var videoURL: URL?
     var isRecording: Bool {
         fileOutput.isRecording
     }
@@ -43,9 +45,12 @@ class ExperienceVideoViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        requestPermissionAndShowCamera()
-        captureSession.startRunning()
         configureNavigationController()
+        videoRecordingManager.requestPermissionAndShowCamera { [weak self] success in
+            guard let self = self else { return }
+            self.videoRecordingManager.setupCamera(with: self.cameraView, and: self.captureSession, and: self.fileOutput)
+            self.captureSession.startRunning()
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -70,66 +75,6 @@ class ExperienceVideoViewController: UIViewController {
         navigationController?.popToRootViewController(animated: true)
     }
     
-    private func requestPermissionAndShowCamera() {
-        let status = AVCaptureDevice.authorizationStatus(for: .video)
-        switch status {
-        case .notDetermined:
-            requestVideoPermission()
-        case .restricted:
-            fatalError("Parental controls have been enabled. Video access is denied.")
-        case .denied:
-            fatalError("Tell User to enable permission for Video/Camera")
-        case .authorized:
-            setupCamera()
-        @unknown default:
-            fatalError("Apple added a new case for status that we aren't handling yet.")
-        }
-    }
-    
-    private func requestVideoPermission() {
-        AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
-            guard let self = self, granted else {
-                fatalError("Tell User to enable permission for Video/Camera")
-            }
-            DispatchQueue.main.async { self.setupCamera() }
-        }
-    }
-    
-    private func setupCamera() {
-        cameraView.videoPlayerView.videoGravity = .resizeAspectFill
-        recordButton.addTarget(self, action: #selector(recordTapped), for: .touchUpInside)
-        
-        // Creating the camera for use
-        let camera = bestCamera()
-        
-        // Starting video configuration
-        captureSession.beginConfiguration()
-        
-        // Inputs
-        guard let cameraInput = try? AVCaptureDeviceInput(device: camera) else { fatalError("Device configured incorrectly") }
-        guard captureSession.canAddInput(cameraInput) else { fatalError("Unable to add camera input") }
-        captureSession.addInput(cameraInput)
-        
-        // Resolution
-        if captureSession.canSetSessionPreset(.hd1920x1080) {
-            captureSession.sessionPreset = .hd1920x1080
-        }
-        
-        // Microphone
-        let microphone = bestAudio()
-        guard let audioInput = try? AVCaptureDeviceInput(device: microphone) else { fatalError("Device configured incorrectly") }
-        guard captureSession.canAddInput(audioInput) else { fatalError("Unable to add audio input") }
-        captureSession.addInput(audioInput)
-        
-        // Outputs
-        guard captureSession.canAddOutput(fileOutput) else { fatalError("Cannot add file output") }
-        captureSession.addOutput(fileOutput)
-        
-        // We have reached the end and need to save the configuration to create a file
-        captureSession.commitConfiguration()
-        cameraView.session = captureSession
-    }
-    
     @objc private func recordTapped() {
         toggleRecordingMode()
     }
@@ -138,6 +83,7 @@ class ExperienceVideoViewController: UIViewController {
         view.backgroundColor = .systemBackground
         view.addSubview(cameraView)
         cameraView.addSubview(recordButton)
+        cameraView.videoPlayerView.videoGravity = .resizeAspectFill
         NSLayoutConstraint.activate([
             cameraView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             cameraView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -152,26 +98,6 @@ class ExperienceVideoViewController: UIViewController {
     private func updateViews() {
         let recordButtonImage =  isRecording ? "stop.circle" : "smallcircle.fill.circle"
         recordButton.setImage(UIImage(systemName: recordButtonImage), for: .normal)
-    }
-    
-    private func bestCamera() -> AVCaptureDevice {
-        if let device = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) {
-            return device
-        }
-        
-        if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
-            return device
-        }
-        
-        fatalError("No cameras available on device (or running in the Simulator)")
-        
-    }
-    
-    private func bestAudio() -> AVCaptureDevice {
-        if let device = AVCaptureDevice.default(for: .audio) {
-            return device
-        }
-        fatalError()
     }
     
     private func toggleRecordingMode() {
