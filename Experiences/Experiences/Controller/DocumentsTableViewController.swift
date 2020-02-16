@@ -24,6 +24,7 @@ class DocumentsTableViewController: UIViewController {
     
     override func viewDidLoad() {
         setupTableView()
+        configureTableViewController()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -69,6 +70,7 @@ extension DocumentsTableViewController: UITableViewDataSource, UITableViewDelega
         let experience = fetchedResultsController.object(at: indexPath)
         experienceDetailVC.experience = experience
         navigationController?.pushViewController(experienceDetailVC, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

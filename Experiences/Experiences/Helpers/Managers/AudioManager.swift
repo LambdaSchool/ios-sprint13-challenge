@@ -23,7 +23,7 @@ class AudioManager: NSObject {
     // MARK: - Properties
     var audioPlayer: AVAudioPlayer?
     var audioRecorder: AVAudioRecorder?
-    var recordingSession: AVAudioSession?
+    var session: AVAudioSession?
     var timer: Timer?
     weak var delegate: AudioManagerDelegate?
     var recordingURL: URL?
@@ -33,6 +33,18 @@ class AudioManager: NSObject {
     }
     var isRecording: Bool {
         return audioRecorder?.isRecording ?? false
+    }
+    
+    override init() {
+        session = AVAudioSession.sharedInstance()
+        do {
+            try session?.setCategory(.playAndRecord, mode: .default)
+            try session?.overrideOutputAudioPort(.speaker)
+            try session?.setActive(true)
+        } catch {
+            NSLog("Error: \(error)")
+        }
+        super.init()
     }
     
     // MARK: - API Methods
@@ -46,7 +58,7 @@ class AudioManager: NSObject {
     
     func loadAudio(with url: URL) {
         do {
-            audioPlayer = try AVAudioPlayer(data: Data(contentsOf: url))
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
             audioPlayer?.delegate = self
         } catch {
             NSLog("Audio playback error: \(error.localizedDescription)")
@@ -116,22 +128,14 @@ class AudioManager: NSObject {
     }
     
     private func requestRecordPermission() {
-        recordingSession = AVAudioSession.sharedInstance()
-        do {
-            try recordingSession?.setCategory(.playAndRecord, mode: .default)
-            try recordingSession?.overrideOutputAudioPort(.speaker)
-            try recordingSession?.setActive(true)
-            recordingSession?.requestRecordPermission { granted in
-                DispatchQueue.main.async {
-                    guard granted else {
-                        NSLog("Failed to record")
-                        return
-                    }
-                    self.startRecording()
+        session?.requestRecordPermission { granted in
+            DispatchQueue.main.async {
+                guard granted else {
+                    NSLog("Failed to record")
+                    return
                 }
+                self.startRecording()
             }
-        } catch {
-            NSLog("Failed to record")
         }
     }
     

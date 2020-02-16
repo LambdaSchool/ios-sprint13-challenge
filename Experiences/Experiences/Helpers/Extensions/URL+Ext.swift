@@ -26,4 +26,13 @@ extension URL {
         let fileURL = documentsDirectory.appendingPathComponent(title).appendingPathExtension("mp4")
         return fileURL
     }
+    
+    static func fetchAudioFromDocumentsDirectory(name: String) -> URL? {
+        let documentDirectory = FileManager.SearchPathDirectory.documentDirectory
+        let userDomainMask = FileManager.SearchPathDomainMask.userDomainMask
+        let paths = NSSearchPathForDirectoriesInDomains(documentDirectory, userDomainMask, true)
+        guard let dirPath = paths.first else { return nil }
+        let audioURL = URL(fileURLWithPath: dirPath).appendingPathComponent(name).appendingPathExtension("caf")
+        return audioURL
+    }
 }
