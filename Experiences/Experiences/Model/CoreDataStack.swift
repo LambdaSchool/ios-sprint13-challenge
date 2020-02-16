@@ -10,9 +10,13 @@ import CoreData
 import Foundation
 
 class CoreDataStack {
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - Singleton Set-Up
     static let shared = CoreDataStack()
     private init() { }
     
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - Properties
     lazy var container: NSPersistentContainer = {
         var container = NSPersistentContainer(name: "Experiences")
         container.loadPersistentStores { _, error in
@@ -32,6 +36,8 @@ class CoreDataStack {
         container.viewContext
     }
     
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - Helper
     func save(_ context: NSManagedObjectContext = CoreDataStack.shared.mainContext) throws {
         var error: Error?
         

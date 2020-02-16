@@ -11,6 +11,9 @@ import UIKit
 
 class DocumentsTableViewController: UIViewController {
     
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - Properties
+    let tableView = UITableView()
     private lazy var fetchedResultsController: NSFetchedResultsController<Experience> = {
         let fetchRequest: NSFetchRequest<Experience> = Experience.fetchRequest()
         fetchRequest.sortDescriptors = [ NSSortDescriptor(key: "title", ascending: true) ]
@@ -20,8 +23,9 @@ class DocumentsTableViewController: UIViewController {
         try? frc.performFetch()
         return frc
     }()
-    let tableView = UITableView()
     
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - View Controller Life Cycle
     override func viewDidLoad() {
         setupTableView()
         configureTableViewController()
@@ -32,15 +36,12 @@ class DocumentsTableViewController: UIViewController {
         configureTableViewController()
     }
     
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - View Configuration
     private func configureTableViewController() {
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(presentRecordingScreen))
-    }
-    
-    @objc private func presentRecordingScreen() {
-        let experiencesRecordingVC = ExperienceRecordingViewController()
-        navigationController?.pushViewController(experiencesRecordingVC, animated: true)
     }
     
     private func setupTableView() {
@@ -51,8 +52,17 @@ class DocumentsTableViewController: UIViewController {
         tableView.rowHeight = 96
         tableView.register(DocumentCell.self, forCellReuseIdentifier: DocumentCell.reuseID)
     }
+    
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - Private - Helpers
+    @objc private func presentRecordingScreen() {
+        let experiencesRecordingVC = ExperienceRecordingViewController()
+        navigationController?.pushViewController(experiencesRecordingVC, animated: true)
+    }
 }
 
+// --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+// MARK: - Table View Delegate and DataSource
 extension DocumentsTableViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fetchedResultsController.fetchedObjects?.count ?? 0
@@ -74,6 +84,8 @@ extension DocumentsTableViewController: UITableViewDataSource, UITableViewDelega
     }
 }
 
+// --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+// MARK: - Fetched Results Controller Delegate
 extension DocumentsTableViewController: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()

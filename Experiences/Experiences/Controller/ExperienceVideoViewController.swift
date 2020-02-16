@@ -11,12 +11,19 @@ import UIKit
 
 class ExperienceVideoViewController: UIViewController {
     
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - Properties
     var experience: Experience?
     let videoRecordingManager = VideoRecordingManager()
     private lazy var captureSession = AVCaptureSession()
     private lazy var fileOutput = AVCaptureMovieFileOutput()
     private var videoURL: URL?
+    var isRecording: Bool {
+        fileOutput.isRecording
+    }
     
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - View Objects
     let cameraView: CameraPreviewView = {
         let cameraView = CameraPreviewView()
         cameraView.translatesAutoresizingMaskIntoConstraints = false
@@ -34,10 +41,8 @@ class ExperienceVideoViewController: UIViewController {
         return button
     }()
     
-    var isRecording: Bool {
-        fileOutput.isRecording
-    }
-    
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - View Controller Life Cycle
     override func viewDidLoad() {
         configure()
         configureNavigationController()
@@ -58,25 +63,11 @@ class ExperienceVideoViewController: UIViewController {
         captureSession.stopRunning()
     }
     
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - View Configuration
     private func configureNavigationController() {
         title = "Record a video"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(dismissAndSave))
-    }
-    
-    @objc private func dismissAndSave() {
-        guard let experience = experience,
-            let videoURL = videoURL,
-            let coordinates = LocationManager.shared.getLocation()
-            else { return }
-        experience.video = videoURL.absoluteString
-        experience.latitude = coordinates.latitude as Double
-        experience.longitude = coordinates.longitude as Double
-        try? CoreDataStack.shared.save()
-        navigationController?.popToRootViewController(animated: true)
-    }
-    
-    @objc private func recordTapped() {
-        toggleRecordingMode()
     }
     
     private func configure() {
@@ -100,6 +91,8 @@ class ExperienceVideoViewController: UIViewController {
         recordButton.setImage(UIImage(systemName: recordButtonImage), for: .normal)
     }
     
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - Private - Helpers
     private func toggleRecordingMode() {
         guard let experience = experience, let title = experience.title else { return }
         if isRecording {
@@ -108,8 +101,28 @@ class ExperienceVideoViewController: UIViewController {
             fileOutput.startRecording(to: URL.makeNewVideoURL(with: title), recordingDelegate: self)
         }
     }
+    
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - Private - Actions
+    @objc private func dismissAndSave() {
+        guard let experience = experience,
+            let videoURL = videoURL,
+            let coordinates = LocationManager.shared.getLocation()
+            else { return }
+        experience.video = videoURL.absoluteString
+        experience.latitude = coordinates.latitude as Double
+        experience.longitude = coordinates.longitude as Double
+        try? CoreDataStack.shared.save()
+        navigationController?.popToRootViewController(animated: true)
+    }
+    
+    @objc private func recordTapped() {
+        toggleRecordingMode()
+    }
 }
 
+// --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+// MARK: - AVCapture File Output Delegate
 extension ExperienceVideoViewController: AVCaptureFileOutputRecordingDelegate {
     func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
         updateViews()

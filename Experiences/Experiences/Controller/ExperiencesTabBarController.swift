@@ -10,12 +10,16 @@ import UIKit
 
 class ExperiencesTabBarController: UITabBarController {
     
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - View Controller Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         UITabBar.appearance().tintColor = .systemTeal
         viewControllers = [createDocumentTableViewController(), createExperiencesMapViewController()]
     }
     
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - View Controller Configuration
     func createDocumentTableViewController() -> UINavigationController {
         let documentsTableVC = DocumentsTableViewController(nibName: nil, bundle: nil)
         documentsTableVC.title = "Documents"

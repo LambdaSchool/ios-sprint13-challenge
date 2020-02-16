@@ -11,6 +11,8 @@ import UIKit
 
 class ExperienceDetailViewController: UIViewController {
     
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - Properties
     var manager = AudioManager()
     var player: AVQueuePlayer!
     var experience: Experience? {
@@ -19,6 +21,8 @@ class ExperienceDetailViewController: UIViewController {
         }
     }
     
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - View Objects
     private lazy var timeIntervalFormatter: DateComponentsFormatter = {
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .positional
@@ -120,12 +124,16 @@ class ExperienceDetailViewController: UIViewController {
         return imageView
     }()
     
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - View Controller Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
         updateViews()
     }
     
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - View Configuration
     private func configure() {
         view.backgroundColor = .systemBackground
         view.addSubview(videoLayerView)
@@ -172,9 +180,11 @@ class ExperienceDetailViewController: UIViewController {
     private func updateViews() {
         guard let experience = experience,
             let title = experience.title,
+            let audioURL = URL.fetchAudioFromDocumentsDirectory(name: title),
+            let image = UIImage.loadImageFromDocumentsDirectory(name: title),
             self.isViewLoaded else { return }
         self.title = title
-        guard let audioURL = URL.fetchAudioFromDocumentsDirectory(name: title) else { return }
+        experienceImageView.image = image
         manager.loadAudio(with: audioURL)
         manager.delegate = self
         updateAudioViews()
@@ -191,6 +201,8 @@ class ExperienceDetailViewController: UIViewController {
         timeRemainingLabel.text = "-\(timeIntervalFormatter.string(from: timeRemaining) ?? "")"
     }
     
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - Private - Actions
     @objc private func audioPlayTapped() {
         manager.togglePlayMode()
     }
@@ -210,6 +222,8 @@ class ExperienceDetailViewController: UIViewController {
     }
 }
 
+// --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+// MARK: - Audio Manager Delegate
 extension ExperienceDetailViewController: AudioManagerDelegate {
     func isRecording() {
         return

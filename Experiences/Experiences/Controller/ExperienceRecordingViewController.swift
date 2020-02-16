@@ -13,12 +13,28 @@ import UIKit
 
 class ExperienceRecordingViewController: UIViewController {
     
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - Properties
     let manager = AudioManager()
     var audioFileURL: URL?
     var context = CIContext(options: nil)
     var imageHeightConstraint: NSLayoutConstraint!
     var hasBeenFiltered = false
+    private var originalImage: UIImage? {
+        didSet {
+            guard let originalImage = originalImage else { return }
+            scaledImage = originalImage
+        }
+    }
     
+    private var scaledImage: UIImage? {
+        didSet {
+            updateImage()
+        }
+    }
+    
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - View Objects
     var documentImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -50,19 +66,8 @@ class ExperienceRecordingViewController: UIViewController {
         return button
     }()
     
-    private var originalImage: UIImage? {
-        didSet {
-            guard let originalImage = originalImage else { return }
-            scaledImage = originalImage
-        }
-    }
-    
-    private var scaledImage: UIImage? {
-        didSet {
-            updateImage()
-        }
-    }
-    
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - View Controller Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -74,6 +79,8 @@ class ExperienceRecordingViewController: UIViewController {
         configure()
     }
     
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - View Configuration
     private func configureNavigationBar() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(presentVideoScreen))
         navigationController?.navigationBar.prefersLargeTitles = false
@@ -83,72 +90,8 @@ class ExperienceRecordingViewController: UIViewController {
         documentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(chooseImage)))
     }
     
-    @objc private func chooseImage() {
-        let authorizationStatus = PHPhotoLibrary.authorizationStatus()
-        switch authorizationStatus {
-        case .authorized:
-            DispatchQueue.main.async { self.presentImagePickerController() }
-        case .notDetermined:
-            
-            PHPhotoLibrary.requestAuthorization { (status) in
-                guard status == .authorized else {
-                    NSLog("User did not authorize access to the photo library")
-                    return
-                }
-                DispatchQueue.main.async { self.presentImagePickerController() }
-            }
-            
-        case .denied:
-            NSLog("In order to access the photo library, you must allow this application access to it.")
-        case .restricted:
-            NSLog("Unable to access the photo library. Your device's restrictions do not allow access.")
-        @unknown default:
-            break
-        }
-    }
-    
-    private func presentImagePickerController() {
-        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
-            NSLog("The photo library is unavailable")
-            return
-        }
-        
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
-        present(imagePicker, animated: true, completion: nil)
-    }
-    
-    @objc func recordTapped() {
-        guard let title = titleTextField.text, !title.isEmpty else { return }
-        manager.title = title
-        print("Recording: \(manager.isRecording)")
-        manager.toggleRecordingMode()
-        print("Recording: \(manager.isRecording)")
-        if !hasBeenFiltered {
-            originalImage = documentImageView.image
-            updateImage()
-            hasBeenFiltered.toggle()
-        }
-    }
-    
     private func updateViews() {
         recordButton.isSelected = manager.isRecording
-    }
-    
-    @objc private func presentVideoScreen() {
-        let experienceVideoVC = ExperienceVideoViewController()
-        guard let title = titleTextField.text,
-            !title.isEmpty,
-            let image = documentImageView.image,
-            let imageData = image.jpegData(compressionQuality: 0.7),
-            let audioFileURL = audioFileURL
-            else { return }
-        let imageURL = URL.makeNewImageURL(with: title)
-        try? imageData.write(to: imageURL)
-        let experience = Experience(title: title, timestamp: Date(), image: imageURL.absoluteString, audio: audioFileURL.absoluteString, video: "", latitude: 0, longitude: 0)
-        experienceVideoVC.experience = experience
-        navigationController?.pushViewController(experienceVideoVC, animated: true)
     }
     
     private func configure() {
@@ -179,14 +122,16 @@ class ExperienceRecordingViewController: UIViewController {
         ])
     }
     
-    private func filter(_ image: UIImage) -> UIImage? {
-        guard let cgImage = image.cgImage else { return nil }
-        let ciImage = CIImage(cgImage: cgImage)
-        let filter = CIFilter.photoEffectNoir()
-        filter.inputImage = ciImage
-        guard let outputCIImage = filter.outputImage else { return nil }
-        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else { return nil }
-        return UIImage(cgImage: outputCGImage)
+    private func presentImagePickerController() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            NSLog("The photo library is unavailable")
+            return
+        }
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
     }
     
     private func updateImage() {
@@ -197,12 +142,80 @@ class ExperienceRecordingViewController: UIViewController {
         }
     }
     
-    func setImageViewHeight(with aspectRatio: CGFloat) {
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - Private - Helpers
+    private func setImageViewHeight(with aspectRatio: CGFloat) {
         imageHeightConstraint.constant = documentImageView.frame.size.width * aspectRatio
         view.layoutSubviews()
     }
+    
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - Private - Actions
+    private func filter(_ image: UIImage) -> UIImage? {
+        guard let cgImage = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+        let filter = CIFilter.photoEffectNoir()
+        filter.inputImage = ciImage
+        guard let outputCIImage = filter.outputImage else { return nil }
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else { return nil }
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    @objc private func chooseImage() {
+        let authorizationStatus = PHPhotoLibrary.authorizationStatus()
+        switch authorizationStatus {
+        case .authorized:
+            DispatchQueue.main.async { self.presentImagePickerController() }
+        case .notDetermined:
+            
+            PHPhotoLibrary.requestAuthorization { (status) in
+                guard status == .authorized else {
+                    NSLog("User did not authorize access to the photo library")
+                    return
+                }
+                DispatchQueue.main.async { self.presentImagePickerController() }
+            }
+            
+        case .denied:
+            NSLog("In order to access the photo library, you must allow this application access to it.")
+        case .restricted:
+            NSLog("Unable to access the photo library. Your device's restrictions do not allow access.")
+        @unknown default:
+            break
+        }
+    }
+    
+    @objc func recordTapped() {
+        guard let title = titleTextField.text, !title.isEmpty else { return }
+        manager.title = title
+        print("Recording: \(manager.isRecording)")
+        manager.toggleRecordingMode()
+        print("Recording: \(manager.isRecording)")
+        if !hasBeenFiltered {
+            originalImage = documentImageView.image
+            updateImage()
+            hasBeenFiltered.toggle()
+        }
+    }
+    
+    @objc private func presentVideoScreen() {
+        let experienceVideoVC = ExperienceVideoViewController()
+        guard let title = titleTextField.text,
+            !title.isEmpty,
+            let image = documentImageView.image,
+            let imageData = image.jpegData(compressionQuality: 0.7),
+            let audioFileURL = audioFileURL
+            else { return }
+        let imageURL = URL.makeNewImageURL(with: title)
+        try? imageData.write(to: imageURL)
+        let experience = Experience(title: title, timestamp: Date(), image: imageURL.absoluteString, audio: audioFileURL.absoluteString, video: "", latitude: 0, longitude: 0)
+        experienceVideoVC.experience = experience
+        navigationController?.pushViewController(experienceVideoVC, animated: true)
+    }
 }
 
+// --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+// MARK: - Audio Manager Delegate
 extension ExperienceRecordingViewController: AudioManagerDelegate {
     func isRecording() {
         updateViews()
@@ -230,6 +243,8 @@ extension ExperienceRecordingViewController: AudioManagerDelegate {
     }
 }
 
+// --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+// MARK: - Image Picker Delegate Methods
 extension ExperienceRecordingViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.originalImage] as? UIImage else { return }
@@ -243,6 +258,8 @@ extension ExperienceRecordingViewController: UIImagePickerControllerDelegate, UI
     }
 }
 
+// --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+// MARK: - TextField Delegate
 extension ExperienceRecordingViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

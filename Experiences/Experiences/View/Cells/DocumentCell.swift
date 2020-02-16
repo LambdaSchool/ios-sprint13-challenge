@@ -9,7 +9,20 @@
 import UIKit
 
 class DocumentCell: UITableViewCell {
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - Reuse Identifier
     static let reuseID = "DocumentCell"
+    
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - Properties
+    var experience: Experience? {
+        didSet {
+            updateViews()
+        }
+    }
+    
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - View Obects
     let titleLabel: UILabel = {
         let label = UILabel()
         label.frame = .zero
@@ -42,12 +55,8 @@ class DocumentCell: UITableViewCell {
         return formatter
     }()
     
-    var experience: Experience? {
-        didSet {
-            updateViews()
-        }
-    }
-    
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configure()
@@ -58,6 +67,8 @@ class DocumentCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - View Configuration
     private func updateViews() {
         guard let experience = experience,
             let timestamp = experience.timestamp,
@@ -69,8 +80,6 @@ class DocumentCell: UITableViewCell {
         timestampLabel.text = dateFormatter.string(from: timestamp)
         
     }
-    
-    
     
     private func configure() {
         contentView.addSubview(documentImageView)

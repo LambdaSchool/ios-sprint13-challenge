@@ -12,30 +12,28 @@ import UIKit
 
 class ExperiencesMapViewController: UIViewController {
     
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - Properties
+    var experiences = [Experience]()
+    
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - View Objects
     let mapView: MKMapView = {
         let mapView = MKMapView()
         mapView.translatesAutoresizingMaskIntoConstraints = false
         return mapView
     }()
-    var experiences = [Experience]()
     
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - View Controller Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureMapView()
         fetchExperiences()
     }
     
-    private func fetchExperiences() {
-        let fetchRequest: NSFetchRequest<Experience> = Experience.fetchRequest()
-        fetchRequest.sortDescriptors = [ NSSortDescriptor(key: "title", ascending: true) ]
-        do {
-            self.experiences = try CoreDataStack.shared.mainContext.fetch(fetchRequest)
-            self.mapView.addAnnotations(experiences)
-        } catch {
-            print("Error: \(error)")
-        }
-    }
-    
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - View Configuration
     private func configureMapView() {
         view.addSubview(mapView)
         mapView.delegate = self
@@ -47,8 +45,23 @@ class ExperiencesMapViewController: UIViewController {
             mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
+    
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - Private - Helpers
+    private func fetchExperiences() {
+        let fetchRequest: NSFetchRequest<Experience> = Experience.fetchRequest()
+        fetchRequest.sortDescriptors = [ NSSortDescriptor(key: "title", ascending: true) ]
+        do {
+            self.experiences = try CoreDataStack.shared.mainContext.fetch(fetchRequest)
+            self.mapView.addAnnotations(experiences)
+        } catch {
+            print("Error: \(error)")
+        }
+    }
 }
 
+// --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+// MARK: - Map View Delegate
 extension ExperiencesMapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation as? Experience != nil else { fatalError("Only experiences are supported") }
