@@ -73,11 +73,6 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
           timer?.invalidate()
           timer = nil
       }
-      // What do I want to do?
-      // pause it
-      // volume
-      // restart the audio
-      // update the time/labels
 
       var isPlaying: Bool {
           audioPlayer?.isPlaying ?? false

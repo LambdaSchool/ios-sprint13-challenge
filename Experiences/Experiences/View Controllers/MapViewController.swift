@@ -22,7 +22,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        configureViews()                                 
+        updateVIews()
     }
     
 //MARK: - actions
@@ -50,6 +50,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
 
     // MARK: - helper methods
+    private func updateVIews() {
+        self.mapView.removeAnnotations(self.mapView.annotations)
+        self.mapView.addAnnotations(self.experienceController.experiences)
+    }
+    
     private func setupLocationManager() {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -85,9 +90,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     private func configureViews() {
         mapView.delegate = self
-        mapView.addAnnotations(experienceController.experiences)
-      //  mapView.register(MKAnnotationView.self, forAnnotationViewWithReuseIdentifier: identifier)
-        
+        DispatchQueue.main.async {
+            self.mapView.addAnnotations(self.experienceController.experiences)
+        }
     }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -100,7 +105,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
        }
     
     @IBAction func unwindToMapView(_ unwindSegue: UIStoryboardSegue) {
-     
     }
 }
 
