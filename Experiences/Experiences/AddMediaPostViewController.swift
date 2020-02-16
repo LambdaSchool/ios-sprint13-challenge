@@ -18,6 +18,7 @@ class AddMediaPostViewController: UIViewController {
     var audioRecorder: AVAudioRecorder?
     var recordingURL: URL?
     var timer: Timer?
+    var recordingSession = AVAudioSession.sharedInstance()
     
     var experiences: [ExperienceEntry] = []
     
@@ -82,7 +83,6 @@ class AddMediaPostViewController: UIViewController {
             
             // 44.1 KHz = FM quality audio
             let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)! // FIX_ME: can fail
-            
             audioRecorder = try! AVAudioRecorder(url: recordingURL, format: format) // FIXME: Deal with errors fatalError()
             audioRecorder?.record()
             audioRecorder?.delegate = self
@@ -91,13 +91,20 @@ class AddMediaPostViewController: UIViewController {
     }
     
     func requestRecordPermission() {
-        AVAudioSession.sharedInstance().requestRecordPermission { granted in
-            DispatchQueue.main.async {
-                guard granted == true else {
-                    fatalError("We need microphone access")
+        
+        do {
+            try recordingSession.setCategory(.playAndRecord, mode: .default)
+            try recordingSession.setActive(true)
+            recordingSession.requestRecordPermission { granted in
+                DispatchQueue.main.async {
+                    guard granted == true else {
+                        fatalError("We need microphone access")
+                    }
+                    self.startRecording()
                 }
-                self.startRecording()
             }
+        } catch {
+            fatalError("Something went wrong setting up recording session: \(error)")
         }
     }
     
