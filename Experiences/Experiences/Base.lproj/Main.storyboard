@@ -91,9 +91,14 @@
                                     <segment title="Video"/>
                                     <segment title="Recording"/>
                                 </segments>
+                                <connections>
+                                    <action selector="chooseMediaSegmentedControl:" destination="VbW-r3-i8K" eventType="valueChanged" id="774-e5-Vu6"/>
+                                </connections>
                             </segmentedControl>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vjm-6O-qSM">
-                                <rect key="frame" x="20" y="307" width="374" height="374"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="camera.on.rectangle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Vjm-6O-qSM">
+                                <rect key="frame" x="20" y="306.5" width="374" height="375"/>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Vjm-6O-qSM" secondAttribute="height" multiplier="1:1" id="fO8-Wc-RHx"/>
                                 </constraints>
@@ -118,15 +123,31 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R6n-TI-TOd">
                                 <rect key="frame" x="40" y="689" width="334" height="40"/>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="0Zt-MR-kSS"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Add"/>
+                                <state key="normal" title="Add">
+                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="addMediaButtonTapped:" destination="VbW-r3-i8K" eventType="touchUpInside" id="n5t-cM-jCD"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aag-UA-c8J">
+                                <rect key="frame" x="132" y="745" width="150" height="30"/>
+                                <color key="backgroundColor" red="0.3803921569" green="0.60784313729999995" blue="0.35686274509999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="kdf-aK-hqK"/>
+                                </constraints>
+                                <color key="tintColor" red="0.3803921569" green="0.60784313729999995" blue="0.35686274509999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Replay">
+                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="replay:" destination="VbW-r3-i8K" eventType="touchUpInside" id="hvU-74-wZx"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -136,8 +157,10 @@
                             <constraint firstItem="Qz3-35-kBe" firstAttribute="trailing" secondItem="R6n-TI-TOd" secondAttribute="trailing" constant="40" id="5JR-E4-VyI"/>
                             <constraint firstItem="U2M-H5-ych" firstAttribute="leading" secondItem="Qz3-35-kBe" secondAttribute="leading" constant="20" id="5KU-KF-gMo"/>
                             <constraint firstItem="Qz3-35-kBe" firstAttribute="trailing" secondItem="qQZ-YP-Qv9" secondAttribute="trailing" constant="20" id="7e5-Xd-6zS"/>
+                            <constraint firstItem="Aag-UA-c8J" firstAttribute="top" secondItem="R6n-TI-TOd" secondAttribute="bottom" constant="16" id="ATJ-Zw-vFE"/>
                             <constraint firstItem="Hsu-Ns-UqL" firstAttribute="leading" secondItem="Qz3-35-kBe" secondAttribute="leading" constant="20" id="BX1-wB-vtf"/>
                             <constraint firstItem="R6n-TI-TOd" firstAttribute="leading" secondItem="Qz3-35-kBe" secondAttribute="leading" constant="40" id="Ci0-zy-JKo"/>
+                            <constraint firstItem="Aag-UA-c8J" firstAttribute="centerX" secondItem="byB-9N-YCq" secondAttribute="centerX" id="GdF-O7-POZ"/>
                             <constraint firstItem="U2M-H5-ych" firstAttribute="top" secondItem="Ilt-Ie-EpD" secondAttribute="bottom" constant="8" id="Ibe-oM-X7S"/>
                             <constraint firstItem="Vjm-6O-qSM" firstAttribute="leading" secondItem="Qz3-35-kBe" secondAttribute="leading" constant="20" id="J58-Kk-MPX"/>
                             <constraint firstItem="ThF-K8-pOh" firstAttribute="leading" secondItem="Qz3-35-kBe" secondAttribute="leading" constant="40" id="KDm-2E-JcT"/>
@@ -159,9 +182,11 @@
                         <viewLayoutGuide key="safeArea" id="Qz3-35-kBe"/>
                     </view>
                     <connections>
+                        <outlet property="addButton" destination="R6n-TI-TOd" id="wXJ-xx-0a1"/>
                         <outlet property="descriptionTextView" destination="qQZ-YP-Qv9" id="1J5-61-OnQ"/>
                         <outlet property="imageView" destination="Vjm-6O-qSM" id="CeS-d1-lzh"/>
                         <outlet property="mediaSegmentedControl" destination="ThF-K8-pOh" id="5P2-7f-jyA"/>
+                        <outlet property="replayButton" destination="Aag-UA-c8J" id="HvJ-Ol-Bud"/>
                         <outlet property="titleTextField" destination="Ilt-Ie-EpD" id="Efu-0u-kFm"/>
                     </connections>
                 </viewController>
@@ -171,6 +196,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="camera.on.rectangle" catalog="system" width="64" height="48"/>
         <image name="plus.square.fill" catalog="system" width="64" height="56"/>
     </resources>
 </document>
