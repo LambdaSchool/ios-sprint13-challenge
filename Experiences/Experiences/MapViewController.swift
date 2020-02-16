@@ -89,13 +89,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let identifier = "Experience"
         let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
-        if annotationView == nil {
-            let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            annotationView.canShowCallout = true
-            
-        } else {
+        if annotationView != nil {
             annotationView?.annotation = annotation
-            annotationView?.canShowCallout = true 
+            annotationView?.canShowCallout = true
         }
         
         return annotationView

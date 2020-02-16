@@ -11,6 +11,7 @@ import Photos
 import CoreImage
 import CoreImage.CIFilterBuiltins
 import MapKit
+
 class PictureViewController: UIViewController {
 
     // MARK: - Properties
@@ -31,6 +32,10 @@ class PictureViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
     }
     
     // MARK: - Actions
@@ -66,7 +71,7 @@ class PictureViewController: UIViewController {
         guard let orginalImage = originalImage else { return }
         imageVIew.image = filterImage(orginalImage)
     }
-    
+   
     private func presentActionSheet() {
         let alertVC = UIAlertController(title: "Choose option", message: "", preferredStyle: .alert)
         let cameraAction = UIAlertAction(title: "Camera", style: .default) { (_) in
