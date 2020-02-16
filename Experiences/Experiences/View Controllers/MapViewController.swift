@@ -16,8 +16,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     let identifier = "Experience"
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureViews()
+        mapView.delegate = self
         checkLocationServices()
+        configureViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -89,18 +90,16 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     private func configureViews() {
-        mapView.delegate = self
-        DispatchQueue.main.async {
-            self.mapView.addAnnotations(self.experienceController.experiences)
-        }
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: identifier)
+       mapView.addAnnotations(experienceController.experiences)
     }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-       let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
-        if annotationView != nil {
-            annotationView?.annotation = annotation
-            annotationView?.canShowCallout = true
-        }
+            guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView else { return nil}
+            annotationView.annotation = annotation
+            annotationView.displayPriority = .required
+            annotationView.canShowCallout = true
+            annotationView.clusteringIdentifier = identifier
         return annotationView
        }
     
