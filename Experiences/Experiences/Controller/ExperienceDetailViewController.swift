@@ -6,11 +6,13 @@
 //  Copyright © 2020 Chad Rutherford. All rights reserved.
 //
 
+import AVFoundation
 import UIKit
 
 class ExperienceDetailViewController: UIViewController {
     
     var manager = AudioManager()
+    var player: AVQueuePlayer!
     var experience: Experience? {
         didSet {
             updateViews()
@@ -39,6 +41,7 @@ class ExperienceDetailViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "play.circle"), for: .normal)
         button.setPreferredSymbolConfiguration(.init(font: .systemFont(ofSize: 35), scale: .default), forImageIn: .normal)
+        button.addTarget(self, action: #selector(videoPlayTapped), for: .touchUpInside)
         button.tintColor = .systemGreen
         return button
     }()
@@ -190,6 +193,20 @@ class ExperienceDetailViewController: UIViewController {
     
     @objc private func audioPlayTapped() {
         manager.togglePlayMode()
+    }
+    
+    @objc private func videoPlayTapped() {
+        guard let experience = experience,
+            let title = experience.title
+            else { return }
+        guard let videoURL = URL.fetchVideoFromDocumentsDirectory(name: title) else { return }
+        player = AVQueuePlayer(url: videoURL)
+        let playerLayer = AVPlayerLayer(player: player)
+        playerLayer.frame = videoLayerView.frame
+        videoLayerView.layer.addSublayer(playerLayer)
+        videoLayerView.playerLayer = playerLayer
+        videoLayerView.layer.masksToBounds = true
+        player.play()
     }
 }
 
