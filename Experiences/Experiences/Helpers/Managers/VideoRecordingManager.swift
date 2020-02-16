@@ -14,7 +14,7 @@ class VideoRecordingManager {
         let status = AVCaptureDevice.authorizationStatus(for: .video)
         switch status {
         case .notDetermined:
-            requestVideoPermission(completion: completion)
+            self.requestVideoPermission(completion: completion)
         case .restricted:
             fatalError("Parental controls have been enabled. Video access is denied.")
         case .denied:
@@ -31,7 +31,7 @@ class VideoRecordingManager {
             guard granted else {
                 fatalError("Tell User to enable permission for Video/Camera")
             }
-            completion(true)
+            DispatchQueue.main.async { completion(true) }
         }
     }
     

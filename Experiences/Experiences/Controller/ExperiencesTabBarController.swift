@@ -22,14 +22,14 @@ class ExperiencesTabBarController: UITabBarController {
     // MARK: - View Controller Configuration
     func createDocumentTableViewController() -> UINavigationController {
         let documentsTableVC = DocumentsTableViewController(nibName: nil, bundle: nil)
-        documentsTableVC.title = "Documents"
+        documentsTableVC.title = "Experiences"
         documentsTableVC.tabBarItem = UITabBarItem(title: "Documents", image: UIImage(systemName: "folder"), tag: 0)
         return UINavigationController(rootViewController: documentsTableVC)
     }
     
     func createExperiencesMapViewController() -> UINavigationController {
         let experiencesMapVC = ExperiencesMapViewController()
-        experiencesMapVC.title = "Experiences"
+        experiencesMapVC.title = "Experience Locations"
         experiencesMapVC.tabBarItem = UITabBarItem(title: "Experiences", image: UIImage(systemName: "map"), tag: 1)
         return UINavigationController(rootViewController: experiencesMapVC)
     }

@@ -120,7 +120,6 @@ class ExperienceDetailViewController: UIViewController {
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 15
         imageView.clipsToBounds = true
-        imageView.backgroundColor = .systemGray4
         return imageView
     }()
     
@@ -214,6 +213,7 @@ class ExperienceDetailViewController: UIViewController {
         guard let videoURL = URL.fetchVideoFromDocumentsDirectory(name: title) else { return }
         player = AVQueuePlayer(url: videoURL)
         let playerLayer = AVPlayerLayer(player: player)
+        playerLayer.player = player
         playerLayer.frame = videoLayerView.frame
         videoLayerView.layer.addSublayer(playerLayer)
         videoLayerView.playerLayer = playerLayer
