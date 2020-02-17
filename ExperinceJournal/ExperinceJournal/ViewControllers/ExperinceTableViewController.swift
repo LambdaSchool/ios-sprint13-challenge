@@ -10,7 +10,7 @@ import UIKit
 
 class ExperinceTableViewController: UITableViewController {
 
-    var entryController: EntryController?
+    
 
         override func viewDidAppear(_ animated: Bool) {
             super.viewDidAppear(animated)
@@ -61,8 +61,8 @@ class ExperinceTableViewController: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "JournalCell", for: indexPath)
 
            
-            cell.textLabel?.text = entryController?.entries[indexPath.row].title
-            cell.detailTextLabel?.text = entryController?.entries[indexPath.row].mediaType.rawValue
+            cell.textLabel?.text = EntryController.shared.entries[indexPath.row].title
+            cell.detailTextLabel?.text = EntryController.shared.entries[indexPath.row].mediaType.rawValue
 
             return cell
         }
@@ -74,18 +74,19 @@ class ExperinceTableViewController: UITableViewController {
             switch segue.identifier {
             case "ShowImageSegue":
                 if let destinationVC = segue.destination as? ImagePostViewController {
-                    destinationVC.entryController = self.entryController
-                    destinationVC.delegate = self
+               
+                    destinationVC.delegate = self as ImageViewControllerDelegate
+                    
                 }
             case "ShowAudioSegue":
                 if let destinationVC = segue.destination as? AudioViewController {
-                    destinationVC.entryController = self.entryController
-                    destinationVC.delegate = self
+                    
+                    destinationVC.delegate = self as? AudioViewControllerDelegate
                 }
             case "ShowVideoSegue":
                 if let destinationVC = segue.destination as? VideoViewController {
-                    destinationVC.entryController = self.entryController
-                    destinationVC.delegate = self
+                   
+                    destinationVC.delegate = self as? VideoViewControllerDelegate
                 }
             default:
                 return

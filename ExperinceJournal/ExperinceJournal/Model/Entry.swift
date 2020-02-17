@@ -8,7 +8,7 @@
 import CoreLocation
 import Foundation
 
-enum MeidaType: String {
+enum MediaType: String {
     case image
     case audio
     case video
@@ -17,10 +17,10 @@ enum MeidaType: String {
 class Entry: NSObject {
     
     var entryTitle: String?
-    let mediaType: MeidaType
+    let mediaType: MediaType
     var geoTag: CLLocationCoordinate2D?
     
-     init(entryTitle: String?, mediaType: MeidaType, geoTag: CLLocationCoordinate2D?) {
+     init(entryTitle: String?, mediaType: MediaType, geoTag: CLLocationCoordinate2D?) {
         self.entryTitle = entryTitle
         self.mediaType = mediaType
         self.geoTag = geoTag

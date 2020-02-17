@@ -27,7 +27,7 @@ protocol ImageViewControllerDelegate {
 class ImagePostViewController: UIViewController {
     
     var filterType: FilterType?
-    var mapView: MapViewController!
+    //var mapView: MapViewController!
     var entryController: EntryController?
     var imageData: Data?
     var delegate: ImageViewControllerDelegate?
@@ -60,6 +60,8 @@ class ImagePostViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        imageTitleTextField.delegate = self as? UITextFieldDelegate
+        
         updateViews()
         
     }
@@ -271,12 +273,12 @@ class ImagePostViewController: UIViewController {
         
         if GeoTag.isOn {
             LocationHelper.shared.getCurrentLocation { (coordinate) in
-                self.entryController?.createPost(with: title, ofType: .image, location: coordinate)
+                EntryController.shared.createPost(with: title, ofType: .image, location: coordinate)
                 self.delegate?.imagePostButtonWasTapped()
                 self.dismiss(animated: true)
             }
         } else {
-            self.entryController?.createPost(with: title, ofType: .image, location: nil)
+            EntryController.shared.createPost(with: title, ofType: .image, location: nil)
             self.delegate?.imagePostButtonWasTapped()
             self.dismiss(animated: true, completion: nil)
         }
@@ -302,6 +304,11 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func textFieldShouldReturn( _ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
 }
