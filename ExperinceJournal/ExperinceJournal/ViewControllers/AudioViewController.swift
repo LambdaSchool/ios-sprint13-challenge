@@ -40,7 +40,7 @@ class AudioViewController: UIViewController {
         super.viewDidLoad()
         postButton.isEnabled = false
         postButton.tintColor = UIColor.gray
-
+        
         timeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: timeLabel.font.pointSize,
                                                           weight: .regular)
         timeRemainingLabel.font = UIFont.monospacedDigitSystemFont(ofSize: timeRemainingLabel.font.pointSize,
@@ -86,10 +86,10 @@ class AudioViewController: UIViewController {
 
     private func postAudio() {
         view.endEditing(true)
-
-        guard let _ = audioData else { return }
+//TODO: check if user wants to geotag
+      
         let title = "Audio Post"
-        self.entryController?.createPost(with: title, ofType: .audio, location: nil)
+        EntryController.shared.createPost(with: title, ofType: .audio, location: nil)
         delegate?.audioPostButtonWasTapped()
         dismiss(animated: true, completion: nil)
     }
