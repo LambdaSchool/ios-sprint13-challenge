@@ -11,6 +11,7 @@ import Foundation
 
 class EntryController {
     var entries = [Entry]()
+    static var shared = EntryController()
     
     func createPost(with title: String, ofType mediaType: MeidaType, location geoTag: CLLocationCoordinate2D?) {
         let entry = Entry(entryTitle: title, mediaType: mediaType, geoTag: geoTag)

@@ -27,6 +27,7 @@ protocol ImageViewControllerDelegate {
 class ImagePostViewController: UIViewController {
     
     var filterType: FilterType?
+    var mapView: MapViewController!
     var entryController: EntryController?
     var imageData: Data?
     var delegate: ImageViewControllerDelegate?
@@ -182,6 +183,7 @@ class ImagePostViewController: UIViewController {
             
         }
         presentImagePickerController()
+        
     }
     
     

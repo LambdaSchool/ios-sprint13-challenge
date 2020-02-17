@@ -29,6 +29,7 @@ class RecodingViewController: UIViewController {
     
     
     @IBAction func addVideoExperienceButtonTapped(_ sender: Any) {
+         
     }
     
     @IBAction func recordButtonTapped(_ sender: Any) {
