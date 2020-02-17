@@ -165,12 +165,12 @@ class VideoViewController: UIViewController {
         // TODO: IMPLEMENT LOCATION
         if geotagSwitch.isOn {
             LocationHelper.shared.getCurrentLocation { (coordinate) in
-                self.entryController?.createPost(with: title, ofType: .image, location: coordinate)
+                EntryController.shared.createPost(title: title, mediaType: .image, geoTag: coordinate)
                 self.delegate?.videoPostButtonWasTapped()
                 self.dismiss(animated: true, completion: nil)
             }
         } else {
-            self.entryController?.createPost(with: title, ofType: .image, location: nil)
+            EntryController.shared.createPost(title: title, mediaType: .image, geoTag: nil)
             self.delegate?.videoPostButtonWasTapped()
             self.dismiss(animated: true, completion: nil)
         }

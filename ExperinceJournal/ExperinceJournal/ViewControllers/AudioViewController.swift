@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import CoreData 
 
 protocol AudioViewControllerDelegate {
     func audioPostButtonWasTapped()
@@ -27,7 +28,9 @@ class AudioViewController: UIViewController {
     @IBOutlet weak var timeRemainingLabel: UILabel!
     @IBOutlet weak var timeSlider: UISlider!
     @IBOutlet weak var postButton: UIBarButtonItem!
-
+    
+    @IBOutlet weak var locationSwitch: UISwitch!
+    
     private lazy var timeFormatter: DateComponentsFormatter = {
         let formatting = DateComponentsFormatter()
         formatting.unitsStyle = .positional 
@@ -87,9 +90,13 @@ class AudioViewController: UIViewController {
     private func postAudio() {
         view.endEditing(true)
 //TODO: check if user wants to geotag
-      
+        if locationSwitch.isOn {
+            LocationHelper.shared.getCurrentLocation { (coordinate) in
+                EntryController.shared.createPost(title: "AudioPost", mediaType: .audio, geoTag: coordinate)
+            }
+        }
         let title = "Audio Post"
-        EntryController.shared.createPost(with: title, ofType: .audio, location: nil)
+        EntryController.shared.createPost(title: title, mediaType: .audio, geoTag: nil)
         delegate?.audioPostButtonWasTapped()
         dismiss(animated: true, completion: nil)
     }

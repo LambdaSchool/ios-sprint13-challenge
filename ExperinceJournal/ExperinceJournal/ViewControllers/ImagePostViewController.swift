@@ -273,12 +273,12 @@ class ImagePostViewController: UIViewController {
         
         if GeoTag.isOn {
             LocationHelper.shared.getCurrentLocation { (coordinate) in
-                EntryController.shared.createPost(with: title, ofType: .image, location: coordinate)
+                EntryController.shared.createPost(title: title, mediaType: .image, geoTag: coordinate)
                 self.delegate?.imagePostButtonWasTapped()
                 self.dismiss(animated: true)
             }
         } else {
-            EntryController.shared.createPost(with: title, ofType: .image, location: nil)
+            EntryController.shared.createPost(title: title, mediaType: .image, geoTag: nil)
             self.delegate?.imagePostButtonWasTapped()
             self.dismiss(animated: true, completion: nil)
         }
