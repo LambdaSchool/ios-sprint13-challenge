@@ -39,6 +39,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="buh-gd-p0Z" kind="show" id="Gum-k0-lTy"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -310,6 +313,32 @@
             </objects>
             <point key="canvasLocation" x="4066.666666666667" y="317.41071428571428"/>
         </scene>
+        <!--Map-->
+        <scene sceneID="fPJ-oR-WHG">
+            <objects>
+                <viewController id="buh-gd-p0Z" customClass="MapViewController" customModule="ExperinceJournal" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="XBf-jn-zel">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="UFI-JX-Wjb">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="Mml-iP-w23"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Map" image="map" catalog="system" id="4AO-vh-DCT"/>
+                    <navigationItem key="navigationItem" id="erq-Af-Gcd"/>
+                    <connections>
+                        <outlet property="mapView" destination="UFI-JX-Wjb" id="97N-g5-znh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZEw-bZ-lnB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2305.7971014492755" y="748.66071428571422"/>
+        </scene>
         <!--Video View Controller-->
         <scene sceneID="Dx9-7N-9aW">
             <objects>
@@ -400,6 +429,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="ax3-nG-Cng" kind="relationship" relationship="viewControllers" id="gUz-co-BkX"/>
+                        <segue destination="buh-gd-p0Z" kind="relationship" relationship="viewControllers" id="zPK-ir-9wv"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QQY-mA-XxD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -409,10 +439,14 @@
     </scenes>
     <resources>
         <image name="book" catalog="system" width="64" height="50"/>
+        <image name="map" catalog="system" width="64" height="56"/>
         <image name="mic" catalog="system" width="54" height="64"/>
         <image name="pause.circle" catalog="system" width="64" height="60"/>
         <image name="play.fill" catalog="system" width="58" height="64"/>
         <image name="plus" catalog="system" width="64" height="56"/>
         <image name="stop.circle" catalog="system" width="64" height="60"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Gum-k0-lTy"/>
+    </inferredMetricsTieBreakers>
 </document>

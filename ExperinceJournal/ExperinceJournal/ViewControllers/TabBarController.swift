@@ -22,8 +22,8 @@ class TabBarViewController: UITabBarController {
         if let navController = tabViewControllers[0] as? UINavigationController,
             let journalTVC = navController.topViewController as? ExperinceTableViewController {
                     }
-       // if let mapVC = tabViewControllers[1] as? MapViewController {
-           // mapVC.entryController = self.entryController
+        if let mapVC = tabViewControllers[1] as? MapViewController {
+           
         }
     }
-//}
+}
