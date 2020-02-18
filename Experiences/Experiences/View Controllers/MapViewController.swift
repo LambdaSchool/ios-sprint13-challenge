@@ -12,6 +12,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     private var experienceController = ExperienceController()
+    
     let locationManager = CLLocationManager()
     let identifier = "Experience"
     override func viewDidLoad() {
@@ -130,8 +131,8 @@ extension MapViewController: CLLocationManagerDelegate {
     }
     
     private func checkExperience() {
-//        for experience in experienceController.experiences {
-//          //  print(experience.image)
-//        }
+        for experience in experienceController.experiences {
+            print(experience.image)
+        }
     }
 }

@@ -20,7 +20,7 @@ class Experience: NSObject {
     
     required init(title: String, image: UIImage?, audioRecording: URL?, videoRecording: URL?, location: CLLocationCoordinate2D?) {
         self.name = title
-        self.image = nil
+        self.image = image
         self.audioRecording = audioRecording
         self.videoRecording = videoRecording
         self.location = location
