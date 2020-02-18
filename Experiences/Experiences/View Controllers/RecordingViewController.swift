@@ -115,6 +115,7 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
         let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: [.withInternetDateTime])
         let url = documents.appendingPathComponent(name).appendingPathExtension("caf")
+        print(url)
         self.audioRecordingURL = url
         return url
        }

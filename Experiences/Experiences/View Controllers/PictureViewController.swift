@@ -50,7 +50,7 @@ class PictureViewController: UIViewController {
     @IBAction func saveButtonPressed(_ sender: Any) {
         guard let title = titleTextfield.text, let image = imageVIew.image else { return }
         let location = locationManager.location?.coordinate
-       experienceController?.createExperience(withTitle: title, image:image , audioRecording: nil, videoRecording: nil, location: location)
+        experienceController?.createExperience(withTitle: title, image:image, audioRecording: nil, videoRecording: nil, location: location)
         dismiss(animated: true, completion: nil)
     }
     

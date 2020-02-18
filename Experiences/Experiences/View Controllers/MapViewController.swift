@@ -19,11 +19,17 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         mapView.delegate = self
         checkLocationServices()
         configureViews()
+        checkExperience()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateVIews()
+        checkExperience()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        checkExperience()
     }
     
 //MARK: - actions
@@ -100,8 +106,16 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             annotationView.displayPriority = .required
             annotationView.canShowCallout = true
             annotationView.clusteringIdentifier = identifier
+            annotationView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         return annotationView
        }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        guard let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ExperienceDetailVC") as? ExperienceDetailViewController else {return }
+        guard let experience = view.annotation as? Experience else { return }
+        detailVC.experience = experience
+        present(detailVC, animated: true, completion: nil)
+    }
     
     @IBAction func unwindToMapView(_ unwindSegue: UIStoryboardSegue) {
     }
@@ -113,5 +127,11 @@ extension MapViewController: CLLocationManagerDelegate {
         
     }
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+    }
+    
+    private func checkExperience() {
+//        for experience in experienceController.experiences {
+//          //  print(experience.image)
+//        }
     }
 }
