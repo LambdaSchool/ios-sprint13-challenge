@@ -53,7 +53,7 @@
         <!--New Experience-->
         <scene sceneID="R08-cF-82k">
             <objects>
-                <viewController id="ysU-Ye-xP3" sceneMemberID="viewController">
+                <viewController id="ysU-Ye-xP3" customClass="ImageAudioViewController" customModule="ExperiencesSprint" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="02q-Fu-X15">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -73,13 +73,20 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mOM-aF-ld6">
                                 <rect key="frame" x="170" y="430" width="74" height="30"/>
                                 <state key="normal" title="Add Image"/>
+                                <connections>
+                                    <action selector="addImageTapped:" destination="ysU-Ye-xP3" eventType="touchUpInside" id="4Kd-ap-WWm"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nKJ-pf-QlG">
                                 <rect key="frame" x="87" y="468" width="240" height="30"/>
+                                <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Record Audio">
                                     <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <state key="selected" title="Stop Recording"/>
+                                <connections>
+                                    <action selector="recordAudioTapped:" destination="ysU-Ye-xP3" eventType="touchUpInside" id="NCr-Va-i6f"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -106,6 +113,12 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="addImageButton" destination="mOM-aF-ld6" id="t7C-In-x5l"/>
+                        <outlet property="imageView" destination="WnF-S7-Iwd" id="PPw-56-2xn"/>
+                        <outlet property="recordAudioButton" destination="nKJ-pf-QlG" id="vun-cY-quM"/>
+                        <outlet property="titleTextField" destination="AqB-L4-2Ct" id="3je-Sr-2ah"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vpr-t7-iJ1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -114,14 +127,31 @@
         <!--Video Recording-->
         <scene sceneID="j1U-mq-0en">
             <objects>
-                <viewController id="76y-rA-qre" sceneMemberID="viewController">
+                <viewController id="76y-rA-qre" customClass="VideoViewController" customModule="ExperiencesSprint" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="88c-I8-a5h">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7TW-gy-Civ">
                                 <rect key="frame" x="20" y="140" width="374" height="722"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YkK-xs-9NT">
+                                        <rect key="frame" x="141" y="647" width="92" height="30"/>
+                                        <color key="tintColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Record Video">
+                                            <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <state key="selected" title="Stop Recording"/>
+                                        <connections>
+                                            <action selector="recordVideoTapped:" destination="76y-rA-qre" eventType="touchUpInside" id="P5f-Z5-kAH"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="YkK-xs-9NT" secondAttribute="bottom" constant="45" id="Mrs-VP-pqW"/>
+                                    <constraint firstItem="YkK-xs-9NT" firstAttribute="centerX" secondItem="7TW-gy-Civ" secondAttribute="centerX" id="sJP-9x-EkS"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -136,6 +166,10 @@
                     <navigationItem key="navigationItem" title="Video Recording" id="ooP-iy-g9O">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="lZs-H2-xHG"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="cameraView" destination="7TW-gy-Civ" id="ZLs-lM-GgV"/>
+                        <outlet property="recordVideoButton" destination="YkK-xs-9NT" id="KDF-qF-5Lq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f1t-WD-fhe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
