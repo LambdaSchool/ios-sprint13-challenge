@@ -51,6 +51,16 @@ class ImageAudioViewController: UIViewController {
     
     
     // MARK: - Actions
+    @IBAction func nextTapped(_ sender: UIBarButtonItem) {
+        print("nextTapped")
+        guard let comment = titleTextField.text, !comment.isEmpty, let image = scaledImage, let recordingURL = recordingURL else { return }
+        
+        experienceController.comment = comment
+        experienceController.image = filterImage(image)
+        experienceController.audioURL = recordingURL
+        
+        performSegue(withIdentifier: "AddVideoSegue", sender: self)
+    }
     
     @IBAction func addImageTapped(_ sender: UIButton) {
         print("addImageTapped")
@@ -221,16 +231,21 @@ class ImageAudioViewController: UIViewController {
         updateViews()
     }
     
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        
+        // NEXT
+//        if segue.identifier == "AddVideoSegue" {
+//            print("AddVideoSegue")
+//            if let videoVC = segue.destination as? VideoViewController {
+//                guard let title = titleTextField.text, let !title.isEmpty else { return }
+//
+//                //detailVC.post = postController.posts[indexPath.row]
+//            }
+//        }
     }
-    */
-
 }
 
 // MARK: - Extensions

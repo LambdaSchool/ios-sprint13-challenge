@@ -7,7 +7,16 @@
 //
 
 import Foundation
+import CoreLocation
+import UIKit
 
 class ExperienceController {
     var experiences: [Experience] = []
+    
+    // store in here then add them up with save button
+    var comment: String?
+    var coordinate: CLLocationCoordinate2D?
+    var image: UIImage?
+    var audioURL: URL?
+    var videoURL: URL?
 }
