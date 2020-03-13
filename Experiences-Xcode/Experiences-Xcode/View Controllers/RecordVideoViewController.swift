@@ -10,7 +10,7 @@ import UIKit
 
 class RecordVideoViewController: UIViewController {
 
-    @IBOutlet weak var videoView: UIView!
+    @IBOutlet weak var videoView: CameraView!
     @IBOutlet weak var recordButton: UIButton!
     
     
