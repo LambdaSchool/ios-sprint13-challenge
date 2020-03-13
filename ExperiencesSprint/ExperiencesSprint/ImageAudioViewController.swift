@@ -40,6 +40,18 @@ class ImageAudioViewController: UIViewController {
     /// Allows us to render the image (like an oven for baking bread)
     private let context = CIContext(options: nil)
     
+    let experienceController = ExperienceController()
+    
+    var audioRecorder: AVAudioRecorder?
+    var recordingURL: URL?
+    
+    var isRecording: Bool {
+        return audioRecorder?.isRecording ?? false
+    }
+    
+    
+    // MARK: - Actions
+    
     @IBAction func addImageTapped(_ sender: UIButton) {
         print("addImageTapped")
         presentImagePickerController()
@@ -47,6 +59,11 @@ class ImageAudioViewController: UIViewController {
     
     @IBAction func recordAudioTapped(_ sender: UIButton) {
         print("recordAudioTapped")
+        if isRecording {
+            stopRecording()
+        } else {
+            requestPermissionOrStartRecording()
+        }
     }
     
     // MARK: - View Life Cycle
@@ -54,8 +71,11 @@ class ImageAudioViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        try? prepareAudioSession()
         // Do any additional setup after loading the view.
     }
+    
+    // MARK: - Image
     
     func filterImage(_ image: UIImage) -> UIImage? {
         // UIImage -> CGImage -> CIImage
@@ -125,6 +145,82 @@ class ImageAudioViewController: UIViewController {
         }
     }
     
+    // MARK: - Audio
+    
+    // If you don't set active, on a device record won't work the first time (or other strange behavior)
+    func prepareAudioSession() throws {
+        let session = AVAudioSession.sharedInstance()
+        try session.setCategory(.playAndRecord, options: [.defaultToSpeaker])
+        try session.setActive(true, options: []) // can fail if on a phone call, for instance
+    }
+    
+    func updateViews() {
+        recordAudioButton.isSelected = isRecording
+    }
+    
+    func createNewRecordingURL() -> URL {
+        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        
+        let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
+        let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
+        
+        print("recording URL: \(file)")
+        
+        return file
+    }
+    
+    func requestPermissionOrStartRecording() {
+        switch AVAudioSession.sharedInstance().recordPermission {
+        case .undetermined:
+            AVAudioSession.sharedInstance().requestRecordPermission { granted in
+                guard granted == true else {
+                    print("We need microphone access") // Privacy for microphone denied
+                    return
+                }
+                
+                print("Recording permission has been granted!")
+                // NOTE: Invite the user to tap record again, since we just interrupted them, and they may not have been ready to record
+            }
+        case .denied:
+            print("Microphone access has been blocked.")
+            
+            let alertController = UIAlertController(title: "Microphone Access Denied", message: "Please allow this app to access your Microphone.", preferredStyle: .alert)
+            
+            alertController.addAction(UIAlertAction(title: "Open Settings", style: .default) { (_) in
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+            })
+            
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            
+            present(alertController, animated: true, completion: nil)
+        case .granted:
+            startRecording()
+        @unknown default:
+            break
+        }
+    }
+    
+    func startRecording() {
+        // 44.1 kHz
+        print("Start Recording")
+        let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
+        let recordingURL = createNewRecordingURL()
+        audioRecorder = try? AVAudioRecorder(url: recordingURL, format: format)
+        audioRecorder?.record()
+        audioRecorder?.delegate = self
+        //audioRecorder?.isMeteringEnabled = true
+        self.recordingURL = recordingURL
+        print(self.recordingURL)
+        updateViews()
+    }
+    
+    func stopRecording() {
+        print("Stop Recording")
+        audioRecorder?.stop()
+        print(self.recordingURL)
+        updateViews()
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -185,5 +281,22 @@ extension UIImage {
         return UIGraphicsImageRenderer(size: size, format: imageRendererFormat).image { context in
             draw(at: .zero)
         }
+    }
+}
+
+extension ImageAudioViewController: AVAudioRecorderDelegate {
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        // Play the recorded file instead of the piano music
+        guard let recordingURL = recordingURL else { return }
+        //self.recordingURL = recordingURL
+        //audioPlayer = try? AVAudioPlayer(contentsOf: recordingURL)
+        //updateViews()
+    }
+    
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
+        if let error = error {
+            print("Error recording: \(error)")
+        }
+        //updateViews()
     }
 }
