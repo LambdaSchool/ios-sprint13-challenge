@@ -47,8 +47,15 @@ class AddExperienceViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        titleTextField.delegate = self
+        locationController.delegate = self
+        
+        updateViews()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        deletePreviousVideoRecording()
     }
     
     private func updateViews() {

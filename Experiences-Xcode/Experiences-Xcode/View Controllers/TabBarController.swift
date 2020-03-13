@@ -7,24 +7,26 @@
 //
 
 import UIKit
+import MapKit
 
 class TabBarController: UITabBarController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    let experienceController = ExperienceController()
 
-        // Do any additional setup after loading the view.
-    }
-    
+     override func viewDidLoad() {
+         super.viewDidLoad()
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+         for viewController in viewControllers ?? [] {
+             if let navigationVC = viewController as? UINavigationController {
+                 for viewController in navigationVC.viewControllers {
+                     if let postsVC = viewController as? ExperienceListTableViewController {
+                         postsVC.experienceController = experienceController
+                     }
+                 }
+             } else if let mapVC = viewController as? MapViewController {
+                 mapVC.experienceController = experienceController
+             }
+         }
+     }
 
 }
