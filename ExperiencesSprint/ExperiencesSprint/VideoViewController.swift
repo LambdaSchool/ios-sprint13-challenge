@@ -14,6 +14,11 @@ class VideoViewController: UIViewController {
     
     @IBOutlet weak var recordVideoButton: UIButton!
     
+    @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
+        print("savedButtonTapped")
+        dismiss(animated: true, completion: nil)
+    }
+    
     @IBAction func recordVideoTapped(_ sender: UIButton) {
         print("recordVideoTapped")
     }
