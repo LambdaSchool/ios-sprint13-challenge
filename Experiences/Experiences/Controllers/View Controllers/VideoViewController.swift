@@ -9,22 +9,20 @@
 import UIKit
 import AVFoundation
 
-class VideoViewController: UIViewController {
+class VideoViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
-    // MARK: - IBOutlets
-    @IBOutlet weak var videoPreview: CameraView!
+    @IBOutlet weak var videoPreviewView: CameraView!
     @IBOutlet weak var recordButton: UIButton!
     
-    // MARK: - Variables
-    var captureSession: AVCaptureSession!
-    var recordOutput: AVCaptureMovieFileOutput!
+    var videoHasBeenRecorded = false
     var experience: Experience!
     var expController: ExpController!
-    var videoHasBeenRecorded = false
+    var captureSession: AVCaptureSession!
+    var recordOutput: AVCaptureMovieFileOutput!
     
-    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized:
             self.showCamera()
@@ -51,24 +49,37 @@ class VideoViewController: UIViewController {
         captureSession.stopRunning()
     }
     
-    // MARK: - IBActions
-    @IBAction func saveExp(_ sender: Any) {
-        guard videoHasBeenRecorded else { return }
-        
-        expController.saveExp(experience)
-        dismiss(animated: true, completion: nil)
-    }
     
     @IBAction func record(_ sender: Any) {
         if recordOutput.isRecording {
             recordOutput.stopRecording()
         } else {
             recordOutput.startRecording(to: experience.videoURL, recordingDelegate: self)
+            
         }
     }
     
-    // MARK: - Helper Functions
-    func updateViews() {
+    @IBAction func saveExperience(_ sender: Any) {
+        guard videoHasBeenRecorded else { return }
+        
+        expController.saveExp(experience)
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
+        DispatchQueue.main.async { self.updateViews() }
+    }
+    
+    func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+        DispatchQueue.main.async {
+            defer {
+                self.videoHasBeenRecorded = true
+                self.updateViews()
+            }
+        }
+    }
+    
+    private func updateViews() {
         guard isViewLoaded else { return }
         
         let isRecording = recordOutput?.isRecording ?? false
@@ -76,7 +87,7 @@ class VideoViewController: UIViewController {
         recordButton.setImage(UIImage(named: recordButtonImage), for: .normal)
     }
     
-    func showCamera() {
+    private func showCamera() {
         let captureSession = AVCaptureSession()
         let videoDevice = bestCamera()
         guard let videoDeviceInput = try? AVCaptureDeviceInput(device: videoDevice),
@@ -94,33 +105,18 @@ class VideoViewController: UIViewController {
         captureSession.commitConfiguration()
         
         self.captureSession = captureSession
-        videoPreview.videoLayer.session = captureSession
+        videoPreviewView.videoLayer.session = captureSession
         
     }
     
     
-    func bestCamera() -> AVCaptureDevice {
+    private func bestCamera() -> AVCaptureDevice {
         if let device = AVCaptureDevice.default(.builtInDualCamera, for: .video, position: .back) {
             return device
         } else if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
             return device
         } else {
             fatalError("Missing expected back camera device.")
-        }
-    }
-}
-
-extension VideoViewController: AVCaptureFileOutputRecordingDelegate {
-    func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
-        DispatchQueue.main.async { self.updateViews() }
-    }
-    
-    func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
-        DispatchQueue.main.async {
-            do {
-                self.videoHasBeenRecorded = true
-                self.updateViews()
-            }
         }
     }
 }

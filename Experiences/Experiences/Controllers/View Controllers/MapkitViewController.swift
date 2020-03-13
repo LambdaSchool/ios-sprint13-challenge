@@ -17,6 +17,10 @@ class MapkitViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         addAnnotations()
     }
     
@@ -36,11 +40,9 @@ class MapkitViewController: UIViewController {
 extension MapkitViewController: MKMapViewDelegate {
     func addAnnotations() {
         let experiences = Set(expController.experiences)
-        
+        print(experiences)
         let currentAnnotations = Set(mapView.annotations.compactMap({ $0 as? Experience }))
-        
         let addedExperiences = Array(experiences.subtracting(currentAnnotations))
-        
         mapView.addAnnotations(addedExperiences)
     }
     

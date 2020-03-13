@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 import AVFoundation
 import CoreLocation
 
@@ -44,7 +45,7 @@ class ExpViewController: UIViewController, UITextFieldDelegate {
     @IBAction func addPosterImage(_ sender: Any) {
         presentImagePickerController()
     }
-
+    
     @IBAction func recordAudio(_ sender: Any) {
         recordAudio()
     }
@@ -85,7 +86,7 @@ extension ExpViewController: CLLocationManagerDelegate {
         let status = CLLocationManager.authorizationStatus()
         
         switch status {
-        
+            
         case .notDetermined:
             
             locationManager.requestWhenInUseAuthorization()
@@ -109,12 +110,15 @@ extension ExpViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         guard status == .authorizedWhenInUse else { return }
-    
+        
         locationManager.requestLocation()
     }
 }
 
 extension ExpViewController: AVAudioRecorderDelegate, AVAudioPlayerDelegate {
+    
+    var isPlaying: Bool { return player?.isPlaying ?? false }
+    var isRecording: Bool { return recorder?.isRecording ?? false }
     
     func recordAudio() {
         defer { updateButtons() }
@@ -176,9 +180,6 @@ extension ExpViewController: AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     }
     
     func updateButtons() {
-        
-        playRecordingButton.isHidden = audioHasBeenRecorded ? false : true
-        
         let playButtonTitle = isPlaying ? "Stop Playing" : "Play"
         var recordButtonTitle = isRecording ? "Stop Recording" : "Record"
         if recordCount == 1 { recordButtonTitle = "Stop Recording" }
@@ -187,12 +188,6 @@ extension ExpViewController: AVAudioRecorderDelegate, AVAudioPlayerDelegate {
         playRecordingButton.setTitle(playButtonTitle, for: .normal)
         recordAudioButton.setTitle(recordButtonTitle, for: .normal)
     }
-    
-    
-    
-    var isPlaying: Bool { return player?.isPlaying ?? false }
-    var isRecording: Bool { return recorder?.isRecording ?? false }
-    
 }
 
 extension ExpViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -200,65 +195,46 @@ extension ExpViewController: UIImagePickerControllerDelegate, UINavigationContro
     func presentImagePickerController() {
         
         let alert = UIAlertController(title: "Select Source", message: nil, preferredStyle: .actionSheet)
-        
         let imagePicker = UIImagePickerController()
-        
         imagePicker.delegate = self
         
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
-        
             let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .default) { (_) in
-                
                 imagePicker.sourceType = .photoLibrary
-                
                 self.present(imagePicker, animated: true, completion: nil)
             }
-            
             alert.addAction(photoLibraryAction)
         }
         
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            
             let cameraAction = UIAlertAction(title: "Camera", style: .default) { (_) in
-                
                 imagePicker.sourceType = .camera
-                
                 self.present(imagePicker, animated: true, completion: nil)
             }
-            
             alert.addAction(cameraAction)
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
         alert.addAction(cancelAction)
-        
         present(alert, animated: true, completion: nil)
     }
     
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-    
+        
         guard let image = info[.originalImage] as? UIImage else { return }
-        
         let processedImage = grayscaleImage(image)
-        
         posterImageView.image = processedImage
-        
         picker.dismiss(animated: true, completion: nil)
-        
         posterImageButton.setTitle("", for: .normal)
     }
     
     func grayscaleImage(_ image: UIImage) -> UIImage? {
         
         if let imageFilter = CIFilter(name: "CIColorControls") {
-            
             let startImage = CIImage(image: image)
             imageFilter.setValue(startImage, forKey: kCIInputImageKey)
-            
-            imageFilter.setValue(0.0, forKey: "inputSaturation")
-            
+            imageFilter.setValue(1.0, forKey: "inputSaturation")
             guard let outputImage = imageFilter.outputImage,
                 let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else { return nil }
             

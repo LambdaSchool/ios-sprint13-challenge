@@ -6,23 +6,15 @@
 //  Copyright © 2020 Aaron Cleveland. All rights reserved.
 //
 
-import AVFoundation
+import Foundation
 import MapKit
 
 class Experience: NSObject, MKAnnotation {
     
-    init(title: String, image: UIImage, coordinate: CLLocationCoordinate2D, id: String) {
-        self.title = title
-        self.image = image
-        self.coordinate = coordinate
-        self.id = id
-    }
-    
     var title: String?
     var subtitle: String?
     var coordinate: CLLocationCoordinate2D
-    
-    var image: UIImage
+    var image: UIImage?
     var id: String
     
     var audioURL: URL {
@@ -39,6 +31,10 @@ class Experience: NSObject, MKAnnotation {
         return documentsDir.appendingPathComponent("\(id)video").appendingPathExtension("mov")
     }
     
-    
-    
+    init(title: String, image: UIImage?, coordinate: CLLocationCoordinate2D, id: String) {
+        self.title = title
+        self.image = image
+        self.coordinate = coordinate
+        self.id = id
+    }
 }
