@@ -19,6 +19,10 @@ class Experience: NSObject, MKAnnotation {
     var audioURL: URL?
     var videoURL: URL?
     
+    var title: String? {
+        return comment
+    }
+    
     init(comment: String,
          coordinate: CLLocationCoordinate2D,
          image: UIImage,
@@ -30,7 +34,7 @@ class Experience: NSObject, MKAnnotation {
         self.audioURL = audioURL
         self.videoURL = videoURL
         
-        // ?
+        // Why is this needed?
         //super.init()
     }
 }

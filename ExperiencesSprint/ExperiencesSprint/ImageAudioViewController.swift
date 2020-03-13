@@ -49,15 +49,16 @@ class ImageAudioViewController: UIViewController {
         return audioRecorder?.isRecording ?? false
     }
     
-    
     // MARK: - Actions
+    
+    /// This doesn't get called for some reason, have to do this logic in "prepare for segue"
     @IBAction func nextTapped(_ sender: UIBarButtonItem) {
         print("nextTapped")
-        guard let comment = titleTextField.text, !comment.isEmpty, let image = scaledImage, let recordingURL = recordingURL else { return }
+        guard let comment = titleTextField.text, !comment.isEmpty else { return }
         
-        experienceController.comment = comment
-        experienceController.image = filterImage(image)
-        experienceController.audioURL = recordingURL
+        masterExperienceController.comment = comment
+        masterExperienceController.image = filterImage(scaledImage ?? UIImage(named: "tom")!)
+        masterExperienceController.audioURL = recordingURL
         
         performSegue(withIdentifier: "AddVideoSegue", sender: self)
     }
@@ -80,9 +81,7 @@ class ImageAudioViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         try? prepareAudioSession()
-        // Do any additional setup after loading the view.
     }
     
     // MARK: - Image
@@ -126,33 +125,6 @@ class ImageAudioViewController: UIViewController {
         imagePicker.sourceType = .photoLibrary
         imagePicker.delegate = self
         present(imagePicker, animated: true)
-    }
-
-    private func savePhoto() {
-        guard let originalImage = originalImage else { return }
-        guard let processedImage = self.filterImage(originalImage.flattened) else { return }
-        PHPhotoLibrary.requestAuthorization { (status) in
-            guard status == .authorized else { return }
-            // Let the library know we are going to make changes
-            PHPhotoLibrary.shared().performChanges({
-                // Make a new photo creation request
-                PHAssetCreationRequest.creationRequestForAsset(from: processedImage)
-            }, completionHandler: { (success, error) in
-                if let error = error {
-                    NSLog("Error saving photo: \(error)")
-                    return
-                }
-                DispatchQueue.main.async {
-                    print("Saved image to Photo Library")
-                    let alertController = UIAlertController(title: "Image Saved",
-                                                            message: "Saved image to photo library",
-                                                            preferredStyle: .alert)
-                    let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                    alertController.addAction(alertAction)
-                    self.present(alertController, animated: true, completion: nil)
-                }
-            })
-        }
     }
     
     // MARK: - Audio
@@ -220,14 +192,12 @@ class ImageAudioViewController: UIViewController {
         audioRecorder?.delegate = self
         //audioRecorder?.isMeteringEnabled = true
         self.recordingURL = recordingURL
-        print(self.recordingURL)
         updateViews()
     }
     
     func stopRecording() {
         print("Stop Recording")
         audioRecorder?.stop()
-        print(self.recordingURL)
         updateViews()
     }
     
@@ -238,8 +208,12 @@ class ImageAudioViewController: UIViewController {
         if segue.identifier == "AddVideoSegue" {
             print("AddVideoSegue")
             if let vidVC = segue.destination as? VideoViewController {
-                vidVC.experienceController = self.experienceController
-                //mapVC.experienceController = self.experienceController
+                guard let comment = titleTextField.text, !comment.isEmpty else { return }
+                
+                masterExperienceController.comment = comment
+                masterExperienceController.image = filterImage(scaledImage ?? UIImage(named: "tom")!)
+                masterExperienceController.audioURL = recordingURL
+                print(vidVC)
             }
         }
     }
@@ -297,18 +271,10 @@ extension UIImage {
 }
 
 extension ImageAudioViewController: AVAudioRecorderDelegate {
-    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-        // Play the recorded file instead of the piano music
-        guard let recordingURL = recordingURL else { return }
-        //self.recordingURL = recordingURL
-        //audioPlayer = try? AVAudioPlayer(contentsOf: recordingURL)
-        //updateViews()
-    }
     
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
         if let error = error {
             print("Error recording: \(error)")
         }
-        //updateViews()
     }
 }

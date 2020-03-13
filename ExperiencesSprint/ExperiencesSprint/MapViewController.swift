@@ -12,6 +12,8 @@ import CoreLocation
 
 var currentLocation = CLLocationCoordinate2D(latitude: 0, longitude: 0)
 
+var masterExperienceController = ExperienceController()
+
 class MapViewController: UIViewController {
     
     // MARK: - Properties
@@ -22,17 +24,13 @@ class MapViewController: UIViewController {
     let locationManager = CLLocationManager()
     var experienceController: ExperienceController?
     
+    // MARK: - Actions
+    
     @IBAction func addExperienceTapped(_ sender: UIButton) {
-        print("Add Experience Tapped")
         locationManager.startUpdatingLocation()
-        
         guard let lat = locationManager.location?.coordinate.latitude, let long = locationManager.location?.coordinate.longitude else { return }
         let coordinates = CLLocationCoordinate2DMake(lat, long)
-        
-        print("currentLocation start = \(currentLocation)")
         currentLocation = coordinates
-        print("currentLocation now = \(currentLocation)")
-        //experienceController.coordinate = coordinates
         locationManager.stopUpdatingLocation()
     }
     
@@ -49,17 +47,7 @@ class MapViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print(experienceController?.experiences)
-        guard let experienceController = experienceController else { return }
-        mapView.addAnnotations(experienceController.experiences)
-        print("annotations = \(mapView.annotations)")
-    }
-
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        mapView.addAnnotations(masterExperienceController.experiences)
     }
 }
 
@@ -78,6 +66,7 @@ extension MapViewController: MKMapViewDelegate {
             return nil
         }
         print(annotationView)
+        annotationView.canShowCallout = true
         return annotationView
     }
 }
@@ -86,14 +75,10 @@ extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         let center = CLLocationCoordinate2DMake(currentLocation.latitude, currentLocation.longitude)
-        let span = MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)
+        let span = MKCoordinateSpan(latitudeDelta: 0.069, longitudeDelta: 0.069)
         let region = MKCoordinateRegion(center: center,
                                         span: span)
         mapView.setRegion(region, animated: true)
         locationManager.stopUpdatingLocation()
     }
-    
 }
-
-
-
