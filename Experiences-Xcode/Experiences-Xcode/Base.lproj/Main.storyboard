@@ -105,6 +105,9 @@
                                 <state key="normal" title="RECORD" image="mic" catalog="system">
                                     <color key="titleColor" red="0.001521902144" green="0.65311706849999995" blue="0.3171931529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <state key="selected" title="STOP" image="xmark" catalog="system">
+                                    <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="recordTapped:" destination="0an-w9-4U0" eventType="touchUpInside" id="oTp-wS-QlH"/>
                                 </connections>
@@ -123,6 +126,9 @@
                                 <color key="tintColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="PLAY" image="play" catalog="system">
                                     <color key="titleColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <state key="selected" title="STOP">
+                                    <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="playTapped:" destination="0an-w9-4U0" eventType="touchUpInside" id="rUQ-bQ-NhL"/>
@@ -189,11 +195,14 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fjO-lV-mQa">
-                                        <rect key="frame" x="156" y="574" width="103" height="96"/>
+                                        <rect key="frame" x="156" y="554" width="103" height="116"/>
                                         <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <color key="tintColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="Record"/>
-                                        <state key="selected" image="Stop"/>
+                                        <state key="selected" image="Stop">
+                                            <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleShadowColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="recordTapped:" destination="gUe-jI-hLV" eventType="touchUpInside" id="0JQ-Ny-wHb"/>
                                         </connections>
@@ -204,7 +213,6 @@
                                     <constraint firstItem="fjO-lV-mQa" firstAttribute="leading" secondItem="9jl-bR-WVk" secondAttribute="leading" constant="156" id="04J-SC-Mml"/>
                                     <constraint firstAttribute="trailing" secondItem="fjO-lV-mQa" secondAttribute="trailing" constant="155" id="J0R-tQ-qWu"/>
                                     <constraint firstAttribute="bottom" secondItem="fjO-lV-mQa" secondAttribute="bottom" constant="55" id="JqJ-FF-BWv"/>
-                                    <constraint firstItem="fjO-lV-mQa" firstAttribute="top" secondItem="9jl-bR-WVk" secondAttribute="top" constant="574" id="ylE-1V-K6P"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -312,5 +320,6 @@
         <image name="mic" catalog="system" width="54" height="64"/>
         <image name="pencil" catalog="system" width="64" height="56"/>
         <image name="play" catalog="system" width="60" height="64"/>
+        <image name="xmark" catalog="system" width="64" height="56"/>
     </resources>
 </document>
