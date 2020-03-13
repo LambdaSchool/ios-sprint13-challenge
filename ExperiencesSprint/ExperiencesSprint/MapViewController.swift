@@ -12,15 +12,24 @@ import CoreLocation
 
 class MapViewController: UIViewController {
     
+    // MARK: - Properties
+    
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var addExperienceButton: UIButton!
+    
+    let locationManager = CLLocationManager()
+    let experienceController = ExperienceController()
     
     @IBAction func addExperienceTapped(_ sender: UIButton) {
         print("Add Experience Tapped")
     }
+    
+    // MARK: - View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        mapView.delegate = self
+        locationManager.delegate = self
         // Do any additional setup after loading the view.
     }
     
@@ -36,3 +45,16 @@ class MapViewController: UIViewController {
     */
 
 }
+
+// MARK: - Extensions
+
+extension MapViewController: MKMapViewDelegate {
+    
+}
+
+extension MapViewController: CLLocationManagerDelegate {
+    
+}
+
+
+
