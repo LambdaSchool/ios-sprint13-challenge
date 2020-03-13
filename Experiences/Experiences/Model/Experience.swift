@@ -6,7 +6,7 @@
 //  Copyright © 2020 Aaron Cleveland. All rights reserved.
 //
 
-import Foundation
+import AVFoundation
 import MapKit
 
 class Experience: NSObject, MKAnnotation {

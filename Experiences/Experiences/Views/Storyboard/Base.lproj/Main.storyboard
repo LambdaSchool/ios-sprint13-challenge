@@ -53,9 +53,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="c7v-Uz-jqQ">
+                            <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="c7v-Uz-jqQ">
                                 <rect key="frame" x="20" y="182" width="374" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -63,29 +62,15 @@
                                 <rect key="frame" x="18" y="224" width="376" height="376"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PZj-IM-ynv">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PZj-IM-ynv">
                                 <rect key="frame" x="20" y="224" width="374" height="376"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Add Image"/>
                                 <connections>
                                     <action selector="addPosterImage:" destination="2j6-ur-nJG" eventType="touchUpInside" id="HCA-og-gZ9"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K5M-aY-uFQ">
-                                <rect key="frame" x="20" y="625" width="374" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Record">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="recordAudio:" destination="2j6-ur-nJG" eventType="touchUpInside" id="DIu-vG-V4y"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="deR-tG-q5z">
-                                <rect key="frame" x="20" y="669" width="374" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="deR-tG-q5z">
+                                <rect key="frame" x="20" y="806" width="374" height="36"/>
                                 <color key="backgroundColor" systemColor="systemIndigoColor" red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Play Recording">
@@ -95,8 +80,31 @@
                                     <action selector="playAudioRecording:" destination="2j6-ur-nJG" eventType="touchUpInside" id="Ead-Ph-XQj"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K5M-aY-uFQ">
+                                <rect key="frame" x="20" y="762" width="374" height="36"/>
+                                <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Record">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="recordAudio:" destination="2j6-ur-nJG" eventType="touchUpInside" id="DIu-vG-V4y"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="yS4-aN-FM9" firstAttribute="bottom" secondItem="deR-tG-q5z" secondAttribute="bottom" constant="20" id="043-Yh-JsD"/>
+                            <constraint firstItem="PZj-IM-ynv" firstAttribute="leading" secondItem="yS4-aN-FM9" secondAttribute="leading" constant="20" id="64D-Mb-IsZ"/>
+                            <constraint firstItem="deR-tG-q5z" firstAttribute="top" secondItem="K5M-aY-uFQ" secondAttribute="bottom" constant="8" id="CD3-mC-HYL"/>
+                            <constraint firstItem="yS4-aN-FM9" firstAttribute="trailing" secondItem="deR-tG-q5z" secondAttribute="trailing" constant="20" id="CDF-Yi-GIq"/>
+                            <constraint firstItem="PZj-IM-ynv" firstAttribute="top" secondItem="c7v-Uz-jqQ" secondAttribute="bottom" constant="8" id="GCs-rI-SOi"/>
+                            <constraint firstItem="K5M-aY-uFQ" firstAttribute="leading" secondItem="yS4-aN-FM9" secondAttribute="leading" constant="20" id="Kjj-lx-2MH"/>
+                            <constraint firstItem="deR-tG-q5z" firstAttribute="leading" secondItem="yS4-aN-FM9" secondAttribute="leading" constant="20" id="aJ1-MX-Tf5"/>
+                            <constraint firstItem="yS4-aN-FM9" firstAttribute="trailing" secondItem="K5M-aY-uFQ" secondAttribute="trailing" constant="20" id="ifF-59-f65"/>
+                            <constraint firstItem="yS4-aN-FM9" firstAttribute="trailing" secondItem="PZj-IM-ynv" secondAttribute="trailing" constant="20" id="oT2-95-ML7"/>
+                            <constraint firstItem="K5M-aY-uFQ" firstAttribute="top" secondItem="PZj-IM-ynv" secondAttribute="bottom" constant="162" id="yfh-Gd-bzW"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="yS4-aN-FM9"/>
                     </view>
                     <navigationItem key="navigationItem" id="O1y-X0-AgQ">
