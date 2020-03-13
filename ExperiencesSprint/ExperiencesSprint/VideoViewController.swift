@@ -9,6 +9,8 @@
 import UIKit
 import AVFoundation
 
+
+
 class VideoViewController: UIViewController {
 
     // MARK: - Properties
@@ -30,10 +32,23 @@ class VideoViewController: UIViewController {
         print("savedButtonTapped")
         
         guard experienceController?.videoURL != nil else { return }
+        let comment = experienceController?.comment ?? "N/A"
+        let coordinate = currentLocation
+        let image = experienceController?.image ?? UIImage(named: "tom")!
+        let audioURL: URL = experienceController?.audioURL ?? URL(string: "audio")!
+        let videoURL: URL = experienceController?.videoURL ?? URL(string: "video")!
+        
+        let newExp = Experience(comment: comment,
+                                coordinate: coordinate,
+                                image: image,
+                                audioURL: audioURL,
+                                videoURL: videoURL)
+        experienceController?.experiences.append(newExp)
 //        guard let experienceController = experienceController else { return }
 //        let newExp = Experience(comment: experienceController.comment, coordinate: experienceController.coordinate, image: experienceController.image, audioURL: experienceController.audioURL, videoURL: experienceController.videoURL)
 //
-        dismiss(animated: true, completion: nil)
+        //dismiss(animated: true, completion: nil)
+        performSegue(withIdentifier: "ShowMapSegue", sender: self)
     }
     
     @IBAction func recordVideoTapped(_ sender: UIButton) {
@@ -150,6 +165,15 @@ class VideoViewController: UIViewController {
         fatalError("no cameras on device, or you're on the simualor")
         // Potentially the hardware is missing or broken (if the user serviced the device, or dropped in pool)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowMapSegue" {
+            print("ShowMapSegue")
+            if let mapVC = segue.destination as? MapViewController {
+                mapVC.experienceController = self.experienceController
+            }
+        }
+    }
 }
 
 extension VideoViewController: AVCaptureFileOutputRecordingDelegate {
@@ -170,6 +194,9 @@ extension VideoViewController: AVCaptureFileOutputRecordingDelegate {
         updateViews()
     }
 }
+
+
+
 
 class CameraViewController: UIViewController {
     

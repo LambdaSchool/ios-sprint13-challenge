@@ -15,9 +15,9 @@ class Experience: NSObject, MKAnnotation {
     
     var comment: String
     var coordinate: CLLocationCoordinate2D
-    var image: UIImage
-    var audioURL: URL
-    var videoURL: URL
+    var image: UIImage?
+    var audioURL: URL?
+    var videoURL: URL?
     
     init(comment: String,
          coordinate: CLLocationCoordinate2D,

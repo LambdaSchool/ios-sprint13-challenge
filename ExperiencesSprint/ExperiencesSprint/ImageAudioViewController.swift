@@ -235,16 +235,13 @@ class ImageAudioViewController: UIViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        // NEXT
-//        if segue.identifier == "AddVideoSegue" {
-//            print("AddVideoSegue")
-//            if let videoVC = segue.destination as? VideoViewController {
-//                guard let title = titleTextField.text, let !title.isEmpty else { return }
-//
-//                //detailVC.post = postController.posts[indexPath.row]
-//            }
-//        }
+        if segue.identifier == "AddVideoSegue" {
+            print("AddVideoSegue")
+            if let vidVC = segue.destination as? VideoViewController {
+                vidVC.experienceController = self.experienceController
+                //mapVC.experienceController = self.experienceController
+            }
+        }
     }
 }
 
