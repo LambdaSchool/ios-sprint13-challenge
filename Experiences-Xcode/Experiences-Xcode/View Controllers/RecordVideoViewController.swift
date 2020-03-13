@@ -7,12 +7,20 @@
 //
 
 import UIKit
+import AVFoundation
+
+protocol CameraViewControllerDelegate {
+    func setRecordURL(_ recordURL: URL)
+    func saveWithNoVideo()
+}
 
 class RecordVideoViewController: UIViewController {
 
     @IBOutlet weak var videoView: CameraView!
     @IBOutlet weak var recordButton: UIButton!
     
+    var experienceController: ExperienceController!
+    var delegate: CameraViewControllerDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
