@@ -81,6 +81,7 @@ class ImageAudioViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        titleTextField.delegate = self
         try? prepareAudioSession()
     }
     
@@ -276,5 +277,13 @@ extension ImageAudioViewController: AVAudioRecorderDelegate {
         if let error = error {
             print("Error recording: \(error)")
         }
+    }
+}
+
+extension ImageAudioViewController: UITextFieldDelegate {
+    // Thanks, Paul's Youtube video
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        titleTextField.resignFirstResponder()
+        return true
     }
 }
