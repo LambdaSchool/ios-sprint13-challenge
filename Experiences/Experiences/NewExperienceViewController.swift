@@ -11,9 +11,20 @@ import MapKit
 
 class NewExperienceViewController: UIViewController {
 
-    var coordinate: CLLocationCoordinate2D?
+    var coordinate: CLLocationCoordinate2D? {
+        didSet {
+            
+        }
+    }
     
-    var experience: Experience?
+    var experiences: [Experience] = []
+    
+    var updatedExperience: Experience? {
+        didSet {
+            print(updatedExperience?.expTitle as Any)
+        }
+    }
+    var expTitle = ""
     
     var experienceController: ExperienceController?
     
@@ -25,10 +36,22 @@ class NewExperienceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print(experiences.count)
+        print(experiences.first?.expTitle)
+    }
     
+    @IBAction func saveTapped(_ sender: Any) {
+
+
+        self.performSegue(withIdentifier: "MapViewSegue", sender: self)
+
+
+    }
     
     @IBAction func addImageTapped(_ sender: Any) {
         guard let title = titleTextField.text, !title.isEmpty else {
@@ -39,13 +62,8 @@ class NewExperienceViewController: UIViewController {
             
             return
         }
-        guard let coordinate = coordinate else {
-            print("No Coordinate")
-            return
-        }
-        let newExperience = Experience(title: title, image: nil, video: nil, audio: nil, coordinate: coordinate)
-        self.experience = newExperience
-        self.performSegue(withIdentifier: "ImageSegue", sender: self)
+        expTitle = title
+//        self.performSegue(withIdentifier: "ImageSegue", sender: self)
     }
     
     @IBAction func addVideoTapped(_ sender: Any) {
@@ -57,12 +75,8 @@ class NewExperienceViewController: UIViewController {
             
             return
         }
-        guard let coordinate = coordinate else {
-            print("No Coordinate")
-            return
-        }
-        let newExperience = Experience(title: title, image: nil, video: nil, audio: nil, coordinate: coordinate)
-        self.experience = newExperience
+        
+//        let newExperience = Experience(title: title, image: nil, video: nil, audio: nil, coordinate: coordinate)
         self.performSegue(withIdentifier: "VideoSegue", sender: self)
     }
     
@@ -75,12 +89,7 @@ class NewExperienceViewController: UIViewController {
             
             return
         }
-        guard let coordinate = coordinate else {
-            print("No Coordinate")
-            return
-        }
-        let newExperience = Experience(title: title, image: nil, video: nil, audio: nil, coordinate: coordinate)
-        self.experience = newExperience
+       
         self.performSegue(withIdentifier: "AudioSegue", sender: self)
     }
     
@@ -91,16 +100,30 @@ class NewExperienceViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ImageSegue" {
             guard let imageVC = segue.destination as? ImageViewController else { return }
-            imageVC.experience = experience
+                imageVC.title = expTitle
+                imageVC.coordinate = coordinate 
+
             imageVC.experienceController = experienceController
         } else if segue.identifier == "VideoSegue" {
             guard let videoVC = segue.destination as? VideoRecordingViewController else { return }
-            videoVC.experience = experience
+
             videoVC.experienceController = experienceController
         } else if segue.identifier == "AudioSegue" {
             guard let audioVC = segue.destination as? VoiceRecordingViewController else { return }
-            audioVC.experience = experience
             audioVC.experienceController = experienceController
+        } else if segue.identifier == "" {
+            guard let mapViewVC = segue.destination as? MapKitViewController else { return }
+            mapViewVC.experiences = experiences
+            
         }
     }
+}
+
+extension NewExperienceViewController: ExperienceMediaDelegate {
+    func experience(experience: Experience) {
+        experiences.append(experience)
+        print(experience.expTitle)
+    }
+    
+    
 }

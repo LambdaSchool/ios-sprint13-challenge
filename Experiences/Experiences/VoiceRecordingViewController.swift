@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import MapKit
 
 class VoiceRecordingViewController: UIViewController {
 
@@ -43,7 +44,6 @@ class VoiceRecordingViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         captureSession.startRunning()
         
     }
@@ -55,9 +55,14 @@ class VoiceRecordingViewController: UIViewController {
     
     @IBAction func saveTapped(_ sender: Any) {
         if let experience = experience {
-            experience.audio = self.audio
-            experienceController?.experiences.append(experience)
-        }
+                experience.audio = audio
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let newExperience = storyboard.instantiateViewController(identifier: "NewExperience") as! NewExperienceViewController
+                }
+//        if let experience = experience {
+//            experience.audio = self.audio
+//            experienceController?.experiences.append(experience)
+//        }
         navigationController?.popToRootViewController(animated: true)
     }
     @IBAction func recordButtonTapped(_ sender: Any) {

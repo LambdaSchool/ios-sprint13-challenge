@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import MapKit
 
 class VideoRecordingViewController: UIViewController {
 
@@ -23,6 +24,8 @@ class VideoRecordingViewController: UIViewController {
     
     var player: AVPlayer!
     
+    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var cameraView: CameraPreviewView!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
@@ -43,7 +46,6 @@ class VideoRecordingViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         captureSession.startRunning()
         
     }
@@ -57,12 +59,17 @@ class VideoRecordingViewController: UIViewController {
         toggleRecording()
     }
     
+    @IBAction func backButtonTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     @IBAction func saveTapped(_ sender: Any) {
         if let experience = experience {
-            experience.video = self.video
-            experienceController?.experiences.append(experience)
-        }
-        navigationController?.popToRootViewController(animated: true)
+                experience.video = video
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let newExperience = storyboard.instantiateViewController(identifier: "NewExperience") as! NewExperienceViewController
+                }
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func playButtonTapped(_ sender: Any) {
@@ -150,8 +157,12 @@ class VideoRecordingViewController: UIViewController {
         recordButton.isSelected = fileOutput.isRecording
         if fileOutput.isRecording {
             recordButton.setImage(UIImage(systemName: "video.fill"), for: .normal)
+            backButton.isHidden = true
+            saveButton.isHidden = true
         } else {
             recordButton.setImage(UIImage(systemName: "video"), for: .normal)
+            backButton.isHidden = false
+            saveButton.isHidden = false
         }
         if video == nil {
             playButton.isHidden = true
