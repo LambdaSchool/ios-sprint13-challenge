@@ -12,8 +12,6 @@ import MapKit
 
 class VoiceRecordingViewController: UIViewController {
 
-    var experienceController: ExperienceController?
-    
     var experience: Experience?
     
     lazy var captureSession = AVCaptureSession()
@@ -37,9 +35,6 @@ class VoiceRecordingViewController: UIViewController {
         
         setupAudioCaptureSession()
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGestureRecognizer(_:)))
-        
-        view.addGestureRecognizer(tapGesture)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -55,14 +50,10 @@ class VoiceRecordingViewController: UIViewController {
     
     @IBAction func saveTapped(_ sender: Any) {
         if let experience = experience {
-                experience.audio = audio
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let newExperience = storyboard.instantiateViewController(identifier: "NewExperience") as! NewExperienceViewController
-                }
-//        if let experience = experience {
-//            experience.audio = self.audio
-//            experienceController?.experiences.append(experience)
-//        }
+            experience.audio = audio
+            let experienceDictionary = [mediaAdded : experience]
+            NotificationCenter.default.post(name: .mediaAdded, object: nil, userInfo: experienceDictionary)
+        }
         navigationController?.popToRootViewController(animated: true)
     }
     @IBAction func recordButtonTapped(_ sender: Any) {
@@ -199,6 +190,7 @@ class VoiceRecordingViewController: UIViewController {
             }
         }
     }
+    
     /*
     // MARK: - Navigation
 
@@ -219,7 +211,6 @@ extension VoiceRecordingViewController: AVCaptureFileOutputRecordingDelegate {
             return
         }
         self.audio = outputFileURL
-        self.experience?.audio = self.audio
         
         playAudio(url: outputFileURL)
     }

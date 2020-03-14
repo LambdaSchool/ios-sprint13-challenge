@@ -13,18 +13,10 @@ import CoreImage.CIFilterBuiltins
 import MapKit
 
 class ImageViewController: UIViewController {
-
-    var experienceController: ExperienceController?
     
     weak var delegate: ExperienceMediaDelegate?
     
-    var coordinate: CLLocationCoordinate2D? {
-        didSet {
-            
-        }
-    }
-    
-    override var title: String? {
+    var experience: Experience? {
         didSet {
             
         }
@@ -69,7 +61,7 @@ class ImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        checkAuthorizationStatus()
         
         updateViews()
     }
@@ -83,15 +75,10 @@ class ImageViewController: UIViewController {
         
         let image = imageView.image
         
-        let coords = CLLocationCoordinate2D(latitude: 37.52568435668945, longitude: -122.27737426757812)
-//        print(image)
-//        print(title!)
+        self.experience?.image = image
         
-        
-        let newExperience = Experience(title: title!, image: image, video: nil, audio: nil, coordinate: coords)
-        delegate?.experience(experience: newExperience)
-        let experienceDictionary = ["experience" : newExperience]
-        NotificationCenter.default.post(name: .saveTapped, object: self, userInfo: experienceDictionary)
+        let experienceDictionary = [mediaAdded : experience] as! [String : Experience]
+        NotificationCenter.default.post(name: .mediaAdded, object: nil, userInfo: experienceDictionary)
         
         navigationController?.popViewController(animated: true)
 
@@ -127,15 +114,42 @@ class ImageViewController: UIViewController {
             presentImagePickerController()
         }
     
+    func checkAuthorizationStatus() {
+        let authorizationStatus = PHPhotoLibrary.authorizationStatus()
+        
+        switch authorizationStatus {
+        case .authorized:
+            presentImagePickerController()
+        case .notDetermined:
+            
+            PHPhotoLibrary.requestAuthorization { (status) in
+                
+                guard status == .authorized else {
+                    NSLog("User did not authorize access to the photo library")
+                    self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
+                    return
+                }
+                
+              self.presentImagePickerController()
+            }
+            
+        case .denied:
+            self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
+        case .restricted:
+            self.presentInformationalAlertController(title: "Error", message: "Unable to access the photo library. Your device's restrictions do not allow access.")
+            
+        @unknown default:
+          self.presentInformationalAlertController(title: "Error", message: "Future Unknown Authorization Status")
+          }
+          presentImagePickerController()
+    }
+    
     func updateViews() {
         guard let imageData = imageData,
             let image = UIImage(data: imageData) else {
-                title = "New Post"
                 return
         }
-        
-//        setImageViewHeight(with: image.ratio)
-        
+
         imageView.image = image
     }
     
@@ -180,44 +194,6 @@ class ImageViewController: UIViewController {
         present(imagePicker, animated: true, completion: nil)
     }
     
-//    @objc private func selectPhoto() {
-//      let authorizationStatus = PHPhotoLibrary.authorizationStatus()
-//
-//      switch authorizationStatus {
-//      case .authorized:
-//          presentImagePickerController()
-//      case .notDetermined:
-//
-//          PHPhotoLibrary.requestAuthorization { (status) in
-//
-//              guard status == .authorized else {
-//                  NSLog("User did not authorize access to the photo library")
-//                  self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
-//                  return
-//              }
-//
-//              self.presentImagePickerController()
-//          }
-//
-//      case .denied:
-//          self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
-//      case .restricted:
-//          self.presentInformationalAlertController(title: "Error", message: "Unable to access the photo library. Your device's restrictions do not allow access.")
-//
-//      @unknown default:
-//        self.presentInformationalAlertController(title: "Error", message: "Future Unknown Authorization Status")
-//        }
-//        presentImagePickerController()
-//    }
-    
-//    func setImageViewHeight(with aspectRatio: CGFloat) {
-//
-//        imageView.con = imageView.frame.size.width * aspectRatio
-//
-//        view.layoutSubviews()
-//    }
-    
-    
     // MARK: - Navigation
 }
 
@@ -231,8 +207,6 @@ extension ImageViewController: UIImagePickerControllerDelegate, UINavigationCont
         
         imageView.image = image
         originalImage = image
-        
-//        setImageViewHeight(with: image.ratio)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

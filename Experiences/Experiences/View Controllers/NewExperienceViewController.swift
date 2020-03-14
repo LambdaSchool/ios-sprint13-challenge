@@ -8,53 +8,61 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
 class NewExperienceViewController: UIViewController {
 
     var coordinate: CLLocationCoordinate2D? {
         didSet {
-            
+            print(coordinate as Any)
         }
     }
     
-    var experiences: [Experience] = []
+    var experience: Experience!
     
-    var updatedExperience: Experience? {
-        didSet {
-            print(updatedExperience?.expTitle as Any)
-        }
-    }
-    var expTitle = ""
-    
-    var experienceController: ExperienceController?
+    var expWithMedia: Experience!
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var addImageButton: UIButton!
     @IBOutlet weak var addVideoButton: UIButton!
     @IBOutlet weak var addVoiceRecordingButton: UIButton!
+    @IBOutlet weak var imageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        NotificationCenter.default.addObserver(forName: .saveTapped, object: nil, queue: nil) { (catchNotification) in
+            guard let addMediaExp = catchNotification.userInfo?[mediaAdded] else { return }
+            self.experience = addMediaExp as? Experience
+        }
+        updateViews()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        print(experiences.count)
-        print(experiences.first?.expTitle)
+    
     }
     
     @IBAction func saveTapped(_ sender: Any) {
-
-
-        self.performSegue(withIdentifier: "MapViewSegue", sender: self)
-
-
+        let experienceDictionary = [experienceSaved: experience] as! [String : Experience]
+        NotificationCenter.default.post(name: .saveTapped, object: nil, userInfo: experienceDictionary)
+        navigationController?.popToRootViewController(animated: true)
+    }
+    
+    func updateViews() {
+        titleTextField.layer.borderWidth = 2.0
+        titleTextField.layer.cornerRadius = 8
+        titleTextField.layer.borderColor = #colorLiteral(red: 0.1850692332, green: 0.1410367489, blue: 0.7820795178, alpha: 1)
+        addImageButton.layer.cornerRadius = 8
+        addVideoButton.layer.cornerRadius = 8
+        addVoiceRecordingButton.layer.cornerRadius = 8
     }
     
     @IBAction func addImageTapped(_ sender: Any) {
-        guard let title = titleTextField.text, !title.isEmpty else {
+        guard
+            let title = titleTextField.text,
+            let coordinate = coordinate,
+            !title.isEmpty else {
             let alert = UIAlertController(title: "Wait!", message: "An experience needs a title, please add one!", preferredStyle: .alert)
             let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
             alert.addAction(action)
@@ -62,12 +70,15 @@ class NewExperienceViewController: UIViewController {
             
             return
         }
-        expTitle = title
-//        self.performSegue(withIdentifier: "ImageSegue", sender: self)
+        let newExperience = Experience(title: title, image: nil, video: nil, audio: nil, coordinate: coordinate)
+        self.experience = newExperience
     }
     
     @IBAction func addVideoTapped(_ sender: Any) {
-        guard let title = titleTextField.text, !title.isEmpty else {
+        guard
+            let title = titleTextField.text,
+            let coordinate = coordinate,
+            !title.isEmpty else {
             let alert = UIAlertController(title: "Wait!", message: "An experience needs a title, please add one!", preferredStyle: .alert)
             let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
             alert.addAction(action)
@@ -75,13 +86,15 @@ class NewExperienceViewController: UIViewController {
             
             return
         }
-        
-//        let newExperience = Experience(title: title, image: nil, video: nil, audio: nil, coordinate: coordinate)
-        self.performSegue(withIdentifier: "VideoSegue", sender: self)
+        let newExperience = Experience(title: title, image: nil, video: nil, audio: nil, coordinate: coordinate)
+        self.experience = newExperience
     }
     
     @IBAction func addVoiceRecordingTapped(_ sender: Any) {
-        guard let title = titleTextField.text, !title.isEmpty else {
+        guard
+            let title = titleTextField.text,
+            let coordinate = coordinate,
+            !title.isEmpty else {
             let alert = UIAlertController(title: "Wait!", message: "An experience needs a title, please add one!", preferredStyle: .alert)
             let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
             alert.addAction(action)
@@ -89,41 +102,24 @@ class NewExperienceViewController: UIViewController {
             
             return
         }
-       
-        self.performSegue(withIdentifier: "AudioSegue", sender: self)
+        let newExperience = Experience(title: title, image: nil, video: nil, audio: nil, coordinate: coordinate)
+        self.experience = newExperience
     }
-    
-    
     
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ImageSegue" {
             guard let imageVC = segue.destination as? ImageViewController else { return }
-                imageVC.title = expTitle
-                imageVC.coordinate = coordinate 
-
-            imageVC.experienceController = experienceController
+                imageVC.experience = experience
         } else if segue.identifier == "VideoSegue" {
             guard let videoVC = segue.destination as? VideoRecordingViewController else { return }
-
-            videoVC.experienceController = experienceController
+                videoVC.experience = experience
         } else if segue.identifier == "AudioSegue" {
             guard let audioVC = segue.destination as? VoiceRecordingViewController else { return }
-            audioVC.experienceController = experienceController
-        } else if segue.identifier == "" {
-            guard let mapViewVC = segue.destination as? MapKitViewController else { return }
-            mapViewVC.experiences = experiences
-            
+                audioVC.experience = experience
         }
     }
 }
 
-extension NewExperienceViewController: ExperienceMediaDelegate {
-    func experience(experience: Experience) {
-        experiences.append(experience)
-        print(experience.expTitle)
-    }
-    
-    
-}
+

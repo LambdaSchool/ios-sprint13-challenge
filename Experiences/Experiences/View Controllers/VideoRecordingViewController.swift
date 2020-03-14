@@ -11,8 +11,6 @@ import AVFoundation
 import MapKit
 
 class VideoRecordingViewController: UIViewController {
-
-    var experienceController: ExperienceController?
     
     var experience: Experience?
     
@@ -20,7 +18,7 @@ class VideoRecordingViewController: UIViewController {
     
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     
-    var video: URL?
+    var video: URL!
     
     var player: AVPlayer!
     
@@ -39,9 +37,6 @@ class VideoRecordingViewController: UIViewController {
         
         setupCaptureSession()
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGestureRecognizer(_:)))
-        
-        view.addGestureRecognizer(tapGesture)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -65,10 +60,10 @@ class VideoRecordingViewController: UIViewController {
     
     @IBAction func saveTapped(_ sender: Any) {
         if let experience = experience {
-                experience.video = video
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let newExperience = storyboard.instantiateViewController(identifier: "NewExperience") as! NewExperienceViewController
-                }
+            experience.video = video
+            let experienceDictionary = [mediaAdded : experience]
+            NotificationCenter.default.post(name: .mediaAdded, object: nil, userInfo: experienceDictionary)
+        }
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -253,7 +248,6 @@ extension VideoRecordingViewController: AVCaptureFileOutputRecordingDelegate {
             return
         }
         self.video = outputFileURL
-        self.experience?.video = self.video
         playMovie(url: outputFileURL)
     }
     
