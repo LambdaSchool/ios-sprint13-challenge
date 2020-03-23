@@ -26,6 +26,9 @@
                                 </constraints>
                                 <color key="tintColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" image="paperplane.fill" catalog="system"/>
+                                <connections>
+                                    <segue destination="1u9-po-T4c" kind="presentation" id="WKZ-JP-i7X"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -41,29 +44,114 @@
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <segue destination="1u9-po-T4c" kind="presentation" id="qed-lA-3C7"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TRo-9S-GIW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1455.072463768116" y="-136.60714285714286"/>
         </scene>
-        <!--View Controller-->
+        <!--Add Experience View Controller-->
         <scene sceneID="7Xx-dk-wcw">
             <objects>
-                <viewController id="1u9-po-T4c" sceneMemberID="viewController">
+                <viewController id="1u9-po-T4c" customClass="AddExperienceViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Spr-Mb-Gqs">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="eRO-ZE-q6B">
+                                <rect key="frame" x="20" y="20" width="374" height="454"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7E5-IY-hdL">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="30"/>
+                                        <state key="normal" title="Next"/>
+                                        <connections>
+                                            <action selector="nextButtonTapped:" destination="1u9-po-T4c" eventType="touchUpInside" id="lQm-3q-T53"/>
+                                        </connections>
+                                    </button>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter a title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="J1o-S9-EDC">
+                                        <rect key="frame" x="0.0" y="50" width="374" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fz6-5c-Ey5">
+                                        <rect key="frame" x="0.0" y="104" width="374" height="350"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QPK-O9-7ap">
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="330"/>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yrs-W1-mKT">
+                                                <rect key="frame" x="137.5" y="150" width="99" height="30"/>
+                                                <state key="normal" title="Choose Image"/>
+                                                <connections>
+                                                    <action selector="choosImageButtonTapped:" destination="1u9-po-T4c" eventType="touchUpInside" id="4Ln-d5-eLu"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstItem="Yrs-W1-mKT" firstAttribute="centerX" secondItem="QPK-O9-7ap" secondAttribute="centerX" id="3Z5-Dg-gUZ"/>
+                                            <constraint firstAttribute="height" constant="350" id="Asv-gz-sOu"/>
+                                            <constraint firstItem="QPK-O9-7ap" firstAttribute="top" secondItem="fz6-5c-Ey5" secondAttribute="top" id="P5j-TV-kJG"/>
+                                            <constraint firstAttribute="trailing" secondItem="QPK-O9-7ap" secondAttribute="trailing" id="dPB-Ta-ZGC"/>
+                                            <constraint firstItem="QPK-O9-7ap" firstAttribute="leading" secondItem="fz6-5c-Ey5" secondAttribute="leading" id="hEq-40-lMZ"/>
+                                            <constraint firstItem="Yrs-W1-mKT" firstAttribute="centerY" secondItem="QPK-O9-7ap" secondAttribute="centerY" id="piq-So-BZr"/>
+                                            <constraint firstAttribute="bottom" secondItem="QPK-O9-7ap" secondAttribute="bottom" constant="20" symbolic="YES" id="wRY-iL-gkN"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="14t-uO-6KJ">
+                                <rect key="frame" x="30" y="504" width="354" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4kw-lT-HHT">
+                                        <rect key="frame" x="0.0" y="0.0" width="354" height="30"/>
+                                        <state key="normal" title="Record Audio Comment"/>
+                                        <state key="selected" title="Stop Recording">
+                                            <color key="titleColor" red="1" green="0.1764705882" blue="0.32745098039999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="recordAudioButtonTapped:" destination="1u9-po-T4c" eventType="touchUpInside" id="63h-lE-JYl"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="eRO-ZE-q6B" firstAttribute="top" secondItem="xR2-go-lYu" secondAttribute="top" constant="20" id="7i1-kw-Ukc"/>
+                            <constraint firstItem="xR2-go-lYu" firstAttribute="trailing" secondItem="eRO-ZE-q6B" secondAttribute="trailing" constant="20" id="Hna-kX-dzF"/>
+                            <constraint firstItem="xR2-go-lYu" firstAttribute="trailing" secondItem="14t-uO-6KJ" secondAttribute="trailing" constant="30" id="ajO-VX-Gug"/>
+                            <constraint firstItem="14t-uO-6KJ" firstAttribute="top" secondItem="eRO-ZE-q6B" secondAttribute="bottom" constant="30" id="uiy-10-WRL"/>
+                            <constraint firstItem="eRO-ZE-q6B" firstAttribute="leading" secondItem="xR2-go-lYu" secondAttribute="leading" constant="20" id="wfT-5o-oTV"/>
+                            <constraint firstItem="14t-uO-6KJ" firstAttribute="leading" secondItem="xR2-go-lYu" secondAttribute="leading" constant="30" id="z1N-8C-Dhe"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="xR2-go-lYu"/>
                     </view>
                     <navigationItem key="navigationItem" id="K66-Lf-MhF"/>
+                    <connections>
+                        <outlet property="chooseImageButton" destination="Yrs-W1-mKT" id="val-Y5-crB"/>
+                        <outlet property="imageView" destination="QPK-O9-7ap" id="ZNo-LU-RDG"/>
+                        <outlet property="recordAudioButton" destination="4kw-lT-HHT" id="5vh-BD-iL3"/>
+                        <outlet property="titleTextField" destination="J1o-S9-EDC" id="DKm-AP-1ha"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3rW-MD-OfK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2257.971014492754" y="-137.27678571428569"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="KRv-nL-sw1">
+            <objects>
+                <viewController id="UF7-fy-E5T" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="K5b-1d-Yor">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="zbQ-OI-3pF"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cTD-Ht-KSx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3065" y="-137"/>
         </scene>
     </scenes>
     <resources>
