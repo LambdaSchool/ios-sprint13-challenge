@@ -31,6 +31,11 @@ class CameraViewController: UIViewController {
         }
     }
     
+    //MARK: - Model Controller Properties & Delegate Methods
+    
+    var experienceController: ExperienceController?
+    
+    
     // MARK: - Model Object Properties
     
     var experienceTitle: String?

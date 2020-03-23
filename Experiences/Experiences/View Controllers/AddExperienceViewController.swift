@@ -36,6 +36,10 @@ class AddExperienceViewController: UIViewController {
         recordAudioButton.isSelected = isRecording
     }
     
+    // MARK: Model Controller Properties & Delegate Methods
+    
+    var experienceController: ExperienceController?
+    
     
     // MARK: - Image Properties
     
@@ -209,14 +213,17 @@ class AddExperienceViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "ShowCameraViewSegue" {
-            guard  let cameraVC = segue.destination as? CameraViewController,
-                let audioData = audioData,
+            guard let audioData = audioData,
                 let imageData = imageData,
-                let title = titleTextField.text, !title.isEmpty else { return }
+                let title = titleTextField.text, !title.isEmpty,
+                let experienceController = experienceController else { return }
             
-            cameraVC.title = title
-            cameraVC.audioData = audioData
-            cameraVC.imageData = imageData
+            if let cameraVC = segue.destination as? CameraViewController {
+                cameraVC.title = title
+                cameraVC.audioData = audioData
+                cameraVC.imageData = imageData
+                cameraVC.experienceController = experienceController
+            }
         }
     }
     
