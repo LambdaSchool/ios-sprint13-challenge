@@ -254,7 +254,7 @@ class AddExperienceViewController: UIViewController {
     
     
     @IBAction func nextButtonTapped(_ sender: Any) {
-        guard titleTextField.text != nil else { return }
+        guard audioData != nil, imageData != nil, titleTextField.text != nil else { return }
         
         self.performSegue(withIdentifier: "ShowCameraViewSegue", sender: self)
     }
