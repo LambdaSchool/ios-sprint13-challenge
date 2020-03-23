@@ -133,22 +133,66 @@
                         <outlet property="imageView" destination="QPK-O9-7ap" id="ZNo-LU-RDG"/>
                         <outlet property="recordAudioButton" destination="4kw-lT-HHT" id="5vh-BD-iL3"/>
                         <outlet property="titleTextField" destination="J1o-S9-EDC" id="DKm-AP-1ha"/>
+                        <segue destination="UF7-fy-E5T" kind="show" id="LBD-E3-rW7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3rW-MD-OfK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2257.971014492754" y="-137.27678571428569"/>
         </scene>
-        <!--View Controller-->
+        <!--Camera View Controller-->
         <scene sceneID="KRv-nL-sw1">
             <objects>
-                <viewController id="UF7-fy-E5T" sceneMemberID="viewController">
+                <viewController id="UF7-fy-E5T" customClass="CameraViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="K5b-1d-Yor">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="gjz-xb-l85">
+                                <rect key="frame" x="30" y="15" width="354" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CO5-7A-zKT">
+                                        <rect key="frame" x="0.0" y="0.0" width="354" height="30"/>
+                                        <state key="normal" title="Save"/>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HJc-UC-zoM" customClass="CameraView" customModule="Experiences" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="60" width="414" height="748"/>
+                                <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Wk-Qv-gCQ">
+                                <rect key="frame" x="157" y="648" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="QTY-1b-lf6"/>
+                                    <constraint firstAttribute="width" secondItem="8Wk-Qv-gCQ" secondAttribute="height" multiplier="1:1" id="qel-nL-Aq9"/>
+                                </constraints>
+                                <color key="tintColor" red="1" green="0.1764705882" blue="0.32745098039999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="Record"/>
+                                <state key="selected" image="Stop"/>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="gjz-xb-l85" firstAttribute="leading" secondItem="zbQ-OI-3pF" secondAttribute="leading" constant="30" id="4cl-g3-9dF"/>
+                            <constraint firstItem="zbQ-OI-3pF" firstAttribute="bottom" secondItem="HJc-UC-zoM" secondAttribute="bottom" id="8AQ-6B-ZjA"/>
+                            <constraint firstItem="gjz-xb-l85" firstAttribute="top" secondItem="zbQ-OI-3pF" secondAttribute="top" constant="15" id="BiT-5m-JwW"/>
+                            <constraint firstItem="zbQ-OI-3pF" firstAttribute="bottom" secondItem="8Wk-Qv-gCQ" secondAttribute="bottom" constant="60" id="RPl-sD-Ts4"/>
+                            <constraint firstItem="HJc-UC-zoM" firstAttribute="leading" secondItem="zbQ-OI-3pF" secondAttribute="leading" id="dUA-jo-py7"/>
+                            <constraint firstItem="zbQ-OI-3pF" firstAttribute="trailing" secondItem="gjz-xb-l85" secondAttribute="trailing" constant="30" id="fTl-PK-Uke"/>
+                            <constraint firstItem="HJc-UC-zoM" firstAttribute="top" secondItem="gjz-xb-l85" secondAttribute="bottom" constant="15" id="hTA-VC-dI3"/>
+                            <constraint firstItem="zbQ-OI-3pF" firstAttribute="trailing" secondItem="HJc-UC-zoM" secondAttribute="trailing" id="rAt-Q6-M6k"/>
+                            <constraint firstItem="8Wk-Qv-gCQ" firstAttribute="centerX" secondItem="K5b-1d-Yor" secondAttribute="centerX" id="uBb-cF-Xx9"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="zbQ-OI-3pF"/>
                     </view>
+                    <navigationItem key="navigationItem" id="iWc-GG-ObK"/>
+                    <connections>
+                        <outlet property="cameraView" destination="HJc-UC-zoM" id="CZz-AY-iUJ"/>
+                        <outlet property="recordButton" destination="8Wk-Qv-gCQ" id="a1l-J3-GhU"/>
+                        <outlet property="saveButton" destination="CO5-7A-zKT" id="fBO-p2-686"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cTD-Ht-KSx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -156,6 +200,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Record" width="116" height="116"/>
+        <image name="Stop" width="116" height="116"/>
         <image name="paperplane.fill" catalog="system" width="64" height="60"/>
     </resources>
 </document>
