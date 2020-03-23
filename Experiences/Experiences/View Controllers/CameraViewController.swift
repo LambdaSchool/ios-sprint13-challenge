@@ -45,6 +45,7 @@ class CameraViewController: UIViewController {
         super.viewDidLoad()
 
         cameraView.videoPlayerLayer.videoGravity = .resizeAspectFill
+        setUpCamera()
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
         view.addGestureRecognizer(tapGesture)
@@ -52,7 +53,7 @@ class CameraViewController: UIViewController {
     
     @objc func handleTapGesture(_ tapGesture: UITapGestureRecognizer) {
         if tapGesture.state == .ended {
-//            replayRecording()
+            replayRecording()
         }
     }
     
@@ -130,8 +131,61 @@ class CameraViewController: UIViewController {
         }
         preconditionFailure("No microphones on device could be used for recording video")
     }
+    
+    
+    //MARK: - Video Recording Functions
+       
+       private func toggleRecording() {
+           if fileOutput.isRecording {
+               fileOutput.stopRecording()
+           } else {
+               fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
+           }
+       }
+       
+       private func newRecordingURL() -> URL {
+           let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
 
-    /*
+           let formatter = ISO8601DateFormatter()
+           formatter.formatOptions = [.withInternetDateTime]
+
+           let name = formatter.string(from: Date())
+           let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
+           return fileURL
+       }
+    
+    
+    // MARK: - Video Playback Functions
+        
+        private func replayRecording() {
+            if let player = player {
+                player.seek(to: CMTime.zero)
+                player.play()
+            }
+        }
+        
+        private func playMovie(url: URL) {
+            player = AVPlayer(url: url)
+            
+            playerLayer = AVPlayerLayer(player: player)
+            
+            var playbackView = view.bounds
+            playbackView.size.height /= 3.5
+            playbackView.size.width /= 3.5
+            playbackView.origin.y = view.layoutMargins.top + 90
+            playbackView.origin.x = view.layoutMargins.left
+
+            playerLayer.cornerRadius = 8
+            playerLayer.masksToBounds = true
+            playerLayer.videoGravity = .resizeAspectFill
+            
+            playerLayer.frame = playbackView
+            view.layer.addSublayer(playerLayer)
+            
+            player.play()
+        }
+
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -139,6 +193,36 @@ class CameraViewController: UIViewController {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
     }
-    */
 
+    
+    
+    // MARK: - Actions
+    
+    @IBAction func recordButtonTapped(_ sender: Any) {
+        toggleRecording()
+    }
+    
+    @IBAction func saveButtonTapped(_ sender: Any) {
+    }
+    
+
+}
+
+
+extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
+    
+    func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
+        updateViews()
+    }
+    
+    func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+        if let error = error {
+            print("Error saving video to file output: \(error)")
+        }
+        
+        videoURL = outputFileURL
+        updateViews()
+        playMovie(url: outputFileURL)
+    }
+    
 }
