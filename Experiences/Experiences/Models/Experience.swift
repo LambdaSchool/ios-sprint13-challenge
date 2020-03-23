@@ -7,11 +7,27 @@
 //
 
 import Foundation
+import MapKit
+import CoreLocation
 
-struct Experience {
-    let title: String
-    let imageData: Data?
-    let audioData: Data?
-    let videoData: Data?
+class Experience: NSObject, MKAnnotation {
+    var name: String
+    var imageData: Data
+    var audioData: Data
+    var videoData: Data
+    
+    var coordinate: CLLocationCoordinate2D
+    var title: String? {
+        return name
+    }
+    
+    
+    init(name: String, imageData: Data, audioData: Data, videoData: Data, coordinate: CLLocationCoordinate2D) {
+        self.name = name
+        self.imageData = imageData
+        self.audioData = audioData
+        self.videoData = videoData
+        self.coordinate = coordinate
+    }
 }
 
