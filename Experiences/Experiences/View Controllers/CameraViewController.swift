@@ -33,6 +33,7 @@ class CameraViewController: UIViewController {
     
     // MARK: - Model Object Properties
     
+    var experienceTitle: String?
     var imageData: Data?
     var audioData: Data?
     var videoData: Data?

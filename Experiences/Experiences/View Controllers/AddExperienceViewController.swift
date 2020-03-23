@@ -204,10 +204,19 @@ class AddExperienceViewController: UIViewController {
     }
 
     // MARK: - Navigation
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "ShowCameraViewSegue" {
+            guard  let cameraVC = segue.destination as? CameraViewController,
+                let audioData = audioData,
+                let imageData = imageData,
+                let title = titleTextField.text, !title.isEmpty else { return }
+            
+            cameraVC.title = title
+            cameraVC.audioData = audioData
+            cameraVC.imageData = imageData
+        }
     }
     
     
@@ -242,11 +251,12 @@ class AddExperienceViewController: UIViewController {
         }
         presentImagePickerController()
     }
-
     
     
     @IBAction func nextButtonTapped(_ sender: Any) {
+        guard titleTextField.text != nil else { return }
         
+        self.performSegue(withIdentifier: "ShowCameraViewSegue", sender: self)
     }
     
     @IBAction func recordAudioButtonTapped(_ sender: Any) {
