@@ -24,11 +24,12 @@ class AddExperienceViewController: UIViewController {
     
     
     //MARK: - View Set-Up
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-         audioPlayer = AVAudioPlayer()
+        audioPlayer = AVAudioPlayer()
+        titleTextField.delegate = self
     }
     
     private func updateViews() {
@@ -324,5 +325,12 @@ extension AddExperienceViewController: AVAudioRecorderDelegate {
         if let error = error {
             print("Audio recorder error: \(error)")
         }
+    }
+}
+
+extension AddExperienceViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
+        return true
     }
 }
