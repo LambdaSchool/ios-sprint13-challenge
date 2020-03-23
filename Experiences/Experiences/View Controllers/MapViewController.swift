@@ -20,21 +20,31 @@ class MapViewController: UIViewController {
     private let locationManager = CLLocationManager()
     
     var experienceController = ExperienceController()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-         locationManager.requestWhenInUseAuthorization()
-               userTrackingButton = MKUserTrackingButton(mapView: mapView)
-               
-               userTrackingButton.translatesAutoresizingMaskIntoConstraints = false
-               
-               view.addSubview(userTrackingButton)
-               
-               userTrackingButton.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 20).isActive = true
-               userTrackingButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -20).isActive = true
+        
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        userTrackingButton = MKUserTrackingButton(mapView: mapView)
+        
+        userTrackingButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(userTrackingButton)
+        
+        userTrackingButton.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 20).isActive = true
+        userTrackingButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -20).isActive = true
+        
+        locationManager.delegate = self
+        zoomToUserLocation()
     }
     
+    func zoomToUserLocation() {
+        if let location = locationManager.location?.coordinate {
+            let region = MKCoordinateRegion.init(center: location, latitudinalMeters: 12000, longitudinalMeters: 12000)
+            mapView.setRegion(region, animated: true)
+        }
+    }
 
     
     // MARK: - Navigation
@@ -60,5 +70,11 @@ extension MapViewController: MKMapViewDelegate {
 }
 
 extension MapViewController: CLLocationManagerDelegate {
-    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else { return }
+        
+        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        let region = MKCoordinateRegion.init(center: center, latitudinalMeters: 12000, longitudinalMeters: 12000)
+        mapView.setRegion(region, animated: true)
+    }
 }
