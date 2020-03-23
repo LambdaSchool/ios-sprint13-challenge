@@ -12,9 +12,9 @@ import CoreLocation
 
 class Experience: NSObject, MKAnnotation {
     var name: String
-    var imageData: Data
-    var audioData: Data
-    var videoData: Data
+    var imageData: Data?
+    var audioData: Data?
+    var videoData: Data?
     
     var coordinate: CLLocationCoordinate2D
     var title: String? {

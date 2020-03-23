@@ -16,27 +16,49 @@ class MapViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var newExperienceButton: UIButton!
     
-    private var userTrackingButton: MKUserTrackingButton!
+    
+    // USER BUTTON HIDES THE MKAnnotation
+//    private var userTrackingButton: MKUserTrackingButton!
     private let locationManager = CLLocationManager()
     
     var experienceController = ExperienceController()
+    var experiences: [Experience] = [] {
+        didSet {
+            mapView.addAnnotations(experiences)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        navigationController?.navigationBar.isHidden = true
         locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        userTrackingButton = MKUserTrackingButton(mapView: mapView)
+//        userTrackingButton = MKUserTrackingButton(mapView: mapView)
+//
+//        userTrackingButton.translatesAutoresizingMaskIntoConstraints = false
         
-        userTrackingButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(userTrackingButton)
-        
-        userTrackingButton.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 20).isActive = true
-        userTrackingButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -20).isActive = true
+//        view.addSubview(userTrackingButton)
+//
+//        userTrackingButton.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 20).isActive = true
+//        userTrackingButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -20).isActive = true
         
         locationManager.delegate = self
         zoomToUserLocation()
+        fetchExperiences()
+        
+//        let annotation = MKPointAnnotation()
+//        if let coordinate = locationManager.location?.coordinate {
+//            annotation.coordinate = coordinate
+//            annotation.title = "Test"
+//            mapView.addAnnotation(annotation)
+//        }
+       
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchExperiences()
+        mapView.showAnnotations(experiences, animated: true)
     }
     
     func zoomToUserLocation() {
@@ -45,7 +67,11 @@ class MapViewController: UIViewController {
             mapView.setRegion(region, animated: true)
         }
     }
-
+    
+    func fetchExperiences() {
+        experiences = experienceController.experiences
+    }
+    
     
     // MARK: - Navigation
 
@@ -54,6 +80,7 @@ class MapViewController: UIViewController {
         if segue.identifier == "AddNewExperienceSegue" {
             if let addExperienceVC = segue.destination as? AddExperienceViewController {
                 addExperienceVC.experienceController = experienceController
+                addExperienceVC.delegate = self
             }
         }
     }
@@ -66,7 +93,9 @@ class MapViewController: UIViewController {
 
 
 extension MapViewController: MKMapViewDelegate {
-    
+    func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
+        fetchExperiences()
+    }
 }
 
 extension MapViewController: CLLocationManagerDelegate {
@@ -76,5 +105,12 @@ extension MapViewController: CLLocationManagerDelegate {
         let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         let region = MKCoordinateRegion.init(center: center, latitudinalMeters: 12000, longitudinalMeters: 12000)
         mapView.setRegion(region, animated: true)
+    }
+}
+
+
+extension MapViewController: MapViewReloadDelegate {
+    func refreshMap() {
+        fetchExperiences()
     }
 }

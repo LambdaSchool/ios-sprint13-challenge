@@ -39,6 +39,7 @@ class AddExperienceViewController: UIViewController {
     // MARK: Model Controller Properties & Delegate Methods
     
     var experienceController: ExperienceController?
+    var delegate: MapViewReloadDelegate?
     
     
     // MARK: - Image Properties
@@ -213,16 +214,15 @@ class AddExperienceViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "ShowCameraViewSegue" {
-            guard let audioData = audioData,
-                let imageData = imageData,
-                let title = titleTextField.text, !title.isEmpty,
+            guard let name = titleTextField.text, !name.isEmpty,
                 let experienceController = experienceController else { return }
             
             if let cameraVC = segue.destination as? CameraViewController {
-                cameraVC.title = title
+                cameraVC.experienceName = name
                 cameraVC.audioData = audioData
                 cameraVC.imageData = imageData
                 cameraVC.experienceController = experienceController
+                cameraVC.delegate = self.delegate
             }
         }
     }
@@ -262,8 +262,6 @@ class AddExperienceViewController: UIViewController {
     
     
     @IBAction func nextButtonTapped(_ sender: Any) {
-        guard audioData != nil, imageData != nil, titleTextField.text != nil else { return }
-        
         self.performSegue(withIdentifier: "ShowCameraViewSegue", sender: self)
     }
     

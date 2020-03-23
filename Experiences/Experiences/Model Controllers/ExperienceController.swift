@@ -13,12 +13,14 @@ import CoreLocation
 class ExperienceController {
     
     var experiences: [Experience] = []
-    var currentLocation: CLLocationCoordinate2D?
     
     
-    func addNewExperience(title: String, imageData: Data, audioData: Data, videoData: Data) {
+    func addNewExperience(name: String, imageData: Data?, audioData: Data?, videoData: Data?, location: CLLocation) {
         
+        let currentLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         
+        let experience = Experience(name: name, imageData: imageData ?? Data(), audioData: audioData ?? Data(), videoData: videoData ?? Data(), coordinate: currentLocation)
         
+        experiences.append(experience)
     }
 }

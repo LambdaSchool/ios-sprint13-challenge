@@ -8,6 +8,11 @@
 
 import UIKit
 import AVFoundation
+import CoreLocation
+
+protocol MapViewReloadDelegate {
+    func refreshMap()
+}
 
 class CameraViewController: UIViewController {
     
@@ -34,14 +39,16 @@ class CameraViewController: UIViewController {
     //MARK: - Model Controller Properties & Delegate Methods
     
     var experienceController: ExperienceController?
+    var delegate: MapViewReloadDelegate?
     
     
     // MARK: - Model Object Properties
     
-    var experienceTitle: String?
+    var experienceName: String?
     var imageData: Data?
     var audioData: Data?
     var videoData: Data?
+    var locationManager = CLLocationManager()
     
     
     //MARK: - View Set-Up
@@ -55,6 +62,7 @@ class CameraViewController: UIViewController {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
         view.addGestureRecognizer(tapGesture)
+        
     }
     
     @objc func handleTapGesture(_ tapGesture: UITapGestureRecognizer) {
@@ -192,15 +200,6 @@ class CameraViewController: UIViewController {
         }
 
     
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-
-    
     
     // MARK: - Actions
     
@@ -209,6 +208,15 @@ class CameraViewController: UIViewController {
     }
     
     @IBAction func saveButtonTapped(_ sender: Any) {
+        guard let experienceController = experienceController,
+            let name = experienceName,
+            let currentLocation = locationManager.location else { return }
+        
+        experienceController.addNewExperience(name: name, imageData: imageData, audioData: audioData, videoData: videoData, location: currentLocation)
+        
+        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+        self.delegate?.refreshMap()
+        
     }
     
 
