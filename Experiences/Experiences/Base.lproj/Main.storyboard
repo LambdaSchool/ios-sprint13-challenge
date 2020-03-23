@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Map View Controller-->
         <scene sceneID="eaS-XU-GGk">
             <objects>
-                <viewController id="ztx-if-14U" sceneMemberID="viewController">
+                <viewController id="ztx-if-14U" customClass="MapViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mnA-mO-V0X">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -27,7 +27,7 @@
                                 <color key="tintColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" image="paperplane.fill" catalog="system"/>
                                 <connections>
-                                    <segue destination="1u9-po-T4c" kind="presentation" id="WKZ-JP-i7X"/>
+                                    <action selector="newExperienceTapped:" destination="ztx-if-14U" eventType="touchUpInside" id="fMZ-AQ-Nzx"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -44,6 +44,11 @@
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="mapView" destination="ApP-lN-N7N" id="dQy-1I-tuu"/>
+                        <outlet property="newExperienceButton" destination="xNf-Qv-AkD" id="xVs-wD-pcM"/>
+                        <segue destination="1u9-po-T4c" kind="presentation" identifier="AddNewExperienceSegue" id="SGt-of-Q6y"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TRo-9S-GIW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
