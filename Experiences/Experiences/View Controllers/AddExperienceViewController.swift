@@ -30,6 +30,7 @@ class AddExperienceViewController: UIViewController {
         
         audioPlayer = AVAudioPlayer()
         titleTextField.delegate = self
+        
     }
     
     private func updateViews() {
@@ -229,6 +230,10 @@ class AddExperienceViewController: UIViewController {
     
     
     // MARK: - Actions
+    
+    @IBAction func cancelButtonTapped(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
+    }
     
     
     @IBAction func choosImageButtonTapped(_ sender: Any) {

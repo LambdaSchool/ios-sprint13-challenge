@@ -15,7 +15,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView autoresizesSubviews="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ApP-lN-N7N">
+                            <mapView autoresizesSubviews="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" showsScale="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ApP-lN-N7N">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xNf-Qv-AkD">
@@ -48,7 +48,7 @@
                     <connections>
                         <outlet property="mapView" destination="ApP-lN-N7N" id="dQy-1I-tuu"/>
                         <outlet property="newExperienceButton" destination="xNf-Qv-AkD" id="xVs-wD-pcM"/>
-                        <segue destination="1u9-po-T4c" kind="presentation" identifier="AddNewExperienceSegue" id="SGt-of-Q6y"/>
+                        <segue destination="1u9-po-T4c" kind="show" identifier="AddNewExperienceSegue" id="SGt-of-Q6y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TRo-9S-GIW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -60,19 +60,31 @@
             <objects>
                 <viewController id="1u9-po-T4c" customClass="AddExperienceViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Spr-Mb-Gqs">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="eRO-ZE-q6B">
-                                <rect key="frame" x="20" y="20" width="374" height="454"/>
+                                <rect key="frame" x="20" y="64" width="374" height="454"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7E5-IY-hdL">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="1Un-Qp-GJH">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="30"/>
-                                        <state key="normal" title="Next"/>
-                                        <connections>
-                                            <action selector="nextButtonTapped:" destination="1u9-po-T4c" eventType="touchUpInside" id="lQm-3q-T53"/>
-                                        </connections>
-                                    </button>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lvf-Vu-Lqa">
+                                                <rect key="frame" x="0.0" y="0.0" width="187" height="30"/>
+                                                <state key="normal" title="Cancel"/>
+                                                <connections>
+                                                    <action selector="cancelButtonTapped:" destination="1u9-po-T4c" eventType="touchUpInside" id="tB3-Es-GeD"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7E5-IY-hdL">
+                                                <rect key="frame" x="187" y="0.0" width="187" height="30"/>
+                                                <state key="normal" title="Next"/>
+                                                <connections>
+                                                    <action selector="nextButtonTapped:" destination="1u9-po-T4c" eventType="touchUpInside" id="lQm-3q-T53"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter a title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="J1o-S9-EDC">
                                         <rect key="frame" x="0.0" y="50" width="374" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -106,7 +118,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="14t-uO-6KJ">
-                                <rect key="frame" x="30" y="504" width="354" height="30"/>
+                                <rect key="frame" x="30" y="548" width="354" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4kw-lT-HHT">
                                         <rect key="frame" x="0.0" y="0.0" width="354" height="30"/>
@@ -133,7 +145,6 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="xR2-go-lYu"/>
                     </view>
-                    <navigationItem key="navigationItem" id="K66-Lf-MhF"/>
                     <connections>
                         <outlet property="chooseImageButton" destination="Yrs-W1-mKT" id="val-Y5-crB"/>
                         <outlet property="imageView" destination="QPK-O9-7ap" id="ZNo-LU-RDG"/>
@@ -151,28 +162,40 @@
             <objects>
                 <viewController id="UF7-fy-E5T" customClass="CameraViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="K5b-1d-Yor">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="gjz-xb-l85">
-                                <rect key="frame" x="30" y="15" width="354" height="30"/>
+                                <rect key="frame" x="30" y="59" width="354" height="30"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CO5-7A-zKT">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="CCk-PU-39z">
                                         <rect key="frame" x="0.0" y="0.0" width="354" height="30"/>
-                                        <state key="normal" title="Save"/>
-                                        <connections>
-                                            <action selector="saveButtonTapped:" destination="UF7-fy-E5T" eventType="touchUpInside" id="2WH-tg-LeE"/>
-                                        </connections>
-                                    </button>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R9p-U5-4eC">
+                                                <rect key="frame" x="0.0" y="0.0" width="177" height="30"/>
+                                                <state key="normal" title="&lt; Back"/>
+                                                <connections>
+                                                    <action selector="backButtonTapped:" destination="UF7-fy-E5T" eventType="touchUpInside" id="sUE-Ge-Z3p"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CO5-7A-zKT">
+                                                <rect key="frame" x="177" y="0.0" width="177" height="30"/>
+                                                <state key="normal" title="Save"/>
+                                                <connections>
+                                                    <action selector="saveButtonTapped:" destination="UF7-fy-E5T" eventType="touchUpInside" id="2WH-tg-LeE"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HJc-UC-zoM" customClass="CameraView" customModule="Experiences" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="60" width="414" height="748"/>
-                                <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="0.0" y="104" width="414" height="758"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Wk-Qv-gCQ">
-                                <rect key="frame" x="157" y="648" width="100" height="100"/>
+                                <rect key="frame" x="157" y="702" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="QTY-1b-lf6"/>
                                     <constraint firstAttribute="width" secondItem="8Wk-Qv-gCQ" secondAttribute="height" multiplier="1:1" id="qel-nL-Aq9"/>

@@ -18,7 +18,7 @@ class MapViewController: UIViewController {
     
     
     // USER BUTTON HIDES THE MKAnnotation
-//    private var userTrackingButton: MKUserTrackingButton!
+    private var userTrackingButton: MKUserTrackingButton!
     private let locationManager = CLLocationManager()
     
     var experienceController = ExperienceController()
@@ -33,10 +33,11 @@ class MapViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-//        userTrackingButton = MKUserTrackingButton(mapView: mapView)
-//
-//        userTrackingButton.translatesAutoresizingMaskIntoConstraints = false
         
+        /* User tracking button hides an annotation if the annoation is next to user button */
+//        userTrackingButton = MKUserTrackingButton(mapView: mapView)
+//        userTrackingButton.translatesAutoresizingMaskIntoConstraints = false
+//
 //        view.addSubview(userTrackingButton)
 //
 //        userTrackingButton.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 20).isActive = true
@@ -45,13 +46,6 @@ class MapViewController: UIViewController {
         locationManager.delegate = self
         zoomToUserLocation()
         fetchExperiences()
-        
-//        let annotation = MKPointAnnotation()
-//        if let coordinate = locationManager.location?.coordinate {
-//            annotation.coordinate = coordinate
-//            annotation.title = "Test"
-//            mapView.addAnnotation(annotation)
-//        }
        
     }
     

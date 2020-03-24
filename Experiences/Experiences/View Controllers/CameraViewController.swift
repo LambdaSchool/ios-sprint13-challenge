@@ -24,6 +24,8 @@ class CameraViewController: UIViewController {
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     lazy private var playerLayer = AVPlayerLayer()
+    var camera: AVCaptureDevice?
+    var microphone: AVCaptureDevice?
     
     var player: AVPlayer!
     var videoURL: URL? {
@@ -35,6 +37,7 @@ class CameraViewController: UIViewController {
             }
         }
     }
+    
     
     //MARK: - Model Controller Properties & Delegate Methods
     
@@ -56,12 +59,30 @@ class CameraViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        cameraView.videoPlayerLayer.videoGravity = .resizeAspectFill
         setUpCamera()
+        
+        let noCameraAlert = UIAlertController(title: "No Camera", message: "A camera could not be prepared for this device. Don't worry - you can still create an experience without video.", preferredStyle: .alert)
+               noCameraAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+               
+               let noMicAlert = UIAlertController(title: "No Microphone", message: "A microphone could not be prepared for this device. Don't worry - you can still create an experience without video.", preferredStyle: .alert)
+               noMicAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
+        if camera == nil {
+            self.present(noCameraAlert, animated: true)
+            recordButton.isEnabled = false
+            recordButton.tintColor = .gray
+            return
+        }
+        
+        if microphone == nil {
+            self.present(noMicAlert, animated: true)
+        }
+        cameraView.videoPlayerLayer.videoGravity = .resizeAspectFill
+        
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
         view.addGestureRecognizer(tapGesture)
+        
         
     }
     
@@ -89,15 +110,14 @@ class CameraViewController: UIViewController {
     // MARK: - Camera & Microphone Set-Up
     
     private func setUpCamera() {
-        let camera = bestCamera()
-        let microphone = bestMicrophone()
+        guard let camera = camera, let microphone = microphone else { return }
         
         captureSession.beginConfiguration()
         
-        // Check if we have camer and mic available as inputs
         guard let cameraInput = try? AVCaptureDeviceInput(device: camera) else {
             preconditionFailure("Cannot get camera input")
         }
+        
         guard let microphoneInput = try? AVCaptureDeviceInput(device: microphone) else {
             preconditionFailure("Cannot get microphone input")
         }
@@ -129,21 +149,19 @@ class CameraViewController: UIViewController {
         cameraView.session = captureSession
     }
     
-    private func bestCamera() -> AVCaptureDevice {
+    private func bestCamera() {
         if let device = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) {
-            return device
+            camera = device
         }
         if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
-            return device
+            camera = device
         }
-        preconditionFailure("No camera on device match the necessary specs for recording video")
     }
     
-    private func bestMicrophone() -> AVCaptureDevice {
+    private func bestMicrophone() {
         if let device = AVCaptureDevice.default(for: .audio) {
-            return device
+            microphone = device
         }
-        preconditionFailure("No microphones on device could be used for recording video")
     }
     
     
@@ -214,11 +232,16 @@ class CameraViewController: UIViewController {
         
         experienceController.addNewExperience(name: name, imageData: imageData, audioData: audioData, videoData: videoData, location: currentLocation)
         
-        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+        navigationController?.popToRootViewController(animated: true)
         self.delegate?.refreshMap()
         
     }
     
+    @IBAction func backButtonTapped(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
+    }
+    
+
 
 }
 
