@@ -23,7 +23,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <state key="normal" image="plus.square.fill" catalog="system"/>
                                 <connections>
-                                    <segue destination="VbW-r3-i8K" kind="presentation" id="FjL-fi-68z"/>
+                                    <segue destination="VbW-r3-i8K" kind="presentation" identifier="EntrySegue" id="FjL-fi-68z"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -93,7 +93,6 @@
                                 </segments>
                                 <connections>
                                     <action selector="chooseMediaSegmentedControl:" destination="VbW-r3-i8K" eventType="valueChanged" id="774-e5-Vu6"/>
-                                    <segue destination="F76-eV-Myy" kind="presentation" modalPresentationStyle="fullScreen" id="SIz-Tb-1Aw"/>
                                 </connections>
                             </segmentedControl>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="camera.on.rectangle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Vjm-6O-qSM">
@@ -182,6 +181,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Qz3-35-kBe"/>
                     </view>
+                    <navigationItem key="navigationItem" id="Yz0-5n-yDa"/>
                     <connections>
                         <outlet property="addButton" destination="R6n-TI-TOd" id="wXJ-xx-0a1"/>
                         <outlet property="descriptionTextView" destination="qQZ-YP-Qv9" id="1J5-61-OnQ"/>
@@ -189,23 +189,39 @@
                         <outlet property="mediaSegmentedControl" destination="ThF-K8-pOh" id="5P2-7f-jyA"/>
                         <outlet property="replayButton" destination="Aag-UA-c8J" id="HvJ-Ol-Bud"/>
                         <outlet property="titleTextField" destination="Ilt-Ie-EpD" id="Efu-0u-kFm"/>
+                        <segue destination="F76-eV-Myy" kind="presentation" identifier="CameraSegue" modalPresentationStyle="fullScreen" id="k4e-c9-fyC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uvv-Y7-jJQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1076.8115942028987" y="138.61607142857142"/>
         </scene>
-        <!--View Controller-->
+        <!--Camera View Controller-->
         <scene sceneID="hRq-yo-kM7">
             <objects>
-                <viewController id="F76-eV-Myy" sceneMemberID="viewController">
+                <viewController id="F76-eV-Myy" customClass="CameraViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eEp-Dd-RUa">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rcg-ut-T9E" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="avp-Zt-j8B">
+                                        <rect key="frame" x="20" y="824" width="48" height="30"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="cancelButtonTapped:" destination="F76-eV-Myy" eventType="touchUpInside" id="7ZI-y1-hXL"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="avp-Zt-j8B" secondAttribute="bottom" constant="42" id="DMc-Eu-WA6"/>
+                                    <constraint firstItem="avp-Zt-j8B" firstAttribute="leading" secondItem="rcg-ut-T9E" secondAttribute="leading" constant="20" id="dIe-nx-5vl"/>
+                                </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w3C-3b-kaK">
                                 <rect key="frame" x="149" y="746" width="116" height="116"/>
@@ -230,6 +246,10 @@
                         <viewLayoutGuide key="safeArea" id="Nkg-FR-iTB"/>
                     </view>
                     <navigationItem key="navigationItem" id="V1C-1T-jed"/>
+                    <connections>
+                        <outlet property="cameraView" destination="rcg-ut-T9E" id="0Ge-zv-JJP"/>
+                        <outlet property="recordButton" destination="w3C-3b-kaK" id="2Yg-5v-Xo7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EKu-VH-fVP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

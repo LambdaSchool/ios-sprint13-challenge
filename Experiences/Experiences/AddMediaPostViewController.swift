@@ -20,7 +20,7 @@ class AddMediaPostViewController: UIViewController {
     var timer: Timer?
     var recordingSession = AVAudioSession.sharedInstance()
     
-    var experiences: [ExperienceEntry] = []
+    static var experiences: [ExperienceEntry] = []
     
     // MARK: - IBOutlets
     @IBOutlet weak var titleTextField: UITextField!
@@ -128,6 +128,7 @@ class AddMediaPostViewController: UIViewController {
         // 2020-01-18T23/10/40-08/00.caf
         let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: [.withInternetDateTime])
         let url = documents.appendingPathComponent(name).appendingPathExtension("caf")
+        recordingURL = url
         return url
     }
     
@@ -155,21 +156,22 @@ class AddMediaPostViewController: UIViewController {
     
     // MARK: - IBActions
     @IBAction func chooseMediaSegmentedControl(_ sender: UISegmentedControl) {
-        //        switch mediaSegmentedControl.selectedSegmentIndex {
-        //        case 0:
-        //            addButton.backgroundColor = .blue
-        //        case 1:
-        //            addButton.backgroundColor = .green
-        //        case 2:
-        //            addButton.backgroundColor = .purple
-        //            if isRecording {
-        //                addButton.titleLabel?.text = "Stop"
-        //            } else {
-        //                addButton.titleLabel?.text = "Start"
-        //            }
-        //        default:
-        //            print("default")
-        //        }
+        switch mediaSegmentedControl.selectedSegmentIndex {
+        case 0:
+            addButton.backgroundColor = .blue
+        case 1:
+            addButton.backgroundColor = .green
+            self.performSegue(withIdentifier: "CameraSegue", sender: sender)
+        case 2:
+            addButton.backgroundColor = .purple
+            if isRecording {
+                addButton.titleLabel?.text = "Stop"
+            } else {
+                addButton.titleLabel?.text = "Start"
+            }
+        default:
+            print("default")
+        }
     }
     
     
@@ -184,13 +186,26 @@ class AddMediaPostViewController: UIViewController {
                 !title.isEmpty,
                 let description = descriptionTextView.text,
                 let image = imageView.image {
-                let entry = ExperienceEntry(title: title, description: description, photo: image, movie: nil, audio: nil, id: UUID())
-                experiences.append(entry)
-                print(experiences.description)
+                let entry = ExperienceEntry(title: title, description: description, photo: image, movie: nil, audio: nil, id: UUID(), geotag: ViewController.shared.userLoc)
+                AddMediaPostViewController.experiences.append(entry)
+                print(AddMediaPostViewController.experiences.description)
                 self.dismiss(animated: true)
             }
         case 1:
-            print("movie")
+            do {
+                if let title = titleTextField.text,
+                    !title.isEmpty,
+                    let description = descriptionTextView.text,
+                    let audioURL = recordingURL {
+                    let audioFile = try AVAudioFile(forReading: audioURL)
+                    let entry = ExperienceEntry(title: title, description: description, photo: nil, movie: nil, audio: audioFile, id: UUID(), geotag: ViewController.shared.userLoc)
+                    AddMediaPostViewController.experiences.append(entry)
+                    print(AddMediaPostViewController.experiences.description)
+                    self.dismiss(animated: true)
+                }
+            } catch {
+                fatalError("Couldn't create post")
+            }
         case 2:
             print("recording")
         default:
