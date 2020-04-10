@@ -240,6 +240,9 @@
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="3sL-6j-hr9">
                                         <rect key="frame" x="-2" y="28.333333333333371" width="382" height="31"/>
+                                        <connections>
+                                            <action selector="sliderValueChanged:" destination="Mma-lI-DeL" eventType="valueChanged" id="XQB-V1-edJ"/>
+                                        </connections>
                                     </slider>
                                 </subviews>
                             </stackView>
@@ -255,7 +258,18 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="3mE-3o-P7S"/>
                     </view>
-                    <navigationItem key="navigationItem" id="ssB-D3-GJ6"/>
+                    <navigationItem key="navigationItem" id="ssB-D3-GJ6">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="T2d-R2-yKM">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="Mma-lI-DeL" id="WvO-lK-LxZ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="filterSlider" destination="3sL-6j-hr9" id="MQn-5B-r56"/>
+                        <outlet property="imageView" destination="gcc-F4-bhv" id="HDg-Aj-zZC"/>
+                        <outlet property="savePhotoButton" destination="T2d-R2-yKM" id="nik-1n-rHU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YKG-XH-gE9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
