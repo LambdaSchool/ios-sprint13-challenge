@@ -132,9 +132,13 @@ class UserExperienceViewController: UIViewController, UIGestureRecognizerDelegat
        
     }
     //MARK:- View Life Cycle
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+          
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+    
         view.addSubview(titleTextField)
         view.addSubview(imageView)
         view.addSubview(filterSegmentControl)
@@ -152,7 +156,7 @@ class UserExperienceViewController: UIViewController, UIGestureRecognizerDelegat
     func updateViews() {
         imageView.image = scaledImage
     }
-    
+    var filterBottomConstraint: NSLayoutConstraint?
     private func contrainstViews() {
         
         NSLayoutConstraint.activate([
@@ -170,11 +174,11 @@ class UserExperienceViewController: UIViewController, UIGestureRecognizerDelegat
             imageView.heightAnchor.constraint(equalToConstant: 200)
         
         ])
-        
+     filterBottomConstraint =  filterSegmentControl.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: 100)
         NSLayoutConstraint.activate([
             filterSegmentControl.leadingAnchor.constraint(equalTo: titleTextField.leadingAnchor),
             filterSegmentControl.trailingAnchor.constraint(equalTo: titleTextField.trailingAnchor),
-            filterSegmentControl.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -32)
+          filterBottomConstraint!
         
         ])
         
@@ -236,7 +240,13 @@ extension UserExperienceViewController: UIImagePickerControllerDelegate, UINavig
        
        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
           if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+         
                imageView.image = editedImage
+            self.filterBottomConstraint?.constant = -64
+            UIView.animate(withDuration: 1) {
+                self.view.layoutIfNeeded()
+            }
+           
             self.originalImage = editedImage
           } else if let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
            imageView.image = originalImage

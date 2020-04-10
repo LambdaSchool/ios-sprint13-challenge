@@ -17,11 +17,11 @@ extension MapViewController: MKMapViewDelegate {
               
               if annotation is MKUserLocation {    return nil    }
                
-          annotationView?.glyphImage = UIImage(systemName: "star")
-          annotationView?.glyphTintColor = .yellow
-            annotationView?.accessibilityActivate()
-          annotationView?.canShowCallout = true
-          let button = UIButton(type: .detailDisclosure)
+        annotationView?.glyphImage = UIImage(systemName: "star")
+        annotationView?.glyphTintColor = .yellow
+        annotationView?.accessibilityActivate()
+        annotationView?.canShowCallout = true
+        let button = UIButton(type: .detailDisclosure)
 
           annotationView?.rightCalloutAccessoryView = button
           return annotationView
