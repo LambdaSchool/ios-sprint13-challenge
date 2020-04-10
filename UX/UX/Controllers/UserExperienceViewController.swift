@@ -11,17 +11,39 @@ import CoreImage
 import CoreImage.CIFilterBuiltins
 import Photos
 import AVFoundation
+import CoreLocation
+
+protocol UserExperienceViewControllerDelegate: AnyObject {
+    func didGetNewItem(item: [Item])
+}
 
 class UserExperienceViewController: UIViewController, UIGestureRecognizerDelegate
 {
-
-    @objc func handleBack() {
-        dismiss(animated: true, completion: nil)
-    }
+    var locationManager: CLLocationManager?
+    weak var delegate: UserExperienceViewControllerDelegate?
+    private var context = CIContext(options: nil)
+    private var originalImage: UIImage? {
+         didSet {
+           
+          
+             guard let originalImage = originalImage else { return }
+             var scaledSize = imageView.bounds.size
+             let scale = UIScreen.main.scale
+            
+             print("image size: \(originalImage.size)")
+             print("size: \(scaledSize)")
+             print("scale: \(scale)")
+             scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
+             scaledImage = originalImage.imageByScaling(toSize: scaledSize)
+         }
+     }
     
-    @objc func handleNext() {
-        dismiss(animated: true, completion: nil)
-    }
+    private var scaledImage: UIImage? {
+          didSet {
+              updateViews()
+          }
+      }
+  
     
     
     private let titleTextField: UITextField = {
@@ -38,26 +60,78 @@ class UserExperienceViewController: UIViewController, UIGestureRecognizerDelegat
         view.translatesAutoresizingMaskIntoConstraints = false
         view.tintColor = .white
         view.contentMode = .scaleAspectFit
-        view.backgroundColor = .red
+        view.backgroundColor = .white
         view.clipsToBounds = true
         view.isUserInteractionEnabled = true
         return view
         
     }()
+    private func filterColorInvert(_ image: UIImage) -> UIImage? {
+          guard let cgImage = image.cgImage else { return nil }
+          let ciImage = CIImage(cgImage: cgImage)
+          let filter = CIFilter.colorInvert()
+          
+          
+          filter.inputImage = ciImage
+          
+          guard let outputCIImage = filter.outputImage else { return nil }
+          guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size) ) else { return nil }
+                
+                return UIImage(cgImage: outputCGImage)
+      }
+      private func filterComicImage(_ image: UIImage) -> UIImage? {
+          guard let cgImage = image.cgImage else { return nil }
+          
+          let ciImage = CIImage(cgImage: cgImage)
+          let filter = CIFilter.comicEffect()
+           
+             filter.setValue(ciImage, forKey: kCIInputImageKey)
+        
+          guard let outputCIImage = filter.outputImage else { return nil }
+          
+          guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size) ) else { return nil }
+          
+          return UIImage(cgImage: outputCGImage)
+      }
     
     @objc func cameraPicked(sender: UITapGestureRecognizer) {
         print("Hello")
         showImagePickerControllerActionSheet()
     }
+    private let filterSegmentControl: UISegmentedControl = {
+        let items = ["Standard","Comic","Invert"]
+       let sg = UISegmentedControl(items: items)
+        sg.translatesAutoresizingMaskIntoConstraints = false
+        sg.addTarget(self, action: #selector(segmentSwitch), for: .valueChanged)
+        sg.selectedSegmentIndex =  0
+        return sg
+    }()
     
-    
+    @objc func segmentSwitch(sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+            
+            case 0:
+                imageView.image = scaledImage
+            case 1:
+                 guard let imageToFiler = scaledImage else { return }
+                imageView.image = filterComicImage(imageToFiler)
+           
+            case 2:
+                guard let imageToFiler = scaledImage else { return }
+                imageView.image = filterColorInvert(imageToFiler)
+            default:
+            break
+        }
+       
+    }
     //MARK:- View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(titleTextField)
         view.addSubview(imageView)
-        
+        view.addSubview(filterSegmentControl)
+        hideKeyboardWhenTappedAround()
         let tap = UITapGestureRecognizer(target: self, action: #selector(cameraPicked))
         tap.delegate = self
         imageView.addGestureRecognizer(tap)
@@ -65,8 +139,13 @@ class UserExperienceViewController: UIViewController, UIGestureRecognizerDelegat
         view.backgroundColor = .white
         setUpNavigationBar()
         contrainstViews()
+        originalImage = imageView.image
     }
     
+    func updateViews() {
+        imageView.image = scaledImage
+    }
+//
     
     private func contrainstViews() {
         
@@ -86,9 +165,22 @@ class UserExperienceViewController: UIViewController, UIGestureRecognizerDelegat
         
         ])
         
+        NSLayoutConstraint.activate([
+            filterSegmentControl.leadingAnchor.constraint(equalTo: titleTextField.leadingAnchor),
+            filterSegmentControl.trailingAnchor.constraint(equalTo: titleTextField.trailingAnchor),
+            filterSegmentControl.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -32)
+        
+        ])
         
     }
-    
+    @objc func handleBack() {
+          dismiss(animated: true, completion: nil)
+      }
+      
+      @objc func handleNext() {
+          dismiss(animated: true, completion: nil)
+        delegate?.didGetNewItem(item: [Item(postTitle: titleTextField.text!, postURL: nil, latitude:MapViewController.locationManager.location!.coordinate.latitude , longitude: MapViewController.locationManager.location!.coordinate.longitude)])
+      }
     
     private func setUpNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -128,8 +220,10 @@ extension UserExperienceViewController: UIImagePickerControllerDelegate, UINavig
        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
           if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
                imageView.image = editedImage
+            self.originalImage = editedImage
           } else if let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
            imageView.image = originalImage
+            self.originalImage = originalImage
            }
            dismiss(animated: true, completion: nil)
        }

@@ -16,7 +16,7 @@ extension MapViewController : CLLocationManagerDelegate {
             case .denied:
          break
             default:
-                locationManager.startUpdatingLocation()
+                MapViewController.locationManager.startUpdatingLocation()
         }
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -24,7 +24,7 @@ extension MapViewController : CLLocationManagerDelegate {
       guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
        
         print("locations = \(locValue.latitude) \(locValue.longitude)")
-            locationManager.stopUpdatingLocation()
+        MapViewController.locationManager.stopUpdatingLocation()
     }
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error.localizedDescription)
@@ -34,9 +34,9 @@ extension MapViewController : CLLocationManagerDelegate {
     private func checkLocationAuthorization() {
            
              switch CLLocationManager.authorizationStatus() {
-                 case .authorizedWhenInUse:   locationManager.startUpdatingLocation()
+                case .authorizedWhenInUse:   MapViewController.locationManager.startUpdatingLocation()
                      break
-                 case .denied:   locationManager.requestWhenInUseAuthorization()
+                case .denied:   MapViewController.locationManager.requestWhenInUseAuthorization()
               
                      break
                  case .notDetermined:
@@ -46,7 +46,7 @@ extension MapViewController : CLLocationManagerDelegate {
                      break
                  case .authorizedAlways:
 
-                     self.locationManager.startUpdatingLocation()
+                    MapViewController.self.locationManager.startUpdatingLocation()
                  default:
                      break
              }

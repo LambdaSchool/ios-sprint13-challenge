@@ -10,12 +10,18 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class MapViewController: UIViewController
-{
 
-    lazy  var locationManager : CLLocationManager = {
+
+class MapViewController: UIViewController, UserExperienceViewControllerDelegate
+{
+    func didGetNewItem(item: [Item]) {
+        mapView.addAnnotations(item)
+    }
+    
+
+     static let locationManager : CLLocationManager = {
         let lm = CLLocationManager()
-        lm.delegate = self
+      
         lm.desiredAccuracy  = kCLLocationAccuracyBest
         lm.activityType = .fitness
         lm.startUpdatingLocation()
@@ -24,9 +30,11 @@ class MapViewController: UIViewController
     
    //MARK:- Properties
     
-    private let mapView: MKMapView = {
+    private lazy var mapView: MKMapView = {
        let map = MKMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
+        map.delegate = self
+        map.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "Post")
         return map
     }()
     
@@ -39,11 +47,12 @@ class MapViewController: UIViewController
         return button
     }()
     
-    private let userExperienceViewController:UINavigationController = {
+    private lazy var userExperienceViewController:UINavigationController = {
        let vc = UserExperienceViewController()
         let navVC = UINavigationController(rootViewController: vc)
+        vc.delegate = self
         navVC.modalPresentationStyle = .fullScreen
-      
+        
         return navVC
     }()
     
@@ -83,7 +92,8 @@ class MapViewController: UIViewController
         view.addSubview(mapView)
         view.addSubview(actionButton)
         view.addSubview(stackView)
-        locationManager.requestWhenInUseAuthorization()
+        MapViewController.locationManager.delegate = self
+        MapViewController.locationManager.requestWhenInUseAuthorization()
         view.backgroundColor = .white
         navigationItem.title = "User Experience"
         layOutViews()
@@ -91,6 +101,10 @@ class MapViewController: UIViewController
        
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+      
+    }
     
     
     
