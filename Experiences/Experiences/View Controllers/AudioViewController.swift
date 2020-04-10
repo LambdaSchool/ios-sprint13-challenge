@@ -7,9 +7,31 @@
 //
 
 import UIKit
+import AVFoundation
 
 class AudioViewController: UIViewController {
 
+    //MARK: Properties
+    var media: Media?
+    var delegate: ExperienceTableViewControllerDelegate?
+    private var player: Player? = nil
+    
+    private var recorder: Recorder? = nil
+    private lazy var timeFormatter: DateComponentsFormatter = {
+        let formatting = DateComponentsFormatter()
+        formatting.unitsStyle = .positional
+        formatting.zeroFormattingBehavior = .pad
+        formatting.allowedUnits = [.minute, .second]
+        return formatting
+      }()
+      
+    
+    //MARK: Outlets
+    
+    
+    
+    //MARK: View Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

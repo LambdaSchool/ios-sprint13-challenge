@@ -9,6 +9,10 @@
 import UIKit
 import CoreLocation
 
+protocol ExperienceTableViewControllerDelegate {
+    func mediaAdded(media: Media)
+}
+
 class ExperienceTableViewController: UITableViewController {
 
     //MARK: Properties
@@ -121,11 +125,11 @@ class ExperienceTableViewController: UITableViewController {
         switch segue.identifier {
         case "AddImageSegue":
             let vc = segue.destination as! ImageViewController
-            vc.delegate = self
+       //     vc.delegate = self
         case "showImageSegue":
             let vc = segue.destination as! ImageViewController
-            vc.delegate = self
-            vc.media = selectedMedia
+       //     vc.delegate = self
+       //     vc.media = selectedMedia
         case "addVideoSegue":
             let vc = segue.destination as! VideoViewController
             vc.delegate = self
@@ -135,11 +139,11 @@ class ExperienceTableViewController: UITableViewController {
             vc.media = selectedMedia
         case "addAudioSegue":
             let vc = segue.destination as! AudioViewController
-            vc.delegate = self
+      //      vc.delegate = self
         case "showAudioSegue":
             let vc = segue.destination as! AudioViewController
-            vc.delegate = self
-            vc.media = selectedMedia
+        //    vc.delegate = self
+       //     vc.media = selectedMedia
         default:
             break
         }
@@ -147,3 +151,25 @@ class ExperienceTableViewController: UITableViewController {
 
 
 }
+
+extension ExperienceTableViewController: ExperienceTableViewControllerDelegate {
+    func mediaAdded(media: Media) {
+        if let experience = experience {
+            experience.addMedia(media: media)
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        } else {
+            let title = self.titleTextField.text ?? ""
+          //  let subtitle = self.descriptionTF.text ?? ""
+         //   let newExperience = Experience(title: title, subtitle: subtitle, coordinate: coordinate)
+          //  experienceController?.add(newExperience: newExperience)
+        //    experience = newExperience
+         //   experience?.addMedia(media: media)
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
+}
+
