@@ -9,7 +9,10 @@
 import UIKit
 
 class CameraViewController: UIViewController {
-
+    
+    var experienceController: ExperienceController?
+    var fileTitle: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

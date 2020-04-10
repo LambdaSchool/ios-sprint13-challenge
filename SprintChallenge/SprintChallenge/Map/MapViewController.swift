@@ -51,6 +51,14 @@ class MapViewController: UIViewController {
              locationManager.requestWhenInUseAuthorization()
          }
      }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "PostViewController" {
+            guard let vc = segue.destination as? PostViewController else { return }
+            experienceController.currentLocation = locationManager.location?.coordinate
+            vc.experienceController = experienceController
+        }
+    }
 }
 
 extension MapViewController: MKMapViewDelegate {

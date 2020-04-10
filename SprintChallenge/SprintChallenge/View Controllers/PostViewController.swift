@@ -9,24 +9,36 @@
 import UIKit
 import MapKit
 
+class DetailView: UIView {
+    var experience: Experience?
+}
+
 class PostViewController: UIViewController {
     var experienceController: ExperienceController?
     
      var postLocation: CLLocationCoordinate2D?
     
     @IBOutlet var titleTextField: UITextField!
-     @IBOutlet var imageView: UIImageView!
+    @IBOutlet var imageView: UIImageView!
+    @IBOutlet var recordButton: UIButton!
     
-    override func viewDidLoad() {
+     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "back", style: .plain, target: self, action: #selector(back))
+        recordButton.isEnabled = false
+        
     }
     
     var currentImage: UIImage? {
         didSet {
             print("Prepare for record")
-            //prepareForRecord()
+            prepareForRecord()
         }
+    }
+    
+    func prepareForRecord() {
+        imageView.image = currentImage!
+        recordButton.isEnabled = true
+        recordButton.backgroundColor = .red
     }
     
     @IBAction func addImageButtonPressed(_ sender: Any) {
@@ -41,9 +53,9 @@ class PostViewController: UIViewController {
          print("recordButtonPressed")
      }
     
-    @objc func back() {
-         dismiss(animated: true, completion: nil)
-     }
+    @IBAction func back(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
 
     func addPhotoRequest() {
          imageView.image = nil
@@ -57,16 +69,18 @@ class PostViewController: UIViewController {
          imagePicker.delegate = self
          present(imagePicker, animated: true)
      }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "CameraViewController" {
+            guard let vc = segue.destination as? CameraViewController,
+                let fileTitle = titleTextField.text, !fileTitle.isEmpty else {
+                NSLog("title is empty")
+                return
+            }
+            
+            vc.fileTitle = fileTitle
+            vc.experienceController = experienceController
+        }
     }
-    */
-
 }
 
 extension PostViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
