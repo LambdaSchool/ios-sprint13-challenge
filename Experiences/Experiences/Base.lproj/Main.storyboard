@@ -18,6 +18,9 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="qpu-Dl-gnC">
                                 <rect key="frame" x="0.0" y="88" width="414" height="713"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="xaR-eQ-Ulz" appends="YES" id="pD3-7i-hXh"/>
+                                </connections>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -31,13 +34,18 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Ie-Ao-cox" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="xaR-eQ-Ulz">
+                    <connections>
+                        <action selector="dropPin:" destination="0yk-hB-PHR" id="MmT-3d-xp5"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="656.52173913043487" y="-198.21428571428569"/>
         </scene>
         <!--Add Experience-->
         <scene sceneID="vz0-2R-iys">
             <objects>
-                <tableViewController id="q7i-qw-oRn" sceneMemberID="viewController">
+                <tableViewController id="q7i-qw-oRn" customClass="ExperienceTableViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="TPL-Vg-uiW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -59,6 +67,17 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7h9-kN-uiV">
+                                    <rect key="frame" x="186" y="63" width="135" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                    <state key="normal" title="Click to add media">
+                                        <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="addMedia:" destination="q7i-qw-oRn" eventType="touchUpInside" id="0Dc-vw-a4N"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         </view>
@@ -99,6 +118,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="titleTextField" destination="p3N-c9-tpv" id="uPK-TQ-4qS"/>
                         <segue destination="sDK-hg-SHg" kind="show" identifier="showImageSegue" id="ABM-P4-47w"/>
                         <segue destination="sDK-hg-SHg" kind="show" identifier="AddImageSegue" id="g2B-8G-c8s"/>
                         <segue destination="Xt8-W4-2qO" kind="show" identifier="showAudioSegue" id="2cH-UX-0FL"/>
