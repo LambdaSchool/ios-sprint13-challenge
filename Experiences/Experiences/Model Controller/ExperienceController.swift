@@ -15,10 +15,9 @@ class ExperienceController {
     
     func createExperience(geoTag: GeoTag,
                           description: String,
-                          audioComment: URL?,
-                          videoComment: URL?,
-                          photo: UIImage?
-                          ) {
+                          audioComment: URL? = nil,
+                          videoComment: URL? = nil,
+                          photo: UIImage? = nil) {
         let newExperience = Experience(description: description,
                                        geoTag: geoTag,
                                        audioComment: audioComment,

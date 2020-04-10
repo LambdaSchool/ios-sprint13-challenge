@@ -10,20 +10,52 @@ import UIKit
 
 class EntryViewController: UIViewController {
     
+    // MARK: - Properties
+    
+    let audioCommentController = AudioCommentController()
+    
     var experienceController: ExperienceController?
     var geoTag: GeoTag?
+    var descriptionText: String?
+    var audioURL: URL?
+    
+    var isRecording: Bool {
+           guard let audioRecorder = audioCommentController.audioRecorder else { return false}
+        return audioRecorder.isRecording
+    }
 
+    // MARK: - Outlets
     
     @IBOutlet weak var DescriptionTextField: UITextField!
-    
-    
     @IBOutlet weak var recordAudioButton: UIButton!
     
+    // MARK: - Actions
+    
     @IBAction func recordAudioTapped(_ sender: UIButton) {
-    }
-    @IBAction func saveTapped(_ sender: Any) {
+        guard let descriptionText = DescriptionTextField.text,
+            !descriptionText.isEmpty else { return }
+        if isRecording {
+            audioCommentController.stopRecording()
+            updateViews()
+            dismiss(animated: true, completion: nil)
+        } else {
+            audioCommentController.requestPermissionOrStartRecording()
+            audioURL = audioCommentController.createNewRecordingURL()
+            updateViews()
+        }
     }
     
+    @IBAction func saveTapped(_ sender: Any) {
+        guard let descriptionText = DescriptionTextField.text,
+        !descriptionText.isEmpty,
+        let audioURL = audioURL,
+        let geoTag = geoTag else { return }
+        experienceController?.createExperience(geoTag: geoTag,
+                                               description: descriptionText,
+                                               audioComment: audioURL)
+    }
+    
+    // MARK: View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,15 +63,24 @@ class EntryViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-
-    /*
+    private func updateViews() {
+        recordAudioButton.isSelected = isRecording
+    }
+    
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == ConstantValues.addPhotoSegue {
+            guard let addPhotoVC = segue.destination as? EntryViewController else { return }
+            addPhotoVC.experienceController = experienceController
+            addPhotoVC.geoTag = geoTag
+            addPhotoVC.descriptionText = descriptionText
+        }
+        if segue.identifier == ConstantValues.addPhotoSegue {
+            guard let addPhotoVC = segue.destination as? EntryViewController else { return }
+            addPhotoVC.experienceController = experienceController
+            addPhotoVC.geoTag = geoTag
+            addPhotoVC.descriptionText = descriptionText
+        }
     }
-    */
-
 }

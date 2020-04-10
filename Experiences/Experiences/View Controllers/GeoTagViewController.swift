@@ -15,7 +15,6 @@ class GeoTagViewController: UIViewController, MKMapViewDelegate {
     // MARK: - Properties
     
     let experienceController = ExperienceController()
-    
     var geoTag: GeoTag?{
         didSet{
             guard let geoTag = geoTag else { return }
@@ -76,8 +75,6 @@ extension GeoTagViewController: CLLocationManagerDelegate {
             let long = location.coordinate.longitude
             geoTag = GeoTag(longitude: long,
                             latitude: lat)
-            
         }
-        
     }
 }

@@ -9,8 +9,18 @@
 import UIKit
 
 class VideoRecordingViewController: UIViewController {
+    
+    // MARK: - Properties
+    
+    var experienceController: ExperienceController?
+    var geoTag: GeoTag?
+    var descriptionText: String?
+    
+    // MARK: -  Outles
 
     @IBOutlet weak var recordButton: UIButton!
+    
+    // MARK: - Actions
     
     @IBAction func saveTapped(_ sender: Any) {
     }
