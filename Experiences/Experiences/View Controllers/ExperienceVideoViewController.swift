@@ -11,6 +11,14 @@ import UIKit
 class ExperienceVideoViewController: UIViewController {
     @IBOutlet weak var playerView: UIView!
     
+    var videoURL: URL?
+    
     @IBAction func openCameraTapped(_ sender: Any) {
+    }
+}
+
+extension ExperienceVideoViewController: CameraViewControllerDelegate {
+    func videoFinished(url: URL) {
+        self.videoURL = url
     }
 }
