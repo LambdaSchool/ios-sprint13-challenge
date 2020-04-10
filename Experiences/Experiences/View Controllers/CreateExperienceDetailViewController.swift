@@ -8,13 +8,21 @@
 
 import UIKit
 import CoreImage.CIFilterBuiltins
+import AVFoundation
 
 class CreateExperienceDetailViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var addPhotoButton: UIButton!
     @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var audioRecordButton: UIButton!
     
     private var context = CIContext(options: nil)
+    var audioRecorder: AVAudioRecorder?
+    var recordingURL: URL?
+    
+    var isRecording: Bool {
+        audioRecorder?.isRecording ?? false
+    }
     
     private var originalImage: UIImage? {
         didSet {
@@ -42,6 +50,83 @@ class CreateExperienceDetailViewController: UIViewController {
  
     }
     
+    @IBAction func recordAudioTapped(_ sender: Any) {
+        if isRecording {
+            stopRecording()
+        } else {
+            requestPermissionOrStartRecording()
+        }
+        
+        updateViews()
+    }
+    
+    func createNewRecordingURL() -> URL {
+        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        
+        let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
+        let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
+        
+        print("recording URL: \(file)")
+        
+        return file
+    }
+    
+    
+    func requestPermissionOrStartRecording() {
+        switch AVAudioSession.sharedInstance().recordPermission {
+            case .undetermined:
+                AVAudioSession.sharedInstance().requestRecordPermission { granted in
+                    guard granted == true else {
+                        print("We need microphone access")
+                        return
+                    }
+                    
+                    print("Recording permission has been granted!")
+                    // NOTE: Invite the user to tap record again, since we just interrupted them, and they may not have been ready to record
+            }
+            case .denied:
+                print("Microphone access has been blocked.")
+                
+                let alertController = UIAlertController(title: "Microphone Access Denied", message: "Please allow this app to access your Microphone.", preferredStyle: .alert)
+                
+                alertController.addAction(UIAlertAction(title: "Open Settings", style: .default) { (_) in
+                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                })
+                
+                alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                
+                present(alertController, animated: true, completion: nil)
+            case .granted:
+                startRecording()
+            @unknown default:
+                break
+        }
+    }
+    
+    
+    func startRecording() {
+        let recordingURL = createNewRecordingURL()
+        
+        let audioFormat = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
+        audioRecorder = try? AVAudioRecorder(url: recordingURL, format: audioFormat)
+        audioRecorder?.delegate = self
+        audioRecorder?.record()
+        
+        updateViews()
+        
+        self.recordingURL = recordingURL
+    }
+    
+    func stopRecording() {
+        audioRecorder?.stop()
+        updateViews()
+    }
+    
+    private func updateViews() {
+        audioRecordButton.isSelected = isRecording
+    }
+    
+    
     func filterImage(_ image: UIImage) -> UIImage? {
         guard let cgImage = image.cgImage else { return nil }
         let ciImage = CIImage(cgImage: cgImage)
@@ -66,5 +151,18 @@ extension CreateExperienceDetailViewController: UIImagePickerControllerDelegate,
         }
         
         picker.dismiss(animated: true)
+    }
+}
+
+extension CreateExperienceDetailViewController: AVAudioRecorderDelegate {
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        updateViews()
+    }
+    
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
+        if let error = error {
+            print("Audio recorder error: \(error)")
+        }
+        updateViews()
     }
 }
