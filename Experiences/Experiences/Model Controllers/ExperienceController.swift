@@ -11,8 +11,8 @@ import Foundation
 class ExperienceController {
     var experiences: [Experience] = []
     
-    func createExperience(title: String, image: Data? = nil, audioRecordingURL: URL? = nil, videoRecordingURL: URL? = nil) {
-        let experience = Experience(title: title, posterImage: image, videoURL: videoRecordingURL, audioRecordingURL: audioRecordingURL)
+    func createExperience(title: String, image: Data? = nil, audioRecordingURL: URL? = nil, videoRecordingURL: URL? = nil, longitude: Double, latitude: Double) {
+        let experience = Experience(experiencetitle: title, posterImage: image, videoURL: videoRecordingURL, audioRecordingURL: audioRecordingURL, longitude: longitude, latitude: latitude)
         
         experiences.append(experience)
     }

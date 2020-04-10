@@ -8,11 +8,17 @@
 
 import UIKit
 import AVFoundation
+import CoreLocation
 
 class ExperienceVideoViewController: UIViewController {
     @IBOutlet weak var playerView: UIView!
     
-    var videoURL: URL?    
+    var experienceImage: UIImage?
+    var experiencAudioRecordingURL: URL?
+    var experienceTitle: String?
+    var videoURL: URL?
+    var location: CLLocation?
+    var experienceController: ExperienceController?
     private var player: AVPlayer!
     
     override func viewDidAppear(_ animated: Bool) {
@@ -20,6 +26,7 @@ class ExperienceVideoViewController: UIViewController {
         if let videoURL = videoURL {
             playMovie(url: videoURL)
         }
+        
     }
     
     private func requestPermissionAndShowCamera() {
@@ -69,6 +76,28 @@ class ExperienceVideoViewController: UIViewController {
     
     @IBAction func openCameraTapped(_ sender: Any) {
         requestPermissionAndShowCamera()
+    }
+    
+    @IBAction func saveTapped(_ sender: Any) {
+        guard let experienceController = experienceController else {
+            print("no experience controller passed")
+            return
+        }
+        
+        guard let experienceTitle = experienceTitle, !experienceTitle.isEmpty else {
+            print("no experience title passed")
+            return
+        }
+        
+        guard let location = location else {
+            print("no experience location passed")
+            return
+        }
+        
+        experienceController.createExperience(title: experienceTitle, image: experienceImage?.pngData(), audioRecordingURL: experiencAudioRecordingURL, videoRecordingURL: videoURL, longitude: location.coordinate.longitude, latitude: location.coordinate.latitude)
+        dismiss(animated: true, completion: nil)
+        
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

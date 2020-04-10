@@ -9,6 +9,7 @@
 import UIKit
 import CoreImage.CIFilterBuiltins
 import AVFoundation
+import CoreLocation
 
 class CreateExperienceDetailViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
@@ -19,6 +20,9 @@ class CreateExperienceDetailViewController: UIViewController {
     private var context = CIContext(options: nil)
     var audioRecorder: AVAudioRecorder?
     var recordingURL: URL?
+    let locationManager = Location()
+    var location: CLLocation?
+    var experienceController: ExperienceController?
     
     var isRecording: Bool {
         audioRecorder?.isRecording ?? false
@@ -34,6 +38,7 @@ class CreateExperienceDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "New Experience"
+        self.location = locationManager.getCurrentLocation()
     }
     
     @IBAction func addPhotoTapped(_ sender: Any) {
@@ -140,6 +145,18 @@ class CreateExperienceDetailViewController: UIViewController {
         
         return UIImage(cgImage: outputCGImage)
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "RecordVideoShowSegue" {
+            if let destVC = segue.destination as? ExperienceVideoViewController {
+                destVC.experienceTitle = titleTextField.text
+                destVC.experiencAudioRecordingURL = recordingURL
+                destVC.experienceImage = imageView.image
+                destVC.location = location
+                destVC.experienceController = experienceController
+            }
+        }
     }
     
 }
