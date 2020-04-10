@@ -8,9 +8,17 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
-class MapViewController: UIViewController, MKMapViewDelegate{
+class MapViewController: UIViewController {
 
+    //MARK: Properties
+    
+    
+    //MARK: Outlets
+    @IBOutlet weak var map: MKMapView!
+    
+    //MARK: View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
