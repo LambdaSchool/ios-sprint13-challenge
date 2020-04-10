@@ -12,6 +12,7 @@ import AVFoundation
 
 class MapViewController: UIViewController {
    let experienceController = ExperienceController()
+        let locationManager = CLLocationManager()
     
     @IBOutlet var mapview: MKMapView!
     @IBOutlet var postButton: UIButton!
@@ -19,11 +20,24 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
       // Do any additional setup after loading the view.
-        
+        requestLocationAccess()
     }
 
     @IBAction func postButtonPressed(_ sender: Any) {
-        print("Post Button was pressed.")
+        //print("Post Button was pressed.")
+        print((locationManager.location?.coordinate)!)
     }
     
+    func requestLocationAccess() {
+         let status = CLLocationManager.authorizationStatus()
+
+         switch status {
+         case .authorizedAlways, .authorizedWhenInUse:
+             return
+         case .denied, .restricted:
+             print("location access denied")
+         default:
+             locationManager.requestWhenInUseAuthorization()
+         }
+     }
 }
