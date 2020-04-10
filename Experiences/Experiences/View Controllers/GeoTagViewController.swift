@@ -9,6 +9,10 @@
 import UIKit
 
 class GeoTagViewController: UIViewController {
+    
+    // MARK: - Properties
+    
+    let experienceController = ExperienceController()
 
     override func viewDidLoad() {
         super.viewDidLoad()

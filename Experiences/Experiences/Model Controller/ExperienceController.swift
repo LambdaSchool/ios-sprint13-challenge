@@ -7,3 +7,24 @@
 //
 
 import Foundation
+import UIKit
+
+class ExperienceController {
+    
+    var experience: Experience?
+    
+    func createExperience(geoTag: GeoTag,
+                          description: String,
+                          audioComment: URL?,
+                          videoComment: URL?,
+                          photo: UIImage?
+                          ) {
+        let newExperience = Experience(description: description,
+                                       geoTag: geoTag,
+                                       audioComment: audioComment,
+                                       videoComment: videoComment,
+                                       photo: photo)
+        self.experience = newExperience
+    }
+    
+}
