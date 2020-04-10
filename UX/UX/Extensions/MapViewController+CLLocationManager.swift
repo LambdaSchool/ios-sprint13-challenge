@@ -22,7 +22,10 @@ extension MapViewController : CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
        
       guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-       
+        if let userLocation = MapViewController.locationManager.location?.coordinate {
+            let viewRegion = MKCoordinateRegion(center: userLocation, latitudinalMeters: 1000, longitudinalMeters: 1000)
+            mapView.setRegion(viewRegion, animated: true) // zoom to current user location
+        }
         print("locations = \(locValue.latitude) \(locValue.longitude)")
         MapViewController.locationManager.stopUpdatingLocation()
     }

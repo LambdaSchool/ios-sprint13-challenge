@@ -32,10 +32,11 @@ class MapViewController: UIViewController, UserExperienceViewControllerDelegate
     
    //MARK:- Properties
     
-    private lazy var mapView: MKMapView = {
+     lazy var mapView: MKMapView = {
        let map = MKMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
         map.delegate = self
+        map.showsUserLocation = true
         map.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "Post")
         return map
     }()
@@ -100,7 +101,7 @@ class MapViewController: UIViewController, UserExperienceViewControllerDelegate
         navigationItem.title = "User Experience"
         layOutViews()
         
-       
+     
     }
     
     override func viewWillAppear(_ animated: Bool) {
