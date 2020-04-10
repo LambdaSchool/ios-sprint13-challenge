@@ -14,7 +14,7 @@ class DetailView: UIView {
 }
 
 class PostViewController: UIViewController {
-    var experienceController: ExperienceController?
+    var experiencesController: ExperiencesController?
     
      var postLocation: CLLocationCoordinate2D?
     
@@ -50,6 +50,10 @@ class PostViewController: UIViewController {
 }
 
      @IBAction func recordButtonPressed(_ sender: Any) {
+         guard currentImage != nil else {
+             NSLog("currentImage is empty")
+             return
+         }
          print("recordButtonPressed")
      }
     
@@ -69,6 +73,7 @@ class PostViewController: UIViewController {
          imagePicker.delegate = self
          present(imagePicker, animated: true)
      }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "CameraViewController" {
             guard let vc = segue.destination as? CameraViewController,
@@ -78,7 +83,7 @@ class PostViewController: UIViewController {
             }
             
             vc.fileTitle = fileTitle
-            vc.experienceController = experienceController
+            vc.experiencesController = experiencesController
         }
     }
 }

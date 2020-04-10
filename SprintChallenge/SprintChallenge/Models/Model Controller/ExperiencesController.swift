@@ -8,7 +8,7 @@
 import Foundation
 import MapKit
 
-class ExperienceController {
+class ExperiencesController {
     private (set) var experinces: [Experience] = []
     
     var currentLocation: CLLocationCoordinate2D?

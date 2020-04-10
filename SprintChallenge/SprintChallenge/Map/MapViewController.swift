@@ -11,7 +11,7 @@ import MapKit
 import AVFoundation
 
 class MapViewController: UIViewController {
-   let experienceController = ExperienceController()
+   let experiencesController = ExperiencesController()
     let locationManager = CLLocationManager()
     
     var experiences: [Experience] = []
@@ -30,7 +30,7 @@ class MapViewController: UIViewController {
         
         mapview.reloadInputViews()
         mapview.delegate = self
-        mapview?.addAnnotations(experienceController.experinces)
+        mapview?.addAnnotations(experiencesController.experinces)
         mapview.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnotationView")
     }
     
@@ -55,8 +55,8 @@ class MapViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "PostViewController" {
             guard let vc = segue.destination as? PostViewController else { return }
-            experienceController.currentLocation = locationManager.location?.coordinate
-            vc.experienceController = experienceController
+            experiencesController.currentLocation = locationManager.location?.coordinate
+            vc.experiencesController = experiencesController
         }
     }
 }
