@@ -15,6 +15,8 @@ import CoreLocation
 class MapViewController: UIViewController, UserExperienceViewControllerDelegate
 {
     func didGetNewItem(item: [Item]) {
+        print(item.count)
+        self.mapView.removeAnnotations(self.mapView.annotations)
         mapView.addAnnotations(item)
     }
     
@@ -61,7 +63,7 @@ class MapViewController: UIViewController, UserExperienceViewControllerDelegate
         label.text = "Dark mode?"
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.boldSystemFont(ofSize: 16)
-        label.textColor = #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)
+        label.textColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
         return label
     }()
     
@@ -108,7 +110,7 @@ class MapViewController: UIViewController, UserExperienceViewControllerDelegate
     
     
     
-    
+   //MARK:- Objc funcs
     
     @objc func handleButtonTapped() {
          present(userExperienceViewController, animated: true, completion: nil)
@@ -120,6 +122,7 @@ class MapViewController: UIViewController, UserExperienceViewControllerDelegate
          
      }
 
+    //MARK:- Private
     
     private func layOutViews() {
         
@@ -134,8 +137,8 @@ class MapViewController: UIViewController, UserExperienceViewControllerDelegate
         NSLayoutConstraint.activate([
             actionButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -32),
             actionButton.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -32),
-            actionButton.widthAnchor.constraint(equalToConstant: 100),
-            actionButton.heightAnchor.constraint(equalToConstant: 100)
+            actionButton.widthAnchor.constraint(equalToConstant: 60),
+            actionButton.heightAnchor.constraint(equalToConstant: 60)
             
         ])
         

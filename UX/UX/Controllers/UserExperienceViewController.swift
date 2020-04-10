@@ -22,10 +22,10 @@ class UserExperienceViewController: UIViewController, UIGestureRecognizerDelegat
     var locationManager: CLLocationManager?
     weak var delegate: UserExperienceViewControllerDelegate?
     private var context = CIContext(options: nil)
+    var items: [Item] = []
     private var originalImage: UIImage? {
          didSet {
            
-          
              guard let originalImage = originalImage else { return }
              var scaledSize = imageView.bounds.size
              let scale = UIScreen.main.scale
@@ -95,7 +95,7 @@ class UserExperienceViewController: UIViewController, UIGestureRecognizerDelegat
       }
     
     @objc func cameraPicked(sender: UITapGestureRecognizer) {
-        print("Hello")
+        
         showImagePickerControllerActionSheet()
     }
     private let filterSegmentControl: UISegmentedControl = {
@@ -179,30 +179,41 @@ class UserExperienceViewController: UIViewController, UIGestureRecognizerDelegat
       
       @objc func handleNext() {
           dismiss(animated: true, completion: nil)
-        delegate?.didGetNewItem(item: [Item(postTitle: titleTextField.text!, postURL: nil, latitude:MapViewController.locationManager.location!.coordinate.latitude , longitude: MapViewController.locationManager.location!.coordinate.longitude)])
+        let item = Item(postTitle: titleTextField.text!, postURL: nil, latitude:MapViewController.locationManager.location!.coordinate.latitude , longitude: MapViewController.locationManager.location!.coordinate.longitude)
+        items.append(item)
+        delegate?.didGetNewItem(item:items)
       }
     
     private func setUpNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "New Experience"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .done, target: self, action: #selector(handleNext))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(handleNext))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(handleBack))
     }
-    
+    let videoRecordingViewController : UINavigationController = {
+             let vc = VideoRecordingViewController()
+             let nav = UINavigationController(rootViewController: vc)
+             nav.modalPresentationStyle = .fullScreen
+             return nav
+         }()
 
 }
 extension UserExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func showImagePickerControllerActionSheet() {
-           let ac = UIAlertController(title: "Choose your book's cover", message: nil, preferredStyle: .actionSheet)
-           let firstAction = UIAlertAction(title: "Choose from Library", style: .default) { (action) in
+           let ac = UIAlertController(title: "Choose your experience type", message: nil, preferredStyle: .actionSheet)
+           let firstAction = UIAlertAction(title: "Choose Photo from Library", style: .default) { (action) in
                self.showImagePickerController(sourceType: .photoLibrary)
            }
            let secondAction = UIAlertAction(title: "Take new photo", style: .default) { (action) in
                self.showImagePickerController(sourceType: .camera)
            }
+        let videoAction = UIAlertAction(title: "Video Recording", style: .default) { (action) in
+            self.requestPermissionAndShowCamera()
+        }
            let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
            ac.addAction(firstAction)
            ac.addAction(secondAction)
+            ac.addAction(videoAction)
            ac.addAction(cancelAction)
            present(ac, animated: true, completion: nil)
        }
@@ -226,5 +237,34 @@ extension UserExperienceViewController: UIImagePickerControllerDelegate, UINavig
             self.originalImage = originalImage
            }
            dismiss(animated: true, completion: nil)
+       }
+   
+    func requestPermissionAndShowCamera()  {
+           let status = AVCaptureDevice.authorizationStatus(for: .video)
+           
+           switch status {
+               case .notDetermined:
+                   requestPermission()
+               case .restricted:
+                   fatalError("You don't have permission to use the camera, talk to your parent about enabling")
+               case .denied:
+                   fatalError("Show them a link to settings to get access to video")
+               case .authorized: //2nd + run, they've given permission to use the camera
+            present(videoRecordingViewController, animated: true, completion: nil)
+                   break
+               @unknown default:
+                   fatalError("Didn't ")
+           }
+           
+       }
+       
+        func requestPermission() {
+           AVCaptureDevice.requestAccess(for: .video) { granted in
+               guard granted else { fatalError("Tell user they need to get video permission") }
+               DispatchQueue.main.async {
+                   //
+                   self.present(self.videoRecordingViewController, animated: true, completion: nil)
+               }
+           }
        }
 }
