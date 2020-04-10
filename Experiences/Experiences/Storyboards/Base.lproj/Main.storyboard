@@ -196,10 +196,16 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nbr-Dc-RD6">
                                 <rect key="frame" x="199.66666666666666" y="437" width="15" height="22"/>
                                 <state key="normal" image="play.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="playButtonTapped:" destination="uMZ-bf-Xvv" eventType="touchUpInside" id="gEu-E2-bOG"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LfO-fz-hpK">
                                 <rect key="frame" x="195" y="840" width="25" height="22"/>
                                 <state key="normal" image="mic.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="recordButtonTapped:" destination="uMZ-bf-Xvv" eventType="touchUpInside" id="MMo-Nn-hmQ"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -217,8 +223,17 @@
                         <viewLayoutGuide key="safeArea" id="5DK-xR-ASq"/>
                     </view>
                     <navigationItem key="navigationItem" id="yLB-Se-Xe3">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="TgI-Gf-Rns"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="TgI-Gf-Rns">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="uMZ-bf-Xvv" id="fhP-WT-0kk"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="cameraView" destination="ika-et-dk7" id="ahN-9D-dro"/>
+                        <outlet property="playButton" destination="Nbr-Dc-RD6" id="VDH-Ed-7TY"/>
+                        <outlet property="recordButton" destination="LfO-fz-hpK" id="KBL-Dt-iJC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9bS-zb-Wrs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
