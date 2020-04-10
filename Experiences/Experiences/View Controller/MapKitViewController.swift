@@ -16,7 +16,7 @@ class MapKitViewController: UIViewController {
     let locationManager = CLLocationManager()
     var coordinate = CLLocationCoordinate2D()
     let regionRadius: CLLocationDistance = 4000
-    var experiences: [Experience] = [Experience(title: "Winds Howling", image: UIImage(named: "Geralt"), video: nil, audio: nil, coordinate: CLLocationCoordinate2D(latitude: 37.569470, longitude: -122.314700))]
+    var experiences: [Experience] = [Experience(title: "Winds Howling", image: UIImage(named: "Geralt"), video: nil, audio: nil, coordinate: CLLocationCoordinate2D(latitude: 34.0522, longitude: -118.2437))]
     // MARK: - IBOutlets
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var getLocationButton: UIButton!
