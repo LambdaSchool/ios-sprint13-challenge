@@ -166,8 +166,6 @@ class VideoViewController: UIViewController {
           }
           fatalError("ERROR: No audio device")
       }
-      
-      // Helper to save to documents directory
       private func newRecordingURL() -> URL {
           let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
           

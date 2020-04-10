@@ -37,8 +37,6 @@ class ExperienceTableViewController: UITableViewController {
                   experience.title = title
                   experience.subtitle = description
                   experience.updatedTimeStamp = Date()
-                  //This experience already exists in the array
-                  //controller.add(newExperience: experience)
               } else {
                   controller.add(newExperience: Experience(title: title, subtitle: description, coordinate: coordinate))
               }
@@ -125,11 +123,11 @@ class ExperienceTableViewController: UITableViewController {
         switch segue.identifier {
         case "AddImageSegue":
             let vc = segue.destination as! ImageViewController
-       //     vc.delegate = self
+            vc.delegate = self
         case "showImageSegue":
             let vc = segue.destination as! ImageViewController
-       //     vc.delegate = self
-       //     vc.media = selectedMedia
+             vc.delegate = self
+             vc.media = selectedMedia
         case "addVideoSegue":
             let vc = segue.destination as! VideoViewController
             vc.delegate = self
@@ -139,11 +137,11 @@ class ExperienceTableViewController: UITableViewController {
             vc.media = selectedMedia
         case "addAudioSegue":
             let vc = segue.destination as! AudioViewController
-      //      vc.delegate = self
+            vc.delegate = self
         case "showAudioSegue":
             let vc = segue.destination as! AudioViewController
-        //    vc.delegate = self
-       //     vc.media = selectedMedia
+            vc.delegate = self
+            vc.media = selectedMedia
         default:
             break
         }

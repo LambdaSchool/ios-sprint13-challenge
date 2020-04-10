@@ -146,6 +146,21 @@
                                 <rect key="frame" x="20" y="182" width="374" height="282"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ubS-G1-Grg">
+                                <rect key="frame" x="285" y="539" width="49" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="bwSwitch:" destination="sDK-hg-SHg" eventType="valueChanged" id="jZq-KD-peY"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Black &amp; White" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kdZ-xu-Lmf">
+                                <rect key="frame" x="77" y="544" width="107" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="3Qr-2p-0cm"/>
@@ -153,8 +168,15 @@
                     <navigationItem key="navigationItem" title="Image" id="MGG-Ie-iCG">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="pnG-gG-h6u">
                             <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="sDK-hg-SHg" id="lyy-Nx-uY2"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="filterToggle" destination="ubS-G1-Grg" id="mFI-bf-Qrt"/>
+                        <outlet property="imageView" destination="ep0-1i-mtg" id="kF9-sh-rBc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kIt-7T-dTk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -203,18 +225,24 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZGS-oY-bv8">
-                                <rect key="frame" x="250" y="526" width="73" height="24"/>
+                                <rect key="frame" x="171" y="724" width="73" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Button" image="pause.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="pauseButtonTapped:" destination="Xt8-W4-2qO" eventType="touchUpInside" id="UOT-61-HJx"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CMW-qg-Ekq">
-                                <rect key="frame" x="122" y="526" width="76" height="26"/>
+                                <rect key="frame" x="172" y="568" width="76" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Button" image="play.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="recordButtonTapped:" destination="Xt8-W4-2qO" eventType="touchUpInside" id="8lj-eS-L5R"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -237,8 +265,18 @@
                     <navigationItem key="navigationItem" title="Audio" id="IEP-xf-kX4">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="igo-ut-3Ay">
                             <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="Xt8-W4-2qO" id="0ml-lV-RFx"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="pauseButton" destination="ZGS-oY-bv8" id="UVe-oH-1n2"/>
+                        <outlet property="recordButton" destination="CMW-qg-Ekq" id="7p1-le-RVn"/>
+                        <outlet property="timeLabel" destination="zIp-q5-yS1" id="YHS-8w-l7F"/>
+                        <outlet property="timeRemainingLabel" destination="Lj5-cv-PuI" id="NrQ-II-ero"/>
+                        <outlet property="timeSlider" destination="LOW-DT-oae" id="mwB-QU-cRl"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R24-IH-5iD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
