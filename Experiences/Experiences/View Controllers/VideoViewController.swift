@@ -23,7 +23,8 @@ class VideoViewController: UIViewController {
     //MARK: Outlets
     
     @IBOutlet weak var recordButton: UIButton!
-    @IBOutlet weak var videoView: CameraPreviewView!
+   
+    @IBOutlet var videoView: CameraPreviewView!
     
     
     //MARK: View Lifecycle
@@ -33,6 +34,7 @@ class VideoViewController: UIViewController {
         updateViews()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
         view.addGestureRecognizer(tapGesture)
+     //   setUpVideoSession()
         
     }
     
@@ -54,7 +56,7 @@ class VideoViewController: UIViewController {
     }
       
     //MARK: Actions
-    @IBAction func recordButtonTapped(_ sender: Any) {
+    @IBAction func recordButtonTapped(_ sender: UIButton) {
         if fileOutput.isRecording {
            fileOutput.stopRecording()
            recordButton.setImage(UIImage(named: "Record"), for: .normal)
@@ -90,7 +92,7 @@ class VideoViewController: UIViewController {
             self.recordButton.isHidden = true
             if let url = media.mediaURL {
                 playMovie(url: url , small: false)
-                
+               ///
             }
           } else {
               setUpVideoSession()

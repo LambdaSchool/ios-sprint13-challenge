@@ -91,7 +91,7 @@ class AudioViewController: UIViewController {
     private func updateViews() {
         let playTitle = player?.isPlaying ?? false ? "Pause" : "Play"
         recordButton.setTitle(playTitle, for: .normal)
-        let recordTitle = recorder?.isRecording ?? false ? "Stop Recording" : "Record"
+        let recordTitle = recorder?.isRecording ?? false ? "Stop" : "Record"
         pauseButton.setTitle(recordTitle, for: .normal)
         if let player = player {
             recordButton.isHidden = false
