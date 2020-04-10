@@ -133,21 +133,54 @@
             </objects>
             <point key="canvasLocation" x="2039.1304347826087" y="137.94642857142856"/>
         </scene>
-        <!--View Controller-->
+        <!--Video Recording View Controller-->
         <scene sceneID="eE5-rx-4QV">
             <objects>
-                <viewController id="aox-eH-Tq1" sceneMemberID="viewController">
+                <viewController id="aox-eH-Tq1" customClass="VideoRecordingViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Y6R-bT-hPc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t60-gy-c84">
+                                <rect key="frame" x="0.0" y="88" width="414" height="414"/>
+                                <color key="backgroundColor" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="t60-gy-c84" secondAttribute="height" multiplier="1:1" id="ZHo-8e-yia"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IvD-dw-Vjp">
+                                <rect key="frame" x="197" y="542" width="20" height="22"/>
+                                <state key="normal" image="camera.circle" catalog="system"/>
+                                <state key="selected" image="camera.circle.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="recordTapped:" destination="aox-eH-Tq1" eventType="touchUpInside" id="EFA-Oy-v5U"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="IvD-dw-Vjp" firstAttribute="top" secondItem="t60-gy-c84" secondAttribute="bottom" constant="40" id="1ze-o3-uxA"/>
+                            <constraint firstItem="t60-gy-c84" firstAttribute="leading" secondItem="Y6R-bT-hPc" secondAttribute="leading" id="E4K-Nt-wi2"/>
+                            <constraint firstItem="IvD-dw-Vjp" firstAttribute="centerX" secondItem="Y6R-bT-hPc" secondAttribute="centerX" id="XL0-1d-AHL"/>
+                            <constraint firstItem="t60-gy-c84" firstAttribute="top" secondItem="70K-mO-Xn1" secondAttribute="top" id="tK6-ev-bxX"/>
+                            <constraint firstItem="t60-gy-c84" firstAttribute="trailing" secondItem="70K-mO-Xn1" secondAttribute="trailing" id="x1Y-a6-A8v"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="70K-mO-Xn1"/>
                     </view>
-                    <navigationItem key="navigationItem" id="x21-ug-0tE"/>
+                    <navigationItem key="navigationItem" id="x21-ug-0tE">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="zom-sn-4nD">
+                            <connections>
+                                <action selector="saveTapped:" destination="aox-eH-Tq1" id="AE3-8f-ZRR"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="recordButton" destination="IvD-dw-Vjp" id="qE1-db-hPb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gT4-HD-YkG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3154" y="-131"/>
+            <point key="canvasLocation" x="3153.6231884057975" y="-131.25"/>
         </scene>
         <!--Photo View Controller-->
         <scene sceneID="yun-VG-Eu4">
@@ -217,6 +250,7 @@
     </scenes>
     <resources>
         <image name="camera.circle" catalog="system" width="128" height="121"/>
+        <image name="camera.circle.fill" catalog="system" width="128" height="121"/>
         <image name="mic.circle" catalog="system" width="128" height="121"/>
         <image name="mic.circle.fill" catalog="system" width="128" height="121"/>
         <image name="photo" catalog="system" width="128" height="93"/>
