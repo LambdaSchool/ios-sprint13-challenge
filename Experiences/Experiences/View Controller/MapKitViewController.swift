@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
 class MapKitViewController: UIViewController {
     
@@ -79,11 +80,12 @@ class MapKitViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AddExperienceSegue" {
             guard let newExperienceVC = segue.destination as? NewExperienceViewController else { return }
-//            newExperienceVC.coordinate = coordinate
+            newExperienceVC.coordinate = coordinate
         }
     }
 }
 
+// MARK: - Extensions
 extension MapKitViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let experience = annotation as? Experience
@@ -96,7 +98,6 @@ extension MapKitViewController: MKMapViewDelegate {
         let detailView = ExperienceDetailView()
         detailView.experience = experience
         annotationView.detailCalloutAccessoryView = detailView
-        
         return annotationView
     }
 }

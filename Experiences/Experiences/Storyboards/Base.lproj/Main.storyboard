@@ -38,7 +38,7 @@
                     <navigationItem key="navigationItem" id="arh-bI-Qvf">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="OGM-RS-UNY">
                             <connections>
-                                <segue destination="6mc-1y-vSm" kind="show" id="gnt-kH-gSg"/>
+                                <segue destination="6mc-1y-vSm" kind="show" identifier="AddExperienceSegue" id="gnt-kH-gSg"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -80,21 +80,21 @@
                                         <rect key="frame" x="150" y="0.0" width="74" height="30"/>
                                         <state key="normal" title="Add Image"/>
                                         <connections>
-                                            <segue destination="Mma-lI-DeL" kind="show" id="eEy-pe-wVf"/>
+                                            <segue destination="Mma-lI-DeL" kind="show" identifier="AddImageSegue" id="eEy-pe-wVf"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RW3-Yv-e4d">
                                         <rect key="frame" x="114.66666666666666" y="38" width="144.99999999999997" height="30"/>
                                         <state key="normal" title="Add Video Recording"/>
                                         <connections>
-                                            <segue destination="NAi-gp-ht3" kind="show" id="B4a-Nw-akq"/>
+                                            <segue destination="NAi-gp-ht3" kind="show" identifier="AddVideoSegue" id="B4a-Nw-akq"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a2b-0T-ZcJ">
                                         <rect key="frame" x="115.66666666666666" y="76" width="142.99999999999997" height="30"/>
                                         <state key="normal" title="Add Voice Recording"/>
                                         <connections>
-                                            <segue destination="uMZ-bf-Xvv" kind="show" id="7OF-yA-96b"/>
+                                            <segue destination="uMZ-bf-Xvv" kind="show" identifier="AddAudioSegue" id="7OF-yA-96b"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -117,6 +117,13 @@
                     <navigationItem key="navigationItem" title="Create an Experience" id="8rD-1k-ZgP">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="zLZ-VH-CaU"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="addImageButton" destination="UzJ-Bp-97Y" id="csw-Pu-QEf"/>
+                        <outlet property="addVideoRecordingButton" destination="RW3-Yv-e4d" id="Ku5-kK-Kyk"/>
+                        <outlet property="addVoiceRecordingButton" destination="a2b-0T-ZcJ" id="Bt7-dX-k1h"/>
+                        <outlet property="imageView" destination="fRL-q8-bFv" id="9sm-Rz-Wfe"/>
+                        <outlet property="titleTextField" destination="YT9-6H-70j" id="O6G-f4-3JG"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uc8-cf-yxr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
