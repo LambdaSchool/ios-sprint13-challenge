@@ -9,6 +9,9 @@
 import UIKit
 
 class EntryViewController: UIViewController {
+    
+    var experienceController: ExperienceController?
+    var geoTag: GeoTag?
 
     
     @IBOutlet weak var DescriptionTextField: UITextField!
