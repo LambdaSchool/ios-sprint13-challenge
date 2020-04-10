@@ -7,3 +7,10 @@
 //
 
 import Foundation
+
+struct ConstantValues {
+    
+    static let entrySegue = "EntrySegue"
+    static let addVideoSegue = "AddVideoSegue"
+    static let addPhotoSegue = "AddPhotoSegue"
+}
