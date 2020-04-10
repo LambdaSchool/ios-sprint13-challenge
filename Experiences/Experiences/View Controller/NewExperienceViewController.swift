@@ -73,6 +73,9 @@ class NewExperienceViewController: UIViewController {
     // MARK: - View LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        let tapRecognizer = UITapGestureRecognizer()
+        tapRecognizer.addTarget(self, action: #selector(NewExperienceViewController.didTapView))
+        self.view.addGestureRecognizer(tapRecognizer)
         NotificationCenter.default.addObserver(forName: .saveTapped, object: nil, queue: nil) { (catchNotification) in
             guard let addMediaExp = catchNotification.userInfo?[mediaAdded] else { return }
             self.experience = addMediaExp as? Experience
@@ -83,7 +86,7 @@ class NewExperienceViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
-    
+
     // MARK: - Functions
     func updateViews() {
         titleTextField.layer.borderWidth = 2.0
@@ -92,6 +95,10 @@ class NewExperienceViewController: UIViewController {
         addImageButton.layer.cornerRadius = 8
         addVideoRecordingButton.layer.cornerRadius = 8
         addVoiceRecordingButton.layer.cornerRadius = 8
+    }
+    
+    @objc func didTapView(){
+        self.view.endEditing(true)
     }
     
     // MARK: - Navigation
