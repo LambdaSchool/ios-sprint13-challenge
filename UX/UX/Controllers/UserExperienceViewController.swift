@@ -19,6 +19,8 @@ protocol UserExperienceViewControllerDelegate: AnyObject {
 
 class UserExperienceViewController: UIViewController, UIGestureRecognizerDelegate
 {
+    //MARK:- Properties
+    
     var locationManager: CLLocationManager?
     weak var delegate: UserExperienceViewControllerDelegate?
     private var context = CIContext(options: nil)
@@ -66,6 +68,8 @@ class UserExperienceViewController: UIViewController, UIGestureRecognizerDelegat
         return view
         
     }()
+    //MARK:- Privates
+    
     private func filterColorInvert(_ image: UIImage) -> UIImage? {
           guard let cgImage = image.cgImage else { return nil }
           let ciImage = CIImage(cgImage: cgImage)
@@ -94,10 +98,7 @@ class UserExperienceViewController: UIViewController, UIGestureRecognizerDelegat
           return UIImage(cgImage: outputCGImage)
       }
     
-    @objc func cameraPicked(sender: UITapGestureRecognizer) {
-        
-        showImagePickerControllerActionSheet()
-    }
+ 
     private let filterSegmentControl: UISegmentedControl = {
         let items = ["Standard","Comic","Invert"]
        let sg = UISegmentedControl(items: items)
@@ -106,11 +107,17 @@ class UserExperienceViewController: UIViewController, UIGestureRecognizerDelegat
         sg.selectedSegmentIndex =  0
         return sg
     }()
+    //MARK:- Objc
+    @objc func cameraPicked(sender: UITapGestureRecognizer) {
+         
+         showImagePickerControllerActionSheet()
+     }
     
     @objc func segmentSwitch(sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
             
             case 0:
+                
                 imageView.image = scaledImage
             case 1:
                  guard let imageToFiler = scaledImage else { return }
@@ -145,7 +152,6 @@ class UserExperienceViewController: UIViewController, UIGestureRecognizerDelegat
     func updateViews() {
         imageView.image = scaledImage
     }
-//
     
     private func contrainstViews() {
         
@@ -257,7 +263,6 @@ extension UserExperienceViewController: UIImagePickerControllerDelegate, UINavig
            }
            
        }
-       
         func requestPermission() {
            AVCaptureDevice.requestAccess(for: .video) { granted in
                guard granted else { fatalError("Tell user they need to get video permission") }
