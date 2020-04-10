@@ -155,10 +155,16 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FBC-aE-4tx">
                                 <rect key="frame" x="199.66666666666666" y="437" width="15" height="22"/>
                                 <state key="normal" image="play.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="playButtonTapped:" destination="NAi-gp-ht3" eventType="touchUpInside" id="7Pi-eu-IlC"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ugJ-LW-pjY">
                                 <rect key="frame" x="195" y="840" width="25" height="22"/>
                                 <state key="normal" image="video.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="recordButtonTapped:" destination="NAi-gp-ht3" eventType="touchUpInside" id="7qk-9H-hc9"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -176,7 +182,11 @@
                         <viewLayoutGuide key="safeArea" id="f9P-RS-JH8"/>
                     </view>
                     <navigationItem key="navigationItem" id="Cfa-h3-tVF">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="PyH-Vw-bJE"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="PyH-Vw-bJE">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="NAi-gp-ht3" id="HAS-hp-w6y"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="cameraView" destination="Pju-xM-Pdg" id="C66-4h-V3n"/>

@@ -25,7 +25,23 @@ class VideoRecordingViewController: UIViewController {
     @IBOutlet weak var playButton: UIButton!
     
     // MARK: - IBActions
+    @IBAction func recordButtonTapped(_ sender: UIButton) {
+        updateViews()
+        toggleRecording()
+    }
     
+    @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
+        if let experience = experience {
+            experience.video = video
+            let experienceDictionary = [mediaAdded : experience]
+            NotificationCenter.default.post(name: .mediaAdded, object: nil, userInfo: experienceDictionary)
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func playButtonTapped(_ sender: UIButton) {
+        replayMovie()
+    }
     
     // MARK: - View LifeCycle
     override func viewDidLoad() {
@@ -128,10 +144,8 @@ class VideoRecordingViewController: UIViewController {
         topRect.size.height = topRect.height
         topRect.size.width = topRect.width
         topRect.origin.y = view.layoutMargins.top
-        
         playerLayer.frame = topRect
         view.layer.addSublayer(playerLayer)
-        
         player.play()
     }
     

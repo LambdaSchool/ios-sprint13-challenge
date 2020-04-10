@@ -171,6 +171,7 @@ class VoiceRecordingViewController: UIViewController {
     }
 }
 
+// MARK: - Extensions
 extension VoiceRecordingViewController: AVCaptureFileOutputRecordingDelegate {
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         updateViews()
