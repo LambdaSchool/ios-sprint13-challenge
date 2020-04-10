@@ -7,3 +7,7 @@
 //
 
 import Foundation
+
+protocol ExperienceMediaDelegate: AnyObject {
+    func experience(experience: Experience)
+}
