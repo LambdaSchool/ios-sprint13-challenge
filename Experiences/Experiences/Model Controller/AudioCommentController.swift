@@ -16,7 +16,6 @@ class AudioCommentController {
 
     func createURL(){
         recordingURL = createNewRecordingURL()
-        
     }
     
     func createNewRecordingURL() -> URL {

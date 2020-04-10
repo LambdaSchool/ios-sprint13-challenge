@@ -59,7 +59,7 @@ class EntryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        DescriptionTextField.delegate = self
         // Do any additional setup after loading the view.
     }
     
@@ -71,16 +71,24 @@ class EntryViewController: UIViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == ConstantValues.addPhotoSegue {
-            guard let addPhotoVC = segue.destination as? EntryViewController else { return }
+            guard let addPhotoVC = segue.destination as? PhotoViewController else { return }
             addPhotoVC.experienceController = experienceController
             addPhotoVC.geoTag = geoTag
             addPhotoVC.descriptionText = descriptionText
         }
         if segue.identifier == ConstantValues.addPhotoSegue {
-            guard let addPhotoVC = segue.destination as? EntryViewController else { return }
-            addPhotoVC.experienceController = experienceController
-            addPhotoVC.geoTag = geoTag
-            addPhotoVC.descriptionText = descriptionText
+            guard let addVideoVC = segue.destination as? VideoRecordingViewController else { return }
+            addVideoVC.experienceController = experienceController
+            addVideoVC.geoTag = geoTag
+            addVideoVC.descriptionText = descriptionText
         }
+    }
+}
+
+extension EntryViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

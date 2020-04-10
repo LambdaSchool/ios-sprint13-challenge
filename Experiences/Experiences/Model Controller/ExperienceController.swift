@@ -17,13 +17,14 @@ class ExperienceController {
                           description: String,
                           audioComment: URL? = nil,
                           videoComment: URL? = nil,
-                          photo: UIImage? = nil) {
+                          photo: UIImage? = nil) -> Experience {
         let newExperience = Experience(description: description,
                                        geoTag: geoTag,
                                        audioComment: audioComment,
                                        videoComment: videoComment,
                                        photo: photo)
         self.experience = newExperience
+        return newExperience
     }
     
 }
