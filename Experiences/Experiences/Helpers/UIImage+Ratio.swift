@@ -15,7 +15,6 @@ extension UIImage {
     
     func imageByScaling(toSize size: CGSize) -> UIImage? {
         guard size.width > 0 && size.height > 0 else { return nil }
-        
         let originalAspectRatio = self.size.width/self.size.height
         var correctedSize = size
         

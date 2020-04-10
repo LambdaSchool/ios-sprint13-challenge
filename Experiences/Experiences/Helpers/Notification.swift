@@ -11,11 +11,9 @@ import Foundation
 enum myNotificationKeys: String {
     case mediaAdded = "mediaAdded"
     case experienceSaved = "experienceSaved"
-    
 }
 
 extension NSNotification.Name {
     static let saveTapped = NSNotification.Name("saveTapped")
-    
     static let mediaAdded = NSNotification.Name("mediaAdded")
 }

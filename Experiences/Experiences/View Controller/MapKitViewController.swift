@@ -17,6 +17,7 @@ class MapKitViewController: UIViewController {
     var coordinate = CLLocationCoordinate2D()
     let regionRadius: CLLocationDistance = 4000
     var experiences: [Experience] = [Experience(title: "Winds Howling", image: UIImage(named: "Geralt"), video: nil, audio: nil, coordinate: CLLocationCoordinate2D(latitude: 34.0522, longitude: -118.2437))]
+    
     // MARK: - IBOutlets
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var getLocationButton: UIButton!
@@ -49,7 +50,6 @@ class MapKitViewController: UIViewController {
     // MARK: - View LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        locationManager.delegate = self
         mapView.delegate = self
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "Experience")
         NotificationCenter.default.addObserver(forName: .saveTapped, object: nil, queue: nil) { (catchNotification) in
@@ -125,8 +125,4 @@ extension MapKitViewController: MKMapViewDelegate {
         annotationView.detailCalloutAccessoryView = detailView
         return annotationView
     }
-}
-
-extension MapKitViewController: CLLocationManagerDelegate {
-    
 }

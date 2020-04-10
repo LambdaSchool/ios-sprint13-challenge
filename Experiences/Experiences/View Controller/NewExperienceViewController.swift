@@ -28,6 +28,48 @@ class NewExperienceViewController: UIViewController {
     @IBOutlet weak var addVideoRecordingButton: UIButton!
     @IBOutlet weak var addVoiceRecordingButton: UIButton!
     
+    // MARK: - IBActions
+    @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
+        let experienceDictionary = [experienceSaved: experience] as! [String : Experience]
+        NotificationCenter.default.post(name: .saveTapped, object: nil, userInfo: experienceDictionary)
+        navigationController?.popToRootViewController(animated: true)
+    }
+    
+    @IBAction func addImageButtonTapped(_ sender: Any) {
+        guard let title = titleTextField.text, let coordinate = coordinate, !title.isEmpty else {
+            let alert = UIAlertController(title: "Wait!", message: "An experience needs a title, please add one!", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
+            alert.addAction(action)
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        let newExperience = Experience(title: title, image: nil, video: nil, audio: nil, coordinate: coordinate)
+        self.experience = newExperience
+    }
+    
+    @IBAction func addVideoButtonTapped(_ sender: Any) {
+        guard let title = titleTextField.text, let coordinate = coordinate, !title.isEmpty else {
+            let alert = UIAlertController(title: "Wait!", message: "An experience needs a title, please add one!", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
+            alert.addAction(action)
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        let newExperience = Experience(title: title, image: nil, video: nil, audio: nil, coordinate: coordinate)
+        self.experience = newExperience
+    }
+    
+    @IBAction func addVoiceButtonTapped(_ sender: Any) {
+        guard let title = titleTextField.text, let coordinate = coordinate, !title.isEmpty else {
+            let alert = UIAlertController(title: "Wait!", message: "An experience needs a title, please add one!", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
+            alert.addAction(action)
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        let newExperience = Experience(title: title, image: nil, video: nil, audio: nil, coordinate: coordinate)
+        self.experience = newExperience
+    }
     // MARK: - View LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()

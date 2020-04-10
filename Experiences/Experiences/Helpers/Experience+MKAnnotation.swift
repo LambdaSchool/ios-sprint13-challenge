@@ -10,7 +10,6 @@ import Foundation
 import MapKit
 
 extension Experience: MKAnnotation {
-    
     var title: String? {
         expTitle
     }

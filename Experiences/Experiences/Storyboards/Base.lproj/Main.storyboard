@@ -84,6 +84,7 @@
                                         <rect key="frame" x="150" y="0.0" width="74" height="30"/>
                                         <state key="normal" title="Add Image"/>
                                         <connections>
+                                            <action selector="addImageButtonTapped:" destination="6mc-1y-vSm" eventType="touchUpInside" id="HbQ-CO-7Gu"/>
                                             <segue destination="Mma-lI-DeL" kind="show" identifier="AddImageSegue" id="eEy-pe-wVf"/>
                                         </connections>
                                     </button>
@@ -91,6 +92,7 @@
                                         <rect key="frame" x="114.66666666666666" y="38" width="144.99999999999997" height="30"/>
                                         <state key="normal" title="Add Video Recording"/>
                                         <connections>
+                                            <action selector="addVideoButtonTapped:" destination="6mc-1y-vSm" eventType="touchUpInside" id="bqM-fU-sRq"/>
                                             <segue destination="NAi-gp-ht3" kind="show" identifier="AddVideoSegue" id="B4a-Nw-akq"/>
                                         </connections>
                                     </button>
@@ -98,6 +100,7 @@
                                         <rect key="frame" x="115.66666666666666" y="76" width="142.99999999999997" height="30"/>
                                         <state key="normal" title="Add Voice Recording"/>
                                         <connections>
+                                            <action selector="addVoiceButtonTapped:" destination="6mc-1y-vSm" eventType="touchUpInside" id="fAJ-9G-fNF"/>
                                             <segue destination="uMZ-bf-Xvv" kind="show" identifier="AddAudioSegue" id="7OF-yA-96b"/>
                                         </connections>
                                     </button>
@@ -119,7 +122,11 @@
                         <viewLayoutGuide key="safeArea" id="2cJ-AX-WEF"/>
                     </view>
                     <navigationItem key="navigationItem" title="Create an Experience" id="8rD-1k-ZgP">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="zLZ-VH-CaU"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="zLZ-VH-CaU">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="6mc-1y-vSm" id="x8M-Jn-zz9"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="addImageButton" destination="UzJ-Bp-97Y" id="csw-Pu-QEf"/>
@@ -253,32 +260,33 @@
                                     <constraint firstAttribute="width" secondItem="gcc-F4-bhv" secondAttribute="height" multiplier="1:1" id="OCG-jx-Mjl"/>
                                 </constraints>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="LvV-9z-eWc">
-                                <rect key="frame" x="20" y="522" width="378" height="58.333333333333371"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filter Value" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oqw-8f-qdD">
-                                        <rect key="frame" x="0.0" y="0.0" width="84.666666666666671" height="20.333333333333332"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="3sL-6j-hr9">
-                                        <rect key="frame" x="-2" y="28.333333333333371" width="382" height="31"/>
-                                        <connections>
-                                            <action selector="sliderValueChanged:" destination="Mma-lI-DeL" eventType="valueChanged" id="XQB-V1-edJ"/>
-                                        </connections>
-                                    </slider>
-                                </subviews>
-                            </stackView>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="3sL-6j-hr9">
+                                <rect key="frame" x="18" y="542.33333333333337" width="378" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Fs3-Zq-yvq"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="sliderValueChanged:" destination="Mma-lI-DeL" eventType="valueChanged" id="XQB-V1-edJ"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filter Value" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oqw-8f-qdD">
+                                <rect key="frame" x="20" y="501.99999999999994" width="374" height="20.333333333333314"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="3mE-3o-P7S" firstAttribute="trailing" secondItem="LvV-9z-eWc" secondAttribute="trailing" constant="16" id="3sS-gf-MEc"/>
-                            <constraint firstItem="LvV-9z-eWc" firstAttribute="top" secondItem="gcc-F4-bhv" secondAttribute="bottom" constant="40" id="D2y-Nu-zPW"/>
-                            <constraint firstItem="LvV-9z-eWc" firstAttribute="leading" secondItem="3mE-3o-P7S" secondAttribute="leading" constant="20" id="Ozc-lm-HDb"/>
+                            <constraint firstItem="3sL-6j-hr9" firstAttribute="top" secondItem="oqw-8f-qdD" secondAttribute="bottom" constant="20" id="5dp-hT-4KY"/>
+                            <constraint firstItem="oqw-8f-qdD" firstAttribute="leading" secondItem="3mE-3o-P7S" secondAttribute="leading" constant="20" id="AGm-e6-WCa"/>
+                            <constraint firstItem="3sL-6j-hr9" firstAttribute="leading" secondItem="3mE-3o-P7S" secondAttribute="leading" constant="20" id="hZi-Mm-MS9"/>
                             <constraint firstItem="gcc-F4-bhv" firstAttribute="top" secondItem="3mE-3o-P7S" secondAttribute="top" constant="20" id="jia-Sx-THV"/>
+                            <constraint firstItem="oqw-8f-qdD" firstAttribute="top" secondItem="gcc-F4-bhv" secondAttribute="bottom" constant="20" id="l5S-qZ-XHO"/>
+                            <constraint firstItem="3mE-3o-P7S" firstAttribute="trailing" secondItem="oqw-8f-qdD" secondAttribute="trailing" constant="20" id="oUA-4d-KWw"/>
                             <constraint firstItem="3mE-3o-P7S" firstAttribute="trailing" secondItem="gcc-F4-bhv" secondAttribute="trailing" constant="20" id="t71-o8-6tg"/>
                             <constraint firstItem="gcc-F4-bhv" firstAttribute="leading" secondItem="3mE-3o-P7S" secondAttribute="leading" constant="20" id="tcp-hn-dra"/>
+                            <constraint firstItem="3mE-3o-P7S" firstAttribute="trailing" secondItem="3sL-6j-hr9" secondAttribute="trailing" constant="20" id="vrO-gT-yH2"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="3mE-3o-P7S"/>
                     </view>
