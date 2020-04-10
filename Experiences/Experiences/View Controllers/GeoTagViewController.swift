@@ -34,6 +34,10 @@ class GeoTagViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet var mapView: MKMapView!
     
+    @IBAction func myUnwindAction(unwindSegue: UIStoryboardSegue) {
+        
+    }
+    
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {

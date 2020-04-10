@@ -79,7 +79,6 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
                                                              description: descriptionText,
                                                              photo: photo)
         experienceController.experience = newEntry
-        navigationController?.popToRootViewController(animated: true)
     }
     
     // MARK: - View Lifecycle
