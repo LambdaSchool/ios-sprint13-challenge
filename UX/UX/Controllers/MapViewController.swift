@@ -43,7 +43,7 @@ class MapViewController: UIViewController
        let vc = UserExperienceViewController()
         let navVC = UINavigationController(rootViewController: vc)
         navVC.modalPresentationStyle = .fullScreen
-        navVC.modalTransitionStyle = .flipHorizontal
+      
         return navVC
     }()
     
