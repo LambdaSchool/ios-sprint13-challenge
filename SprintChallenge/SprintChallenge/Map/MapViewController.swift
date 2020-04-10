@@ -12,7 +12,9 @@ import AVFoundation
 
 class MapViewController: UIViewController {
    let experienceController = ExperienceController()
-        let locationManager = CLLocationManager()
+    let locationManager = CLLocationManager()
+    
+    var experiences: [Experience] = []
     
     @IBOutlet var mapview: MKMapView!
     @IBOutlet var postButton: UIButton!
@@ -23,6 +25,15 @@ class MapViewController: UIViewController {
         requestLocationAccess()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        mapview.reloadInputViews()
+        mapview.delegate = self
+        mapview?.addAnnotations(experienceController.experinces)
+        mapview.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceAnotationView")
+    }
+    
     @IBAction func postButtonPressed(_ sender: Any) {
         //print("Post Button was pressed.")
         print((locationManager.location?.coordinate)!)
@@ -40,4 +51,12 @@ class MapViewController: UIViewController {
              locationManager.requestWhenInUseAuthorization()
          }
      }
+}
+
+extension MapViewController: MKMapViewDelegate {
+   func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+       if annotation is MKUserLocation { return nil }
+
+       return nil
+   }
 }

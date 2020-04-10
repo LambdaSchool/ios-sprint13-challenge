@@ -29,4 +29,3 @@ class Experience: NSObject {
 extension Experience: MKAnnotation {
  //Setting up mapKit with experiences?
 }
-

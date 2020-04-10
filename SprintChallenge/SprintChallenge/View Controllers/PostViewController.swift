@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import MapKit
 
 class PostViewController: UIViewController {
     var experienceController: ExperienceController?
+    
+     var postLocation: CLLocationCoordinate2D?
     
     @IBOutlet var titleTextField: UITextField!
      @IBOutlet var imageView: UIImageView!
@@ -19,9 +22,20 @@ class PostViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "back", style: .plain, target: self, action: #selector(back))
     }
     
+    var currentImage: UIImage? {
+        didSet {
+            print("Prepare for record")
+            //prepareForRecord()
+        }
+    }
+    
     @IBAction func addImageButtonPressed(_ sender: Any) {
-         print("addPosterButtonPressed")
-     }
+      guard let title = titleTextField.text, !title.isEmpty else {
+            NSLog("title is empty")
+            return
+        }
+        addPhotoRequest()
+}
 
      @IBAction func recordButtonPressed(_ sender: Any) {
          print("recordButtonPressed")
@@ -30,7 +44,19 @@ class PostViewController: UIViewController {
     @objc func back() {
          dismiss(animated: true, completion: nil)
      }
-    
+
+    func addPhotoRequest() {
+         imageView.image = nil
+         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+             fatalError("AddPhoto error")
+         }
+
+         let imagePicker = UIImagePickerController()
+         imagePicker.sourceType = .photoLibrary
+
+         imagePicker.delegate = self
+         present(imagePicker, animated: true)
+     }
     /*
     // MARK: - Navigation
 
@@ -41,4 +67,18 @@ class PostViewController: UIViewController {
     }
     */
 
+}
+
+extension PostViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+   func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+       picker.dismiss(animated: true)
+   }
+
+   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+       picker.dismiss(animated: true) {
+           if let image = info[.originalImage] as? UIImage {
+            self.currentImage = image.myCIColorControlsFilter(image: image)
+           }
+       }
+   }
 }
