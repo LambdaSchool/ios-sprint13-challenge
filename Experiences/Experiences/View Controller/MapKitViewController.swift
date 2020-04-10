@@ -21,6 +21,31 @@ class MapKitViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var getLocationButton: UIButton!
     
+    // MARK: - IBActions
+    @IBAction func addExperienceButtonTapped(_ sender: Any) {
+        checkLocationAuthorizationStatus()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.distanceFilter = kCLDistanceFilterNone
+        locationManager.startUpdatingLocation()
+        if let coords = mapView.userLocation.location?.coordinate {
+            self.coordinate = coords
+            let initialLocation = CLLocation(latitude: coords.latitude, longitude: coords.longitude)
+            centerMapOnLocation(location: initialLocation)
+        }
+        self.performSegue(withIdentifier: "AddExperienceSegue", sender: self)
+    }
+    
+    @IBAction func getLocationButtonTapped(_ sender: UIButton) {
+        checkLocationAuthorizationStatus()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.distanceFilter = kCLDistanceFilterNone
+        locationManager.startUpdatingLocation()
+        if let coords = mapView.userLocation.location?.coordinate {
+            let initialLocation = CLLocation(latitude: coords.latitude, longitude: coords.longitude)
+            centerMapOnLocation(location: initialLocation)
+        }
+    }
+    
     // MARK: - View LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()

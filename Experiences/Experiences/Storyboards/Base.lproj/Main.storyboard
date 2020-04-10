@@ -21,6 +21,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bMJ-yJ-wtQ">
                                 <rect key="frame" x="361" y="836" width="21" height="22"/>
                                 <state key="normal" image="location" catalog="system"/>
+                                <connections>
+                                    <action selector="getLocationButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Mmn-xm-zLm"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -38,6 +41,7 @@
                     <navigationItem key="navigationItem" id="arh-bI-Qvf">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="OGM-RS-UNY">
                             <connections>
+                                <action selector="addExperienceButtonTapped:" destination="BYZ-38-t0r" id="I3H-PL-in0"/>
                                 <segue destination="6mc-1y-vSm" kind="show" identifier="AddExperienceSegue" id="gnt-kH-gSg"/>
                             </connections>
                         </barButtonItem>
@@ -167,6 +171,11 @@
                     <navigationItem key="navigationItem" id="Cfa-h3-tVF">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="PyH-Vw-bJE"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="cameraView" destination="Pju-xM-Pdg" id="C66-4h-V3n"/>
+                        <outlet property="playButton" destination="FBC-aE-4tx" id="Yoj-xb-620"/>
+                        <outlet property="recordButton" destination="ugJ-LW-pjY" id="Vae-2Y-QUy"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c7i-XR-Duk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
