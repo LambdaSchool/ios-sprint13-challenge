@@ -10,7 +10,7 @@
         <!--Map-->
         <scene sceneID="OGz-lA-yFf">
             <objects>
-                <viewController id="8zN-w3-B1n" sceneMemberID="viewController">
+                <viewController id="8zN-w3-B1n" customClass="MapViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="R5O-Og-Uxz">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -31,21 +31,52 @@
             </objects>
             <point key="canvasLocation" x="-575.36231884057975" y="685.71428571428567"/>
         </scene>
-        <!--View Controller-->
+        <!--New Experience-->
         <scene sceneID="LDA-wh-fEg">
             <objects>
                 <viewController id="sdP-59-ct1" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Qdk-1w-57I">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ezB-Lu-R8u">
+                                <rect key="frame" x="20" y="114" width="374" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TVV-bo-s21">
+                                <rect key="frame" x="170" y="216" width="74" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Add Image"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8ho-Gm-9FB">
+                                <rect key="frame" x="183" y="282" width="49" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Record">
+                                    <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="EuR-Ib-52s" kind="presentation" identifier="recordVideoSegue" id="ZE6-Dc-hoB"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="YD3-en-6Y4"/>
                     </view>
-                    <navigationItem key="navigationItem" id="cxl-nn-FpV"/>
+                    <navigationItem key="navigationItem" title="New Experience" id="cxl-nn-FpV"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hye-EZ-YQz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1213.0434782608697" y="-485.49107142857139"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="wc6-xR-H0f">
+            <objects>
+                <viewController id="EuR-Ib-52s" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sYZ-s7-GzX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2054" y="-485"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Fhd-Vw-US9">
