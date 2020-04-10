@@ -9,13 +9,44 @@
 import UIKit
 
 class ExperienceDetailView: UIView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    
+    // MARK: - Properties
+    let titleLabel = UILabel()
+    let imageView = UIImageView()
+    var experience: Experience? {
+        didSet {
+            updateSubviews()
+        }
     }
-    */
-
+    
+    // MARK: - Initializers
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        titleLabel.setContentHuggingPriority(.defaultLow+1, for: .horizontal)
+        
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, imageView])
+        stackView.spacing = UIStackView.spacingUseSystem
+        stackView.axis = .vertical
+        let mainStackView = UIStackView(arrangedSubviews: [stackView])
+        mainStackView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(mainStackView)
+        stackView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        stackView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        stackView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Functions
+    func updateSubviews() {
+        guard let experience = experience else { return }
+        titleLabel.text = experience.expTitle
+        if let image = experience.image {
+            imageView.image = image
+        }
+    }
 }
