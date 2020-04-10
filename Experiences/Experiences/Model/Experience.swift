@@ -13,7 +13,6 @@ class Experience: NSObject, MKAnnotation {
   
 //MARK: Properties
     var title: String?
-    var subtitle: String?
     var media: [Media] = []
    
     var coordinate: CLLocationCoordinate2D
@@ -21,9 +20,8 @@ class Experience: NSObject, MKAnnotation {
     var updatedTimeStamp: Date?
     
 //MARK: Initializer
-    init (title: String, subtitle: String, coordinate: CLLocationCoordinate2D, createdDate: Date = Date()) {
+    init (title: String, coordinate: CLLocationCoordinate2D, createdDate: Date = Date()) {
         self.title = title
-        self.subtitle = subtitle
         self.coordinate = coordinate
         self.createdTimestamp = createdDate
     }

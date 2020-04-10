@@ -35,10 +35,9 @@ class ExperienceTableViewController: UITableViewController {
                   let controller = experienceController else { return }
               if let experience = experience {
                   experience.title = title
-                  experience.subtitle = description
                   experience.updatedTimeStamp = Date()
               } else {
-                  controller.add(newExperience: Experience(title: title, subtitle: description, coordinate: coordinate))
+                  controller.add(newExperience: Experience(title: title, coordinate: coordinate))
               }
               navigationController?.popViewController(animated: true)
     }
@@ -82,7 +81,6 @@ class ExperienceTableViewController: UITableViewController {
          guard let experience = experience else { return }
          tableView.reloadData()
          titleTextField.text = experience.title
-       //  descriptionTF.text = experience.subtitle
      }
 
 
@@ -159,11 +157,11 @@ extension ExperienceTableViewController: ExperienceTableViewControllerDelegate {
             }
         } else {
             let title = self.titleTextField.text ?? ""
-          //  let subtitle = self.descriptionTF.text ?? ""
-         //   let newExperience = Experience(title: title, subtitle: subtitle, coordinate: coordinate)
-          //  experienceController?.add(newExperience: newExperience)
-        //    experience = newExperience
-         //   experience?.addMedia(media: media)
+      
+          let newExperience = Experience(title: title, coordinate: coordinate)
+         experienceController?.add(newExperience: newExperience)
+         experience = newExperience
+         experience?.addMedia(media: media)
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }

@@ -19,7 +19,7 @@ class ExperienceController {
         experiences.append(newExperience)
     }
     
-    func update(exerience: Experience, title: String, subtitle: String, coordinate: CLLocationCoordinate2D) {
+    func update(exerience: Experience, title: String, coordinate: CLLocationCoordinate2D) {
         
     }
 }

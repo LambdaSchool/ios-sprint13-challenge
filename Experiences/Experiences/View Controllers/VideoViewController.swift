@@ -99,7 +99,7 @@ class VideoViewController: UIViewController {
       
       private func playRecording() {
           if let player = player {
-              player.seek(to: CMTime.zero)  // seek to the beginning of the video
+              player.seek(to: CMTime.zero) 
               player.play()
           }
       }
