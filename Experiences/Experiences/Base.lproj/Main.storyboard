@@ -55,28 +55,35 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="45" translatesAutoresizingMaskIntoConstraints="NO" id="Y5l-lB-eYI">
-                                <rect key="frame" x="0.0" y="88" width="414" height="497"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="45" translatesAutoresizingMaskIntoConstraints="NO" id="Y5l-lB-eYI">
+                                <rect key="frame" x="0.0" y="108" width="600" height="581"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter a description:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zsj-zI-8DT">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="148.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YpD-nc-xRw">
-                                        <rect key="frame" x="0.0" y="65.5" width="414" height="34"/>
+                                        <rect key="frame" x="0.0" y="65.5" width="600" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="600" id="fnY-eh-aIa"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Record Audio Comment:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xeE-Js-3xI">
-                                        <rect key="frame" x="0.0" y="144.5" width="414" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="144.5" width="186.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sMh-m9-Cpt">
-                                        <rect key="frame" x="0.0" y="210" width="414" height="22"/>
+                                        <rect key="frame" x="0.0" y="210" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="Joz-pp-cQU"/>
+                                            <constraint firstAttribute="height" constant="50" id="nM8-sU-YKG"/>
+                                        </constraints>
                                         <state key="normal" image="mic.circle" catalog="system"/>
                                         <state key="selected" image="mic.circle.fill" catalog="system"/>
                                         <connections>
@@ -84,26 +91,34 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Record Video Comment:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="adb-7I-fM0">
-                                        <rect key="frame" x="0.0" y="277" width="414" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="305" width="187" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kwf-qg-S8D">
-                                        <rect key="frame" x="0.0" y="342.5" width="414" height="22"/>
+                                        <rect key="frame" x="0.0" y="370.5" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="OXl-Ae-0Zy"/>
+                                            <constraint firstAttribute="width" constant="50" id="eML-ik-Gpp"/>
+                                        </constraints>
                                         <state key="normal" image="camera.circle" catalog="system"/>
                                         <connections>
                                             <segue destination="aox-eH-Tq1" kind="show" identifier="AddVideoSegue" id="C1M-Gi-7PE"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Photo:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oed-yX-WsJ">
-                                        <rect key="frame" x="0.0" y="409.5" width="414" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="465.5" width="85" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LBO-r5-924">
-                                        <rect key="frame" x="0.0" y="475" width="414" height="22"/>
+                                        <rect key="frame" x="0.0" y="531" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="cqa-5y-LDn"/>
+                                            <constraint firstAttribute="width" constant="50" id="sT4-KX-12S"/>
+                                        </constraints>
                                         <state key="normal" image="photo" catalog="system"/>
                                         <connections>
                                             <segue destination="qWX-Eo-r93" kind="show" identifier="AddPhotoSegue" id="CfW-iX-DDg"/>
@@ -114,8 +129,9 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="Y5l-lB-eYI" firstAttribute="top" secondItem="5Ou-gB-zKi" secondAttribute="top" id="GYy-Yu-DRh"/>
+                            <constraint firstItem="Y5l-lB-eYI" firstAttribute="top" secondItem="5Ou-gB-zKi" secondAttribute="top" constant="20" id="GYy-Yu-DRh"/>
                             <constraint firstItem="5Ou-gB-zKi" firstAttribute="trailing" secondItem="Y5l-lB-eYI" secondAttribute="trailing" id="Mja-9M-gTv"/>
+                            <constraint firstItem="Y5l-lB-eYI" firstAttribute="centerX" secondItem="kOY-08-ZVA" secondAttribute="centerX" id="VbE-82-IPC"/>
                             <constraint firstItem="Y5l-lB-eYI" firstAttribute="leading" secondItem="5Ou-gB-zKi" secondAttribute="leading" id="kFS-zg-gw7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="5Ou-gB-zKi"/>
@@ -154,7 +170,11 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IvD-dw-Vjp">
-                                <rect key="frame" x="197" y="542" width="20" height="22"/>
+                                <rect key="frame" x="182" y="792" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="FFa-SD-W5u"/>
+                                    <constraint firstAttribute="width" constant="50" id="Wa3-Eb-5zC"/>
+                                </constraints>
                                 <state key="normal" image="camera.circle" catalog="system"/>
                                 <state key="selected" image="camera.circle.fill" catalog="system"/>
                                 <connections>
@@ -164,9 +184,9 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="IvD-dw-Vjp" firstAttribute="top" secondItem="t60-gy-c84" secondAttribute="bottom" constant="40" id="1ze-o3-uxA"/>
                             <constraint firstItem="t60-gy-c84" firstAttribute="leading" secondItem="Y6R-bT-hPc" secondAttribute="leading" id="E4K-Nt-wi2"/>
                             <constraint firstItem="IvD-dw-Vjp" firstAttribute="centerX" secondItem="Y6R-bT-hPc" secondAttribute="centerX" id="XL0-1d-AHL"/>
+                            <constraint firstItem="70K-mO-Xn1" firstAttribute="bottom" secondItem="IvD-dw-Vjp" secondAttribute="bottom" constant="20" id="rjs-Ja-lJ5"/>
                             <constraint firstItem="t60-gy-c84" firstAttribute="top" secondItem="70K-mO-Xn1" secondAttribute="top" id="tK6-ev-bxX"/>
                             <constraint firstItem="t60-gy-c84" firstAttribute="trailing" secondItem="70K-mO-Xn1" secondAttribute="trailing" id="x1Y-a6-A8v"/>
                         </constraints>
@@ -181,6 +201,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="cameraView" destination="t60-gy-c84" id="BhS-rc-vYg"/>
                         <outlet property="recordButton" destination="IvD-dw-Vjp" id="qE1-db-hPb"/>
                     </connections>
                 </viewController>

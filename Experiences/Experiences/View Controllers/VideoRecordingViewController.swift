@@ -45,8 +45,10 @@ class VideoRecordingViewController: UIViewController, AVCaptureFileOutputRecordi
     @IBAction func recordTapped(_ sender: UIButton) {
         if fileOutput.isRecording {
             fileOutput.stopRecording()
+            recordButton.isSelected = fileOutput.isRecording
         } else {
             fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
+            recordButton.isSelected = fileOutput.isRecording
         }
     }
     
@@ -54,7 +56,7 @@ class VideoRecordingViewController: UIViewController, AVCaptureFileOutputRecordi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        cameraView.videoPlayerView.videoGravity = .resizeAspectFill
+        cameraView.videoPlayerView.videoGravity = .resizeAspectFill
         setUpCaptureSession()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
         view.addGestureRecognizer(tapGesture)
@@ -63,6 +65,12 @@ class VideoRecordingViewController: UIViewController, AVCaptureFileOutputRecordi
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         captureSession.startRunning()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        captureSession.stopRunning()
     }
     
     // MARK: - Private Methods
@@ -106,7 +114,7 @@ class VideoRecordingViewController: UIViewController, AVCaptureFileOutputRecordi
         captureSession.addOutput(fileOutput)
         captureSession.commitConfiguration()
         
-        cameraView.session = captureSession
+        cameraView?.session = captureSession
     }
     
     private func bestCamera() -> AVCaptureDevice {
@@ -156,13 +164,13 @@ class VideoRecordingViewController: UIViewController, AVCaptureFileOutputRecordi
     
     func playVideoRecording(url: URL) {
         player = AVPlayer(url: url)
-        
         let playerLayer = AVPlayerLayer(player: player)
         playerLayer.frame = cameraView.frame
         view.layer.addSublayer(playerLayer)
-        
         player.play()
     }
+    
+    // MARK: - Delegate Methods
     
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         func fileOutput(_ output: AVCaptureFileOutput,
