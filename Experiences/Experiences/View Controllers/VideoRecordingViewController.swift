@@ -173,15 +173,10 @@ class VideoRecordingViewController: UIViewController, AVCaptureFileOutputRecordi
     // MARK: - Delegate Methods
     
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
-        func fileOutput(_ output: AVCaptureFileOutput,
-                        didFinishRecordingTo outputFileURL: URL,
-                        from connections: [AVCaptureConnection],
-                        error: Error?) {
             if let error = error {
                 print("Video Recording Error: \(error)")
             } else {
                 playVideoRecording(url: outputFileURL)
             }
         }
-    }
 }
