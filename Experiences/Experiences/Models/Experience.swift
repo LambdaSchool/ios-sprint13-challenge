@@ -8,15 +8,16 @@
 
 import Foundation
 import MapKit
+//import CoreLocation
 
 class Experience: NSObject, MKAnnotation {
     var title: String?
-    var coordinate: CLLocationCoordinate2d
+    var coordinate: CLLocationCoordinate2D
     var image: UIImage?
     var audio: URL?
     var video: URL?
     
-    init(title: String, coordinate: CLLocationCoordinate2d, image: UIImage?, audio: URL?, video: URL?) {
+    init(title: String, coordinate: CLLocationCoordinate2D, image: UIImage?, audio: URL?, video: URL?) {
         self.title = title
         self.coordinate = coordinate
         self.image = image

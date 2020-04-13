@@ -7,3 +7,15 @@
 //
 
 import Foundation
+import MapKit
+
+class ExperienceController {
+    
+    var experiences: [Experience] = []
+    
+    func createExperience(title: String, coordinate: CLLocationCoordinate2D, video: URL? = nil, audio: URL? = nil, image: UIImage?) {
+
+        let experience = Experience(title: title, coordinate: coordinate, image: image, audio: audio, video: video)
+        experiences.append(experience)
+    }
+}

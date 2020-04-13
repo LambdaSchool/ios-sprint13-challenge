@@ -9,14 +9,38 @@
 import UIKit
 import UIKit.UIKitCore
 import AVFoundation
+import MapKit
 
 class PostViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    // MARK: - Image Outlets
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var imageButton: UIButton!
+    // MARK: - Audio Outlets
+    @IBOutlet var playButton: UIButton!
+    @IBOutlet var recordButton: UIButton!
+    @IBOutlet var timeElapsedLabel: UILabel!
+    @IBOutlet var timeRemainingLabel: UILabel!
+    @IBOutlet var timeSlider: UISlider!
+    @IBOutlet weak var titleTF: UITextField!
+    
+    var coordinates: CLLocationCoordinate2D?
+    var image: UIImage?
+    var audio: URL?
+    var video: URL?
+    
+    var experienceController: ExperienceController?
+    var mapsVC: ExperiencesMapViewController?
+    
+    // MARK: - Image Properties
     let imagePC = UIImagePickerController()
     
-    var audioComments: [URL] = []
-    
+    // MARK: - Audio Properties
     private var timer: Timer?
+    
+    
+    
+    
     
     var audioPlayer: AVAudioPlayer? {
         didSet {
@@ -24,11 +48,9 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             audioPlayer?.isMeteringEnabled = true
         }
     }
-    
     var isPlaying: Bool {
         audioPlayer?.isPlaying ?? false // single line method, you can omit the return
     }
-    
     var audioRecorder: AVAudioRecorder? {
         didSet {
             audioRecorder?.isMeteringEnabled = true
@@ -39,7 +61,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var isRecording: Bool {
         audioRecorder?.isRecording ?? false
     }
-    
+    // TIMER
     private lazy var timeIntervalFormatter: DateComponentsFormatter = {
         // NOTE: DateComponentFormatter is good for minutes/hours/seconds
         // DateComponentsFormatter is not good for milliseconds, use DateFormatter instead)
@@ -51,17 +73,11 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         return formatting
     }()
     
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var imageButton: UIButton!
-    
-    @IBOutlet var playButton: UIButton!
-    @IBOutlet var recordButton: UIButton!
-    @IBOutlet var timeElapsedLabel: UILabel!
-    @IBOutlet var timeRemainingLabel: UILabel!
-    @IBOutlet var timeSlider: UISlider!
-    
+    // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // COORDINATES
         
         // IMAGE
         imagePC.delegate = self
@@ -73,9 +89,59 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                                                                    weight: .regular)
     }
     
-    @IBAction func addImage(_ sender: Any) {
+    @IBAction func Save(_ sender: Any) {
+        guard let coordinates = coordinates else { return }
+        experienceController?.createExperience(title: titleTF.text ?? "", coordinate: coordinates, video: video, audio: audio, image: image)
+        navigationController?.popViewController(animated: true)
+        print(experienceController?.experiences.last?.title ?? "nil")
+        print(experienceController?.experiences.last?.coordinate ?? "nil")
+        print(experienceController?.experiences.last?.image ?? "nil")
+        print(experienceController?.experiences.last?.audio ?? "nil")
+        print(experienceController?.experiences.last?.video ?? "nil")
+    }
+    
+    func updateViews() {
+        playButton.isSelected = isPlaying
+        recordButton.isSelected = isRecording
         
-        imagePC.allowsEditing = false
+        let elapsedTime = audioPlayer?.currentTime ?? 0
+        let duration = audioPlayer?.duration ?? 0
+        let remainingTime = duration - elapsedTime
+        timeElapsedLabel.text = timeIntervalFormatter.string(from: elapsedTime)
+        timeRemainingLabel.text = timeIntervalFormatter.string(from: remainingTime)
+        timeSlider.minimumValue = 0
+        timeSlider.maximumValue = Float(duration)
+        timeSlider.value = Float(elapsedTime)
+    }
+    
+    // MARK: - Audio Actions
+    @IBAction func togglePlayback(_ sender: Any) {
+        if isPlaying {
+            pause()
+        } else {
+            play()
+        }
+    }
+    @IBAction func toggleRecording(_ sender: Any) {
+        
+        if isRecording {
+            stopRecording()
+        } else {
+            requestPermissionOrStartRecording()
+        }
+    }
+    
+    @IBAction func updateCurrentTime(_ sender: Any) {
+        if isPlaying {
+            pause()
+        }
+        audioPlayer?.currentTime = TimeInterval(timeSlider.value)
+        updateViews()
+    }
+    
+    // MARK: - Image Actions
+    @IBAction func addImage(_ sender: Any) {
+        imagePC.allowsEditing = true
         let actionSheet = UIAlertController(title: "Photo Source", message: "Choose a source", preferredStyle: .actionSheet)
         
         actionSheet.addAction(UIAlertAction(title: "Camera", style: .default , handler: { (sction: UIAlertAction) in
@@ -95,15 +161,19 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
         self.present(actionSheet, animated: true)
-        
-        
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
-        imageView.image = image
-        //dismiss(animated: true, completion: nil)
-        imageButton.isHidden = true
+        
+        DispatchQueue.main.async {
+            self.image = image
+            NSLog("Experience Image: \(String(describing: image))")
+            self.imageView.image = image
+            self.image = image
+            self.imageButton.isHidden = true
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     /*
@@ -115,35 +185,10 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
      // Pass the selected object to the new view controller.
      }
      */
-    
-    // MARK: - Audio
-    @IBAction func togglePlayback(_ sender: Any) {
-    }
-    
-    @IBAction func toggleRecording(_ sender: Any) {
-    }
-    
-    @IBAction func updateCurrentTime(_ sender: Any) {
-    }
 }
 
+// MARK: - Audio Extension
 extension PostViewController {
-    
-    
-    func updateViews() {
-        playButton.isSelected = isPlaying
-        recordButton.isSelected = isRecording
-        
-        let elapsedTime = audioPlayer?.currentTime ?? 0
-        let duration = audioPlayer?.duration ?? 0
-        let remainingTime = duration - elapsedTime
-        timeElapsedLabel.text = timeIntervalFormatter.string(from: elapsedTime)
-        timeRemainingLabel.text = timeIntervalFormatter.string(from: remainingTime)
-        timeSlider.minimumValue = 0
-        timeSlider.maximumValue = Float(duration)
-        timeSlider.value = Float(elapsedTime)
-    }
-    
     func prepareAudioSession() throws {
         let session = AVAudioSession.sharedInstance()
         try session.setCategory(.playAndRecord, options: [.defaultToSpeaker])
@@ -229,17 +274,17 @@ extension PostViewController {
         audioRecorder?.stop()
     }
     
-    // MARK: - Playbac
-    func loadAudio() {
-        let songURL = Bundle.main.url(forResource: "piano", withExtension: "mp3")!
-        
-        audioPlayer = try? AVAudioPlayer(contentsOf: songURL)
-    }
+    // MARK: - Playback
+//    func loadAudio() {
+//        let songURL = Bundle.main.url(forResource: "piano", withExtension: "mp3")!
+//
+//        audioPlayer = try? AVAudioPlayer(contentsOf: songURL)
+//    }
     
     func play() {
         audioPlayer?.play()
         startTimer()
-        //updateViews()
+        updateViews()
     }
     
     func pause() {
@@ -267,7 +312,8 @@ extension PostViewController: AVAudioRecorderDelegate {
         
         // Setup the player to play the recording
         if let recordingURL = recordingURL {
-            audioComments.append(recordingURL)
+            self.audio = recordingURL
+            NSLog("Experience Audio: \(String(describing: audio))")
             audioPlayer = try? AVAudioPlayer(contentsOf: recordingURL)
             //FIXME: do/catch
         }

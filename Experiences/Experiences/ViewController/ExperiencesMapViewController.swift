@@ -19,11 +19,32 @@ class ExperiencesMapViewController: UIViewController {
     let regionInMeters: Double = 10000
     var preLocation: CLLocation?
     
+    var experienceController = ExperienceController()
+
+    
+    var experience: Experience?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //mapView.delegate = self
         // Do any additional setup after loading the view.
         checkLocationServices()
+        
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        mapView.addAnnotations(experienceController.experiences)
+    }
+    
+
+    // MARK: - Location
+    
+    func setupLocationManager() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
     
     func centerViewOnUserLocation() {
@@ -36,13 +57,9 @@ class ExperiencesMapViewController: UIViewController {
     func getAdress(for mapView: MKMapView) -> CLLocation {
         let latitude = mapView.centerCoordinate.latitude
         let longitude = mapView.centerCoordinate.longitude
-        
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        //NSLog("\(String(describing: experience?.coordinate))")
         return CLLocation(latitude: latitude, longitude: longitude)
-    }
-    
-    func setupLocationManager() {
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
     
     func checkLocationServices() {
@@ -75,15 +92,16 @@ class ExperiencesMapViewController: UIViewController {
         }
     }
     
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "AddPostSegue" {
+            let destinationVC = segue.destination as? PostViewController
+            destinationVC?.coordinates = locationManager.location?.coordinate
+            destinationVC?.experienceController = experienceController
+        }
     }
-    */
 }
 
 extension ExperiencesMapViewController: CLLocationManagerDelegate {
