@@ -10,6 +10,10 @@ import UIKit
 import AVFoundation
 import MapKit
 
+protocol VideoPostViewControllerDelegate {
+    func videoURL(_ url: URL)
+}
+
 class VideoPostViewController: UIViewController {
     
     enum RecordingState {
@@ -20,14 +24,24 @@ class VideoPostViewController: UIViewController {
     
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var postButton: UIButton!
-    @IBOutlet weak var geoTagButton: UIButton!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var recordingTimeLabel: UILabel!
     @IBOutlet weak var preview: CameraPreviewView!
     
     let postViewController = PostViewController()
+    var delegate: VideoPostViewControllerDelegate!
     
-    var recordingState: RecordingState = .preview
+    var recordingState: RecordingState = .preview {
+        didSet {
+            print(recordingState)
+        }
+    }
+    
+    var video: URL? {
+        didSet {
+            NSLog("Video: \(video)")
+        }
+    }
     
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
@@ -38,6 +52,7 @@ class VideoPostViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        
         preview.videoPlayerView.videoGravity = .resizeAspectFill
         
         setUpCaptureSession()
@@ -47,6 +62,7 @@ class VideoPostViewController: UIViewController {
         super.viewDidAppear(animated)
         
         captureSession.startRunning()
+        recordingState = .preview
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -61,20 +77,17 @@ class VideoPostViewController: UIViewController {
         case .preview:
             postButton.isHidden = true
             cancelButton.isHidden = false
-            geoTagButton.isHidden = true
             recordButton.isHidden = false
             recordingTimeLabel.isHidden = true
         case .recording:
             postButton.isHidden = true
             cancelButton.isHidden = true
-            geoTagButton.isHidden = true
             recordButton.isHidden = false
             //recordButton.isSelected
             recordingTimeLabel.isHidden = false
         case .readyToPost:
             postButton.isHidden = false
             cancelButton.isHidden = false
-            geoTagButton.isHidden = false
             recordButton.isHidden = true
             //recordButton.isSelected
             recordingTimeLabel.isHidden = false
@@ -142,9 +155,9 @@ class VideoPostViewController: UIViewController {
         let playerLayer = AVPlayerLayer(player: player)
         // top left corner (Fullscreen, you'd need a close button)
         var topRect = view.bounds
-        //        topRect.size.height = topRect.size.height
-        //        topRect.size.width = topRect.size.width // create a constant for the "magic number"
-        topRect.origin.y = view.layoutMargins.top
+                topRect.size.height = topRect.size.height / 2
+                topRect.size.width = topRect.size.width / 2 // create a constant for the "magic number"
+        topRect.origin.y = view.layoutMargins.top + 40
         
         playerLayer.frame = topRect
         view.layer.addSublayer(playerLayer)
@@ -171,6 +184,9 @@ class VideoPostViewController: UIViewController {
     }
     
     @IBAction func post(_ sender: Any) {
+        self.dismiss(animated: true)
+        guard let video = video else { return }
+        delegate.videoURL(video)
     }
     
     private func newRecordingURL() -> URL {
@@ -187,8 +203,10 @@ class VideoPostViewController: UIViewController {
     @IBAction func record(_ sender: Any) {
         if fileOutput.isRecording {
             fileOutput.stopRecording() // FUTURE: Play with pausing using another button
+            recordingState = .readyToPost
         } else {
             fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
+            recordingState = .recording
         }
     }
     
@@ -212,8 +230,7 @@ extension VideoPostViewController: AVCaptureFileOutputRecordingDelegate {
             NSLog("Video Recording Error: \(error)")
         } else {
             playMovie(url: outputFileURL)
-            postViewController.video = outputFileURL
-            NSLog("Experience Video: \(outputFileURL)")
+            video = outputFileURL
         }
         updateViews()
         

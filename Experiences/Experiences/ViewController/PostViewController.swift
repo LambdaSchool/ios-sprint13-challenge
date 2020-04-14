@@ -10,8 +10,12 @@ import UIKit
 import UIKit.UIKitCore
 import AVFoundation
 import MapKit
+import CoreImage
+import CoreImage.CIFilterBuiltins
+import Photos
 
 class PostViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
     
     // MARK: - Image Outlets
     @IBOutlet weak var imageView: UIImageView!
@@ -24,23 +28,20 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     @IBOutlet var timeSlider: UISlider!
     @IBOutlet weak var titleTF: UITextField!
     
+    // MARK: - Properties
     var coordinates: CLLocationCoordinate2D?
     var image: UIImage?
     var audio: URL?
     var video: URL?
     
     var experienceController: ExperienceController?
-    var mapsVC: ExperiencesMapViewController?
     
     // MARK: - Image Properties
     let imagePC = UIImagePickerController()
+    private let context = CIContext(options: nil)
     
     // MARK: - Audio Properties
     private var timer: Timer?
-    
-    
-    
-    
     
     var audioPlayer: AVAudioPlayer? {
         didSet {
@@ -48,9 +49,11 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             audioPlayer?.isMeteringEnabled = true
         }
     }
+    
     var isPlaying: Bool {
         audioPlayer?.isPlaying ?? false // single line method, you can omit the return
     }
+    
     var audioRecorder: AVAudioRecorder? {
         didSet {
             audioRecorder?.isMeteringEnabled = true
@@ -76,12 +79,10 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // COORDINATES
-        
+        // TITLE
+        titleTF.delegate = self
         // IMAGE
         imagePC.delegate = self
-        
         // AUDIO
         timeElapsedLabel.font = UIFont.monospacedDigitSystemFont(ofSize: timeElapsedLabel.font.pointSize,
                                                                  weight: .regular)
@@ -93,11 +94,11 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         guard let coordinates = coordinates else { return }
         experienceController?.createExperience(title: titleTF.text ?? "", coordinate: coordinates, video: video, audio: audio, image: image)
         navigationController?.popViewController(animated: true)
-        print(experienceController?.experiences.last?.title ?? "nil")
-        print(experienceController?.experiences.last?.coordinate ?? "nil")
-        print(experienceController?.experiences.last?.image ?? "nil")
-        print(experienceController?.experiences.last?.audio ?? "nil")
-        print(experienceController?.experiences.last?.video ?? "nil")
+        print("Title: \(experienceController?.experiences.last?.title)")
+        print("Coordinates: \(experienceController?.experiences.last?.coordinate)")
+        print("Image: \(experienceController?.experiences.last?.image)")
+        print("Audio: \(experienceController?.experiences.last?.audio)")
+        print("Video: \(experienceController?.experiences.last?.video)")
     }
     
     func updateViews() {
@@ -163,28 +164,49 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         self.present(actionSheet, animated: true)
     }
     
+    func filterImage(_ image: UIImage) -> UIImage? {
+        
+        // UIImage -> CGImage (CoreGrephics) -> CIImage (CoreImage)
+        guard let cgImage = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+        // Filter
+        let filter = CIFilter.dotScreen()
+        filter.inputImage = ciImage
+        
+        guard let outputCIImage = filter.outputImage else { return nil }
+        guard let outputCGImage = context.createCGImage(outputCIImage,
+        from: CGRect(origin: .zero, size: image.size)) else { return nil }
+        
+        // CIImage -> CGImage -> UIImage
+        return UIImage(cgImage: outputCGImage)
+        
+        
+    }
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
         
+        let editedImage = filterImage(image)
+        
         DispatchQueue.main.async {
-            self.image = image
-            NSLog("Experience Image: \(String(describing: image))")
-            self.imageView.image = image
-            self.image = image
+            NSLog("Experience Image: \(String(describing: editedImage))")
+            self.imageView.image = editedImage
+            self.image = editedImage
             self.imageButton.isHidden = true
             self.dismiss(animated: true, completion: nil)
         }
     }
     
-    /*
      // MARK: - Navigation
      
      // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
+        if segue.identifier == "RecordVideoSegue" {
+            let destinationVC = segue.destination as? VideoPostViewController
+            //destinationVC?.experienceController = experienceController
+            destinationVC?.delegate = self
+        }
      }
-     */
 }
 
 // MARK: - Audio Extension
@@ -249,11 +271,9 @@ extension PostViewController {
     // MARK: - Recorder
     func createNewRecordingURL() -> URL {
         let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        
         let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
         let file = documents.appendingPathComponent(name, isDirectory: false)
-        
-        //        print("recording URL: \(file)")
+
         return file
     }
     
@@ -261,7 +281,6 @@ extension PostViewController {
         let recordingURL = createNewRecordingURL().appendingPathExtension("caf")
         self.recordingURL = recordingURL
         // Setup the AVAudioRecorder and record
-        // 44.1 KHZ = FM radio quality
         let audioFormat = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
         audioRecorder = try? AVAudioRecorder(url: recordingURL, format: audioFormat) // FIXME: error logic
         audioRecorder?.delegate = self
@@ -275,12 +294,6 @@ extension PostViewController {
     }
     
     // MARK: - Playback
-//    func loadAudio() {
-//        let songURL = Bundle.main.url(forResource: "piano", withExtension: "mp3")!
-//
-//        audioPlayer = try? AVAudioPlayer(contentsOf: songURL)
-//    }
-    
     func play() {
         audioPlayer?.play()
         startTimer()
@@ -300,6 +313,7 @@ extension PostViewController: AVAudioPlayerDelegate {
     }
     
     func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        
         if let error = error {
             NSLog("Audio Player Decode Error: \(error)")
         }
@@ -326,5 +340,18 @@ extension PostViewController: AVAudioRecorderDelegate {
             NSLog("Audio Recorder Error: \(error)")
         }
         updateViews()
+    }
+}
+
+extension PostViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+}
+
+extension PostViewController: VideoPostViewControllerDelegate {
+    func videoURL(_ url: URL) {
+        video = url
     }
 }

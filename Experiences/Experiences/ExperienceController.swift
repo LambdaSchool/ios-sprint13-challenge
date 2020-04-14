@@ -11,7 +11,11 @@ import MapKit
 
 class ExperienceController {
     
-    var experiences: [Experience] = []
+    var experiences: [Experience] = [] {
+        didSet {
+            print("Experiences: \(experiences)")
+        }
+    }
     
     func createExperience(title: String, coordinate: CLLocationCoordinate2D, video: URL? = nil, audio: URL? = nil, image: UIImage?) {
 

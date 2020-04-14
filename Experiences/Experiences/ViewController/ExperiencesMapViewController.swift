@@ -20,23 +20,29 @@ class ExperiencesMapViewController: UIViewController {
     var preLocation: CLLocation?
     
     var experienceController = ExperienceController()
-
     
     var experience: Experience?
     
+    var annotations: [MKAnnotation] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //mapView.delegate = self
+        mapView.delegate = self
         // Do any additional setup after loading the view.
         checkLocationServices()
-        
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        mapView.addAnnotations(experienceController.experiences)
+        for experience in experienceController.experiences {
+            let annotation = ExperienceAnnotation(title: experience.title, coordinate: experience.coordinate)
+            annotations.append(annotation)
+        }
+        mapView.addAnnotations(annotations)
+        mapView.showAnnotations(annotations, animated: true)
+        print(mapView.annotations.count)
     }
     
 
@@ -148,5 +154,16 @@ extension ExperiencesMapViewController: MKMapViewDelegate {
             }
             
         }
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier) as? MKMarkerAnnotationView {
+            annotationView.animatesWhenAdded = true
+            annotationView.titleVisibility = .adaptive
+            
+            return annotationView
+        }
+        
+        return nil
     }
 }
