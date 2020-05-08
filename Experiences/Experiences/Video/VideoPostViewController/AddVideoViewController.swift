@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class VideoPostViewController: ShiftableViewController {
+class AddVideoViewController: UIViewController {
 
     // MARK: - Private Properties
     
@@ -21,7 +21,6 @@ class VideoPostViewController: ShiftableViewController {
     
     @IBOutlet weak var playerView: VideoPlayerView!
     @IBOutlet weak var playPauseButton: UIBarButtonItem!
-    @IBOutlet weak var titleTextField: UITextField! { didSet { titleTextField.delegate = self }}
     
     // MARK: - View Lifecycle
     
@@ -104,25 +103,9 @@ class VideoPostViewController: ShiftableViewController {
         player = nil
         showCamera()
     }
-    
-    @IBAction func sendTapped(_ sender: Any) {
-        guard
-            let player = player,
-            let url = player.assetURL,
-            let title = titleTextField.text else { return }
-        
-        print("Sending the video titled \"\(title)\" with url: \(url)")
-    }
-    
-    // MARK: - Text Field Delegate
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
 }
 
-extension VideoPostViewController: VideoRecorderDelegate {
+extension AddVideoViewController: VideoRecorderDelegate {
     func didRecordVideo(to url: URL) {
         player = AVPlayer(url: url)
     }
