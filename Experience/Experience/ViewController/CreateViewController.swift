@@ -56,8 +56,8 @@ class CreateViewController: UIViewController {
     
     
     @IBAction func saveExp(_ sender: Any) {
-        guard let location = location, let title = titleTextField.text, !title.isEmpty else {return}
-        experiences?.create(title: title, latitude: <#T##Double#>, longitude: <#T##Double#>)
+        guard let title = titleTextField.text, !title.isEmpty else {return}
+        experiences?.create(title: title, latitude: Double(Int.random(in: 47_200_953...48_083_626)) / 1_000_000, longitude: Double(Int.random(in: (-122_564_484)...(-121_963_246))) / 1_000_000)
         navigationController?.popViewController(animated: true)
         //experience?.lat =
     }
