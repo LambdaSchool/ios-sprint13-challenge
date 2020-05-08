@@ -12,6 +12,7 @@ class AddViewController: UIViewController {
 
     // MARK: - Properites
     var experienceController: ExperienceController?
+    var delegate: MapViewController?
 
     // If this object exists, it's a view/update situation.
     var experience: Experience? {
@@ -27,14 +28,22 @@ class AddViewController: UIViewController {
     // MARK: - Actions
     @IBAction func saveButton(_ sender: UIBarButtonItem) {
         guard let ec = experienceController,
+            let delegate = delegate,
             let title = titleTextField.text,
             title.count > 0 else {
             // TODO: Add a dialog saying why you can't save.
             return
         }
 
+        let coordinates = delegate.whereAmI()
+
         if experience == nil {
-            ec.create(title: title, audioClip: audioClip, image: image, videoClip: videoClip)
+            ec.create(title: title,
+                      audioClip: audioClip,
+                      image: image,
+                      videoClip: videoClip,
+                      latitude: coordinates.latitude,
+                      longitude: coordinates.longitude)
         }
 
         navigationController?.popViewController(animated: true)

@@ -16,6 +16,8 @@ class MapViewController: UIViewController {
 
     var experienceController = ExperienceController()
 
+    private let locManager = CLLocationManager()
+
     // MARK: - Actions
 
 
@@ -27,6 +29,8 @@ class MapViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        startLocationManager()
 
         mapView.delegate = self
 
@@ -53,12 +57,33 @@ class MapViewController: UIViewController {
         if segue.identifier == "AddSegue" {
             guard let vc = segue.destination as? AddViewController else { return }
             vc.experienceController = experienceController
+            vc.delegate = self
         }
+    }
+
+    // MARK: - Public
+    func whereAmI() -> (latitude: Double, longitude: Double){
+
+        let lat = locManager.location?.coordinate.latitude ?? 0.0
+        let long = locManager.location?.coordinate.longitude ?? 0.0
+
+        return (latitude: lat, longitude: long)
     }
 
     // MARK: - Private
 
+    private func startLocationManager() {
+        // Ask for Authorisation from the User.
+        locManager.requestAlwaysAuthorization()
 
+        // For use in foreground
+        locManager.requestWhenInUseAuthorization()
+
+        if CLLocationManager.locationServicesEnabled() {
+            locManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locManager.startUpdatingLocation()
+        }
+    }
 }
 
 extension MapViewController: MKMapViewDelegate {
