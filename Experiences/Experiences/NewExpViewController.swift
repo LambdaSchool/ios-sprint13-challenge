@@ -51,13 +51,15 @@ class NewExpViewController: UIViewController {
         super.viewWillAppear(animated)
 
         print(audioURL)
+        print(videoURL)
     }
 
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "VideoRecordShowSegue" {
-
+            guard let destination = segue.destination as? CameraViewViewController else { fatalError("Programmer error") }
+            destination.newExpController = self
         } else if segue.identifier == "AudioRecordShowSegue" {
             guard let destination = segue.destination as? AudioRecordViewController else { fatalError("Programmer error") }
             destination.newExpController = self
