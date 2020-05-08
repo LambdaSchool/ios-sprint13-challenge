@@ -47,7 +47,7 @@ class AddExperienceViewController: UIViewController {
     }
     @IBAction func saveWithoutVideo(_ sender: Any) {
         saveCurrentExperience()
-        navigationController?.popViewController(animated: true)
+        performSegue(withIdentifier: "saveWithoutVideoSegue", sender: self)
     }
     
     // MARK: - View Methods
