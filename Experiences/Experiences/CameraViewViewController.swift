@@ -11,7 +11,9 @@ import AVFoundation
 
 class CameraViewViewController: UIViewController {
 
-    private var player: AVPlayer! // we promise to set it before using it ... or it'll crash!
+    private var player: AVPlayer!
+    private var videoURL: URL?
+    var newExpController: NewExpViewController?
 
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
@@ -89,6 +91,25 @@ class CameraViewViewController: UIViewController {
 
     @IBAction func recordButtonPressed(_ sender: Any) {
         toggleRecord()
+    }
+
+    @IBAction func cancelButtonTapped(_ sender: Any) {
+        guard let url = videoURL else { return }
+        do {
+            try FileManager.default.removeItem(at: url)
+            navigationController?.popViewController(animated: true)
+            dismiss(animated: true, completion: nil)
+            self.navigationController?.popViewController(animated: true)
+        } catch {
+            NSLog("error deleting: \(error)")
+        }
+    }
+
+    @IBAction func saveButtonTapped(_ sender: Any) {
+        guard let videoURL = videoURL else { return }
+        newExpController?.videoURL = videoURL.path
+        dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
 
     private func toggleRecord() {
@@ -175,6 +196,8 @@ extension CameraViewViewController: AVCaptureFileOutputRecordingDelegate {
         if let error = error {
             print("Error saving video: \(error)")
         } else {
+            //save url
+            self.videoURL = outputFileURL
             // show movie
             playMovie(url: outputFileURL)
         }
