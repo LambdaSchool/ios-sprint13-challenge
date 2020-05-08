@@ -42,8 +42,8 @@ class AddVideoViewController: UIViewController {
     // MARK: - View Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        videoView.videoPlayerView.videoGravity = .resizeAspectFill
         setUpCaptureSession()
+        videoView.videoPlayerView.videoGravity = .resizeAspectFill
         view.addSubview(playerView)
     }
     
