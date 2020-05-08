@@ -18,7 +18,6 @@ class RecordVideoViewController: UIViewController {
     // MARK: - IBOutlets
     @IBOutlet weak var cameraView: CameraPreviewView!
     @IBOutlet weak var recordButton: UIButton!
-    
     @IBOutlet weak var cancelButton: UIButton!
     
     // MARK: - Properties
@@ -129,7 +128,6 @@ extension RecordVideoViewController: AVCaptureFileOutputRecordingDelegate {
         if let error = error {
             print("Error saving video: \(error)")
         } else {
-            
             delegate?.recordedVideoURL(url: outputFileURL)
             print("Video Recorded. Passing URL: \(outputFileURL)")
             dismiss(animated: true, completion: nil)

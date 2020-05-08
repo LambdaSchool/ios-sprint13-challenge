@@ -38,6 +38,7 @@ class AddExperienceViewController: UIViewController {
     @IBOutlet weak var saveButton: UIButton!
     
     // MARK: - Properties
+    var experienceController: ExperienceController?
     let locationManager = CLLocationManager()
     var recordedVideoURL: URL?
 
@@ -100,6 +101,10 @@ class AddExperienceViewController: UIViewController {
     }
     
     @IBAction func saveButtonTapped(_ sender: Any) {
+        guard let title = titleTextField.text, !title.isEmpty else { return }
+        //TODO: FINISH THIS ACTION
+        experienceController?.createExperience(name: title, image: nil, audioURL: nil, videoURL: recordedVideoURL, longitude: 0, latitude: 0)
+        navigationController?.popViewController(animated: true)
     }
 
     // MARK: - Navigation
