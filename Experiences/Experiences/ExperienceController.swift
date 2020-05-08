@@ -43,6 +43,17 @@ class ExperienceController {
     // Read
 
     // Update
+    func update(experience exp: Experience,
+                title: String?,
+                audioClip: URL?,
+                image: UIImage?,
+                videoClip: URL?) {
+
+        exp.title = title
+        exp.audioClip = audioClip
+        exp.image = image
+        exp.videoClip = videoClip
+    }
 
     // Delete
 

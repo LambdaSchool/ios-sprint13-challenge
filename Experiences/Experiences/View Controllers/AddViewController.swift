@@ -70,7 +70,13 @@ class AddViewController: UIViewController {
 
         let coordinates = delegate.whereAmI()
 
-        if experience == nil {
+        if let experience = experience {
+            ec.update(experience: experience,
+                      title: title,
+                      audioClip: audioClip,
+                      image: imageView.image,
+                      videoClip: videoClip)
+        } else {
             ec.create(title: title,
                       audioClip: audioClip,
                       image: imageView.image,
