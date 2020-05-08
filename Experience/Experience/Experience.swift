@@ -7,15 +7,29 @@
 //
 
 import Foundation
+import MapKit
 
 class Experience: NSObject, Codable {
-    let lat: Double
-    let log: Double
-    let title: String
+    let latitude: Double
+    let longitude: Double
+    var expTitle: String
     
-    init(lat: Double, log: Double, title: String) {
-        self.lat = lat
-        self.log = log
-        self.title = title
+    init(latitude: Double, longitude: Double, expTitle: String) {
+        self.longitude = longitude
+        self.latitude = latitude
+        self.expTitle = expTitle
     }
 }
+extension Experience: MKAnnotation {
+
+    var coordinate: CLLocationCoordinate2D {
+
+    CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
+}
+
+
+class Experiences {
+    var experiences: [Experience] = []
+}
+

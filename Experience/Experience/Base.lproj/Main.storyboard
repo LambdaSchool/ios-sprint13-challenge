@@ -31,7 +31,7 @@
                     <navigationItem key="navigationItem" title="Experience" id="DA7-pf-hUW">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="xXC-C1-13o">
                             <connections>
-                                <segue destination="Vfj-q7-Rr0" kind="show" id="iYd-o4-P3e"/>
+                                <segue destination="Vfj-q7-Rr0" kind="show" identifier="AddExpSegue" id="iYd-o4-P3e"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -43,16 +43,16 @@
             </objects>
             <point key="canvasLocation" x="1042.0289855072465" y="132.58928571428572"/>
         </scene>
-        <!--View Controller-->
+        <!--Location View Controller-->
         <scene sceneID="dUk-aj-bzI">
             <objects>
-                <viewController id="Ypg-af-C8g" sceneMemberID="viewController">
+                <viewController id="Ypg-af-C8g" customClass="LocationViewController" customModule="Experience" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="G16-Is-hM4">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h4a-gq-6hR">
-                                <rect key="frame" x="107" y="150" width="200" height="50"/>
+                                <rect key="frame" x="107" y="290" width="200" height="50"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="SWn-GQ-Cc6"/>
@@ -62,15 +62,18 @@
                                 <state key="normal" title="Current Location">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="currentLocationTapped:" destination="Ypg-af-C8g" eventType="touchUpInside" id="6mg-Vz-cWL"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Or Type Your Location Below:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nOF-rD-Pmj">
-                                <rect key="frame" x="94.5" y="245" width="225" height="21"/>
+                                <rect key="frame" x="94.5" y="385" width="225" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="city, country" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f07-3C-1Cg">
-                                <rect key="frame" x="30" y="311" width="354" height="50"/>
+                                <rect key="frame" x="30" y="451" width="354" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="EmI-6h-H3p"/>
                                 </constraints>
@@ -78,7 +81,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c4Y-nI-LEw">
-                                <rect key="frame" x="132" y="461" width="150" height="60"/>
+                                <rect key="frame" x="132" y="601" width="150" height="60"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="Hj1-7d-Vcy"/>
@@ -87,6 +90,9 @@
                                 <state key="normal" title="Save">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="saveLocationTapped:" destination="Ypg-af-C8g" eventType="touchUpInside" id="Znj-JT-pNs"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -103,6 +109,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hsa-8b-hY1"/>
                     </view>
+                    <navigationItem key="navigationItem" id="fYs-n9-UFh"/>
+                    <connections>
+                        <outlet property="locationTextField" destination="f07-3C-1Cg" id="So3-y8-HfA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="61d-iY-N9g" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -116,32 +126,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p8e-Sa-KTG">
+                                <rect key="frame" x="57" y="170" width="300" height="36"/>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="ybP-v6-msL"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Choose/Change Location">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="Ypg-af-C8g" kind="show" identifier="ChooseLocationSegue" id="hUf-hV-RnM"/>
+                                </connections>
+                            </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rpB-8W-JgN">
-                                <rect key="frame" x="0.0" y="226" width="414" height="40"/>
+                                <rect key="frame" x="0.0" y="331" width="414" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="wGW-j5-ljk"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p8e-Sa-KTG">
-                                <rect key="frame" x="107" y="170" width="200" height="36"/>
-                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="ybP-v6-msL"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Choose Location">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <segue destination="Ypg-af-C8g" kind="popoverPresentation" popoverAnchorView="p8e-Sa-KTG" id="hUf-hV-RnM">
-                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                    </segue>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q9j-FN-UnJ">
-                                <rect key="frame" x="162" y="316" width="90" height="30"/>
+                                <rect key="frame" x="162" y="421" width="90" height="30"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="rVm-jV-2b5"/>
@@ -154,7 +162,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="blt-XT-jJG">
-                                <rect key="frame" x="162" y="366" width="90" height="30"/>
+                                <rect key="frame" x="162" y="471" width="90" height="30"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="pAH-pl-JSB"/>
@@ -167,11 +175,19 @@
                                     <segue destination="FTL-hQ-Exu" kind="presentation" identifier="ShowCamera" modalPresentationStyle="fullScreen" id="qKw-wT-3f2"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pjq-lR-nV3">
+                                <rect key="frame" x="160.5" y="251" width="93" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="rpB-8W-JgN" firstAttribute="top" secondItem="p8e-Sa-KTG" secondAttribute="bottom" constant="20" id="CDO-K6-5Ka"/>
+                            <constraint firstItem="pjq-lR-nV3" firstAttribute="top" secondItem="p8e-Sa-KTG" secondAttribute="bottom" constant="45" id="Etp-bN-fnK"/>
                             <constraint firstItem="rpB-8W-JgN" firstAttribute="leading" secondItem="PVe-9D-C14" secondAttribute="leading" id="GI8-TS-aY2"/>
+                            <constraint firstItem="pjq-lR-nV3" firstAttribute="centerX" secondItem="CCg-D2-KuO" secondAttribute="centerX" id="Iif-Q8-gKM"/>
+                            <constraint firstItem="rpB-8W-JgN" firstAttribute="top" secondItem="pjq-lR-nV3" secondAttribute="bottom" constant="50" id="MJt-8n-7ZD"/>
                             <constraint firstItem="p8e-Sa-KTG" firstAttribute="centerX" secondItem="CCg-D2-KuO" secondAttribute="centerX" id="Opm-qD-CJe"/>
                             <constraint firstItem="blt-XT-jJG" firstAttribute="centerX" secondItem="CCg-D2-KuO" secondAttribute="centerX" id="Pxf-el-sY5"/>
                             <constraint firstItem="blt-XT-jJG" firstAttribute="top" secondItem="Q9j-FN-UnJ" secondAttribute="bottom" constant="20" id="QQk-ez-046"/>
@@ -183,8 +199,16 @@
                         <viewLayoutGuide key="safeArea" id="PVe-9D-C14"/>
                     </view>
                     <navigationItem key="navigationItem" id="wdE-xl-vJ8">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="ceS-29-YT9"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="ceS-29-YT9">
+                            <connections>
+                                <action selector="saveExp:" destination="Vfj-q7-Rr0" id="c6Z-ZU-rfD"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="locationLabel" destination="pjq-lR-nV3" id="S7e-8S-jkJ"/>
+                        <outlet property="titleTextField" destination="rpB-8W-JgN" id="ceb-Hs-n2d"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Nr-Sg-sJw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
