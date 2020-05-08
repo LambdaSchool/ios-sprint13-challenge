@@ -10,6 +10,14 @@ import UIKit
 
 class ExperienceViewController: UIViewController {
 
+    // MARK: - Public Properties
+    
+    var experienceController: ExperienceController?
+    
+    // MARK: - IBOutlets
+    
+    // MARK: - View Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
