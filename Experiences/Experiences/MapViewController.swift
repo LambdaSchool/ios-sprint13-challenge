@@ -34,15 +34,14 @@ class MapViewController: UIViewController {
         mapView.addAnnotations(experienceController.experiences)
     }
 
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "NewExpShowSegue" {
+            guard let destination = segue.destination as? NewExpViewController else { fatalError("Programmer error") }
+            destination.experienceController = experienceController
+        }
     }
-    */
 
     @IBAction func addButtonTapped(_ sender: Any) {
         if experienceController.locationPermission() {

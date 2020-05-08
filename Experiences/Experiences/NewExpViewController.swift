@@ -11,6 +11,7 @@ import UIKit
 class NewExpViewController: UIViewController {
 
     // MARK: - Properties
+    var experienceController: ExperienceController!
 
     // MARK: - Outlets
 
