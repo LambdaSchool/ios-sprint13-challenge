@@ -14,15 +14,15 @@ class Experience: NSObject {
     var content: String
     var videoURL: String?
     var imageData: Data?
-    var auddioURL: String?
+    var audioURL: String?
     var geoTag: CLLocationCoordinate2D
 
-    internal init(expTitle: String, content: String, geoTag: CLLocationCoordinate2D, videoURL: String? = nil, imageData: Data? = nil, auddioURL: String? = nil) {
+    internal init(expTitle: String, content: String, geoTag: CLLocationCoordinate2D, videoURL: String? = nil, imageData: Data? = nil, audioURL: String? = nil) {
         self.expTitle = expTitle
         self.content = content
         self.videoURL = videoURL
         self.imageData = imageData
-        self.auddioURL = auddioURL
+        self.audioURL = audioURL
         self.geoTag = geoTag
     }
 }
