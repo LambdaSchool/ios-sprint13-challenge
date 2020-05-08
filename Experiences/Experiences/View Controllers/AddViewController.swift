@@ -11,7 +11,12 @@ import UIKit
 class AddViewController: UIViewController {
 
     // MARK: - Properites
-
+    var experienceController: ExperienceController?
+    var experience: Experience? {
+        didSet {
+            updateViews()
+        }
+    }
 
     // MARK: - Actions
     @IBAction func saveButton(_ sender: UIBarButtonItem) {
@@ -30,4 +35,7 @@ class AddViewController: UIViewController {
     }
     
     // MARK: - Private
+    private func updateViews() {
+        
+    }
 }

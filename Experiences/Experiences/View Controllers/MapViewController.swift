@@ -14,7 +14,7 @@ class MapViewController: UIViewController {
 
     // MARK: - Properites
 
-    var experiences: [Experience] = []
+    var experienceController = ExperienceController()
 
     // MARK: - Actions
 
@@ -33,13 +33,13 @@ class MapViewController: UIViewController {
         // MKMarkerAnnotationView like a table view cell
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "PostView")
 
-        print("Total posts: \(experiences.count)")
+        print("Total posts: \(experienceController.experiences.count)")
 
         DispatchQueue.main.async {
-            self.mapView.addAnnotations(self.experiences)
+            self.mapView.addAnnotations(self.experienceController.experiences)
 
             // Center the map based on the first element
-            guard let post = self.experiences.first else { return }
+            guard let post = self.experienceController.experiences.first else { return }
 
             let span = MKCoordinateSpan(latitudeDelta: 2, longitudeDelta: 2)
             let region = MKCoordinateRegion(center: post.coordinate, span: span)
@@ -47,7 +47,17 @@ class MapViewController: UIViewController {
         }
     }
 
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AddSegue" {
+            guard let vc = segue.destination as? AddViewController else { return }
+            vc.experienceController = experienceController
+        }
+    }
+
     // MARK: - Private
+
 
 }
 
