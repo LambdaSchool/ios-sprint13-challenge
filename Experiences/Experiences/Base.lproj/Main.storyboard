@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Kfe-Ze-WVN">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Your Experiences-->
+        <scene sceneID="JtL-r5-V6O">
+            <objects>
+                <viewController id="Q6Q-PG-eBf" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Xzs-GG-uxN">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bST-cc-fne">
+                                <rect key="frame" x="164" y="257" width="86" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Add A photo"/>
+                                <connections>
+                                    <segue destination="qzn-c1-tvA" kind="show" identifier="AddPhotoTapped" id="Gvf-ry-U2Q"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yAR-yZ-YVh">
+                                <rect key="frame" x="150" y="318" width="115" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Add A Recording"/>
+                                <connections>
+                                    <segue destination="nSF-P8-KG1" kind="show" identifier="AddRecordingTapped" id="aJR-Dw-rk8"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="5bO-g1-QBm"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Your Experiences" id="RKd-ue-7Rg">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="map" catalog="system" id="d7V-lz-50e">
+                            <connections>
+                                <segue destination="BYZ-38-t0r" kind="show" identifier="MapTapped" id="XyJ-g9-RCE"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lqF-Hb-7GU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="164" y="155"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="MqC-aY-7W5">
+            <objects>
+                <viewController id="nSF-P8-KG1" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="b6m-8L-9Cx">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="FOl-yL-Juf"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Aut-Tz-N6x"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3ps-72-ehT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="732" y="998"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="3Au-Ij-RFr">
+            <objects>
+                <viewController id="qzn-c1-tvA" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lne-OM-Saz">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="mOX-8O-3zI"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="XjH-um-mdW"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GKA-xd-zxq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-397" y="998"/>
+        </scene>
+        <!--Your Map-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="da1-wN-uoc">
+                                <rect key="frame" x="0.0" y="140" width="414" height="756"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Your Map" id="3Su-gy-pbQ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1323" y="108"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="hUQ-Md-IWA">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Kfe-Ze-WVN" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="xZ2-6Q-TsE">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Q6Q-PG-eBf" kind="relationship" relationship="rootViewController" id="upG-v0-qEW"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6le-jI-h2i" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1174" y="108"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="map" catalog="system" width="128" height="113"/>
+    </resources>
+</document>
