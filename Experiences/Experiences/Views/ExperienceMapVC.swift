@@ -18,15 +18,19 @@ class ExperienceMapVC: UIViewController {
     var location2d: CLLocationCoordinate2D?
     var experience: Experience?
     
-    var mapPins: [MapPin]
+    var mapPins: [MapPin]?
+    var mapPin: MapPin?
     
-    init() {
-        self.location = locationMan.location!
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        self.mapPins = []
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
+    
     
     
     // NOTE: You need to import MapKit to link to MKMapView
@@ -43,7 +47,8 @@ class ExperienceMapVC: UIViewController {
             coord.latitude = latitude ?? Double(2)
             coord.longitude = long ?? Double(3)
             let mapPin = MapPin(coordinate: coord, title: experience.title ?? "", subtitle: experience.description ?? "", experience: experience)
-        mapPins.append(mapPin)
+            self.mapPin = mapPin
+            self.mapPins?.append(mapPin)
       
     }
     }
@@ -53,7 +58,11 @@ class ExperienceMapVC: UIViewController {
         if segue.identifier == "New Experience" {
             if let imageTitleVC = segue.destination as? DiscBlurViewController {
             imageTitleVC.experienceCon = self.experienceCon
-        }
+            } else if segue.identifier == "mapToDetail" {
+                if let detailVc = segue.destination as? MapDetailViewController {
+                    detailVc.pin = mapPin
+                }
+            }
         }
     }
 	override func viewDidLoad() {
@@ -72,9 +81,9 @@ class ExperienceMapVC: UIViewController {
          let locationManager = CLLocationManager()
             locationManager.requestAlwaysAuthorization()
             DispatchQueue.main.async {
-                self.mapView.addAnnotations(self.mapPins)
+                mapView.annotations = mapPins
                 
-                guard let pin = self.mapPins.first else { return }
+                guard let pin = self.mapPins?.first else { return }
                 
                 let span = MKCoordinateSpan(latitudeDelta: 2, longitudeDelta: 2)
                 let region = MKCoordinateRegion(center: pin.coordinate, span: span)
@@ -102,9 +111,11 @@ extension ExperienceMapVC: MKMapViewDelegate {
         annotationView.markerTintColor = .red
          
         
-        annotationView.canShowCallout = true
-        let detailView = MapDetailViewController(nibName: nil, bundle: Bundle.main, mapPin: pin)
-        annotationView.detailCalloutAccessoryView = detailView
+        
+        if annotationView.isSelected {
+            performSegue(withIdentifier: "mapToDetail", sender: self)
+        }
+        
         
         
         return annotationView

@@ -17,9 +17,9 @@ class DiscBlurViewController: UIViewController {
     var experienceCon: ExperienceController?
 
     @IBAction func nextButton(_ sender: Any) {
-        experienceCon.image = imageView.image
-        experienceCon.postTitle = titleTF.text
-        experienceCon.description = descriptionTF.text
+        experienceCon!.image = imageView.image
+        experienceCon!.postTitle = titleTF.text
+        experienceCon?.description = descriptionTF.text
         performSegue(withIdentifier: "firstToSecond", sender: (Any).self)
     }
     
