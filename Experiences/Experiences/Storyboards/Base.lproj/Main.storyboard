@@ -151,21 +151,48 @@
             </objects>
             <point key="canvasLocation" x="2066.666666666667" y="-110.49107142857143"/>
         </scene>
-        <!--View Controller-->
+        <!--Record Video View Controller-->
         <scene sceneID="Ke8-08-yvd">
             <objects>
-                <viewController id="iEw-Uq-1wq" sceneMemberID="viewController">
+                <viewController id="iEw-Uq-1wq" customClass="RecordVideoViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="y27-ek-TtU">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SZI-SO-Gx5" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="140" width="414" height="722"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0jE-my-6cp">
+                                        <rect key="frame" x="169.5" y="637" width="75" height="75"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="75" id="0mk-YH-F1u"/>
+                                            <constraint firstAttribute="height" constant="75" id="HZq-fa-By2"/>
+                                        </constraints>
+                                        <state key="normal" image="circle" catalog="system"/>
+                                        <state key="selected" image="stop.circle" catalog="system"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="0jE-my-6cp" secondAttribute="bottom" constant="10" id="0ec-xy-Y7a"/>
+                                    <constraint firstItem="0jE-my-6cp" firstAttribute="centerX" secondItem="SZI-SO-Gx5" secondAttribute="centerX" id="zma-Vf-IBw"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="SZI-SO-Gx5" firstAttribute="leading" secondItem="Wyr-j6-2KW" secondAttribute="leading" id="CbK-t5-7ft"/>
+                            <constraint firstItem="Wyr-j6-2KW" firstAttribute="bottom" secondItem="SZI-SO-Gx5" secondAttribute="bottom" id="PGD-u7-mHi"/>
+                            <constraint firstItem="SZI-SO-Gx5" firstAttribute="trailing" secondItem="Wyr-j6-2KW" secondAttribute="trailing" id="U1d-Hy-XGc"/>
+                            <constraint firstItem="SZI-SO-Gx5" firstAttribute="top" secondItem="Wyr-j6-2KW" secondAttribute="top" id="XDN-V9-KDB"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Wyr-j6-2KW"/>
                     </view>
                     <navigationItem key="navigationItem" id="Vv5-WG-p9y"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ax1-7L-vPh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2744" y="-109"/>
+            <point key="canvasLocation" x="2816" y="-110"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="wbZ-Mc-dOe">
@@ -187,7 +214,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="circle" catalog="system" width="128" height="121"/>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
         <image name="mic.fill" catalog="system" width="108" height="128"/>
+        <image name="stop.circle" catalog="system" width="128" height="121"/>
     </resources>
 </document>
