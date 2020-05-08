@@ -10,12 +10,24 @@ import UIKit
 
 class AddExperienceViewController: UIViewController {
     
+    // MARK: - Properties
     
-
+    // MARK: - IBOutlets
+    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var addImageButton: UIButton!
+    
+    // MARK: - IBActions
+    @IBAction func addImage(_ sender: Any) {
+    }
+    @IBAction func recordAudio(_ sender: Any) {
+    }
+    @IBAction func nextButtonTapped(_ sender: Any) {
+    }
+    
+    // MARK: - View Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
 

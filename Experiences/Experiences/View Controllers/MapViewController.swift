@@ -19,7 +19,7 @@ class MapViewController: UIViewController {
     @IBAction func addExperience(_ sender: Any) {
     }
     
-    
+    // MARK: - View Methods
     override func viewDidLoad() {
         super.viewDidLoad()
 

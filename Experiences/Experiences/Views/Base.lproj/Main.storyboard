@@ -85,12 +85,18 @@
                                 <rect key="frame" x="141.5" y="356.5" width="131" height="44"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
                                 <state key="normal" title="Add Image"/>
+                                <connections>
+                                    <action selector="addImage:" destination="ZQU-EZ-4wz" eventType="touchUpInside" id="A7p-rI-ybx"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iaQ-CY-tDJ">
                                 <rect key="frame" x="125" y="533" width="164" height="44"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
                                 <state key="normal" title="Record Audio"/>
                                 <state key="selected" title="Stop Recording"/>
+                                <connections>
+                                    <action selector="recordAudio:" destination="ZQU-EZ-4wz" eventType="touchUpInside" id="l7T-wu-v4T"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -115,9 +121,17 @@
                         <viewLayoutGuide key="safeArea" id="tY2-8B-V81"/>
                     </view>
                     <navigationItem key="navigationItem" id="6vr-q4-ZQo">
-                        <barButtonItem key="rightBarButtonItem" title="Next" id="TwL-TS-Kta"/>
+                        <barButtonItem key="rightBarButtonItem" title="Next" id="TwL-TS-Kta">
+                            <connections>
+                                <action selector="nextButtonTapped:" destination="ZQU-EZ-4wz" id="zQg-4D-A9O"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addImage" destination="JKt-1u-dWK" id="0LJ-Jy-5bF"/>
+                        <outlet property="addImageButton" destination="JKt-1u-dWK" id="Pf6-Yx-BD6"/>
+                        <outlet property="imageView" destination="QmG-Tr-rCQ" id="V4Z-DQ-6Zt"/>
+                        <outlet property="titleTextField" destination="gKW-A6-zzb" id="EfL-ax-7AU"/>
                         <segue destination="YKn-m7-YHf" kind="show" id="C2j-QH-uqN"/>
                     </connections>
                 </viewController>
