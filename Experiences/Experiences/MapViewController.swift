@@ -12,6 +12,7 @@ import MapKit
 class MapViewController: UIViewController {
 
     // MARK: - Properties
+    let experienceController = ExperienceController()
 
     // MARK: - Outlets
     @IBOutlet weak var mapView: MKMapView!
@@ -22,8 +23,15 @@ class MapViewController: UIViewController {
         // Do any additional setup after loading the view.
         mapView.delegate = self
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceView")
+
     }
-    
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+
+        mapView.addAnnotations(experienceController.experiences)
+    }
 
     /*
     // MARK: - Navigation
@@ -41,6 +49,17 @@ class MapViewController: UIViewController {
 
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        <#code#>
+        guard let experience = annotation as? Experience else {
+            fatalError("Didn't conform to MKAnnotation properly")
+        }
+
+        guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceView", for: experience) as? MKMarkerAnnotationView else {
+            fatalError("Missing a registered map annotation")
+        }
+
+        annotationView.glyphImage = UIImage(named: "􀉛")
+        annotationView.canShowCallout = true
+
+        return annotationView
     }
 }
