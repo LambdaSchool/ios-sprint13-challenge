@@ -126,6 +126,10 @@ class CameraViewViewController: UIViewController {
         view.addSubview(playerView) // FIXME: Don't add every time we play
 
         player.play()
+        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: self.player.currentItem, queue: .main) { [weak self] _ in
+            self?.player?.seek(to: CMTime.zero)
+            self?.player?.play()
+        }
     }
 
     // MARK: - Camera Permissions
