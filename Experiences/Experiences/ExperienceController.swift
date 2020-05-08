@@ -15,6 +15,20 @@ class ExperienceController {
     // MARK: - CRUD
 
     // Create
+    func create(title: String?, audioClip: URL?, image: URL?, videoClip: URL?) {
+        let exp = Experience()
+
+        exp.title = title
+        exp.audioClip = audioClip
+        exp.image = image
+        exp.videoClip = videoClip
+
+        // FIXME: Add GPS
+        //        var latitude: Double?
+        //        var longitude: Double?
+
+        experiences.append(exp)
+    }
 
     // Read
 
