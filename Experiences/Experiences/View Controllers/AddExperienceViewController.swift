@@ -42,20 +42,11 @@ class AddExperienceViewController: UIViewController {
         }
     }
     @IBAction func nextButtonTapped(_ sender: Any) {
+        saveCurrentExperience()
+        performSegue(withIdentifier: "AddVideoSegue", sender: self)
     }
     @IBAction func saveWithoutVideo(_ sender: Any) {
-        // Mandatory to create experience
-        guard let title = titleTextField.text,
-            !title.isEmpty else { return }
-        experienceController?.createExperience(name: title)
-        
-        // Optional additions to experience
-        if let image = image {
-            experienceController?.addImageToExperience(name: title, image: image)
-        }
-        if let audio = audio {
-            experienceController?.addAudioToExperience(name: title, audio: audio)
-        }
+        saveCurrentExperience()
         navigationController?.popViewController(animated: true)
     }
     
@@ -78,6 +69,21 @@ class AddExperienceViewController: UIViewController {
     }
     
     // MARK: - Action Methods
+    func saveCurrentExperience() {
+        // Mandatory to create experience
+        guard let title = titleTextField.text,
+            !title.isEmpty else { return }
+        experienceController?.createExperience(name: title)
+        
+        // Optional additions to experience
+        if let image = image {
+            experienceController?.addImageToExperience(name: title, image: image)
+        }
+        if let audio = audio {
+            experienceController?.addAudioToExperience(name: title, audio: audio)
+        }
+    }
+    
     func presentImagePicker() {
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else { return }
         

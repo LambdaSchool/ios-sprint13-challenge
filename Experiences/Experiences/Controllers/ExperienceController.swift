@@ -20,6 +20,7 @@ class ExperienceController: NSObject {
     func createExperience(name: String) {
         // Get location from user
         locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
         locationManager.requestLocation()
         
         // Get coordinates from users location
@@ -101,6 +102,6 @@ extension ExperienceController: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Failed to find user's location.")
+        print("Failed to find user's location. \(error)")
     }
 }
