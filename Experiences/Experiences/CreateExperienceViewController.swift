@@ -24,6 +24,8 @@ class CreateExperienceViewController: UIViewController {
 
     // MARK: - Properties
 
+    var experienceController: ExperienceController?
+
     // MARK: - View Lifecycle
 
     override func viewDidLoad() {

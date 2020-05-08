@@ -76,7 +76,11 @@ class ExperiencesViewController: UIViewController {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
+        if segue.identifier == "CreateExperienceSegue" {
+            if let createExperienceVC = segue.destination as? CreateExperienceViewController {
+                createExperienceVC.experienceController = experienceController
+            }
+        }
     }
 }
 
