@@ -8,6 +8,9 @@
 
 import UIKit
 import AVFoundation
+import CoreImage
+import CoreImage.CIFilterBuiltins
+import Photos
 
 class AddViewController: UIViewController {
 
@@ -34,6 +37,27 @@ class AddViewController: UIViewController {
 
     private var videoClip: URL?
     private var player: AVPlayer! // Implicetly unwrapped optional. we promise to set it before using it ... or it'll crash!
+
+    // Image properties
+    let context = CIContext(options: nil)
+
+    var originalImage: UIImage? {
+        didSet {
+            // resize the scaledImage and set it view
+            guard let originalImage = originalImage else { return }
+            // Height and width
+            var scaledSize = imageView.bounds.size
+            let scale = UIScreen.main.scale  // Size of pixels on this device: 1x, 2x, or 3x
+            scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
+            scaledImage = originalImage.imageByScaling(toSize: scaledSize)
+        }
+    }
+
+    var scaledImage: UIImage? {
+        didSet {
+            updateViews()
+        }
+    }
 
     // MARK: - Actions
     @IBAction func saveButton(_ sender: UIBarButtonItem) {
@@ -68,22 +92,27 @@ class AddViewController: UIViewController {
     @IBOutlet weak var titleTextField: UITextField!
 
     // Video Outlets
-
     @IBOutlet var recordButton: UIButton!
     @IBOutlet var cameraView: CameraPreviewView!
 
-    // MARK: - View Lifecycle
+    // Image Outlets
+    @IBOutlet weak var brightnessSlider: UISlider!
+    @IBOutlet weak var imageView: UIImageView!
+
+    // MARK: View Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         videoCameraSetup()
+        imageSetup()
     }
     
     // MARK: - Private
     private func updateViews() {
         videoUpdateViews()
+        imageUpdateViews()
     }
 }
 
@@ -383,5 +412,98 @@ extension AddViewController: AVCaptureFileOutputRecordingDelegate {
     func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
         print("startedRecording: \(fileURL)")
         updateViews()
+    }
+}
+
+// -----------------------------------------------------------------------------
+// MARK: - Image Code
+// -----------------------------------------------------------------------------
+extension AddViewController {
+
+    // MARK: - Actions
+
+    @IBAction func addButton(_ sender: Any) {
+        presentImagePickerControllerToUser()
+    }
+
+    // MARK: Slider Actions
+
+    @IBAction func brightnessSlider(_ sender: Any) {
+        updateViews()
+    }
+
+    /// Call in viewDidLoad
+    func imageSetup() {
+        // Use this to get the details of a given filter.
+        // Get CIAttributeSliderMax, CIAttributeSliderMin, & CIAttributeDefault
+        let filter = CIFilter(name: "CIBumpDistortion")! // build-in filter from Apple
+        print(filter)
+        print(filter.attributes)
+
+        // Demo with a starter image from Storyboard
+        originalImage = imageView.image
+    }
+
+    // MARK: - Private Functions
+    private func imageUpdateViews() {
+        if let scaledImage = scaledImage {
+            imageView.image = filterImage(scaledImage)
+        } else {
+            imageView.image = nil
+        }
+    }
+
+    private func presentImagePickerControllerToUser() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            print("Error: The photo library is not available")
+            return
+        }
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        present(imagePicker, animated: true, completion: nil)
+    }
+
+    private func filterImage(_ image: UIImage) -> UIImage? {
+
+        // UIImage -> CGImage -> CIImage
+        guard let cgImage = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+
+        // Filter image step
+        let filter = CIFilter(name: "CIColorControls")! // build-in filter from Apple
+        //        let filter2 = CIFilter.colorControls()
+        //        filter2.brightness = brightnessSlider.value
+
+        // setting values / getting values from Core Image
+        filter.setValue(ciImage, forKey: kCIInputImageKey /* "inputImage" */)
+        filter.setValue(brightnessSlider.value, forKey: kCIInputBrightnessKey)
+
+        // CIImage -> CGImage -> UIImage
+        //        guard let outputCIImage = filter.value(forKey: kCIOutputImageKey) as? CIImage else { return nil }
+        guard let outputCIImage = filter.outputImage else { return nil }
+
+        // Render the image (do image processing here)
+        guard let outputCGImage = context.createCGImage(outputCIImage,
+                                                        from: CGRect(origin: .zero, size: image.size)) else {
+                                                            return nil
+        }
+
+        return UIImage(cgImage: outputCGImage)
+    }
+}
+
+// -----------------------------------------------------------------------------
+// MARK: - Image Code Extension
+// -----------------------------------------------------------------------------
+extension AddViewController: UIImagePickerControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[.originalImage] as? UIImage {
+            originalImage = image
+        }
+        picker.dismiss(animated: true)
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
     }
 }
