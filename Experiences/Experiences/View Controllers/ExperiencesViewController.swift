@@ -42,6 +42,9 @@ class ExperiencesViewController: UIViewController {
     
     // MARK: - Private Methods
     private func updateViews() {
+        mapView.delegate = self
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "XPView")
+        
         self.mapView.addAnnotations(experienceController.experiences)
         guard let xp = experienceController.experiences.first else { return }
         
@@ -52,3 +55,19 @@ class ExperiencesViewController: UIViewController {
 
 }
 
+extension ExperiencesViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let experience = annotation as? Experience else {
+            fatalError("Only videos are supported")
+        }
+        
+        guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "XPView", for: annotation) as? MKMarkerAnnotationView else { fatalError("Missing a register view") }
+        
+        annotationView.canShowCallout = true
+        let detailView = XPDetailView()
+        detailView.experience = experience
+        annotationView.detailCalloutAccessoryView = detailView
+        
+        return annotationView
+    }
+}
