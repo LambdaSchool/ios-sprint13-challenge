@@ -82,19 +82,37 @@ class CreateExperienceViewController: UIViewController {
         return UIImage(cgImage: outputCGImage)
     }
 
+    private func missingPropertiesAlert() {
+        if image == nil && videoURL == nil {
+            let alert = UIAlertController(title: "Missing Image and Video", message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+        } else if image == nil {
+            let alert = UIAlertController(title: "Missing Image", message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+        } else if videoURL == nil {
+            let alert = UIAlertController(title: "Missing Video", message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+        }
+    }
+
     // MARK: - IBActions
 
     @IBAction func addImageTapped(_ sender: Any) {
         presentImagePickerController()
     }
 
-
     @IBAction func saveButtonTapped(_ sender: Any) {
         guard
             let title = titleTextField.text, !title.isEmpty,
             let coordinates = coordinates,
             let image = image,
-            let videoURL = videoURL else { return }
+            let videoURL = videoURL else {
+                missingPropertiesAlert()
+                return
+        }
 
         experienceController?.createExperience(called: title, at: coordinates, image: image, audioURL: nil, videoURL: videoURL)
         navigationController?.popViewController(animated: true)
