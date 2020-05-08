@@ -237,7 +237,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EgM-dp-J7P">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EgM-dp-J7P" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemGray2Color" red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
@@ -250,25 +250,17 @@
                                 <state key="normal" image="circle.fill" catalog="system"/>
                                 <state key="selected" image="pause.fill" catalog="system"/>
                                 <connections>
-                                    <action selector="recordButtonTapped:" destination="MvR-ko-kZw" eventType="touchUpInside" id="O1B-MX-YIa"/>
+                                    <action selector="recordButtonPressed:" destination="MvR-ko-kZw" eventType="touchUpInside" id="BOJ-Xa-i4S"/>
                                 </connections>
                             </button>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xuk-3C-p1u">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <color key="backgroundColor" systemColor="systemPurpleColor" red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="xuk-3C-p1u" firstAttribute="width" secondItem="EgM-dp-J7P" secondAttribute="width" id="1Yv-py-vnw"/>
-                            <constraint firstItem="xuk-3C-p1u" firstAttribute="centerX" secondItem="EgM-dp-J7P" secondAttribute="centerX" id="1vG-yF-Qv7"/>
-                            <constraint firstItem="xuk-3C-p1u" firstAttribute="centerY" secondItem="EgM-dp-J7P" secondAttribute="centerY" id="27m-55-eWm"/>
                             <constraint firstItem="EgM-dp-J7P" firstAttribute="width" secondItem="F1z-Y1-o7q" secondAttribute="width" id="7eF-4q-sag"/>
                             <constraint firstItem="EgM-dp-J7P" firstAttribute="height" secondItem="F1z-Y1-o7q" secondAttribute="height" id="A2Y-KD-pXr"/>
                             <constraint firstItem="EgM-dp-J7P" firstAttribute="centerX" secondItem="F1z-Y1-o7q" secondAttribute="centerX" id="KMt-Js-cNS"/>
                             <constraint firstItem="EgM-dp-J7P" firstAttribute="centerY" secondItem="F1z-Y1-o7q" secondAttribute="centerY" id="XL4-Ib-2k1"/>
                             <constraint firstItem="5ot-gV-Lek" firstAttribute="centerX" secondItem="F1z-Y1-o7q" secondAttribute="centerX" id="ZJ6-aW-fjP"/>
-                            <constraint firstItem="xuk-3C-p1u" firstAttribute="height" secondItem="EgM-dp-J7P" secondAttribute="height" id="d7c-3y-04Y"/>
                             <constraint firstItem="Y7a-Ry-16e" firstAttribute="bottom" secondItem="5ot-gV-Lek" secondAttribute="bottom" constant="100" id="pMl-XP-fuk"/>
                             <constraint firstItem="5ot-gV-Lek" firstAttribute="width" secondItem="EgM-dp-J7P" secondAttribute="width" multiplier="0.15" id="weE-ZL-slT"/>
                         </constraints>
@@ -276,15 +268,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="h0y-Vv-SKg">
                         <barButtonItem key="backBarButtonItem" title="Back" id="EKC-vg-lmD"/>
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="agv-Km-COC">
-                            <connections>
-                                <action selector="saveButtonTapped:" destination="MvR-ko-kZw" id="JpG-WG-dNV"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="agv-Km-COC"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="cameraPreView" destination="EgM-dp-J7P" id="z1y-re-BB8"/>
-                        <outlet property="playbackView" destination="xuk-3C-p1u" id="60b-L8-F58"/>
+                        <outlet property="cameraView" destination="EgM-dp-J7P" id="yS5-JM-W8w"/>
                         <outlet property="recordButton" destination="5ot-gV-Lek" id="Xes-7g-bLi"/>
                     </connections>
                 </viewController>

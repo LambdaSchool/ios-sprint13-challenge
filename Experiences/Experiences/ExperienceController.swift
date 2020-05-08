@@ -9,6 +9,7 @@
 import Foundation
 import MapKit
 import CoreLocation
+import AVFoundation
 
 class ExperienceController: NSObject {
 
@@ -34,6 +35,12 @@ class ExperienceController: NSObject {
         }
 
         return false
+    }
+
+    func avPermissions() {
+        AVCaptureDevice.requestAccess(for: .video) { granted in
+            guard granted else { fatalError("Tell user to enable in Settings: Popup from Audio to do this, or use a custom ") }
+        }
     }
 }
 
