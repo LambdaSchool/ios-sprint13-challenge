@@ -35,20 +35,12 @@ class MapViewController: UIViewController {
         mapView.delegate = self
 
         // MKMarkerAnnotationView like a table view cell
-        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "PostView")
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExpView")
+    }
 
-        print("Total posts: \(experienceController.experiences.count)")
-
-        DispatchQueue.main.async {
-            self.mapView.addAnnotations(self.experienceController.experiences)
-
-            // Center the map based on the first element
-            guard let post = self.experienceController.experiences.first else { return }
-
-            let span = MKCoordinateSpan(latitudeDelta: 2, longitudeDelta: 2)
-            let region = MKCoordinateRegion(center: post.coordinate, span: span)
-            self.mapView.setRegion(region, animated: true)
-        }
+    override func viewDidAppear(_ animated: Bool) {
+        print("🥳 viewDidAppear")
+        refreshAnnotations()
     }
 
     // MARK: - Navigation
@@ -84,6 +76,27 @@ class MapViewController: UIViewController {
             locManager.startUpdatingLocation()
         }
     }
+
+    private func addAnnotations() {
+        mapView.addAnnotations(experienceController.experiences)
+
+        // Center the map based on the most recently added experience
+        guard let post = self.experienceController.experiences.last else { return }
+
+        let span = MKCoordinateSpan(latitudeDelta: 2, longitudeDelta: 2)
+        let region = MKCoordinateRegion(center: post.coordinate, span: span)
+        mapView.setRegion(region, animated: true)
+    }
+
+    private func refreshAnnotations() {
+        print("Total posts: \(experienceController.experiences.count)")
+
+        mapView.removeAnnotations(mapView.annotations)
+
+        DispatchQueue.main.async {
+            self.addAnnotations()
+        }
+    }
 }
 
 extension MapViewController: MKMapViewDelegate {
@@ -92,7 +105,7 @@ extension MapViewController: MKMapViewDelegate {
             fatalError("Only experiences are supported")
         }
 
-        guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "PostView", for: annotation) as? MKMarkerAnnotationView else {
+        guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExpView", for: annotation) as? MKMarkerAnnotationView else {
             fatalError("Missing a registered view")
         }
 
