@@ -65,6 +65,9 @@
                                     <constraint firstAttribute="width" secondItem="Huf-VI-T5X" secondAttribute="height" multiplier="1.5:1" id="JUU-tF-Z9O"/>
                                 </constraints>
                                 <state key="normal" title="Experience a Title"/>
+                                <connections>
+                                    <action selector="addPhotoTapped:" destination="Mgp-pP-8Co" eventType="touchUpInside" id="oRZ-Yi-Sz9"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q42-HY-0ha">
                                 <rect key="frame" x="0.0" y="450" width="414" height="33"/>
@@ -73,6 +76,7 @@
                                     <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
+                                    <action selector="recordButtonTapped:" destination="Mgp-pP-8Co" eventType="touchUpInside" id="1Sz-PA-gxE"/>
                                     <segue destination="MvR-ko-kZw" kind="show" identifier="RecordShowSegue" id="Ii7-MX-Xny"/>
                                 </connections>
                             </button>
@@ -96,8 +100,18 @@
                         <viewLayoutGuide key="safeArea" id="7uT-KR-7X5"/>
                     </view>
                     <navigationItem key="navigationItem" title="New Experience" id="EHa-ah-mYB">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="oW7-uS-GsS"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="oW7-uS-GsS">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="Mgp-pP-8Co" id="R9D-02-sKX"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="photoButton" destination="Huf-VI-T5X" id="eMF-c3-fSN"/>
+                        <outlet property="photoView" destination="b9e-PK-EF7" id="Bho-Sa-enO"/>
+                        <outlet property="recordButton" destination="Q42-HY-0ha" id="X5i-ra-aHm"/>
+                        <outlet property="titleField" destination="LAL-3b-tNF" id="xk3-jN-gwa"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UzX-CQ-CZu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

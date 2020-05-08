@@ -10,6 +10,15 @@ import UIKit
 
 class NewExpViewController: UIViewController {
 
+    // MARK: - Properties
+
+    // MARK: - Outlets
+
+    @IBOutlet weak var titleField: UITextField!
+    @IBOutlet weak var photoView: UIImageView!
+    @IBOutlet weak var photoButton: UIButton!
+    @IBOutlet weak var recordButton: UIButton! // Just in case lol
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,5 +35,13 @@ class NewExpViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+
+    // MARK: - Actions
+    @IBAction func addPhotoTapped(_ sender: Any) {
+    }
+    @IBAction func recordButtonTapped(_ sender: Any) {
+    }
+    @IBAction func saveButtonTapped(_ sender: Any) {
+    }
 
 }
