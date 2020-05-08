@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CoreImage
+import CoreImage.CIFilterBuiltins
 
 protocol MediaDelegate {
     func wasAdded()
@@ -19,11 +21,15 @@ class NewExpViewController: UIViewController {
     var videoURL: String?
     var imageData: Data?
     var audioURL: String?
+    let context = CIContext(options: nil)
 
     var originalImage: UIImage? {
         didSet {
+            guard let originalImage = originalImage else { return }
+
+
             photoButton.setTitle("", for: .normal)
-            photoView.image = originalImage
+            photoView.image = vignette(originalImage)
         }
     }
 
@@ -49,6 +55,33 @@ class NewExpViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+
+    // MARK: - Methods
+
+    func vignette(_ image: UIImage) -> UIImage? {
+        // MARK: - UIImage -> CGImage -> CIImage and back
+
+        // UIImage -> CGImage
+        guard let cgImage = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+
+        // filter image
+        let filter = CIFilter.vignetteEffect()
+
+        // Set values
+        let size = photoView.bounds.size
+        filter.inputImage = ciImage
+        filter.intensity = 0.3
+        filter.radius = 500
+        filter.center = CGPoint(x: size.width / 2, y: size.height / 2)
+
+        // CI -> CG -> UI
+        guard let outputCIImage = filter.outputImage else { return nil }
+
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size )) else { return nil }
+
+        return UIImage(cgImage: outputCGImage)
+    }
 
     // MARK: - Actions
     @IBAction func addPhotoTapped(_ sender: Any) {
