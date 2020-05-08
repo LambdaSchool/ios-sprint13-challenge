@@ -18,7 +18,7 @@ class ExperienceViewController: UIViewController {
     
     let experience = Experience(title: "New Experience", latitude: 1, longitude: 1) // TODO: Get coordinates
     
-    lazy var audioRecorder = AudioRecorder(delegate: self)
+    lazy var audioRecorder = AudioDeck(delegate: self)
     var mediaTVC: ExperienceMediaTableViewController!
     var audioVisualizerVC: AudioVisualizerViewController?
     
@@ -93,18 +93,10 @@ class ExperienceViewController: UIViewController {
 
 // MARK: - Audio Recorder Delegate
 
-extension ExperienceViewController: AudioRecorderDelegate {
+extension ExperienceViewController: AudioDeckDelegate {
     func didRecord(to fileURL: URL, with duration: TimeInterval) {
         experience.audioClips.append(fileURL)
         updateMedia()
-    }
-    
-    func didUpdatePlaybackLocation(to time: TimeInterval) {
-        
-    }
-    
-    func didFinishPlaying() {
-        
     }
     
     func didUpdateAudioAmplitude(to decibels: Float) {

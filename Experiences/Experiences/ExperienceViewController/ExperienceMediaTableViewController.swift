@@ -72,6 +72,7 @@ class ExperienceMediaTableViewController: UITableViewController {
             fatalError("Unable to cast cell to type \(AudioTableViewCell.self)")
         }
         cell.url = experience?.audioClips[indexPath.row]
+        
         return cell
     }
     

@@ -1,5 +1,5 @@
 //
-//  AudioRecorder.swift
+//  AudioDeck.swift
 //  AudioComments
 //
 //  Created by Shawn Gee on 5/6/20.
@@ -9,22 +9,30 @@
 import UIKit
 import AVFoundation
 
-protocol AudioRecorderDelegate: AnyObject {
+protocol AudioDeckDelegate: AnyObject {
     func didRecord(to fileURL: URL, with duration: TimeInterval)
     func didUpdatePlaybackLocation(to time: TimeInterval)
     func didFinishPlaying()
     func didUpdateAudioAmplitude(to decibels: Float)
 }
 
-class AudioRecorder: NSObject {
+extension AudioDeckDelegate {
+    func didRecord(to fileURL: URL, with duration: TimeInterval) {}
+    func didUpdatePlaybackLocation(to time: TimeInterval) {}
+    func didFinishPlaying() {}
+    func didUpdateAudioAmplitude(to decibels: Float) {}
+}
+
+class AudioDeck: NSObject {
     
     // MARK: - Public Properties
     
     var isRecording: Bool { recorder?.isRecording ?? false }
     var isPlaying: Bool { player?.isPlaying ?? false }
     var fileURL: URL? { player?.url }
+    var fileDuration: TimeInterval? { player?.duration }
     
-    weak var delegate: AudioRecorderDelegate?
+    weak var delegate: AudioDeckDelegate?
     
     // MARK: - Private Properties
     
@@ -36,12 +44,16 @@ class AudioRecorder: NSObject {
     
     // MARK: - Init
     
-    convenience init(delegate: AudioRecorderDelegate) {
+    convenience init(delegate: AudioDeckDelegate) {
         self.init()
         self.delegate = delegate
     }
     
     // MARK: - Public Methods
+    
+    func open(audioFile url: URL) {
+        try? setPlayer(url: url)
+    }
     
     func startRecording() {
         let recordingURL = createNewRecordingURL()
@@ -77,6 +89,12 @@ class AudioRecorder: NSObject {
     }
     
     // MARK: - Private Methods
+    
+    private func setPlayer(url: URL) throws {
+        player = try AVAudioPlayer(contentsOf: url)
+        player!.isMeteringEnabled = true
+        player!.delegate = self
+    }
     
     private func createNewRecordingURL() -> URL {
         let tempDir = FileManager.default.temporaryDirectory
@@ -116,14 +134,11 @@ class AudioRecorder: NSObject {
 
 // MARK: - AVAudioRecorderDelegate
 
-extension AudioRecorder: AVAudioRecorderDelegate {
+extension AudioDeck: AVAudioRecorderDelegate {
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         if flag, let recordingURL = recordingURL  {
             do {
-                player = try AVAudioPlayer(contentsOf: recordingURL)
-                player!.isMeteringEnabled = true
-                player!.delegate = self
-                
+                try setPlayer(url: recordingURL)
                 delegate?.didRecord(to: recordingURL, with: player!.duration)
             } catch {
                 print(error)
@@ -140,7 +155,7 @@ extension AudioRecorder: AVAudioRecorderDelegate {
 
 // MARK: - AVAudioPlayerDelegate
 
-extension AudioRecorder: AVAudioPlayerDelegate {
+extension AudioDeck: AVAudioPlayerDelegate {
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         update()
