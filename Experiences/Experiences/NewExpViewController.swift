@@ -20,6 +20,8 @@ class NewExpViewController: UIViewController {
     var imageData: Data?
     var audioURL: String?
 
+    var originalImage: UIImage?
+
     // MARK: - Outlets
 
     @IBOutlet weak var titleField: UITextField!
@@ -45,6 +47,7 @@ class NewExpViewController: UIViewController {
 
     // MARK: - Actions
     @IBAction func addPhotoTapped(_ sender: Any) {
+
     }
     @IBAction func recordButtonTapped(_ sender: Any) {
     }
@@ -61,4 +64,31 @@ class NewExpViewController: UIViewController {
         experienceController.createExperience(title: title, content: content, videoURL: videoURL, imageData: imageData, audioURL: audioURL, geoTag: geoTag)
     }
 
+}
+
+extension NewExpViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    private func presentImagePickerController() {
+
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            NSLog("Error: The photo library is not available")
+            return
+        }
+
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+
+        present(imagePicker, animated: true, completion: nil)
+    }
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[.originalImage] as? UIImage {
+            originalImage = image
+        }
+
+        picker.dismiss(animated: true)
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
 }
