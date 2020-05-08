@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BI9-0L-dRE">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -9,13 +10,13 @@
         <!--Experiences-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MapViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ChV-vG-F8s">
-                                <rect key="frame" x="0.0" y="44" width="600" height="556"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -42,13 +43,13 @@
         <!--New Experience-->
         <scene sceneID="VKv-yo-asq">
             <objects>
-                <viewController id="Xyl-h1-1fi" sceneMemberID="viewController">
+                <viewController id="Xyl-h1-1fi" customClass="ExperienceViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lEu-nG-ufI">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fUJ-Zf-rcM">
-                                <rect key="frame" x="0.0" y="551" width="600" height="49"/>
+                                <rect key="frame" x="0.0" y="813" width="414" height="49"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="49" id="xYx-3G-fRl"/>
                                 </constraints>
@@ -67,12 +68,12 @@
                                 </items>
                             </toolbar>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter a title for your experience" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="U1a-ct-eux">
-                                <rect key="frame" x="20" y="64" width="560" height="34"/>
+                                <rect key="frame" x="20" y="108" width="374" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kvn-bb-lYw">
-                                <rect key="frame" x="0.0" y="98" width="600" height="453"/>
+                                <rect key="frame" x="0.0" y="142" width="414" height="671"/>
                                 <connections>
                                     <segue destination="jgY-hG-nYH" kind="embed" id="iMR-NO-ZWe"/>
                                 </connections>
@@ -124,11 +125,11 @@
             <objects>
                 <viewController id="1Sz-r3-G8q" customClass="AddVideoViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6lC-yQ-gs3">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0dR-el-0oU">
-                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="818" width="414" height="44"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="WJi-aK-fZg"/>
                                     <barButtonItem width="10" style="plain" systemItem="fixedSpace" id="h2K-ab-prV"/>
@@ -142,7 +143,7 @@
                                 </items>
                             </toolbar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i1a-hp-jkw" customClass="VideoPlayerView" customModule="Experiences" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44" width="600" height="512"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="730"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
@@ -172,10 +173,10 @@
             </objects>
             <point key="canvasLocation" x="2765" y="129"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Experience Media Table View Controller-->
         <scene sceneID="gMC-Pp-H3c">
             <objects>
-                <tableViewController id="jgY-hG-nYH" sceneMemberID="viewController">
+                <tableViewController definesPresentationContext="YES" id="jgY-hG-nYH" customClass="ExperienceMediaTableViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="12Q-5g-FJu">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="671"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -189,7 +190,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="kN5-be-fal" kind="show" identifier="ShowVisualizerSegue" id="Td2-t0-pac"/>
+                                    <segue destination="kN5-be-fal" kind="modal" identifier="ShowVisualizerSegue" id="Td2-t0-pac"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="200" id="stn-o1-u24">
@@ -219,36 +220,53 @@
             </objects>
             <point key="canvasLocation" x="2553" y="874"/>
         </scene>
-        <!--View Controller-->
+        <!--Audio Visualizer View Controller-->
         <scene sceneID="cKF-QL-oKh">
             <objects>
-                <viewController id="kN5-be-fal" sceneMemberID="viewController">
+                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="kN5-be-fal" customClass="AudioVisualizerViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="m4b-1y-cM9">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="671"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ppt-Nt-k0f" customClass="AudioVisualizer" customModule="Experiences" customModuleProvider="target">
+                                <rect key="frame" x="20" y="0.0" width="374" height="671"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="barColor">
+                                        <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Ppt-Nt-k0f" firstAttribute="leading" secondItem="uva-Rw-sAM" secondAttribute="leading" constant="20" id="4SW-gm-n0y"/>
+                            <constraint firstItem="Ppt-Nt-k0f" firstAttribute="top" secondItem="m4b-1y-cM9" secondAttribute="top" id="b52-YT-Mj4"/>
+                            <constraint firstAttribute="bottom" secondItem="Ppt-Nt-k0f" secondAttribute="bottom" id="lzj-nt-uF2"/>
+                            <constraint firstItem="uva-Rw-sAM" firstAttribute="trailing" secondItem="Ppt-Nt-k0f" secondAttribute="trailing" constant="20" id="pU8-xu-tPU"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="uva-Rw-sAM"/>
                     </view>
                     <navigationItem key="navigationItem" id="Sfb-qf-HRD"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ega-3F-T8W" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3365" y="874"/>
+            <point key="canvasLocation" x="3363.7681159420295" y="873.54910714285711"/>
         </scene>
         <!--Video Recorder View Controller-->
         <scene sceneID="Dug-s6-a0l">
             <objects>
                 <viewController modalPresentationStyle="fullScreen" id="dFC-nB-IOy" customClass="VideoRecorderViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="F9P-B3-Smt">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nzv-X5-edX" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LyW-VQ-o8t">
-                                <rect key="frame" x="265" y="492" width="70" height="68"/>
+                                <rect key="frame" x="172" y="754" width="70" height="68"/>
                                 <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" image="video.circle.fill" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="60"/>
