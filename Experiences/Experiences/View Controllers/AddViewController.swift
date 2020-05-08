@@ -507,3 +507,8 @@ extension AddViewController: UIImagePickerControllerDelegate {
         picker.dismiss(animated: true)
     }
 }
+
+// TODO: Why was this necessary?
+extension AddViewController: UINavigationControllerDelegate {
+
+}
