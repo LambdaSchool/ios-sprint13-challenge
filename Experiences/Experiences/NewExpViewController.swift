@@ -42,6 +42,7 @@ class NewExpViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        titleField.delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -124,6 +125,7 @@ class NewExpViewController: UIViewController {
         let content = "Placeholder descriptions for now."
 
         experienceController.createExperience(title: title, content: content, videoURL: videoURL, imageData: imageData, audioURL: audioURL, geoTag: geoTag)
+        navigationController?.popViewController(animated: true)
     }
 
 }
