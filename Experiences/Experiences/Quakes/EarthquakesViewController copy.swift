@@ -11,17 +11,17 @@ import MapKit
 
 class EarthquakesViewController: UIViewController {
     
-    let quakeFetcher = QuakeFetcher() 
-		
+   var postCon = PostController()
 	// NOTE: You need to import MapKit to link to MKMapView
 	@IBOutlet var mapView: MKMapView!
+    @IBAction addExperienceButtonPressed
     
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
         
         mapView.delegate = self
-        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "QuakeView")
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "Qua")
         
         quakeFetcher.fetchQuakes { (quakes, error) in
             if let error = error {

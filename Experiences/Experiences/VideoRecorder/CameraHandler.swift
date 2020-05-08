@@ -10,6 +10,8 @@ import UIKit
 import AVFoundation
 
 class CameraController: UIViewController {
+    
+    var experienceCon: ExperienceController?
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()

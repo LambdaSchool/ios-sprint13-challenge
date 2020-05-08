@@ -17,12 +17,12 @@ enum MediaType: String {
 
 class Experience {
     
-    init(title: String, description: String? = "", imageData: Data?, audioURL: URL?, videoURL: URL?, timestamp: Date = Date()) {
+    init(title: String, description: String? = "", image: UIImage?, audioURL: URL?, videoURL: URL?, timestamp: Date = Date()) {
 
      
         self.title = title
         self.description = description
-        self.imageData = imageData
+        self.imageData = image
         self.audioURL = audioURL
         self.videoURL = videoURL
         self.timestamp = timestamp

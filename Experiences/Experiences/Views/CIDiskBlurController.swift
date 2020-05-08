@@ -13,8 +13,36 @@ import Photos
 import Foundation
 
 class DiscBlurViewController: UIViewController {
+    
+    var experienceCon: ExperienceController?
 
+    
+    @IBOutlet weak var imageView: UIImageView!
+    
+    @IBAction func addImageButon(_ sender: Any) {
+        presentImagePickerController()
+    }
+    
+    @IBOutlet weak var titleTF: UITextField!
+    @IBOutlet weak var descriptionTF: UITextField!
+    
     let context = CIContext(options: nil)
+    var postCon: ExperienceController?
+    
+    
+func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+        if segue.identifier == "firstToSecond" {
+            let cameraVC = segue.destination as? CameraController
+            cameraVC.experienceCon = self.experienceCon
+        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        originalImage = imageView.image
+    }
+    
     
     var originalImage: UIImage? {
         didSet {
@@ -38,14 +66,9 @@ class DiscBlurViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var radiusSlider: UISlider!
-    @IBOutlet weak var imageView: UIImageView!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        originalImage = imageView.image
-    }
+    
+    
     
     // filterImage(originalImage)
 
@@ -64,10 +87,10 @@ class DiscBlurViewController: UIViewController {
 //        filter2.brightness = brightnessSlider.value
         
         // setting values / gebttings values from Core Image
-        var filter = CIFilter(name: "CIDiscBlur")
+        let filter = CIFilter(name: "CIDiscBlur")
         
         filter?.setValue(ciImage, forKey: kCIInputImageKey)
-        filter?.setValue(radiusSlider.value, forKey: kCIInputRadiusKey)
+        filter?.setValue(16, forKey: kCIInputRadiusKey)
         
         
         // CIImage -> CGImage -> UIImage
@@ -111,65 +134,10 @@ class DiscBlurViewController: UIViewController {
     @IBAction func choosePhotoButtonPressed(_ sender: Any) {
         presentImagePickerController()
     }
-    
-    @IBAction func savePhotoButtonPressed(_ sender: UIButton) {
-        guard let originalImage = originalImage else { return }
-        
-        guard let processedImage = filterImage(originalImage.flattened) else { return }
-        
-        PHPhotoLibrary.requestAuthorization { (status) in
-            
-            guard status == .authorized else { return }
-            
-            // Let the library know we are going to make changes
-            PHPhotoLibrary.shared().performChanges({
-                
-                // Make a new photo creation request
-                
-                PHAssetCreationRequest.creationRequestForAsset(from: processedImage)
-                
-            }, completionHandler: { (success, error) in
-                
-                if let error = error {
-                    NSLog("Error saving photo: \(error)")
-                    return
-                }
-                
-                DispatchQueue.main.async {
-                    self.presentSuccessfulSaveAlert()
-                }
-            })
-        }
-    }
-
-    private func presentSuccessfulSaveAlert() {
-        let alert = UIAlertController(title: "Photo Saved!", message: "The photo has been saved to your Photo Library!", preferredStyle: .alert)
-        
-        let okayAction = UIAlertAction(title: "Okay", style: .default, handler: nil)
-        
-        alert.addAction(okayAction)
-        
-        present(alert, animated: true, completion: nil)
-    }
-
-    // MARK: Slider events
-    
-    @IBAction func radiusChanged(_ sender: UISlider) {
-        updateViews()
-    }
-    
-}
 
 
-extension DiscBlurViewController: UIImagePickerControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        if let image = info[.originalImage] as? UIImage {
-            originalImage = image
-        }
-        
-        picker.dismiss(animated: true)
-    }
+
+
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
@@ -180,3 +148,13 @@ extension DiscBlurViewController: UINavigationControllerDelegate {
     
 }
 
+extension DiscBlurViewController: UIImagePickerControllerDelegate {
+func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    
+    if let image = info[.originalImage] as? UIImage {
+        originalImage = filterImage(image)
+    }
+   
+    picker.dismiss(animated: true)
+    }
+}

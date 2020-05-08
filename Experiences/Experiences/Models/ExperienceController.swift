@@ -7,13 +7,21 @@
 //
 
 import Foundation
+import UIKit
 
 class ExperienceController {
     var experiences: [Experience] = []
+    var postTitle: String?
+    var description: String?
+    var image: UIImage?
+    var audioURL: URL?
+    var videoURL: URL?
     
     func createExperience(with title: String, description: String? = "", imageData: Data? = nil, audioURL: URL? = nil, videoURL: URL? = nil, timestamp: Date = Date()) {
-        let experience = Experience(title: title, description: description, imageData: imageData, audioURL: audioURL, videoURL: videoURL, timestamp: Date())
+        if let postTitle = postTitle {
+        let experience = Experience(title: postTitle, description: description, image: image, audioURL: audioURL, videoURL: videoURL, timestamp: Date())
         self.experiences.append(experience)
         return
+        }
     }
 }
