@@ -59,6 +59,8 @@ class MapViewController: UIViewController {
         let lat = locManager.location?.coordinate.latitude ?? 0.0
         let long = locManager.location?.coordinate.longitude ?? 0.0
 
+        // FIXME: Add in chaos monkey
+        
         return (latitude: lat, longitude: long)
     }
 

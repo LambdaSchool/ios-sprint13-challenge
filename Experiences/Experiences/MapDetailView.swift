@@ -65,7 +65,7 @@ class MapDetailView: UIView {
         let longitude = experience.longitude ?? 0.0
 
         titleLabel.text = experience.title ?? "Untitled"
-        infoButton.setTitle("Show",for: .normal)
+        infoButton.setTitle("Show", for: .normal)
         latitudeLabel.text = "Lat: " + latLonFormatter.string(from: latitude as NSNumber)!
         longitudeLabel.text = "Lon: " + latLonFormatter.string(from: longitude as NSNumber)!
     }
