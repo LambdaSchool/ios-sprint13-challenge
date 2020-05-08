@@ -18,13 +18,44 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ChV-vG-F8s">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                             </mapView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="OLd-ec-ORp">
+                                <rect key="frame" x="197" y="465.5" width="20" height="19"/>
+                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="OLd-ec-ORp" secondAttribute="height" multiplier="1:1" id="3e5-8K-UvP"/>
+                                    <constraint firstAttribute="height" constant="20" id="ppK-fD-K89"/>
+                                </constraints>
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="light"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9D9-Kq-Xfb">
+                                <rect key="frame" x="0.0" y="474.5" width="199" height="1"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="yOU-Ah-V6m"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3GO-Ke-ueq">
+                                <rect key="frame" x="215" y="474.5" width="199" height="1"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="y7o-hC-GdR"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="3GO-Ke-ueq" firstAttribute="centerY" secondItem="ChV-vG-F8s" secondAttribute="centerY" id="00U-eE-j5z"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ChV-vG-F8s" secondAttribute="trailing" id="6q8-qp-uOg"/>
+                            <constraint firstItem="9D9-Kq-Xfb" firstAttribute="centerY" secondItem="ChV-vG-F8s" secondAttribute="centerY" id="Icr-2R-3up"/>
+                            <constraint firstItem="OLd-ec-ORp" firstAttribute="centerX" secondItem="ChV-vG-F8s" secondAttribute="centerX" id="Mlu-DF-dP0"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ChV-vG-F8s" secondAttribute="bottom" id="R9J-Ux-a2C"/>
                             <constraint firstItem="ChV-vG-F8s" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="TC2-0Y-nmx"/>
+                            <constraint firstItem="9D9-Kq-Xfb" firstAttribute="leading" secondItem="ChV-vG-F8s" secondAttribute="leading" id="YB4-c9-6Or"/>
+                            <constraint firstItem="OLd-ec-ORp" firstAttribute="centerY" secondItem="ChV-vG-F8s" secondAttribute="centerY" id="car-ys-H6C"/>
+                            <constraint firstItem="9D9-Kq-Xfb" firstAttribute="trailing" secondItem="ChV-vG-F8s" secondAttribute="centerX" constant="-8" id="dgV-Ku-vG8"/>
+                            <constraint firstItem="3GO-Ke-ueq" firstAttribute="trailing" secondItem="ChV-vG-F8s" secondAttribute="trailing" id="eIw-RY-sHt"/>
                             <constraint firstItem="ChV-vG-F8s" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="w2k-Zu-jgH"/>
+                            <constraint firstItem="3GO-Ke-ueq" firstAttribute="leading" secondItem="ChV-vG-F8s" secondAttribute="centerX" constant="8" id="wPf-ZB-dXT"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -106,7 +137,11 @@
                         <viewLayoutGuide key="safeArea" id="Lc2-3h-xFy"/>
                     </view>
                     <navigationItem key="navigationItem" title="New Experience" id="3gs-li-0a3">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="yTh-vh-gSs"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="yTh-vh-gSs">
+                            <connections>
+                                <action selector="save:" destination="Xyl-h1-1fi" id="llL-rh-ba7"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="micButton" destination="2qe-Hg-UXn" id="61l-kB-8rj"/>
@@ -363,6 +398,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="circle" catalog="system" width="128" height="121"/>
         <image name="mic.fill" catalog="system" width="108" height="128"/>
         <image name="pause.fill" catalog="system" width="116" height="128"/>
         <image name="photo.fill" catalog="system" width="128" height="93"/>

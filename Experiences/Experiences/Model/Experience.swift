@@ -10,9 +10,9 @@ import Foundation
 
 class Experience: NSObject {
     var title: String?
-    let time = Date()
-    let latitude: Double
-    let longitude: Double
+    var time = Date()
+    var latitude: Double
+    var longitude: Double
     
     // Media
     var audioClips: [URL] = []

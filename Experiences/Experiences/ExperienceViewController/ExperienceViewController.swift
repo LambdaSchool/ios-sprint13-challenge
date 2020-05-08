@@ -23,6 +23,7 @@ class ExperienceViewController: UIViewController {
     var audioVisualizerVC: AudioVisualizerViewController?
     
     // MARK: - IBOutlets
+    
     @IBOutlet weak var micButton: UIBarButtonItem!
     
     // MARK: - View Lifecycle
@@ -72,6 +73,10 @@ class ExperienceViewController: UIViewController {
         // Show photo picker
     }
    
+    @IBAction func save(_ sender: Any) {
+        experienceController?.add(experience)
+        navigationController?.popViewController(animated: true)
+    }
     
 
     // MARK: - Navigation
@@ -85,6 +90,8 @@ class ExperienceViewController: UIViewController {
     }
 
 }
+
+// MARK: - Audio Recorder Delegate
 
 extension ExperienceViewController: AudioRecorderDelegate {
     func didRecord(to fileURL: URL, with duration: TimeInterval) {
@@ -103,6 +110,4 @@ extension ExperienceViewController: AudioRecorderDelegate {
     func didUpdateAudioAmplitude(to decibels: Float) {
         audioVisualizerVC?.updateVisualizer(withAmplitude: decibels)
     }
-    
-
 }

@@ -14,5 +14,8 @@ class ExperienceController {
     
     // MARK: - CRUD
     
+    func add(_ experience: Experience) {
+        experiences.append(experience)
+    }
     
 }

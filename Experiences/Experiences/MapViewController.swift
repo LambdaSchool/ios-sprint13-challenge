@@ -26,6 +26,11 @@ class MapViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        updateExperienceAnnotations()
+    }
+    
     // MARK: - Private Methods
     
     private func setUpMapView() {
@@ -43,6 +48,8 @@ class MapViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let experienceVC = segue.destination as? ExperienceViewController {
             experienceVC.experienceController = experienceController
+            experienceVC.experience.latitude = mapView.centerCoordinate.latitude
+            experienceVC.experience.longitude = mapView.centerCoordinate.longitude
         }
     }
 }
