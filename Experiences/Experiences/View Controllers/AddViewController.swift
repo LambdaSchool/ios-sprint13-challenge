@@ -105,7 +105,7 @@ class AddViewController: UIViewController {
 
         videoCameraSetup()
         imageSetup()
-        
+
         guard let exp = experience,
             !inited else { return }
 
@@ -114,6 +114,9 @@ class AddViewController: UIViewController {
         originalImage = exp.image
         audioClip = exp.audioClip
         videoClip = exp.videoClip
+        if let videoClip = videoClip {
+            playMovie(url: videoClip)
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
