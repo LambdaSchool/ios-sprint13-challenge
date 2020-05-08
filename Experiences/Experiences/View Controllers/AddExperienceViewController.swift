@@ -38,6 +38,7 @@ class AddExperienceViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var recordVideoButton: UIButton!
+    @IBOutlet weak var selectPhotoButton: UIButton!
     
     // MARK: - Properties
     var experienceController: ExperienceController?
@@ -47,18 +48,7 @@ class AddExperienceViewController: UIViewController {
     
     var originalImage: UIImage? {
         didSet {
-            guard let originalImage = originalImage else { return }
-            var scaledSize = imageView.bounds.size
-            let scale = UIScreen.main.scale  // 1x, 2x, or 3x
-            scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
-            print("scaled size: \(scaledSize)")
-            
-            scaledImage = originalImage.imageByScaling(toSize: scaledSize)
-        }
-    }
-    
-    var scaledImage: UIImage? {
-        didSet {
+            selectPhotoButton.setTitle("", for: .normal) // To allow the user to still select a different image
             updateImageView()
         }
     }
@@ -125,7 +115,7 @@ class AddExperienceViewController: UIViewController {
     @IBAction func saveButtonTapped(_ sender: Any) {
         guard let title = titleTextField.text, !title.isEmpty else { return }
         //TODO: FINISH THIS ACTION
-        experienceController?.createExperience(name: title, image: nil, audioURL: nil, videoURL: recordedVideoURL, longitude: 0, latitude: 0)
+        experienceController?.createExperience(name: title, image: imageView.image, audioURL: nil, videoURL: recordedVideoURL, longitude: 0, latitude: 0)
         navigationController?.popViewController(animated: true)
     }
 
@@ -160,8 +150,8 @@ class AddExperienceViewController: UIViewController {
     }
     
     private func updateImageView() {
-        if let scaledImage = scaledImage {
-             imageView.image = filterImage(scaledImage)
+        if let originalImage = originalImage {
+             imageView.image = filterImage(originalImage)
          } else {
              imageView.image = nil
          }
@@ -177,7 +167,7 @@ class AddExperienceViewController: UIViewController {
         
         // Setting values / getting values from Core Image
         filter.setValue(ciImage, forKey: kCIInputImageKey)
-        filter.setValue(1.0, forKey: kCIInputIntensityKey)
+        filter.setValue(0.75, forKey: kCIInputIntensityKey)
         
         // CIImage -> CGImage -> UIImage
         
