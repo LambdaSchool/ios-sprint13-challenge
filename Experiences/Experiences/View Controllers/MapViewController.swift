@@ -9,7 +9,17 @@
 import UIKit
 
 class MapViewController: UIViewController {
-
+    
+    // MARK: - Properties
+    
+    // MARK: - IBOutlets
+    @IBOutlet weak var mapView: MKMapView!
+    
+    // MARK: - IBActions
+    @IBAction func addExperience(_ sender: Any) {
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
