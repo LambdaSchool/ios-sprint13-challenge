@@ -11,6 +11,8 @@ import UIKit
 class AddExperienceViewController: UIViewController {
     
     // MARK: - Properties
+    var experienceController: ExperienceController?
+    var image: UIImage?
     
     // MARK: - IBOutlets
     @IBOutlet weak var titleTextField: UITextField!
@@ -20,6 +22,7 @@ class AddExperienceViewController: UIViewController {
     
     // MARK: - IBActions
     @IBAction func addImage(_ sender: Any) {
+        presentImagePicker()
     }
     @IBAction func recordAudio(_ sender: Any) {
     }
@@ -31,6 +34,16 @@ class AddExperienceViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    // MARK: - Action Methods
+    func presentImagePicker() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else { return }
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        present(imagePicker, animated: true, completion: nil)
+        
+    }
 
     /*
     // MARK: - Navigation
@@ -42,4 +55,22 @@ class AddExperienceViewController: UIViewController {
     }
     */
 
+}
+
+extension AddExperienceViewController: UIImagePickerControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[.originalImage] as? UIImage {
+            self.image = image
+            self.addImageButton.isHidden = true
+            self.imageView.isHidden = false
+            self.imageView.image = image
+        }
+        picker.dismiss(animated: true)
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+}
+
+extension AddExperienceViewController: UINavigationControllerDelegate {
 }

@@ -12,7 +12,7 @@ import MapKit
 class MapViewController: UIViewController {
     
     // MARK: - Properties
-    let exerienceContoller = ExperienceController()
+    let experienceController = ExperienceController()
     
     // MARK: - IBOutlets
     @IBOutlet weak var mapView: MKMapView!
