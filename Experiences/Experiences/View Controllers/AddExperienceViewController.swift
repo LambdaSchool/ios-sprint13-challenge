@@ -43,7 +43,9 @@ class AddExperienceViewController: UIViewController {
     }
     @IBAction func nextButtonTapped(_ sender: Any) {
         saveCurrentExperience()
-        performSegue(withIdentifier: "AddVideoSegue", sender: self)
+        experienceController?.requestPermission {
+            performSegue(withIdentifier: "AddVideoSegue", sender: self)
+        }
     }
     @IBAction func saveWithoutVideo(_ sender: Any) {
         saveCurrentExperience()

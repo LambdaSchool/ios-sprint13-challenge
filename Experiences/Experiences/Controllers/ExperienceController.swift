@@ -92,6 +92,15 @@ class ExperienceController: NSObject {
         print("recording URL created: \(url)")
         return url
     }
+    
+    func requestPermission(completion: () -> ()) {
+        AVCaptureDevice.requestAccess(for: .video) { (granted) in
+            guard granted else {
+                fatalError("Tell user to enable in Settings: popup from audio to do this or custom view.")
+            }
+        }
+        completion()
+    }
 }
 
 extension ExperienceController: CLLocationManagerDelegate {
