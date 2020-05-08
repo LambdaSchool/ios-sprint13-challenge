@@ -18,6 +18,14 @@ class CameraController: UIViewController {
 		// Do any additional setup after loading the view.
 	}
 	
+  func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+        if segue.identifier == "handlerToCamer" {
+            if let cameraVC = segue.destination as? CameraViewController {
+            cameraVC.experienceController = experienceCon
+            }
+        }
+    }
+    
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		
@@ -59,6 +67,6 @@ class CameraController: UIViewController {
     
 	
 	private func showCamera() {
-		performSegue(withIdentifier: "ShowCamera", sender: self)
+		performSegue(withIdentifier: "cameraSegue", sender: self)
 	}
 }

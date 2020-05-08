@@ -29,7 +29,7 @@ class Experience {
     }
     let title: String?
     var description: String? 
-    var imageData: Data?
+    var imageData: UIImage?
     var audioURL: URL?
     var videoURL: URL?
     let timestamp: Date

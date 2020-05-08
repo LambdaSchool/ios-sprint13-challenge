@@ -17,7 +17,7 @@ class ExperienceController {
     var audioURL: URL?
     var videoURL: URL?
     
-    func createExperience(with title: String, description: String? = "", imageData: Data? = nil, audioURL: URL? = nil, videoURL: URL? = nil, timestamp: Date = Date()) {
+    func createExperience(with title: String, description: String? = "", image: UIImage? = nil, audioURL: URL? = nil, videoURL: URL? = nil, timestamp: Date = Date()) {
         if let postTitle = postTitle {
         let experience = Experience(title: postTitle, description: description, image: image, audioURL: audioURL, videoURL: videoURL, timestamp: Date())
         self.experiences.append(experience)

@@ -16,6 +16,12 @@ class DiscBlurViewController: UIViewController {
     
     var experienceCon: ExperienceController?
 
+    @IBAction func nextButton(_ sender: Any) {
+        experienceCon.image = imageView.image
+        experienceCon.postTitle = titleTF.text
+        experienceCon.description = descriptionTF.text
+        performSegue(withIdentifier: "firstToSecond", sender: (Any).self)
+    }
     
     @IBOutlet weak var imageView: UIImageView!
     
@@ -27,14 +33,14 @@ class DiscBlurViewController: UIViewController {
     @IBOutlet weak var descriptionTF: UITextField!
     
     let context = CIContext(options: nil)
-    var postCon: ExperienceController?
     
     
 func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
         if segue.identifier == "firstToSecond" {
-            let cameraVC = segue.destination as? CameraController
+            if let cameraVC = segue.destination as? CameraController {
             cameraVC.experienceCon = self.experienceCon
         }
+    }
     }
     
     override func viewDidLoad() {

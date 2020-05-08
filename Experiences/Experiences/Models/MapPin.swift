@@ -12,10 +12,12 @@ class MapPin : NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     var title: String?
     var subtitle: String?
+    var experience: Experience
 
-    init(coordinate: CLLocationCoordinate2D, title: String, subtitle: String) {
+    init(coordinate: CLLocationCoordinate2D, title: String, subtitle: String, experience: Experience) {
         self.coordinate = coordinate
         self.title = title
         self.subtitle = subtitle
+        self.experience = experience
     }
 }

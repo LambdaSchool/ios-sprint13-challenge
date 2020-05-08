@@ -14,10 +14,20 @@ class CameraViewController: UIViewController {
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     private var player: AVPlayer! // we promise to set it out before using it ... or it'll crash!
-
+    
+    var experienceController: ExperienceController?
+    @IBAction func nextButton(_ sender: Any) {
+        performSegue(withIdentifier: "cameraToAudio", sender: (Any).self)
+    }
+    
     @IBOutlet var recordButton: UIButton!
     @IBOutlet var cameraView: CameraPreviewView!
-
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let audioVC = segue.destination as? AudioRecorderController {
+            audioVC.exCon = self.experienceController
+        }
+    }
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -41,10 +51,6 @@ class CameraViewController: UIViewController {
         recordButton.isSelected = fileOutput.isRecording
     }
 
-
-    @IBAction func recordButtonPressed(_ sender: Any) {
-
-	}
     
     private func toggleRecord() {
         if fileOutput.isRecording {
@@ -91,7 +97,7 @@ class CameraViewController: UIViewController {
     }
     // Recording
     
-    @IBAction func recordButtonPRessed(_ sender: Any) {
+    @IBAction func recordButtonPressed(_ sender: Any) {
         toggleRecord()
     }
     @IBAction func recordButtonPressedFromMenuBar(_ sender: Any) {
@@ -107,6 +113,7 @@ class CameraViewController: UIViewController {
 
 		let name = formatter.string(from: Date())
 		let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
+        experienceController?.videoURL = fileURL
 		return fileURL
 	}
     private func playMovie(url: URL) {

@@ -11,6 +11,8 @@ import AVFoundation
 
 class AudioRecorderController: UIViewController {
     
+    var exCon: ExperienceController?
+    
     @IBOutlet var playButton: UIButton!
     @IBOutlet var recordButton: UIButton!
     @IBOutlet var timeElapsedLabel: UILabel!
@@ -18,8 +20,7 @@ class AudioRecorderController: UIViewController {
     @IBOutlet var timeSlider: UISlider!
     @IBOutlet var audioVisualizer: AudioVisualizer!
     
-    var commentVC: ImagePostDetailTableViewController?
-    var postController: PostController? 
+   
     
     private lazy var timeIntervalFormatter: DateComponentsFormatter = {
         // NOTE: DateComponentFormatter is good for minutes/hours/seconds
@@ -150,6 +151,11 @@ class AudioRecorderController: UIViewController {
         updateViews()
         cancelTimer()
     }
+    func stopRecording() {
+        audioRecorder?.stop()
+        updateViews()
+        cancelTimer()
+    }
     
     
     // MARK: - Recording
@@ -167,7 +173,7 @@ class AudioRecorderController: UIViewController {
         let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
         
     print("recording URL: \(file)")
-        
+        exCon?.audioURL = file
         return file
     }
     
@@ -218,11 +224,7 @@ class AudioRecorderController: UIViewController {
         updateViews()
     }
     
-    func stopRecording() {
-        audioRecorder?.stop()
-        updateViews()
-        canceltimer()
-    }
+    
     
     // MARK: - Actions
     
