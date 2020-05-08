@@ -14,7 +14,14 @@ class ExperienceViewController: UIViewController {
     
     var experienceController: ExperienceController?
     
+    // MARK: - Private Properties
+    
+    lazy var audioRecorder = AudioRecorder(delegate: self)
+    var mediaTVC: ExperienceMediaTableViewController!
+    var audioVisualizerVC: AudioVisualizerViewController?
+    
     // MARK: - IBOutlets
+    @IBOutlet weak var micButton: UIBarButtonItem!
     
     // MARK: - View Lifecycle
     
@@ -24,15 +31,63 @@ class ExperienceViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    private func startRecordingAudio() {
+        micButton.tintColor = .systemRed
+        audioRecorder.startRecording()
+        audioVisualizerVC = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(identifier: "AudioVisualizerViewController")
+        mediaTVC.present(audioVisualizerVC!, animated: true)
+    }
+    
+    private func stopRecordingAudio() {
+        micButton.tintColor = .systemBlue
+        audioRecorder.stopRecording()
+        audioVisualizerVC?.dismiss(animated: true)
+    }
+    
+    // MARK: - IBActions
+    
+    @IBAction func toggleRecordAudio(_ sender: Any) {
+        if audioRecorder.isRecording {
+            stopRecordingAudio()
+        } else {
+            startRecordingAudio()
+        }
+        
+    }
+    
+    @IBAction func addPhoto(_ sender: Any) {
+        // Show photo picker
+    }
+   
+    
 
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        // Embed
+        if let mediaTVC = segue.destination as? ExperienceMediaTableViewController {
+            self.mediaTVC = mediaTVC
+        }
     }
-    */
+
+}
+
+extension ExperienceViewController: AudioRecorderDelegate {
+    func didRecord(to fileURL: URL, with duration: TimeInterval) {
+        
+    }
+    
+    func didUpdatePlaybackLocation(to time: TimeInterval) {
+        
+    }
+    
+    func didFinishPlaying() {
+        
+    }
+    
+    func didUpdateAudioAmplitude(to decibels: Float) {
+        audioVisualizerVC?.updateVisualizer(withAmplitude: decibels)
+    }
+    
 
 }

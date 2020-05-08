@@ -58,7 +58,11 @@
                                 </constraints>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="GFv-AA-dQi"/>
-                                    <barButtonItem title="Item" image="mic.fill" catalog="system" id="2qe-Hg-UXn"/>
+                                    <barButtonItem title="Item" image="mic.fill" catalog="system" id="2qe-Hg-UXn">
+                                        <connections>
+                                            <action selector="toggleRecordAudio:" destination="Xyl-h1-1fi" id="4Rz-Ze-qWS"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="W6V-pb-bTl"/>
                                     <barButtonItem title="Item" image="video.fill" catalog="system" id="20n-FG-UMc">
                                         <connections>
@@ -66,7 +70,11 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="a7B-10-X3B"/>
-                                    <barButtonItem title="Item" image="photo.fill" catalog="system" id="CFu-xY-GDl"/>
+                                    <barButtonItem title="Item" image="photo.fill" catalog="system" id="CFu-xY-GDl">
+                                        <connections>
+                                            <action selector="addPhoto:" destination="Xyl-h1-1fi" id="EG5-ub-7uY"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="lIb-6P-0Zg"/>
                                 </items>
                             </toolbar>
@@ -100,6 +108,9 @@
                     <navigationItem key="navigationItem" title="New Experience" id="3gs-li-0a3">
                         <barButtonItem key="rightBarButtonItem" title="Save" id="yTh-vh-gSs"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="micButton" destination="2qe-Hg-UXn" id="61l-kB-8rj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="srA-EK-N49" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -132,7 +143,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0dR-el-0oU">
-                                <rect key="frame" x="0.0" y="818" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="813" width="414" height="49"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="WJi-aK-fZg"/>
                                     <barButtonItem width="10" style="plain" systemItem="fixedSpace" id="h2K-ab-prV"/>
@@ -146,7 +157,7 @@
                                 </items>
                             </toolbar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i1a-hp-jkw" customClass="VideoPlayerView" customModule="Experiences" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="88" width="414" height="730"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
@@ -185,18 +196,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="60" id="0MY-qM-FVD">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AudioCell" rowHeight="60" id="0MY-qM-FVD">
                                 <rect key="frame" x="0.0" y="28" width="414" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0MY-qM-FVD" id="80s-wj-08Y">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="kN5-be-fal" kind="modal" identifier="ShowVisualizerSegue" id="Td2-t0-pac"/>
-                                </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="200" id="stn-o1-u24">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PhotoCell" rowHeight="200" id="stn-o1-u24">
                                 <rect key="frame" x="0.0" y="88" width="414" height="200"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="stn-o1-u24" id="5Gf-7t-Wat">
@@ -204,7 +212,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="200" id="bFe-Zd-usQ">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="VideoCell" rowHeight="200" id="bFe-Zd-usQ">
                                 <rect key="frame" x="0.0" y="288" width="414" height="200"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bFe-Zd-usQ" id="4m2-7B-9eS">
@@ -226,13 +234,13 @@
         <!--Audio Visualizer View Controller-->
         <scene sceneID="cKF-QL-oKh">
             <objects>
-                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="kN5-be-fal" customClass="AudioVisualizerViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AudioVisualizerViewController" modalTransitionStyle="crossDissolve" modalPresentationStyle="currentContext" useStoryboardIdentifierAsRestorationIdentifier="YES" id="kN5-be-fal" customClass="AudioVisualizerViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="m4b-1y-cM9">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="651"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ppt-Nt-k0f" customClass="AudioVisualizer" customModule="Experiences" customModuleProvider="target">
-                                <rect key="frame" x="20" y="0.0" width="374" height="651"/>
+                                <rect key="frame" x="20" y="0.0" width="374" height="896"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="barColor">
@@ -251,6 +259,9 @@
                         <viewLayoutGuide key="safeArea" id="uva-Rw-sAM"/>
                     </view>
                     <navigationItem key="navigationItem" id="Sfb-qf-HRD"/>
+                    <connections>
+                        <outlet property="visualizer" destination="Ppt-Nt-k0f" id="ikI-Fn-Hu8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ega-3F-T8W" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

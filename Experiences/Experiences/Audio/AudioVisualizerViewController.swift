@@ -10,12 +10,17 @@ import UIKit
 
 class AudioVisualizerViewController: UIViewController {
 
+    @IBOutlet weak var visualizer: AudioVisualizer!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
+    func updateVisualizer(withAmplitude decibels: Float) {
+        visualizer.addValue(decibelValue: decibels)
+    }
 
     /*
     // MARK: - Navigation

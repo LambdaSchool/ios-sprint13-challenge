@@ -34,6 +34,13 @@ class AudioRecorder: NSObject {
     
     private var updateTimer: Timer?
     
+    // MARK: - Init
+    
+    convenience init(delegate: AudioRecorderDelegate) {
+        self.init()
+        self.delegate = delegate
+    }
+    
     // MARK: - Public Methods
     
     func startRecording() {

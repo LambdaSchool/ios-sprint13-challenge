@@ -10,22 +10,18 @@ import Foundation
 
 class Experience: NSObject {
     var title: String?
-    let time: Date
+    let time = Date()
     let latitude: Double
     let longitude: Double
     
     // Media
-    var audioClips: [URL]
-    var videos: [URL]
-    var photos: [URL]
+    var audioClips: [URL] = []
+    var videos: [URL] = []
+    var photos: [URL] = []
     
-    init(title: String, time: Date, latitude: Double, longitude: Double, audioClips: [URL], videos: [URL], photos: [URL]) {
+    init(title: String, latitude: Double, longitude: Double) {
         self.title = title
-        self.time = time
         self.latitude = latitude
         self.longitude = longitude
-        self.audioClips = audioClips
-        self.videos = videos
-        self.photos = photos
     }
 }
