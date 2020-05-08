@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class ExperienceController {
 
@@ -17,14 +18,14 @@ class ExperienceController {
     // Create
     func create(title: String?,
                 audioClip: URL?,
-                image: URL?,
+                image: UIImage?,
                 videoClip: URL?,
                 latitude: Double? = 0.0,
                 longitude: Double? = 0.0) {
 
         print("audioClip URL: \(audioClip?.absoluteString ?? "N/A")")
         print("videoClip URL: \(videoClip?.absoluteString ?? "N/A")")
-        print("image URL: \(image?.absoluteString ?? "N/A")")
+        print("image: \(image != nil ? "Image attached" : "N/A")")
 
         let exp = Experience()
 

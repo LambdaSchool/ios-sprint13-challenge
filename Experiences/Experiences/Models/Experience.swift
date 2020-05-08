@@ -12,7 +12,7 @@ import MapKit
 class Experience: NSObject {
     var title: String?
     var audioClip: URL?
-    var image: URL?
+    var image: UIImage?
     var videoClip: URL?
     var latitude: Double?
     var longitude: Double?

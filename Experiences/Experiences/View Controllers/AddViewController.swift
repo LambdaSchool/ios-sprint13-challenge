@@ -74,7 +74,7 @@ class AddViewController: UIViewController {
         if experience == nil {
             ec.create(title: title,
                       audioClip: audioClip,
-                      image: image,
+                      image: imageView.image,
                       videoClip: videoClip,
                       latitude: coordinates.latitude,
                       longitude: coordinates.longitude)
