@@ -17,6 +17,6 @@ class ExperienceController {
 
         let newExperience = Experience(expTitle: title, content: content, geoTag: geoTag, videoURL: videoURL, imageData: imageData, audioURL: audioURL)
         experiences.append(newExperience)
-        
+
     }
 }

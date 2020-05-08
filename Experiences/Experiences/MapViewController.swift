@@ -29,6 +29,7 @@ class MapViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        experienceController.createExperience(title: "Testing", content: "Hello world", videoURL: nil, imageData: nil, audioURL: nil, geoTag: CLLocationCoordinate2D(latitude: CLLocationDegrees(floatLiteral: 40.68), longitude: CLLocationDegrees(floatLiteral: -73.99)))
 
         mapView.addAnnotations(experienceController.experiences)
     }
