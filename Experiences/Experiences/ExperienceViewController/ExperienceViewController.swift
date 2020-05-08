@@ -109,12 +109,16 @@ class ExperienceViewController: UIViewController {
     
 }
 
+// MARK: - Text Field Delegate
+
 extension ExperienceViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
 }
+
+// MARK: - Audio Permission
 
 extension ExperienceViewController {
     
@@ -158,7 +162,6 @@ extension ExperienceViewController {
         }
     }
 }
-
 
 // MARK: - Audio Recorder Delegate
 
