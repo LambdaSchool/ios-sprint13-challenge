@@ -16,6 +16,7 @@ class AddExperienceViewController: UIViewController {
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var addImageButton: UIButton!
+    @IBOutlet weak var recordAudioButton: UIButton!
     
     // MARK: - IBActions
     @IBAction func addImage(_ sender: Any) {

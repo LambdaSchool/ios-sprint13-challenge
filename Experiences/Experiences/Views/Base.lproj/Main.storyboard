@@ -131,6 +131,7 @@
                         <outlet property="addImage" destination="JKt-1u-dWK" id="0LJ-Jy-5bF"/>
                         <outlet property="addImageButton" destination="JKt-1u-dWK" id="Pf6-Yx-BD6"/>
                         <outlet property="imageView" destination="QmG-Tr-rCQ" id="V4Z-DQ-6Zt"/>
+                        <outlet property="recordAudioButton" destination="iaQ-CY-tDJ" id="Yaj-qV-Yjk"/>
                         <outlet property="titleTextField" destination="gKW-A6-zzb" id="EfL-ax-7AU"/>
                         <segue destination="YKn-m7-YHf" kind="show" id="C2j-QH-uqN"/>
                     </connections>
@@ -164,6 +165,9 @@
                                         <state key="selected" image="stop.circle" catalog="system">
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="50" scale="default"/>
                                         </state>
+                                        <connections>
+                                            <action selector="recordVideo:" destination="YKn-m7-YHf" eventType="touchUpInside" id="lXl-3q-l4a"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -185,8 +189,16 @@
                         <viewLayoutGuide key="safeArea" id="4VG-QZ-auS"/>
                     </view>
                     <navigationItem key="navigationItem" id="WMR-I2-T8u">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="MPh-sF-lnM"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="MPh-sF-lnM">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="YKn-m7-YHf" id="qyf-Oo-se9"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="recordButton" destination="YOp-eT-WHO" id="FpA-y1-tT1"/>
+                        <outlet property="videoView" destination="ph1-SH-Fua" id="JpY-at-f6H"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dXx-CY-rpb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
