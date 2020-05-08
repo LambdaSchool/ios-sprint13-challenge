@@ -7,18 +7,16 @@
 //
 
 import UIKit
+import AVFoundation
 
 class VideoTableViewCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    var url: URL? { didSet { setUpVideo() }}
+
+    @IBOutlet weak var videoPlayerView: VideoPlayerView!
+    
+    func setUpVideo() {
+        guard let url = url else { return }
+        videoPlayerView.player = AVPlayer(url: url)
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

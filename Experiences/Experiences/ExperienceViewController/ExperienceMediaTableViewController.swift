@@ -71,20 +71,24 @@ class ExperienceMediaTableViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "AudioCell", for: indexPath) as? AudioTableViewCell else {
             fatalError("Unable to cast cell to type \(AudioTableViewCell.self)")
         }
+        
         cell.url = experience?.audioClips[indexPath.row]
         
         return cell
     }
     
     private func videoCell(forRowAt indexPath: IndexPath) -> VideoTableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "AudioCell", for: indexPath) as? VideoTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "VideoCell", for: indexPath) as? VideoTableViewCell else {
             fatalError("Unable to cast cell to type \(VideoTableViewCell.self)")
         }
+        
+        cell.url = experience?.videos[indexPath.row]
+        
         return cell
     }
     
     private func photoCell(forRowAt indexPath: IndexPath) -> PhotoTableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "AudioCell", for: indexPath) as? PhotoTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PhotoCell", for: indexPath) as? PhotoTableViewCell else {
             fatalError("Unable to cast cell to type \(PhotoTableViewCell.self)")
         }
         return cell

@@ -13,7 +13,7 @@ class AddVideoViewController: UIViewController {
     
     // MARK: - Public Properties
     
-    var experienceController: ExperienceController?
+    var experience: Experience?
 
     // MARK: - Private Properties
     
@@ -104,7 +104,9 @@ class AddVideoViewController: UIViewController {
     }
     
     @IBAction func save(_ sender: Any) {
-        
+        guard let url = player?.assetURL else { return }
+        experience?.videos.append(url)
+        navigationController?.popViewController(animated: true)
     }
 }
 

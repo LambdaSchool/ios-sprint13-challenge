@@ -92,16 +92,15 @@ class ExperienceViewController: UIViewController {
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Embed
+        // Embed Media Table View Controller
         if let mediaTVC = segue.destination as? ExperienceMediaTableViewController {
             mediaTVC.experience = experience
             self.mediaTVC = mediaTVC
         }
         
-        // Add Video
-        
+        // Segue to Add Video View Controller
         if let addVideoVC = segue.destination as? AddVideoViewController {
-            addVideoVC.experienceController = experienceController
+            addVideoVC.experience = experience
         }
     }
     
