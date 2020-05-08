@@ -8,10 +8,17 @@
 
 import UIKit
 
+protocol MediaDelegate {
+    func wasAdded()
+}
+
 class NewExpViewController: UIViewController {
 
     // MARK: - Properties
     var experienceController: ExperienceController!
+    var videoURL: String?
+    var imageData: Data?
+    var audioURL: String?
 
     // MARK: - Outlets
 
@@ -43,6 +50,16 @@ class NewExpViewController: UIViewController {
     @IBAction func recordButtonTapped(_ sender: Any) {
     }
     @IBAction func saveButtonTapped(_ sender: Any) {
+        // I'd usually make locationManager private and only control it through built methods but... time
+        experienceController.locationManager.requestLocation()
+        guard let title = titleField.text,
+            let geoTag = experienceController.locationManager.location?.coordinate else {
+                NSLog("Something missing fam")
+                return
+        }
+        let content = "Placeholder descriptions for now."
+
+        experienceController.createExperience(title: title, content: content, videoURL: videoURL, imageData: imageData, audioURL: audioURL, geoTag: geoTag)
     }
 
 }
