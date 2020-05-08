@@ -7,8 +7,30 @@
 //
 
 import UIKit
-
+import CoreImage
+import CoreImage.CIFilterBuiltins
 class HomePageViewController: UIViewController {
+    
+    // MARK: - Properties
+    
+    let context = CIContext(options: nil)
+    var originalImage: UIImage? {
+        didSet {
+            // resize the scaledImage and set it
+            guard let originalImage = originalImage else { return }
+            // Height and width
+            var scaledSize = imageView.bounds.size
+            let scale = UIScreen.main.scale  // 1x, 2x, or 3x
+            scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
+            print("scaled size: \(scaledSize)")
+            scaledImage = originalImage.imageByScaling(toSize: scaledSize)
+        }
+    }
+    var scaledImage: UIImage? {
+        didSet {
+            updateViews()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,6 +38,21 @@ class HomePageViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    
+    
+    
+    // MARK: - Actions
+    
+    private func presentImagePickerController() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            print("Error: The photo library is not available")
+            return
+        }
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        present(imagePicker, animated: true, completion: nil)
+    }
 
     /*
     // MARK: - Navigation
@@ -28,3 +65,16 @@ class HomePageViewController: UIViewController {
     */
 
 }
+
+extension HomePageViewController: UIImagePickerControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+           if let image = info[.originalImage] as? UIImage {
+               originalImage = image
+           }
+           picker.dismiss(animated: true)
+       }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+               picker.dismiss(animated: true)
+           }
+       }
+
