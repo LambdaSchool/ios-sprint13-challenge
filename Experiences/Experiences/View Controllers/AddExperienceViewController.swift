@@ -39,6 +39,7 @@ class AddExperienceViewController: UIViewController {
     
     // MARK: - Properties
     let locationManager = CLLocationManager()
+    var recordedVideoURL: URL?
 
     // MARK: - View Lifecycle
     override func viewDidLoad() {
@@ -98,17 +99,22 @@ class AddExperienceViewController: UIViewController {
         requestPermissionAndShowCamera()
     }
     
-    
     @IBAction func saveButtonTapped(_ sender: Any) {
     }
-    /*
+
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "ShowCameraSegue" {
+            guard let RecordVideoVC = segue.destination as? RecordVideoViewController else { return }
+            RecordVideoVC.delegate = self
+        }
     }
-    */
 
+}
+
+extension AddExperienceViewController: RecordedVideoURLDelegate {
+    func recordedVideoURL(url: URL) {
+        recordedVideoURL = url
+        print("nice")
+    }
 }

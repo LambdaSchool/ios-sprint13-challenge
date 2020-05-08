@@ -9,6 +9,10 @@
 import UIKit
 import AVFoundation
 
+protocol RecordedVideoURLDelegate: AnyObject {
+    func recordedVideoURL(url: URL)
+}
+
 class RecordVideoViewController: UIViewController {
 
     // MARK: - IBOutlets
@@ -21,6 +25,7 @@ class RecordVideoViewController: UIViewController {
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     var recordedVideoURL: URL?
+    weak var delegate: RecordedVideoURLDelegate?
     
     // MARK: - View Lifecycle
     override func viewDidLoad() {
@@ -117,8 +122,6 @@ class RecordVideoViewController: UIViewController {
     @IBAction func cancelButtonTapped(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
-    
-
 }
 
 extension RecordVideoViewController: AVCaptureFileOutputRecordingDelegate {
@@ -127,7 +130,9 @@ extension RecordVideoViewController: AVCaptureFileOutputRecordingDelegate {
             print("Error saving video: \(error)")
         } else {
             
-            //TODO: DISMISS OR POP AND SEND BACK LINK
+            delegate?.recordedVideoURL(url: outputFileURL)
+            print("Video Recorded. Passing URL: \(outputFileURL)")
+            dismiss(animated: true, completion: nil)
         }
         updateViews()
     }
