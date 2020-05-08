@@ -146,6 +146,14 @@ extension AddViewController {
     }
 
     // MARK: - Private
+
+    /// Make the app the active session for audio
+    private func prepareAudioSession() throws {
+        let session = AVAudioSession.sharedInstance()
+        try session.setCategory(.playAndRecord, options: [.defaultToSpeaker])
+        try session.setActive(true, options: []) // can fail if on a phone call, for instance
+    }
+
     private func createNewRecordingURL() -> URL {
         let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
 
@@ -187,6 +195,12 @@ extension AddViewController {
     }
 
     func startRecording() {
+        do {
+            try prepareAudioSession()
+        } catch {
+            fatalError("Failed prepareAudioSession")
+        }
+
         audioClip = createNewRecordingURL()
 
         guard let recordingURL = audioClip else { return }
