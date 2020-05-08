@@ -11,25 +11,6 @@ import CoreLocation
 import AVFoundation
 import CoreImage
 
-extension UIViewController {
-    func hideKeyboardWhenViewTapped() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-    }
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
-    }
-}
-
-extension UITextField {
-    func setLeftPaddingPoints(_ amount:CGFloat){
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
-        self.leftView = paddingView
-        self.leftViewMode = .always
-    }
-}
-
 class AddExperienceViewController: UIViewController {
 
     // MARK: - IBOutlets
@@ -42,7 +23,7 @@ class AddExperienceViewController: UIViewController {
     
     // MARK: - Properties
     var experienceController: ExperienceController?
-    let locationManager = CLLocationManager()
+    var locationManager: CLLocationManager?
     let context = CIContext(options: nil)
     var recordedVideoURL: URL?
     var recordedAudioURL: URL?
@@ -59,9 +40,13 @@ class AddExperienceViewController: UIViewController {
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        locationManager.requestWhenInUseAuthorization()
         self.hideKeyboardWhenViewTapped()
         setupViews()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        locationManager?.stopUpdatingLocation()
     }
     
     // MARK: - Private Methods
@@ -71,9 +56,9 @@ class AddExperienceViewController: UIViewController {
         titleTextField.setLeftPaddingPoints(10)
         
         if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.startUpdatingLocation()
+            locationManager?.delegate = self
+            locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager?.startUpdatingLocation()
         }
     }
     
@@ -128,9 +113,8 @@ class AddExperienceViewController: UIViewController {
     
     @IBAction func saveButtonTapped(_ sender: Any) {
         guard let title = titleTextField.text, !title.isEmpty else { return }
-        //TODO: Dont forget about location
-        experienceController?.createExperience(name: title, image: imageView.image, audioURL: recordedAudioURL, videoURL: recordedVideoURL, longitude: 0, latitude: 0)
-        locationManager.stopUpdatingLocation()
+        experienceController?.createExperience(name: title, image: imageView.image, audioURL: recordedAudioURL, videoURL: recordedVideoURL, longitude: longitude, latitude: latitude)
+        locationManager?.stopUpdatingLocation()
         navigationController?.popViewController(animated: true)
     }
 
@@ -175,7 +159,6 @@ class AddExperienceViewController: UIViewController {
                 }
                 
                 print("Recording permission has been granted!")
-                // NOTE: Invite the user to tap record again, since we just interrupted them, and they may not have been ready to record
             }
         case .denied:
             print("Microphone access has been blocked.")
@@ -198,7 +181,6 @@ class AddExperienceViewController: UIViewController {
     
     func startRecording() {
         let recordingURL = createNewRecordingURL()
-        
         let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
         audioRecorder = try? AVAudioRecorder(url: recordingURL, format: format)
         audioRecorder?.delegate = self
@@ -307,7 +289,7 @@ extension AddExperienceViewController: UIImagePickerControllerDelegate, UINaviga
 extension AddExperienceViewController: AVAudioRecorderDelegate {
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
         if let error = error {
-            print("⚠️ Audio Recorder Error: \(error)")
+            print("Audio Recorder Error: \(error)")
         }
         updateAudioViews()
     }
@@ -324,5 +306,6 @@ extension AddExperienceViewController: CLLocationManagerDelegate {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         latitude = locValue.latitude
         longitude = locValue.longitude
+        print("Lat: \(latitude), Long: \(longitude)")
     }
 }

@@ -17,10 +17,12 @@ class ExperiencesViewController: UIViewController {
     
     // MARK: - Properties
     let experienceController = ExperienceController()
+    let locationManager = CLLocationManager()
     
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        locationManager.requestWhenInUseAuthorization()
     }
     
     // MARK: - Navigation
@@ -28,6 +30,7 @@ class ExperiencesViewController: UIViewController {
         if segue.identifier == "ShowAddExperienceSegue" {
             guard let AddExperienceVC = segue.destination as? AddExperienceViewController else { return }
             AddExperienceVC.experienceController = experienceController
+            AddExperienceVC.locationManager = locationManager
         }
     }
     
