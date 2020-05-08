@@ -93,6 +93,13 @@ class ExperienceController: NSObject {
         return url
     }
     
+    func createNewVideoURL(name: String) -> URL {
+        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let url = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("mov")
+        print("recording URL created: \(url)")
+        return url
+    }
+    
     func requestPermission(completion: () -> ()) {
         AVCaptureDevice.requestAccess(for: .video) { (granted) in
             guard granted else {
