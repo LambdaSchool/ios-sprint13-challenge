@@ -83,8 +83,8 @@ class CreateExperienceViewController: UIViewController {
     }
 
     private func missingPropertiesAlert() {
-        if image == nil && videoURL == nil {
-            let alert = UIAlertController(title: "Missing Image and Video", message: nil, preferredStyle: .alert)
+        if image == nil && videoURL == nil && title == nil {
+            let alert = UIAlertController(title: "Missing Image, Video and Title", message: nil, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             present(alert, animated: true, completion: nil)
         } else if image == nil {
@@ -93,6 +93,14 @@ class CreateExperienceViewController: UIViewController {
             present(alert, animated: true, completion: nil)
         } else if videoURL == nil {
             let alert = UIAlertController(title: "Missing Video", message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+        } else if title == nil {
+            let alert = UIAlertController(title: "Missing Video", message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+        } else {
+            let alert = UIAlertController(title: "Missing Required Properties", message: nil, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             present(alert, animated: true, completion: nil)
         }
