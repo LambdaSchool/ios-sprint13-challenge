@@ -16,13 +16,14 @@ class ExperienceController {
     var experiences: [Experience] = []
     
     // MARK: - CRUD
-    func createExperience(name: String, info: String) {
+    func createExperience(name: String) {
         let latitude: Double = 0.00 // TODO: replace placeholder value
         let longitude: Double = 0.00 // TODO: replace placeholder value
         let time = Date()
         
-        let newExperience = Experience(name: name, info: info, latitude: latitude, longitude: longitude, time: time)
+        let newExperience = Experience(name: name, latitude: latitude, longitude: longitude, time: time)
         experiences.append(newExperience)
+        print("added new experience to experiences")
     }
     
     func addAudioToExperience(name: String, audio: URL) {
@@ -31,6 +32,7 @@ class ExperienceController {
             return
         }
         experiences[index].audio = audio
+        print("Added audio to experience \(name)")
     }
     
     func addImageToExperience(name: String, image: UIImage) {
@@ -39,6 +41,7 @@ class ExperienceController {
             return
         }
         experiences[index].image = image
+        print("Added image to experience \(name)")
     }
     
     func addVideoToExperience(name: String, video: URL) {
@@ -47,6 +50,7 @@ class ExperienceController {
             return
         }
         experiences[index].video = video
+        print("Added video to experience \(name)")
     }
     
     func deleteExperience(named: String) {
@@ -55,6 +59,7 @@ class ExperienceController {
             return
         }
         experiences.remove(at: index)
+        print("Deleted experience \(named)")
     }
     
     

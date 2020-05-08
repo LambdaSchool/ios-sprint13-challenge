@@ -15,9 +15,9 @@ class Experience: NSObject {
     var title: String? {
         name
     }
-    var info: String
+    var info: String?
     override var description: String {
-        info
+        info ?? " "
     }
     var image: UIImage?
     var video: URL?
@@ -28,7 +28,7 @@ class Experience: NSObject {
     
     // MARK: - Initializers
     internal init(name: String,
-                  info: String,
+                  info: String? = nil,
                   image: UIImage? = nil,
                   video: URL? = nil,
                   audio: URL? = nil,

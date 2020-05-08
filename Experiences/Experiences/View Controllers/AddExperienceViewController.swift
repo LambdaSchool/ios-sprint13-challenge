@@ -13,6 +13,7 @@ class AddExperienceViewController: UIViewController {
     // MARK: - Properties
     var experienceController: ExperienceController?
     var image: UIImage?
+    var audio: URL?
     
     // MARK: - IBOutlets
     @IBOutlet weak var titleTextField: UITextField!
@@ -27,6 +28,21 @@ class AddExperienceViewController: UIViewController {
     @IBAction func recordAudio(_ sender: Any) {
     }
     @IBAction func nextButtonTapped(_ sender: Any) {
+    }
+    @IBAction func saveWithoutVideo(_ sender: Any) {
+        // Mandatory to create experience
+        guard let title = titleTextField.text,
+            !title.isEmpty else { return }
+        experienceController?.createExperience(name: title)
+        
+        // Optional additions to experience
+        if let image = image {
+            experienceController?.addImageToExperience(name: title, image: image)
+        }
+        if let audio = audio {
+            experienceController?.addAudioToExperience(name: title, audio: audio)
+        }
+        navigationController?.popViewController(animated: true)
     }
     
     // MARK: - View Methods
