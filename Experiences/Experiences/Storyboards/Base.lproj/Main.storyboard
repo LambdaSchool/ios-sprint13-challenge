@@ -88,13 +88,30 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="lE3-aM-cmA" customClass="CameraPreviewView" customModule="VideoPost" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="212" width="414" height="250"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="250" id="akD-9u-Vjn"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8wF-TZ-JaX">
+                                <rect key="frame" x="195" y="472" width="24" height="22"/>
+                                <state key="normal" image="camera.fill" catalog="system"/>
+                                <state key="selected" image="stop.circle.fill" catalog="system"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="lE3-aM-cmA" firstAttribute="trailing" secondItem="Puu-1z-p3l" secondAttribute="trailing" id="1IB-51-l6D"/>
+                            <constraint firstItem="lE3-aM-cmA" firstAttribute="top" secondItem="oqU-7t-5Z7" secondAttribute="bottom" constant="20" id="GNS-E6-97P"/>
                             <constraint firstItem="oqU-7t-5Z7" firstAttribute="top" secondItem="sHz-ET-jyh" secondAttribute="bottom" constant="20" id="Gxp-Kg-xCc"/>
                             <constraint firstItem="oqU-7t-5Z7" firstAttribute="centerX" secondItem="7dP-lg-83U" secondAttribute="centerX" id="LPz-M5-p96"/>
+                            <constraint firstItem="lE3-aM-cmA" firstAttribute="leading" secondItem="Puu-1z-p3l" secondAttribute="leading" id="TeY-TI-SYe"/>
                             <constraint firstItem="sHz-ET-jyh" firstAttribute="leading" secondItem="Puu-1z-p3l" secondAttribute="leading" constant="20" id="Wmh-rT-wCM"/>
                             <constraint firstItem="Puu-1z-p3l" firstAttribute="trailing" secondItem="sHz-ET-jyh" secondAttribute="trailing" constant="20" id="mAQ-2o-TuZ"/>
+                            <constraint firstItem="8wF-TZ-JaX" firstAttribute="centerX" secondItem="7dP-lg-83U" secondAttribute="centerX" id="omK-Pa-aQy"/>
+                            <constraint firstItem="8wF-TZ-JaX" firstAttribute="top" secondItem="lE3-aM-cmA" secondAttribute="bottom" constant="10" id="t6v-zj-7ah"/>
                             <constraint firstItem="sHz-ET-jyh" firstAttribute="top" secondItem="Puu-1z-p3l" secondAttribute="top" constant="20" id="z8a-gJ-ceB"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Puu-1z-p3l"/>
@@ -133,4 +150,8 @@
             <point key="canvasLocation" x="137.68115942028987" y="137.94642857142856"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="camera.fill" catalog="system" width="128" height="96"/>
+        <image name="stop.circle.fill" catalog="system" width="128" height="121"/>
+    </resources>
 </document>
