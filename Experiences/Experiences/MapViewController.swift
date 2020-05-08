@@ -44,6 +44,10 @@ class MapViewController: UIViewController {
     }
     */
 
+    @IBAction func addButtonTapped(_ sender: Any) {
+    }
+
+
 }
 
 // MARK: - Extensions
