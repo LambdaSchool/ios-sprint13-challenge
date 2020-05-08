@@ -28,7 +28,6 @@ class XPDetailView: UIView {
         imageView.topAnchor.constraint(equalTo: topAnchor, constant: 8).isActive = true
         imageView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
         imageView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-//        imageView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         imageView.contentMode = .scaleAspectFit
         
@@ -51,13 +50,11 @@ class XPDetailView: UIView {
         
     }
     
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError()
     }
     
     // MARK: - Private Methods
-    
     private func updateSubviews() {
         imageView.image = experience?.image
         
@@ -85,13 +82,9 @@ class XPDetailView: UIView {
         }
     }
     
-    
     var isPlaying: Bool {
         audioPlayer?.isPlaying ?? false
     }
-
-
-
 
     // Fixes bug for iPhone
     func prepareAudioSession() throws {
@@ -100,11 +93,10 @@ class XPDetailView: UIView {
         try session.setActive(true, options: []) // can fail if on a phone call, for instance
     }
 
-
     func play() {
         audioPlayer?.play()
         startTimer()
-//        updateViews()
+        updateViews()
     }
 
     func pause() {
@@ -113,15 +105,13 @@ class XPDetailView: UIView {
         updateViews()
     }
 
-
-
     // MARK: - Timer
-    var timer: Timer?
+    var audioPlayerTimer: Timer?
 
     func startTimer() {
-        timer?.invalidate() // Cancel a timeer before you start a new one
+        audioPlayerTimer?.invalidate() // Cancel a timeer before you start a new one
 
-        timer = Timer.scheduledTimer(withTimeInterval: 0.030, repeats: true) { [weak self] (_) in
+        audioPlayerTimer = Timer.scheduledTimer(withTimeInterval: 0.030, repeats: true) { [weak self] (_) in
             guard let self = self else { return }
 
             self.updateViews()
@@ -130,19 +120,23 @@ class XPDetailView: UIView {
     }
 
     func cancelTimer() {
-        timer?.invalidate()
-        timer = nil
+        audioPlayerTimer?.invalidate()
+        audioPlayerTimer = nil
     }
     
     private func updateViews(){
         playButton.isSelected = isPlaying
+        
+        let currentTime = audioPlayer?.currentTime ?? 0.0
+        let duration = audioPlayer?.duration ?? 0.0
+        
+        sliderView.minimumValue = 0
+        sliderView.maximumValue = Float(duration)
+        sliderView.value = Float(currentTime)
     }
-
-
 }
 
 extension XPDetailView: AVAudioPlayerDelegate {
-    
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         updateViews()
     }
