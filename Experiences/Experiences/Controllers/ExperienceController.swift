@@ -11,16 +11,30 @@ import UIKit
 import MapKit
 import AVKit
 
-class ExperienceController {
+class ExperienceController: NSObject {
     // MARK: - Properties
     var experiences: [Experience] = []
+    let locationManager = CLLocationManager()
     
     // MARK: - CRUD
     func createExperience(name: String) {
-        let latitude: Double = 0.00 // TODO: replace placeholder value
-        let longitude: Double = 0.00 // TODO: replace placeholder value
-        let time = Date()
+        // Get location from user
+        locationManager.delegate = self
+        locationManager.requestLocation()
         
+        // Get coordinates from users location
+        var latitude: Double
+        var longitude: Double
+        if let coordinate = locationManager.location?.coordinate {
+            latitude = coordinate.latitude
+            longitude = coordinate.longitude
+        } else {
+            latitude = 0.00
+            longitude = 0.00
+        }
+
+        // Create user experience
+        let time = Date()
         let newExperience = Experience(name: name, latitude: latitude, longitude: longitude, time: time)
         experiences.append(newExperience)
         print("added new experience to experiences")
@@ -69,5 +83,24 @@ class ExperienceController {
             return i
         }
         return nil
+    }
+    
+    func createNewRecordingURL(name: String) -> URL {
+        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let url = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
+        print("recording URL created: \(url)")
+        return url
+    }
+}
+
+extension ExperienceController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            print("Found user's location: \(location)")
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Failed to find user's location.")
     }
 }
