@@ -17,23 +17,51 @@ class ExperiencesViewController: UIViewController {
 
     // MARK: - Properties
 
+    let experienceController = ExperienceController()
+    let locationManager = CLLocationManager()
+
+    var experience: Experience?
+    var currentCoordinate: CLLocationCoordinate2D?
+    var annotations: [MKAnnotation] = []
+
     // MARK: - View Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        configureLocation()
     }
-    
 
-    /*
+    // MARK: - Actions
+
+    private func configureLocation() {
+        locationManager.delegate = self
+
+        let status = CLLocationManager.authorizationStatus()
+
+        if CLLocationManager.authorizationStatus() == .notDetermined {
+            locationManager.requestWhenInUseAuthorization()
+        } else if status == .authorizedAlways || status == .authorizedWhenInUse {
+            beginLocationUpdates(using: locationManager)
+        }
+    }
+
+    private func beginLocationUpdates(using locationManager: CLLocationManager) {
+        mapView.showsUserLocation = true
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
+    }
+
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
+    }
+}
+
+extension ExperiencesViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedAlways || status == .authorizedWhenInUse {
+            beginLocationUpdates(using: locationManager)
+        }
+    }
 }
