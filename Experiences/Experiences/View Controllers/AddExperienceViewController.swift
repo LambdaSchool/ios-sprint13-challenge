@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CoreImage
+import CoreImage.CIFilterBuiltins
 
 class AddExperienceViewController: UIViewController {
     
@@ -14,6 +16,7 @@ class AddExperienceViewController: UIViewController {
     var experienceController: ExperienceController?
     var image: UIImage?
     var audio: URL?
+    let context = CIContext(options: nil)
     
     // MARK: - IBOutlets
     @IBOutlet weak var titleTextField: UITextField!
@@ -50,6 +53,10 @@ class AddExperienceViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    func updateViews() {
+        imageView.image = image
+    }
+    
     // MARK: - Action Methods
     func presentImagePicker() {
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else { return }
@@ -58,7 +65,28 @@ class AddExperienceViewController: UIViewController {
         imagePicker.sourceType = .photoLibrary
         imagePicker.delegate = self
         present(imagePicker, animated: true, completion: nil)
+    }
+    
+    private func filterImage(originalImage: UIImage) {
+        addImageButton.isHidden = true
         
+        // Convert UIImage to CIImage
+        guard let cgImage = originalImage.cgImage else { return }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        // Create Filter
+        let filter = CIFilter(name: "CIUnsharpMask")!
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        filter.setValue(2.5, forKey: kCIInputRadiusKey)
+        filter.setValue(0.5, forKey: kCIInputIntensityKey)
+        
+        // Convert CIImage back to UIImage
+        guard let outputCIImage = filter.outputImage,
+            let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: originalImage.size))
+            else { return }
+        
+        image = UIImage(cgImage: outputCGImage)
+        updateViews()
     }
 
     /*
@@ -76,10 +104,7 @@ class AddExperienceViewController: UIViewController {
 extension AddExperienceViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.originalImage] as? UIImage {
-            self.image = image
-            self.addImageButton.isHidden = true
-            self.imageView.isHidden = false
-            self.imageView.image = image
+            filterImage(originalImage: image)
         }
         picker.dismiss(animated: true)
     }
