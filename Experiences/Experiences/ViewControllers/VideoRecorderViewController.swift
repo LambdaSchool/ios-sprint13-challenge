@@ -129,6 +129,8 @@ class VideoRecorderViewController: UIViewController {
     }
 }
 
+// MARK: - AV Capture File Output Recording Delegate
+
 extension VideoRecorderViewController: AVCaptureFileOutputRecordingDelegate {
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         if let error = error {

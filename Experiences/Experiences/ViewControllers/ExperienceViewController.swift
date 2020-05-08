@@ -8,20 +8,24 @@
 
 import UIKit
 import AVFoundation
+import CoreImage
+import CoreImage.CIFilterBuiltins
 
 class ExperienceViewController: UIViewController {
 
     // MARK: - Public Properties
     
     var experienceController: ExperienceController?
+    let experience = Experience(title: "New Experience", latitude: 1, longitude: 1)
     
     // MARK: - Private Properties
     
-    let experience = Experience(title: "New Experience", latitude: 1, longitude: 1) // TODO: Get coordinates
+    private var mediaTVC: MediaTableViewController!
     
-    lazy var audioRecorder = AudioDeck(delegate: self)
-    var mediaTVC: ExperienceMediaTableViewController!
-    var audioVisualizerVC: AudioVisualizerViewController?
+    private lazy var audioRecorder = AudioDeck(delegate: self)
+    private var audioVisualizerVC: AudioVisualizerViewController?
+    
+    private let context = CIContext()
     
     // MARK: - IBOutlets
     
@@ -63,6 +67,17 @@ class ExperienceViewController: UIViewController {
         audioRecorder.stopRecording()
     }
     
+    private func presentImagePickerController() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            print("Error: The photo library is not available")
+            return
+        }
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
     // MARK: - IBActions
     
     @IBAction func toggleRecordAudio(_ sender: Any) {
@@ -81,7 +96,7 @@ class ExperienceViewController: UIViewController {
     }
     
     @IBAction func addPhoto(_ sender: Any) {
-        // Show photo picker
+        presentImagePickerController()
     }
    
     @IBAction func save(_ sender: Any) {
@@ -96,7 +111,7 @@ class ExperienceViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Embed Media Table View Controller
-        if let mediaTVC = segue.destination as? ExperienceMediaTableViewController {
+        if let mediaTVC = segue.destination as? MediaTableViewController {
             mediaTVC.experience = experience
             self.mediaTVC = mediaTVC
         }
@@ -106,7 +121,57 @@ class ExperienceViewController: UIViewController {
             addVideoVC.experience = experience
         }
     }
+}
+
+// MARK: - Image Picker Delegate
+
+extension ExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    func filterImage(_ image: UIImage) -> UIImage? {
+        // UIImage -> CGImage -> CIImage
+        guard let cgImage = image.cgImage else { return nil}
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        // Filter image
+        let filter = CIFilter.photoEffectNoir()
+ 
+        filter.inputImage = ciImage
+        
+        // CIImage -> CGImage -> UIImage
+        guard let outputCIImage = filter.value(forKey: kCIOutputImageKey) as? CIImage else { return nil }
+        
+        guard let outputCGImage = context.createCGImage(
+            outputCIImage,
+            from: CGRect(origin: .zero, size: image.size)) else { return nil }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    func storeImage(_ image: UIImage, withFileName fileName: String) -> URL {
+        let tempDir = FileManager.default.temporaryDirectory
+        let imageData = image.pngData()
+        let imageURL = tempDir.appendingPathComponent(fileName).appendingPathExtension("png")
+        try? imageData?.write(to: imageURL)
+        return imageURL
+    }
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+
+        if let image = info[.originalImage] as? UIImage, let url = info[.imageURL] as? URL {
+            let imageName = url.lastPathComponent
+            if let filteredImage = filterImage(image.flattened) {
+                let url = storeImage(filteredImage, withFileName: imageName)
+                experience.photos.append(url)
+                updateMedia()
+            }
+        }
+        
+        picker.dismiss(animated: true)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
 }
 
 // MARK: - Text Field Delegate

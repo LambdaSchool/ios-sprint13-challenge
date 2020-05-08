@@ -19,4 +19,6 @@ class VideoTableViewCell: UITableViewCell {
         guard let url = url else { return }
         videoPlayerView.player = AVPlayer(url: url)
     }
+    
+    // TODO: Implement video playback controls
 }

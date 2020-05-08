@@ -110,6 +110,8 @@ class AddVideoViewController: UIViewController {
     }
 }
 
+// MARK: - VideoRecorderDelegate
+
 extension AddVideoViewController: VideoRecorderDelegate {
     func didRecordVideo(to url: URL) {
         player = AVPlayer(url: url)

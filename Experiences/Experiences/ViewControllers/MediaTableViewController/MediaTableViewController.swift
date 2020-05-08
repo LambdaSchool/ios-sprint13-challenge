@@ -1,5 +1,5 @@
 //
-//  ExperienceMediaTableViewController.swift
+//  MediaTableViewController.swift
 //  Experiences
 //
 //  Created by Shawn Gee on 5/8/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ExperienceMediaTableViewController: UITableViewController {
+class MediaTableViewController: UITableViewController {
 
     
     // MARK: - Public Properties
@@ -91,6 +91,9 @@ class ExperienceMediaTableViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "PhotoCell", for: indexPath) as? PhotoTableViewCell else {
             fatalError("Unable to cast cell to type \(PhotoTableViewCell.self)")
         }
+        
+        cell.url = experience?.photos[indexPath.row]
+        
         return cell
     }
 
