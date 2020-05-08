@@ -11,30 +11,15 @@ import AVFoundation
 
 
 class CreateViewController: UIViewController {
-    
-    @IBOutlet weak var locationLabel: UILabel!
+
     @IBOutlet weak var titleTextField: UITextField!
-    var location: Location? {
-        didSet {
-            updateViews()
-        }
-    }
-    var experience: Experience?
+
+    var experiences: Experiences?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateViews()
     }
-    func updateViews(){
-        if let location = location {
-            switch location {
-            case .other:
-                locationLabel.text = "Other"
-            default:
-                locationLabel.text = "Current"
-            }
-        }
-    }
+
     @IBAction func addVideoTapped(_ sender: Any) {
         requestPermissionAndShowCamera()
     }
@@ -72,14 +57,8 @@ class CreateViewController: UIViewController {
     
     @IBAction func saveExp(_ sender: Any) {
         guard let location = location, let title = titleTextField.text, !title.isEmpty else {return}
-        experience?.expTitle = title
+        experiences?.create(title: title, latitude: <#T##Double#>, longitude: <#T##Double#>)
         navigationController?.popViewController(animated: true)
         //experience?.lat =
-    }
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ChooseLocationSegue" {
-            guard let chooseVC = segue.destination as? LocationViewController else {return}
-            chooseVC.location = location
-        }
     }
 }

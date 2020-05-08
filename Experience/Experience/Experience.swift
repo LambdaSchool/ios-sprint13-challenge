@@ -27,9 +27,3 @@ extension Experience: MKAnnotation {
     CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
 }
-
-
-class Experiences {
-    var experiences: [Experience] = []
-}
-

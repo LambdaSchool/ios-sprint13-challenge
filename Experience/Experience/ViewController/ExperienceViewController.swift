@@ -11,8 +11,7 @@ import MapKit
 
 class ExperienceViewController: UIViewController, CLLocationManagerDelegate {
     
-    let experience: Experience? = nil
-    var location: Location?
+    let experiences = Experiences()
     var currentLocation: CLLocation!
     var locationManager = CLLocationManager()
     let newPin = MKPointAnnotation()
@@ -24,43 +23,21 @@ class ExperienceViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceView")
-        
-        if let location = location {
-            switch location {
-            case .other:
-                print("HI")
-            default:
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        guard let experience = experiences.experiences.first else { return }
 
-                locationManager.startUpdatingLocation()
-                if (CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
-                    CLLocationManager.authorizationStatus() ==  .authorizedAlways)
-                {
-                    currentLocation = locationManager.location
-                }
-                
-                if CLLocationManager.headingAvailable()
-                {
-                    locationManager.headingFilter = 5
-                    locationManager.startUpdatingHeading()
-                }
-                
-                func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-                    mapView.removeAnnotation(newPin)
+        mapView.addAnnotations(experiences.experiences)
 
-                    let location = locations.last! as CLLocation
+        let span = MKCoordinateSpan(latitudeDelta: 2.5, longitudeDelta: 2.5)
 
-                    let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-                    let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+        let region = MKCoordinateRegion(center: experience.coordinate, span: span)
 
-                    //set region on the map
-                    mapView.setRegion(region, animated: true)
+        mapView.setRegion(region, animated: true)
 
-                    newPin.coordinate = location.coordinate
-                    mapView.addAnnotation(newPin)
 
-                }
-            }
-        }
     }
     
 
@@ -70,8 +47,7 @@ class ExperienceViewController: UIViewController, CLLocationManagerDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AddExpSegue" {
             guard let createExpVC = segue.destination as? CreateViewController else {return}
-            createExpVC.experience = experience
-            createExpVC.location = location
+            createExpVC.experiences = experiences
         }
     }
 }
