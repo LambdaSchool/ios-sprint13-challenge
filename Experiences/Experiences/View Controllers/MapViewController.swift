@@ -56,11 +56,13 @@ class MapViewController: UIViewController {
     // MARK: - Public
     func whereAmI() -> (latitude: Double, longitude: Double){
 
-        let lat = locManager.location?.coordinate.latitude ?? 0.0
-        let long = locManager.location?.coordinate.longitude ?? 0.0
+        var lat = locManager.location?.coordinate.latitude ?? 0.0
+        var long = locManager.location?.coordinate.longitude ?? 0.0
 
-        // FIXME: Add in chaos monkey
-        
+        // HACK: Randomly spread the pins around. Privacy feature?
+        lat = lat + Double.random(in: -0.005...0.005)
+        long = long + Double.random(in: -0.005...0.005)
+
         return (latitude: lat, longitude: long)
     }
 
@@ -85,7 +87,7 @@ class MapViewController: UIViewController {
         // Center the map based on the most recently added experience
         guard let post = self.experienceController.experiences.last else { return }
 
-        let span = MKCoordinateSpan(latitudeDelta: 2, longitudeDelta: 2)
+        let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         let region = MKCoordinateRegion(center: post.coordinate, span: span)
         mapView.setRegion(region, animated: true)
     }
