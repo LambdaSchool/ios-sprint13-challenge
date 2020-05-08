@@ -9,19 +9,6 @@
 import Foundation
 import CoreLocation
 
-struct Experience {
-    var title: String
-    let time: Date
-    let latitude: Double
-    let longitude: Double
-    
-    // Media
-    var audioClips: [URL]
-    var videos: [URL]
-    var photos: [URL]
-}
-
-
 class ExperienceController {
     private(set) var experiences: [Experience] = []
     

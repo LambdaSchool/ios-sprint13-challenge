@@ -11,13 +11,23 @@ import MapKit
 
 class MapViewController: UIViewController {
 
-    @IBOutlet weak var mapView: MKMapView!
+    // MARK: - IBOutlets
+    
+    @IBOutlet private weak var mapView: MKMapView! { didSet { setUpMapView() }}
+    
+    // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
-
-
+    
+    // MARK: - Private Methods
+    
+    private func setUpMapView() {
+        
+    }
 }
+
+
 
