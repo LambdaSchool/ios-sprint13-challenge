@@ -7,13 +7,21 @@
 //
 
 import UIKit
+import MapKit
 
 class MapViewController: UIViewController {
+
+    // MARK: - Properties
+
+    // MARK: - Outlets
+    @IBOutlet weak var mapView: MKMapView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        mapView.delegate = self
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceView")
     }
     
 
@@ -27,4 +35,12 @@ class MapViewController: UIViewController {
     }
     */
 
+}
+
+// MARK: - Extensions
+
+extension MapViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        <#code#>
+    }
 }
