@@ -20,7 +20,12 @@ class NewExpViewController: UIViewController {
     var imageData: Data?
     var audioURL: String?
 
-    var originalImage: UIImage?
+    var originalImage: UIImage? {
+        didSet {
+            photoButton.setTitle("", for: .normal)
+            photoView.image = originalImage
+        }
+    }
 
     // MARK: - Outlets
 
@@ -47,7 +52,7 @@ class NewExpViewController: UIViewController {
 
     // MARK: - Actions
     @IBAction func addPhotoTapped(_ sender: Any) {
-
+        presentImagePickerController()
     }
     @IBAction func recordButtonTapped(_ sender: Any) {
     }
