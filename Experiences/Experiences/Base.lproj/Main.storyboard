@@ -191,33 +191,83 @@
         <scene sceneID="gMC-Pp-H3c">
             <objects>
                 <tableViewController definesPresentationContext="YES" id="jgY-hG-nYH" customClass="ExperienceMediaTableViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="12Q-5g-FJu">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="12Q-5g-FJu">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="651"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AudioCell" rowHeight="60" id="0MY-qM-FVD">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AudioCell" rowHeight="60" id="0MY-qM-FVD" customClass="AudioTableViewCell" customModule="Experiences" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0MY-qM-FVD" id="80s-wj-08Y">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="Abs-dN-imr">
+                                            <rect key="frame" x="40" y="15" width="334" height="30"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TvU-93-5On">
+                                                    <rect key="frame" x="0.0" y="0.0" width="15" height="30"/>
+                                                    <state key="normal" image="play.fill" catalog="system"/>
+                                                    <state key="selected" image="pause.fill" catalog="system"/>
+                                                    <connections>
+                                                        <action selector="togglePlayback:" destination="0MY-qM-FVD" eventType="touchUpInside" id="K0Y-hg-KOw"/>
+                                                    </connections>
+                                                </button>
+                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="HkF-34-cL6">
+                                                    <rect key="frame" x="43" y="0.0" width="293" height="31"/>
+                                                </slider>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Abs-dN-imr" secondAttribute="trailing" constant="20" id="41b-77-aKQ"/>
+                                        <constraint firstItem="Abs-dN-imr" firstAttribute="centerY" secondItem="80s-wj-08Y" secondAttribute="centerY" id="Vvk-qU-LQq"/>
+                                        <constraint firstItem="Abs-dN-imr" firstAttribute="leading" secondItem="80s-wj-08Y" secondAttribute="leadingMargin" constant="20" id="lIM-ot-ndF"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="playPauseButton" destination="TvU-93-5On" id="dWm-Y7-Gvw"/>
+                                    <outlet property="timelineSlider" destination="HkF-34-cL6" id="Kbh-eg-rqR"/>
+                                </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PhotoCell" rowHeight="200" id="stn-o1-u24">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PhotoCell" rowHeight="200" id="stn-o1-u24" customClass="PhotoTableViewCell" customModule="Experiences" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="88" width="414" height="200"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="stn-o1-u24" id="5Gf-7t-Wat">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RlO-73-eHM">
+                                            <rect key="frame" x="20" y="11" width="374" height="178"/>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottomMargin" secondItem="RlO-73-eHM" secondAttribute="bottom" id="OTN-5K-ej0"/>
+                                        <constraint firstItem="RlO-73-eHM" firstAttribute="leading" secondItem="5Gf-7t-Wat" secondAttribute="leadingMargin" id="WKw-nZ-Pif"/>
+                                        <constraint firstItem="RlO-73-eHM" firstAttribute="top" secondItem="5Gf-7t-Wat" secondAttribute="topMargin" id="Zo7-6a-SLn"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="RlO-73-eHM" secondAttribute="trailing" id="cwp-HO-YJN"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="VideoCell" rowHeight="200" id="bFe-Zd-usQ">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="VideoCell" rowHeight="200" id="bFe-Zd-usQ" customClass="VideoTableViewCell" customModule="Experiences" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="288" width="414" height="200"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bFe-Zd-usQ" id="4m2-7B-9eS">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cqk-Td-0C7" customClass="VideoPlayerView" customModule="Experiences" customModuleProvider="target">
+                                            <rect key="frame" x="20" y="11" width="374" height="178"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Cqk-Td-0C7" firstAttribute="top" secondItem="4m2-7B-9eS" secondAttribute="topMargin" id="206-5b-1fd"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Cqk-Td-0C7" secondAttribute="trailing" id="2xq-H6-6M9"/>
+                                        <constraint firstItem="Cqk-Td-0C7" firstAttribute="leading" secondItem="4m2-7B-9eS" secondAttribute="leadingMargin" id="oF7-Oe-kU2"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="Cqk-Td-0C7" secondAttribute="bottom" id="pOT-wd-dZB"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -229,7 +279,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N0t-tf-02r" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2553" y="874"/>
+            <point key="canvasLocation" x="2552.1739130434785" y="873.54910714285711"/>
         </scene>
         <!--Audio Visualizer View Controller-->
         <scene sceneID="cKF-QL-oKh">
@@ -314,6 +364,7 @@
     </scenes>
     <resources>
         <image name="mic.fill" catalog="system" width="108" height="128"/>
+        <image name="pause.fill" catalog="system" width="116" height="128"/>
         <image name="photo.fill" catalog="system" width="128" height="93"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
         <image name="stop.circle.fill" catalog="system" width="128" height="121"/>
