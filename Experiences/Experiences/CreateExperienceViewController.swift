@@ -19,12 +19,14 @@ class CreateExperienceViewController: UIViewController {
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var imageButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var recordButton: UIButton!
-    @IBOutlet weak var videoPlayerView: VideoPlayerView!
 
     // MARK: - Properties
 
     var experienceController: ExperienceController?
+
+    var image: UIImage?
+    var audioURL: URL?
+    var videoURL: URL?
 
     // MARK: - View Lifecycle
 
@@ -35,6 +37,10 @@ class CreateExperienceViewController: UIViewController {
     }
 
     // MARK: - IBActions
+
+    @IBAction func addImageTapped(_ sender: Any) {
+    }
+
 
     @IBAction func saveButtonTapped(_ sender: Any) {
     }
