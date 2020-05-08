@@ -25,6 +25,7 @@ class ExperienceViewController: UIViewController {
     
     // MARK: - IBOutlets
     
+    @IBOutlet weak var titleTextField: UITextField! { didSet { titleTextField.delegate = self }}
     @IBOutlet weak var micButton: UIBarButtonItem!
     
     // MARK: - View Lifecycle
@@ -84,6 +85,8 @@ class ExperienceViewController: UIViewController {
     }
    
     @IBAction func save(_ sender: Any) {
+        guard let text = titleTextField.text else { return }
+        experience.title = text
         experienceController?.add(experience)
         navigationController?.popViewController(animated: true)
     }
@@ -104,6 +107,13 @@ class ExperienceViewController: UIViewController {
         }
     }
     
+}
+
+extension ExperienceViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }
 
 extension ExperienceViewController {
