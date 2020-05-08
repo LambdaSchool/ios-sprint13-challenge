@@ -50,7 +50,7 @@ class ExperienceController {
     }
     
     func deleteExperience(named: String) {
-        guard let index = experienceIndexByName(name: name) else {
+        guard let index = experienceIndexByName(name: named) else {
             print("Experience has not been created yet.")
             return
         }
