@@ -52,7 +52,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1sZ-6k-7zf">
-                                <rect key="frame" x="0.0" y="199" width="414" height="292"/>
+                                <rect key="frame" x="0.0" y="199" width="414" height="246"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="246" id="pg4-sU-yzB"/>
+                                </constraints>
                             </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name your experience" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RT2-3o-r2f">
                                 <rect key="frame" x="20" y="148" width="374" height="34"/>
@@ -60,7 +63,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iSe-34-aS1">
-                                <rect key="frame" x="137.5" y="282" width="139" height="107"/>
+                                <rect key="frame" x="137.5" y="262" width="139" height="107"/>
                                 <state key="normal" image="photo.on.rectangle" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="90"/>
                                 </state>
@@ -69,10 +72,7 @@
                                 </connections>
                             </button>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9NQ-Tg-tP1" customClass="VideoPlayerView" customModule="Experiences" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="500" width="414" height="362"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="362" id="uj8-mh-Jzy"/>
-                                </constraints>
+                                <rect key="frame" x="0.0" y="454" width="414" height="408"/>
                                 <connections>
                                     <segue destination="54o-ML-1aS" kind="embed" identifier="VideoSegue" id="na6-Z0-jIM"/>
                                 </connections>
@@ -81,7 +81,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="RyH-Oq-6OS" firstAttribute="trailing" secondItem="RT2-3o-r2f" secondAttribute="trailing" constant="20" id="0gn-IQ-sb7"/>
-                            <constraint firstItem="iSe-34-aS1" firstAttribute="top" secondItem="RT2-3o-r2f" secondAttribute="bottom" constant="100" id="6al-6g-5Gk"/>
+                            <constraint firstItem="iSe-34-aS1" firstAttribute="top" secondItem="RT2-3o-r2f" secondAttribute="bottom" constant="80" id="6al-6g-5Gk"/>
                             <constraint firstItem="RT2-3o-r2f" firstAttribute="top" secondItem="RyH-Oq-6OS" secondAttribute="top" constant="8" id="DvB-Af-YBQ"/>
                             <constraint firstItem="1sZ-6k-7zf" firstAttribute="top" secondItem="RT2-3o-r2f" secondAttribute="bottom" constant="17" id="MZN-lz-6Rf"/>
                             <constraint firstItem="9NQ-Tg-tP1" firstAttribute="leading" secondItem="RyH-Oq-6OS" secondAttribute="leading" id="OXQ-DA-mR3"/>
@@ -112,49 +112,6 @@
             </objects>
             <point key="canvasLocation" x="2873.913043478261" y="736.60714285714278"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="ezq-ug-gty">
-            <objects>
-                <viewController storyboardIdentifier="CameraView" id="B5a-nt-rvl" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="AH0-9n-H7R">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y6r-zh-7rP" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sgv-tN-ipe">
-                                <rect key="frame" x="157" y="702" width="100" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="K5h-Nv-JEK"/>
-                                    <constraint firstAttribute="width" constant="100" id="QZr-ol-C4U"/>
-                                </constraints>
-                                <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" image="Record"/>
-                                <state key="selected" image="Stop"/>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="y6r-zh-7rP" firstAttribute="top" secondItem="AH0-9n-H7R" secondAttribute="top" id="BIN-Hb-40w"/>
-                            <constraint firstItem="y6r-zh-7rP" firstAttribute="leading" secondItem="fHU-Av-Kyd" secondAttribute="leading" id="JDj-He-wTF"/>
-                            <constraint firstItem="y6r-zh-7rP" firstAttribute="top" secondItem="AH0-9n-H7R" secondAttribute="top" id="KGd-xN-fn8"/>
-                            <constraint firstItem="y6r-zh-7rP" firstAttribute="trailing" secondItem="fHU-Av-Kyd" secondAttribute="trailing" id="Msb-en-eaB"/>
-                            <constraint firstAttribute="bottom" secondItem="y6r-zh-7rP" secondAttribute="bottom" id="NYz-Ny-LXs"/>
-                            <constraint firstItem="sgv-tN-ipe" firstAttribute="centerX" secondItem="fHU-Av-Kyd" secondAttribute="centerX" id="NkT-HT-d0i"/>
-                            <constraint firstAttribute="bottom" secondItem="y6r-zh-7rP" secondAttribute="bottom" id="USl-3D-xgH"/>
-                            <constraint firstItem="fHU-Av-Kyd" firstAttribute="bottom" secondItem="sgv-tN-ipe" secondAttribute="bottom" constant="60" id="cB4-Pm-jhg"/>
-                            <constraint firstItem="y6r-zh-7rP" firstAttribute="trailing" secondItem="fHU-Av-Kyd" secondAttribute="trailing" id="eXy-Se-h5f"/>
-                            <constraint firstItem="y6r-zh-7rP" firstAttribute="leading" secondItem="fHU-Av-Kyd" secondAttribute="leading" id="giI-yy-ypG"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="fHU-Av-Kyd"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ES3-UG-JBB" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4761" y="737"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="mAj-Nh-YXh">
             <objects>
@@ -178,14 +135,14 @@
             <objects>
                 <viewController id="54o-ML-1aS" customClass="VideoViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="maQ-xL-rXx">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="362"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="408"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wBp-zq-xnd" customClass="VideoPlayerView" customModule="Experiences" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="373"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="408"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tzn-f8-ihg">
-                                        <rect key="frame" x="154" y="135.5" width="106" height="102"/>
+                                        <rect key="frame" x="154" y="153" width="106" height="102"/>
                                         <state key="normal" image="video.circle" catalog="system">
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="90"/>
                                         </state>
@@ -206,11 +163,12 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstAttribute="bottomMargin" secondItem="wBp-zq-xnd" secondAttribute="bottom" constant="-11" id="7UO-Mo-0vf"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="wBp-zq-xnd" secondAttribute="bottom" id="7UO-Mo-0vf"/>
                             <constraint firstItem="wBp-zq-xnd" firstAttribute="leading" secondItem="maQ-xL-rXx" secondAttribute="leading" id="I2X-d5-VJz"/>
                             <constraint firstAttribute="trailing" secondItem="wBp-zq-xnd" secondAttribute="trailing" id="Uda-rd-Jxh"/>
                             <constraint firstItem="wBp-zq-xnd" firstAttribute="top" secondItem="maQ-xL-rXx" secondAttribute="top" id="mFa-9z-RHq"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="gAw-Xg-pWQ"/>
                     </view>
                     <connections>
                         <outlet property="recordButton" destination="Tzn-f8-ihg" id="JXg-9L-l5d"/>
@@ -223,8 +181,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Record" width="116" height="116"/>
-        <image name="Stop" width="116" height="116"/>
         <image name="photo.on.rectangle" catalog="system" width="128" height="98"/>
         <image name="stop.circle" catalog="system" width="128" height="121"/>
         <image name="video.circle" catalog="system" width="128" height="121"/>
