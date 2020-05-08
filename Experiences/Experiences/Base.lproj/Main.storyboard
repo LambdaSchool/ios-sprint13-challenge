@@ -10,7 +10,7 @@
         <!--Your Experiences-->
         <scene sceneID="1Kq-Ds-Wb4">
             <objects>
-                <viewController id="8PE-5M-tSa" sceneMemberID="viewController">
+                <viewController id="8PE-5M-tSa" customClass="ExperiencesViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="M9q-Z6-TJc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -35,15 +35,18 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="sbP-6s-tNl" id="yXI-6u-nND"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RQA-mV-lYf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2083" y="737"/>
         </scene>
-        <!--View Controller-->
+        <!--Create Experience View Controller-->
         <scene sceneID="gbA-k6-6SR">
             <objects>
-                <viewController id="vgc-rl-gHS" sceneMemberID="viewController">
+                <viewController id="vgc-rl-gHS" customClass="CreateExperienceViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TVy-iE-dxq">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -58,7 +61,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dZL-rf-tYC">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dZL-rf-tYC" customClass="VideoPlayerView" customModule="Experiences" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="511" width="414" height="351"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -87,8 +90,19 @@
                         <viewLayoutGuide key="safeArea" id="RyH-Oq-6OS"/>
                     </view>
                     <navigationItem key="navigationItem" id="qMu-gv-PW1">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="sls-8G-T5B"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="sls-8G-T5B">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="vgc-rl-gHS" id="alh-v4-J3e"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="imageButton" destination="iSe-34-aS1" id="7Vj-DZ-TZw"/>
+                        <outlet property="imageView" destination="1sZ-6k-7zf" id="eMA-ch-WLH"/>
+                        <outlet property="recordButton" destination="nLb-V2-WOi" id="fmF-ub-vuS"/>
+                        <outlet property="titleTextField" destination="RT2-3o-r2f" id="oaf-eX-7Rl"/>
+                        <outlet property="videoPlayerView" destination="dZL-rf-tYC" id="bIU-ee-TcR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qLw-uP-1aP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
