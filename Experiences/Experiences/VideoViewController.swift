@@ -22,6 +22,7 @@ class VideoViewController: UIViewController {
     // MARK: - Properties
 
     var delegate: PassVideoDelegate?
+    var experienceController: ExperienceController?
 
     // MARK: - View Lifecycle
 

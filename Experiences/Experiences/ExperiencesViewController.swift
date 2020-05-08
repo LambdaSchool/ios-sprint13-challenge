@@ -79,6 +79,7 @@ class ExperiencesViewController: UIViewController {
         if segue.identifier == "CreateExperienceSegue" {
             if let createExperienceVC = segue.destination as? CreateExperienceViewController {
                 createExperienceVC.experienceController = experienceController
+                createExperienceVC.coordinates = currentCoordinate
             }
         }
     }

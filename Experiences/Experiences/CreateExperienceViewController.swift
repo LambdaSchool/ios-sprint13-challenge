@@ -11,6 +11,7 @@ import CoreImage
 import CoreImage.CIFilterBuiltins
 import Photos
 import AVFoundation
+import MapKit
 
 class CreateExperienceViewController: UIViewController {
 
@@ -25,6 +26,7 @@ class CreateExperienceViewController: UIViewController {
     let context = CIContext(options: nil)
     var experienceController: ExperienceController?
 
+    var coordinates: CLLocationCoordinate2D?
     var image: UIImage?
     var audioURL: URL?
     var videoURL: URL?
@@ -88,18 +90,26 @@ class CreateExperienceViewController: UIViewController {
 
 
     @IBAction func saveButtonTapped(_ sender: Any) {
+        guard
+            let title = titleTextField.text, !title.isEmpty,
+            let coordinates = coordinates,
+            let image = image,
+            let videoURL = videoURL else { return }
+
+        experienceController?.createExperience(called: title, at: coordinates, image: image, audioURL: nil, videoURL: videoURL)
+        navigationController?.popViewController(animated: true)
     }
 
-    /*
      // MARK: - Navigation
 
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
+        if segue.identifier == "VideoSegue" {
+            if let videoVC = segue.destination as? VideoViewController {
+                videoVC.delegate = self
+                videoVC.experienceController = experienceController
+            }
+        }
      }
-     */
-
 }
 
 extension CreateExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -116,5 +126,11 @@ extension CreateExperienceViewController: UIImagePickerControllerDelegate, UINav
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension CreateExperienceViewController: PassVideoDelegate {
+    func videoURL(_ url: URL) {
+        self.videoURL = url
     }
 }
