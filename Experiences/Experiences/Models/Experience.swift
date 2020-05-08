@@ -20,8 +20,8 @@ class Experience: NSObject {
         info
     }
     var image: UIImage?
-    var video: AVMovie?
-    var audio: AVAudioFile?
+    var video: URL?
+    var audio: URL?
     let latitude: Double
     let longitude: Double
     let time: Date
@@ -30,8 +30,8 @@ class Experience: NSObject {
     internal init(name: String,
                   info: String,
                   image: UIImage? = nil,
-                  video: AVMovie? = nil,
-                  audio: AVAudioFile? = nil,
+                  video: URL? = nil,
+                  audio: URL? = nil,
                   latitude: Double,
                   longitude: Double,
                   time: Date) {
