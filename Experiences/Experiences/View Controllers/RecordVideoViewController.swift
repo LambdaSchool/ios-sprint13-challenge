@@ -7,29 +7,133 @@
 //
 
 import UIKit
+import AVFoundation
 
 class RecordVideoViewController: UIViewController {
 
     // MARK: - IBOutlets
+    @IBOutlet weak var cameraView: CameraPreviewView!
+    @IBOutlet weak var recordButton: UIButton!
+    
+    @IBOutlet weak var cancelButton: UIButton!
     
     // MARK: - Properties
+    lazy private var captureSession = AVCaptureSession()
+    lazy private var fileOutput = AVCaptureMovieFileOutput()
+    var recordedVideoURL: URL?
     
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupViews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        captureSession.startRunning()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        captureSession.stopRunning()
+    }
+    
+    // MARK: - Private Methods
+    private func setupViews() {
+        cameraView.videoPlayerView.videoGravity = .resizeAspectFill
+        setUpCaptureSession()
+    }
+    
+    private func updateViews() {
+        recordButton.isSelected = fileOutput.isRecording
+        if fileOutput.isRecording {
+            cancelButton.isEnabled = false
+        } else {
+            cancelButton.isEnabled = true
+        }
+    }
+    
+    private func setUpCaptureSession() {
+        captureSession.beginConfiguration()
+        let camera = bestCamera()
+        
+        guard let cameraInput = try? AVCaptureDeviceInput(device: camera),
+                                     captureSession.canAddInput(cameraInput) else {
+            fatalError("Error adding camera to capture session")
+        }
+        
+        captureSession.addInput(cameraInput)
+        
+        if captureSession.canSetSessionPreset(.hd1920x1080) {
+            captureSession.sessionPreset = .hd1920x1080
+        }
 
-        // Do any additional setup after loading the view.
+        guard captureSession.canAddOutput(fileOutput) else {
+            fatalError("Error: Cannot save movie")
+        }
+        captureSession.addOutput(fileOutput)
+        
+        captureSession.commitConfiguration()
+        cameraView.session = captureSession
+    }
+    
+    private func bestCamera() -> AVCaptureDevice {
+        if let ultraWideCamera = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) {
+            return ultraWideCamera
+        }
+
+        if let wideAngleCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
+            return wideAngleCamera
+        }
+        
+        fatalError("No camera available - are you on a simulator?")
+    }
+    
+    private func toggleRecord() {
+        if fileOutput.isRecording {
+            fileOutput.stopRecording()
+        } else {
+            recordedVideoURL = newRecordingURL()
+            fileOutput.startRecording(to: recordedVideoURL!, recordingDelegate: self)
+        }
+    }
+    
+    private func newRecordingURL() -> URL {
+         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+
+         let formatter = ISO8601DateFormatter()
+         formatter.formatOptions = [.withInternetDateTime]
+
+         let name = formatter.string(from: Date())
+         let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
+         return fileURL
+     }
+    
+    // MARK: - IBActions
+    @IBAction func recordButtonTapped(_ sender: Any) {
+        toggleRecord()
+    }
+    
+    @IBAction func cancelButtonTapped(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
     
 
-    /*
-    // MARK: - Navigation
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+extension RecordVideoViewController: AVCaptureFileOutputRecordingDelegate {
+    func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+        if let error = error {
+            print("Error saving video: \(error)")
+        } else {
+            
+            //TODO: DISMISS OR POP AND SEND BACK LINK
+        }
+        updateViews()
     }
-    */
-
+    
+    func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
+        print("started recording \(fileURL)")
+        updateViews()
+    }
 }
