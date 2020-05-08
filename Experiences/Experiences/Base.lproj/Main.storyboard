@@ -119,10 +119,10 @@
             </objects>
             <point key="canvasLocation" x="2004" y="139"/>
         </scene>
-        <!--View Controller-->
+        <!--Audio Record View Controller-->
         <scene sceneID="hw0-4s-uSv">
             <objects>
-                <viewController id="1ky-j0-dYA" sceneMemberID="viewController">
+                <viewController id="1ky-j0-dYA" customClass="AudioRecordViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="989-Ew-CsI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -141,6 +141,9 @@
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="6c2-ji-gof">
                                                 <rect key="frame" x="53" y="0.0" width="225" height="31"/>
+                                                <connections>
+                                                    <action selector="updateCurrentTime:" destination="1ky-j0-dYA" eventType="valueChanged" id="1t3-KP-hxC"/>
+                                                </connections>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="boC-qr-ygF">
                                                 <rect key="frame" x="285" y="0.0" width="46" height="30"/>
@@ -156,10 +159,18 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4sj-fZ-lL0">
                                                 <rect key="frame" x="0.0" y="0.0" width="165.5" height="22"/>
                                                 <state key="normal" image="play.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="togglePlayback:" destination="1ky-j0-dYA" eventType="touchUpInside" id="9bj-Ea-T2X"/>
+                                                </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hUI-ej-vhr">
+                                            <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hUI-ej-vhr">
                                                 <rect key="frame" x="165.5" y="0.0" width="165.5" height="22"/>
+                                                <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal" image="mic.fill" catalog="system"/>
+                                                <state key="selected" image="circle.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="toggleRecording:" destination="1ky-j0-dYA" eventType="touchUpInside" id="8mw-63-BCM"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -172,6 +183,9 @@
                                         <rect key="frame" x="0.0" y="0.0" width="134" height="36"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <state key="normal" title="Save Comment"/>
+                                        <connections>
+                                            <action selector="saveButtonTapped:" destination="1ky-j0-dYA" eventType="touchUpInside" id="YHb-IX-PVh"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFV-dn-VcW">
                                         <rect key="frame" x="36.5" y="61" width="61" height="36"/>
@@ -179,6 +193,9 @@
                                         <state key="normal" title="Cancel">
                                             <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="cancelButtonTapped:" destination="1ky-j0-dYA" eventType="touchUpInside" id="Pjt-S6-i7x"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -193,7 +210,20 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="lsH-f0-NFH"/>
                     </view>
-                    <navigationItem key="navigationItem" id="GEM-ld-Hyp"/>
+                    <navigationItem key="navigationItem" id="GEM-ld-Hyp">
+                        <barButtonItem key="leftBarButtonItem" id="n7a-ZQ-hPV">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="1ky-j0-dYA" id="Q2S-7m-kgQ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="audioSlider" destination="6c2-ji-gof" id="pXs-cG-pYE"/>
+                        <outlet property="currentTimeLabel" destination="g8T-Ef-QbX" id="XQR-fi-XcM"/>
+                        <outlet property="durationLabel" destination="boC-qr-ygF" id="bvo-hu-1NT"/>
+                        <outlet property="playPauseButton" destination="4sj-fZ-lL0" id="awQ-a0-IpZ"/>
+                        <outlet property="recordButton" destination="hUI-ej-vhr" id="LPx-lb-dFY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V6H-vS-fNZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -218,6 +248,7 @@
                                 </constraints>
                                 <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" image="circle.fill" catalog="system"/>
+                                <state key="selected" image="pause.fill" catalog="system"/>
                                 <connections>
                                     <action selector="recordButtonTapped:" destination="MvR-ko-kZw" eventType="touchUpInside" id="O1B-MX-YIa"/>
                                 </connections>
@@ -283,6 +314,7 @@
     <resources>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
         <image name="mic.fill" catalog="system" width="108" height="128"/>
+        <image name="pause.fill" catalog="system" width="116" height="128"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
     </resources>
 </document>
