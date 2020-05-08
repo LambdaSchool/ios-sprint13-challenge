@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ExperienceViewController: UIViewController {
 
@@ -46,16 +47,19 @@ class ExperienceViewController: UIViewController {
     }
     
     private func startRecordingAudio() {
-        micButton.tintColor = .systemRed
-        audioRecorder.startRecording()
-        audioVisualizerVC = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(identifier: "AudioVisualizerViewController")
-        mediaTVC.present(audioVisualizerVC!, animated: true)
+        
+        if audioRecorder.startRecording() {
+            micButton.tintColor = .systemRed
+            audioVisualizerVC = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(identifier: "AudioVisualizerViewController")
+            mediaTVC.present(audioVisualizerVC!, animated: true)
+        } else {
+            print("⚠️ Unable to start recording")
+        }
     }
     
     private func stopRecordingAudio() {
         micButton.tintColor = .systemBlue
         audioRecorder.stopRecording()
-        audioVisualizerVC?.dismiss(animated: true)
     }
     
     // MARK: - IBActions
@@ -64,7 +68,13 @@ class ExperienceViewController: UIViewController {
         if audioRecorder.isRecording {
             stopRecordingAudio()
         } else {
-            startRecordingAudio()
+            requestAudioPermission { (permissionGranted) in
+                if permissionGranted {
+                    self.startRecordingAudio()
+                } else {
+                    print("Need permission to record audio")
+                }
+            }
         }
         
     }
@@ -78,23 +88,75 @@ class ExperienceViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-
+    
     // MARK: - Navigation
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Embed
         if let mediaTVC = segue.destination as? ExperienceMediaTableViewController {
             mediaTVC.experience = experience
             self.mediaTVC = mediaTVC
         }
+        
+        // Add Video
+        
+        if let addVideoVC = segue.destination as? AddVideoViewController {
+            addVideoVC.experienceController = experienceController
+        }
     }
-
+    
 }
+
+extension ExperienceViewController {
+    
+    private func requestAudioPermission(completion: @escaping (Bool) -> Void) {
+        switch AVAudioSession.sharedInstance().recordPermission {
+        case .undetermined:
+            AVAudioSession.sharedInstance().requestRecordPermission { granted in
+                guard granted == true else {
+                    print("We need microphone access")
+                    DispatchQueue.main.async {
+                        completion(false)
+                    }
+                    return
+                }
+                
+                print("Recording permission has been granted!")
+                DispatchQueue.main.async {
+                    completion(true)
+                }
+                return
+                // NOTE: Invite the user to tap record again, since we just interrupted them, and they may not have been ready to record
+            }
+        case .denied:
+            print("Microphone access has been blocked.")
+            
+            let alertController = UIAlertController(title: "Microphone Access Denied", message: "Please allow this app to access your Microphone.", preferredStyle: .alert)
+            
+            alertController.addAction(UIAlertAction(title: "Open Settings", style: .default) { (_) in
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+            })
+            
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            
+            present(alertController, animated: true, completion: nil)
+            completion(false)
+        case .granted:
+            completion(true)
+            return
+        @unknown default:
+            break
+        }
+    }
+}
+
 
 // MARK: - Audio Recorder Delegate
 
 extension ExperienceViewController: AudioDeckDelegate {
     func didRecord(to fileURL: URL, with duration: TimeInterval) {
+        audioVisualizerVC?.dismiss(animated: true)
+        audioVisualizerVC = nil
         experience.audioClips.append(fileURL)
         updateMedia()
     }

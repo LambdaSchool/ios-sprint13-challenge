@@ -47,6 +47,7 @@ class AudioDeck: NSObject {
     convenience init(delegate: AudioDeckDelegate) {
         self.init()
         self.delegate = delegate
+        try? prepareAudioSession() // TODO: handle case where on phone call and it fails
     }
     
     // MARK: - Public Methods
@@ -55,17 +56,27 @@ class AudioDeck: NSObject {
         try? setPlayer(url: url)
     }
     
-    func startRecording() {
+    func startRecording() -> Bool {
         let recordingURL = createNewRecordingURL()
         
         let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
-        recorder = try? AVAudioRecorder(url: recordingURL, format: format)
-        recorder?.isMeteringEnabled = true
-        recorder?.delegate = self
         
-        recorder?.record()
-        self.recordingURL = recordingURL
-        startUpdateTimer()
+        do {
+            recorder = try AVAudioRecorder(url: recordingURL, format: format)
+            recorder!.isMeteringEnabled = true
+            recorder!.delegate = self
+            self.recordingURL = recordingURL
+            
+            let success = recorder!.record()
+            if success {
+                startUpdateTimer()
+            }
+            
+            return success
+        } catch {
+            print(error)
+            return false
+        } 
     }
     
     func stopRecording() {
@@ -89,6 +100,12 @@ class AudioDeck: NSObject {
     }
     
     // MARK: - Private Methods
+    
+    func prepareAudioSession() throws {
+        let session = AVAudioSession.sharedInstance()
+        try session.setCategory(.playAndRecord, options: [.defaultToSpeaker])
+        try session.setActive(true, options: []) // can fail if on a phone call, for instance
+    }
     
     private func setPlayer(url: URL) throws {
         player = try AVAudioPlayer(contentsOf: url)
@@ -128,8 +145,6 @@ class AudioDeck: NSObject {
             delegate?.didUpdateAudioAmplitude(to: recorder.averagePower(forChannel: 0))
         }
     }
-    
-
 }
 
 // MARK: - AVAudioRecorderDelegate

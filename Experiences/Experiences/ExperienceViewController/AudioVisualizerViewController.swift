@@ -19,6 +19,7 @@ class AudioVisualizerViewController: UIViewController {
     }
     
     func updateVisualizer(withAmplitude decibels: Float) {
+        guard isViewLoaded else { return }
         visualizer.addValue(decibelValue: decibels)
     }
 

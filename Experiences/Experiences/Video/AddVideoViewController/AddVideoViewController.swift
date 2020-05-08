@@ -10,6 +10,10 @@ import UIKit
 import AVFoundation
 
 class AddVideoViewController: UIViewController {
+    
+    // MARK: - Public Properties
+    
+    var experienceController: ExperienceController?
 
     // MARK: - Private Properties
     
@@ -99,9 +103,8 @@ class AddVideoViewController: UIViewController {
         updateViews()
     }
     
-    @IBAction func clearTapped(_ sender: Any) {
-        player = nil
-        showCamera()
+    @IBAction func save(_ sender: Any) {
+        
     }
 }
 
