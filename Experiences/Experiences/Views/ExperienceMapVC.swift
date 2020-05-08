@@ -21,9 +21,13 @@ class ExperienceMapVC: UIViewController {
     var mapPins: [MapPin]?
     var mapPin: MapPin?
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle) {
         self.mapPins = []
+        self.mapPin = nil
+        self.location = locationMan.location!
+        super.init(nibName: nibNameOrNil, bundle: Bundle.main)
     }
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -81,7 +85,9 @@ class ExperienceMapVC: UIViewController {
          let locationManager = CLLocationManager()
             locationManager.requestAlwaysAuthorization()
             DispatchQueue.main.async {
-                mapView.annotations = mapPins
+                
+                guard let mapPins = self.mapPins else {return}
+                self.mapView.addAnnotations(mapPins)
                 
                 guard let pin = self.mapPins?.first else { return }
                 

@@ -42,6 +42,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="cameraView" destination="797-0E-dBZ" id="SkW-oR-uWB"/>
+                        <outlet property="mainview" destination="797-0E-dBZ" id="N9I-ll-Lbg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pns-P0-vfJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -97,7 +98,6 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <state key="normal" title="Audio"/>
                                         <connections>
-                                            <action selector="audioButton:" destination="x6G-Pz-rrp" eventType="touchUpInside" id="J5b-Mn-ON1"/>
                                             <segue destination="412-sw-oWK" kind="showDetail" identifier="experienceToAudio" id="MPg-KZ-HGd"/>
                                         </connections>
                                     </button>
@@ -128,8 +128,8 @@
                         <viewLayoutGuide key="safeArea" id="9MK-fc-LdI"/>
                     </view>
                     <connections>
-                        <outlet property="TitleLabel" destination="sOT-KZ-CNL" id="sxq-xS-QgL"/>
                         <outlet property="descriptionLabel" destination="EQA-dR-THS" id="imv-VQ-mxD"/>
+                        <outlet property="titleLabel" destination="sOT-KZ-CNL" id="r0f-mk-VVj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mi4-ad-Z2l" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -205,9 +205,6 @@
                                         <rect key="frame" x="0.0" y="521" width="394" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <action selector="titleTF:" destination="vTD-wd-Y8J" eventType="editingDidEnd" id="N8m-aK-82X"/>
-                                        </connections>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Xm-BV-H5O">
                                         <rect key="frame" x="0.0" y="570" width="394" height="42"/>
@@ -219,9 +216,6 @@
                                         <rect key="frame" x="0.0" y="627" width="394" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <action selector="descriptionTF:" destination="vTD-wd-Y8J" eventType="editingDidEnd" id="uJi-mo-mqj"/>
-                                        </connections>
                                     </textField>
                                 </subviews>
                             </stackView>
