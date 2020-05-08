@@ -15,6 +15,11 @@
 		04C916322465ACC4004582E3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04C916302465ACC4004582E3 /* LaunchScreen.storyboard */; };
 		04C9163C2465B32E004582E3 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9163B2465B32E004582E3 /* AudioRecorder.swift */; };
 		04C9163E2465B336004582E3 /* AudioVisualizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9163D2465B336004582E3 /* AudioVisualizer.swift */; };
+		04C9164A2465B416004582E3 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C916442465B416004582E3 /* VideoPlayerView.swift */; };
+		04C9164B2465B416004582E3 /* VideoPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C916452465B416004582E3 /* VideoPostViewController.swift */; };
+		04C9164C2465B416004582E3 /* CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C916472465B416004582E3 /* CameraPreviewView.swift */; };
+		04C9164D2465B416004582E3 /* VideoRecorderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C916482465B416004582E3 /* VideoRecorderViewController.swift */; };
+		04C9164E2465B416004582E3 /* AVPlayer+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C916492465B416004582E3 /* AVPlayer+Convenience.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +33,11 @@
 		04C916332465ACC4004582E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04C9163B2465B32E004582E3 /* AudioRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
 		04C9163D2465B336004582E3 /* AudioVisualizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioVisualizer.swift; sourceTree = "<group>"; };
+		04C916442465B416004582E3 /* VideoPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
+		04C916452465B416004582E3 /* VideoPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoPostViewController.swift; sourceTree = "<group>"; };
+		04C916472465B416004582E3 /* CameraPreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
+		04C916482465B416004582E3 /* VideoRecorderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoRecorderViewController.swift; sourceTree = "<group>"; };
+		04C916492465B416004582E3 /* AVPlayer+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVPlayer+Convenience.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,12 +75,49 @@
 				04C916292465ACC1004582E3 /* ViewController.swift */,
 				04C9162B2465ACC1004582E3 /* Main.storyboard */,
 				04C9162E2465ACC4004582E3 /* Assets.xcassets */,
-				04C9163B2465B32E004582E3 /* AudioRecorder.swift */,
-				04C9163D2465B336004582E3 /* AudioVisualizer.swift */,
+				04C916422465B416004582E3 /* Video */,
+				04C9164F2465B42F004582E3 /* Audio */,
 				04C916302465ACC4004582E3 /* LaunchScreen.storyboard */,
 				04C916332465ACC4004582E3 /* Info.plist */,
 			);
 			path = Experiences;
+			sourceTree = "<group>";
+		};
+		04C916422465B416004582E3 /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				04C916432465B416004582E3 /* VideoPostViewController */,
+				04C916462465B416004582E3 /* VideoRecorderViewController */,
+				04C916492465B416004582E3 /* AVPlayer+Convenience.swift */,
+			);
+			path = Video;
+			sourceTree = "<group>";
+		};
+		04C916432465B416004582E3 /* VideoPostViewController */ = {
+			isa = PBXGroup;
+			children = (
+				04C916442465B416004582E3 /* VideoPlayerView.swift */,
+				04C916452465B416004582E3 /* VideoPostViewController.swift */,
+			);
+			path = VideoPostViewController;
+			sourceTree = "<group>";
+		};
+		04C916462465B416004582E3 /* VideoRecorderViewController */ = {
+			isa = PBXGroup;
+			children = (
+				04C916472465B416004582E3 /* CameraPreviewView.swift */,
+				04C916482465B416004582E3 /* VideoRecorderViewController.swift */,
+			);
+			path = VideoRecorderViewController;
+			sourceTree = "<group>";
+		};
+		04C9164F2465B42F004582E3 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				04C9163B2465B32E004582E3 /* AudioRecorder.swift */,
+				04C9163D2465B336004582E3 /* AudioVisualizer.swift */,
+			);
+			path = Audio;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,11 +191,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04C9164D2465B416004582E3 /* VideoRecorderViewController.swift in Sources */,
+				04C9164E2465B416004582E3 /* AVPlayer+Convenience.swift in Sources */,
+				04C9164C2465B416004582E3 /* CameraPreviewView.swift in Sources */,
 				04C9162A2465ACC1004582E3 /* ViewController.swift in Sources */,
+				04C9164B2465B416004582E3 /* VideoPostViewController.swift in Sources */,
 				04C916262465ACC1004582E3 /* AppDelegate.swift in Sources */,
 				04C9163C2465B32E004582E3 /* AudioRecorder.swift in Sources */,
 				04C916282465ACC1004582E3 /* SceneDelegate.swift in Sources */,
 				04C9163E2465B336004582E3 /* AudioVisualizer.swift in Sources */,
+				04C9164A2465B416004582E3 /* VideoPlayerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
