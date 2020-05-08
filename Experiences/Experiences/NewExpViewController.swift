@@ -44,6 +44,13 @@ class NewExpViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        print(audioURL)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        print(audioURL)
     }
 
     // MARK: - Navigation
@@ -52,7 +59,8 @@ class NewExpViewController: UIViewController {
         if segue.identifier == "VideoRecordShowSegue" {
 
         } else if segue.identifier == "AudioRecordShowSegue" {
-
+            guard let destination = segue.destination as? AudioRecordViewController else { fatalError("Programmer error") }
+            destination.newExpController = self
         }
     }
 

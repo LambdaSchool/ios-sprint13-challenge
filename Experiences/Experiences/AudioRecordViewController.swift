@@ -13,6 +13,8 @@ class AudioRecordViewController: UIViewController {
 
     // MARK: - Properties
 
+    var newExpController: NewExpViewController?
+
     var audioPlayer: AVAudioPlayer? {
         didSet {
             audioPlayer?.delegate = self
@@ -207,7 +209,9 @@ class AudioRecordViewController: UIViewController {
     }
     @IBAction func saveButtonTapped(_ sender: Any) {
         guard let recordingURL = recordingURL else { return }
+        newExpController?.audioURL = recordingURL.path
         self.dismiss(animated: true, completion:    nil)
+        self.navigationController?.popViewController(animated: true)
     }
     @IBAction func cancelButtonTapped(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
