@@ -17,7 +17,6 @@ class Experience: NSObject {
     let longitude: Double
     let latitude: Double
     
-    
     internal init(name: String, image: UIImage?, audioURL: URL?, videoURL: URL?, longitude: Double, latitude: Double) {
         self.name = name
         self.image = image

@@ -23,6 +23,12 @@ class ExperiencesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.requestWhenInUseAuthorization()
+        updateViews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateViews()
     }
     
     // MARK: - Navigation
@@ -35,7 +41,14 @@ class ExperiencesViewController: UIViewController {
     }
     
     // MARK: - Private Methods
-    
+    private func updateViews() {
+        self.mapView.addAnnotations(experienceController.experiences)
+        guard let xp = experienceController.experiences.first else { return }
+        
+        let span = MKCoordinateSpan(latitudeDelta: 2, longitudeDelta: 2)
+        let region = MKCoordinateRegion(center: xp.coordinate, span: span)
+        self.mapView.setRegion(region, animated: true)
+    }
 
 }
 
