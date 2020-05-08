@@ -38,7 +38,8 @@ class ExperienceMapVC: UIViewController {
     
     
     // NOTE: You need to import MapKit to link to MKMapView
-	@IBOutlet var mapView: MKMapView!
+
+    @IBOutlet weak var mapView: MKMapView!
     
     @IBAction func unwindToThisView(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? AudioRecorderController {
@@ -108,7 +109,7 @@ extension ExperienceMapVC: MKMapViewDelegate {
         guard let pin = annotation as? MapPin else {
             fatalError("Only map pins are supported.")
         }
-        guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "Pin View", for: annotation) as? MKMarkerAnnotationView else {
+        guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "Pin View", for: pin) as? MKMarkerAnnotationView else {
             fatalError("Missing a registered view.")
         }
         annotationView.glyphImage = UIImage(named: "QuakeIcon")

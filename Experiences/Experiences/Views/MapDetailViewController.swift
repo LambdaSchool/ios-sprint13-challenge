@@ -27,6 +27,7 @@ class MapDetailViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "experienceToVideo" {
             let evid = segue.destination as? ExperienceVideoPlayerViewController
+            evid?.mapPin = self.pin
             
         }
         if segue.identifier == "experienceToAudio" {
