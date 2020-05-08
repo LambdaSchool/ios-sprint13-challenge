@@ -14,7 +14,7 @@ class ExperienceMapVC: UIViewController {
     
     var experienceCon = ExperienceController()
     let locationMan = CLLocationManager()
-    var location: CLLocation
+    var location: CLLocation?
     var location2d: CLLocationCoordinate2D?
     var experience: Experience?
     
@@ -28,10 +28,10 @@ class ExperienceMapVC: UIViewController {
         super.init(nibName: nibNameOrNil, bundle: Bundle.main)
     }
     
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    required init?(coder aDecoder: NSCoder) {
+       super.init(coder: aDecoder)
     }
+    
     
     
     
@@ -72,6 +72,8 @@ class ExperienceMapVC: UIViewController {
     }
 	override func viewDidLoad() {
 		super.viewDidLoad()
+        let initialLocation = CLLocation(latitude: 21.282778, longitude: -157.829444)
+        mapView.centerToLocation(initialLocation)
         self.locationMan.requestAlwaysAuthorization()
 
         // For use in foreground
@@ -136,4 +138,17 @@ extension ExperienceMapVC: CLLocationManagerDelegate {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         print("locations = \(locValue.latitude) \(locValue.longitude)")
     }
+}
+
+private extension MKMapView {
+  func centerToLocation(
+    _ location: CLLocation,
+    regionRadius: CLLocationDistance = 1000
+  ) {
+    let coordinateRegion = MKCoordinateRegion(
+      center: location.coordinate,
+      latitudinalMeters: regionRadius,
+      longitudinalMeters: regionRadius)
+    setRegion(coordinateRegion, animated: true)
+  }
 }
