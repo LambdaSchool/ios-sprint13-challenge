@@ -10,21 +10,23 @@ import UIKit
 
 class CameraViewViewController: UIViewController {
 
+    // MARK: - Properties
+
+    // MARK: - Outlets
+    @IBOutlet weak var cameraPreView: UIView! // Get it? PreVIEW instead of PreviewView? God I'm so witty
+    @IBOutlet weak var playbackView: UIView!
+    @IBOutlet weak var recordButton: UIButton!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    // MARK: - Actions
+    @IBAction func saveButtonTapped(_ sender: Any) {
     }
-    */
+    @IBAction func recordButtonTapped(_ sender: Any) {
+    }
 
 }

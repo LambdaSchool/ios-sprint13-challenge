@@ -136,8 +136,11 @@
                                 </constraints>
                                 <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" image="circle.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="recordButtonTapped:" destination="MvR-ko-kZw" eventType="touchUpInside" id="O1B-MX-YIa"/>
+                                </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xuk-3C-p1u">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xuk-3C-p1u">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemPurpleColor" red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
@@ -160,8 +163,17 @@
                     </view>
                     <navigationItem key="navigationItem" id="h0y-Vv-SKg">
                         <barButtonItem key="backBarButtonItem" title="Back" id="EKC-vg-lmD"/>
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="agv-Km-COC"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="agv-Km-COC">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="MvR-ko-kZw" id="JpG-WG-dNV"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="cameraPreView" destination="EgM-dp-J7P" id="z1y-re-BB8"/>
+                        <outlet property="playbackView" destination="xuk-3C-p1u" id="60b-L8-F58"/>
+                        <outlet property="recordButton" destination="5ot-gV-Lek" id="Xes-7g-bLi"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uUO-cd-68s" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
