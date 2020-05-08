@@ -22,14 +22,17 @@ class ExperienceController: NSObject {
         experiences.append(newExperience)
     }
 
-    func locationPermission() {
+    func locationPermission() -> Bool {
         locationManager.requestWhenInUseAuthorization()
 
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
+            return true
         }
+        
+        return false
     }
 }
 

@@ -45,6 +45,9 @@ class MapViewController: UIViewController {
     */
 
     @IBAction func addButtonTapped(_ sender: Any) {
+        if experienceController.locationPermission() {
+            performSegue(withIdentifier: "NewExpShowSegue", sender: self)
+        }
     }
 
 
