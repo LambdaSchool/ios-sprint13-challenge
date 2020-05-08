@@ -52,6 +52,9 @@ class MapViewController: UIViewController, MapViewDelegate {
             guard let vc = segue.destination as? AddViewController else { return }
             vc.experienceController = experienceController
             vc.delegate = self
+            if let exp = sender as? Experience {
+                vc.experience = exp
+            }
         }
     }
 
@@ -69,7 +72,7 @@ class MapViewController: UIViewController, MapViewDelegate {
     }
 
     func invokeViewExperience(_ exp: Experience) {
-        performSegue(withIdentifier: "AddSegue", sender: nil)
+        performSegue(withIdentifier: "AddSegue", sender: exp)
     }
 
     // MARK: - Private
