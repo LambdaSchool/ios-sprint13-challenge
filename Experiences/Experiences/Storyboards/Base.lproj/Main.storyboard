@@ -51,14 +51,52 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sHz-ET-jyh">
-                                <rect key="frame" x="20" y="106" width="374" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sHz-ET-jyh">
+                                <rect key="frame" x="20" y="108" width="374" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                             </textField>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="45" translatesAutoresizingMaskIntoConstraints="NO" id="oqU-7t-5Z7">
+                                <rect key="frame" x="51" y="162" width="312.5" height="30"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Audio:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0DT-tb-89f">
+                                        <rect key="frame" x="0.0" y="0.0" width="48.5" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Kl-sc-nNY">
+                                        <rect key="frame" x="93.5" y="0.0" width="49" height="30"/>
+                                        <state key="normal" title="Record"/>
+                                        <connections>
+                                            <action selector="recordButton:" destination="r9h-TN-ybt" eventType="touchUpInside" id="hmJ-ZB-5dp"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dJR-bN-F1I">
+                                        <rect key="frame" x="187.5" y="0.0" width="32" height="30"/>
+                                        <state key="normal" title="Stop"/>
+                                        <connections>
+                                            <action selector="stopButton:" destination="r9h-TN-ybt" eventType="touchUpInside" id="nOZ-Yt-zMk"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Wa-RN-5Dn">
+                                        <rect key="frame" x="264.5" y="0.0" width="48" height="30"/>
+                                        <state key="normal" title="Cancel"/>
+                                        <connections>
+                                            <action selector="cancelButton:" destination="r9h-TN-ybt" eventType="touchUpInside" id="Nn7-Ay-CzP"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="oqU-7t-5Z7" firstAttribute="top" secondItem="sHz-ET-jyh" secondAttribute="bottom" constant="20" id="Gxp-Kg-xCc"/>
+                            <constraint firstItem="oqU-7t-5Z7" firstAttribute="centerX" secondItem="7dP-lg-83U" secondAttribute="centerX" id="LPz-M5-p96"/>
+                            <constraint firstItem="sHz-ET-jyh" firstAttribute="leading" secondItem="Puu-1z-p3l" secondAttribute="leading" constant="20" id="Wmh-rT-wCM"/>
+                            <constraint firstItem="Puu-1z-p3l" firstAttribute="trailing" secondItem="sHz-ET-jyh" secondAttribute="trailing" constant="20" id="mAQ-2o-TuZ"/>
+                            <constraint firstItem="sHz-ET-jyh" firstAttribute="top" secondItem="Puu-1z-p3l" secondAttribute="top" constant="20" id="z8a-gJ-ceB"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Puu-1z-p3l"/>
                     </view>
                     <navigationItem key="navigationItem" id="OvH-UU-gBd">
