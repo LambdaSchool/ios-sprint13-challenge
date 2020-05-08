@@ -25,13 +25,14 @@ class ExperienceController: NSObject {
     func locationPermission() -> Bool {
         locationManager.requestWhenInUseAuthorization()
 
-        if CLLocationManager.locationServicesEnabled() {
+        if CLLocationManager.locationServicesEnabled(),
+        CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
             return true
         }
-        
+
         return false
     }
 }
