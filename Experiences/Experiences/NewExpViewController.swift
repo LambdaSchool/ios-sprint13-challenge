@@ -42,9 +42,6 @@ class NewExpViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        print(audioURL)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -155,5 +152,11 @@ extension NewExpViewController: UIImagePickerControllerDelegate, UINavigationCon
     }
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
+    }
+}
+
+extension NewExpViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
     }
 }
