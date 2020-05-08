@@ -10,13 +10,15 @@ import UIKit
 // NOTE: Don't forget Project > Target > General > Frameworks > add MapKit
 import MapKit
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, MapViewDelegate {
 
     // MARK: - Properites
 
     var experienceController = ExperienceController()
 
     private let locManager = CLLocationManager()
+
+    var detailView = MapDetailView()
 
     // MARK: - Actions
 
@@ -66,6 +68,10 @@ class MapViewController: UIViewController {
         return (latitude: lat, longitude: long)
     }
 
+    func invokeViewExperience(_ exp: Experience) {
+        performSegue(withIdentifier: "AddSegue", sender: nil)
+    }
+
     // MARK: - Private
 
     private func startLocationManager() {
@@ -103,6 +109,11 @@ class MapViewController: UIViewController {
     }
 }
 
+protocol MapViewDelegate {
+
+    func invokeViewExperience(_ exp: Experience)
+}
+
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let experience = annotation as? Experience else {
@@ -115,10 +126,20 @@ extension MapViewController: MKMapViewDelegate {
 
         annotationView.glyphImage = nil // default glyph image of a pin is used
         annotationView.canShowCallout = true
-        let detailView = MapDetailView()
+        detailView = MapDetailView()
         detailView.experience = experience
+        detailView.delegate = self
         annotationView.detailCalloutAccessoryView = detailView
 
         return annotationView
     }
+
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        print("mapView pin tap")
+    }
+
+    func detailView(_ mapView: UIView, didSelect view: UIView) {
+        print("detailView pin tap")
+    }
+
 }

@@ -17,6 +17,8 @@ class MapDetailView: UIView {
         }
     }
 
+    var delegate: MapViewDelegate?
+
     private let titleLabel = UILabel()
     private let infoButton = UIButton()
     private let latitudeLabel = UILabel()
@@ -50,10 +52,26 @@ class MapDetailView: UIView {
         mainStackView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         mainStackView.topAnchor.constraint(equalTo: topAnchor).isActive = true
         mainStackView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+
+        // Capture when someone taps the view
+        let touch = UITapGestureRecognizer(target: self, action: #selector(getter: UICommandAlternate.action))
+        self.addGestureRecognizer(touch)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError()
+    }
+
+    // MARK: - Public
+
+    /// User tapped out map pop-up. Take them to experience view.
+    @objc func action() {
+        print("MapDetailView: tapped")
+
+        guard let experience = experience,
+            let delegate = delegate else { return }
+
+        delegate.invokeViewExperience(experience)
     }
 
     // MARK: - Private
