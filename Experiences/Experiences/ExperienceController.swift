@@ -22,8 +22,10 @@ class ExperienceController {
                 latitude: Double? = 0.0,
                 longitude: Double? = 0.0) {
 
-//        print("\(audioClip!)")
-        
+        print("audioClip URL: \(audioClip?.absoluteString ?? "N/A")")
+        print("videoClip URL: \(videoClip?.absoluteString ?? "N/A")")
+        print("image URL: \(image?.absoluteString ?? "N/A")")
+
         let exp = Experience()
 
         exp.title = title
