@@ -17,6 +17,7 @@ class AddViewController: UIViewController {
     // MARK: - Properites
     var experienceController: ExperienceController?
     var delegate: MapViewController?
+    private var inited = false
 
     // If this object exists, it's a view/update situation.
     var experience: Experience? {
@@ -24,8 +25,6 @@ class AddViewController: UIViewController {
             updateViews()
         }
     }
-
-    private var image: URL?
 
     // Audio properties
     private var audioClip: URL?
@@ -104,13 +103,29 @@ class AddViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
         videoCameraSetup()
         imageSetup()
+        
+        guard let exp = experience,
+            !inited else { return }
+
+        inited.toggle()
+        titleTextField.text = exp.title
+        originalImage = exp.image
+        audioClip = exp.audioClip
+        videoClip = exp.videoClip
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        updateViews()
     }
     
     // MARK: - Private
     private func updateViews() {
+        guard isViewLoaded else { return }
+
         videoUpdateViews()
         imageUpdateViews()
     }
@@ -306,7 +321,7 @@ extension AddViewController {
     }
 
     private func videoUpdateViews() {
-        recordButton.isSelected = fileOutput.isRecording
+//        recordButton.isSelected = fileOutput.isRecording
     }
 
     // MARK: - Private
