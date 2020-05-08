@@ -11,6 +11,12 @@ import UIKit
 class AddVideoViewController: UIViewController {
     
     // MARK: - Properties
+    var experienceController: ExperienceController?
+    var name: String? {
+        didSet {
+            title = name
+        }
+    }
     
     // MARK: - IBOutlets
     @IBOutlet weak var recordButton: UIButton!
@@ -20,6 +26,8 @@ class AddVideoViewController: UIViewController {
     @IBAction func recordVideo(_ sender: Any) {
     }
     @IBAction func saveButtonTapped(_ sender: Any) {
+        
+        performSegue(withIdentifier: "saveFullExperienceSegue", sender: self)
     }
     
     // MARK: - View Methods
