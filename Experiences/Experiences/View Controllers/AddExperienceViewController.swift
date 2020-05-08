@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 import AVFoundation
+import CoreImage
 
 extension UIViewController {
     func hideKeyboardWhenViewTapped() {
@@ -36,11 +37,31 @@ class AddExperienceViewController: UIViewController {
     @IBOutlet weak var recordAudioButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var recordVideoButton: UIButton!
     
     // MARK: - Properties
     var experienceController: ExperienceController?
     let locationManager = CLLocationManager()
+    let context = CIContext(options: nil)
     var recordedVideoURL: URL?
+    
+    var originalImage: UIImage? {
+        didSet {
+            guard let originalImage = originalImage else { return }
+            var scaledSize = imageView.bounds.size
+            let scale = UIScreen.main.scale  // 1x, 2x, or 3x
+            scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
+            print("scaled size: \(scaledSize)")
+            
+            scaledImage = originalImage.imageByScaling(toSize: scaledSize)
+        }
+    }
+    
+    var scaledImage: UIImage? {
+        didSet {
+            updateImageView()
+        }
+    }
 
     // MARK: - View Lifecycle
     override func viewDidLoad() {
@@ -94,6 +115,7 @@ class AddExperienceViewController: UIViewController {
     }
     
     @IBAction func selectPhotoButtonTapped(_ sender: Any) {
+        presentImagePickerController()
     }
     
     @IBAction func recordVideoButtonTapped(_ sender: Any) {
@@ -114,12 +136,78 @@ class AddExperienceViewController: UIViewController {
             RecordVideoVC.delegate = self
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // MARK: - Photo Experience
+    private func presentImagePickerController() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            print("Error: The photo library is not available")
+            return
+        }
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    private func updateImageView() {
+        if let scaledImage = scaledImage {
+             imageView.image = filterImage(scaledImage)
+         } else {
+             imageView.image = nil
+         }
+    }
 
+    private func filterImage(_ image: UIImage) -> UIImage? {
+        // UIImage -> CGImage -> CIImage
+        guard let cgImage = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+                
+        // Filter
+        let filter = CIFilter(name: "CISepiaTone")!
+        
+        // Setting values / getting values from Core Image
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        filter.setValue(1.0, forKey: kCIInputIntensityKey)
+        
+        // CIImage -> CGImage -> UIImage
+        
+        guard let outputCIImage = filter.outputImage else { return nil }
+        
+        // Render the image (do image processing here). Recipe needs to be used on image now.
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else {
+            return nil
+        }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
 }
 
 extension AddExperienceViewController: RecordedVideoURLDelegate {
     func recordedVideoURL(url: URL) {
         recordedVideoURL = url
-        print("nice")
+        recordVideoButton.isSelected = true
+    }
+}
+
+extension AddExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[.originalImage] as? UIImage {
+            originalImage = image
+        }
+        
+        picker.dismiss(animated: true)
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
     }
 }
