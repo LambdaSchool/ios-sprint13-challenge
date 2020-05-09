@@ -29,6 +29,12 @@ class AddViewController: UIViewController {
     // Audio properties
     private var audioClip: URL?
     private var audioRecorder: AVAudioRecorder?
+    var audioPlayer: AVAudioPlayer? {
+        didSet {
+            // Using a didSet allows us to make sure we don't forget to set the delegate
+            audioPlayer?.delegate = self
+        }
+    }
 
     // Video properties
     lazy private var captureSession = AVCaptureSession()
@@ -150,16 +156,24 @@ class AddViewController: UIViewController {
 extension AddViewController {
 
     @IBAction func audioRecordButton(_ sender: Any) {
-        if audioRecorder?.isRecording ?? false {
-            audioRecorder?.stop()
-
-            updateViews()
+        if (audioClip == nil || (audioRecorder?.isRecording ?? false)) {
+            // We are recording
+            if audioRecorder?.isRecording ?? false {
+                audioStop()
+            } else {
+                requestPermissionOrStartRecording()
+            }
         } else {
-            requestPermissionOrStartRecording()
+            if (audioPlayer?.isPlaying ?? false) == false {
+                audioPlay()
+            } else {
+                audioPlayer?.stop()
+                updateViews()
+            }
         }
     }
 
-    @IBAction func cancelButton(_ sender: Any) {
+    @IBAction func audioCancelButton(_ sender: Any) {
         audioRecorder?.stop()
         let success = audioRecorder?.deleteRecording()
         if let success = success {
@@ -172,12 +186,39 @@ extension AddViewController {
             print("Unabled to Cancel Recording.")
         }
 
+        audioPlayer?.stop()
+        audioClip = nil // FIXME: Delete the file
+
         updateViews()
     }
 
     // MARK: - Private
 
+    private func audioStop() {
+        audioRecorder?.stop()
+
+        updateViews()
+    }
+
     private func audioUpdateViews() {
+        let config = UIImage.SymbolConfiguration(pointSize: 14, weight: .regular, scale: .large)
+
+        if audioClip == nil || (audioRecorder?.isRecording ?? false) {
+            // We need to record a clip
+            let largeStart = UIImage(systemName: "mic.fill", withConfiguration: config)
+            audioRecordButtonOutlet.setImage(largeStart, for: .normal)
+
+            let largeStop = UIImage(systemName: "stop.circle.fill", withConfiguration: config)
+            audioRecordButtonOutlet.setImage(largeStop, for: .selected)
+        } else {
+            // We need to play a clip
+            let largeStart = UIImage(systemName: "play.fill", withConfiguration: config)
+            audioRecordButtonOutlet.setImage(largeStart, for: .normal)
+
+            let largeStop = UIImage(systemName: "stop.fill", withConfiguration: config)
+            audioRecordButtonOutlet.setImage(largeStop, for: .selected)
+        }
+
         if let audioRecorder = audioRecorder {
             audioRecordButtonOutlet.isSelected = audioRecorder.isRecording
         }
@@ -230,6 +271,21 @@ extension AddViewController {
         }
     }
 
+    private func audioPlay() {
+        guard let audioClip = audioClip else { return }
+        if audioPlayer == nil {
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: audioClip)
+            } catch {
+                print("Couldn't load clip; we tried: \(audioClip.absoluteString)")
+                return
+            }
+        }
+        audioPlayer?.play()
+        //startTimer()
+        updateViews()
+    }
+
     func startRecording() {
         do {
             try prepareAudioSession()
@@ -275,6 +331,20 @@ extension AddViewController: AVAudioRecorderDelegate {
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
         if let error = error {
             print("Audio Record Error: \(error)")
+        }
+        updateViews()
+    }
+}
+
+extension AddViewController: AVAudioPlayerDelegate {
+
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        updateViews()
+    }
+
+    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        if let error = error {
+            print("Audio Player Error: \(error)")
         }
         updateViews()
     }
