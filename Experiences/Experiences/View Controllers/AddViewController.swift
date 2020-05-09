@@ -96,8 +96,11 @@ class AddViewController: UIViewController {
     // MARK: - Outlets
     @IBOutlet weak var titleTextField: UITextField!
 
+    // Audio Outlets
+    @IBOutlet var audioRecordButtonOutlet: UIButton!
+
     // Video Outlets
-    @IBOutlet var recordButton: UIButton!
+    @IBOutlet var videoRecordButtonOutlet: UIButton!
     @IBOutlet var cameraView: CameraPreviewView!
 
     // Image Outlets
@@ -135,6 +138,7 @@ class AddViewController: UIViewController {
     private func updateViews() {
         guard isViewLoaded else { return }
 
+        audioUpdateViews()
         videoUpdateViews()
         imageUpdateViews()
     }
@@ -145,7 +149,7 @@ class AddViewController: UIViewController {
 // -----------------------------------------------------------------------------
 extension AddViewController {
 
-    @IBAction func recordButton(_ sender: Any) {
+    @IBAction func audioRecordButton(_ sender: Any) {
         requestPermissionOrStartRecording()
     }
 
@@ -170,6 +174,12 @@ extension AddViewController {
     }
 
     // MARK: - Private
+
+    private func audioUpdateViews() {
+        if let audioRecorder = audioRecorder {
+            audioRecordButtonOutlet.isSelected = audioRecorder.isRecording
+        }
+    }
 
     /// Make the app the active session for audio
     private func prepareAudioSession() throws {
@@ -269,7 +279,7 @@ extension AddViewController: AVAudioRecorderDelegate {
 // -----------------------------------------------------------------------------
 extension AddViewController {
 
-    @IBAction func recordButtonPressed(_ sender: Any) {
+    @IBAction func videoRecordButton(_ sender: Any) {
         toggleRecord()
     }
 
@@ -288,10 +298,10 @@ extension AddViewController {
         // Increase the size of the start/stop button
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .regular, scale: .large)
         let largeStart = UIImage(systemName: "camera.fill", withConfiguration: largeConfig)
-        recordButton.setImage(largeStart, for: .normal)
+        videoRecordButtonOutlet.setImage(largeStart, for: .normal)
 
         let largeStop = UIImage(systemName: "stop.circle.fill", withConfiguration: largeConfig)
-        recordButton.setImage(largeStop, for: .selected)
+        videoRecordButtonOutlet.setImage(largeStop, for: .selected)
     }
 
     @objc func handleTapGesture(_ tapGesture: UITapGestureRecognizer) {
@@ -330,7 +340,7 @@ extension AddViewController {
     }
 
     private func videoUpdateViews() {
-        recordButton.isSelected = fileOutput.isRecording
+        videoRecordButtonOutlet.isSelected = fileOutput.isRecording
     }
 
     // MARK: - Private
