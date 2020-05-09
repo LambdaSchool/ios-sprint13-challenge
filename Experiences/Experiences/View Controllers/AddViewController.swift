@@ -150,13 +150,13 @@ class AddViewController: UIViewController {
 extension AddViewController {
 
     @IBAction func audioRecordButton(_ sender: Any) {
-        requestPermissionOrStartRecording()
-    }
+        if audioRecorder?.isRecording ?? false {
+            audioRecorder?.stop()
 
-    @IBAction func stopButton(_ sender: Any) {
-        audioRecorder?.stop()
-
-        updateViews()
+            updateViews()
+        } else {
+            requestPermissionOrStartRecording()
+        }
     }
 
     @IBAction func cancelButton(_ sender: Any) {
