@@ -330,7 +330,7 @@ extension AddViewController {
     }
 
     private func videoUpdateViews() {
-//        recordButton.isSelected = fileOutput.isRecording
+        recordButton.isSelected = fileOutput.isRecording
     }
 
     // MARK: - Private
