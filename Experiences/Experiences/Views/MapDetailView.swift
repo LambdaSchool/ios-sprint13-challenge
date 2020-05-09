@@ -19,8 +19,8 @@ class MapDetailView: UIView {
 
     var delegate: MapViewDelegate?
 
-    private let titleLabel = UILabel()
-    private let infoButton = UIButton()
+//    private let titleLabel = UILabel()
+//    private let infoButton = UIButton()
     private let latitudeLabel = UILabel()
     private let longitudeLabel = UILabel()
 
@@ -38,11 +38,12 @@ class MapDetailView: UIView {
 
         latitudeLabel.setContentHuggingPriority(.defaultLow+1, for: .horizontal)
 
-        let placeDateStackView = UIStackView(arrangedSubviews: [titleLabel, infoButton])
-        placeDateStackView.spacing = UIStackView.spacingUseSystem
+//        let placeDateStackView = UIStackView(arrangedSubviews: [titleLabel, infoButton])
+//        placeDateStackView.spacing = UIStackView.spacingUseSystem
         let latLonStackView = UIStackView(arrangedSubviews: [latitudeLabel, longitudeLabel])
         latLonStackView.spacing = UIStackView.spacingUseSystem
-        let mainStackView = UIStackView(arrangedSubviews: [placeDateStackView, latLonStackView])
+//        let mainStackView = UIStackView(arrangedSubviews: [placeDateStackView, latLonStackView])
+        let mainStackView = UIStackView(arrangedSubviews: [latLonStackView])
         mainStackView.axis = .vertical
         mainStackView.spacing = UIStackView.spacingUseSystem
 
@@ -82,8 +83,8 @@ class MapDetailView: UIView {
         let latitude = experience.latitude ?? 0.0
         let longitude = experience.longitude ?? 0.0
 
-        titleLabel.text = experience.title ?? "Untitled"
-        infoButton.setTitle("Show", for: .normal)
+//        titleLabel.text = "Wha?"//experience.title ?? "Untitled"
+//        infoButton.setTitle("Show", for: .normal)
         latitudeLabel.text = "Lat: " + latLonFormatter.string(from: latitude as NSNumber)!
         longitudeLabel.text = "Lon: " + latLonFormatter.string(from: longitude as NSNumber)!
     }
