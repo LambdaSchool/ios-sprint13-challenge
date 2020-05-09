@@ -11,7 +11,7 @@ import AVFoundation
 
 class AudioRecorderController: UIViewController {
     
-    var exCon: ExperienceController?
+    
     
     @IBOutlet var playButton: UIButton!
     @IBOutlet var recordButton: UIButton!
@@ -153,6 +153,7 @@ class AudioRecorderController: UIViewController {
     }
     func stopRecording() {
         audioRecorder?.stop()
+        
         updateViews()
         cancelTimer()
     }
@@ -173,7 +174,9 @@ class AudioRecorderController: UIViewController {
         let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
         
     print("recording URL: \(file)")
-        exCon?.audioURL = file
+    
+        ExperienceController.shared.audioURL = file
+        print(ExperienceController.shared.audioURL)
         return file
     }
     
@@ -221,6 +224,7 @@ class AudioRecorderController: UIViewController {
         
         audioRecorder?.record()
         self.recordingURL = recordingURL
+        ExperienceController.shared.audioURL = recordingURL
         updateViews()
     }
     

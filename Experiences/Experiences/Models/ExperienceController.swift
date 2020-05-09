@@ -10,6 +10,9 @@ import Foundation
 import UIKit
 
 class ExperienceController {
+    
+    static let shared = ExperienceController()
+    
     var experiences: [Experience] = []
     var postTitle: String?
     var description: String?
@@ -17,11 +20,20 @@ class ExperienceController {
     var audioURL: URL?
     var videoURL: URL?
     
-    func createExperience(with title: String, description: String? = "", image: UIImage? = nil, audioURL: URL? = nil, videoURL: URL? = nil, timestamp: Date = Date()) {
-        if let postTitle = postTitle {
-        let experience = Experience(title: postTitle, description: description, image: image, audioURL: audioURL, videoURL: videoURL, timestamp: Date())
+   
+    func createExperience(with title: String?,
+                          description: String?,
+                          image: UIImage?,
+                          audioURL: URL?,
+                          videoURL: URL?,
+                          timestamp: Date = Date()) {
+        let experience = Experience(title: postTitle ?? "",
+                                    description: description ?? "",
+                                    image: image ?? nil,
+                                    audioURL: audioURL ?? nil,
+                                    videoURL: videoURL ?? nil,
+                                    timestamp: Date())
         self.experiences.append(experience)
         return
-        }
     }
 }

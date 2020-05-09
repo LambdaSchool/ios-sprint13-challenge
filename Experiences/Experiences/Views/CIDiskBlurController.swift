@@ -14,13 +14,13 @@ import Foundation
 
 class DiscBlurViewController: UIViewController {
     
-    var experienceCon: ExperienceController?
 
     @IBAction func nextButton(_ sender: Any) {
-        experienceCon!.image = imageView.image
-        experienceCon!.postTitle = titleTF.text
-        experienceCon?.description = descriptionTF.text
-        performSegue(withIdentifier: "firstToSecond", sender: (Any).self)
+        ExperienceController.shared.image = imageView.image
+        ExperienceController.shared.postTitle = titleTF.text
+        ExperienceController.shared.description = descriptionTF.text
+        performSegue(withIdentifier: "firstToSecond",
+                     sender: (Any).self)
     }
     
     @IBOutlet weak var imageView: UIImageView!
@@ -34,12 +34,11 @@ class DiscBlurViewController: UIViewController {
     
     let context = CIContext(options: nil)
     
-    
-func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+    func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
         if segue.identifier == "firstToSecond" {
-            if let cameraVC = segue.destination as? CameraController {
-            cameraVC.experienceCon = self.experienceCon
-        }
+            ExperienceController.shared.postTitle = titleTF.text
+            ExperienceController.shared.description = descriptionTF.text
+            let _ = segue.destination as? CameraController
     }
     }
     
@@ -63,6 +62,7 @@ func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
             print("scaled size: \(scaledSize)")
             
             scaledImage = originalImage.imageByScaling(toSize: scaledSize)
+
         }
     }
         
@@ -81,22 +81,16 @@ func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
     // Create a stub with default return is a good way to start
     private func filterImage(_ image: UIImage) -> UIImage? {
         
-        // UIImage -> CGImage -> CIImage
+        
         guard let cgImage = image.cgImage else { return nil }
         let ciImage = CIImage(cgImage: cgImage)
         
-        // TODO: show builtins filters
-        
-        // Filter image
-    // built-in filter from Apple
-//        let filter2 = CIFilter.colorControls()
-//        filter2.brightness = brightnessSlider.value
-        
-        // setting values / gebttings values from Core Image
         let filter = CIFilter(name: "CIDiscBlur")
         
-        filter?.setValue(ciImage, forKey: kCIInputImageKey)
-        filter?.setValue(16, forKey: kCIInputRadiusKey)
+        filter?.setValue(ciImage,
+                         forKey: kCIInputImageKey)
+        filter?.setValue(NSNumber(10),
+                         forKey: kCIInputRadiusKey)
         
         
         // CIImage -> CGImage -> UIImage
@@ -104,12 +98,15 @@ func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
         // guard let outputCIImage = filter.value(forKey: kCIOutputImageKey) as? CIImage else { return nil }
         guard let outputCIImage = filter?.outputImage else { return nil }
         
+        print(outputCIImage.url)
+        
         // Render the image (do image processing here)
         guard let outputCGImage = context.createCGImage(outputCIImage,
                                                         from: CGRect(origin: .zero, size: image.size)) else {
             return nil
         }
-        
+        ExperienceController.shared.image = UIImage(cgImage: outputCGImage)
+        print(ExperienceController.shared.image)
         return UIImage(cgImage: outputCGImage)
     }
     
@@ -158,8 +155,7 @@ extension DiscBlurViewController: UIImagePickerControllerDelegate {
 func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
     
     if let image = info[.originalImage] as? UIImage {
-        originalImage = filterImage(image)
-    }
+        originalImage = image    }
    
     picker.dismiss(animated: true)
     }

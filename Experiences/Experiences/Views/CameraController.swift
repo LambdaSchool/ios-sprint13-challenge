@@ -11,7 +11,7 @@ import AVFoundation
 
 class CameraController: UIViewController {
     
-    var experienceCon: ExperienceController?
+    
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -19,10 +19,8 @@ class CameraController: UIViewController {
 	}
 	
   func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
-        if segue.identifier == "handlerToCamer" {
-            if let cameraVC = segue.destination as? CameraViewController {
-            cameraVC.experienceController = experienceCon
-            }
+        if segue.identifier == "handlerToCamera" {
+            let _ = segue.destination as? CameraViewController
         }
     }
     
