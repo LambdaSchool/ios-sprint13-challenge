@@ -155,6 +155,8 @@ extension AddViewController {
 
     @IBAction func stopButton(_ sender: Any) {
         audioRecorder?.stop()
+
+        updateViews()
     }
 
     @IBAction func cancelButton(_ sender: Any) {
@@ -170,7 +172,7 @@ extension AddViewController {
             print("Unabled to Cancel Recording.")
         }
 
-        navigationController?.popViewController(animated: true)
+        updateViews()
     }
 
     // MARK: - Private
@@ -243,6 +245,8 @@ extension AddViewController {
         audioRecorder = try? AVAudioRecorder(url: recordingURL, format: format) // TODO: Error handling do/catch
         audioRecorder?.delegate = self
         audioRecorder?.record()
+
+        updateViews()
     }
 }
 
@@ -265,12 +269,14 @@ extension AddViewController: AVAudioRecorderDelegate {
             // Dispose of recorder (otherwise I can still cancel and it will delete the recording!)
             audioRecorder = nil
         }
+        updateViews()
     }
 
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
         if let error = error {
             print("Audio Record Error: \(error)")
         }
+        updateViews()
     }
 }
 
