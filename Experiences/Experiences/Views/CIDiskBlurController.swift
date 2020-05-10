@@ -13,8 +13,6 @@ import Photos
 import Foundation
 
 class DiscBlurViewController: UIViewController {
-    
-
     @IBAction func nextButton(_ sender: Any) {
         ExperienceController.shared.image = imageView.image
         ExperienceController.shared.postTitle = titleTF.text
@@ -76,7 +74,6 @@ class DiscBlurViewController: UIViewController {
             updateViews()
         }
     }
-    
     
     
     

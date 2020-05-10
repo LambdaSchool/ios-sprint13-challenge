@@ -11,19 +11,16 @@ import UIKit
 import MapKit
 
 class ExperienceController {
-    
     static let shared = ExperienceController()
     static let locMan = CLLocationManager()
-    
     var experiences: [Experience] = []
+    var mapPins: [MapPin] = []
     var postTitle: String?
     var description: String?
     var image: UIImage?
     var audioURL: URL?
     var videoURL: URL?
     var coord: CLLocationCoordinate2D?
-    
-   
     func createExperience(with title: String?,
                           description: String?,
                           image: UIImage?,

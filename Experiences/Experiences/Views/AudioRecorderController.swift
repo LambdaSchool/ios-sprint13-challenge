@@ -193,6 +193,8 @@ class AudioRecorderController: UIViewController {
     }
     func startRecording() {
         let recordingURL = createNewRecordingURL()
+        ExperienceController.shared.audioURL = recordingURL
+        print("I SET THE AUDIO URL, SEE? -> " + String(describing: ExperienceController.shared.audioURL))
         startTimer()
         let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
         audioRecorder = try? AVAudioRecorder(url: recordingURL, format: format) // TODO: Error handling do/cacth
@@ -223,6 +225,19 @@ class AudioRecorderController: UIViewController {
            print("lat: \(String(describing: ExperienceController.shared.experiences.first?.coord?.latitude))")
            print("long: \(String(describing: ExperienceController.shared.experiences.first?.coord?.longitude))")
            print("If all are not nil, successfully made experience.")
+        ExperienceController.shared.mapPins.append(MapPin(coordinate: ExperienceController.shared.coord!,
+                                                          title: ExperienceController.shared.postTitle ?? "",
+                                                          subtitle: ExperienceController.shared.description ?? "",
+                                                          experience: ExperienceController.shared.experiences.last!))
+        print("Printing MapPin")
+        print("Title: " +
+            "\(String(describing: ExperienceController.shared.mapPins.last?.title?.description))")
+        print("Description: " +
+            "\(String(describing: ExperienceController.shared.mapPins.last?.subtitle?.description))")
+        print("Printing mapPin coordinate components!")
+        print(ExperienceController.shared.mapPins.last?.coordinate.latitude.description as Any)
+        print(ExperienceController.shared.mapPins.last?.coordinate.longitude.description as Any)
+        print(ExperienceController.shared.mapPins.count)
        }
 }
 extension AudioRecorderController: AVAudioPlayerDelegate {

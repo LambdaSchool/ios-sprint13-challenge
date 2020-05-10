@@ -16,6 +16,7 @@ class CameraController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
+        
 	}
 	
   func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {

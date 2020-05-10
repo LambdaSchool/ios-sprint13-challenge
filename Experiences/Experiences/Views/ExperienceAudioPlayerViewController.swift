@@ -116,9 +116,9 @@ class ExperienceAudioPlayerViewController: UIViewController,  AVAudioPlayerDeleg
         }
         
         func loadAudio() {
-            let songURL = pin?.experience.audioURL
+            let songURL = ExperienceController.shared.audioURL
             
-            audioPlayer = try? AVAudioPlayer(contentsOf: (songURL ?? Bundle.main.url(forResource: "piano", withExtension: "mp3")!))
+            audioPlayer = try? AVAudioPlayer(contentsOf: songURL!)
             
     }
         

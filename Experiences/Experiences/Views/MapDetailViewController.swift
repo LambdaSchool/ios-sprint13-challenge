@@ -11,28 +11,30 @@ import UIKit
 class MapDetailViewController: UIViewController {
         
         // MARK: - Properties
-    var pin: MapPin? {
-        didSet {
-            titleLabel.text = pin?.title
-            descriptionLabel.text = "\(String(describing: pin?.description))" + "\n" + "Lat: \(String(describing: pin?.coordinate.latitude)) Lon: \(String(describing: pin?.coordinate.longitude))"
-        }
+    
+    override func viewDidLoad() {
+        
+        self.image.image = ExperienceController.shared.image
+        self.titleLabel.text = ExperienceController.shared.postTitle
+        self.descriptionLabel.text = ExperienceController.shared.description
     }
     
     @IBOutlet weak var titleLabel: UILabel!
     
     @IBOutlet weak var descriptionLabel: UILabel!
     
-        
+    @IBOutlet weak var image: UIImageView!
+    
         
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "experienceToVideo" {
-            let evid = segue.destination as? ExperienceVideoPlayerViewController
-            evid?.mapPin = self.pin
+            _ = segue.destination as? ExperienceVideoPlayerViewController
+          
             
         }
         if segue.identifier == "experienceToAudio" {
-            let eAudio = segue.destination as? ExperienceAudioPlayerViewController
-            eAudio?.pin = self.pin
+            _ = segue.destination as? ExperienceAudioPlayerViewController
+            
         }
     }
 
