@@ -17,7 +17,13 @@ enum MediaType: String {
 
 class Experience {
     
-    init(title: String, description: String? = "", image: UIImage?, audioURL: URL?, videoURL: URL?, timestamp: Date = Date()) {
+    init(title: String,
+         description: String? = "",
+         image: UIImage?,
+         audioURL: URL?,
+         videoURL: URL?,
+         coord: CLLocationCoordinate2D,
+         timestamp: Date = Date()) {
 
      
         self.title = title
@@ -26,6 +32,7 @@ class Experience {
         self.audioURL = audioURL
         self.videoURL = videoURL
         self.timestamp = timestamp
+        self.coord = coord
     }
     let title: String?
     var description: String? 
@@ -33,6 +40,7 @@ class Experience {
     var audioURL: URL?
     var videoURL: URL?
     let timestamp: Date
+    var coord: CLLocationCoordinate2D?
     
     
 }

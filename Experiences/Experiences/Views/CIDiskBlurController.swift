@@ -18,7 +18,12 @@ class DiscBlurViewController: UIViewController {
     @IBAction func nextButton(_ sender: Any) {
         ExperienceController.shared.image = imageView.image
         ExperienceController.shared.postTitle = titleTF.text
+        print("ExperienceController.shared.postTitle = " + "\(String(describing: ExperienceController.shared.postTitle))")
         ExperienceController.shared.description = descriptionTF.text
+        print("ExperienceController.shared.description = " + "\(String(describing: ExperienceController.shared.description))")
+        if ExperienceController.shared.image == nil {
+            print("The image didn't get added!")
+        }
         performSegue(withIdentifier: "firstToSecond",
                      sender: (Any).self)
     }
@@ -98,15 +103,12 @@ class DiscBlurViewController: UIViewController {
         // guard let outputCIImage = filter.value(forKey: kCIOutputImageKey) as? CIImage else { return nil }
         guard let outputCIImage = filter?.outputImage else { return nil }
         
-        print(outputCIImage.url)
         
         // Render the image (do image processing here)
         guard let outputCGImage = context.createCGImage(outputCIImage,
                                                         from: CGRect(origin: .zero, size: image.size)) else {
             return nil
         }
-        ExperienceController.shared.image = UIImage(cgImage: outputCGImage)
-        print(ExperienceController.shared.image)
         return UIImage(cgImage: outputCGImage)
     }
     
@@ -137,10 +139,6 @@ class DiscBlurViewController: UIViewController {
     @IBAction func choosePhotoButtonPressed(_ sender: Any) {
         presentImagePickerController()
     }
-
-
-
-
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)

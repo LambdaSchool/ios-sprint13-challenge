@@ -233,7 +233,6 @@
                         <barButtonItem key="rightBarButtonItem" title="Next" id="TFY-vV-6hM">
                             <connections>
                                 <action selector="nextButton:" destination="vTD-wd-Y8J" id="cEK-ha-3O0"/>
-                                <segue destination="sqO-Dj-dxc" kind="show" identifier="firstToSecond" id="N5f-8B-rwd"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -241,6 +240,7 @@
                         <outlet property="descriptionTF" destination="icF-FM-QmZ" id="utc-Kk-2pL"/>
                         <outlet property="imageView" destination="NNQ-C4-SV2" id="xML-Vj-nLf"/>
                         <outlet property="titleTF" destination="FEe-PQ-tnx" id="s58-SU-CUh"/>
+                        <segue destination="sqO-Dj-dxc" kind="show" identifier="firstToSecond" id="pzj-oj-SvN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GYu-pe-AmL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -311,13 +311,13 @@
                         <barButtonItem key="rightBarButtonItem" title="Next" id="vcj-y6-kcc">
                             <connections>
                                 <action selector="nextButton:" destination="nKf-Zz-a8s" id="1Il-Ob-BHD"/>
-                                <segue destination="5hO-am-2fh" kind="show" identifier="cameraToAudio" id="Ts5-nc-yQB"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="cameraView" destination="EnH-Bj-61E" id="uRh-Zx-4GZ"/>
                         <outlet property="recordButton" destination="Gkt-Jf-G2E" id="Yaa-1Q-oUA"/>
+                        <segue destination="5hO-am-2fh" kind="show" identifier="cameraToAudio" id="ftP-os-xeR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yFb-cB-A6z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -500,7 +500,7 @@
                     <navigationItem key="navigationItem" id="p3L-yf-sCg">
                         <barButtonItem key="rightBarButtonItem" title="Create Experience" id="XQP-hO-oCZ">
                             <connections>
-                                <segue destination="TWj-rN-wxO" kind="unwind" unwindAction="unwindToThisViewWithSender:" id="eTx-sL-AJU"/>
+                                <segue destination="TWj-rN-wxO" kind="unwind" identifier="completeRewindSegue" unwindAction="unwindToThisViewWithSender:" id="eTx-sL-AJU"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

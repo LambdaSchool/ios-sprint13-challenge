@@ -32,6 +32,7 @@ class CameraViewController: UIViewController {
 
 		// Resize csamera preview to fill the entire screen
 		cameraView.videoPlayerView.videoGravity = .resizeAspectFill
+        
         performSegue(withIdentifier: "cameraToAudio", sender: self)
 
         setUpCaptureSession()

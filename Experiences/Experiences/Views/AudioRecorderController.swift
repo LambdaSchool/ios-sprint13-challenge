@@ -11,7 +11,26 @@ import AVFoundation
 
 class AudioRecorderController: UIViewController {
     
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "completeRewindSegue" {
+            ExperienceController.shared.createExperience(with: ExperienceController.shared.postTitle,
+                                                         description: ExperienceController.shared.description,
+                                                         image: ExperienceController.shared.image,
+                                                         audioURL: ExperienceController.shared.audioURL,
+                                                         videoURL: ExperienceController.shared.videoURL,
+                                                         coord: ExperienceController.shared.coord)
+    }
+        print("Examining newly created experience in AudioRecorderController")
+        print("Title: \(String(describing: ExperienceController.shared.experiences.first?.title?.description))")
+        print("Description: \(String(describing: ExperienceController.shared.experiences.first?.description?.description))")
+        print("Image URL: \(String(describing: ExperienceController.shared.experiences.first?.imageData?.description))")
+        print("AudioURL: \(String(describing: ExperienceController.shared.experiences.first?.audioURL?.description))")
+        print("VidoURL: \(String(describing: ExperienceController.shared.experiences.first?.videoURL?.description)))")
+        print("TimeStamp: \(String(describing: ExperienceController.shared.experiences.first?.timestamp.description))")
+        print("lat: \(String(describing: ExperienceController.shared.experiences.first?.coord?.latitude))")
+        print("long: \(String(describing: ExperienceController.shared.experiences.first?.coord?.longitude))")
+        print("If all are not nil, successfully made experience.")
+    }
     
     @IBOutlet var playButton: UIButton!
     @IBOutlet var recordButton: UIButton!
@@ -99,7 +118,6 @@ class AudioRecorderController: UIViewController {
                self.audioVisualizer.addValue(decibelValue: audioRecorder.averagePower(forChannel: 0))
                 
             }
-            
             if let audioPlayer = self.audioPlayer,
                 self.isPlaying == true {
             
@@ -162,7 +180,12 @@ class AudioRecorderController: UIViewController {
     // MARK: - Recording
     
     var audioRecorder: AVAudioRecorder?
-    var recordingURL: URL?
+    var recordingURL: URL? {
+        didSet {
+            ExperienceController.shared.audioURL = recordingURL
+            print(ExperienceController.shared.audioURL)
+        }
+    }
     
     var isRecording: Bool {
         audioRecorder?.isRecording ?? false
@@ -173,10 +196,8 @@ class AudioRecorderController: UIViewController {
         let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
         let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
         
-    print("recording URL: \(file)")
+        print("recording URL: \(file)")
     
-        ExperienceController.shared.audioURL = file
-        print(ExperienceController.shared.audioURL)
         return file
     }
     
@@ -224,7 +245,6 @@ class AudioRecorderController: UIViewController {
         
         audioRecorder?.record()
         self.recordingURL = recordingURL
-        ExperienceController.shared.audioURL = recordingURL
         updateViews()
     }
     
@@ -242,7 +262,7 @@ class AudioRecorderController: UIViewController {
         
     }
     
-    @IBAction func updateCurrentTime(_ sender: UISlider) {
+    @IBAction func updateCurrentTime(_ sender: Any) {
         if isPlaying {
             pause()
         }
