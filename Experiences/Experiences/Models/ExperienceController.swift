@@ -13,6 +13,7 @@ import MapKit
 class ExperienceController {
     
     static let shared = ExperienceController()
+    static let locMan = CLLocationManager()
     
     var experiences: [Experience] = []
     var postTitle: String?
