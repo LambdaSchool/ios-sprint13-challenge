@@ -22,41 +22,39 @@ class ExperienceMapVC: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     
     @IBAction func unwindToThisView(sender: UIStoryboardSegue) {
-        
-        
-        let mapPin = MapPin(coordinate: ExperienceController.shared.coord!,
-                            title: ExperienceController.shared.postTitle ?? "",
-                            subtitle: ExperienceController.shared.description ?? "",
-                            experience: ExperienceController.shared.experiences.first!)
-        self.mapPin = mapPin
+        guard let loc = ExperienceController.shared.coord  else {
+            print("Oops on the leocation!")
+            return
+        }
+        self.mapPin = MapPin(coordinate: loc,
+                             title: ExperienceController.shared.postTitle ?? "",
+                             subtitle: ExperienceController.shared.description ?? "",
+                             experience: ExperienceController.shared.experiences.first!)
         print("Printing MapPin")
-        print("Title: " + "\(String(describing: mapPin.title?.description))")
-        print("Description: " + "\(String(describing: mapPin.subtitle?.description))")
+        print("Title: " + "\(String(describing: self.mapPin?.title?.description))")
+        print("Description: " + "\(String(describing: self.mapPin?.subtitle?.description))")
         (print("Printing mapPin coordinate components!"))
-        print(mapPin.coordinate.latitude.description)
-        print(mapPin.coordinate.longitude.description)
-        self.mapPins.append(mapPin)
+        print(mapPin?.coordinate.latitude.description as Any)
+        print(mapPin?.coordinate.longitude.description as Any)
+        guard self.mapPin != nil else { return }
+        self.mapPins.append(self.mapPin!)
         print(self.mapPins.count)
  
         }
-        // Print experience components
-        
-      
-    
-    
-    
     func prepareForSegue(segue: UIStoryboardSegue!, sender: Any?) {
         if segue.identifier == "mapToAddExperience" {
             let _ = segue.destination as? DiscBlurViewController
             ExperienceController.shared.coord = ExperienceController.locMan.location?.coordinate
-            }
-            
-        
-        if segue.identifier == "mapToDetail" {
-            let detailVc = segue.destination as? MapDetailViewController
-            detailVc!.pin = mapPin
+            print("Location @ initial segue: " +
+                "\n" +
+                "\(String(describing: ExperienceController.shared.coord?.latitude))" +
+                "\n" +
+                "\(String(describing: ExperienceController.shared.coord?.longitude))")
         }
-        
+        if segue.identifier == "mapToDetail" {
+        let detailVc = segue.destination as? MapDetailViewController
+        detailVc!.pin = mapPin
+        }
     }
 	override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,6 +69,7 @@ class ExperienceMapVC: UIViewController {
                          forAnnotationViewWithReuseIdentifier: "PinView")
     }
     func viewDidAppear() {
+        mapView.removeAnnotations(mapView.annotations)
         mapView.addAnnotations(mapPins)
         let span = MKCoordinateSpan(latitudeDelta: 0.05,
                                     longitudeDelta: 0.05)
@@ -85,26 +84,19 @@ class ExperienceMapVC: UIViewController {
 extension ExperienceMapVC: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView,
                  viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation is MKUserLocation {
-            return nil
+        guard let experience = annotation as? MapPin else {
+            fatalError("Only EXPERIENCES are allowed!!!")
         }
-
-        let reuseId = "pin"
-
-        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
-        if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation,
-                                          reuseIdentifier: reuseId)
-            pinView?.canShowCallout = true
-
-            let rightButton: AnyObject! = UIButton(type: UIButton.ButtonType.detailDisclosure)
-            rightButton.title(for: UIControl.State.normal)
-            pinView!.rightCalloutAccessoryView = rightButton as? UIView
+        guard let pinView = mapView.dequeueReusableAnnotationView(withIdentifier: "PinDetailView",
+                                                                  for: annotation) as? MKMarkerAnnotationView else {
+                                                                    fatalError("Missing a registered view")
         }
-        else {
-            pinView?.annotation = annotation
-        }
-
+        pinView.glyphImage = UIImage(named: "Brain")
+        print("Icons made by someone on SmashIcons. Remember to properly attribute should this get made into a portfolio piece.")
+        pinView.canShowCallout = true
+        let rightButton: UIButton = UIButton(type: UIButton.ButtonType.detailDisclosure)
+        rightButton.titleLabel?.text = "Experience the EXPERIENCE, DAWG!"
+        pinView.rightCalloutAccessoryView = rightButton as UIView
         return pinView
     }
     func mapView(_ mapView: MKMapView,
@@ -128,15 +120,14 @@ extension ExperienceMapVC: CLLocationManagerDelegate {
         }
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-            var currentLoc = locations.last!
-            let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-            let region = MKCoordinateRegion(center: currentLoc.coordinate,
-                                            span: span)
-            
-            mapView.setRegion(region,
-                              animated: true)
-            ExperienceController.shared.coord = currentLoc.coordinate
-            print(ExperienceController.shared.coord?.latitude)
+        guard var currentLoc = locations.last?.coordinate else {return}
+        let span = MKCoordinateSpan(latitudeDelta: 0.05,
+                                    longitudeDelta: 0.05)
+        let region = MKCoordinateRegion(center: currentLoc,
+                                        span: span)
+        mapView.setRegion(region,
+                          animated: true)
+        print(ExperienceController.shared.coord?.latitude as Any)
         
     }
 }

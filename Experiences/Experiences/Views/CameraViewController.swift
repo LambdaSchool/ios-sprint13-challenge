@@ -64,45 +64,40 @@ class CameraViewController: UIViewController {
     // MARK: - DON'T HAVE A WORKING iOS DEVICE. UNCOMMENT CODE TO SEE IF IT WORKS.
     private func setUpCaptureSession() {
         // Add inputs
-      //  captureSession.beginConfiguration()
+        captureSession.beginConfiguration()
         // Camera Input
-        //let camera = bestCamera()
+        let camera = bestCamera()
         
         // Microphone Input
-     //   guard let cameraInput = try? AVCaptureDeviceInput(device: camera), captureSession.canAddInput(cameraInput) else {
-          //  fatalError("Error adding camera to capture session.")
-    //    }
-      //  captureSession.addInput(cameraInput)
-        
-    //    if //captureSession.canSetSessionPreset(.hd1920x1080) {
-          //  captureSession.sessionPreset = .hd1920x1080
-         //   }
+        guard let cameraInput = try? AVCaptureDeviceInput(device: camera), captureSession.canAddInput(cameraInput) else {
+            fatalError("Error adding camera to capture session.")
+        }
+        captureSession.addInput(cameraInput)
+        if captureSession.canSetSessionPreset(.hd1920x1080) {
+            captureSession.sessionPreset = .hd1920x1080
+        }
         
         // Add outputs
-      //  guard captureSession.canAddOutput(fileOutput) else {
-         //   fatalError("Error: Cannot save movie with capture session.")
- //       }
+        guard captureSession.canAddOutput(fileOutput) else {
+            fatalError("Error: Cannot save movie with capture session.")
+        }
         // TODO: Start/Stop Session
- //   }
-    
-   // private func bestCamera() ->  AVCaptureDevice {
-    // Ultra-wide lens (iPhone 11 Pro Max on back)
-    //    do {
-        
-    //         if let ultraWideCamera = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) {
-           //// return ultraWideCamera
-    //    }
-        // Wide angle lenes
-   //     if let wideAngleCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
-       //     return wideAngleCamera
-     //   }
-  //      }
-        
-   //     do  {
-                //    }
-    //}
-    // Recording
     }
+    
+    private func bestCamera() ->  AVCaptureDevice {
+        // Ultra-wide lens (iPhone 11 Pro Max on back)
+        do {
+            if let ultraWideCamera = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) {
+                return ultraWideCamera
+            }
+        // Wide angle lenes
+            if let wideAngleCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
+                return wideAngleCamera
+            }
+            fatalError("Are you on an iphone simulator? ")
+        }
+    }
+    // Recording
     @IBAction func recordButtonPressed(_ sender: Any) {
         toggleRecord()
     }
@@ -120,7 +115,7 @@ class CameraViewController: UIViewController {
 		let name = formatter.string(from: Date())
 		let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
         ExperienceController.shared.videoURL = fileURL
-        print(ExperienceController.shared.videoURL)
+        print(ExperienceController.shared.videoURL as Any)
 		return fileURL
 	}
     private func playMovie(url: URL) {
