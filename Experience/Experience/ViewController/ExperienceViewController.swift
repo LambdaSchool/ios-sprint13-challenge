@@ -9,19 +9,19 @@
 import UIKit
 import MapKit
 
-class ExperienceViewController: UIViewController, CLLocationManagerDelegate {
+class ExperienceViewController: UIViewController {
     
     let experiences = Experiences()
-    var currentLocation: CLLocation!
-    var locationManager = CLLocationManager()
-    let newPin = MKPointAnnotation()
+//    var currentLocation: CLLocation!
+//    var locationManager = CLLocationManager()
+//    let newPin = MKPointAnnotation()
     
     @IBOutlet weak var mapView: MKMapView!
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//        locationManager.delegate = self
+//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceView")
     }
     
