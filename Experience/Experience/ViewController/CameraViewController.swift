@@ -23,6 +23,10 @@ class CameraViewController: UIViewController {
         cameraView.videoPlayerView.videoGravity = .resizeAspectFill
         setUpCaptureSession()
     }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        captureSession.startRunning()
+    }
     private func updateViews() {
         RecordButton.isSelected = fileOutput.isRecording
     }
@@ -54,7 +58,7 @@ class CameraViewController: UIViewController {
         captureSession.addOutput(fileOutput)
         
         captureSession.commitConfiguration()
-        cameraView.session = captureSession
+        cameraView.videoPlayerView.session = captureSession
         // TODO: Start/Stop session
     }
     
@@ -85,7 +89,8 @@ class CameraViewController: UIViewController {
     private func toggleRecord() {
         if fileOutput.isRecording {
             fileOutput.stopRecording()
-            navigationController?.popViewController(animated: true)
+            //navigationController?.popViewController(animated: true)
+            dismiss(animated: true, completion: nil)
         } else {
             fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
         }

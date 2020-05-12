@@ -49,40 +49,33 @@ class ImagePostViewController: UIViewController {
     }
     private func presentImagePickerController() {
 
+//        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+//            presentInformationalAlertController(title: "Error", message: "The photo library is unavailable")
+//            return
+//        }
+//
+//        let imagePicker = UIImagePickerController()
+//        //8a00
+//        //6c00
+//        imagePicker.delegate = self
+//
+//        imagePicker.sourceType = .photoLibrary
+//
+//        present(imagePicker, animated: true, completion: nil)
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
             presentInformationalAlertController(title: "Error", message: "The photo library is unavailable")
             return
         }
-        
-        let imagePicker = UIImagePickerController()
-        //8a00
-        //6c00
-        imagePicker.delegate = self
-
-        imagePicker.sourceType = .photoLibrary
-
-        present(imagePicker, animated: true, completion: nil)
+        DispatchQueue.main.async {
+                 let imagePicker = UIImagePickerController()
+                 imagePicker.delegate = self
+                 imagePicker.sourceType = .photoLibrary
+            self.present(imagePicker, animated: true, completion: nil)
+        }
     }
     
     @IBAction func saveImage(_ sender: Any) {
         view.endEditing(true)
-//        guard let imageData = imageView.image?.jpegData(compressionQuality: 0.1) else {
-//                presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
-//                return
-//        }
-//        
-//        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
-//            guard success else {
-//                DispatchQueue.main.async {
-//                    self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
-//                }
-//                return
-//            }
-//            
-//            DispatchQueue.main.async {
-//                self.navigationController?.popViewController(animated: true)
-//            }
-//        }
         navigationController?.popViewController(animated: true)
     }
     func filter(_ image: UIImage, for filter: FilterType) -> UIImage? {

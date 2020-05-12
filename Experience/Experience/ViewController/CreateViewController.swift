@@ -8,18 +8,32 @@
 
 import UIKit
 import AVFoundation
+import CoreLocation
 
-
-class CreateViewController: UIViewController {
+class CreateViewController: UIViewController, CLLocationManagerDelegate {
 
     @IBOutlet weak var titleTextField: UITextField!
-
+    var locationManager = CLLocationManager()
+    
     var experiences: Experiences?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpLocationManager()
     }
-
+    func setUpLocationManager() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        let status = CLLocationManager.authorizationStatus()
+        switch status {
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .authorizedWhenInUse:
+            locationManager.requestLocation()
+        default:
+            break
+        }
+    }
     @IBAction func addVideoTapped(_ sender: Any) {
         requestPermissionAndShowCamera()
     }
@@ -57,8 +71,21 @@ class CreateViewController: UIViewController {
     
     @IBAction func saveExp(_ sender: Any) {
         guard let title = titleTextField.text, !title.isEmpty else {return}
-        experiences?.create(title: title, latitude: Double(Int.random(in: 47_200_953...48_083_626)) / 1_000_000, longitude: Double(Int.random(in: (-122_564_484)...(-121_963_246))) / 1_000_000)
+        let lat = locationManager.location?.coordinate.latitude ?? 00
+        let long = locationManager.location?.coordinate.longitude ?? 00
+        experiences?.create(title: title, latitude: lat, longitude: long)
         navigationController?.popViewController(animated: true)
-        //experience?.lat =
+    }
+    
+}
+extension CreateViewController {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    }
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        NSLog("Location manager failed with error: \(error)")
+    }
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        guard status == .authorizedWhenInUse else { return }
+        locationManager.requestLocation()
     }
 }
