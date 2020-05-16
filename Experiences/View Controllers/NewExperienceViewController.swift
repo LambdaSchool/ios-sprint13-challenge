@@ -32,7 +32,7 @@ class NewExperienceViewController: UIViewController {
             
             guard let scaledCGImage = scaledUIImage?.cgImage else { return }
             scaledImage = CIImage(cgImage: scaledCGImage)
-        
+            
         }
     }
     
@@ -47,10 +47,10 @@ class NewExperienceViewController: UIViewController {
     @IBOutlet weak var addPosterButton: UIButton!
     @IBOutlet weak var recordButton: UIButton!
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         recordButton.isEnabled = false
     }
     
@@ -58,28 +58,35 @@ class NewExperienceViewController: UIViewController {
         
     }
     
-//    @IBAction func selectImage(_ sender: Any) {
-//        let authorizationStatus = PHPhotoLibrary.authorizationStatus()
-//
-//        switch authorizationStatus {
-//        case .authorized:
-//
-//        default:
-//            <#code#>
-//        }
-//    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func selectImage(_ sender: Any) {
+        let authorizationStatus = PHPhotoLibrary.authorizationStatus()
+        
+        switch authorizationStatus {
+        case .authorized:
+            presentImagePickerController()
+        case .notDetermined:
+            PHPhotoLibrary.requestAuthorization { (status) in
+                guard status == .authorized else {
+                    NSLog("User did not authorize access to the photo library.")
+                    self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library you must allow us to access it.")
+                    return
+                }
+                
+                self.presentImagePickerController()
+            }
+            
+        case .denied:
+            self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow us to access it")
+        case .restricted:
+            self.presentInformationalAlertController(title: "Error", message: "Unable to access the library. Your devices's restrictions do not allow access.")
+        default:
+            preconditionFailure("The app does not handle this new case provided by apple")
+        }
+        
+        presentImagePickerController()
     }
-    */
     
-    private func presntImagePickerController() {
+    private func presentImagePickerController() {
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
             presentInformationalAlertController(title: "Error", message: "The photo library is unavailable")
             return
@@ -89,8 +96,19 @@ class NewExperienceViewController: UIViewController {
             let imagePicker = UIImagePickerController()
             imagePicker.sourceType = .photoLibrary
             
+            //Presenting the ViewController:
             self.present(imagePicker, animated: true, completion: nil)
         }
     }
-
+    
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
