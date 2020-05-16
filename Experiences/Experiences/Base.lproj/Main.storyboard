@@ -189,7 +189,7 @@
             </objects>
             <point key="canvasLocation" x="128.98550724637681" y="138.61607142857142"/>
         </scene>
-        <!--Audio View Controller-->
+        <!--Audio-->
         <scene sceneID="anV-MA-Ik9">
             <objects>
                 <viewController id="Vec-sa-4zD" customClass="AudioViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
@@ -291,7 +291,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="SfZ-HU-iIh"/>
                     </view>
-                    <navigationItem key="navigationItem" id="nRF-Vw-G7r">
+                    <navigationItem key="navigationItem" title="Audio" id="nRF-Vw-G7r">
                         <barButtonItem key="rightBarButtonItem" title="Next" id="TmK-MS-mWl">
                             <connections>
                                 <action selector="nextBtnWasPressed:" destination="Vec-sa-4zD" id="wgH-0f-oW5"/>
@@ -313,7 +313,7 @@
             </objects>
             <point key="canvasLocation" x="128.98550724637681" y="916.74107142857133"/>
         </scene>
-        <!--Images View Controller-->
+        <!--Take Photo-->
         <scene sceneID="NJ3-A7-asU">
             <objects>
                 <viewController id="sIy-tP-ESf" customClass="ImagesViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
@@ -473,7 +473,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ttj-Jw-mFI"/>
                     </view>
-                    <navigationItem key="navigationItem" id="pzw-Uj-t73">
+                    <navigationItem key="navigationItem" title="Take Photo" id="pzw-Uj-t73">
                         <barButtonItem key="rightBarButtonItem" title="Next" id="T1b-7u-aOk">
                             <connections>
                                 <action selector="nextBtnTapped:" destination="sIy-tP-ESf" id="DRx-KI-GmD"/>
@@ -495,17 +495,44 @@
             </objects>
             <point key="canvasLocation" x="1106" y="982"/>
         </scene>
-        <!--Video View Controller-->
+        <!--Take Video-->
         <scene sceneID="Ftv-nv-kE1">
             <objects>
                 <viewController id="xqR-Lf-4N5" customClass="VideoViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RWO-2l-aZE">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1t1-vV-hWD" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="108" width="414" height="754"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="klb-Zt-vc2">
+                                        <rect key="frame" x="169.5" y="625" width="75" height="75"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="75" id="YlE-qN-V5t"/>
+                                            <constraint firstAttribute="height" constant="75" id="o8Z-mr-73R"/>
+                                        </constraints>
+                                        <state key="normal" image="icons8-record"/>
+                                        <state key="selected" image="icons8-stop_squared"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="klb-Zt-vc2" secondAttribute="bottom" constant="54" id="HiD-eu-h25"/>
+                                    <constraint firstItem="klb-Zt-vc2" firstAttribute="centerX" secondItem="1t1-vV-hWD" secondAttribute="centerX" id="YvC-7q-w0U"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="VLq-WZ-TDz" firstAttribute="trailing" secondItem="1t1-vV-hWD" secondAttribute="trailing" id="Lb2-h5-RDa"/>
+                            <constraint firstItem="VLq-WZ-TDz" firstAttribute="bottom" secondItem="1t1-vV-hWD" secondAttribute="bottom" id="kLZ-p3-E9c"/>
+                            <constraint firstItem="1t1-vV-hWD" firstAttribute="top" secondItem="VLq-WZ-TDz" secondAttribute="top" constant="20" id="ost-GU-Bbo"/>
+                            <constraint firstItem="1t1-vV-hWD" firstAttribute="leading" secondItem="VLq-WZ-TDz" secondAttribute="leading" id="wTm-5G-V7a"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="VLq-WZ-TDz"/>
                     </view>
-                    <navigationItem key="navigationItem" id="zwS-oQ-8aI">
+                    <navigationItem key="navigationItem" title="Take Video" id="zwS-oQ-8aI">
                         <barButtonItem key="rightBarButtonItem" title="Next" id="fR1-RA-jcG">
                             <connections>
                                 <segue destination="HnZ-Qr-bf7" kind="show" identifier="VideotoMapSegue" id="JmI-Bf-cVw"/>
@@ -519,14 +546,16 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="IVq-74-bhd"/>
+        <segue reference="bJN-H1-hMZ"/>
         <segue reference="oF3-KU-xf7"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="icons8-image" width="50" height="50"/>
         <image name="icons8-microphone" width="48" height="48"/>
+        <image name="icons8-record" width="50" height="50"/>
         <image name="icons8-save" width="50" height="50"/>
         <image name="icons8-slr_camera" width="50" height="50"/>
+        <image name="icons8-stop_squared" width="48" height="48"/>
         <image name="icons8-video_call" width="50" height="50"/>
         <image name="mic.fill" catalog="system" width="108" height="128"/>
         <image name="pause.fill" catalog="system" width="116" height="128"/>
