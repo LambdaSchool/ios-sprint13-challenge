@@ -12,7 +12,7 @@ import CoreImage
 import CoreImage.CIFilterBuiltins
 import MapKit
 
-class NewExperienceViewController: UIViewController {
+class NewExperienceViewController: UIViewController, UINavigationControllerDelegate {
     
     //Properties:
     var mapVC: MapViewController?
@@ -118,6 +118,7 @@ class NewExperienceViewController: UIViewController {
         
         DispatchQueue.main.async {
             let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
             imagePicker.sourceType = .photoLibrary
             
             //Presenting the ViewController:
@@ -125,6 +126,21 @@ class NewExperienceViewController: UIViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "GoToRecordersSegue" {
+            guard let recordersVC = segue.destination as? RecordersViewController else { return }
+            
+            guard let image = photoImageView.image else { return }
+            let picture = Experience.Picture(imagePost: image)
+            
+            recordersVC.experienceTitle = titleTextField.text
+            recordersVC.picture = picture
+            recordersVC.userLocation = userLocation
+            recordersVC.mapViewController = mapVC
+        }
+    }
+    
+        
     /*
      // MARK: - Navigation
      
