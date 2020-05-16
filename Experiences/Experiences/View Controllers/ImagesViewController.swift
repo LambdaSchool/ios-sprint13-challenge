@@ -153,6 +153,7 @@ class ImagesViewController: UIViewController {
   }
   
   @IBAction func nextBtnTapped(_ sender: UIBarButtonItem) {
+    performSegue(withIdentifier: "ImagesToMapSegue", sender: nil)
   }
   @IBAction func selectImageTapped(_ sender: Any) {
      presentImagePickerController()
