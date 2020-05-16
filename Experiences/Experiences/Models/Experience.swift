@@ -7,3 +7,27 @@
 //
 
 import Foundation
+import MapKit
+
+enum MediaType {
+    case image
+    case audio
+    case video
+}
+
+class Experience: NSObject, Decodable {
+    var experienceTitle: String
+    
+    
+}
+
+//extension Experience: MKAnnotation {
+//    var coordinate: CLLocationCoordinate2D {
+//        <#code#>
+//    }
+//    
+//    var title: String? {
+//        
+//    }
+//    
+//}
