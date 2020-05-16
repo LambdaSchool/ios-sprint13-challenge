@@ -13,6 +13,7 @@ class MapViewController: UIViewController {
     
     let locationManager = CLLocationManager()
     
+    
     @IBOutlet var mapView: MKMapView!
     
     
