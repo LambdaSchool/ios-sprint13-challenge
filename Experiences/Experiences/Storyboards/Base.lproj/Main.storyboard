@@ -47,9 +47,35 @@
                     <view key="view" contentMode="scaleToFill" id="wfj-H5-DAE">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XIB-7E-uOV">
+                                <rect key="frame" x="0.0" y="241" width="414" height="414"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="XIB-7E-uOV" secondAttribute="height" multiplier="1:1" id="oBI-j1-svj"/>
+                                </constraints>
+                            </imageView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add a title or caption:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ABh-hH-JfX">
+                                <rect key="frame" x="12" y="663" width="390" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="ABh-hH-JfX" firstAttribute="leading" secondItem="Zql-Vk-VMx" secondAttribute="leading" constant="12" id="9kq-3p-6Fi"/>
+                            <constraint firstItem="Zql-Vk-VMx" firstAttribute="trailing" secondItem="ABh-hH-JfX" secondAttribute="trailing" constant="12" id="Dl7-vB-9N7"/>
+                            <constraint firstItem="XIB-7E-uOV" firstAttribute="centerX" secondItem="wfj-H5-DAE" secondAttribute="centerX" id="FkY-nE-Dkh"/>
+                            <constraint firstItem="Zql-Vk-VMx" firstAttribute="trailing" secondItem="XIB-7E-uOV" secondAttribute="trailing" id="YR5-EF-yRo"/>
+                            <constraint firstItem="ABh-hH-JfX" firstAttribute="top" secondItem="XIB-7E-uOV" secondAttribute="bottom" constant="8" id="ZW3-Sd-cPW"/>
+                            <constraint firstItem="XIB-7E-uOV" firstAttribute="centerY" secondItem="wfj-H5-DAE" secondAttribute="centerY" id="ZuQ-RX-FiQ"/>
+                            <constraint firstItem="XIB-7E-uOV" firstAttribute="leading" secondItem="Zql-Vk-VMx" secondAttribute="leading" id="yYU-Zi-Kwf"/>
+                            <constraint firstItem="ABh-hH-JfX" firstAttribute="centerX" secondItem="wfj-H5-DAE" secondAttribute="centerX" id="z5N-2K-hhU"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Zql-Vk-VMx"/>
                     </view>
+                    <connections>
+                        <outlet property="imageView" destination="XIB-7E-uOV" id="8QQ-Gk-R5F"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k2G-jc-sCH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -128,11 +154,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="up3-Ti-LjZ" customClass="AudioVisualizer" customModule="Experiences" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44" width="414" height="742"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="barWidth">
-                                        <real key="value" value="0.0"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Xyc-zk-4Oz">
                                 <rect key="frame" x="16" y="794" width="382" height="60"/>

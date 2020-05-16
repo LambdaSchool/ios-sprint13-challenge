@@ -6,25 +6,160 @@
 //  Copyright © 2020 Jessie Griffin. All rights reserved.
 //
 
+
 import UIKit
+import CoreImage
+import CoreImage.CIFilterBuiltins
+import Photos
 
 class ImagePostViewController: UIViewController {
 
+    // MARK: - Outlets
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var selectImageButton: UIBarButtonItem!
+    
+    
+    // MARK: - Properties
+    private let context = CIContext()
+    private let noirFilter = CIFilter.photoEffectNoir()
+    
+    var isFiltering: Bool = false
+
+    var originalImage: UIImage? {
+        didSet {
+            guard let originalImage = originalImage else { return }
+            
+            var scaledSize = imageView.bounds.size
+            let scale: CGFloat = UIScreen.main.scale
+            
+            scaledSize = CGSize(width: scaledSize.width*scale,
+                                height: scaledSize.height*scale)
+            
+            guard let scaledUIImage = originalImage.imageByScaling(toSize: scaledSize) else { return }
+            
+            scaledImage = CIImage(image: scaledUIImage)
+        }
+    }
+
+    var scaledImage: CIImage? {
+        didSet {
+            applyFilter()
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        presentImagePickerController()
+        originalImage = imageView.image
+    }
 
-        // Do any additional setup after loading the view.
+    private func image(byFiltering inputImage: CIImage) -> UIImage {
+        
+        noirFilter.inputImage = inputImage
+        
+        guard let outputImage = noirFilter.outputImage else { return originalImage! }
+        
+        guard let renderedImage = context.createCGImage(outputImage, from: inputImage.extent) else { return originalImage! }
+        
+        return UIImage(cgImage: renderedImage)
+    }
+
+    private func applyFilter() {
+        if let scaledImage = scaledImage {
+            imageView.image = image(byFiltering: scaledImage)
+        } else {
+            imageView.image = nil
+        }
+    }
+
+    private func presentImagePickerController() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            print("The photo library is not available")
+            return
+        }
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        
+        present(imagePicker, animated: true, completion: nil)
     }
     
+    // MARK: Actions
+    
+    @IBAction func selectPhotoButtonPressed(_ sender: UIBarButtonItem) {
+        presentImagePickerController()
 
-    /*
-    // MARK: - Navigation
+        if selectImageButton.title == "Select Image" {
+            selectImageButton.title = "Save Photo"
+        } else {
+            guard let originalImage = originalImage?.flattened, let ciImage = CIImage(image: originalImage) else { return }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+            let processedImage = self.image(byFiltering: ciImage)
+
+            PHPhotoLibrary.requestAuthorization { status in
+                guard status == .authorized else { return }
+
+                PHPhotoLibrary.shared().performChanges({
+                    PHAssetChangeRequest.creationRequestForAsset(from: processedImage)
+                }) { (success, error) in
+                    if let error = error {
+                        print("Error saving photo: \(error)")
+                        // NSLog("%@", error)
+                        return
+                    }
+
+                    DispatchQueue.main.async {
+                        self.presentSuccessfulSaveAlert()
+                    }
+                }
+            }
+        }
     }
-    */
 
+    private func presentSuccessfulSaveAlert() {
+        let alert = UIAlertController(title: "Photo Saved!", message: "The photo has been saved to your Photo Library!", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    private func addTitleOrCaption() {
+        let alert = UIAlertController(title: "Add a Title or Caption",
+                                      message: "Describe your experience!",
+                                      preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        alert.addTextField { textField in
+            textField.placeholder = "Title:"
+        }
+        
+        alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: { action in
+            if let imageCaption = alert.textFields?.first?.text {
+                self.presentSuccessfulSaveAlert()
+            }
+//            NotificationCenter.default.post(name: .newVideoAddedAddedNotificationName, object: self)
+        }))
+        self.present(alert, animated: true)
+    }
+}
+
+extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let image = info[.editedImage] as? UIImage {
+            originalImage = image
+        } else if let image = info[.originalImage] as? UIImage {
+            originalImage = image
+        }
+        
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
 }
