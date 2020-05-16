@@ -7,13 +7,29 @@
 //
 
 import UIKit
-import MapKit
+import CoreImage
+import CoreImage.CIFilterBuiltins
+import Photos
 
 class ImagesViewController: UIViewController {
   
   var experienceController: ExperienceController?
   let locationManager = CLLocationManager()
-
+  var experienceNoteTitle2 = ""
+  private let context = CIContext()
+  private let colorControlsFilter = CIFilter.colorControls()
+  private let blurFilter = CIFilter.gaussianBlur()
+  
+  //MARK: Outlets
+  @IBOutlet weak var imageView: UIImageView!
+  @IBOutlet weak var titleFromMain: UILabel!
+  @IBOutlet weak var brightnessSlider: UISlider!
+  @IBOutlet weak var contrastSlider: UISlider!
+  @IBOutlet weak var saturationSlider: UISlider!
+  @IBOutlet weak var blurSlider: UISlider!
+  @IBOutlet weak var mysterySlider: UISlider!
+  
+  
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,5 +47,28 @@ class ImagesViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+  //MARK: Actions
+  
+  @IBAction func brightnessSliderTap(_ sender: Any) {
+  }
+  @IBAction func contrastSliderTap(_ sender: Any) {
+  }
+  @IBAction func saturationSliderTap(_ sender: Any) {
+  }
+  @IBAction func blurSliderTap(_ sender: Any) {
+  }
+  @IBAction func mysterySliderTap(_ sender: Any) {
+  }
+  @IBAction func saveBtnPressed(_ sender: Any) {
+  }
+  @IBAction func nextBtnTapped(_ sender: UIBarButtonItem) {
+  }
+  @IBAction func selectImageTapped(_ sender: Any) {
+  }
+  @IBAction func selectCameraTapped(_ sender: Any) {
+  }
+  
+  
+  
 
 }
