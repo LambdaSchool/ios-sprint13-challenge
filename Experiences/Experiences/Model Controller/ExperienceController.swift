@@ -16,7 +16,8 @@ class ExperienceController {
   
   //Dummy init
   init() {
-    createExperience(withTitle: "Running at the park", image: UIImage(imageLiteralResourceName: "plant2"), ofType: .image, location: locationManager.location?.coordinate)
+  createExperience(withTitle: "Running at the park", image: UIImage(imageLiteralResourceName: "plant2"), ofType: .image, location: locationManager.location?.coordinate)
+     
   }
   
   

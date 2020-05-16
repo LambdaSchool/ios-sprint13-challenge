@@ -7,8 +7,14 @@
 //
 
 import UIKit
+import MapKit
+import AVKit
 
 class VideoViewController: UIViewController {
+  
+  var experienceController: ExperienceController?
+  let locationManager = CLLocationManager()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()

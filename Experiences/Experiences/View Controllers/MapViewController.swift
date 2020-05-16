@@ -7,8 +7,13 @@
 //
 
 import UIKit
+import MapKit
 
 class MapViewController: UIViewController {
+  
+  var experienceController: ExperienceController?
+  let locationManager = CLLocationManager()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
