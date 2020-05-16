@@ -12,11 +12,11 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="43X-o0-yA2">
-                                <rect key="frame" x="5" y="108" width="404" height="75"/>
+                                <rect key="frame" x="5" y="20" width="404" height="75"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aev-iN-k05">
                                         <rect key="frame" x="0.0" y="0.0" width="404" height="20.5"/>
@@ -35,7 +35,7 @@
                                 </constraints>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="iy6-OT-Wgn">
-                                <rect key="frame" x="10" y="223" width="394" height="450"/>
+                                <rect key="frame" x="10" y="135" width="394" height="450"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="450" id="vEB-fi-zeE"/>
@@ -68,7 +68,7 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0oP-jM-iIS">
-                                <rect key="frame" x="0.0" y="776" width="414" height="76"/>
+                                <rect key="frame" x="0.0" y="722" width="414" height="76"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="1mZ-xW-mkO">
                                         <rect key="frame" x="10" y="10" width="394" height="56"/>
@@ -132,11 +132,11 @@
             <objects>
                 <viewController id="HnZ-Qr-bf7" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8Wd-1X-95t">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="pP0-Lh-jRx">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -148,6 +148,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="I2M-af-Tqo"/>
                     </view>
+                    <navigationItem key="navigationItem" id="wn0-kl-HNP">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="nV1-ut-Yg9">
+                            <connections>
+                                <segue destination="BYZ-38-t0r" kind="show" identifier="mapToRootControllerSegue" id="JZT-gY-3pE"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t6B-b2-0oE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -176,12 +183,18 @@
             <objects>
                 <viewController id="Vec-sa-4zD" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GFE-Ea-1yo">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="SfZ-HU-iIh"/>
                     </view>
-                    <navigationItem key="navigationItem" id="nRF-Vw-G7r"/>
+                    <navigationItem key="navigationItem" id="nRF-Vw-G7r">
+                        <barButtonItem key="rightBarButtonItem" title="Next" id="TmK-MS-mWl">
+                            <connections>
+                                <segue destination="HnZ-Qr-bf7" kind="show" identifier="audioToMapSegue" id="bJN-H1-hMZ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TkJ-iH-bju" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -192,12 +205,18 @@
             <objects>
                 <viewController id="sIy-tP-ESf" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KjQ-JS-1SW">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="ttj-Jw-mFI"/>
                     </view>
-                    <navigationItem key="navigationItem" id="pzw-Uj-t73"/>
+                    <navigationItem key="navigationItem" id="pzw-Uj-t73">
+                        <barButtonItem key="rightBarButtonItem" title="Next" id="T1b-7u-aOk">
+                            <connections>
+                                <segue destination="HnZ-Qr-bf7" kind="show" identifier="cameraToMapSegue" id="IVq-74-bhd"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fuu-on-9bq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -208,18 +227,28 @@
             <objects>
                 <viewController id="xqR-Lf-4N5" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RWO-2l-aZE">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="VLq-WZ-TDz"/>
                     </view>
-                    <navigationItem key="navigationItem" id="zwS-oQ-8aI"/>
+                    <navigationItem key="navigationItem" id="zwS-oQ-8aI">
+                        <barButtonItem key="rightBarButtonItem" title="Next" id="fR1-RA-jcG">
+                            <connections>
+                                <segue destination="HnZ-Qr-bf7" kind="show" identifier="videoToMapSegue" id="JmI-Bf-cVw"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="go6-rf-pYU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2172" y="917"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="IVq-74-bhd"/>
+        <segue reference="JZT-gY-3pE"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="icons8-microphone" width="48" height="48"/>
         <image name="icons8-slr_camera" width="50" height="50"/>
