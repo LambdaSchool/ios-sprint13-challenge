@@ -40,6 +40,98 @@
             </objects>
             <point key="canvasLocation" x="635" y="110"/>
         </scene>
+        <!--Image Post View Controller-->
+        <scene sceneID="Nwo-Cj-C93">
+            <objects>
+                <viewController id="Mbu-9M-PdW" customClass="ImagePostViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wfj-H5-DAE">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="Zql-Vk-VMx"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="k2G-jc-sCH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1400" y="-84"/>
+        </scene>
+        <!--Video Post View Controller-->
+        <scene sceneID="ECT-cF-jsV">
+            <objects>
+                <viewController id="Y26-n6-jfm" customClass="VideoPostViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ol6-3f-CV5">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="q1B-cS-hCJ"/>
+                    </view>
+                    <connections>
+                        <segue destination="NNN-AE-zHb" kind="presentation" identifier="ShowCamera" modalPresentationStyle="fullScreen" id="mKr-yD-0LT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dn6-a2-Tdp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1399" y="598"/>
+        </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="ciu-Te-OKg">
+            <objects>
+                <viewController id="NNN-AE-zHb" customClass="CameraViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dya-gf-QgI">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hM1-7y-zj2">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="enW-II-zPi">
+                                        <rect key="frame" x="157" y="736" width="100" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="aVD-4U-duc"/>
+                                            <constraint firstAttribute="width" constant="100" id="o3M-1J-z8E"/>
+                                        </constraints>
+                                        <color key="tintColor" systemColor="systemPurpleColor" red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" image="Record"/>
+                                        <state key="selected" image="Stop"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemGray3Color" red="0.78039215689999997" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" systemColor="systemGray3Color" red="0.78039215689999997" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="enW-II-zPi" firstAttribute="centerX" secondItem="hM1-7y-zj2" secondAttribute="centerX" id="O1Y-AY-Ojs"/>
+                                    <constraint firstAttribute="bottom" secondItem="enW-II-zPi" secondAttribute="bottom" constant="60" id="tCD-sM-m3G"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="hM1-7y-zj2" firstAttribute="trailing" secondItem="dya-gf-QgI" secondAttribute="trailing" id="9lP-oq-vh2"/>
+                            <constraint firstAttribute="bottom" secondItem="hM1-7y-zj2" secondAttribute="bottom" id="XnT-5w-snE"/>
+                            <constraint firstItem="hM1-7y-zj2" firstAttribute="leading" secondItem="dya-gf-QgI" secondAttribute="leading" id="b0V-Wq-tf5"/>
+                            <constraint firstItem="hM1-7y-zj2" firstAttribute="top" secondItem="dya-gf-QgI" secondAttribute="top" id="ryK-Z1-SA5"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="oAP-VL-14y"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rKV-b6-JI8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2150" y="599"/>
+        </scene>
+        <!--Audio Post View Controller-->
+        <scene sceneID="hpY-Ke-XlJ">
+            <objects>
+                <viewController id="XZc-eY-t60" customClass="AudioPostViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0Z7-iL-oAK">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="p7T-Af-Oaq"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7kV-6K-wl1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2162" y="-85"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="bcN-UF-6lB">
             <objects>
@@ -60,6 +152,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Record" width="116" height="116"/>
+        <image name="Stop" width="116" height="116"/>
         <image name="plus" catalog="system" width="128" height="113"/>
     </resources>
 </document>

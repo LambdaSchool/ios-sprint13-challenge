@@ -18,7 +18,6 @@ class MapViewController: UIViewController {
     
     @IBAction func addExperience(_ sender: UIBarButtonItem) {
         self.presentMediaOptionsAlertController()
-
     }
     
     /*
