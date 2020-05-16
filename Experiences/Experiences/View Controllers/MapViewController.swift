@@ -8,10 +8,19 @@
 
 import UIKit
 import MapKit
+import AVFoundation
 
 class MapViewController: UIViewController {
     
     let locationManager = CLLocationManager()
+    var userLocation: CLLocationCoordinate2D?
+    private let regionInMeters: Double = 35000.0
+    
+    var experience: Experience? {
+        didSet {
+            updateViews()
+        }
+    }
     
     
     @IBOutlet var mapView: MKMapView!
@@ -21,9 +30,32 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.requestWhenInUseAuthorization()
-
-
-        // Do any additional setup after loading the view.
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        requestCameraPermission()
+    }
+    
+    func currentUserLocation() -> CLLocationCoordinate2D {
+        guard let currentLocation = locationManager.location?.coordinate else { return CLLocationCoordinate2D() }
+        return currentLocation
+    }
+    
+    private func requestCameraPermission() {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .notDetermined:
+            requestCameraPermission()
+            
+        case .restricted:
+            preconditionFailure("Video is disabled, please review device restrictions.")
+        case .denied:
+            preconditionFailure("You are not able to use the app without giving permission via Settins > Privacy > Video.")
+        case .authorized: break
+        @unknown default:
+            preconditionFailure("A new status code that was added that we need to handle.")
+        }
+    }
+    
+    func updateViews() {
+        
     }
     
 
