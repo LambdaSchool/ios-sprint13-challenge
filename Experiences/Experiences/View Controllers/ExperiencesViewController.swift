@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ExperiencesViewController.swift
 //  Experiences
 //
 //  Created by Sal B Amer on 5/15/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ExperiencesViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
