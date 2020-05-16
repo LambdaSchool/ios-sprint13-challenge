@@ -15,10 +15,16 @@ enum MediaType {
     case video
 }
 
-class Experience: NSObject, Decodable {
-    var experienceTitle: String
+class Experience: NSObject {
+    let experienceTitle: String
+    let geotag: CLLocationCoordinate2D
+    let media: [MediaType]
     
-    
+    init(title: String, geotag: CLLocationCoordinate2D, media: [MediaType]) {
+        self.experienceTitle = title
+        self.geotag = geotag
+        self.media = media
+    }
 }
 
 //extension Experience: MKAnnotation {
