@@ -31,7 +31,7 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        requestCameraPermission()
+//        requestCameraPermission()
     }
     
     func currentUserLocation() -> CLLocationCoordinate2D {

@@ -53,17 +53,48 @@ class NewExperienceViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-//    @IBAction func selectImage(_ sender: UIButton) {
-//
-//        let authorizationStatus = PHPhotoLibrary.authorizationStatus()
-//
-//        switch authorizationStatus {
-//        case .authorized:
-//
-//        default:
-//            <#code#>
-//        }
-//    }
+    @IBAction func selectImage(_ sender: UIButton) {
+
+        let authorizationStatus = PHPhotoLibrary.authorizationStatus()
+
+        switch authorizationStatus {
+        case .authorized:
+            presentImagePickerController()
+        
+        case .notDetermined:
+            
+            PHPhotoLibrary.requestAuthorization { status in
+                guard status == .authorized else {
+                    NSLog("User did not authorize access to the photo library.")
+                    self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library you must allow us to access it.")
+                    return
+                }
+                self.presentImagePickerController()
+            }
+            
+        case .denied:
+            self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow us to access it.")
+            
+        case .restricted:
+            self.presentInformationalAlertController(title: "Error", message: "Unable to access the photo library. You're device's restrictions do not allow access")
+        @unknown default:
+            preconditionFailure("The app does not handle this new case provided by apple.")
+        }
+        presentImagePickerController()
+    }
+    
+    @IBAction func recordPressed(_ sender: UIButton) {
+        
+        guard titleTextField.text != "" else {
+            presentInformationalAlertController(title: "Error", message: "Cannot have text field empty")
+            
+            return
+        }
+        
+        performSegue(withIdentifier: "RecordSegue", sender: self)
+    }
+    
+    
     
     private func updateViews() {
         
@@ -93,5 +124,4 @@ class NewExperienceViewController: UIViewController {
             self.present(imagePicker, animated: true, completion: nil)
         }
     }
-
 }

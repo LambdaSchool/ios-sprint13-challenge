@@ -89,6 +89,9 @@ EEFkZCBQb3N0ZXIgSW1hZ2U
                                 <state key="normal" title="Record">
                                     <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="recordPressed:" destination="a4J-cb-oEn" eventType="touchUpInside" id="z2A-ts-mbw"/>
+                                </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UTh-HD-kUO">
                                 <rect key="frame" x="20" y="190" width="374" height="233"/>
@@ -114,22 +117,53 @@ EEFkZCBQb3N0ZXIgSW1hZ2U
                         <viewLayoutGuide key="safeArea" id="Z0Q-dh-k01"/>
                     </view>
                     <navigationItem key="navigationItem" title="New Experience" id="DUl-Nz-pe2">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="0XF-dQ-JK1">
-                            <connections>
-                                <segue destination="mho-Wb-Dp0" kind="show" id="XT1-eQ-KWg"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="0XF-dQ-JK1"/>
                     </navigationItem>
                     <connections>
                         <outlet property="addPosterButton" destination="pnE-X9-4Rc" id="TgE-bG-IkL"/>
                         <outlet property="photoImage" destination="UTh-HD-kUO" id="J7n-kF-tC8"/>
                         <outlet property="recordButton" destination="Gb4-dy-rdc" id="2FY-jY-xXz"/>
                         <outlet property="titleTextField" destination="0FD-qP-a26" id="MYu-Vq-Ppx"/>
+                        <segue destination="HsB-HW-oQb" kind="show" identifier="RecordSegue" id="VKY-Ja-NZQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lec-AY-lXR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="873.91304347826099" y="66.964285714285708"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="k53-Di-QNb">
+            <objects>
+                <viewController id="HsB-HW-oQb" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="x85-oe-VQF">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="99M-JV-cB6">
+                                <rect key="frame" x="108" y="427" width="198" height="43"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                <state key="normal" title="Record Audio"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dd1-ns-fiT">
+                                <rect key="frame" x="150" y="503" width="115" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <state key="normal" title="Record Video"/>
+                                <connections>
+                                    <segue destination="mho-Wb-Dp0" kind="show" id="z8u-PG-lXM"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="JVY-De-WRR"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Q4T-yH-pWg"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mXX-WF-ZyL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1705.7971014492755" y="66.964285714285708"/>
         </scene>
         <!--Video Recording-->
         <scene sceneID="9Ox-tq-NKI">
@@ -141,11 +175,13 @@ EEFkZCBQb3N0ZXIgSW1hZ2U
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="zV0-x0-FF8"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Video Recording" id="tNp-uz-p3n"/>
+                    <navigationItem key="navigationItem" title="Video Recording" id="tNp-uz-p3n">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="BFF-QD-sHm"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dbs-HQ-7sp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1628" y="67"/>
+            <point key="canvasLocation" x="2494" y="67"/>
         </scene>
     </scenes>
     <resources>
