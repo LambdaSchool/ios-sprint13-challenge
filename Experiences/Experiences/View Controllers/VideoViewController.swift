@@ -91,7 +91,7 @@ class VideoViewController: UIViewController {
      if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
        return device
      }
-     preconditionFailure("No cameras on device matched the specs we need")
+     preconditionFailure("No real cameras on device - Check if you are on simulator")
    }
    
    // pick which mic is best
@@ -99,7 +99,7 @@ class VideoViewController: UIViewController {
      if let device = AVCaptureDevice.default(for: .audio) {
        return device
      }
-     preconditionFailure("No cameras on device matched the specs we need")
+     preconditionFailure("No real cameras on device - Check if you are on simulator")
    }
   
   func playRecording() {

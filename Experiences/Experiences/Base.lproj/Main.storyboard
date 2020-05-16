@@ -12,11 +12,11 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ExperiencesViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="43X-o0-yA2">
-                                <rect key="frame" x="5" y="108" width="404" height="75"/>
+                                <rect key="frame" x="5" y="20" width="404" height="75"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aev-iN-k05">
                                         <rect key="frame" x="0.0" y="0.0" width="404" height="20.5"/>
@@ -35,7 +35,7 @@
                                 </constraints>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="iy6-OT-Wgn">
-                                <rect key="frame" x="10" y="223" width="394" height="450"/>
+                                <rect key="frame" x="10" y="135" width="394" height="450"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="450" id="vEB-fi-zeE"/>
@@ -72,7 +72,7 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0oP-jM-iIS">
-                                <rect key="frame" x="0.0" y="776" width="414" height="76"/>
+                                <rect key="frame" x="0.0" y="722" width="414" height="76"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="1mZ-xW-mkO">
                                         <rect key="frame" x="10" y="10" width="394" height="56"/>
@@ -143,11 +143,11 @@
             <objects>
                 <viewController id="HnZ-Qr-bf7" customClass="MapViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8Wd-1X-95t">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="pP0-Lh-jRx">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -162,10 +162,14 @@
                     <navigationItem key="navigationItem" id="wn0-kl-HNP">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="nV1-ut-Yg9">
                             <connections>
+                                <action selector="saveBtnPressed:" destination="HnZ-Qr-bf7" id="Lde-Vn-u6x"/>
                                 <segue destination="BYZ-38-t0r" kind="show" identifier="mapToRootControllerSegue" id="JZT-gY-3pE"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="mapKitView" destination="pP0-Lh-jRx" id="Rgg-IN-PSs"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t6B-b2-0oE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -194,18 +198,18 @@
             <objects>
                 <viewController id="Vec-sa-4zD" customClass="AudioViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GFE-Ea-1yo">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dD5-zu-mYn" customClass="AudioVisualizer" customModule="Experiences" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="239" width="414" height="202"/>
+                                <rect key="frame" x="0.0" y="151" width="414" height="202"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="202" id="OFd-5N-jeq"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gua-EU-01f">
-                                <rect key="frame" x="10" y="541" width="394" height="21"/>
+                                <rect key="frame" x="10" y="453" width="394" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="r9O-my-0KH"/>
                                 </constraints>
@@ -214,7 +218,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="O84-a0-uBN">
-                                <rect key="frame" x="5" y="662" width="404" height="150"/>
+                                <rect key="frame" x="5" y="574" width="404" height="184"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="PJ4-jO-suG">
                                         <rect key="frame" x="5" y="0.0" width="394" height="50"/>
@@ -249,10 +253,10 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="168" translatesAutoresizingMaskIntoConstraints="NO" id="r8a-Ov-5he">
-                                        <rect key="frame" x="97.5" y="70" width="209" height="80"/>
+                                        <rect key="frame" x="97.5" y="70" width="209" height="114"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2DQ-Fs-Mfy">
-                                                <rect key="frame" x="0.0" y="0.0" width="24" height="80"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="24" height="114"/>
                                                 <state key="normal" image="play.rectangle" catalog="system"/>
                                                 <state key="selected" image="pause.fill" catalog="system"/>
                                                 <connections>
@@ -260,7 +264,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SKs-VB-r5n">
-                                                <rect key="frame" x="192" y="0.0" width="17" height="80"/>
+                                                <rect key="frame" x="192" y="0.0" width="17" height="114"/>
                                                 <state key="normal" image="mic.fill" catalog="system"/>
                                                 <state key="selected" image="stop.circle" catalog="system"/>
                                                 <connections>
@@ -318,17 +322,17 @@
             <objects>
                 <viewController id="sIy-tP-ESf" customClass="ImagesViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KjQ-JS-1SW">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icons8-image" translatesAutoresizingMaskIntoConstraints="NO" id="Tkq-2R-U6A">
-                                <rect key="frame" x="0.0" y="148" width="414" height="233"/>
+                                <rect key="frame" x="0.0" y="60" width="414" height="233"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Tkq-2R-U6A" secondAttribute="height" multiplier="16:9" id="YNr-ZT-DKu"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xU6-bE-JPj">
-                                <rect key="frame" x="5" y="441" width="404" height="21"/>
+                                <rect key="frame" x="5" y="353" width="404" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="A7h-0r-u4w"/>
                                 </constraints>
@@ -337,7 +341,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="n5q-i0-cgd">
-                                <rect key="frame" x="5" y="522" width="404" height="182"/>
+                                <rect key="frame" x="5" y="434" width="404" height="182"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="PM3-li-1TB">
                                         <rect key="frame" x="0.0" y="0.0" width="404" height="30"/>
@@ -427,7 +431,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="qTZ-5h-YmQ">
-                                <rect key="frame" x="5" y="747" width="404" height="75"/>
+                                <rect key="frame" x="5" y="693" width="404" height="75"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ia0-Go-dns">
                                         <rect key="frame" x="0.0" y="0.0" width="121.5" height="75"/>
@@ -500,14 +504,14 @@
             <objects>
                 <viewController id="xqR-Lf-4N5" customClass="VideoViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RWO-2l-aZE">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1t1-vV-hWD" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="108" width="414" height="754"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="788"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="klb-Zt-vc2">
-                                        <rect key="frame" x="169.5" y="625" width="75" height="75"/>
+                                        <rect key="frame" x="169.5" y="659" width="75" height="75"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="75" id="YlE-qN-V5t"/>
                                             <constraint firstAttribute="height" constant="75" id="o8Z-mr-73R"/>
@@ -555,7 +559,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="JmI-Bf-cVw"/>
-        <segue reference="oF3-KU-xf7"/>
+        <segue reference="JZT-gY-3pE"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="icons8-image" width="50" height="50"/>
