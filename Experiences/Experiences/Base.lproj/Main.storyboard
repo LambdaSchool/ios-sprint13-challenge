@@ -76,14 +76,23 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lih-Oi-oT6">
                                                 <rect key="frame" x="0.0" y="0.0" width="91.5" height="56"/>
                                                 <state key="normal" image="icons8-microphone"/>
+                                                <connections>
+                                                    <segue destination="Vec-sa-4zD" kind="show" identifier="recordAudioSegue" id="Aqu-xN-JPe"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2nm-im-kaa">
                                                 <rect key="frame" x="151.5" y="0.0" width="91" height="56"/>
                                                 <state key="normal" image="icons8-slr_camera"/>
+                                                <connections>
+                                                    <segue destination="sIy-tP-ESf" kind="show" identifier="takePhotoSegue" id="Cfn-ZZ-z43"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="erY-Qw-naH">
                                                 <rect key="frame" x="302.5" y="0.0" width="91.5" height="56"/>
                                                 <state key="normal" image="icons8-video_call"/>
+                                                <connections>
+                                                    <segue destination="xqR-Lf-4N5" kind="show" identifier="takeVideoSegue" id="if1-Jf-nBb"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -118,6 +127,32 @@
             </objects>
             <point key="canvasLocation" x="1039.1304347826087" y="138.61607142857142"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="Uyp-sD-VIF">
+            <objects>
+                <viewController id="HnZ-Qr-bf7" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8Wd-1X-95t">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="pP0-Lh-jRx">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="I2M-af-Tqo" firstAttribute="bottom" secondItem="pP0-Lh-jRx" secondAttribute="bottom" id="Qlz-4i-gfv"/>
+                            <constraint firstItem="pP0-Lh-jRx" firstAttribute="top" secondItem="I2M-af-Tqo" secondAttribute="top" id="bI1-OZ-DYi"/>
+                            <constraint firstItem="I2M-af-Tqo" firstAttribute="trailing" secondItem="pP0-Lh-jRx" secondAttribute="trailing" id="h9z-ld-0Zf"/>
+                            <constraint firstItem="pP0-Lh-jRx" firstAttribute="leading" secondItem="I2M-af-Tqo" secondAttribute="leading" id="vvd-Cn-rBg"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="I2M-af-Tqo"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="t6B-b2-0oE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1987" y="139"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="tzo-sY-Wl5">
             <objects>
@@ -135,6 +170,54 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2C5-aE-vZ9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="128.98550724637681" y="138.61607142857142"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="anV-MA-Ik9">
+            <objects>
+                <viewController id="Vec-sa-4zD" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GFE-Ea-1yo">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="SfZ-HU-iIh"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="nRF-Vw-G7r"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TkJ-iH-bju" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="129" y="917"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="NJ3-A7-asU">
+            <objects>
+                <viewController id="sIy-tP-ESf" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="KjQ-JS-1SW">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="ttj-Jw-mFI"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="pzw-Uj-t73"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fuu-on-9bq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1133" y="917"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Ftv-nv-kE1">
+            <objects>
+                <viewController id="xqR-Lf-4N5" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="RWO-2l-aZE">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="VLq-WZ-TDz"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="zwS-oQ-8aI"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="go6-rf-pYU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2172" y="917"/>
         </scene>
     </scenes>
     <resources>
