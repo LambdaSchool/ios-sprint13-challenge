@@ -56,7 +56,21 @@ class NewExperienceViewController: UIViewController {
     }
     
     func updateViews() {
+        if let scaledImage = scaledImage {
+            photoImageView.image = filterImage(for: scaledImage)
+        } else {
+            photoImageView.image = nil
+        }
+    }
+    
+    private func filterImage(for inputImage: CIImage) -> UIImage {
+        exposureAdjustFilter.inputImage = inputImage
+        exposureAdjustFilter.ev = Float(1.0)
         
+        guard let outputImage = exposureAdjustFilter.outputImage else { return UIImage(ciImage: inputImage)}
+        guard let renderedImage = context.createCGImage(outputImage, from: CGRect(origin: CGPoint.zero, size: UIImage(ciImage: inputImage).size)) else { return UIImage(ciImage: inputImage)}
+        
+        return UIImage(cgImage: renderedImage)
     }
     
     @IBAction func selectImage(_ sender: Any) {
@@ -121,4 +135,21 @@ class NewExperienceViewController: UIViewController {
      }
      */
     
+}
+
+
+extension NewExperienceViewController: UIImagePickerControllerDelegate, UINavigationBarDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        addPosterButton.setTitle("", for: [])
+        picker.dismiss(animated: true, completion: nil)
+        
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
+        selectedImage = image
+        recordButton.isEnabled = true
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
 }
