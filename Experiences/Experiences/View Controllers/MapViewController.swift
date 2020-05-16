@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import AVFoundation
+import CoreLocation
 
 class MapViewController: UIViewController {
     
@@ -21,7 +22,6 @@ class MapViewController: UIViewController {
             updateViews()
         }
     }
-    
     
     @IBOutlet var mapView: MKMapView!
     
@@ -54,8 +54,17 @@ class MapViewController: UIViewController {
         }
     }
     
+    private func requestVideoPermissions() {
+        AVCaptureDevice.requestAccess(for: .video) { isGranted in
+            guard isGranted else {
+                preconditionFailure("Maybe create an alert later to tell user to enable permissions for video or camera :)")
+            }
+        }
+    }
+    
     func updateViews() {
-        
+        guard let myExperience = experience else { return }
+        mapView.addAnnotation(myExperience)
     }
     
 
@@ -69,4 +78,28 @@ class MapViewController: UIViewController {
     }
     */
 
+}
+
+extension MapViewController: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else { return }
+        
+        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        
+        let region = MKCoordinateRegion.init(center: center, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
+        
+        mapView.setRegion(region, animated: true)
+    }
+}
+
+extension Experience: MKAnnotation {
+   
+    var coordinate: CLLocationCoordinate2D {
+        geotag
+    }
+    
+    var title: String? {
+        experienceTitle
+    }
 }
