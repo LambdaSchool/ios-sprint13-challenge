@@ -16,7 +16,11 @@ class MapViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func addExperience(_ sender: UIBarButtonItem) {
+        self.presentMediaOptionsAlertController()
 
+    }
+    
     /*
     // MARK: - Navigation
 
