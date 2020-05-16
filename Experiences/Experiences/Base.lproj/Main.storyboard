@@ -196,20 +196,122 @@
                     <view key="view" contentMode="scaleToFill" id="GFE-Ea-1yo">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dD5-zu-mYn" customClass="AudioVisualizer" customModule="Experiences" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="239" width="414" height="202"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="202" id="OFd-5N-jeq"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gua-EU-01f">
+                                <rect key="frame" x="10" y="541" width="394" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="r9O-my-0KH"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="O84-a0-uBN">
+                                <rect key="frame" x="5" y="662" width="404" height="150"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="PJ4-jO-suG">
+                                        <rect key="frame" x="5" y="0.0" width="394" height="50"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B4R-9C-c5h" userLabel="00:00 -TElapsed">
+                                                <rect key="frame" x="0.0" y="0.0" width="55" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="55" id="phQ-My-5jd"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="yM8-dU-JRW">
+                                                <rect key="frame" x="61" y="0.0" width="272" height="51"/>
+                                                <connections>
+                                                    <action selector="playBackSliderWasChanged:" destination="Vec-sa-4zD" eventType="valueChanged" id="6c6-ig-2zn"/>
+                                                </connections>
+                                            </slider>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Nr-F2-Ogy" userLabel="00:00 - TRemaining">
+                                                <rect key="frame" x="339" y="0.0" width="55" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="55" id="SID-yr-nAv"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="XHJ-M8-f5A"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="168" translatesAutoresizingMaskIntoConstraints="NO" id="r8a-Ov-5he">
+                                        <rect key="frame" x="97.5" y="70" width="209" height="80"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2DQ-Fs-Mfy">
+                                                <rect key="frame" x="0.0" y="0.0" width="24" height="80"/>
+                                                <state key="normal" image="play.rectangle" catalog="system"/>
+                                                <state key="selected" image="pause.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="playBtnWasPressed:" destination="Vec-sa-4zD" eventType="touchUpInside" id="ZOp-p8-LiP"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SKs-VB-r5n">
+                                                <rect key="frame" x="192" y="0.0" width="17" height="80"/>
+                                                <state key="normal" image="mic.fill" catalog="system"/>
+                                                <state key="selected" image="stop.circle" catalog="system"/>
+                                                <connections>
+                                                    <action selector="recordBtnWasPressed:" destination="Vec-sa-4zD" eventType="touchUpInside" id="SpP-1E-xQk"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="PJ4-jO-suG" firstAttribute="leading" secondItem="O84-a0-uBN" secondAttribute="leading" constant="5" id="JWa-Mn-H0V"/>
+                                    <constraint firstAttribute="trailing" secondItem="PJ4-jO-suG" secondAttribute="trailing" constant="5" id="lJi-6W-ABq"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="O84-a0-uBN" secondAttribute="trailing" constant="5" id="01p-Nw-YVd"/>
+                            <constraint firstItem="gua-EU-01f" firstAttribute="leading" secondItem="SfZ-HU-iIh" secondAttribute="leading" constant="10" id="8tG-It-eEV"/>
+                            <constraint firstItem="dD5-zu-mYn" firstAttribute="trailing" secondItem="SfZ-HU-iIh" secondAttribute="trailing" id="EYe-iF-hO1"/>
+                            <constraint firstItem="SfZ-HU-iIh" firstAttribute="trailing" secondItem="gua-EU-01f" secondAttribute="trailing" constant="10" id="IWd-24-lhi"/>
+                            <constraint firstItem="SfZ-HU-iIh" firstAttribute="bottom" secondItem="O84-a0-uBN" secondAttribute="bottom" constant="50" id="Nja-uA-bM1"/>
+                            <constraint firstItem="dD5-zu-mYn" firstAttribute="top" secondItem="SfZ-HU-iIh" secondAttribute="top" constant="151" id="WmL-g7-2bh"/>
+                            <constraint firstItem="O84-a0-uBN" firstAttribute="top" secondItem="gua-EU-01f" secondAttribute="bottom" constant="100" id="hhp-rm-An7"/>
+                            <constraint firstItem="gua-EU-01f" firstAttribute="top" secondItem="dD5-zu-mYn" secondAttribute="bottom" constant="100" id="n0a-po-dot"/>
+                            <constraint firstItem="dD5-zu-mYn" firstAttribute="leading" secondItem="SfZ-HU-iIh" secondAttribute="leading" id="pIN-sF-Xd1"/>
+                            <constraint firstItem="O84-a0-uBN" firstAttribute="leading" secondItem="GFE-Ea-1yo" secondAttribute="leading" constant="5" id="pzd-pI-ZNB"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="SfZ-HU-iIh"/>
                     </view>
                     <navigationItem key="navigationItem" id="nRF-Vw-G7r">
                         <barButtonItem key="rightBarButtonItem" title="Next" id="TmK-MS-mWl">
                             <connections>
+                                <action selector="nextBtnWasPressed:" destination="Vec-sa-4zD" id="wgH-0f-oW5"/>
                                 <segue destination="HnZ-Qr-bf7" kind="show" identifier="audioToMapSegue" id="bJN-H1-hMZ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="audiVisualizer" destination="dD5-zu-mYn" id="E8q-aC-rpf"/>
+                        <outlet property="audioSlider" destination="yM8-dU-JRW" id="dhT-vr-fqB"/>
+                        <outlet property="noteTitleLabel" destination="gua-EU-01f" id="frr-V2-bqR"/>
+                        <outlet property="playPauseButton" destination="2DQ-Fs-Mfy" id="lre-KY-Tbx"/>
+                        <outlet property="recordButton" destination="SKs-VB-r5n" id="Jh7-Qk-ei0"/>
+                        <outlet property="timeElapsedLbl" destination="B4R-9C-c5h" id="CNT-8D-hvv"/>
+                        <outlet property="timeRemainingLbl" destination="8Nr-F2-Ogy" id="wug-67-ZMD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TkJ-iH-bju" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="129" y="917"/>
+            <point key="canvasLocation" x="128.98550724637681" y="916.74107142857133"/>
         </scene>
         <!--Images View Controller-->
         <scene sceneID="NJ3-A7-asU">
@@ -257,12 +359,16 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="JmI-Bf-cVw"/>
+        <segue reference="bJN-H1-hMZ"/>
         <segue reference="oF3-KU-xf7"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="icons8-microphone" width="48" height="48"/>
         <image name="icons8-slr_camera" width="50" height="50"/>
         <image name="icons8-video_call" width="50" height="50"/>
+        <image name="mic.fill" catalog="system" width="108" height="128"/>
+        <image name="pause.fill" catalog="system" width="116" height="128"/>
+        <image name="play.rectangle" catalog="system" width="128" height="93"/>
+        <image name="stop.circle" catalog="system" width="128" height="121"/>
     </resources>
 </document>
