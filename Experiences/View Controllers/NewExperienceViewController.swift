@@ -51,6 +51,7 @@ class NewExperienceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //If false, it'll show greyed out on the screen.
         recordButton.isEnabled = false
     }
     
@@ -84,6 +85,15 @@ class NewExperienceViewController: UIViewController {
         }
         
         presentImagePickerController()
+    }
+    
+    @IBAction func recordTapped(_ sender: Any) {
+        guard titleTextField.text != "" else {
+            presentInformationalAlertController(title: "Error", message: "Cannot have text field empty")
+            return
+        }
+        
+        performSegue(withIdentifier: "GoToRecordersSegue", sender: self)
     }
     
     private func presentImagePickerController() {
