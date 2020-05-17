@@ -104,7 +104,43 @@ class VideoRecordingViewController: UIViewController {
     }
     
     func setupCamera() {
+        guard let camera = bestCamera() else { return }
+        let microphone = bestMic()
         
+        captureSession.beginConfiguration()
+        guard let cameraInput = try? AVCaptureDeviceInput(device: camera) else {
+            let alert = UIAlertController(title: "No usable camera", message: "Your camera may not be compatible with this app", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                return
+            }))
+            present(alert, animated: true)
+            return
+        }
+        
+        guard captureSession.canAddInput(cameraInput) else {
+            preconditionFailure("This session cant handle this input: \(cameraInput)")
+        }
+        
+        captureSession.addInput(cameraInput)
+        
+        guard let microphoneInput = try? AVCaptureDeviceInput(device: microphone) else {
+            preconditionFailure("Cant create an input from microphone")
+        }
+        
+        captureSession.addInput(microphoneInput)
+        
+        if captureSession.canSetSessionPreset(.hd1920x1080) {
+            captureSession.sessionPreset = .hd1920x1080
+        }
+        
+        guard captureSession.canAddOutput(fileOutput) else {
+            preconditionFailure("Cannot write to disk")
+        }
+        captureSession.addOutput(fileOutput)
+        
+        captureSession.commitConfiguration()
+        cameraView.session = captureSession
     }
     
     private func toggleRecording() {
@@ -116,24 +152,34 @@ class VideoRecordingViewController: UIViewController {
     }
     
     private func newRecordingURL() -> URL {
-        
+        return newRecordingURL()
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func bestCamera() -> AVCaptureDevice? {
+        
+        if let device = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) {
+            return device
+        } else {
+            let alert = UIAlertController(title: "No camera", message: "There is not a suitable camera to use", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .destructive))
+            
+            present(alert, animated: true)
+            recordingButton.isEnabled = false
+            return nil
+        }
     }
-    */
-
+    
+    private func bestMic() -> AVCaptureDevice {
+        if let device = AVCaptureDevice.default(for: .audio) {
+            return device
+        }
+        
+        preconditionFailure("No mic available to work")
+    }
 }
 
 extension VideoRecordingViewController: AVCaptureFileOutputRecordingDelegate {
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
-        <#code#>
     }
     
     
