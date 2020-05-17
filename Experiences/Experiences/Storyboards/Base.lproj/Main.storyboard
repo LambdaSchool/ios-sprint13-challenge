@@ -48,6 +48,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fWx-D0-Lht">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <items>
+                                    <navigationItem title="Add Image" id="Lyg-IL-k3H">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="UW6-Vw-DL9"/>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="BfE-y6-QBC"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XIB-7E-uOV">
                                 <rect key="frame" x="0.0" y="241" width="414" height="414"/>
                                 <constraints>
@@ -64,12 +73,15 @@
                         <constraints>
                             <constraint firstItem="ABh-hH-JfX" firstAttribute="leading" secondItem="Zql-Vk-VMx" secondAttribute="leading" constant="12" id="9kq-3p-6Fi"/>
                             <constraint firstItem="Zql-Vk-VMx" firstAttribute="trailing" secondItem="ABh-hH-JfX" secondAttribute="trailing" constant="12" id="Dl7-vB-9N7"/>
+                            <constraint firstItem="fWx-D0-Lht" firstAttribute="leading" secondItem="Zql-Vk-VMx" secondAttribute="leading" id="Eid-hS-RLi"/>
                             <constraint firstItem="XIB-7E-uOV" firstAttribute="centerX" secondItem="wfj-H5-DAE" secondAttribute="centerX" id="FkY-nE-Dkh"/>
+                            <constraint firstItem="fWx-D0-Lht" firstAttribute="top" secondItem="Zql-Vk-VMx" secondAttribute="top" id="JKQ-8y-OtW"/>
                             <constraint firstItem="Zql-Vk-VMx" firstAttribute="trailing" secondItem="XIB-7E-uOV" secondAttribute="trailing" id="YR5-EF-yRo"/>
                             <constraint firstItem="ABh-hH-JfX" firstAttribute="top" secondItem="XIB-7E-uOV" secondAttribute="bottom" constant="8" id="ZW3-Sd-cPW"/>
                             <constraint firstItem="XIB-7E-uOV" firstAttribute="centerY" secondItem="wfj-H5-DAE" secondAttribute="centerY" id="ZuQ-RX-FiQ"/>
                             <constraint firstItem="XIB-7E-uOV" firstAttribute="leading" secondItem="Zql-Vk-VMx" secondAttribute="leading" id="yYU-Zi-Kwf"/>
                             <constraint firstItem="ABh-hH-JfX" firstAttribute="centerX" secondItem="wfj-H5-DAE" secondAttribute="centerX" id="z5N-2K-hhU"/>
+                            <constraint firstItem="fWx-D0-Lht" firstAttribute="trailing" secondItem="Zql-Vk-VMx" secondAttribute="trailing" id="zu0-c7-zHN"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Zql-Vk-VMx"/>
                     </view>
@@ -151,8 +163,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SDQ-GU-aeo">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <items>
+                                    <navigationItem title="Add Audio" id="ePG-od-ytL">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="AQ1-EZ-WgQ">
+                                            <connections>
+                                                <action selector="cancel:" destination="XZc-eY-t60" id="kTj-Se-iyg"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="7Gs-a2-9f5">
+                                            <connections>
+                                                <action selector="saveAudio:" destination="XZc-eY-t60" id="pOg-LP-nYb"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="up3-Ti-LjZ" customClass="AudioVisualizer" customModule="Experiences" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44" width="414" height="742"/>
+                                <rect key="frame" x="0.0" y="89" width="414" height="697"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Xyc-zk-4Oz">
@@ -207,13 +236,16 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="up3-Ti-LjZ" firstAttribute="top" secondItem="p7T-Af-Oaq" secondAttribute="top" id="2T2-0J-nuh"/>
                             <constraint firstItem="p7T-Af-Oaq" firstAttribute="bottom" secondItem="Xyc-zk-4Oz" secondAttribute="bottom" constant="8" id="6be-bF-LGo"/>
                             <constraint firstItem="Xyc-zk-4Oz" firstAttribute="top" secondItem="up3-Ti-LjZ" secondAttribute="bottom" constant="8" id="86m-GM-jk8"/>
                             <constraint firstItem="p7T-Af-Oaq" firstAttribute="trailing" secondItem="up3-Ti-LjZ" secondAttribute="trailing" id="8gw-gh-b14"/>
+                            <constraint firstItem="SDQ-GU-aeo" firstAttribute="leading" secondItem="p7T-Af-Oaq" secondAttribute="leading" id="CrK-hd-Xa4"/>
                             <constraint firstItem="Xyc-zk-4Oz" firstAttribute="leading" secondItem="p7T-Af-Oaq" secondAttribute="leading" constant="16" id="MdJ-dV-P0f"/>
+                            <constraint firstItem="SDQ-GU-aeo" firstAttribute="top" secondItem="p7T-Af-Oaq" secondAttribute="top" id="V2r-Hl-xrA"/>
+                            <constraint firstItem="up3-Ti-LjZ" firstAttribute="top" secondItem="SDQ-GU-aeo" secondAttribute="bottom" constant="1" id="VO0-az-KOS"/>
                             <constraint firstItem="up3-Ti-LjZ" firstAttribute="leading" secondItem="p7T-Af-Oaq" secondAttribute="leading" id="VWi-nj-0FG"/>
                             <constraint firstItem="p7T-Af-Oaq" firstAttribute="trailing" secondItem="Xyc-zk-4Oz" secondAttribute="trailing" constant="16" id="ndO-lv-0Tl"/>
+                            <constraint firstItem="SDQ-GU-aeo" firstAttribute="trailing" secondItem="p7T-Af-Oaq" secondAttribute="trailing" id="scf-83-GRr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="p7T-Af-Oaq"/>
                     </view>

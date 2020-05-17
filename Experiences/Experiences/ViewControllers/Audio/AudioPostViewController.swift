@@ -8,8 +8,11 @@
 
 import UIKit
 import AVFoundation
+import MapKit
 
 class AudioPostViewController: UIViewController {
+    
+    var experienceController: ExperienceController?
     
     var audioPlayer: AVAudioPlayer? {
             didSet {
@@ -258,7 +261,34 @@ class AudioPostViewController: UIViewController {
                 requestPermissionOrStartRecording()
             }
         }
+    
+    @IBAction func saveAudio(_ sender: UIBarButtonItem) {
+
+        let alert = UIAlertController(title: "Add a Title or Caption",
+                                      message: "Describe your experience!",
+                                      preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        alert.addTextField { textField in
+            textField.placeholder = "Title:"
+        }
+        
+        alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: { action in
+            if let experienceTitle = alert.textFields?.first?.text {
+                self.experienceController?.createExperience(with: experienceTitle,
+                                                            at: CLLocationCoordinate2D(latitude: 28.317311, longitude: -80.679931),
+                                                            from: .audio)
+            }
+            //            NotificationCenter.default.post(name: .newVideoAddedAddedNotificationName, object: self)
+        }))
+        self.present(alert, animated: true)
     }
+    
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+}
 
 
     extension AudioPostViewController: AVAudioPlayerDelegate {
