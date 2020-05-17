@@ -12,7 +12,7 @@ import CoreImage
 import CoreImage.CIFilterBuiltins
 import MapKit
 
-class NewExperienceViewController: UIViewController {
+class NewExperienceViewController: UIViewController, UINavigationControllerDelegate {
     
     var mapVC: MapViewController?
     var userLocation: CLLocationCoordinate2D?
@@ -48,9 +48,8 @@ class NewExperienceViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         recordButton.isEnabled = false
-        // Do any additional setup after loading the view.
+        
     }
     
     @IBAction func selectImage(_ sender: UIButton) {
@@ -97,19 +96,24 @@ class NewExperienceViewController: UIViewController {
     
     
     private func updateViews() {
-        
+        if let scaledImage = scaledImage {
+            photoImage.image = filterImage(for: scaledImage)
+        } else {
+            photoImage.image = nil
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func filterImage(for inputImage: CIImage) -> UIImage {
+        
+        exposureAdjustFilter.inputImage = inputImage
+        exposureAdjustFilter.ev = Float(1.0)
+        
+        guard let outputImage = exposureAdjustFilter.outputImage else { return UIImage(ciImage: inputImage)}
+        
+        guard let renderedImage = context.createCGImage(outputImage, from: CGRect(origin: CGPoint.zero, size: UIImage(ciImage: inputImage).size)) else { return UIImage(ciImage: inputImage)}
+        
+        return UIImage(cgImage: renderedImage)
     }
-    */
     
     private func presentImagePickerController() {
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
@@ -119,9 +123,43 @@ class NewExperienceViewController: UIViewController {
         
         DispatchQueue.main.async {
             let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
             imagePicker.sourceType = .photoLibrary
             
             self.present(imagePicker, animated: true, completion: nil)
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "RecordSegue" {
+            guard let audioRecordingVC = segue.destination as? AudioRecordingViewController else { return }
+            
+            guard let image = photoImage.image else { return }
+            
+            let picture = Experience.Picture(imagePost: image)
+            
+            audioRecordingVC.experienceTitle = titleTextField.text
+            audioRecordingVC.picture = picture
+            audioRecordingVC.userLocation = userLocation
+            audioRecordingVC.mapViewController = mapVC
+        }
+    }
+}
+
+extension NewExperienceViewController: UIImagePickerControllerDelegate, UINavigationBarDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        addPosterButton.setTitle("", for: [])
+        picker.dismiss(animated: true, completion: nil)
+        
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
+        selectedImage = image
+        recordButton.isEnabled = true
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
 }
