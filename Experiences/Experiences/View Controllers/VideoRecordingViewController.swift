@@ -22,8 +22,11 @@ class VideoRecordingViewController: UIViewController {
     var player: AVPlayer!
     var mapViewController: MapViewController?
     
+    
     @IBOutlet var recordingButton: UIButton!
+    
     @IBOutlet var cameraView: CameraPreviewView!
+    
     
 
     override func viewDidLoad() {
@@ -140,7 +143,7 @@ class VideoRecordingViewController: UIViewController {
         captureSession.addOutput(fileOutput)
         
         captureSession.commitConfiguration()
-        cameraView.session = captureSession
+        
     }
     
     private func toggleRecording() {
@@ -171,6 +174,10 @@ class VideoRecordingViewController: UIViewController {
         
         if let device = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) {
             return device
+        }
+            
+        if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
+            return device
         } else {
             let alert = UIAlertController(title: "No camera", message: "There is not a suitable camera to use", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .destructive))
@@ -191,6 +198,12 @@ class VideoRecordingViewController: UIViewController {
 }
 
 extension VideoRecordingViewController: AVCaptureFileOutputRecordingDelegate {
+    
+    func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
+        updateViews()
+    }
+    
+    
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         if let error = error {
             print("Error saving video: \(error)")
@@ -198,9 +211,5 @@ extension VideoRecordingViewController: AVCaptureFileOutputRecordingDelegate {
         
         updateViews()
         playMovie(url: outputFileURL)
-    }
-    
-    func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
-        updateViews()
     }
 }
