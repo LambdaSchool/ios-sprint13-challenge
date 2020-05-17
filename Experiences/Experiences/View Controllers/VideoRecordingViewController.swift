@@ -152,7 +152,19 @@ class VideoRecordingViewController: UIViewController {
     }
     
     private func newRecordingURL() -> URL {
-        return newRecordingURL()
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime]
+        
+        let name = formatter.string(from: Date())
+        let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
+        videoURL = fileURL
+        return fileURL
+    }
+    
+    private func updateViews() {
+        recordingButton.isSelected = fileOutput.isRecording
     }
     
     private func bestCamera() -> AVCaptureDevice? {
@@ -180,7 +192,15 @@ class VideoRecordingViewController: UIViewController {
 
 extension VideoRecordingViewController: AVCaptureFileOutputRecordingDelegate {
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+        if let error = error {
+            print("Error saving video: \(error)")
+        }
+        
+        updateViews()
+        playMovie(url: outputFileURL)
     }
     
-    
+    func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
+        updateViews()
+    }
 }
