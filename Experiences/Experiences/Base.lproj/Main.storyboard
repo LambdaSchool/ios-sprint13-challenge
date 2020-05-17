@@ -81,9 +81,10 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f3e-MW-duy">
-                                <rect key="frame" x="120" y="600" width="175" height="36"/>
+                                <rect key="frame" x="81" y="597" width="253" height="42"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="Z7i-hU-LXL"/>
+                                    <constraint firstAttribute="width" constant="253" id="m7l-4X-f58"/>
+                                    <constraint firstAttribute="height" constant="42" id="mpn-Rz-JJu"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                 <state key="normal" title="Go to Recorders"/>
@@ -97,13 +98,13 @@
                             <constraint firstItem="734-tJ-U4W" firstAttribute="centerX" secondItem="7yv-wK-98a" secondAttribute="centerX" id="2T1-Kx-2KO"/>
                             <constraint firstItem="734-tJ-U4W" firstAttribute="top" secondItem="7yv-wK-98a" secondAttribute="bottom" constant="8" id="6Yh-9C-L7n"/>
                             <constraint firstItem="iIW-5X-Nak" firstAttribute="leading" secondItem="xxS-8X-MI8" secondAttribute="leading" constant="115" id="BvO-IW-nVU"/>
+                            <constraint firstItem="xxS-8X-MI8" firstAttribute="trailing" secondItem="f3e-MW-duy" secondAttribute="trailing" constant="80" id="Fa3-lG-sEt"/>
                             <constraint firstItem="734-tJ-U4W" firstAttribute="leading" secondItem="7yv-wK-98a" secondAttribute="leading" id="H1X-dO-Puh"/>
-                            <constraint firstItem="f3e-MW-duy" firstAttribute="leading" secondItem="xxS-8X-MI8" secondAttribute="leading" constant="120" id="H7d-Eg-net"/>
                             <constraint firstItem="7yv-wK-98a" firstAttribute="top" secondItem="xxS-8X-MI8" secondAttribute="top" id="JCZ-rm-k6q"/>
-                            <constraint firstItem="f3e-MW-duy" firstAttribute="top" secondItem="iIW-5X-Nak" secondAttribute="bottom" constant="62" id="KcF-pR-OHc"/>
+                            <constraint firstItem="f3e-MW-duy" firstAttribute="top" secondItem="iIW-5X-Nak" secondAttribute="bottom" constant="59" id="QYc-0x-L6D"/>
                             <constraint firstItem="734-tJ-U4W" firstAttribute="trailing" secondItem="7yv-wK-98a" secondAttribute="trailing" id="RxU-Wp-xDO"/>
+                            <constraint firstItem="f3e-MW-duy" firstAttribute="leading" secondItem="xxS-8X-MI8" secondAttribute="leading" constant="81" id="TmS-0i-IPB"/>
                             <constraint firstItem="xxS-8X-MI8" firstAttribute="trailing" secondItem="7yv-wK-98a" secondAttribute="trailing" constant="20" id="U4I-4Z-fsZ"/>
-                            <constraint firstItem="xxS-8X-MI8" firstAttribute="trailing" secondItem="f3e-MW-duy" secondAttribute="trailing" constant="119" id="bAf-1L-sdf"/>
                             <constraint firstItem="xxS-8X-MI8" firstAttribute="trailing" secondItem="iIW-5X-Nak" secondAttribute="trailing" constant="115" id="bqH-6A-Xeu"/>
                             <constraint firstItem="iIW-5X-Nak" firstAttribute="top" secondItem="734-tJ-U4W" secondAttribute="bottom" constant="8" id="efW-45-3b7"/>
                             <constraint firstItem="7yv-wK-98a" firstAttribute="leading" secondItem="xxS-8X-MI8" secondAttribute="leading" constant="20" id="laE-4V-CZO"/>
@@ -144,6 +145,9 @@
                                 <state key="normal" title="Record Audio">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="startStopRecording:" destination="Agh-vq-Ngf" eventType="touchUpInside" id="uFb-ft-MdK"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fl3-AQ-roX">
                                 <rect key="frame" x="99" y="468" width="217" height="48"/>
@@ -156,7 +160,7 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="1F0-cp-6tk" kind="show" id="rvQ-In-lXy"/>
+                                    <action selector="startRecordVideo:" destination="Agh-vq-Ngf" eventType="touchUpInside" id="Qps-2m-jDs"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -175,6 +179,7 @@
                     <connections>
                         <outlet property="recordAudioOutlet" destination="jQj-Wh-iuI" id="6C1-CK-Cbj"/>
                         <outlet property="recordVideoOutlet" destination="fl3-AQ-roX" id="uIj-F7-aXh"/>
+                        <segue destination="1F0-cp-6tk" kind="show" identifier="RecordVideoSegue" id="QJe-en-c9R"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4KB-Of-mo1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -184,7 +189,7 @@
         <!--Video Recording-->
         <scene sceneID="sgZ-vA-dBs">
             <objects>
-                <viewController id="1F0-cp-6tk" sceneMemberID="viewController">
+                <viewController id="1F0-cp-6tk" customClass="VideoRecordingViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ohZ-4Q-SGQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
