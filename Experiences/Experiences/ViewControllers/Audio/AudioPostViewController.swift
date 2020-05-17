@@ -13,7 +13,8 @@ import MapKit
 class AudioPostViewController: UIViewController {
     
     var experienceController: ExperienceController?
-    
+    var delegate: AddExperienceDelegate?
+
     var audioPlayer: AVAudioPlayer? {
             didSet {
                 guard let audioPlayer = audioPlayer else { return }
@@ -276,11 +277,15 @@ class AudioPostViewController: UIViewController {
         
         alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: { action in
             if let experienceTitle = alert.textFields?.first?.text {
-                self.experienceController?.createExperience(with: experienceTitle,
-                                                            at: CLLocationCoordinate2D(latitude: 28.317311, longitude: -80.679931),
-                                                            from: .audio)
+                let experience = Experience(title: experienceTitle,
+                                            geotag: CLLocationCoordinate2D(latitude: 27.616881, longitude: -80.447872),
+                                            media: .image)
+                
+                self.delegate?.experienceWasCreated(experience)
+//                self.experienceController?.createExperience(with: experienceTitle,
+//                                                            at: CLLocationCoordinate2D(latitude: 28.317311, longitude: -80.679931),
+//                                                            ofType: .audio)
             }
-            //            NotificationCenter.default.post(name: .newVideoAddedAddedNotificationName, object: self)
         }))
         self.present(alert, animated: true)
     }

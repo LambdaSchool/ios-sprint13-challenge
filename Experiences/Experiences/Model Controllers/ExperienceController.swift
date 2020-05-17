@@ -9,11 +9,17 @@
 import Foundation
 import CoreLocation
 
+
+extension NSNotification.Name {
+    static let newExperienceAddedNotificationName =
+        NSNotification.Name(rawValue: "newExperienceAddedNotificationName")
+}
+
 class ExperienceController {
     
     private(set) var listOfExperiences: [Experience] = []
 
-    func createExperience(with title: String, at geotag: CLLocationCoordinate2D, from mediaType: MediaType) {
+    func createExperience(with title: String, at geotag: CLLocationCoordinate2D, ofType mediaType: MediaType) {
         let experience = Experience(title: title, geotag: geotag, media: mediaType)
         listOfExperiences.append(experience)
     }

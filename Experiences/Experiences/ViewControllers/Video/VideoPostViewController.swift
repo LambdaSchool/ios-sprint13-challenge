@@ -11,6 +11,9 @@ import AVFoundation
 
 class VideoPostViewController: UIViewController {
     
+    var experienceController: ExperienceController?
+    var delegate: AddExperienceDelegate?
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }

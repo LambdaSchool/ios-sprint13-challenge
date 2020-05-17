@@ -14,10 +14,12 @@ import Photos
 
 class ImagePostViewController: UIViewController {
 
+    var experienceController: ExperienceController?
+    var delegate: AddExperienceDelegate?
+
     // MARK: - Outlets
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var selectImageButton: UIBarButtonItem!
-    
+    @IBOutlet weak var captionTextField: UITextField!
     
     // MARK: - Properties
     private let context = CIContext()
@@ -50,6 +52,7 @@ class ImagePostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         presentImagePickerController()
+        
         originalImage = imageView.image
     }
 
@@ -87,35 +90,35 @@ class ImagePostViewController: UIViewController {
     
     // MARK: Actions
     
-    @IBAction func selectPhotoButtonPressed(_ sender: UIBarButtonItem) {
-        presentImagePickerController()
-
-        if selectImageButton.title == "Select Image" {
-            selectImageButton.title = "Save Photo"
-        } else {
-            guard let originalImage = originalImage?.flattened, let ciImage = CIImage(image: originalImage) else { return }
-
-            let processedImage = self.image(byFiltering: ciImage)
-
-            PHPhotoLibrary.requestAuthorization { status in
-                guard status == .authorized else { return }
-
-                PHPhotoLibrary.shared().performChanges({
-                    PHAssetChangeRequest.creationRequestForAsset(from: processedImage)
-                }) { (success, error) in
-                    if let error = error {
-                        print("Error saving photo: \(error)")
-                        // NSLog("%@", error)
-                        return
-                    }
-
-                    DispatchQueue.main.async {
-                        self.presentSuccessfulSaveAlert()
-                    }
-                }
-            }
-        }
-    }
+//    @IBAction func selectPhotoButtonPressed(_ sender: UIBarButtonItem) {
+//        presentImagePickerController()
+//
+//      if selectImageButton.title == "Select Image" {
+//            selectImageButton.title = "Save Photo"
+//        } else {
+//            guard let originalImage = originalImage?.flattened, let ciImage = CIImage(image: originalImage) else { return }
+//
+//            let processedImage = self.image(byFiltering: ciImage)
+//
+//            PHPhotoLibrary.requestAuthorization { status in
+//                guard status == .authorized else { return }
+//
+//                PHPhotoLibrary.shared().performChanges({
+//                    PHAssetChangeRequest.creationRequestForAsset(from: processedImage)
+//                }) { (success, error) in
+//                    if let error = error {
+//                        print("Error saving photo: \(error)")
+//                        // NSLog("%@", error)
+//                        return
+//                    }
+//
+//                    DispatchQueue.main.async {
+//                        self.presentSuccessfulSaveAlert()
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     private func presentSuccessfulSaveAlert() {
         let alert = UIAlertController(title: "Photo Saved!", message: "The photo has been saved to your Photo Library!", preferredStyle: .alert)
@@ -125,24 +128,19 @@ class ImagePostViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    private func addTitleOrCaption() {
-        let alert = UIAlertController(title: "Add a Title or Caption",
-                                      message: "Describe your experience!",
-                                      preferredStyle: .alert)
+    @IBAction func saveImage(_ sender: UIBarButtonItem) {
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        alert.addTextField { textField in
-            textField.placeholder = "Title:"
-        }
-        
-        alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: { action in
-            if let imageCaption = alert.textFields?.first?.text {
-                self.presentSuccessfulSaveAlert()
-            }
-//            NotificationCenter.default.post(name: .newVideoAddedAddedNotificationName, object: self)
-        }))
-        self.present(alert, animated: true)
+        guard let experienceTitle = captionTextField.text else { return }
+        let experience = Experience(title: experienceTitle,
+                                    geotag: CLLocationCoordinate2D(latitude: 27.616881, longitude: -80.447872),
+                                    media: .image)
+            
+        delegate?.experienceWasCreated(experience)
+        dismiss(animated: true, completion: nil)
+    }
+
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
     }
 }
 

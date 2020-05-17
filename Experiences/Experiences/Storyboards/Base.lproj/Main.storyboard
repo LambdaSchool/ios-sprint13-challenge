@@ -35,6 +35,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="o8m-AM-EZ5" id="Z30-No-u5E"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UAr-fe-J8d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -52,8 +55,16 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                                 <items>
                                     <navigationItem title="Add Image" id="Lyg-IL-k3H">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="UW6-Vw-DL9"/>
-                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="BfE-y6-QBC"/>
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="UW6-Vw-DL9">
+                                            <connections>
+                                                <action selector="cancel:" destination="Mbu-9M-PdW" id="MKw-LA-cRL"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="BfE-y6-QBC">
+                                            <connections>
+                                                <action selector="saveImage:" destination="Mbu-9M-PdW" id="6Wk-I4-BQg"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -86,6 +97,7 @@
                         <viewLayoutGuide key="safeArea" id="Zql-Vk-VMx"/>
                     </view>
                     <connections>
+                        <outlet property="captionTextField" destination="ABh-hH-JfX" id="ptB-df-5up"/>
                         <outlet property="imageView" destination="XIB-7E-uOV" id="8QQ-Gk-R5F"/>
                     </connections>
                 </viewController>
