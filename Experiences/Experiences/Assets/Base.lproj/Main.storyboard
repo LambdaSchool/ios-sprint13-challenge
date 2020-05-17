@@ -141,6 +141,7 @@ EEFkZCBQb3N0ZXIgSW1hZ2U
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <state key="normal" title="Record Audio"/>
+                                <state key="selected" title="Stop Recording"/>
                                 <connections>
                                     <action selector="startStopRecording:" destination="HsB-HW-oQb" eventType="touchUpInside" id="lRf-Ar-rWM"/>
                                 </connections>
@@ -180,26 +181,52 @@ EEFkZCBQb3N0ZXIgSW1hZ2U
             </objects>
             <point key="canvasLocation" x="1705.7971014492755" y="66.964285714285708"/>
         </scene>
-        <!--Video Recording-->
+        <!--Video Recording View Controller-->
         <scene sceneID="9Ox-tq-NKI">
             <objects>
-                <viewController id="mho-Wb-Dp0" sceneMemberID="viewController">
+                <viewController id="mho-Wb-Dp0" customClass="VideoRecordingViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eiS-Mz-ELB">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dlG-Ew-XKs" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="no2-yF-eTI">
+                                        <rect key="frame" x="173" y="730" width="68" height="68"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button" image="recordVideo"/>
+                                        <connections>
+                                            <action selector="startStopRecord:" destination="mho-Wb-Dp0" eventType="touchUpInside" id="AG6-ye-cwA"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="zV0-x0-FF8"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Video Recording" id="tNp-uz-p3n">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="BFF-QD-sHm"/>
+                    <navigationItem key="navigationItem" id="tNp-uz-p3n">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="BFF-QD-sHm">
+                            <connections>
+                                <action selector="saveTapped:" destination="mho-Wb-Dp0" id="f9n-zz-EyQ"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="cameraView" destination="dlG-Ew-XKs" id="OXy-qj-0aD"/>
+                        <outlet property="recordingButton" destination="no2-yF-eTI" id="GNo-Yl-hG2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dbs-HQ-7sp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2494" y="67"/>
+            <point key="canvasLocation" x="2528" y="47"/>
         </scene>
     </scenes>
     <resources>
         <image name="map.fill" catalog="system" width="128" height="113"/>
+        <image name="recordVideo" width="256" height="256"/>
     </resources>
 </document>

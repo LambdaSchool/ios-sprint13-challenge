@@ -19,6 +19,14 @@ class AudioRecordingViewController: UIViewController {
     var experienceTitle: String?
     var recordingURL: URL?
     
+    var audioPlayer: AVAudioPlayer? {
+        didSet {
+            guard let audioPlayer = audioPlayer else { return }
+            
+
+        }
+    }
+    
     @IBOutlet var recordAudio: UIButton!
     @IBOutlet var recordVideo: UIButton!
     
@@ -105,6 +113,7 @@ class AudioRecordingViewController: UIViewController {
         
         do {
             audioRecorder = try AVAudioRecorder(url: recordingURL!, format: format)
+            audioRecorder?.delegate = self
             audioRecorder?.record()
             
         } catch {
@@ -139,4 +148,7 @@ class AudioRecordingViewController: UIViewController {
             videoVC.mapViewController = mapViewController
         }
     }
+}
+
+extension AudioRecordingViewController: AVAudioRecorderDelegate {
 }
