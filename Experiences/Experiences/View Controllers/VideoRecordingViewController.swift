@@ -37,7 +37,7 @@ class VideoRecordingViewController: UIViewController {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
         view.addGestureRecognizer(tapGesture)
-        // Do any additional setup after loading the view.
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -69,6 +69,7 @@ class VideoRecordingViewController: UIViewController {
                                                   picture: picture,
                                                   video: video,
                                                   audio: audio)
+        navigationController?.popToRootViewController(animated: true)
     }
     
     
@@ -143,7 +144,7 @@ class VideoRecordingViewController: UIViewController {
         captureSession.addOutput(fileOutput)
         
         captureSession.commitConfiguration()
-        
+        cameraView.session = captureSession
     }
     
     private func toggleRecording() {

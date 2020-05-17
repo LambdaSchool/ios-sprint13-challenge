@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nID-zf-ICT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KP5-ww-zJN">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Map View Controller-->
+        <!--Map-->
         <scene sceneID="eRA-QB-hJp">
             <objects>
                 <viewController id="nID-zf-ICT" customClass="MapViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
@@ -16,31 +16,29 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="zR3-w5-ugo">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="140" width="414" height="756"/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EdR-hH-MfN">
-                                <rect key="frame" x="341" y="738" width="22" height="22"/>
-                                <state key="normal" image="map.fill" catalog="system"/>
-                                <connections>
-                                    <segue destination="KP5-ww-zJN" kind="presentation" modalPresentationStyle="fullScreen" id="DGi-62-qzm"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="zR3-w5-ugo" firstAttribute="centerY" secondItem="5Ps-fE-mL6" secondAttribute="centerY" id="1gT-TM-alh"/>
+                            <constraint firstItem="zR3-w5-ugo" firstAttribute="centerY" secondItem="5Ps-fE-mL6" secondAttribute="centerY" constant="70" id="1gT-TM-alh"/>
                             <constraint firstItem="zR3-w5-ugo" firstAttribute="centerX" secondItem="5Ps-fE-mL6" secondAttribute="centerX" id="7zf-IQ-ZSv"/>
-                            <constraint firstItem="EdR-hH-MfN" firstAttribute="top" secondItem="Fzs-2F-wPL" secondAttribute="top" constant="694" id="DTg-cu-sdY"/>
                             <constraint firstItem="zR3-w5-ugo" firstAttribute="leading" secondItem="Fzs-2F-wPL" secondAttribute="leading" id="INL-SQ-wn2"/>
-                            <constraint firstItem="EdR-hH-MfN" firstAttribute="leading" secondItem="Fzs-2F-wPL" secondAttribute="leading" constant="341" id="hKM-y8-xbi"/>
-                            <constraint firstItem="zR3-w5-ugo" firstAttribute="top" secondItem="5Ps-fE-mL6" secondAttribute="topMargin" constant="-44" id="iWg-Qn-1YT"/>
+                            <constraint firstItem="zR3-w5-ugo" firstAttribute="top" secondItem="5Ps-fE-mL6" secondAttribute="topMargin" id="iWg-Qn-1YT"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Fzs-2F-wPL"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Map" id="cDi-mB-hEq">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="map.fill" catalog="system" id="6cH-hh-Y4g">
+                            <connections>
+                                <segue destination="a4J-cb-oEn" kind="show" identifier="ImageSegue" id="GyJ-vS-ZbK"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xWv-mL-Toa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-552" y="67"/>
+            <point key="canvasLocation" x="144.92753623188406" y="66.964285714285708"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="6tF-Qa-baY">
@@ -52,12 +50,12 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="a4J-cb-oEn" kind="relationship" relationship="rootViewController" id="EML-wu-nnb"/>
+                        <segue destination="nID-zf-ICT" kind="relationship" relationship="rootViewController" id="Nxa-Yh-Ejx"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hpU-Py-UuS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="170" y="67"/>
+            <point key="canvasLocation" x="-614" y="67"/>
         </scene>
         <!--New Experience-->
         <scene sceneID="mjz-9C-K7x">
@@ -113,9 +111,7 @@ EEFkZCBQb3N0ZXIgSW1hZ2U
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Z0Q-dh-k01"/>
                     </view>
-                    <navigationItem key="navigationItem" title="New Experience" id="DUl-Nz-pe2">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="0XF-dQ-JK1"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="New Experience" id="DUl-Nz-pe2"/>
                     <connections>
                         <outlet property="addPosterButton" destination="pnE-X9-4Rc" id="TgE-bG-IkL"/>
                         <outlet property="photoImage" destination="UTh-HD-kUO" id="J7n-kF-tC8"/>
@@ -174,7 +170,7 @@ EEFkZCBQb3N0ZXIgSW1hZ2U
                     <connections>
                         <outlet property="recordAudio" destination="99M-JV-cB6" id="9DR-cC-xYa"/>
                         <outlet property="recordVideo" destination="dd1-ns-fiT" id="t2C-C3-phy"/>
-                        <segue destination="mho-Wb-Dp0" kind="show" identifier="RecordingSegue" id="ZsB-U5-urL"/>
+                        <segue destination="LfT-gl-axu" kind="show" identifier="RecordingSegue" id="BN2-pI-X23"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mXX-WF-ZyL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -182,55 +178,55 @@ EEFkZCBQb3N0ZXIgSW1hZ2U
             <point key="canvasLocation" x="1705.7971014492755" y="66.964285714285708"/>
         </scene>
         <!--Video Recording View Controller-->
-        <scene sceneID="9Ox-tq-NKI">
+        <scene sceneID="IVf-DQ-LAs">
             <objects>
-                <viewController id="mho-Wb-Dp0" customClass="VideoRecordingViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="eiS-Mz-ELB">
+                <viewController id="LfT-gl-axu" customClass="VideoRecordingViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9sF-B5-TQD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dlG-Ew-XKs" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="030-HM-3cg" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="no2-yF-eTI">
-                                        <rect key="frame" x="173" y="730" width="68" height="68"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Button" image="recordVideo"/>
-                                        <connections>
-                                            <action selector="startStopRecord:" destination="mho-Wb-Dp0" eventType="touchUpInside" id="AG6-ye-cwA"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kC8-uD-a3c">
-                                        <rect key="frame" x="173" y="730" width="68" height="68"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Button" image="recordVideo"/>
-                                        <connections>
-                                            <action selector="startStopRecord:" destination="mho-Wb-Dp0" eventType="touchUpInside" id="vvZ-Ir-1LP"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wvF-vF-WCg">
+                                <rect key="frame" x="167" y="697" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="3Fo-jZ-IaC"/>
+                                    <constraint firstAttribute="height" constant="80" id="anw-vB-MRb"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="recordVideo"/>
+                                <connections>
+                                    <action selector="startStopRecord:" destination="LfT-gl-axu" eventType="touchUpInside" id="gyF-Pm-qRk"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="zV0-x0-FF8"/>
+                        <constraints>
+                            <constraint firstItem="030-HM-3cg" firstAttribute="top" secondItem="9sF-B5-TQD" secondAttribute="top" id="D56-1u-P3l"/>
+                            <constraint firstItem="wvF-vF-WCg" firstAttribute="centerX" secondItem="9sF-B5-TQD" secondAttribute="centerX" id="MVW-6P-5th"/>
+                            <constraint firstItem="030-HM-3cg" firstAttribute="leading" secondItem="FEt-ld-Ve1" secondAttribute="leading" id="Xfj-jI-3yp"/>
+                            <constraint firstItem="FEt-ld-Ve1" firstAttribute="bottom" secondItem="wvF-vF-WCg" secondAttribute="bottom" constant="85" id="eb8-D0-tX2"/>
+                            <constraint firstItem="030-HM-3cg" firstAttribute="trailing" secondItem="FEt-ld-Ve1" secondAttribute="trailing" id="icD-S3-4WF"/>
+                            <constraint firstAttribute="bottom" secondItem="030-HM-3cg" secondAttribute="bottom" id="ikp-Ck-bvr"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="FEt-ld-Ve1"/>
                     </view>
-                    <navigationItem key="navigationItem" id="tNp-uz-p3n">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="BFF-QD-sHm">
+                    <navigationItem key="navigationItem" id="Ol3-kX-w4a">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="1zF-XK-pBZ">
                             <connections>
-                                <action selector="saveTapped:" destination="mho-Wb-Dp0" id="f9n-zz-EyQ"/>
+                                <action selector="saveTapped:" destination="LfT-gl-axu" id="ats-zL-Y1S"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="cameraView" destination="dlG-Ew-XKs" id="ymu-fb-igz"/>
-                        <outlet property="recordingButton" destination="kC8-uD-a3c" id="7L1-PF-Euu"/>
+                        <outlet property="cameraView" destination="030-HM-3cg" id="N2r-HP-Rrj"/>
+                        <outlet property="recordingButton" destination="wvF-vF-WCg" id="nbT-l7-lpp"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Dbs-HQ-7sp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wky-aY-wsX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2528" y="47"/>
+            <point key="canvasLocation" x="2486" y="67"/>
         </scene>
     </scenes>
     <resources>

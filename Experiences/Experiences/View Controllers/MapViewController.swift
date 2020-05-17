@@ -30,8 +30,9 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.requestWhenInUseAuthorization()
+        locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-//        requestCameraPermission()
+        requestCameraPermission()
     }
     
     func currentUserLocation() -> CLLocationCoordinate2D {
@@ -68,16 +69,17 @@ class MapViewController: UIViewController {
     }
     
 
-    /*
+    
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "ImageSegue" {
+            guard let imageSelectionVC = segue.destination as? NewExperienceViewController else { return }
+            
+            userLocation = currentUserLocation()
+            imageSelectionVC.userLocation = userLocation
+            imageSelectionVC.mapVC = self
+        }
     }
-    */
-
 }
 
 extension MapViewController: CLLocationManagerDelegate {
@@ -93,13 +95,6 @@ extension MapViewController: CLLocationManagerDelegate {
     }
 }
 
-extension Experience: MKAnnotation {
-   
-    var coordinate: CLLocationCoordinate2D {
-        geotag
-    }
+extension MapViewController: MKMapViewDelegate {
     
-    var title: String? {
-        experienceTitle
-    }
 }
