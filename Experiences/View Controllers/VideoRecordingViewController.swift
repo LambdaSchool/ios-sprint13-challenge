@@ -26,18 +26,186 @@ class VideoRecordingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        cameraView.videoPlayerLayer.videoGravity = .resizeAspectFill   //.resizeAspectFill
+        setUpCamera()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
+        view.addGestureRecognizer(tapGesture)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    //MARK: - Methods:
+    
+    func updateViews() {
+        recordingButton.isSelected = fileOutput.isRecording
     }
-    */
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        captureSession.startRunning()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        captureSession.stopRunning()
+    }
+    
+    @IBOutlet weak var cameraView: CameraPreviewView!
+   
+    @IBOutlet weak var recordingButton: UIButton!
+    
+    
+    @IBAction func startStopRecording(_ sender: Any) {
+        toggleRecording()
+    }
+    
+    @IBAction func saveTapped(_ sender: Any) {
+        guard let userLocation = userLocation,
+            let videoURL = videoURL,
+            let experienceTitle = experienceTitle,
+            let picture = picture,
+            let audio = recordingURL,
+            let mapViewController = mapViewController else { return }
+        
+        let video = Experience.Video(videoPost: videoURL)
+        mapViewController.experience = Experience(experienceTitle: experienceTitle,
+                                                  geotag: userLocation, picture: picture,
+                                                  video: video, audio: audio)
+    }
+    
+    @objc func handleTapGesture(_ tapGesture: UITapGestureRecognizer) {
+        switch tapGesture.state {
+        case .ended:
+            playRecording()
+        default:
+            print("Handled other tap states: \(tapGesture.state)")
+        }
+    }
+    
+    func playMovie(url: URL) {
+        
+        player = AVPlayer(url: url)
+        let playerLayer = AVPlayerLayer(player: player)
+        
+        var topRect = view.bounds
+        topRect.origin.y = view.frame.origin.y
+        
+        playerLayer.frame = topRect
+        
+        playerLayer.videoGravity = .resizeAspectFill
+        view.layer.addSublayer(playerLayer)
+        
+        player.play()
+        
+        
+    }
+    
+    func playRecording() {
+        if let player = player {
+        
+        player.seek(to: CMTime.zero)
+        player.play()
+    }
+}
+    
+    func setUpCamera() {
+        guard let camera = bestCamera() else { return }
+        let microphone = bestMicrophone()
+        
+        captureSession.beginConfiguration()
+        guard let cameraInput = try? AVCaptureDeviceInput(device: camera) else {
+            let alert = UIAlertController(title: "No Camera", message: "Your camera may not be compatible", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (_) in
+                return
+            }))
+            
+            present(alert, animated: true)
+            return
+        }
 
+        guard captureSession.canAddInput(cameraInput) else {
+            preconditionFailure("Can't create am input \(cameraInput)")
+        }
+        
+        captureSession.addInput(cameraInput)
+        
+        guard let microphoneInput = try? AVCaptureDeviceInput(device: microphone) else {
+            preconditionFailure("Can't create an inout from microphone.")
+        }
+        
+        captureSession.addInput(microphoneInput)
+        
+        if captureSession.canSetSessionPreset(.hd1920x1080) {
+            captureSession.sessionPreset = .hd1920x1080
+        }
+        
+        guard captureSession.canAddOutput(fileOutput) else {
+            preconditionFailure("Cannot write to disk")
+        }
+        
+        captureSession.addOutput(fileOutput)
+        captureSession.commitConfiguration()
+        cameraView.session = captureSession
+    }
+    
+    private func toggleRecording() {
+        if fileOutput.isRecording {
+            fileOutput.stopRecording()
+        } else {
+            fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
+        }
+    }
+    
+    private func newRecordingURL() -> URL {
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime]
+        
+        let name = formatter.string(from: Date())
+        let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
+        videoURL = fileURL
+        return fileURL
+    }
+    
+    private func bestCamera() -> AVCaptureDevice? {
+        if let device = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) {
+            return device
+        }
+        
+        if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
+            return device
+        } else {
+                let alert = UIAlertController(title: "No Camera", message: "There is no suitable camera to use", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .destructive))
+                
+                present(alert, animated: true)
+                recordingButton.isEnabled = false
+                return nil
+            }
+        }
+            
+    private func bestMicrophone() -> AVCaptureDevice {
+        if let device = AVCaptureDevice.default(for: .audio) {
+            return device
+        }
+        
+        preconditionFailure("No microhpne on the device is avilable")
+    }
+}
+
+
+extension VideoRecordingViewController: AVCaptureFileOutputRecordingDelegate {
+    func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+        if let error = error {
+            print("Error saving video: \(error)")
+        }
+        updateViews()
+        playMovie(url: outputFileURL)
+    }
+    
+    func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
+        updateViews()
+    }
 }

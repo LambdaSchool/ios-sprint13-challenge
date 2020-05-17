@@ -66,7 +66,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" id="gWP-Ck-XvY"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                 <state key="normal" title="Add Image"/>
                                 <connections>
                                     <action selector="selectImage:" destination="uPU-id-ex8" eventType="touchUpInside" id="qyj-PR-iGk"/>
@@ -86,14 +86,14 @@
                                     <constraint firstAttribute="width" constant="253" id="m7l-4X-f58"/>
                                     <constraint firstAttribute="height" constant="42" id="mpn-Rz-JJu"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <state key="normal" title="Go to Recorders"/>
                                 <connections>
                                     <action selector="recordTapped:" destination="uPU-id-ex8" eventType="touchUpInside" id="Xiq-Ss-dJH"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="734-tJ-U4W" firstAttribute="centerX" secondItem="7yv-wK-98a" secondAttribute="centerX" id="2T1-Kx-2KO"/>
                             <constraint firstItem="734-tJ-U4W" firstAttribute="top" secondItem="7yv-wK-98a" secondAttribute="bottom" constant="8" id="6Yh-9C-L7n"/>
@@ -135,32 +135,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jQj-Wh-iuI">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jQj-Wh-iuI">
                                 <rect key="frame" x="99" y="394" width="217" height="48"/>
                                 <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="gzV-9H-iMB"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                 <state key="normal" title="Record Audio">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <state key="selected" title="Stop Recording"/>
                                 <connections>
                                     <action selector="startStopRecording:" destination="Agh-vq-Ngf" eventType="touchUpInside" id="uFb-ft-MdK"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fl3-AQ-roX">
                                 <rect key="frame" x="99" y="468" width="217" height="48"/>
-                                <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="Beo-n5-cS3"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
-                                <state key="normal" title="Record Video">
+                                <state key="normal" title="Record Video Now">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="startRecordVideo:" destination="Agh-vq-Ngf" eventType="touchUpInside" id="Qps-2m-jDs"/>
+                                    <action selector="startRecordingVideo:" destination="Agh-vq-Ngf" eventType="touchUpInside" id="Qps-2m-jDs"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -193,14 +193,52 @@
                     <view key="view" contentMode="scaleToFill" id="ohZ-4Q-SGQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nAM-Ae-Grz" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="140" width="414" height="756"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RcM-3G-lwn">
+                                        <rect key="frame" x="149" y="433" width="117" height="116"/>
+                                        <state key="normal" title="Button" image="Record"/>
+                                        <connections>
+                                            <action selector="startRecordingVideo:" destination="bp8-DG-duS" eventType="touchUpInside" id="22N-nz-g0x"/>
+                                            <action selector="startStopRecording:" destination="1F0-cp-6tk" eventType="touchUpInside" id="mrS-qO-wMl"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="RcM-3G-lwn" firstAttribute="top" secondItem="nAM-Ae-Grz" secondAttribute="top" constant="433" id="KWW-OS-bu8"/>
+                                    <constraint firstItem="RcM-3G-lwn" firstAttribute="leading" secondItem="nAM-Ae-Grz" secondAttribute="leading" constant="149" id="Rxk-RB-VXk"/>
+                                    <constraint firstAttribute="trailing" secondItem="RcM-3G-lwn" secondAttribute="trailing" constant="148" id="qGw-MT-MDi"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="nAM-Ae-Grz" firstAttribute="leading" secondItem="zjI-Cw-9ah" secondAttribute="leading" id="HmS-IV-Z3H"/>
+                            <constraint firstItem="nAM-Ae-Grz" firstAttribute="top" secondItem="zjI-Cw-9ah" secondAttribute="top" id="LEh-09-AKo"/>
+                            <constraint firstItem="nAM-Ae-Grz" firstAttribute="trailing" secondItem="zjI-Cw-9ah" secondAttribute="trailing" id="oGz-Hm-nBh"/>
+                            <constraint firstAttribute="bottom" secondItem="nAM-Ae-Grz" secondAttribute="bottom" id="qdR-Qh-6Qm"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="zjI-Cw-9ah"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Video Recording" id="LuY-rH-Xpb"/>
+                    <navigationItem key="navigationItem" title="Video Recording" id="LuY-rH-Xpb">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="8JJ-FK-w7G">
+                            <connections>
+                                <action selector="saveTapped:" destination="1F0-cp-6tk" id="7ue-9Z-fNg"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="cameraView" destination="nAM-Ae-Grz" id="KGj-pl-B9E"/>
+                        <outlet property="recordingButton" destination="RcM-3G-lwn" id="Xg1-eI-MF0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CPU-31-K1H" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="bp8-DG-duS" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3184" y="139"/>
+            <point key="canvasLocation" x="3182.608695652174" y="138.61607142857142"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="atb-vf-Lb6">
@@ -223,6 +261,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Record" width="116" height="116"/>
         <image name="kalen-emsley-Bkci_8qcdvQ-unsplash" width="1500" height="1500"/>
         <image name="map.fill" catalog="system" width="128" height="113"/>
     </resources>

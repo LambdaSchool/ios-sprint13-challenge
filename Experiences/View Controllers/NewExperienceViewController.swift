@@ -12,7 +12,7 @@ import CoreImage
 import CoreImage.CIFilterBuiltins
 import MapKit
 
-class NewExperienceViewController: UIViewController, UINavigationControllerDelegate {
+class NewExperienceViewController: ShiftableViewController {
     
     //Properties:
     var mapVC: MapViewController?
@@ -53,6 +53,7 @@ class NewExperienceViewController: UIViewController, UINavigationControllerDeleg
         
         //If false, it'll show greyed out on the screen.
         recordButton.isEnabled = false
+        titleTextField.delegate = self
     }
     
     func updateViews() {
@@ -154,7 +155,7 @@ class NewExperienceViewController: UIViewController, UINavigationControllerDeleg
 }
 
 
-extension NewExperienceViewController: UIImagePickerControllerDelegate, UINavigationBarDelegate {
+extension NewExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         addPosterButton.setTitle("", for: [])

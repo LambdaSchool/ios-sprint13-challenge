@@ -38,11 +38,11 @@ class RecordersViewController: UIViewController {
             stopRecording()
         } else {
             recordAudioOutlet.isSelected = true
-            
+            requestPermissionForRecording()
         }
     }
     
-    @IBAction func startRecordVideo(_ sender: Any) {
+    @IBAction func startRecordingVideo(_ sender: Any) {
         guard recordingURL != nil else { return }
         performSegue(withIdentifier: "RecordVideoSegue", sender: self)
     }
