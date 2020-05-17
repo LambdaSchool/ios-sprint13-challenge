@@ -17,23 +17,25 @@ enum MediaType {
 
 class Experience: NSObject {
     let experienceTitle: String
-    let geotag: CLLocationCoordinate2D
-    let media: [MediaType]
+    let latitude: Double
+    let longitude: Double
+    let media: MediaType
     
-    init(title: String, geotag: CLLocationCoordinate2D, media: [MediaType]) {
+    init(title: String, geotag: CLLocationCoordinate2D, media: MediaType) {
         self.experienceTitle = title
-        self.geotag = geotag
+        self.latitude = geotag.latitude
+        self.longitude = geotag.longitude
         self.media = media
     }
 }
 
-//extension Experience: MKAnnotation {
-//    var coordinate: CLLocationCoordinate2D {
-//        <#code#>
-//    }
-//    
-//    var title: String? {
-//        
-//    }
-//    
-//}
+extension Experience: MKAnnotation {
+    
+    var coordinate: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
+    
+    var title: String? {
+        experienceTitle
+    }
+}
