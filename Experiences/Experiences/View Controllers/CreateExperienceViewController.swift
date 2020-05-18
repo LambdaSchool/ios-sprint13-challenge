@@ -131,6 +131,42 @@ class CreateExperienceViewController: UIViewController {
         let recordButtonTitle = isRecording ? "Stop Recording" : "Record Audio"
         recordAudioButton.setTitle(recordButtonTitle, for: .normal)
     }
+    
+    // MARK: - Video Permissions
+    
+    private func requestPermissionAndShowCamera() {
+        let status = AVCaptureDevice.authorizationStatus(for: .video)
+        
+        switch status {
+        case .notDetermined:
+            requestPermission()
+        case .restricted:
+            fatalError("Video access is restricted.")
+        case .denied:
+            fatalError("Permission denied.")
+        case .authorized:
+            showCamera()
+        @unknown default:
+            fatalError("No idea why this happened!")
+        }
+    }
+    
+    private func requestPermission() {
+        AVCaptureDevice.requestAccess(for: .video) { (granted) in
+            guard granted else {
+                fatalError("Permission was not granted.")
+            }
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                
+                self.showCamera()
+            }
+        }
+    }
+    
+    private func showCamera() {
+        performSegue(withIdentifier: "ShowRecordVideoSegue", sender: self)
+    }
 
     
     //MARK: - IBActions
@@ -144,6 +180,28 @@ class CreateExperienceViewController: UIViewController {
     }
     
     @IBAction func nextButtonTapped(_ sender: Any) {
+         saveExperience()
+         requestPermissionAndShowCamera()
+    }
+    
+    func saveExperience() {
+        guard let title = titleTextField.text,
+            !title.isEmpty else { return }
+        
+        experienceTitle = title
+        latitude = lat()
+        longitude = long()
+        audioExtension = audio
+        photoExtension = image
+    }
+    
+    // Random lat/long. "Should" be East Coast area...
+    func lat() -> Double {
+        return Double(Int.random(in: 39_299_236...40_000_000)) / 1_000_000
+    }
+    
+    func long() -> Double {
+        return Double(Int.random(in: (-076_609_383)...(-121_963_246))) / 1_000_000
     }
     
     
