@@ -49,14 +49,26 @@ class AddExperienceViewController: UIViewController {
             destinationVC.delegate = self
         }
     }
+    
+    private func image(at url: URL) -> UIImage? {
+        guard let imageData = FileManager.default.contents(atPath: url.relativePath),
+            let image = UIImage(data: imageData) else { return nil }
+        
+        return image
+    }
 
 }
 
 extension AddExperienceViewController: AddMediaViewControllerDelegate {
-    func didAddMedia(mediaType: MediaType, url: URL) {
+    func didSaveMedia(mediaType: MediaType, to url: URL) {
         switch mediaType {
         case .image:
             imageURL = url
+            if let image = image(at: url) {
+                imageView.contentMode = .scaleAspectFit
+                imageView.backgroundColor = .clear
+                imageView.image = image
+            }
         case .audio:
             audioURL = url
         case .video:

@@ -12,7 +12,7 @@ import CoreImage.CIFilterBuiltins
 import Photos
 
 protocol AddMediaViewControllerDelegate {
-    func didAddMedia(mediaType: MediaType, url: URL)
+    func didSaveMedia(mediaType: MediaType, to url: URL)
 }
 
 class AddImageViewController: UIViewController {
@@ -62,7 +62,6 @@ class AddImageViewController: UIViewController {
         super.viewDidLoad()
         imageView.contentMode = .scaleAspectFit
         presentImagePickerController()
-//        originalImage = imageView.image
     }
     
     private func updateImage() {
@@ -116,6 +115,7 @@ class AddImageViewController: UIViewController {
         let imageURL = newMediaURL(forType: .image)
         
         store(image: processedImage, to: imageURL)
+        delegate?.didSaveMedia(mediaType: .image, to: imageURL)
         
         navigationController?.popViewController(animated: true)
     }
