@@ -22,11 +22,14 @@ class AddExperienceViewController: UIViewController {
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var audioRecordingButton: UIButton!
+    @IBOutlet weak var videoRecordingButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        audioRecordingButton.layer.cornerRadius = DW.buttonCornerRadius
+        videoRecordingButton.layer.cornerRadius = DW.buttonCornerRadius
     }
     
     // MARK: - IBActions
@@ -62,7 +65,6 @@ class AddExperienceViewController: UIViewController {
         
         return image
     }
-
 }
 
 extension AddExperienceViewController: AddMediaViewControllerDelegate {
@@ -77,8 +79,10 @@ extension AddExperienceViewController: AddMediaViewControllerDelegate {
             }
         case .audio:
             audioURL = url
+            audioRecordingButton.setTitle("Re-record Audio", for: .normal)
         case .video:
             videoURL = url
+            videoRecordingButton.setTitle("Re-record Video", for: .normal)
         }
     }
 }
