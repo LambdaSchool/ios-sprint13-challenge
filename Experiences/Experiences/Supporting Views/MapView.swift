@@ -25,7 +25,10 @@ struct MapView: UIViewRepresentable {
 
 struct MapView_Previews: PreviewProvider {
     static var previews: some View {
-        MapView(coordinate: displaycoordinate)
+        ForEach(["iPhone SE (2nd generation)", "iPhone 11", "iPhone 11 Pro Max"], id: \.self) { deviceName in
+            MapView(coordinate: displaycoordinate)
+                .previewDevice(PreviewDevice(rawValue: deviceName))
+        }
     }
 }
 
