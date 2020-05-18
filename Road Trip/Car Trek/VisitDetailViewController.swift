@@ -19,11 +19,11 @@ class VisitDetailViewController: UIViewController {
     @IBOutlet var videoView: UIView!
     
     // MARK: - Properties
-//    var visit: Visit? {
-//        didSet {
-//            updateViews()
-//        }
-//    }
+    var visit: Visit? {
+        didSet {
+            updateViews()
+        }
+    }
     
     // MARK: - Views
     override func viewDidLoad() {
