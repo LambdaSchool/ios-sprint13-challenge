@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="hog-0X-mxZ">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" showsScale="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hog-0X-mxZ">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SoS-4h-Ivw">
@@ -82,11 +82,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h7F-3f-jpQ">
-                                <rect key="frame" x="87.666666666666686" y="541" width="200" height="40"/>
+                                <rect key="frame" x="75" y="541" width="225" height="50"/>
                                 <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="NK5-QJ-kmV"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="oAd-c0-3b5"/>
+                                    <constraint firstAttribute="height" constant="50" id="NK5-QJ-kmV"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="225" id="oAd-c0-3b5"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                 <state key="normal" title="Add Audio Recording">
@@ -97,11 +97,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ETz-fP-Prf">
-                                <rect key="frame" x="87.666666666666686" y="613" width="200" height="40"/>
+                                <rect key="frame" x="75" y="623" width="225" height="50"/>
                                 <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="VZu-Gm-Pf8"/>
-                                    <constraint firstAttribute="height" constant="40" id="uY1-PT-c0s"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="225" id="VZu-Gm-Pf8"/>
+                                    <constraint firstAttribute="height" constant="50" id="uY1-PT-c0s"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                 <state key="normal" title="Add Video Recording">
@@ -306,14 +306,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Rb-w7-0Gi" userLabel="Camera View">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Rb-w7-0Gi" userLabel="Camera View" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="108" width="375" height="509"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="2Rb-w7-0Gi" secondAttribute="width" id="HN8-IW-Qsg"/>
-                                </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="01n-fe-hcP" userLabel="Movie Player View">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="01n-fe-hcP" userLabel="Movie Player View" customClass="MoviePlayerView" customModule="Experiences" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="108" width="375" height="509"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
@@ -324,6 +321,9 @@
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="80"/>
                                 </state>
                                 <state key="selected" image="stop.circle" catalog="system"/>
+                                <connections>
+                                    <action selector="recordButtonPressed:" destination="ph0-oc-Yf3" eventType="touchUpInside" id="f4m-oO-UE5"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -344,8 +344,17 @@
                         <viewLayoutGuide key="safeArea" id="J4T-UX-M6g"/>
                     </view>
                     <navigationItem key="navigationItem" title="Add Video Recording" id="qgr-xu-eS9">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="Cr6-9V-khO"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="Cr6-9V-khO">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="ph0-oc-Yf3" id="GCq-wr-QEH"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="cameraView" destination="2Rb-w7-0Gi" id="9aJ-IS-0Yh"/>
+                        <outlet property="moviePlayerView" destination="01n-fe-hcP" id="6zH-zk-K7H"/>
+                        <outlet property="recordButton" destination="TEE-qc-qGE" id="dhc-Wc-Xqh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3ma-Kt-Cev" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
