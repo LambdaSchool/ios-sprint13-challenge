@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class CreateExperienceViewController: UIViewController {
     
@@ -30,6 +31,7 @@ class CreateExperienceViewController: UIViewController {
             savePhoto()
         }
     }
+    var audio = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,6 +87,50 @@ class CreateExperienceViewController: UIViewController {
         
         return UIImage(cgImage: outputCGImage)
     }
+    
+    // MARK: - Audio
+    
+    var audioRecorder: AVAudioRecorder?
+    var isRecording: Bool {
+        audioRecorder?.isRecording ?? false
+    }
+    var recordURL: URL?
+    
+    func record() {
+        audioRecorder = nil
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        audio = UUID().uuidString
+        
+        let file = documentsDirectory.appendingPathComponent(audio).appendingPathExtension("caf")
+        print(file) // Testing and it works!
+        
+        let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
+        
+        audioRecorder = try! AVAudioRecorder(url: file, format: format)
+        recordURL = file
+        audioRecorder?.delegate = self
+        audioRecorder?.record()
+        updateAudioViews()
+    }
+    
+    func stopRecording() {
+        audioRecorder?.stop()
+        audioRecorder = nil
+        updateAudioViews()
+    }
+    
+    func recordToggle() {
+        if isRecording {
+            stopRecording()
+        } else {
+            record()
+        }
+    }
+    
+    func updateAudioViews() {
+        let recordButtonTitle = isRecording ? "Stop Recording" : "Record Audio"
+        recordAudioButton.setTitle(recordButtonTitle, for: .normal)
+    }
 
     
     //MARK: - IBActions
@@ -94,6 +140,7 @@ class CreateExperienceViewController: UIViewController {
     }
     
     @IBAction func recordAudioButtonTapped(_ sender: Any) {
+        recordToggle()
     }
     
     @IBAction func nextButtonTapped(_ sender: Any) {
@@ -117,5 +164,14 @@ extension CreateExperienceViewController: UIImagePickerControllerDelegate, UINav
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+
+extension CreateExperienceViewController: AVAudioRecorderDelegate {
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
+        if let error = error {
+            print("Record error: \(error)")
+        }
     }
 }
