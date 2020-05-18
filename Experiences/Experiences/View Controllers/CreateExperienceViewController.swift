@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CreateExperienceViewController: UIViewController {
+class CreateExperienceViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
     //MARK: - IBOutlets
     
@@ -30,8 +30,24 @@ class CreateExperienceViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
+    // MARK: - Private
+    
+    private func presentImagePickerController() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            print("Error: photo library is not available")
+            return
+        }
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    //MARK: - IBActions
 
     @IBAction func addPhotoButtonTapped(_ sender: Any) {
+        presentImagePickerController()
     }
     
     @IBAction func recordAudioButtonTapped(_ sender: Any) {
