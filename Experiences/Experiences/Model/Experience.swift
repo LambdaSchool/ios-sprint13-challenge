@@ -9,31 +9,65 @@
 import Foundation
 import MapKit
 
+enum MediaType: String, CaseIterable {
+    case image, audio, video
+}
+
 class Experience: NSObject {
     
-    var title: String
-    var imageURL: URL?
-    var audioURL: URL?
-    var videoURL: URL?
+    var experienceTitle: String
+    var media: [Media]
     let timestamp: Date
-    let location: CLLocationCoordinate2D?
+    let geotag: CLLocationCoordinate2D
     
     init(title: String,
          imageURL: URL?,
          audioURL: URL?,
          videoURL: URL?,
          timestamp: Date = Date(),
-         location: CLLocationCoordinate2D? = nil) {
+         geotag: CLLocationCoordinate2D? = nil) {
         
-        self.title = title
-        self.imageURL = imageURL
-        self.audioURL = audioURL
-        self.videoURL = videoURL
+        self.experienceTitle = title
         self.timestamp = timestamp
-        self.location = location
+        self.geotag = geotag ?? Locations.applePark
+        self.media = [ Media(mediaType: .image, url: imageURL),
+                       Media(mediaType: .audio, url: audioURL),
+                       Media(mediaType: .video, url: videoURL), ]
+    }
+    
+    var savedMedia: [Media] {
+        media.filter { $0.url != nil }
+    }
+    
+    var savedMediaTypes: [String] {
+        savedMedia.compactMap { $0.mediaType.rawValue }
     }
     
     static func == (lhs: Experience, rhs: Experience) -> Bool {
         lhs.timestamp == rhs.timestamp
+    }
+    
+    struct Media {
+        let mediaType: MediaType
+        let url: URL?
+    }
+}
+
+extension Experience: MKAnnotation {
+    
+    var coordinate: CLLocationCoordinate2D {
+        geotag
+    }
+    
+    var title: String? {
+        experienceTitle
+    }
+    
+    var subtitle: String? {
+        if savedMediaTypes.count == 0 {
+            return "No media saved"
+        } else {
+            return "Media Types: \(savedMediaTypes.joined(separator: ", "))"
+        }
     }
 }
