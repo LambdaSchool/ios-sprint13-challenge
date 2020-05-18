@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="U8D-Nh-heo">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -7,45 +7,41 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Map View Controller-->
+        <!--Maps-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="MapViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Maps" id="BYZ-38-t0r" customClass="MapViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Lwe-2x-D1c">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Lwe-2x-D1c">
+                                <rect key="frame" x="0.0" y="140" width="414" height="756"/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uca-S0-SVR">
-                                <rect key="frame" x="303" y="746" width="91" height="27"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="27" id="LXT-7B-r9N"/>
-                                </constraints>
-                                <state key="normal" title="Button" image="map.fill" catalog="system"/>
-                                <connections>
-                                    <segue destination="jY8-8w-LEG" kind="presentation" modalPresentationStyle="fullScreen" id="aVX-Pz-oa4"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="Uca-S0-SVR" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="303" id="9Q1-gx-oqM"/>
-                            <constraint firstItem="Uca-S0-SVR" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="702" id="NOP-sg-wyu"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Uca-S0-SVR" secondAttribute="bottom" constant="89" id="c4s-5S-8QP"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Uca-S0-SVR" secondAttribute="trailing" constant="20" id="inn-Sg-VHA"/>
+                            <constraint firstItem="Lwe-2x-D1c" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="23y-Wh-CM3"/>
+                            <constraint firstItem="Lwe-2x-D1c" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Cp9-xu-Xht"/>
+                            <constraint firstItem="Lwe-2x-D1c" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="TM4-gS-MUL"/>
+                            <constraint firstAttribute="bottom" secondItem="Lwe-2x-D1c" secondAttribute="bottom" id="oZv-0L-wR5"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Maps" id="rzl-E7-5WD">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="map.fill" catalog="system" id="64s-xx-eZA">
+                            <connections>
+                                <segue destination="uPU-id-ex8" kind="show" identifier="NewExperienceSegue" id="sek-px-Zef"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="Lwe-2x-D1c" id="8gQ-MH-2GV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="137.68115942028987" y="138.61607142857142"/>
+            <point key="canvasLocation" x="1656.521739130435" y="138.61607142857142"/>
         </scene>
         <!--My Experience-->
         <scene sceneID="BH9-I9-wYQ">
@@ -56,35 +52,26 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kalen-emsley-Bkci_8qcdvQ-unsplash" translatesAutoresizingMaskIntoConstraints="NO" id="734-tJ-U4W">
-                                <rect key="frame" x="20" y="182" width="374" height="312"/>
+                                <rect key="frame" x="0.0" y="182" width="414" height="339"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="312" id="FtZ-iT-cbZ"/>
+                                    <constraint firstAttribute="height" constant="339" id="20L-cg-L9W"/>
+                                    <constraint firstAttribute="width" constant="414" id="UKU-zi-Tw4"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iIW-5X-Nak">
-                                <rect key="frame" x="115" y="502" width="184" height="36"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="gWP-Ck-XvY"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                <state key="normal" title="Add Image"/>
-                                <connections>
-                                    <action selector="selectImage:" destination="uPU-id-ex8" eventType="touchUpInside" id="qyj-PR-iGk"/>
-                                </connections>
-                            </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7yv-wK-98a">
                                 <rect key="frame" x="20" y="140" width="374" height="34"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="khW-7V-96s"/>
+                                    <constraint firstAttribute="height" constant="34" id="Ohr-wC-ChH"/>
+                                    <constraint firstAttribute="width" constant="374" id="qpA-sX-5bI"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f3e-MW-duy">
-                                <rect key="frame" x="81" y="597" width="253" height="42"/>
+                                <rect key="frame" x="81" y="663" width="253" height="36"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="253" id="m7l-4X-f58"/>
-                                    <constraint firstAttribute="height" constant="42" id="mpn-Rz-JJu"/>
+                                    <constraint firstAttribute="width" constant="253" id="a4j-ea-vxR"/>
+                                    <constraint firstAttribute="height" constant="36" id="ule-cS-Rg8"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <state key="normal" title="Go to Recorders"/>
@@ -92,29 +79,37 @@
                                     <action selector="recordTapped:" destination="uPU-id-ex8" eventType="touchUpInside" id="Xiq-Ss-dJH"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iIW-5X-Nak">
+                                <rect key="frame" x="115" y="596" width="184" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="184" id="4Y6-c1-N9R"/>
+                                    <constraint firstAttribute="height" constant="36" id="6MC-8U-gl9"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <state key="normal" title="Add Image"/>
+                                <connections>
+                                    <action selector="selectImage:" destination="uPU-id-ex8" eventType="touchUpInside" id="qyj-PR-iGk"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="734-tJ-U4W" firstAttribute="centerX" secondItem="7yv-wK-98a" secondAttribute="centerX" id="2T1-Kx-2KO"/>
-                            <constraint firstItem="734-tJ-U4W" firstAttribute="top" secondItem="7yv-wK-98a" secondAttribute="bottom" constant="8" id="6Yh-9C-L7n"/>
-                            <constraint firstItem="iIW-5X-Nak" firstAttribute="leading" secondItem="xxS-8X-MI8" secondAttribute="leading" constant="115" id="BvO-IW-nVU"/>
-                            <constraint firstItem="xxS-8X-MI8" firstAttribute="trailing" secondItem="f3e-MW-duy" secondAttribute="trailing" constant="80" id="Fa3-lG-sEt"/>
-                            <constraint firstItem="734-tJ-U4W" firstAttribute="leading" secondItem="7yv-wK-98a" secondAttribute="leading" id="H1X-dO-Puh"/>
-                            <constraint firstItem="7yv-wK-98a" firstAttribute="top" secondItem="xxS-8X-MI8" secondAttribute="top" id="JCZ-rm-k6q"/>
-                            <constraint firstItem="f3e-MW-duy" firstAttribute="top" secondItem="iIW-5X-Nak" secondAttribute="bottom" constant="59" id="QYc-0x-L6D"/>
-                            <constraint firstItem="734-tJ-U4W" firstAttribute="trailing" secondItem="7yv-wK-98a" secondAttribute="trailing" id="RxU-Wp-xDO"/>
-                            <constraint firstItem="f3e-MW-duy" firstAttribute="leading" secondItem="xxS-8X-MI8" secondAttribute="leading" constant="81" id="TmS-0i-IPB"/>
-                            <constraint firstItem="xxS-8X-MI8" firstAttribute="trailing" secondItem="7yv-wK-98a" secondAttribute="trailing" constant="20" id="U4I-4Z-fsZ"/>
-                            <constraint firstItem="xxS-8X-MI8" firstAttribute="trailing" secondItem="iIW-5X-Nak" secondAttribute="trailing" constant="115" id="bqH-6A-Xeu"/>
-                            <constraint firstItem="iIW-5X-Nak" firstAttribute="top" secondItem="734-tJ-U4W" secondAttribute="bottom" constant="8" id="efW-45-3b7"/>
-                            <constraint firstItem="7yv-wK-98a" firstAttribute="leading" secondItem="xxS-8X-MI8" secondAttribute="leading" constant="20" id="laE-4V-CZO"/>
-                            <constraint firstItem="734-tJ-U4W" firstAttribute="width" secondItem="7yv-wK-98a" secondAttribute="width" id="wvv-Av-by9"/>
+                            <constraint firstItem="734-tJ-U4W" firstAttribute="top" secondItem="7yv-wK-98a" secondAttribute="bottom" constant="8" id="2a5-vp-tBC"/>
+                            <constraint firstItem="xxS-8X-MI8" firstAttribute="trailing" secondItem="f3e-MW-duy" secondAttribute="trailing" constant="80" id="2vF-fM-ahu"/>
+                            <constraint firstItem="734-tJ-U4W" firstAttribute="trailing" secondItem="xxS-8X-MI8" secondAttribute="trailing" id="5ig-VF-ihi"/>
+                            <constraint firstItem="xxS-8X-MI8" firstAttribute="trailing" secondItem="7yv-wK-98a" secondAttribute="trailing" constant="20" id="9dl-3l-jSZ"/>
+                            <constraint firstItem="f3e-MW-duy" firstAttribute="top" secondItem="iIW-5X-Nak" secondAttribute="bottom" constant="31" id="EUG-k1-rCY"/>
+                            <constraint firstItem="xxS-8X-MI8" firstAttribute="trailing" secondItem="iIW-5X-Nak" secondAttribute="trailing" constant="115" id="HeA-Ar-eYC"/>
+                            <constraint firstItem="734-tJ-U4W" firstAttribute="leading" secondItem="xxS-8X-MI8" secondAttribute="leading" id="Pcl-UQ-PkC"/>
+                            <constraint firstItem="iIW-5X-Nak" firstAttribute="top" secondItem="734-tJ-U4W" secondAttribute="bottom" constant="75" id="XGe-kK-2Pg"/>
+                            <constraint firstItem="7yv-wK-98a" firstAttribute="leading" secondItem="xxS-8X-MI8" secondAttribute="leading" constant="20" id="efx-kO-h4f"/>
+                            <constraint firstItem="iIW-5X-Nak" firstAttribute="leading" secondItem="xxS-8X-MI8" secondAttribute="leading" constant="115" id="feX-nl-3ks"/>
+                            <constraint firstItem="7yv-wK-98a" firstAttribute="top" secondItem="xxS-8X-MI8" secondAttribute="top" id="hAa-gt-QiU"/>
+                            <constraint firstItem="f3e-MW-duy" firstAttribute="leading" secondItem="xxS-8X-MI8" secondAttribute="leading" constant="81" id="wWP-OO-M3q"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="xxS-8X-MI8"/>
                     </view>
-                    <navigationItem key="navigationItem" title="My Experience" id="Pp7-ec-Cc7">
-                        <barButtonItem key="rightBarButtonItem" title="Done" id="SBB-Cl-SeH"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="My Experience" id="Pp7-ec-Cc7"/>
                     <connections>
                         <outlet property="addPosterButton" destination="iIW-5X-Nak" id="42c-VJ-3u2"/>
                         <outlet property="photoImageView" destination="734-tJ-U4W" id="M3u-kq-xiL"/>
@@ -125,9 +120,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dbA-9E-5uq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1657.9710144927537" y="138.61607142857142"/>
+            <point key="canvasLocation" x="2441" y="139"/>
         </scene>
-        <!--My Options-->
+        <!--My Audio Recorder-->
         <scene sceneID="ypZ-y9-8dC">
             <objects>
                 <viewController id="Agh-vq-Ngf" customClass="RecordersViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
@@ -175,7 +170,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="WTp-tW-oPw"/>
                     </view>
-                    <navigationItem key="navigationItem" title="My Options" id="yax-Pn-17v"/>
+                    <navigationItem key="navigationItem" title="My Audio Recorder" id="yax-Pn-17v"/>
                     <connections>
                         <outlet property="recordAudioOutlet" destination="jQj-Wh-iuI" id="6C1-CK-Cbj"/>
                         <outlet property="recordVideoOutlet" destination="fl3-AQ-roX" id="uIj-F7-aXh"/>
@@ -184,9 +179,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4KB-Of-mo1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2402.898550724638" y="138.61607142857142"/>
+            <point key="canvasLocation" x="3197" y="139"/>
         </scene>
-        <!--Video Recording-->
+        <!--My Video Recorder-->
         <scene sceneID="sgZ-vA-dBs">
             <objects>
                 <viewController id="1F0-cp-6tk" customClass="VideoRecordingViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
@@ -216,15 +211,19 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="nAM-Ae-Grz" secondAttribute="bottom" id="7AA-ER-QLe"/>
+                            <constraint firstItem="nAM-Ae-Grz" firstAttribute="top" secondItem="zjI-Cw-9ah" secondAttribute="top" id="Ad3-hk-zEk"/>
                             <constraint firstItem="nAM-Ae-Grz" firstAttribute="leading" secondItem="zjI-Cw-9ah" secondAttribute="leading" id="HmS-IV-Z3H"/>
                             <constraint firstItem="nAM-Ae-Grz" firstAttribute="top" secondItem="zjI-Cw-9ah" secondAttribute="top" id="LEh-09-AKo"/>
+                            <constraint firstItem="nAM-Ae-Grz" firstAttribute="leading" secondItem="zjI-Cw-9ah" secondAttribute="leading" id="YSY-KF-6p8"/>
                             <constraint firstItem="nAM-Ae-Grz" firstAttribute="trailing" secondItem="zjI-Cw-9ah" secondAttribute="trailing" id="oGz-Hm-nBh"/>
                             <constraint firstAttribute="bottom" secondItem="nAM-Ae-Grz" secondAttribute="bottom" id="qdR-Qh-6Qm"/>
+                            <constraint firstItem="nAM-Ae-Grz" firstAttribute="trailing" secondItem="zjI-Cw-9ah" secondAttribute="trailing" id="wMJ-y2-piP"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="zjI-Cw-9ah"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Video Recording" id="LuY-rH-Xpb">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="8JJ-FK-w7G">
+                    <navigationItem key="navigationItem" title="My Video Recorder" id="LuY-rH-Xpb">
+                        <barButtonItem key="rightBarButtonItem" title="Save Video" id="8JJ-FK-w7G">
                             <connections>
                                 <action selector="saveTapped:" destination="1F0-cp-6tk" id="7ue-9Z-fNg"/>
                             </connections>
@@ -238,26 +237,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CPU-31-K1H" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="bp8-DG-duS" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3182.608695652174" y="138.61607142857142"/>
+            <point key="canvasLocation" x="3995.652173913044" y="138.61607142857142"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="atb-vf-Lb6">
+        <scene sceneID="vU6-f3-D2G">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jY8-8w-LEG" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="U8D-Nh-heo" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="2x7-dV-InY"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="QBn-5y-DUh">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="4EM-ZU-yMv">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="uPU-id-ex8" kind="relationship" relationship="rootViewController" id="OIz-Wb-F2t"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="jZO-jM-8IW"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="L7M-Ft-ApL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="d80-sn-6TX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="909" y="139"/>
+            <point key="canvasLocation" x="915.94202898550736" y="138.61607142857142"/>
         </scene>
     </scenes>
     <resources>

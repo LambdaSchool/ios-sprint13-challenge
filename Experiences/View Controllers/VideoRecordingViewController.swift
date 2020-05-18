@@ -22,10 +22,13 @@ class VideoRecordingViewController: UIViewController {
     var videoURL: URL?
     var player: AVPlayer!
     var mapViewController: MapViewController?
-
+    
+    @IBOutlet weak var cameraView: CameraPreviewView!
+    @IBOutlet weak var recordingButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         cameraView.videoPlayerLayer.videoGravity = .resizeAspectFill   //.resizeAspectFill
         setUpCamera()
         
@@ -51,27 +54,28 @@ class VideoRecordingViewController: UIViewController {
         captureSession.stopRunning()
     }
     
-    @IBOutlet weak var cameraView: CameraPreviewView!
-   
-    @IBOutlet weak var recordingButton: UIButton!
-    
+    //MARK: - Actions:
     
     @IBAction func startStopRecording(_ sender: Any) {
         toggleRecording()
     }
     
     @IBAction func saveTapped(_ sender: Any) {
-        guard let userLocation = userLocation,
-            let videoURL = videoURL,
-            let experienceTitle = experienceTitle,
-            let picture = picture,
-            let audio = recordingURL,
-            let mapViewController = mapViewController else { return }
+        guard let userLocation = userLocation else { return }
+        guard let videoURL = videoURL else { return }
+        guard let experienceTitle = experienceTitle else { return }
+        guard let picture = picture else { return }
+        guard let audio = recordingURL else { return }
+        guard let mapViewController = mapViewController else { return }
         
         let video = Experience.Video(videoPost: videoURL)
         mapViewController.experience = Experience(experienceTitle: experienceTitle,
-                                                  geotag: userLocation, picture: picture,
-                                                  video: video, audio: audio)
+                                                  geotag: userLocation,
+                                                  picture: picture,
+                                                  video: video,
+                                                  audio: audio)
+        
+        navigationController?.popToRootViewController(animated: true)
     }
     
     @objc func handleTapGesture(_ tapGesture: UITapGestureRecognizer) {
@@ -97,17 +101,14 @@ class VideoRecordingViewController: UIViewController {
         view.layer.addSublayer(playerLayer)
         
         player.play()
-        
-        
     }
     
     func playRecording() {
         if let player = player {
-        
-        player.seek(to: CMTime.zero)
-        player.play()
+            player.seek(to: CMTime.zero)
+            player.play()
+        }
     }
-}
     
     func setUpCamera() {
         guard let camera = bestCamera() else { return }
@@ -123,9 +124,9 @@ class VideoRecordingViewController: UIViewController {
             present(alert, animated: true)
             return
         }
-
+        
         guard captureSession.canAddInput(cameraInput) else {
-            preconditionFailure("Can't create am input \(cameraInput)")
+            preconditionFailure("Can't create an input \(cameraInput)")
         }
         
         captureSession.addInput(cameraInput)
@@ -177,15 +178,15 @@ class VideoRecordingViewController: UIViewController {
         if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
             return device
         } else {
-                let alert = UIAlertController(title: "No Camera", message: "There is no suitable camera to use", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .destructive))
-                
-                present(alert, animated: true)
-                recordingButton.isEnabled = false
-                return nil
-            }
-        }
+            let alert = UIAlertController(title: "No Camera", message: "There is no suitable camera to use", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .destructive))
             
+            present(alert, animated: true)
+            recordingButton.isEnabled = false
+            return nil
+        }
+    }
+    
     private func bestMicrophone() -> AVCaptureDevice {
         if let device = AVCaptureDevice.default(for: .audio) {
             return device
