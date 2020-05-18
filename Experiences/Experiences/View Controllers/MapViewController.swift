@@ -15,7 +15,7 @@ class MapViewController: UIViewController {
     
     // MARK: - Properties
     
-    let experinceController = ExperienceController()
+    let experienceController = ExperienceController()
     
 
     override func viewDidLoad() {
@@ -25,6 +25,15 @@ class MapViewController: UIViewController {
     
 
     @IBAction func addExperienceButtonTapped(_ sender: Any) {
+        performSegue(withIdentifier: "ShowCreateExperienceSegue", sender: self)
+    }
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowCreateExperienceSegue" {
+            guard let VC = segue.destination as? CreateExperienceViewController else { return }
+            VC.experienceController = experienceController
+        }
     }
     
 }

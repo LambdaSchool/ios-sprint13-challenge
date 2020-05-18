@@ -9,6 +9,8 @@
 import UIKit
 
 class CreateExperienceViewController: UIViewController {
+    
+    var experienceController: ExperienceController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
