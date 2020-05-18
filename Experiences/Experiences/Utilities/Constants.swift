@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 
 struct DW {
-    static let buttonCornerRadius: CGFloat = 8.0
+    static let buttonCornerRadius: CGFloat = 4.0
 }
 
 struct SegueIdentifiers {
