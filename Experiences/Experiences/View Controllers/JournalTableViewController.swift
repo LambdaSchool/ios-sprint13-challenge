@@ -65,8 +65,13 @@ class JournalTableViewController: UITableViewController {
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+       if segue.identifier == "MapViewSegue" {
+            guard let mapVC = segue.destination as? MapViewController else { return }
+            mapVC.experiences = self.experienceArray
+            for experience in self.experienceArray {
+                print("\(experience.latitude) , \(experience.longitude)")
+            }
+        }
     }
 
 }

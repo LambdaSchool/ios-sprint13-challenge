@@ -6,25 +6,51 @@
 //  Copyright © 2020 DenCedeno Co. All rights reserved.
 //
 
+
 import UIKit
+import MapKit
+import CoreData
+
+extension String {
+    static let annotationReuseIdentifier = "ExperienceAnnotationView"
+}
 
 class MapViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
     
+    var experiences: [Experience] = []
 
-    /*
-    // MARK: - Navigation
+        @IBOutlet var mapView: MKMapView!
+        
+        private var userTrackingButton: MKUserTrackingButton!
+        var locationManager: CLLocationManager?
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        
+        override func viewDidLoad() {
+            super.viewDidLoad()
+
+            userTrackingButton = MKUserTrackingButton(mapView: mapView)
+            userTrackingButton.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(userTrackingButton)
+            
+            NSLayoutConstraint.activate([
+                userTrackingButton.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 20),
+                mapView.bottomAnchor.constraint(equalTo: userTrackingButton.bottomAnchor, constant: 20)
+            ])
+            
+            mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: .annotationReuseIdentifier)
+            
+            fetchExperience(experiences)
+        }
+
+        
+        func fetchExperience(_ expereinces: [Experience]) {
+          for experience in experiences {
+            let annotations = MKPointAnnotation()
+            annotations.title = experience.title
+            annotations.subtitle = "\(String(describing: experience.date))"
+            annotations.coordinate = CLLocationCoordinate2D(latitude:
+              experience.latitude, longitude: experience.longitude)
+            mapView.addAnnotation(annotations)
+          }
+        }
     }
-    */
-
-}
