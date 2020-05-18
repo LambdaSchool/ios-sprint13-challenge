@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class VisitsTableViewController: UITableViewController, VisitDelegate {
     // MARK: - Properties
@@ -17,12 +18,15 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
         return visit
     }
     
+    private let locationManager = CLLocationManager()
+    
     // MARK: - Views
     override func viewDidLoad() {
         super.viewDidLoad()
 
         updateViews()
         tableView.delegate = self
+        locationManager.requestWhenInUseAuthorization()
     }
     
     func updateViews() {
