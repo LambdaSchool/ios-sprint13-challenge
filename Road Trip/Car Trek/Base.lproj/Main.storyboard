@@ -21,7 +21,7 @@
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="6h6-UQ-cAC" detailTextLabel="UsL-fS-mmp" style="IBUITableViewCellStyleValue1" id="6Du-ts-piZ">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="visitCell" textLabel="6h6-UQ-cAC" style="IBUITableViewCellStyleDefault" id="6Du-ts-piZ">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6Du-ts-piZ" id="PUJ-FM-0su">
@@ -29,14 +29,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6h6-UQ-cAC">
-                                            <rect key="frame" x="20" y="12" width="33.5" height="20.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UsL-fS-mmp">
-                                            <rect key="frame" x="350" y="12" width="44" height="20.5"/>
+                                            <rect key="frame" x="20" y="0.0" width="374" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -96,6 +89,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FUb-lY-Fzh">
                                                 <rect key="frame" x="0.0" y="158" width="150" height="30"/>
                                                 <state key="normal" title="Add Photo"/>
+                                                <connections>
+                                                    <action selector="addPhoto:" destination="zrM-aK-DjK" eventType="touchUpInside" id="b90-T1-7bu"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -139,6 +135,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0a8-N0-BZB">
                                                 <rect key="frame" x="114.5" y="72" width="145" height="30"/>
                                                 <state key="normal" title="Add Audio Recording"/>
+                                                <connections>
+                                                    <action selector="addAudioRecording:" destination="zrM-aK-DjK" eventType="touchUpInside" id="3Wo-bM-lcV"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -157,6 +156,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8S2-oP-Bby">
                                                 <rect key="frame" x="0.0" y="258" width="250" height="30"/>
                                                 <state key="normal" title="Add Video Recording"/>
+                                                <connections>
+                                                    <action selector="addVideoRecording:" destination="zrM-aK-DjK" eventType="touchUpInside" id="P8e-pr-hlg"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -178,8 +180,21 @@
                         <viewLayoutGuide key="safeArea" id="HaY-Jx-WuM"/>
                     </view>
                     <navigationItem key="navigationItem" id="BSe-vR-dpi">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="bZq-YJ-vUn"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="bZq-YJ-vUn">
+                            <connections>
+                                <action selector="saveVisit:" destination="zrM-aK-DjK" id="gLQ-hX-ifZ"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="audioPlayButton" destination="ItO-tr-RaH" id="7im-J8-Tcs"/>
+                        <outlet property="audioSlider" destination="oRu-Kt-aOl" id="Pcp-YD-kKw"/>
+                        <outlet property="elapsedTimeLabel" destination="a0b-Iv-Id5" id="Svx-oN-Pnj"/>
+                        <outlet property="nameTextField" destination="p6i-MJ-j15" id="vSF-nR-0mz"/>
+                        <outlet property="photoImageView" destination="DzL-jQ-7DH" id="4i4-Wy-eb6"/>
+                        <outlet property="totalTimeLabel" destination="V4T-VV-mBg" id="cp6-0V-HZC"/>
+                        <outlet property="videoView" destination="JmU-S8-Lww" id="PXf-0n-84g"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IRP-YS-q6u" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
