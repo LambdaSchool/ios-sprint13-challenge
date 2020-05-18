@@ -11,4 +11,10 @@ import MapKit
 
 class ExperiencesMapViewController: UIViewController {
     
+    // MARK: - IBOutlets
+    
+    @IBOutlet var mapView: MKMapView!
+    @IBOutlet var createExperienceButton: UIButton!
+    
+    
 }
