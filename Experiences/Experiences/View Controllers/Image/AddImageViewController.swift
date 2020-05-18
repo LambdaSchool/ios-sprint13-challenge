@@ -8,7 +8,17 @@
 
 import UIKit
 
+protocol AddMediaViewControllerDelegate {
+    func didAddMedia(mediaType: MediaType, url: URL)
+}
+
 class AddImageViewController: UIViewController {
+
+    // MARK: - Properties
+
+    var delegate: AddMediaViewControllerDelegate?
+    
+    // MARK: - View Controller Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,15 +26,5 @@ class AddImageViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }
