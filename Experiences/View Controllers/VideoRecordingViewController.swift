@@ -10,6 +10,10 @@ import UIKit
 import AVFoundation
 import MapKit
 
+protocol RecordedVideoDelegate: AnyObject {
+    func recordedVideoURL(url: URL)
+}
+
 class VideoRecordingViewController: UIViewController {
     
     var userLocation: CLLocationCoordinate2D?
@@ -20,6 +24,7 @@ class VideoRecordingViewController: UIViewController {
     lazy  private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     var videoURL: URL?
+    weak var delegate: RecordedVideoDelegate?
     var player: AVPlayer!
     var mapViewController: MapViewController?
     
@@ -154,7 +159,8 @@ class VideoRecordingViewController: UIViewController {
         if fileOutput.isRecording {
             fileOutput.stopRecording()
         } else {
-            fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
+            videoURL = newRecordingURL()
+            fileOutput.startRecording(to: videoURL!, recordingDelegate: self)
         }
     }
     
@@ -201,6 +207,10 @@ extension VideoRecordingViewController: AVCaptureFileOutputRecordingDelegate {
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         if let error = error {
             print("Error saving video: \(error)")
+        } else {
+            delegate?.recordedVideoURL(url: outputFileURL)
+            print("Video recorded, passing URL: \(outputFileURL)")
+            dismiss(animated: true, completion: nil)
         }
         updateViews()
         playMovie(url: outputFileURL)
