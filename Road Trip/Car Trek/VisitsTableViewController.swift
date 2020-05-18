@@ -10,8 +10,12 @@ import UIKit
 
 class VisitsTableViewController: UITableViewController, VisitDelegate {
     // MARK: - Properties
-    public var visits: [Visit] = []
-    var visit: Visit?
+    var visits: [Visit] = []
+    var visit: Visit? {
+        guard let indexPath = tableView.indexPathForSelectedRow else { return nil }
+        let visit = visits[indexPath.row]
+        return visit
+    }
     
     // MARK: - Views
     override func viewDidLoad() {
@@ -37,11 +41,12 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
         
         let displayedVisit = visits[indexPath.row]
         cell.textLabel?.text = displayedVisit.name
-        visit = displayedVisit
         print("Added \(visit?.name) to TVC")
 
         return cell
     }
+    
+    
     
     /*
     // Override to support editing the table view.
