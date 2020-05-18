@@ -112,36 +112,12 @@ class AddImageViewController: UIViewController {
         guard let originalImage = originalImage?.flattened, let ciImage = CIImage(image: originalImage) else { return }
         
         let processedImage = self.image(byFiltering: ciImage)
-        let imageURL = newMediaURL(forType: .image)
+        let imageURL = MediaFile.newURL(forType: .image)
         
         store(image: processedImage, to: imageURL)
         delegate?.didSaveMedia(mediaType: .image, to: imageURL)
         
         navigationController?.popViewController(animated: true)
-    }
-    
-    private func newMediaURL(forType mediaType: MediaType) -> URL {
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime]
-
-        let name = formatter.string(from: Date())
-        
-        var fileExtension: String
-        
-        switch mediaType {
-        case .image:
-            fileExtension = "png"
-        case .audio:
-            fileExtension = "wav"
-        case .video:
-            fileExtension = "mov"
-        }
-        
-        let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension(fileExtension)
-        
-        return fileURL
     }
     
     private func store(image: UIImage, to url: URL) {

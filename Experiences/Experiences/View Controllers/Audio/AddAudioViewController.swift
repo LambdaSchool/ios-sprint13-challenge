@@ -211,7 +211,7 @@ class AddAudioViewController: UIViewController {
             return
         }
         
-        recordingURL = createNewRecordingURL()
+        recordingURL = MediaFile.newURL(forType: .audio)
         
         let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
         

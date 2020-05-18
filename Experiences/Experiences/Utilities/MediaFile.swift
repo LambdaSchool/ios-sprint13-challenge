@@ -24,7 +24,7 @@ class MediaFile {
         case .image:
             fileExtension = "png"
         case .audio:
-            fileExtension = "wav"
+            fileExtension = "caf"
         case .video:
             fileExtension = "mov"
         }
