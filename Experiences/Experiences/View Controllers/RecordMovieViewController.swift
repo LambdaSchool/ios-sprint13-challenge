@@ -28,7 +28,7 @@ class RecordMovieViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         cameraView.videoPlayerView.videoGravity = .resizeAspectFill
         setUpCamera()
         print(experienceController?.experiences, experience)
@@ -43,77 +43,77 @@ class RecordMovieViewController: UIViewController {
         super.viewDidDisappear(animated)
         captureSession.stopRunning()
     }
+    
+    func toggleRecording() {
+        if fileOutput.isRecording {
+            fileOutput.stopRecording()
+        } else {
+            fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
+        }
+    }
+    
+    private func setUpCamera() {
+        let camera = bestCamera()
+        captureSession.beginConfiguration()
         
-        func toggleRecording() {
-            if fileOutput.isRecording {
-                fileOutput.stopRecording()
-            } else {
-                fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
-            }
+        guard let cameraInput = try? AVCaptureDeviceInput(device: camera) else {
+            fatalError("No video input")
+        }
+        guard captureSession.canAddInput(cameraInput) else {
+            fatalError("Can't add video input")
+        }
+        captureSession.addInput(cameraInput)
+        
+        if captureSession.canSetSessionPreset(.hd1920x1080) {
+            captureSession.canSetSessionPreset(.hd1920x1080)
         }
         
-        private func setUpCamera() {
-            let camera = bestCamera()
-            captureSession.beginConfiguration()
-            
-            guard let cameraInput = try? AVCaptureDeviceInput(device: camera) else {
-                fatalError("No video input")
-            }
-            guard captureSession.canAddInput(cameraInput) else {
-                fatalError("Can't add video input")
-            }
-            captureSession.addInput(cameraInput)
-            
-            if captureSession.canSetSessionPreset(.hd1920x1080) {
-                captureSession.canSetSessionPreset(.hd1920x1080)
-            }
-            
-            let microphone = bestAudio()
-            guard let audioInput = try? AVCaptureDeviceInput(device: microphone) else {
-                fatalError("No audio input")
-            }
-            guard captureSession.canAddInput(audioInput) else {
-                fatalError("Can't add audio input")
-            }
-            captureSession.addInput(audioInput)
-            
-            guard captureSession.canAddOutput(fileOutput) else {
-                fatalError("Can't set up the file output")
-            }
-            captureSession.addOutput(fileOutput)
-            
-            captureSession.commitConfiguration()
-            cameraView.session = captureSession
+        let microphone = bestAudio()
+        guard let audioInput = try? AVCaptureDeviceInput(device: microphone) else {
+            fatalError("No audio input")
         }
+        guard captureSession.canAddInput(audioInput) else {
+            fatalError("Can't add audio input")
+        }
+        captureSession.addInput(audioInput)
         
-        func newRecordingURL() -> URL {
-            
-            let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-            
-            video = UUID().uuidString
-            print(video)
-            let fileURL = documentsDirectory.appendingPathComponent(video).appendingPathExtension("mov")
-            
-            return fileURL
+        guard captureSession.canAddOutput(fileOutput) else {
+            fatalError("Can't set up the file output")
         }
+        captureSession.addOutput(fileOutput)
         
-        func bestCamera() -> AVCaptureDevice {
-            if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
-                return device
-            }
-            fatalError("No camera")
-        }
+        captureSession.commitConfiguration()
+        cameraView.session = captureSession
+    }
+    
+    func newRecordingURL() -> URL {
         
-        private func bestAudio() -> AVCaptureDevice {
-            if let device = AVCaptureDevice.default(for: .audio) {
-                return device
-            }
-            fatalError("No audio")
-        }
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         
-        func updateViews() {
-            recordButton.isSelected = fileOutput.isRecording
+        video = UUID().uuidString
+        print(video)
+        let fileURL = documentsDirectory.appendingPathComponent(video).appendingPathExtension("mov")
+        
+        return fileURL
+    }
+    
+    func bestCamera() -> AVCaptureDevice {
+        if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
+            return device
         }
+        fatalError("No camera")
+    }
+    
+    private func bestAudio() -> AVCaptureDevice {
+        if let device = AVCaptureDevice.default(for: .audio) {
+            return device
+        }
+        fatalError("No audio")
+    }
+    
+    func updateViews() {
+        recordButton.isSelected = fileOutput.isRecording
+    }
     
     
     //MARK: - IBActions
@@ -124,14 +124,17 @@ class RecordMovieViewController: UIViewController {
     }
     
     @IBAction func saveButtonTapped(_ sender: Any) {
-               
-    // Issue here  - set breakpoint 
+        addVideo() 
+        navigationController?.popToRootViewController(animated: true)
+    }
+    
+    func addVideo() {
+        // Issue here  - set breakpoint
         guard let title = experienceTitle,
             let lat = latitude,
             let long = longitude else { return }
         
         experienceController?.createExperience(title: title, latitude: lat, longitude: long, videoExtension: video, audioExtension: audioExtension ?? "", photoExtension: photoExtension ?? "")
-        navigationController?.popToRootViewController(animated: true)
     }
 }
 
