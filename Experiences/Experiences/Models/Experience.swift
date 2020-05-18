@@ -7,3 +7,18 @@
 //
 
 import Foundation
+
+class Experience: NSObject, Codable {
+    
+    let name: String
+    let id: String = UUID().uuidString
+    let date: Date = Date()
+    let latitude: Double
+    let longitude: Double
+    var videoExtension: String
+    var videoURL: URL?
+    let audioExtension: String
+    var audioURL: URL?
+    var photoExtension: String
+    var photoURL: URL?
+}
