@@ -26,21 +26,19 @@ class MapViewController: UIViewController {
         addNewEntryButton.setTitle("ADD", for: .normal)
         addNewEntryButton.setTitleColor(.black, for: .normal)
         view.addSubview(addNewEntryButton)
+        addNewEntryButton.addTarget(self, action: #selector(addNewEntryButtonPressed(_:)), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
             addNewEntryButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -15),
             addNewEntryButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -30)
         ])
     }
-
-  
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    // MARK: - Actions
+    @objc func addNewEntryButtonPressed(_ sender: UIButton!) {
+        performSegue(withIdentifier: "AddNewXP", sender: self)
     }
+
 }
 
 extension MapViewController: MKMapViewDelegate {
