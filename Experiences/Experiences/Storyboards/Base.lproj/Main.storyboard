@@ -130,9 +130,21 @@
                         <viewLayoutGuide key="safeArea" id="SEp-iB-d4Q"/>
                     </view>
                     <navigationItem key="navigationItem" title="New Experience" id="YpC-7f-yRy">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="sj1-cb-mYu"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="SuC-st-ZnH"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="sj1-cb-mYu">
+                            <connections>
+                                <action selector="cancelButtonTapped:" destination="Chl-DJ-Dgl" id="xGT-j7-0yI"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="SuC-st-ZnH">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="Chl-DJ-Dgl" id="LJB-Qd-E2d"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="imageView" destination="iH8-ip-eEE" id="LBn-VB-Z7B"/>
+                        <outlet property="titleTextField" destination="ZcQ-jA-4qQ" id="Cbw-pX-EsP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jZW-9N-36d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
