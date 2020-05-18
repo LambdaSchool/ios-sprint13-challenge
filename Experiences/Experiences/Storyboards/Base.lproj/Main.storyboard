@@ -115,6 +115,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="iH8-ip-eEE" firstAttribute="top" secondItem="ZcQ-jA-4qQ" secondAttribute="bottom" constant="8" id="2ci-dh-R0S"/>
+                            <constraint firstItem="SEp-iB-d4Q" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ETz-fP-Prf" secondAttribute="bottom" constant="16" id="9jA-eG-gSY"/>
                             <constraint firstItem="wos-ct-g29" firstAttribute="bottom" secondItem="iH8-ip-eEE" secondAttribute="bottom" constant="-20" id="DKW-wk-0dc"/>
                             <constraint firstItem="ETz-fP-Prf" firstAttribute="centerX" secondItem="SEp-iB-d4Q" secondAttribute="centerX" id="ePn-IQ-Msj"/>
                             <constraint firstItem="wos-ct-g29" firstAttribute="trailing" secondItem="iH8-ip-eEE" secondAttribute="trailing" constant="-4" id="gIT-6p-2m7"/>
@@ -177,11 +178,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="ZDL-4y-bSH">
-                                <rect key="frame" x="16" y="124" width="343" height="343"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="ZDL-4y-bSH">
+                                <rect key="frame" x="16" y="138.99999999999994" width="343" height="315.33333333333337"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="ZDL-4y-bSH" secondAttribute="height" multiplier="1:1" priority="250" id="R2L-L1-gUk"/>
+                                    <constraint firstAttribute="width" secondItem="ZDL-4y-bSH" secondAttribute="height" multiplier="1:1" priority="750" id="R2L-L1-gUk"/>
                                 </constraints>
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="175"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="mQs-eO-zQ3" userLabel="Filter Stack View">
                                 <rect key="frame" x="16" y="485" width="327" height="126"/>
@@ -197,6 +201,9 @@
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Cpl-3T-oHs" userLabel="Brightness Slider">
                                                 <rect key="frame" x="88" y="0.0" width="241" height="31"/>
+                                                <connections>
+                                                    <action selector="filterSettingsChanged:" destination="0jn-fe-hj1" eventType="valueChanged" id="TOc-YR-lDw"/>
+                                                </connections>
                                             </slider>
                                         </subviews>
                                     </stackView>
@@ -211,6 +218,9 @@
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.25" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="bWH-LH-z3Z" userLabel="Contrast Slider">
                                                 <rect key="frame" x="88" y="0.0" width="241" height="31"/>
+                                                <connections>
+                                                    <action selector="filterSettingsChanged:" destination="0jn-fe-hj1" eventType="valueChanged" id="Gqq-aV-nKM"/>
+                                                </connections>
                                             </slider>
                                         </subviews>
                                     </stackView>
@@ -225,6 +235,9 @@
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="6NA-dG-bd8" userLabel="Saturation Slider">
                                                 <rect key="frame" x="88" y="0.0" width="241" height="31"/>
+                                                <connections>
+                                                    <action selector="filterSettingsChanged:" destination="0jn-fe-hj1" eventType="valueChanged" id="zcW-bo-n3N"/>
+                                                </connections>
                                             </slider>
                                         </subviews>
                                     </stackView>
@@ -239,6 +252,9 @@
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="Zx4-gO-XFS" userLabel="Saturation Slider">
                                                 <rect key="frame" x="36.333333333333343" y="0.0" width="292.66666666666663" height="31"/>
+                                                <connections>
+                                                    <action selector="filterSettingsChanged:" destination="0jn-fe-hj1" eventType="valueChanged" id="VTX-RC-vNp"/>
+                                                </connections>
                                             </slider>
                                         </subviews>
                                     </stackView>
@@ -262,8 +278,19 @@
                         <viewLayoutGuide key="safeArea" id="zlK-Nw-mBK"/>
                     </view>
                     <navigationItem key="navigationItem" title="Add Image" id="bEh-YZ-TzL">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="mTa-36-zh1"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="mTa-36-zh1">
+                            <connections>
+                                <action selector="saveButtonPressed:" destination="0jn-fe-hj1" id="VBk-6x-ezp"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="blurSlider" destination="Zx4-gO-XFS" id="Bmm-iu-3aZ"/>
+                        <outlet property="brightnessSlider" destination="Cpl-3T-oHs" id="x0I-d7-Ef5"/>
+                        <outlet property="contrastSlider" destination="bWH-LH-z3Z" id="hUx-X8-VWr"/>
+                        <outlet property="imageView" destination="ZDL-4y-bSH" id="Bo8-gt-HX9"/>
+                        <outlet property="saturationSlider" destination="6NA-dG-bd8" id="gcE-34-0AZ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tug-qI-Uve" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
