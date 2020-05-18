@@ -20,7 +20,9 @@ class MapViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+
+        mapView.delegate = self
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceView")
     }
     
 
@@ -29,8 +31,33 @@ class MapViewController: UIViewController {
         let vc = storyboard.instantiateViewController(identifier: "CreateExperienceViewController")
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    // MARK: - Navigation
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        guard let experience = experienceController.experiences.first else { return }
+        
+        mapView.addAnnotations(experienceController.experiences)
+        
+        let span = MKCoordinateSpan(latitudeDelta: 2.5, longitudeDelta: 2.5)
+        
+        let region = MKCoordinateRegion(center: experience.coordinate, span: span)
+        
+        mapView.setRegion(region, animated: true)
+        
+    }
 
     
+}
+
+extension MapViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        guard let experience = annotation as? Experience else { fatalError("No coordinates") }
+        guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceView") as? MKMarkerAnnotationView else { fatalError("No view") }
+        
+        annotationView.canShowCallout = true
+        annotationView.annotation = experience
+        return annotationView
+    }
 }
 

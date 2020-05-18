@@ -32,9 +32,11 @@ class CreateExperienceViewController: UIViewController {
         }
     }
     var audio = ""
+    let recordMovieController = RecordMovieViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        titleTextField.delegate = self
 
         // Do any additional setup after loading the view.
     }
@@ -166,6 +168,24 @@ class CreateExperienceViewController: UIViewController {
     
     private func showCamera() {
         performSegue(withIdentifier: "ShowRecordVideoSegue", sender: self)
+    
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowRecordVideoSegue" {
+            guard let VC = segue.destination as? RecordMovieViewController,
+                let experienceTitle = experienceTitle,
+                let latitude = latitude,
+                let longitude = longitude else { return }
+            VC.experienceController = experienceController
+            
+            VC.experienceTitle = experienceTitle
+            VC.latitude = latitude
+            VC.longitude = longitude
+            VC.audioExtension = audioExtension
+            VC.photoExtension = photoExtension
+        }
     }
 
     
@@ -195,7 +215,7 @@ class CreateExperienceViewController: UIViewController {
         photoExtension = image
     }
     
-    // Random lat/long. "Should" be East Coast area...
+    // Random lat/long. "Should" be Maryland/East Coast area...
     func lat() -> Double {
         return Double(Int.random(in: 39_299_236...40_000_000)) / 1_000_000
     }
@@ -208,6 +228,12 @@ class CreateExperienceViewController: UIViewController {
 }
 
 //MARK: - Extensions
+extension CreateExperienceViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+        return true
+    }
+}
 
 extension CreateExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
