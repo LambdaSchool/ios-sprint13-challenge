@@ -24,7 +24,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="60"/>
                                 <state key="normal" title="📝"/>
                                 <connections>
-                                    <segue destination="kQi-V1-cdu" kind="show" id="CnZ-KD-r84"/>
+                                    <segue destination="kQi-V1-cdu" kind="show" identifier="AddExperienceSegue" id="CnZ-KD-r84"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -75,7 +75,7 @@
                                     </preferredSymbolConfiguration>
                                 </state>
                                 <connections>
-                                    <segue destination="0jn-fe-hj1" kind="show" identifier="" id="0pa-8H-Z4e"/>
+                                    <segue destination="0jn-fe-hj1" kind="show" identifier="AddImageSegue" id="0pa-8H-Z4e"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h7F-3f-jpQ">
@@ -90,7 +90,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="NtN-cv-5Gs" kind="show" id="TnD-Ey-a6V"/>
+                                    <segue destination="NtN-cv-5Gs" kind="show" identifier="AddAudioSegue" id="TnD-Ey-a6V"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ETz-fP-Prf">
@@ -105,7 +105,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="ph0-oc-Yf3" kind="show" id="BIx-WF-DzF"/>
+                                    <segue destination="ph0-oc-Yf3" kind="show" identifier="AddVideoSegue" id="BIx-WF-DzF"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -256,7 +256,7 @@
         <!--Add Video Recording-->
         <scene sceneID="3AM-jI-VLS">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="ph0-oc-Yf3" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="ph0-oc-Yf3" customClass="AddVideoViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eqi-UC-Rgh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -309,7 +309,7 @@
         <!--Add Audio Recording-->
         <scene sceneID="3E8-NK-Wqa">
             <objects>
-                <viewController id="NtN-cv-5Gs" sceneMemberID="viewController">
+                <viewController id="NtN-cv-5Gs" customClass="AddAudioViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Xig-Ci-A3y">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -346,6 +346,9 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstItem="qUa-JE-hQh" firstAttribute="width" secondItem="DTo-iG-NNi" secondAttribute="width" id="Bp4-vy-Eu8"/>
+                                        </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="8W7-Mq-RYJ">
                                         <rect key="frame" x="0.0" y="30" width="343" height="46"/>
