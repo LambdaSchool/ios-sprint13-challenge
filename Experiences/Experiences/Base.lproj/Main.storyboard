@@ -82,7 +82,7 @@
                                                 <rect key="frame" x="145" y="85" width="84" height="30"/>
                                                 <state key="normal" title="Add a Photo"/>
                                                 <connections>
-                                                    <action selector="addPhotoButtonTapped:" destination="zhc-xX-AFT" eventType="touchUpInside" id="MyD-NS-BZW"/>
+                                                    <action selector="addPhotoButtonTapped:" destination="zhc-xX-AFT" eventType="touchUpInside" id="Sdf-NE-sKE"/>
                                                 </connections>
                                             </button>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="248" translatesAutoresizingMaskIntoConstraints="NO" id="E8l-Zf-p9R">
@@ -108,7 +108,7 @@
                                         <color key="tintColor" red="0.58072251080000004" green="0.066734083" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Record Audio"/>
                                         <connections>
-                                            <action selector="recordAudioButtonTapped:" destination="zhc-xX-AFT" eventType="touchUpInside" id="6m0-6B-U8i"/>
+                                            <action selector="recordAudioButtonTapped:" destination="zhc-xX-AFT" eventType="touchUpInside" id="Xsq-aL-FBB"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -120,14 +120,17 @@
                     <navigationItem key="navigationItem" title="New Experience" id="uGg-xO-uBs">
                         <barButtonItem key="rightBarButtonItem" title="Next" id="yFU-C2-EdW">
                             <connections>
+                                <action selector="nextButtonTapped:" destination="zhc-xX-AFT" id="0h5-Q7-XId"/>
                                 <segue destination="Wl4-8z-m0w" kind="show" identifier="ShowRecordVideoSegue" id="z9X-AK-Zmb"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="experienceImageView" destination="E8l-Zf-p9R" id="ouW-0O-Hb3"/>
                         <outlet property="imageView" destination="E8l-Zf-p9R" id="0jN-mA-xQP"/>
+                        <outlet property="recordAudioButton" destination="9tV-zo-q9N" id="PcO-BT-IO9"/>
                         <outlet property="recordButton" destination="9tV-zo-q9N" id="Px5-m2-9lS"/>
-                        <outlet property="titleTextField" destination="57M-PQ-Wc7" id="D9D-kd-QrJ"/>
+                        <outlet property="titleTextField" destination="57M-PQ-Wc7" id="THc-WX-lfO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7t7-0u-PXe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
