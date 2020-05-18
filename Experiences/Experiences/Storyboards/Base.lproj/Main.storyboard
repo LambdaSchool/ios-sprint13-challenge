@@ -82,14 +82,13 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h7F-3f-jpQ">
-                                <rect key="frame" x="75" y="541" width="225" height="50"/>
+                                <rect key="frame" x="48" y="541" width="279" height="50"/>
                                 <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="NK5-QJ-kmV"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="225" id="oAd-c0-3b5"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
-                                <state key="normal" title="Add Audio Recording">
+                                <state key="normal" title="Add Audio">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -97,14 +96,13 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ETz-fP-Prf">
-                                <rect key="frame" x="75" y="623" width="225" height="50"/>
+                                <rect key="frame" x="48" y="623" width="279" height="50"/>
                                 <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="225" id="VZu-Gm-Pf8"/>
                                     <constraint firstAttribute="height" constant="50" id="uY1-PT-c0s"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
-                                <state key="normal" title="Add Video Recording">
+                                <state key="normal" title="Add Video">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -122,6 +120,8 @@
                             <constraint firstItem="SEp-iB-d4Q" firstAttribute="trailing" secondItem="iH8-ip-eEE" secondAttribute="trailing" constant="16" id="lAw-Qb-lAg"/>
                             <constraint firstItem="iH8-ip-eEE" firstAttribute="leading" secondItem="SEp-iB-d4Q" secondAttribute="leading" constant="16" id="lZ5-6n-Qtj"/>
                             <constraint firstItem="h7F-3f-jpQ" firstAttribute="centerX" secondItem="SEp-iB-d4Q" secondAttribute="centerX" id="lcm-QD-luB"/>
+                            <constraint firstItem="ETz-fP-Prf" firstAttribute="leading" secondItem="SEp-iB-d4Q" secondAttribute="leading" constant="48" id="n3A-wX-zng"/>
+                            <constraint firstItem="h7F-3f-jpQ" firstAttribute="leading" secondItem="SEp-iB-d4Q" secondAttribute="leading" constant="48" id="paY-bB-0Qk"/>
                             <constraint firstItem="ETz-fP-Prf" firstAttribute="top" secondItem="h7F-3f-jpQ" secondAttribute="bottom" constant="32" id="pyQ-dC-P5n"/>
                             <constraint firstItem="ZcQ-jA-4qQ" firstAttribute="top" secondItem="SEp-iB-d4Q" secondAttribute="top" constant="16" id="slM-nk-OSf"/>
                             <constraint firstItem="SEp-iB-d4Q" firstAttribute="trailing" secondItem="ZcQ-jA-4qQ" secondAttribute="trailing" constant="16" id="x8N-VJ-NuI"/>
@@ -307,16 +307,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Rb-w7-0Gi" userLabel="Camera View" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="108" width="375" height="509"/>
+                                <rect key="frame" x="0.0" y="56" width="375" height="666.66666666666663"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="2Rb-w7-0Gi" secondAttribute="height" multiplier="9:16" id="Rxb-5y-PEA"/>
+                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="01n-fe-hcP" userLabel="Movie Player View" customClass="MoviePlayerView" customModule="Experiences" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="108" width="375" height="509"/>
+                                <rect key="frame" x="0.0" y="56" width="375" height="666.66666666666663"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TEE-qc-qGE">
-                                <rect key="frame" x="140.66666666666666" y="625" width="94" height="91"/>
-                                <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="140.66666666666666" y="615.66666666666663" width="94" height="91"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="largecircle.fill.circle" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="80"/>
                                 </state>
@@ -326,24 +329,23 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="2Rb-w7-0Gi" firstAttribute="width" secondItem="eqi-UC-Rgh" secondAttribute="width" priority="250" id="01n-eS-yXl"/>
+                            <constraint firstItem="2Rb-w7-0Gi" firstAttribute="width" secondItem="eqi-UC-Rgh" secondAttribute="width" id="01n-eS-yXl"/>
                             <constraint firstItem="2Rb-w7-0Gi" firstAttribute="top" secondItem="J4T-UX-M6g" secondAttribute="top" id="9ku-UZ-bzR"/>
                             <constraint firstItem="2Rb-w7-0Gi" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="J4T-UX-M6g" secondAttribute="leading" id="H9r-rT-8im"/>
-                            <constraint firstItem="TEE-qc-qGE" firstAttribute="top" secondItem="2Rb-w7-0Gi" secondAttribute="bottom" constant="8" id="NoG-tr-WAb"/>
+                            <constraint firstItem="TEE-qc-qGE" firstAttribute="bottom" secondItem="2Rb-w7-0Gi" secondAttribute="bottom" constant="-16" id="NoG-tr-WAb"/>
                             <constraint firstItem="01n-fe-hcP" firstAttribute="bottom" secondItem="2Rb-w7-0Gi" secondAttribute="bottom" id="O8e-WA-AA4"/>
                             <constraint firstItem="2Rb-w7-0Gi" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="J4T-UX-M6g" secondAttribute="trailing" id="QNI-cM-BnB"/>
                             <constraint firstItem="01n-fe-hcP" firstAttribute="trailing" secondItem="2Rb-w7-0Gi" secondAttribute="trailing" id="Qco-YF-FSU"/>
                             <constraint firstItem="TEE-qc-qGE" firstAttribute="centerX" secondItem="J4T-UX-M6g" secondAttribute="centerX" id="SLM-XI-FK9"/>
-                            <constraint firstItem="J4T-UX-M6g" firstAttribute="bottom" secondItem="TEE-qc-qGE" secondAttribute="bottom" constant="8" id="YrS-Ax-WzH"/>
                             <constraint firstItem="01n-fe-hcP" firstAttribute="top" secondItem="2Rb-w7-0Gi" secondAttribute="top" id="esF-F2-cfD"/>
                             <constraint firstItem="01n-fe-hcP" firstAttribute="leading" secondItem="2Rb-w7-0Gi" secondAttribute="leading" id="r5z-wh-S12"/>
                             <constraint firstItem="2Rb-w7-0Gi" firstAttribute="centerX" secondItem="J4T-UX-M6g" secondAttribute="centerX" id="zRO-RT-a4m"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="J4T-UX-M6g"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Add Video Recording" id="qgr-xu-eS9">
+                    <navigationItem key="navigationItem" title="Add Video Recording" largeTitleDisplayMode="never" id="qgr-xu-eS9">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="Cr6-9V-khO">
                             <connections>
                                 <action selector="saveButtonTapped:" destination="ph0-oc-Yf3" id="GCq-wr-QEH"/>

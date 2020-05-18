@@ -33,6 +33,10 @@ class AddVideoViewController: UIViewController {
 
         requestPermissionAndShowCamera()
         
+        navigationController?.navigationBar.barStyle = .black
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+
         moviePlayerView.videoPlayerLayer.videoGravity = .resizeAspect
         cameraView.videoPlayerLayer.videoGravity = .resizeAspect
         setupCamera()
