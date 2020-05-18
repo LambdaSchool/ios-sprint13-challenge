@@ -37,10 +37,7 @@ class VisitDetailViewController: UIViewController {
     
     func updateViews() {
         // TODO: fix to update with all properties correctly
-        guard let visit = visit else {
-            nameTextField.text = ""
-            return
-        }
+        guard let visit = visit else { return }
         let name = visit.name
         nameTextField.text = name
         

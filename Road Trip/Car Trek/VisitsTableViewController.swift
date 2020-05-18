@@ -41,7 +41,6 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
         
         let displayedVisit = visits[indexPath.row]
         cell.textLabel?.text = displayedVisit.name
-        print("Added \(visit?.name) to TVC")
 
         return cell
     }
