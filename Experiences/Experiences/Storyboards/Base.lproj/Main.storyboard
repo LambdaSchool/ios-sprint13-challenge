@@ -61,14 +61,17 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="iH8-ip-eEE">
-                                <rect key="frame" x="16" y="166" width="343" height="343"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="iH8-ip-eEE">
+                                <rect key="frame" x="16" y="180.99999999999994" width="343" height="315.33333333333337"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="iH8-ip-eEE" secondAttribute="height" multiplier="1:1" priority="250" id="gN6-eo-xdA"/>
+                                    <constraint firstAttribute="width" secondItem="iH8-ip-eEE" secondAttribute="height" multiplier="1:1" priority="750" id="gN6-eo-xdA"/>
                                 </constraints>
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="175"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wos-ct-g29">
-                                <rect key="frame" x="289" y="454" width="62" height="47"/>
+                                <rect key="frame" x="293" y="442" width="62" height="47"/>
                                 <state key="normal" image="camera.fill" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="44"/>
@@ -112,9 +115,9 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="iH8-ip-eEE" firstAttribute="top" secondItem="ZcQ-jA-4qQ" secondAttribute="bottom" constant="8" id="2ci-dh-R0S"/>
-                            <constraint firstItem="wos-ct-g29" firstAttribute="bottom" secondItem="iH8-ip-eEE" secondAttribute="bottom" constant="-8" id="DKW-wk-0dc"/>
+                            <constraint firstItem="wos-ct-g29" firstAttribute="bottom" secondItem="iH8-ip-eEE" secondAttribute="bottom" constant="-20" id="DKW-wk-0dc"/>
                             <constraint firstItem="ETz-fP-Prf" firstAttribute="centerX" secondItem="SEp-iB-d4Q" secondAttribute="centerX" id="ePn-IQ-Msj"/>
-                            <constraint firstItem="wos-ct-g29" firstAttribute="trailing" secondItem="iH8-ip-eEE" secondAttribute="trailing" constant="-8" id="gIT-6p-2m7"/>
+                            <constraint firstItem="wos-ct-g29" firstAttribute="trailing" secondItem="iH8-ip-eEE" secondAttribute="trailing" constant="-4" id="gIT-6p-2m7"/>
                             <constraint firstItem="SEp-iB-d4Q" firstAttribute="trailing" secondItem="iH8-ip-eEE" secondAttribute="trailing" constant="16" id="lAw-Qb-lAg"/>
                             <constraint firstItem="iH8-ip-eEE" firstAttribute="leading" secondItem="SEp-iB-d4Q" secondAttribute="leading" constant="16" id="lZ5-6n-Qtj"/>
                             <constraint firstItem="h7F-3f-jpQ" firstAttribute="centerX" secondItem="SEp-iB-d4Q" secondAttribute="centerX" id="lcm-QD-luB"/>
@@ -127,6 +130,7 @@
                         <viewLayoutGuide key="safeArea" id="SEp-iB-d4Q"/>
                     </view>
                     <navigationItem key="navigationItem" title="New Experience" id="YpC-7f-yRy">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="sj1-cb-mYu"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="SuC-st-ZnH"/>
                     </navigationItem>
                 </viewController>
@@ -137,11 +141,11 @@
         <!--Navigation Controller-->
         <scene sceneID="Hwj-7W-pXs">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kQi-V1-cdu" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="kQi-V1-cdu" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="o9R-pR-gjv"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="Pbc-ph-pEv">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="108"/>
+                        <rect key="frame" x="0.0" y="44" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -398,6 +402,7 @@
         <image name="largecircle.fill.circle" catalog="system" width="128" height="121"/>
         <image name="mic.fill" catalog="system" width="108" height="128"/>
         <image name="pause.fill" catalog="system" width="116" height="128"/>
+        <image name="photo" catalog="system" width="128" height="93"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
         <image name="stop.circle" catalog="system" width="128" height="121"/>
         <image name="stop.fill" catalog="system" width="128" height="113"/>
