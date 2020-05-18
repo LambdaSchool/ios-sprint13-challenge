@@ -1,14 +1,14 @@
 //
-//  RecordViewController.swift
+//  ExperienceDetailViewController.swift
 //  Experiences
 //
-//  Created by denis cedeno on 5/15/20.
+//  Created by denis cedeno on 5/17/20.
 //  Copyright © 2020 DenCedeno Co. All rights reserved.
 //
 
 import UIKit
 
-class RecordViewController: UIViewController {
+class ExperienceDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -10,15 +10,18 @@ import UIKit
 
 class JournalTableViewCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    @IBOutlet weak var experienceTitle: UILabel!
+        
+        var experience: Experience? {
+            didSet {
+                updateViews()
+            }
+        }
+        
+        private func updateViews() {
+            guard let experience  = experience else { return }
+            experienceTitle.text = "   \(experience.title ?? "")"
+            imageView!.image = UIImage(data: experience.image!)
+        }
+        
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
-}
