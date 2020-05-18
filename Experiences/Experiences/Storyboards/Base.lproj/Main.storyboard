@@ -104,6 +104,9 @@
                                 <state key="normal" title="Add Video Recording">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <segue destination="ph0-oc-Yf3" kind="show" id="BIx-WF-DzF"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -248,7 +251,60 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tug-qI-Uve" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2500" y="-288"/>
+            <point key="canvasLocation" x="2500" y="-218"/>
+        </scene>
+        <!--Add Video Recording-->
+        <scene sceneID="3AM-jI-VLS">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="ph0-oc-Yf3" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eqi-UC-Rgh">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Rb-w7-0Gi" userLabel="Camera View">
+                                <rect key="frame" x="0.0" y="108" width="375" height="509"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="2Rb-w7-0Gi" secondAttribute="width" id="HN8-IW-Qsg"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="01n-fe-hcP" userLabel="Movie Player View">
+                                <rect key="frame" x="0.0" y="108" width="375" height="509"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TEE-qc-qGE">
+                                <rect key="frame" x="140.66666666666666" y="625" width="94" height="91"/>
+                                <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="largecircle.fill.circle" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="80"/>
+                                </state>
+                                <state key="selected" image="stop.circle" catalog="system"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="2Rb-w7-0Gi" firstAttribute="width" secondItem="eqi-UC-Rgh" secondAttribute="width" priority="250" id="01n-eS-yXl"/>
+                            <constraint firstItem="2Rb-w7-0Gi" firstAttribute="top" secondItem="J4T-UX-M6g" secondAttribute="top" id="9ku-UZ-bzR"/>
+                            <constraint firstItem="2Rb-w7-0Gi" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="J4T-UX-M6g" secondAttribute="leading" id="H9r-rT-8im"/>
+                            <constraint firstItem="TEE-qc-qGE" firstAttribute="top" secondItem="2Rb-w7-0Gi" secondAttribute="bottom" constant="8" id="NoG-tr-WAb"/>
+                            <constraint firstItem="01n-fe-hcP" firstAttribute="bottom" secondItem="2Rb-w7-0Gi" secondAttribute="bottom" id="O8e-WA-AA4"/>
+                            <constraint firstItem="2Rb-w7-0Gi" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="J4T-UX-M6g" secondAttribute="trailing" id="QNI-cM-BnB"/>
+                            <constraint firstItem="01n-fe-hcP" firstAttribute="trailing" secondItem="2Rb-w7-0Gi" secondAttribute="trailing" id="Qco-YF-FSU"/>
+                            <constraint firstItem="TEE-qc-qGE" firstAttribute="centerX" secondItem="J4T-UX-M6g" secondAttribute="centerX" id="SLM-XI-FK9"/>
+                            <constraint firstItem="J4T-UX-M6g" firstAttribute="bottom" secondItem="TEE-qc-qGE" secondAttribute="bottom" constant="8" id="YrS-Ax-WzH"/>
+                            <constraint firstItem="01n-fe-hcP" firstAttribute="top" secondItem="2Rb-w7-0Gi" secondAttribute="top" id="esF-F2-cfD"/>
+                            <constraint firstItem="01n-fe-hcP" firstAttribute="leading" secondItem="2Rb-w7-0Gi" secondAttribute="leading" id="r5z-wh-S12"/>
+                            <constraint firstItem="2Rb-w7-0Gi" firstAttribute="centerX" secondItem="J4T-UX-M6g" secondAttribute="centerX" id="zRO-RT-a4m"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="J4T-UX-M6g"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Add Video Recording" id="qgr-xu-eS9">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="Cr6-9V-khO"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3ma-Kt-Cev" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2500" y="518.7192118226601"/>
         </scene>
         <!--Add Audio Recording-->
         <scene sceneID="3E8-NK-Wqa">
@@ -336,9 +392,11 @@
     </scenes>
     <resources>
         <image name="camera.fill" catalog="system" width="128" height="96"/>
+        <image name="largecircle.fill.circle" catalog="system" width="128" height="121"/>
         <image name="mic.fill" catalog="system" width="108" height="128"/>
         <image name="pause.fill" catalog="system" width="116" height="128"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
+        <image name="stop.circle" catalog="system" width="128" height="121"/>
         <image name="stop.fill" catalog="system" width="128" height="113"/>
     </resources>
 </document>
