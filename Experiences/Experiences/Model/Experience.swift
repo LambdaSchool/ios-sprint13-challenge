@@ -65,9 +65,9 @@ extension Experience: MKAnnotation {
     
     var subtitle: String? {
         if savedMediaTypes.count == 0 {
-            return "No media saved"
+            return "No media saved."
         } else {
-            return "Media Types: \(savedMediaTypes.joined(separator: ", "))"
+            return "Saved media: \(savedMediaTypes.joined(separator: ", "))"
         }
     }
 }

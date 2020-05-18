@@ -43,11 +43,9 @@ class ExperienceDetailView: UIView {
         
         latitudeLabel.setContentHuggingPriority(.defaultLow+1, for: .horizontal)
         
-        let placeDateStackView = UIStackView(arrangedSubviews: [savedMediaTypesLabel, dateLabel])
-        placeDateStackView.spacing = UIStackView.spacingUseSystem
         let latLonStackView = UIStackView(arrangedSubviews: [latitudeLabel, longitudeLabel])
         latLonStackView.spacing = UIStackView.spacingUseSystem
-        let mainStackView = UIStackView(arrangedSubviews: [placeDateStackView, latLonStackView])
+        let mainStackView = UIStackView(arrangedSubviews: [savedMediaTypesLabel, dateLabel, latLonStackView])
         mainStackView.axis = .vertical
         mainStackView.spacing = UIStackView.spacingUseSystem
         
@@ -67,8 +65,7 @@ class ExperienceDetailView: UIView {
     
     private func updateSubviews() {
         guard let experience = experience else { return }
-        let savedMediaTypes = experience.subtitle ?? "No media saved"
-        savedMediaTypesLabel.text = String(savedMediaTypes)
+        savedMediaTypesLabel.text = experience.subtitle ?? "No media saved."
         dateLabel.text = dateFormatter.string(from: experience.timestamp)
         latitudeLabel.text = "Lat: " + latLonFormatter.string(from: experience.geotag.latitude as NSNumber)!
         longitudeLabel.text = "Lon: " + latLonFormatter.string(from: experience.geotag.longitude as NSNumber)!

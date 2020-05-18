@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 struct DW {
     static let buttonCornerRadius: CGFloat = 8.0
@@ -17,4 +18,13 @@ struct SegueIdentifiers {
     static let addImageSegue: String = "AddImageSegue"
     static let addAudioSegue: String = "AddAudioSegue"
     static let addVideoSegue: String = "AddVideoSegue"
+}
+
+struct ReuseIdentifiers {
+    static let annotation = "ExperienceAnnotationView"
+}
+
+struct Locations {
+    static let applePark = CLLocationCoordinate2D(latitude: 37.332914,
+                                                  longitude: -122.005202)
 }
