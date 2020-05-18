@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VisitsTableViewController: UITableViewController {
+class VisitsTableViewController: UITableViewController, VisitDelegate {
     // MARK: - Properties
     public var visits: [Visit] = []
     var visit: Visit?
@@ -18,10 +18,12 @@ class VisitsTableViewController: UITableViewController {
         super.viewDidLoad()
 
         updateViews()
+        tableView.delegate = self
     }
     
     func updateViews() {
-        
+       
+        tableView.reloadData()
     }
 
     // MARK: - Data Source
@@ -39,8 +41,6 @@ class VisitsTableViewController: UITableViewController {
         return cell
     }
     
-
-   
     /*
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -53,15 +53,22 @@ class VisitsTableViewController: UITableViewController {
     }
     */
 
-   
+     func updateTable(visit: Visit) {
+        visits.append(visit)
+        tableView.reloadData()
+     }
 
     // MARK: - Navigation
-     /*
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+         if segue.identifier == "viewVisitSegue" {
+            let visitVC = segue.destination as! VisitDetailViewController
+            visitVC.visitDelegate = self
+            
+            visitVC.visit = visit
+        } else if segue.identifier == "addVisitSegue" {
+           let addVC = segue.destination as! VisitDetailViewController
+           addVC.visitDelegate = self
+        }
     }
-    */
-
 }

@@ -25,21 +25,12 @@ class VisitDetailViewController: UIViewController {
         }
     }
     
-    var visits: [Visit]?
-    var returnToTableView: (([Visit]) -> Void)?
+    var visitDelegate: VisitDelegate?
     
     // MARK: - Views
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        if self.isMovingFromParent, let visits = visits {
-            print("Going back to main view controller")
-            returnToTableView?(visits)
-        }
     }
     
     func updateViews() {
@@ -68,6 +59,11 @@ class VisitDetailViewController: UIViewController {
         let audioURL = URL(fileURLWithPath: "")
         let videoURL = URL(fileURLWithPath: "")
         let newVisit: Visit = Visit(name: name, location: 0, photo: photoImageView.image, audioURL: audioURL, videoURL: videoURL)
-        visits?.append(newVisit)
+        visitDelegate?.updateTable(visit: newVisit)
+        navigationController?.popViewController(animated: true)
     }
+}
+
+protocol VisitDelegate {
+     func updateTable(visit: Visit)
 }
