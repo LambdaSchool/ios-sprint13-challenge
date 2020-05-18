@@ -19,12 +19,7 @@ class VisitDetailViewController: UIViewController {
     @IBOutlet var videoView: UIView!
     
     // MARK: - Properties
-    var visit: Visit? {
-        didSet {
-            print("Added \(String(describing: visit?.name)) to DVC")
-            updateViews()
-        }
-    }
+    var visit: Visit?
     
     var visitDelegate: VisitDelegate?
     var audioIsPlaying: Bool = false
@@ -32,13 +27,22 @@ class VisitDetailViewController: UIViewController {
     // MARK: - Views
     override func viewDidLoad() {
         super.viewDidLoad()
-        //updateViews()
+        updateViews()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        updateViews()
     }
     
     func updateViews() {
         // TODO: fix to update with all properties correctly
-        guard let visit = visit else { return }
-        nameTextField.text = visit.name
+        guard let visit = visit else {
+            nameTextField.text = ""
+            return
+        }
+        let name = visit.name
+        nameTextField.text = name
         
         if let photo = visit.photo {
         photoImageView.image = photo
