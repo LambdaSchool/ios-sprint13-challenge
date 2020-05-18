@@ -37,6 +37,8 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
         
         let displayedVisit = visits[indexPath.row]
         cell.textLabel?.text = displayedVisit.name
+        visit = displayedVisit
+        print("Added \(visit?.name) to TVC")
 
         return cell
     }
@@ -65,7 +67,8 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
             let visitVC = segue.destination as! VisitDetailViewController
             visitVC.visitDelegate = self
             
-            visitVC.visit = visit
+            visitVC.visit = self.visit
+            
         } else if segue.identifier == "addVisitSegue" {
            let addVC = segue.destination as! VisitDetailViewController
            addVC.visitDelegate = self

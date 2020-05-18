@@ -21,19 +21,41 @@ class VisitDetailViewController: UIViewController {
     // MARK: - Properties
     var visit: Visit? {
         didSet {
+            print("Added \(String(describing: visit?.name)) to DVC")
             updateViews()
         }
     }
     
     var visitDelegate: VisitDelegate?
+    var audioIsPlaying: Bool = false
     
     // MARK: - Views
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateViews()
+        //updateViews()
     }
     
     func updateViews() {
+        // TODO: fix to update with all properties correctly
+        guard let visit = visit else { return }
+        nameTextField.text = visit.name
+        
+        if let photo = visit.photo {
+        photoImageView.image = photo
+        }
+        
+        audioElapsedTimeLabel.text = "0:00"
+        audioTotalTimeLabel.text = "0:00"
+        updateSlider()
+        
+        if audioIsPlaying {
+            audioPlayButton.title(for: .selected)
+        } else {
+            audioPlayButton.title(for: .normal)
+        }
+    }
+    
+    func updateSlider() {
         
     }
     
