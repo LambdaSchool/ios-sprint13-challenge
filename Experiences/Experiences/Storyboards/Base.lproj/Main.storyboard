@@ -376,7 +376,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="jOh-VT-8YA">
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="jOh-VT-8YA">
                                                 <rect key="frame" x="61" y="0.0" width="221" height="31"/>
                                                 <connections>
                                                     <action selector="updateCurrentTime:" destination="NtN-cv-5Gs" eventType="valueChanged" id="Rpm-hG-ybv"/>
@@ -437,7 +437,11 @@
                         <viewLayoutGuide key="safeArea" id="XlU-AR-ztY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Add Audio Recording" id="4pP-9r-bDe">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="ApW-qa-YSi"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="ApW-qa-YSi">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="NtN-cv-5Gs" id="shH-x1-4mG"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="audioVisualizer" destination="bEa-2l-PtR" id="6BV-3e-Tgw"/>

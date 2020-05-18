@@ -47,6 +47,12 @@ class AddExperienceViewController: UIViewController {
         if segue.identifier == SegueIdentifiers.addImageSegue {
             guard let destinationVC = segue.destination as? AddImageViewController else { return }
             destinationVC.delegate = self
+        } else if segue.identifier == SegueIdentifiers.addAudioSegue {
+            guard let destinationVC = segue.destination as? AddAudioViewController else { return }
+            destinationVC.delegate = self
+        } else if segue.identifier == SegueIdentifiers.addVideoSegue {
+            guard let destinationVC = segue.destination as? AddVideoViewController else { return }
+            destinationVC.delegate = self
         }
     }
     
