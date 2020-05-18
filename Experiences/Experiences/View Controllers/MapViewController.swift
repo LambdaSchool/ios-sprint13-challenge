@@ -7,14 +7,25 @@
 //
 
 import UIKit
+import MapKit
 
 class MapViewController: UIViewController {
+    
+    @IBOutlet var mapView: MKMapView!
+    
+    // MARK: - Properties
+    
+    let experinceController = ExperienceController()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
+    
 
-
+    @IBAction func addExperienceButtonTapped(_ sender: Any) {
+    }
+    
 }
 
