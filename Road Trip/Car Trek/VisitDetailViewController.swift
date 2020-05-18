@@ -25,11 +25,21 @@ class VisitDetailViewController: UIViewController {
         }
     }
     
+    var visits: [Visit]?
+    var returnToTableView: (([Visit]) -> Void)?
+    
     // MARK: - Views
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
-        // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if self.isMovingFromParent, let visits = visits {
+            print("Going back to main view controller")
+            returnToTableView?(visits)
+        }
     }
     
     func updateViews() {
@@ -50,6 +60,14 @@ class VisitDetailViewController: UIViewController {
     }
     
     @IBAction func saveVisit(_ sender: UIBarButtonItem) {
-        
+        guard let name = nameTextField.text/*, let location = location */ else {
+            print("Need to add a name.")
+            return
+        }
+        // TODO: Fix location to be current locaton, and URLs to reflect correct URL path.
+        let audioURL = URL(fileURLWithPath: "")
+        let videoURL = URL(fileURLWithPath: "")
+        let newVisit: Visit = Visit(name: name, location: 0, photo: photoImageView.image, audioURL: audioURL, videoURL: videoURL)
+        visits?.append(newVisit)
     }
 }

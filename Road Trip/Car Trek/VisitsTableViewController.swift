@@ -10,7 +10,7 @@ import UIKit
 
 class VisitsTableViewController: UITableViewController {
     // MARK: - Properties
-    var visits: [Visit] = []
+    public var visits: [Visit] = []
     var visit: Visit?
     
     // MARK: - Views
@@ -29,15 +29,16 @@ class VisitsTableViewController: UITableViewController {
         return visits.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
+        let cell = tableView.dequeueReusableCell(withIdentifier: "visitCell", for: indexPath)
+        
+        let displayedVisit = visits[indexPath.row]
+        cell.textLabel?.text = displayedVisit.name
 
         return cell
     }
-    */
+    
 
    
     /*
