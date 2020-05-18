@@ -25,16 +25,12 @@ class MapViewController: UIViewController {
     
 
     @IBAction func addExperienceButtonTapped(_ sender: Any) {
-        performSegue(withIdentifier: "ShowCreateExperienceSegue", sender: self)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "CreateExperienceViewController")
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     // MARK: - Navigation
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ShowCreateExperienceSegue" {
-            guard let VC = segue.destination as? CreateExperienceViewController else { return }
-            VC.experienceController = experienceController
-        }
-    }
+
     
 }
 
