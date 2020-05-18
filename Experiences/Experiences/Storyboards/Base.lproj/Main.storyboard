@@ -357,7 +357,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="bEa-2l-PtR" userLabel="Visualizer View">
+                            <view contentMode="scaleToFill" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="bEa-2l-PtR" userLabel="Visualizer View" customClass="AudioVisualizer" customModule="Experiences" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="108" width="375" height="532"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
@@ -378,6 +378,9 @@
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="jOh-VT-8YA">
                                                 <rect key="frame" x="61" y="0.0" width="221" height="31"/>
+                                                <connections>
+                                                    <action selector="updateCurrentTime:" destination="NtN-cv-5Gs" eventType="valueChanged" id="Rpm-hG-ybv"/>
+                                                </connections>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-00:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DTo-iG-NNi">
                                                 <rect key="frame" x="288" y="0.0" width="55" height="30"/>
@@ -401,11 +404,17 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <state key="normal" image="play.fill" catalog="system"/>
                                                 <state key="selected" image="pause.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="togglePlayback:" destination="NtN-cv-5Gs" eventType="touchUpInside" id="Rnj-uH-KGB"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqj-0k-rFc">
                                                 <rect key="frame" x="171.66666666666663" y="0.0" width="171.33333333333337" height="46"/>
                                                 <state key="normal" image="mic.fill" catalog="system"/>
                                                 <state key="selected" image="stop.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="toggleRecording:" destination="NtN-cv-5Gs" eventType="touchUpInside" id="xNk-bG-zKo"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -430,6 +439,14 @@
                     <navigationItem key="navigationItem" title="Add Audio Recording" id="4pP-9r-bDe">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="ApW-qa-YSi"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="audioVisualizer" destination="bEa-2l-PtR" id="6BV-3e-Tgw"/>
+                        <outlet property="playButton" destination="cyd-f7-Twb" id="2RP-rl-330"/>
+                        <outlet property="recordButton" destination="hqj-0k-rFc" id="BOF-bg-pyB"/>
+                        <outlet property="timeElapsedLabel" destination="qUa-JE-hQh" id="uwD-yz-3T4"/>
+                        <outlet property="timeRemainingLabel" destination="DTo-iG-NNi" id="tzM-Ov-kxA"/>
+                        <outlet property="timeSlider" destination="jOh-VT-8YA" id="xt6-St-d9t"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ac4-S8-TLy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
