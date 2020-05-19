@@ -11,18 +11,10 @@ import MapKit
 import CoreLocation
 
 class ExperienceController {
-  let locationManager = CLLocationManager()
   var experiences = [Experience]()
-  
-  //Dummy init
-  init() {
-  createExperience(withTitle: "Running at the park", image: UIImage(imageLiteralResourceName: "plant2"), ofType: .image, location: locationManager.location?.coordinate)
-     
-  }
-  
-  
-  func createExperience(withTitle title: String, image: UIImage?, ofType mediaType: MediaType, location geolocation: CLLocationCoordinate2D?) {
-    let experience = Experience(title: title, image: image, mediaType: mediaType, geoLocation: geolocation)
+    
+  func createExperience(withTitle title: String, ofType mediaType: MediaType, location geolocation: CLLocationCoordinate2D?) {
+    let experience = Experience(title: title, mediaType: mediaType, geoLocation: geolocation)
     experiences.append(experience)
   }
 }

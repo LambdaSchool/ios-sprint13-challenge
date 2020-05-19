@@ -30,20 +30,6 @@ class Experience: NSObject {
     self.title = title
     self.mediaType = mediaType
     self.geoLocation = geoLocation
-    super.init()
   }
-  
-  
 }
 
-extension Experience: MKAnnotation {
-    var coordinate: CLLocationCoordinate2D {
-        guard let location = self.geoLocation else { return CLLocationCoordinate2D()}
-        return CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
-    }
-    
-    var title: String? {
-        return name
-    }
-    
-}
