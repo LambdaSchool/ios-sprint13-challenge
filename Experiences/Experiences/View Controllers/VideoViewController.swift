@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import AVKit
+import AVFoundation
 
 protocol VideoViewControllerDelegate {
   func videoButtonWasTapped()
@@ -19,13 +20,15 @@ class VideoViewController: UIViewController {
   var experienceController: ExperienceController?
   let locationManager = CLLocationManager()
   var delegate: VideoViewControllerDelegate?
+
  
-  private var player: AVPlayer!
+  var player: AVPlayer!
   lazy private var captureSession = AVCaptureSession()
   lazy private var fileOutput = AVCaptureMovieFileOutput()
 
   //MARK: Outlets
   
+  @IBOutlet weak var titleTextField: UITextField!
   @IBOutlet weak var cameraPreview: CameraPreviewView!
   @IBOutlet weak var recordButton: UIButton!
   
@@ -177,17 +180,32 @@ class VideoViewController: UIViewController {
     }
     */
   
+  func postVideo() {
+    view.endEditing(true)
+    guard let title = titleTextField.text,
+      !title.isEmpty else {
+        presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a caption before posting.")
+        return
+    }
+    
+  }
+  
   //MARK: Actions
+  
+  @IBAction func cancelBtnPressed(_ sender: Any) {
+    dismiss(animated: true, completion: nil)
+  }
+  
+  @IBAction func saveBtnWasPressed(_ sender: Any) {
+    postVideo()
+  }
+  
   @IBAction func handleTapGesture(_ sender: UITapGestureRecognizer) {
      if sender.state == .ended {
        playRecording()
      }
    }
   
-  @IBAction func nextBtnPressed(_ sender: UIBarButtonItem) {
-    performSegue(withIdentifier: "VideotoMapSegue", sender: nil)
-    
-  }
   @IBAction func recordBtnPressed(_ sender: Any) {
     if fileOutput.isRecording {
             fileOutput.stopRecording()
@@ -213,6 +231,5 @@ extension VideoViewController: AVCaptureFileOutputRecordingDelegate {
     updateViews()
     playMovie(url: outputFileURL)
   }
-  
   
 }

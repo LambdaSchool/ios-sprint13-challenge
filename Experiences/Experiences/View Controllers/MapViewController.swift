@@ -9,10 +9,6 @@
 import UIKit
 import MapKit
 
-extension String {
-  static let annotationReuseIdentifier = "ExperienceAnnotationView"
-}
-
 class MapViewController: UIViewController {
   
   var experienceController: ExperienceController?
@@ -22,7 +18,10 @@ class MapViewController: UIViewController {
   //MARK: Outlets
   @IBOutlet weak var mapKitView: MKMapView!
   
-
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    fetchEntries()
+  }
   override func viewDidLoad() {
     super.viewDidLoad()
     userTrackingButton = MKUserTrackingButton(mapView: mapKitView)
@@ -35,43 +34,25 @@ class MapViewController: UIViewController {
       
     ])
     
-    mapKitView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: .annotationReuseIdentifier)
     mapKitView.delegate = self
     mapKitView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "EntryView")
     fetchEntries()
   }
   
   private func fetchEntries() {
-//    guard let entries = experienceController?.experiences else { return }
-//
-//      DispatchQueue.main.async {
-//          self.mapKitView.addAnnotations(entries)
-//
-//          guard let entry = entries.first else { return }
-//
-//          let span = MKCoordinateSpan(latitudeDelta: 2, longitudeDelta: 2)
-//          let region = MKCoordinateRegion(center: entry.coordinate, span: span)
-//          self.mapKitView.setRegion(region, animated: true)
-//      }
-  }
-    
+    guard let entries = experienceController?.experiences else { return }
 
-    /*
-    // MARK: - Navigation
+      DispatchQueue.main.async {
+          self.mapKitView.addAnnotations(entries)
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-  
-  //MARK: Actions
-  
-  @IBAction func saveBtnPressed(_ sender: UIBarButtonItem) {
-    //TODO: Pass recorded data to tableview
-    performSegue(withIdentifier: "mapToRootControllerSegue", sender: nil)
+          guard let entry = entries.first else { return }
+
+          let span = MKCoordinateSpan(latitudeDelta: 2, longitudeDelta: 2)
+          let region = MKCoordinateRegion(center: entry.coordinate, span: span)
+          self.mapKitView.setRegion(region, animated: true)
+      }
   }
+  
   
 }
 
