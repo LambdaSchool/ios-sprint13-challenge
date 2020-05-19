@@ -87,7 +87,7 @@ class landingPageViewController: UIViewController {
         colorControlsFilter.inputImage = inputImage
         
         blackAndWhiteFilter.inputImage = colorControlsFilter.outputImage?.clampedToExtent()
-        blackAndWhiteFilter.color = .black
+        blackAndWhiteFilter.color = .gray
         blackAndWhiteFilter.intensity = 1
         
         guard let outputImage = blackAndWhiteFilter.outputImage else { return originalImage! }
