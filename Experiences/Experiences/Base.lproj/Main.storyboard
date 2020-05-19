@@ -228,7 +228,39 @@
                     <view key="view" contentMode="scaleToFill" id="wtJ-LL-lP5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6dB-V6-UzU">
+                                <rect key="frame" x="0.0" y="140" width="414" height="722"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5hi-nl-yRz">
+                                        <rect key="frame" x="157" y="568" width="100" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="d0l-Uv-ZMM"/>
+                                            <constraint firstAttribute="height" constant="100" id="qYn-u3-WhY"/>
+                                        </constraints>
+                                        <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" image="Record">
+                                            <color key="titleColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="recordButtonPressed:" destination="PR9-nu-R0q" eventType="touchUpInside" id="kXu-ns-bOx"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="5hi-nl-yRz" secondAttribute="bottom" constant="54" id="831-t5-WNP"/>
+                                    <constraint firstItem="5hi-nl-yRz" firstAttribute="centerX" secondItem="6dB-V6-UzU" secondAttribute="centerX" id="fok-Ik-6GU"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="6dB-V6-UzU" firstAttribute="top" secondItem="0eu-tN-RcG" secondAttribute="top" id="Gxw-5z-f45"/>
+                            <constraint firstItem="0eu-tN-RcG" firstAttribute="bottom" secondItem="6dB-V6-UzU" secondAttribute="bottom" id="X5V-dp-808"/>
+                            <constraint firstItem="6dB-V6-UzU" firstAttribute="leading" secondItem="0eu-tN-RcG" secondAttribute="leading" id="aWG-oR-pdV"/>
+                            <constraint firstItem="0eu-tN-RcG" firstAttribute="trailing" secondItem="6dB-V6-UzU" secondAttribute="trailing" id="pn4-zQ-Rnz"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="0eu-tN-RcG"/>
                     </view>
                     <navigationItem key="navigationItem" title="Record Video" id="zcV-b8-P6Y">
@@ -238,6 +270,10 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="cameraView" destination="6dB-V6-UzU" id="tXW-B4-JcJ"/>
+                        <outlet property="recordButton" destination="5hi-nl-yRz" id="Tsw-UE-mf5"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZdJ-cX-LcW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -279,6 +315,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="YuL-8a-kHg"/>
+        <segue reference="lJf-Vl-TiC"/>
     </inferredMetricsTieBreakers>
+    <resources>
+        <image name="Record" width="116" height="116"/>
+    </resources>
 </document>

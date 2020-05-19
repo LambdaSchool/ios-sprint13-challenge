@@ -11,6 +11,8 @@ import AVFoundation
 
 class ViewController: UIViewController {
     
+    var experience: Experience?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
