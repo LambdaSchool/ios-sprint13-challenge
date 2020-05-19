@@ -12,7 +12,7 @@ import MapKit
 
 struct XPs {
     let title: String
-    let photo: UIImage
+    var photo: UIImage
     let video: URL
     let location: MKAnnotation
 }
