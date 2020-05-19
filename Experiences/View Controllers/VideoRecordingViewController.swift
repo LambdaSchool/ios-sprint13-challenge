@@ -198,7 +198,7 @@ class VideoRecordingViewController: UIViewController {
             return device
         }
         
-        preconditionFailure("No microhpne on the device is avilable")
+        preconditionFailure("No microphone on the device is avilable")
     }
 }
 

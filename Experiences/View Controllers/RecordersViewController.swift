@@ -105,7 +105,7 @@ class RecordersViewController: UIViewController {
             audioRecorder = try AVAudioRecorder(url: recordingURL!, format: format)
             audioRecorder?.record()
         } catch {
-            preconditionFailure("The audio recorder could not be created with \(recordingURL) and \(format)")
+            preconditionFailure("The audio recorder could not be created with: \(recordingURL) and \(format)")
         }
     }
     

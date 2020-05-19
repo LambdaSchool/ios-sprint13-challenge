@@ -14,17 +14,20 @@ class Experience: NSObject {
     var picture: Picture
     var video: Video
     var audio: Audio
+    
     init(experienceTitle: String,
          geotag: CLLocationCoordinate2D,
          picture: Picture,
          video: Video,
          audio: Audio) {
+        
         self.experienceTitle = experienceTitle
         self.geotag = geotag
         self.picture = picture
         self.video = video
         self.audio = audio
     }
+    
     struct Picture {
         var imagePost: UIImage
     }

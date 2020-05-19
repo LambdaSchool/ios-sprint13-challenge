@@ -16,7 +16,7 @@ class MapViewController: UIViewController {
     
     let locationManager = CLLocationManager()
     var userLocation: CLLocationCoordinate2D?
-    private let regionInMeters: Double = 3500.0
+    private let regionInMeters: Double = 35000.0
     
     var experience: Experience? {
         didSet {
@@ -31,16 +31,16 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
 
         locationManager.requestWhenInUseAuthorization()
+        locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        requestCameraPermission()
     }
     
     
     func currentUserLocation() -> CLLocationCoordinate2D {
         guard let currentLocation = locationManager.location?.coordinate else { return CLLocationCoordinate2D() }
-        
         return currentLocation
     }
-    
     
     private func requestCameraPermission() {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
@@ -79,6 +79,8 @@ class MapViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
        if segue.identifier == "NewExperienceSegue" {
                guard let newExperienceVC = segue.destination as? NewExperienceViewController else { return }
+        userLocation = currentUserLocation()
+        newExperienceVC.userLocation = userLocation
         newExperienceVC.mapVC = self
                
            }
