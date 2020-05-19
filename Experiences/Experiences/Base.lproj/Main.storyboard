@@ -16,12 +16,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="NiH-Kl-cLm">
-                                <rect key="frame" x="143" y="756" width="133" height="41"/>
+                                <rect key="frame" x="143" y="756" width="133" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mXT-26-lgT">
-                                        <rect key="frame" x="0.0" y="0.0" width="133" height="41"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                        <state key="normal" title="View Journal"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="133" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <state key="normal" title="View Map"/>
                                         <connections>
                                             <segue destination="o14-Jj-ozE" kind="show" identifier="JournalSegue" id="YuL-8a-kHg"/>
                                         </connections>
@@ -70,9 +70,12 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V7b-VH-Ljw">
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="71"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                                <state key="normal" title="Record">
+                                                <state key="normal" title="Next Step Record Audio">
                                                     <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <segue destination="u8G-sg-Oad" kind="show" identifier="RecordSegue" id="oQr-DZ-doy"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -107,7 +110,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Next" id="EPz-eU-9mJ">
                             <connections>
                                 <action selector="nextButton:" destination="aDm-iJ-NaS" id="5Ag-p6-RVE"/>
-                                <segue destination="aWg-5E-TRH" kind="show" identifier="VideoNextSegue" id="z9R-4w-Xh7"/>
+                                <segue destination="u8G-sg-Oad" kind="show" identifier="RecordingNextSegue" id="UaS-H6-qKy"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -115,14 +118,87 @@
                         <outlet property="addImageButton" destination="WWH-FW-gOs" id="Ueo-2y-st6"/>
                         <outlet property="imageView" destination="NmP-TW-6Ig" id="0Cd-lx-rhX"/>
                         <outlet property="nextVideoButton" destination="EPz-eU-9mJ" id="hNC-Ql-rY3"/>
-                        <outlet property="recordButton" destination="V7b-VH-Ljw" id="5J1-nk-ztd"/>
+                        <outlet property="recordButton" destination="V7b-VH-Ljw" id="bBo-yU-MMk"/>
                         <outlet property="titleTextField" destination="SB3-bN-Qjf" id="754-TC-zm2"/>
                         <outlet property="viewJournalButton" destination="mXT-26-lgT" id="9xp-Zj-t9S"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qqf-SC-qiR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="718.84057971014499" y="33.482142857142854"/>
+            <point key="canvasLocation" x="-832" y="-545"/>
+        </scene>
+        <!--Audio View Controller-->
+        <scene sceneID="Gvq-fH-vsp">
+            <objects>
+                <viewController id="u8G-sg-Oad" customClass="AudioViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="USp-tT-RxK">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="pQc-4M-w2d">
+                                <rect key="frame" x="20" y="240" width="370" height="562"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="microphone" translatesAutoresizingMaskIntoConstraints="NO" id="bw9-Zw-d2m">
+                                        <rect key="frame" x="10" y="0.0" width="350" height="350"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="350" id="Mxq-64-x9z"/>
+                                            <constraint firstAttribute="height" constant="350" id="NAJ-t7-Gs2"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Upk-pc-BaD">
+                                        <rect key="frame" x="121" y="360" width="128" height="104"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                        <state key="normal" title="Record Audio"/>
+                                        <connections>
+                                            <action selector="toggleRecording:" destination="u8G-sg-Oad" eventType="touchUpInside" id="cdD-3D-BDI"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aud-H3-zN9">
+                                        <rect key="frame" x="164.5" y="474" width="41" height="39"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                        <state key="normal" title="Play"/>
+                                        <connections>
+                                            <action selector="togglePlayback:" destination="u8G-sg-Oad" eventType="touchUpInside" id="2Ud-bi-qdv"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hzs-Pt-ea7">
+                                        <rect key="frame" x="71.5" y="523" width="227" height="39"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                        <state key="normal" title="Next Step Record Video"/>
+                                        <connections>
+                                            <segue destination="aWg-5E-TRH" kind="show" identifier="VideoSegue" id="KAN-Ps-Hx1"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="bw9-Zw-d2m" firstAttribute="leading" secondItem="pQc-4M-w2d" secondAttribute="leading" constant="10" id="PUB-cw-aYx"/>
+                                    <constraint firstAttribute="trailing" secondItem="bw9-Zw-d2m" secondAttribute="trailing" constant="10" id="wCi-fa-ZO7"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="sOY-iN-J5u" firstAttribute="bottom" secondItem="pQc-4M-w2d" secondAttribute="bottom" constant="60" id="XKw-G5-RzP"/>
+                            <constraint firstItem="pQc-4M-w2d" firstAttribute="leading" secondItem="USp-tT-RxK" secondAttribute="leadingMargin" id="fjs-QI-l6W"/>
+                            <constraint firstItem="pQc-4M-w2d" firstAttribute="top" secondItem="sOY-iN-J5u" secondAttribute="top" constant="100" id="hgU-Pe-ukj"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="sOY-iN-J5u"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="nit-OH-HuZ">
+                        <barButtonItem key="rightBarButtonItem" title="Next" id="dkH-F1-f5t">
+                            <connections>
+                                <segue destination="aWg-5E-TRH" kind="show" identifier="VideoNextSegue" id="jIG-HM-40Q"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="playButton" destination="aud-H3-zN9" id="sPs-pI-SXM"/>
+                        <outlet property="recordButton" destination="Upk-pc-BaD" id="WnI-4T-suL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="afk-ir-cCY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="250.72463768115944" y="-545.08928571428567"/>
         </scene>
         <!--Experience Journal-->
         <scene sceneID="06C-Gc-36n">
@@ -170,7 +246,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4tA-2h-DIc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1681" y="33"/>
+            <point key="canvasLocation" x="-833" y="344"/>
         </scene>
         <!--Experience Map-->
         <scene sceneID="3yU-ZQ-MVr">
@@ -200,7 +276,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yqZ-aH-RLq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2626" y="33"/>
+            <point key="canvasLocation" x="333" y="344"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Mi3-NI-NiB">
@@ -219,7 +295,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GcE-cI-hLL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-9" y="846"/>
+            <point key="canvasLocation" x="1067" y="-545"/>
         </scene>
         <!--Record Video-->
         <scene sceneID="dnR-E5-o91">
@@ -277,7 +353,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZdJ-cX-LcW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="719" y="846"/>
+            <point key="canvasLocation" x="1988" y="-545"/>
         </scene>
         <!--Title-->
         <scene sceneID="eqm-84-GhJ">
@@ -293,7 +369,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kZu-el-iMu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2175" y="835"/>
+            <point key="canvasLocation" x="-833" y="1233"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="GNn-Z0-xGH">
@@ -311,13 +387,16 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dlh-NB-Exx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-191.30434782608697" y="33.482142857142854"/>
+            <point key="canvasLocation" x="-1639" y="-545"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="lJf-Vl-TiC"/>
+        <segue reference="jIG-HM-40Q"/>
+        <segue reference="YuL-8a-kHg"/>
+        <segue reference="oQr-DZ-doy"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Record" width="116" height="116"/>
+        <image name="microphone" width="1298" height="1180"/>
     </resources>
 </document>

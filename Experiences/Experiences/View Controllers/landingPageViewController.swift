@@ -13,14 +13,7 @@ import Photos
 import MapKit
 
 class landingPageViewController: UIViewController {
-    
-    var experience: Experience?
-    let experienceController = ExperiencesController()
-    
-    var locationManager = CLLocationManager()
-    var latitude: Double = 0
-    var longitude: Double = 0
-    
+
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var addImageButton: UIButton!
     @IBOutlet weak var recordButton: UIButton!
@@ -28,13 +21,19 @@ class landingPageViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     
     @IBOutlet weak var nextVideoButton: UIBarButtonItem!
+    
     @IBAction func addImage(_ sender: Any) {
         presentImagePickerController()
     }
-    
     @IBAction func nextButton(_ sender: Any) {
         saveExperience()
     }
+    
+    var experience: Experience?
+    let experienceController = ExperiencesController()
+    var locationManager = CLLocationManager()
+    var latitude: Double = 0
+    var longitude: Double = 0
     
     var originalImage: UIImage? {
         didSet {
@@ -67,31 +66,16 @@ class landingPageViewController: UIViewController {
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.startUpdatingLocation()
         }
-        
-        updateViews()
         originalImage = imageView.image
     }
     
-    private func updateViews() {
-        guard let experience = experience else {
-            title = "Add Experience"
-            return
-        }
-        title = experience.title
-        imageView.image = UIImage(data: experience.image!)
-        titleTextField.text = experience.title
-    }
-    
     private func image(byFiltering inputImage: CIImage) -> UIImage {
-        
         colorControlsFilter.inputImage = inputImage
-        
         blackAndWhiteFilter.inputImage = colorControlsFilter.outputImage?.clampedToExtent()
         blackAndWhiteFilter.color = .gray
         blackAndWhiteFilter.intensity = 1
         
         guard let outputImage = blackAndWhiteFilter.outputImage else { return originalImage! }
-        
         guard let renderedImage = context.createCGImage(outputImage, from: inputImage.extent) else { return originalImage! }
         
         return UIImage(cgImage: renderedImage)
@@ -114,7 +98,7 @@ class landingPageViewController: UIViewController {
         let processedImage = self.image(byFiltering: ciImage)
         guard let imageData = processedImage.pngData() else {return}
         
-        experienceController.appendExperience(images: imageData, title: title, latitude: latitude, longitude: longitude)
+        experience = Experience(image: imageData, title: title, uuid: UUID(), latitude: latitude, longitide: longitude)
 
         PHPhotoLibrary.requestAuthorization { status in
             guard status == .authorized else { return }
@@ -150,10 +134,14 @@ class landingPageViewController: UIViewController {
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "VideoNextSegue" {
-            guard let mapVC = segue.destination as? VideoViewController else { return }
+        if segue.identifier == "RecordingNextSegue" {
+            guard let recordingVC = segue.destination as? AudioViewController else { return }
             saveExperience()
-            mapVC.experience = self.experience
+            recordingVC.experience = self.experience
+        } else if segue.identifier == "RecordSegue" {
+            guard let recordVC = segue.destination as? AudioViewController else { return }
+            saveExperience()
+            recordVC.experience = self.experience
         }
     }
     
@@ -173,7 +161,6 @@ class landingPageViewController: UIViewController {
 extension landingPageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
         if let image = info[.editedImage] as? UIImage {
             originalImage = image
         } else if let image = info[.originalImage] as? UIImage {
@@ -192,7 +179,5 @@ extension landingPageViewController: CLLocationManagerDelegate {
         guard let coordinates: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         latitude = coordinates.latitude
         longitude = coordinates.longitude
-        
-        print("\(latitude) \(longitude)")
     }
 }

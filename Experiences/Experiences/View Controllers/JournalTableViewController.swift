@@ -24,24 +24,24 @@ class JournalTableViewController: UITableViewController {
         try! frc.performFetch()
         return frc
     }()
-
+    
     var experienceArray: [Experience] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.reloadData()
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return fetchedResultsController.sections?.count ?? 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as? JournalTableViewCell else { return UITableViewCell() }
         cell.experience = fetchedResultsController.object(at: indexPath)
@@ -52,20 +52,20 @@ class JournalTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-        let experience = fetchedResultsController.object(at: indexPath)
-        CoreDataStack.shared.mainContext.delete(experience)
-        do {
-            try CoreDataStack.shared.save(context: CoreDataStack.shared.mainContext)
-        } catch {
-            CoreDataStack.shared.mainContext.reset()
-            print("Error saving managed object context: \(error)")
+            let experience = fetchedResultsController.object(at: indexPath)
+            CoreDataStack.shared.mainContext.delete(experience)
+            do {
+                try CoreDataStack.shared.save(context: CoreDataStack.shared.mainContext)
+            } catch {
+                CoreDataStack.shared.mainContext.reset()
+                print("Error saving managed object context: \(error)")
+            }
         }
     }
-}
-
+    
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-       if segue.identifier == "MapViewSegue" {
+        if segue.identifier == "MapViewSegue" {
             guard let mapVC = segue.destination as? MapViewController else { return }
             mapVC.experiences = self.experienceArray
             for experience in self.experienceArray {
@@ -73,7 +73,7 @@ class JournalTableViewController: UITableViewController {
             }
         }
     }
-
+    
 }
 
 extension JournalTableViewController: NSFetchedResultsControllerDelegate {

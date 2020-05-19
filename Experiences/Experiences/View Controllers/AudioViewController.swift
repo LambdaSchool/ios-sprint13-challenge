@@ -1,15 +1,18 @@
 //
-//  audioController.swift
+//  AudioViewController.swift
 //  Experiences
 //
-//  Created by denis cedeno on 5/18/20.
+//  Created by denis cedeno on 5/19/20.
 //  Copyright © 2020 DenCedeno Co. All rights reserved.
 //
+
 
 import UIKit
 import AVFoundation
 
 class AudioViewController: UIViewController {
+    
+    var experience: Experience?
     
     var audioPlayer: AVAudioPlayer? {
         didSet {
@@ -19,70 +22,21 @@ class AudioViewController: UIViewController {
         }
     }
     
-    weak var timer: Timer?
     var recordingURL: URL?
     var audioRecorder: AVAudioRecorder?
     
     @IBOutlet var playButton: UIButton!
     @IBOutlet var recordButton: UIButton!
-
-    
-    private lazy var timeIntervalFormatter: DateComponentsFormatter = {
-        
-        let formatting = DateComponentsFormatter()
-        formatting.unitsStyle = .positional // 00:00  mm:ss
-        formatting.zeroFormattingBehavior = .pad
-        formatting.allowedUnits = [.minute, .second]
-        return formatting
-    }()
-    
     
     // MARK: - View Controller Lifecycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         loadAudio()
         updateViews()
     }
     
     func updateViews() {
         playButton.isSelected = isPlaying
-
-    }
-    
-    deinit{
-        timer?.invalidate()
-    }
-    
-    // MARK: - Timer
-    
-    
-    func startTimer() {
-        timer?.invalidate()
-        
-        timer = Timer.scheduledTimer(withTimeInterval: 0.30, repeats: true) { [weak self] (_) in
-            guard let self = self else { return }
-            
-            self.updateViews()
-            
-            if let audioRecorder = self.audioRecorder,
-                self.isRecording == true {
-                
-                audioRecorder.updateMeters()
-            }
-            
-            if let audioPlayer = self.audioPlayer,
-                self.isPlaying == true {
-                
-                audioPlayer.updateMeters()
-            }
-        }
-    }
-    
-    func cancelTimer() {
-        timer?.invalidate()
-        timer = nil
     }
     
     // MARK: - Playback
@@ -111,7 +65,6 @@ class AudioViewController: UIViewController {
             try prepareAudioSession()
             audioPlayer?.play()
             updateViews()
-            startTimer()
         } catch {
             print("cannot play audio: \(error)")
         }
@@ -120,11 +73,9 @@ class AudioViewController: UIViewController {
     func pause() {
         audioPlayer?.pause()
         updateViews()
-        cancelTimer()
     }
     
     // MARK: - Recording
-    
     var isRecording: Bool {
         audioRecorder?.isRecording ?? false
     }
@@ -132,10 +83,9 @@ class AudioViewController: UIViewController {
     func createNewRecordingURL() -> URL {
         let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         
-        let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
+        let name = (experience?.uuid?.uuidString)!
+        print("\(name)")
         let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
-        
-        //        print("recording URL: \(file)")
         
         return file
     }
@@ -171,17 +121,20 @@ class AudioViewController: UIViewController {
         }
     }
     
-    
     func startRecording() {
+        
         do {
             try prepareAudioSession()
         } catch {
             print("Cannot record audio: \(error)")
             return
         }
+        
         recordingURL = createNewRecordingURL()
+        
         let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
         do {
+            print("\(String(describing: recordingURL))")
             audioRecorder = try AVAudioRecorder(url: recordingURL!, format: format)
             audioRecorder?.delegate = self
             audioRecorder?.record()
@@ -206,21 +159,30 @@ class AudioViewController: UIViewController {
     
     
     @IBAction func toggleRecording(_ sender: Any) {
-        if isRecording{
+        if isRecording {
             stopRecording()
+            recordButton.backgroundColor = .none
         } else {
             requestPermissionOrStartRecording()
+            
+            recordButton.backgroundColor = .red
         }
     }
     
-    
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "VideoNextSegue" {
+            guard let videoVC = segue.destination as? AudioViewController else { return }
+            videoVC.experience = self.experience
+        } else if segue.identifier == "VideoSegue" {
+            guard let videoVC = segue.destination as? AudioViewController else { return }
+            videoVC.experience = self.experience
+        }
+    }
 }
 
 extension AudioViewController: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         updateViews()
-        cancelTimer()
     }
     func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
         if let error = error {
@@ -242,3 +204,4 @@ extension AudioViewController: AVAudioRecorderDelegate {
         }
     }
 }
+
