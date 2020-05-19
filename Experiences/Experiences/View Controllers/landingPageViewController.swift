@@ -16,11 +16,10 @@ class landingPageViewController: UIViewController {
     
     var experience: Experience?
     let experienceController = ExperiencesController()
-
+    
     var locationManager = CLLocationManager()
     var latitude: Double = 0
     var longitude: Double = 0
-    
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var addImageButton: UIButton!
@@ -36,7 +35,6 @@ class landingPageViewController: UIViewController {
     @IBAction func nextButton(_ sender: Any) {
         saveExperience()
     }
-    
     
     var originalImage: UIImage? {
         didSet {
@@ -55,6 +53,7 @@ class landingPageViewController: UIViewController {
             updateImage()
         }
     }
+    
     private let context = CIContext()
     private let colorControlsFilter = CIFilter.colorControls()
     private let blackAndWhiteFilter = CIFilter.colorMonochrome()
@@ -66,7 +65,7 @@ class landingPageViewController: UIViewController {
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            
+            locationManager.startUpdatingLocation()
         }
         
         updateViews()
@@ -116,10 +115,7 @@ class landingPageViewController: UIViewController {
         guard let imageData = processedImage.pngData() else {return}
         
         experienceController.appendExperience(images: imageData, title: title, latitude: latitude, longitude: longitude)
-        
-        print("\(latitude), \(longitude)")
-        print("\(title)")
-        
+
         PHPhotoLibrary.requestAuthorization { status in
             guard status == .authorized else { return }
             
@@ -130,14 +126,10 @@ class landingPageViewController: UIViewController {
                     print("Error saving photo: \(error)")
                     return
                 }
-                
-                DispatchQueue.main.async {
-//                    self.presentSuccessfulSaveAlert()
-                }
             }
         }
     }
-
+    
     @objc private func addImage() {
         let authorizationStatus = PHPhotoLibrary.authorizationStatus()
         switch authorizationStatus {
@@ -155,18 +147,15 @@ class landingPageViewController: UIViewController {
             break
         }
     }
-
     
     // MARK: - Navigation
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-         if segue.identifier == "VideoNextSegue" {
-                   guard let mapVC = segue.destination as? VideoViewController else { return }
+        if segue.identifier == "VideoNextSegue" {
+            guard let mapVC = segue.destination as? VideoViewController else { return }
             saveExperience()
             mapVC.experience = self.experience
-         }
+        }
     }
-    
     
     private func presentImagePickerController() {
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else { return }
@@ -178,16 +167,6 @@ class landingPageViewController: UIViewController {
             self.present(imagePicker, animated: true, completion: nil)
         }
     }
-    
-//    private func presentSuccessfulSaveAlert() {
-//        let alert = UIAlertController(title: "Experience Saved!", message: "The experience has been saved Please add a video!", preferredStyle: .alert)
-//
-//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-//        navigationController?.popViewController(animated: true)
-//        present(alert, animated: true, completion: nil)
-//    }
-
-
 }
 
 
