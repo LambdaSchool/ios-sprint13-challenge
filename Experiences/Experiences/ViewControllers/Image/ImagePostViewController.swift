@@ -26,7 +26,7 @@ class ImagePostViewController: UIViewController {
     private let noirFilter = CIFilter.photoEffectNoir()
     
     var isFiltering: Bool = false
-
+    
     var originalImage: UIImage? {
         didSet {
             guard let originalImage = originalImage else { return }
@@ -120,6 +120,14 @@ class ImagePostViewController: UIViewController {
 //        }
 //    }
 
+    private func generateRandomLatitude() -> Double {
+        return Double.random(in: -20...40)
+    }
+    
+    private func generateRandomLongitude() -> Double {
+        return Double.random(in: -90...80)
+    }
+    
     private func presentSuccessfulSaveAlert() {
         let alert = UIAlertController(title: "Photo Saved!", message: "The photo has been saved to your Photo Library!", preferredStyle: .alert)
         
@@ -132,7 +140,7 @@ class ImagePostViewController: UIViewController {
         
         guard let experienceTitle = captionTextField.text else { return }
         let experience = Experience(title: experienceTitle,
-                                    geotag: CLLocationCoordinate2D(latitude: 27.616881, longitude: -80.447872),
+                                    geotag: CLLocationCoordinate2D(latitude: generateRandomLatitude(), longitude: generateRandomLongitude()),
                                     media: .image)
             
         delegate?.experienceWasCreated(experience)

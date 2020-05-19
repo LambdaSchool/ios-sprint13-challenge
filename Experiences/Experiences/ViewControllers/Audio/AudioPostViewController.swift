@@ -278,17 +278,25 @@ class AudioPostViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: { action in
             if let experienceTitle = alert.textFields?.first?.text {
                 let experience = Experience(title: experienceTitle,
-                                            geotag: CLLocationCoordinate2D(latitude: 27.616881, longitude: -80.447872),
+                                            geotag: CLLocationCoordinate2D(latitude: self.generateRandomLatitude(),
+                                                                           longitude: self.generateRandomLongitude()),
                                             media: .image)
                 
                 self.delegate?.experienceWasCreated(experience)
-//                self.experienceController?.createExperience(with: experienceTitle,
-//                                                            at: CLLocationCoordinate2D(latitude: 28.317311, longitude: -80.679931),
-//                                                            ofType: .audio)
+                self.dismiss(animated: true, completion: nil)
             }
         }))
         self.present(alert, animated: true)
     }
+    
+    private func generateRandomLatitude() -> Double {
+        return Double.random(in: -90...90)
+    }
+    
+    private func generateRandomLongitude() -> Double {
+        return Double.random(in: -180...180)
+    }
+    
     
     @IBAction func cancel(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)

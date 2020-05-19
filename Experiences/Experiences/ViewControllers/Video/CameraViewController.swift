@@ -9,17 +9,19 @@
 import UIKit
 import AVFoundation
 import AVKit
+import MapKit
 
 class CameraViewController: UIViewController {
-
+    
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
+    var delegate: AddExperienceDelegate?
     
     private var player: AVPlayer!
     
     @IBOutlet var recordButton: UIButton!
     @IBOutlet var cameraView: CameraPreviewView!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Resize camera preview to fill the entire screen
@@ -46,22 +48,22 @@ class CameraViewController: UIViewController {
         let playerVC = AVPlayerViewController()
         playerVC.player = AVPlayer(url: url)
         self.present(playerVC, animated: true, completion: nil)
-//        player = AVPlayer(url: url)
-//
-//        let playerView = MoviePlayerView()
-//        playerView.player = player
-//
-//        var topRect = view.bounds
-//        topRect.size.height /= 4
-//        topRect.size.width /= 4
-//        topRect.origin.y = view.layoutMargins.top
-//
-//        playerView.frame = topRect
-//        view.addSubview(playerView)
-//
-//        player.play()
+        //        player = AVPlayer(url: url)
+        //
+        //        let playerView = MoviePlayerView()
+        //        playerView.player = player
+        //
+        //        var topRect = view.bounds
+        //        topRect.size.height /= 4
+        //        topRect.size.width /= 4
+        //        topRect.origin.y = view.layoutMargins.top
+        //
+        //        playerView.frame = topRect
+        //        view.addSubview(playerView)
+        //
+        //        player.play()
     }
-
+    
     private func setUpCamera() {
         let camera = bestCamera()
         let microphone = bestMicrophone()
@@ -78,7 +80,7 @@ class CameraViewController: UIViewController {
             preconditionFailure("This session can't handle this type of input: \(cameraInput)")
         }
         guard captureSession.canAddInput(microphoneInput) else {
-                 preconditionFailure("This session can't handle this type of input: \(microphoneInput)")
+            preconditionFailure("This session can't handle this type of input: \(microphoneInput)")
         }
         captureSession.addInput(cameraInput)
         captureSession.addInput(microphoneInput)
@@ -125,27 +127,59 @@ class CameraViewController: UIViewController {
         captureSession.stopRunning()
     }
     
+    private func generateRandomLatitude() -> Double {
+        return Double.random(in: -90...90)
+    }
+    
+    private func generateRandomLongitude() -> Double {
+        return Double.random(in: -180...180)
+    }
+    
     @IBAction func recordButtonPressed(_ sender: Any) {
-
+        
         if fileOutput.isRecording {
             fileOutput.stopRecording()
+            
+            let alert = UIAlertController(title: "Add a Title or Caption",
+                                          message: "Describe your experience!",
+                                          preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            
+            alert.addTextField { textField in
+                textField.placeholder = "Title:"
+            }
+            
+            alert.addAction(UIAlertAction(title: "Save", style: .default, handler: { action in
+                if let experienceTitle = alert.textFields?.first?.text {
+                    let experience = Experience(title: experienceTitle,
+                                                geotag: CLLocationCoordinate2D(latitude: self.generateRandomLatitude(),
+                                                                               longitude: self.generateRandomLongitude()),
+                                                media: .image)
+                    
+                    self.delegate?.experienceWasCreated(experience)
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }))
+            self.present(alert, animated: true)
         } else {
             fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
         }
     }
-    
-    /// Creates a new file URL in the documents directory
+
+
+/// Creates a new file URL in the documents directory
     private func newRecordingURL() -> URL {
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-
+        
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions = [.withInternetDateTime]
-
+        
         let name = formatter.string(from: Date())
         let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
         return fileURL
     }
-    
+
     func updateViews() {
         recordButton.isSelected = fileOutput.isRecording
     }

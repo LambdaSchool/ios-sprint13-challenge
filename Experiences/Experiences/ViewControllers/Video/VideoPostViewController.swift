@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import MapKit
 
 class VideoPostViewController: UIViewController {
     
@@ -56,5 +57,43 @@ class VideoPostViewController: UIViewController {
     
     private func showCamera() {
         performSegue(withIdentifier: "ShowCamera", sender: self)
+    }
+    
+    private func generateRandomLatitude() -> Double {
+        return Double.random(in: -90...90)
+    }
+    
+    private func generateRandomLongitude() -> Double {
+        return Double.random(in: -180...180)
+    }
+    
+    @IBAction func saveVideo(_ sender: UIBarButtonItem) {
+
+        let alert = UIAlertController(title: "Add a Title or Caption",
+                                      message: "Describe your experience!",
+                                      preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        alert.addTextField { textField in
+            textField.placeholder = "Title:"
+        }
+        
+        alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: { action in
+            if let experienceTitle = alert.textFields?.first?.text {
+                let experience = Experience(title: experienceTitle,
+                                            geotag: CLLocationCoordinate2D(latitude: self.generateRandomLatitude(),
+                                                                           longitude: self.generateRandomLongitude()),
+                                            media: .image)
+                
+                self.delegate?.experienceWasCreated(experience)
+                self.dismiss(animated: true, completion: nil)
+            }
+        }))
+        self.present(alert, animated: true)
+    }
+    
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
     }
 }
