@@ -20,14 +20,14 @@ enum MediaType: String {
 
 class Experience: NSObject {
   
-  let title: String
+  let newTitle: String
   let mediaType: MediaType
   let geoLocation: CLLocationCoordinate2D?
 //  let video: URL?
 //  let audio: URL?
   
   init(title: String, mediaType: MediaType, geoLocation: CLLocationCoordinate2D?) {
-    self.title = title
+    self.newTitle = title
     self.mediaType = mediaType
     self.geoLocation = geoLocation
   }
