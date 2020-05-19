@@ -10,13 +10,17 @@ import UIKit
 import MapKit
 import AVKit
 
+protocol AudioViewControllerDelegate {
+    func AudioButtonWasTapped()
+}
+
 class AudioViewController: UIViewController {
   
   var experienceController: ExperienceController?
   let locationManager = CLLocationManager()
   weak var timer: Timer?
   var experienceNoteTitle = ""
-  
+  var delegate: AudioViewControllerDelegate?
   var recordingURL: URL?
   var audioRecorder: AVAudioRecorder?
   var audioPlayer: AVAudioPlayer? {

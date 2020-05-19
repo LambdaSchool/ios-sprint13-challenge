@@ -42,17 +42,17 @@ class MapViewController: UIViewController {
   }
   
   private func fetchEntries() {
-    guard let entries = experienceController?.experiences else { return }
-
-      DispatchQueue.main.async {
-          self.mapKitView.addAnnotations(entries)
-
-          guard let entry = entries.first else { return }
-
-          let span = MKCoordinateSpan(latitudeDelta: 2, longitudeDelta: 2)
-          let region = MKCoordinateRegion(center: entry.coordinate, span: span)
-          self.mapKitView.setRegion(region, animated: true)
-      }
+//    guard let entries = experienceController?.experiences else { return }
+//
+//      DispatchQueue.main.async {
+//          self.mapKitView.addAnnotations(entries)
+//
+//          guard let entry = entries.first else { return }
+//
+//          let span = MKCoordinateSpan(latitudeDelta: 2, longitudeDelta: 2)
+//          let region = MKCoordinateRegion(center: entry.coordinate, span: span)
+//          self.mapKitView.setRegion(region, animated: true)
+//      }
   }
     
 

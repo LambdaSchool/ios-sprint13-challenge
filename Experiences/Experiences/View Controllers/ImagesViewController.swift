@@ -11,11 +11,16 @@ import CoreImage
 import CoreImage.CIFilterBuiltins
 import Photos
 
+protocol ImageViewControllerDelegate {
+    func PhotoButtonWasTapped()
+}
+
 class ImagesViewController: UIViewController {
   
   var experienceController: ExperienceController?
   let locationManager = CLLocationManager()
-  var experienceNoteTitle2 = ""
+  var delegate: ImageViewControllerDelegate?
+
   private let context = CIContext()
   private let colorControlsFilter = CIFilter.colorControls()
   private let blurFilter = CIFilter.gaussianBlur()

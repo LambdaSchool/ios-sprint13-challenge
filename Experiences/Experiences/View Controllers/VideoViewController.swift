@@ -10,11 +10,16 @@ import UIKit
 import MapKit
 import AVKit
 
+protocol VideoViewControllerDelegate {
+  func videoButtonWasTapped()
+}
+
 class VideoViewController: UIViewController {
   
   var experienceController: ExperienceController?
   let locationManager = CLLocationManager()
-  var experienceNoteTitle3 = ""
+  var delegate: VideoViewControllerDelegate?
+ 
   private var player: AVPlayer!
   lazy private var captureSession = AVCaptureSession()
   lazy private var fileOutput = AVCaptureMovieFileOutput()
