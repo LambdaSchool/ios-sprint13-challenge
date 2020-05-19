@@ -1,8 +1,8 @@
 //
 //  NewExperienceViewController.swift
-//  Experiences
+//  stuff
 //
-//  Created by Alex Thompson on 5/16/20.
+//  Created by Alex Thompson on 5/18/20.
 //  Copyright © 2020 Lambda School. All rights reserved.
 //
 
@@ -14,7 +14,7 @@ import MapKit
 
 class NewExperienceViewController: ShiftableViewController {
     
-    var mapVC: MapViewController?
+    var mapViewController: MapViewController?
     var userLocation: CLLocationCoordinate2D?
     private let context = CIContext()
     private let exposureAdjustFilter = CIFilter.exposureAdjust()
@@ -130,6 +130,7 @@ class NewExperienceViewController: ShiftableViewController {
         }
     }
     
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "RecordSegue" {
             guard let audioRecordingVC = segue.destination as? AudioRecordingViewController else { return }
@@ -141,7 +142,7 @@ class NewExperienceViewController: ShiftableViewController {
             audioRecordingVC.experienceTitle = titleTextField.text
             audioRecordingVC.picture = picture
             audioRecordingVC.userLocation = userLocation
-            audioRecordingVC.mapViewController = mapVC
+            audioRecordingVC.mapViewController = mapViewController
         }
     }
 }

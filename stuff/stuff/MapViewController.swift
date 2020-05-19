@@ -1,8 +1,8 @@
 //
 //  MapViewController.swift
-//  Experiences
+//  stuff
 //
-//  Created by Alex Thompson on 5/16/20.
+//  Created by Alex Thompson on 5/18/20.
 //  Copyright © 2020 Lambda School. All rights reserved.
 //
 
@@ -13,7 +13,7 @@ import CoreLocation
 
 class MapViewController: UIViewController {
     
-    let locationManager = CLLocationManager()
+    var locationManager = CLLocationManager()
     var userLocation: CLLocationCoordinate2D?
     private let regionInMeters: Double = 35000.0
     
@@ -43,7 +43,7 @@ class MapViewController: UIViewController {
     private func requestCameraPermission() {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .notDetermined:
-            requestCameraPermission()
+            requestVideoPermissions()
             
         case .restricted:
             preconditionFailure("Video is disabled, please review device restrictions.")
@@ -77,7 +77,7 @@ class MapViewController: UIViewController {
             
             userLocation = currentUserLocation()
             imageSelectionVC.userLocation = userLocation
-            imageSelectionVC.mapVC = self
+            imageSelectionVC.mapViewController = self
         }
     }
 }

@@ -1,12 +1,13 @@
 //
 //  Experience.swift
-//  Experiences
+//  stuff
 //
-//  Created by Alex Thompson on 5/16/20.
+//  Created by Alex Thompson on 5/18/20.
 //  Copyright © 2020 Lambda School. All rights reserved.
 //
 
 import Foundation
+
 import MapKit
 
 class Experience: NSObject {
@@ -33,15 +34,33 @@ class Experience: NSObject {
     
     struct Picture {
         var imagePost: UIImage
+        
+        init(imagePost: UIImage) {
+            self.imagePost = imagePost
+        }
     }
     
     struct Video {
         var videoPost: URL
+        
+        init(videoPost: URL) {
+            self.videoPost = videoPost
+        }
     }
     
     struct Audio {
         var audioPost: URL
+        
+        init(audioPost: URL) {
+            self.audioPost = audioPost
+        }
+    }
+    
+    struct Time {
+        var time: Date
+        
+        init(time: Date) {
+            self.time = time
+        }
     }
 }
-
-

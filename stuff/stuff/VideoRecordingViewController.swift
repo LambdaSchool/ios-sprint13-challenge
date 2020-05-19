@@ -1,14 +1,18 @@
 //
 //  VideoRecordingViewController.swift
-//  Experiences
+//  stuff
 //
-//  Created by Alex Thompson on 5/17/20.
+//  Created by Alex Thompson on 5/18/20.
 //  Copyright © 2020 Lambda School. All rights reserved.
 //
 
 import UIKit
 import AVFoundation
 import MapKit
+
+protocol RecordedVideoDelegate: AnyObject {
+    func recordedVideoURL(url: URL)
+}
 
 class VideoRecordingViewController: UIViewController {
     
@@ -19,6 +23,7 @@ class VideoRecordingViewController: UIViewController {
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     var videoURL: URL?
+    weak var delegate: RecordedVideoDelegate?
     var player: AVPlayer!
     var mapViewController: MapViewController?
     
@@ -200,17 +205,20 @@ class VideoRecordingViewController: UIViewController {
 
 extension VideoRecordingViewController: AVCaptureFileOutputRecordingDelegate {
     
-    func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
-        updateViews()
-    }
-    
-    
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         if let error = error {
             print("Error saving video: \(error)")
+        } else {
+            delegate?.recordedVideoURL(url: outputFileURL)
+            print("")
+            dismiss(animated: true, completion: nil)
+            
         }
-        
         updateViews()
         playMovie(url: outputFileURL)
+    }
+    
+    func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
+        updateViews()
     }
 }

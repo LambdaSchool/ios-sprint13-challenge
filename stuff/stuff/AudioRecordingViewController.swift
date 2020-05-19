@@ -1,8 +1,8 @@
 //
 //  AudioRecordingViewController.swift
-//  Experiences
+//  stuff
 //
-//  Created by Alex Thompson on 5/16/20.
+//  Created by Alex Thompson on 5/18/20.
 //  Copyright © 2020 Lambda School. All rights reserved.
 //
 
@@ -19,13 +19,6 @@ class AudioRecordingViewController: UIViewController {
     var experienceTitle: String?
     var recordingURL: URL?
     
-    var audioPlayer: AVAudioPlayer? {
-        didSet {
-            guard let audioPlayer = audioPlayer else { return }
-            
-
-        }
-    }
     
     @IBOutlet var recordAudio: UIButton!
     @IBOutlet var recordVideo: UIButton!

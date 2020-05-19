@@ -1,11 +1,12 @@
 //
-//  UIImage + Scaling.swift
-//  Experiences
+//  UIImage.swift
+//  stuff
 //
-//  Created by Alex Thompson on 5/16/20.
+//  Created by Alex Thompson on 5/18/20.
 //  Copyright © 2020 Lambda School. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
 extension UIImage {
@@ -25,13 +26,6 @@ extension UIImage {
         
         return UIGraphicsImageRenderer(size: correctedSize, format: imageRendererFormat).image { context in
             draw(in: CGRect(origin: .zero, size: correctedSize))
-        }
-    }
-    
-    var flattened: UIImage {
-        if imageOrientation == .up { return self }
-        return UIGraphicsImageRenderer(size: size, format: imageRendererFormat).image { context in
-            draw(at: .zero)
         }
     }
 }

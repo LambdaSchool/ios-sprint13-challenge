@@ -1,8 +1,8 @@
 //
-//  NKAbbotation.swift
-//  Experiences
+//  MKAnnotation.swift
+//  stuff
 //
-//  Created by Alex Thompson on 5/17/20.
+//  Created by Alex Thompson on 5/18/20.
 //  Copyright © 2020 Lambda School. All rights reserved.
 //
 
@@ -18,4 +18,3 @@ extension Experience: MKAnnotation {
         experienceTitle
     }
 }
-
