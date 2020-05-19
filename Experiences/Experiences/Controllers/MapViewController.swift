@@ -14,6 +14,7 @@ class MapViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     private var addNewEntryButton = UIButton()
     private let locationManager = CLLocationManager()
+    private let xps: [XPs] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,5 +43,4 @@ class MapViewController: UIViewController {
 }
 
 extension MapViewController: MKMapViewDelegate {
-    
 }

@@ -54,15 +54,24 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="e3f-cr-y6Q">
+                                        <rect key="frame" x="0.0" y="109" width="355" height="0.0"/>
+                                    </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="px3-nx-FlI">
                                         <rect key="frame" x="0.0" y="184" width="355" height="30"/>
                                         <state key="normal" title="Add Poster Image"/>
+                                        <connections>
+                                            <action selector="addPosterButtonPressed:" destination="SiW-Dh-dPg" eventType="touchUpInside" id="gmT-VQ-xAG"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z88-re-DxY">
                                         <rect key="frame" x="0.0" y="364" width="355" height="30"/>
                                         <state key="normal" title="Record">
                                             <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="recordButtonPressed:" destination="SiW-Dh-dPg" eventType="touchUpInside" id="Ugb-Rh-TRp"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -87,6 +96,7 @@
                     <navigationItem key="navigationItem" id="mCU-PC-iJE"/>
                     <connections>
                         <outlet property="addPosterButton" destination="px3-nx-FlI" id="ChO-Nj-sT2"/>
+                        <outlet property="imageView" destination="e3f-cr-y6Q" id="H7W-LA-NnS"/>
                         <outlet property="newItemTitleField" destination="eSb-L8-tPd" id="Ebh-gY-7Ln"/>
                         <outlet property="recordButton" destination="Z88-re-DxY" id="U8l-Tu-o9x"/>
                     </connections>
