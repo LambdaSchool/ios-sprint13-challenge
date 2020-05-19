@@ -17,3 +17,5 @@ struct Experience {
     var audioURL: URL?
     var videoURL: URL?
 }
+
+var experiences: [Experience] = []
