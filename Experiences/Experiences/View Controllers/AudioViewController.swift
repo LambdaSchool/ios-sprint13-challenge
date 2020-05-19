@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import AVKit
+import AVFoundation
 
 protocol AudioViewControllerDelegate {
     func AudioButtonWasTapped()
@@ -22,6 +23,7 @@ class AudioViewController: UIViewController {
   var experienceNoteTitle = ""
   var delegate: AudioViewControllerDelegate?
   var recordingURL: URL?
+  var audioData: Data?
   var audioRecorder: AVAudioRecorder?
   var audioPlayer: AVAudioPlayer? {
     didSet {
@@ -50,8 +52,8 @@ class AudioViewController: UIViewController {
   
   //MARK: IbOutlets
   
+  @IBOutlet weak var audioTitleField: UITextField!
   @IBOutlet weak var audiVisualizer: AudioVisualizer!
-  @IBOutlet weak var noteTitleLabel: UILabel!
   @IBOutlet weak var timeElapsedLbl: UILabel!
   @IBOutlet weak var timeRemainingLbl: UILabel!
   @IBOutlet weak var audioSlider: UISlider!
@@ -61,9 +63,6 @@ class AudioViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-     // Pass the note from previous ExperiencesVC
-        noteTitleLabel.text = experienceNoteTitle
           
            // Use a font that won't jump around as values change
                  timeElapsedLbl.font = UIFont.monospacedDigitSystemFont(ofSize: timeElapsedLbl.font.pointSize,
@@ -264,11 +263,24 @@ class AudioViewController: UIViewController {
   
   //MARK: - IB Actions
   
-  @IBAction func nextBtnWasPressed(_ sender: UIBarButtonItem) {
-    //    self.textField = titleTxtField.text ?? ""
-    //TODO - How to pass the title + AudioURL?
-    performSegue(withIdentifier: "audioToMapSegue", sender: nil)
+  @IBAction func saveBtnWasPressed(_ sender: UIBarButtonItem) {
+    saveAudio()
   }
+  
+  @IBAction func cancelBtnWasPressed(_ sender: UIBarButtonItem) {
+  }
+  
+  
+  func saveAudio() {
+    view.endEditing(true)
+    guard let recordingURL = recordingURL else { return }
+//    let title = audioTitleField.text ?? "Audio Title"
+    let title = "Audio Post"
+    self.experienceController?.createExperience(withTitle: title, ofType: .audio, location: nil)
+    delegate?.AudioButtonWasTapped()
+    dismiss(animated: true, completion: nil)
+  }
+  
   @IBAction func playBackSliderWasChanged(_ sender: UISlider) {
     if isPlaying {
       pause()

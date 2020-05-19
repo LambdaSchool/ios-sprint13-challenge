@@ -27,7 +27,6 @@ class ImagesViewController: UIViewController {
   
   //MARK: Outlets
   @IBOutlet weak var imageView: UIImageView!
-  @IBOutlet weak var titleFromMain: UILabel!
   @IBOutlet weak var brightnessSlider: UISlider!
   @IBOutlet weak var contrastSlider: UISlider!
   @IBOutlet weak var saturationSlider: UISlider!

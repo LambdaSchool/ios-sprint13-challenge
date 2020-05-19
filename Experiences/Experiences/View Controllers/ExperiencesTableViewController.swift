@@ -13,7 +13,8 @@ class ExperiencesTableViewController: UITableViewController {
   var experienceController: ExperienceController?
 
     override func viewDidLoad() {
-        super.viewDidLoad()
+      super.viewDidLoad()
+      tableView.reloadData()
     }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -62,22 +63,39 @@ class ExperiencesTableViewController: UITableViewController {
         return
       }
     }
+  
+  func createExperience() {
+    
+    let alert = UIAlertController(title: "New Post", message: "Which kind of experience do you want to create?", preferredStyle: .actionSheet)
 
+    let imagePost = UIAlertAction(title: "Photo", style: .default) { (_) in
+        self.performSegue(withIdentifier: "PhotoSegue", sender: nil)
+    }
+
+    let audioPost = UIAlertAction(title: "Audio", style: .default) { (_) in
+        self.performSegue(withIdentifier: "AudioSegue", sender: nil)
+    }
+
+    let videoPost = UIAlertAction(title: "Video", style: .default) { (_) in
+        self.performSegue(withIdentifier: "VideoSegue", sender: nil)
+    }
+
+    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+
+    alert.addAction(imagePost)
+    alert.addAction(audioPost)
+    alert.addAction(videoPost)
+    alert.addAction(cancelAction)
+
+    self.present(alert, animated: true, completion: nil)
+    
+  }
   
   //IB Actions
-  
-  @IBAction func recordAudioBtnPressed(_ sender: Any) {
-    performSegue(withIdentifier: "AudioSegue", sender: nil)
+  @IBAction func addExperienceButton(_ sender: Any) {
+    createExperience()
   }
   
-  @IBAction func takePhotoBtnPressed(_ sender: Any) {
-  }
-  
-  @IBAction func takeVideoBtnPressed(_ sender: Any) {
-  }
-  
-  @IBAction func showMapBtnPressed(_ sender: Any) {
-  }
   
 }
 
