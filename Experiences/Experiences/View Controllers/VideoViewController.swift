@@ -180,11 +180,13 @@ class VideoViewController: UIViewController {
     }
     */
   
+  
+  
   func postVideo() {
     view.endEditing(true)
     guard let title = titleTextField.text,
       !title.isEmpty else {
-        presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a caption before posting.")
+        presentInformationalAlertController(title: "Error", message: "Please Make sure that you add a caption before posting.")
         return
     }
     
