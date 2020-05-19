@@ -24,10 +24,10 @@ class MapViewController: UIViewController {
         private var userTrackingButton: MKUserTrackingButton!
         var locationManager: CLLocationManager?
 
-        
         override func viewDidLoad() {
             super.viewDidLoad()
-
+            locationManager?.requestWhenInUseAuthorization()
+            
             userTrackingButton = MKUserTrackingButton(mapView: mapView)
             userTrackingButton.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(userTrackingButton)
@@ -42,7 +42,6 @@ class MapViewController: UIViewController {
             fetchExperience(experiences)
         }
 
-        
         func fetchExperience(_ expereinces: [Experience]) {
           for experience in experiences {
             let annotations = MKPointAnnotation()

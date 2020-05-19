@@ -10,11 +10,21 @@ import UIKit
 
 class VideoViewController: UIViewController {
 
+    var experience: Experience?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
+    
+        private func presentSuccessfulSaveAlert() {
+            let alert = UIAlertController(title: "Photo Saved!", message: "The photo has been saved to your Photo Library!", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            navigationController?.popViewController(animated: true)
+            present(alert, animated: true, completion: nil)
+        }
     
 
     /*

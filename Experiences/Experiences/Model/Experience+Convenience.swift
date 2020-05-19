@@ -13,7 +13,7 @@ extension Experience {
     @discardableResult
     convenience init(image: Data,
                      title: String,
-                     uuid: UUID,
+                     uuid: UUID = UUID(),
                      latitude: Double,
                      longitide: Double,
                      date: Date = Date(),

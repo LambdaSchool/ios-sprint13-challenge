@@ -14,9 +14,9 @@ class ExperiencesController {
     var experiencePosts: [Experience] = []
 
     @discardableResult
-    func appendFilteredImage(images: Data, title: String, latitude: Double, longitude: Double, uuid: UUID) -> Experience {
+    func appendExperience(images: Data, title: String, latitude: Double, longitude: Double) -> Experience {
         
-        let experiencePost = Experience(image: images, title: title, uuid: uuid, latitude: latitude, longitide: longitude, date: Date())
+        let experiencePost = Experience(image: images, title: title, uuid: UUID(), latitude: latitude, longitide: longitude, date: Date())
         experiencePosts.append(experiencePost)
         do {
             try CoreDataStack.shared.save(context: CoreDataStack.shared.mainContext)
