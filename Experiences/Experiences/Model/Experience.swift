@@ -20,16 +20,14 @@ enum MediaType: String {
 
 class Experience: NSObject {
   
-  let name: String
-  let image: UIImage?
+  let title: String
   let mediaType: MediaType
   let geoLocation: CLLocationCoordinate2D?
 //  let video: URL?
 //  let audio: URL?
   
-  required init(title: String,image: UIImage?, mediaType: MediaType, geoLocation: CLLocationCoordinate2D?) {
-    self.name = title
-    self.image = image
+  init(title: String, mediaType: MediaType, geoLocation: CLLocationCoordinate2D?) {
+    self.title = title
     self.mediaType = mediaType
     self.geoLocation = geoLocation
     super.init()
