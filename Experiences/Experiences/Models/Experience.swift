@@ -12,10 +12,8 @@ import AVKit
 
 struct Experience {
     var title: String
-    var coordinate: CLLocationCoordinate2D?
     var photo: UIImage?
     var audioURL: URL?
     var videoURL: URL?
+    var coordinate: CLLocationCoordinate2D?
 }
-
-var experiences: [Experience] = []
