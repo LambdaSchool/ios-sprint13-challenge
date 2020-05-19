@@ -10,8 +10,6 @@ import SwiftUI
 
 struct AddPhotoCellView: View {
     var body: some View {
-        
-        
         HStack {
             HStack {
                 Text("Add a Photo")
@@ -29,7 +27,7 @@ struct AddPhotoCellView: View {
         .background(Color.white)
         .overlay(RoundedRectangle(cornerRadius: 6, style: .continuous).stroke(Color.blue, lineWidth: 4))
         .shadow(color: .black, radius: 1, x: 0, y: 3)
-    .padding()
+        .padding()
     }
 }
 

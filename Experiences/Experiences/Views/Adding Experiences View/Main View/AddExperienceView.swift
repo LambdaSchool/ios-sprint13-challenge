@@ -10,6 +10,9 @@ import SwiftUI
 
 struct AddExperienceView: View {
     @State var experienceTitleText: String = ""
+    @State var image: Image?
+    @State var inputImage: UIImage?
+    @State var showingImagePicker = false
     
     var body: some View {
         VStack {
@@ -23,6 +26,9 @@ struct AddExperienceView: View {
             
             ScrollView {
                 AddPhotoCellView()
+                    .onTapGesture {
+                        self.showingImagePicker.toggle()
+                    }
                 
                 AddAudioCellView()
                 
@@ -34,6 +40,14 @@ struct AddExperienceView: View {
             
             DoneButtonView()
         }
+        .sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
+            ImagePicker(image: self.$inputImage)
+        }
+    }
+    
+    func loadImage() {
+        guard let inputImage = inputImage else { return }
+        image = Image(uiImage: inputImage)
     }
 }
 
