@@ -169,18 +169,6 @@ class VideoViewController: UIViewController {
     return fileURL
   }
   
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-  
-  
   
   func postVideo() {
     view.endEditing(true)
@@ -188,6 +176,11 @@ class VideoViewController: UIViewController {
       !title.isEmpty else {
         presentInformationalAlertController(title: "Error", message: "Please Make sure that you add a caption before posting.")
         return
+    }
+    LocationHelper.shared.getCurrentLocation { (coordinate) in
+      self.experienceController?.createExperience(withTitle: title, ofType: .video, location: coordinate)
+      self.delegate?.videoButtonWasTapped()
+      self.dismiss(animated: true, completion: nil)
     }
     
   }

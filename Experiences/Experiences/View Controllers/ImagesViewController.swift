@@ -32,6 +32,7 @@ class ImagesViewController: UIViewController {
   @IBOutlet weak var saturationSlider: UISlider!
   @IBOutlet weak var blurSlider: UISlider!
   @IBOutlet weak var mysterySlider: UISlider!
+  @IBOutlet weak var titleTextField: UITextField!
   
   var originalImage: UIImage? {
     didSet {
@@ -106,16 +107,6 @@ class ImagesViewController: UIViewController {
        present(alert, animated: true, completion: nil)
    }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
   //MARK: Actions
   
   @IBAction func brightnessSliderTap(_ sender: Any) {
@@ -133,32 +124,46 @@ class ImagesViewController: UIViewController {
   @IBAction func mysterySliderTap(_ sender: Any) {
     updateImage()
   }
-  @IBAction func saveBtnPressed(_ sender: Any) {
+  
+  @IBAction func saveBtnWasPressed(_ sender: UIBarButtonItem) {
     // TODO: Save to photo library
-        guard let originalImage = originalImage?.flattened,
-          let ciImage = CIImage(image: originalImage) else { return }
-        let processedImage = self.image(byFiltering: ciImage)
-        PHPhotoLibrary.requestAuthorization { status in
-          guard status == .authorized else { return }
-          PHPhotoLibrary.shared().performChanges({
-            PHAssetCreationRequest.creationRequestForAsset(from: processedImage)
-          }) { (success, error) in
-            if let error = error {
-              print("Error saving photo: \(error)")
-    //          NSLog("%@", error)
-              return
-            }
-            DispatchQueue.main.async {
-              self.presentSuccessfulSaveAlert()
-            }
-          }
-          
-        }
+           guard let originalImage = originalImage?.flattened,
+             let ciImage = CIImage(image: originalImage) else { return }
+           let processedImage = self.image(byFiltering: ciImage)
+           PHPhotoLibrary.requestAuthorization { status in
+             guard status == .authorized else { return }
+             PHPhotoLibrary.shared().performChanges({
+               PHAssetCreationRequest.creationRequestForAsset(from: processedImage)
+             }) { (success, error) in
+               if let error = error {
+                 print("Error saving photo: \(error)")
+                 return
+               }
+               DispatchQueue.main.async {
+                 self.presentSuccessfulSaveAlert()
+               }
+             }
+             
+           }
+    // code here to save to experiences
+    view.endEditing(true)
+       guard let title = titleTextField.text,
+         !title.isEmpty else {
+           presentInformationalAlertController(title: "Error", message: "Please Make sure that you add a caption before posting.")
+           return
+       }
+       LocationHelper.shared.getCurrentLocation { (coordinate) in
+         self.experienceController?.createExperience(withTitle: title, ofType: .image, location: coordinate)
+         self.delegate?.PhotoButtonWasTapped()
+         self.dismiss(animated: true, completion: nil)
+       }
+       
   }
   
-  @IBAction func nextBtnTapped(_ sender: UIBarButtonItem) {
-    performSegue(withIdentifier: "ImagesToMapSegue", sender: nil)
+  @IBAction func cancelBtnWasPressed(_ sender: UIBarButtonItem) {
+    dismiss(animated: true, completion: nil)
   }
+  
   @IBAction func selectImageTapped(_ sender: Any) {
      presentImagePickerController()
   }

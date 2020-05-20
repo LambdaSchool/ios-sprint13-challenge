@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="tE6-rX-XLs">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -28,15 +28,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="I2M-af-Tqo"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" selectedImage="map" catalog="system" id="Qpf-bD-asM"/>
-                    <navigationItem key="navigationItem" id="NcP-gA-O3O"/>
+                    <tabBarItem key="tabBarItem" title="" image="mappin.and.ellipse" catalog="system" id="Qpf-bD-asM"/>
                     <connections>
                         <outlet property="mapKitView" destination="pP0-Lh-jRx" id="Rgg-IN-PSs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t6B-b2-0oE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1780" y="528"/>
+            <point key="canvasLocation" x="-1065" y="490"/>
         </scene>
         <!--Experiences-->
         <scene sceneID="ZYU-uo-mwn">
@@ -245,7 +244,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="n5q-i0-cgd">
-                                <rect key="frame" x="5" y="433.5" width="404" height="182"/>
+                                <rect key="frame" x="5" y="377" width="404" height="182"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="PM3-li-1TB">
                                         <rect key="frame" x="0.0" y="0.0" width="404" height="30"/>
@@ -333,11 +332,6 @@
                                         </subviews>
                                     </stackView>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="jCG-Du-Ukq" firstAttribute="top" secondItem="n5q-i0-cgd" secondAttribute="top" constant="76" id="ASL-Nc-fej"/>
-                                    <constraint firstItem="fuH-6M-7JN" firstAttribute="top" secondItem="n5q-i0-cgd" secondAttribute="top" constant="152" id="QGN-gM-Cjn"/>
-                                    <constraint firstItem="jCG-Du-Ukq" firstAttribute="centerY" secondItem="n5q-i0-cgd" secondAttribute="centerY" id="dAP-8q-cqE"/>
-                                </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="qTZ-5h-YmQ">
                                 <rect key="frame" x="5" y="693" width="404" height="75"/>
@@ -368,8 +362,16 @@
                                 </constraints>
                                 <items>
                                     <navigationItem title="Photos" id="v2B-jv-Reo">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Ppv-vG-Tdq"/>
-                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="haa-Hl-Iwm"/>
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Ppv-vG-Tdq">
+                                            <connections>
+                                                <action selector="cancelBtnWasPressed:" destination="sIy-tP-ESf" id="FGv-qb-WcT"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="haa-Hl-Iwm">
+                                            <connections>
+                                                <action selector="saveBtnWasPressed:" destination="sIy-tP-ESf" id="FVg-bE-7Wg"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -392,13 +394,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="ttj-Jw-mFI" firstAttribute="bottom" secondItem="qTZ-5h-YmQ" secondAttribute="bottom" constant="40" id="5Gh-CK-IYo"/>
-                            <constraint firstAttribute="trailing" secondItem="n5q-i0-cgd" secondAttribute="trailing" constant="5" id="7PF-3f-60o"/>
                             <constraint firstItem="Tkq-2R-U6A" firstAttribute="leading" secondItem="ttj-Jw-mFI" secondAttribute="leading" id="901-Ps-aT4"/>
+                            <constraint firstItem="n5q-i0-cgd" firstAttribute="top" secondItem="Tkq-2R-U6A" secondAttribute="bottom" constant="10" id="AfG-OE-9GK"/>
                             <constraint firstItem="Tkq-2R-U6A" firstAttribute="leading" secondItem="ttj-Jw-mFI" secondAttribute="leading" id="BPj-DY-bzm"/>
-                            <constraint firstItem="qTZ-5h-YmQ" firstAttribute="top" secondItem="n5q-i0-cgd" secondAttribute="bottom" constant="77.5" id="KxA-q3-DKD"/>
+                            <constraint firstItem="n5q-i0-cgd" firstAttribute="leading" secondItem="ttj-Jw-mFI" secondAttribute="leading" constant="5" id="DtW-u3-0i6"/>
                             <constraint firstItem="jUq-Tx-1iY" firstAttribute="leading" secondItem="ttj-Jw-mFI" secondAttribute="leading" constant="5" id="MeI-4z-UYl"/>
                             <constraint firstAttribute="trailing" secondItem="QpC-DO-CKT" secondAttribute="trailing" id="QGN-MA-Wrs"/>
                             <constraint firstItem="Tkq-2R-U6A" firstAttribute="trailing" secondItem="ttj-Jw-mFI" secondAttribute="trailing" id="T1F-QD-m5Y"/>
+                            <constraint firstAttribute="trailing" secondItem="n5q-i0-cgd" secondAttribute="trailing" constant="5" id="hbY-A7-wCQ"/>
                             <constraint firstItem="QpC-DO-CKT" firstAttribute="leading" secondItem="ttj-Jw-mFI" secondAttribute="leading" id="hxn-xB-vUT"/>
                             <constraint firstItem="ttj-Jw-mFI" firstAttribute="trailing" secondItem="qTZ-5h-YmQ" secondAttribute="trailing" constant="5" id="jci-Ll-Yr3"/>
                             <constraint firstItem="QpC-DO-CKT" firstAttribute="top" secondItem="ttj-Jw-mFI" secondAttribute="top" id="kBh-zs-znb"/>
@@ -406,8 +409,6 @@
                             <constraint firstItem="ttj-Jw-mFI" firstAttribute="trailing" secondItem="jUq-Tx-1iY" secondAttribute="trailing" constant="5" id="oSt-Ha-38n"/>
                             <constraint firstItem="Tkq-2R-U6A" firstAttribute="top" secondItem="jUq-Tx-1iY" secondAttribute="bottom" constant="20" id="orB-rv-0ew"/>
                             <constraint firstItem="qTZ-5h-YmQ" firstAttribute="leading" secondItem="ttj-Jw-mFI" secondAttribute="leading" constant="5" id="si8-hW-Axq"/>
-                            <constraint firstItem="n5q-i0-cgd" firstAttribute="leading" secondItem="ttj-Jw-mFI" secondAttribute="leading" constant="5" id="u9g-D3-1J1"/>
-                            <constraint firstItem="n5q-i0-cgd" firstAttribute="top" secondItem="Tkq-2R-U6A" secondAttribute="bottom" constant="66.5" id="x2p-vG-8JN"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ttj-Jw-mFI"/>
                     </view>
@@ -425,6 +426,7 @@
                         <outlet property="imageView" destination="Tkq-2R-U6A" id="gFh-z1-AfL"/>
                         <outlet property="mysterySlider" destination="DIE-Pl-EOn" id="xWy-oH-mI7"/>
                         <outlet property="saturationSlider" destination="JP7-3H-FVj" id="q7r-F7-Zcw"/>
+                        <outlet property="titleTextField" destination="jUq-Tx-1iY" id="Zbg-oP-rN6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fuu-on-9bq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -536,7 +538,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="0Yq-zn-3Fl" kind="relationship" relationship="viewControllers" id="59H-II-2ac"/>
-                        <segue destination="HnZ-Qr-bf7" kind="relationship" relationship="viewControllers" id="KL6-rG-aj6"/>
+                        <segue destination="HnZ-Qr-bf7" kind="relationship" relationship="viewControllers" id="sbG-lh-Jfl"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JaB-bY-O2F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -546,7 +548,7 @@
         <!--Navigation Controller-->
         <scene sceneID="xtr-a3-zuo">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="0Yq-zn-3Fl" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0Yq-zn-3Fl" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="house.fill" catalog="system" id="WD7-uv-Yxg"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Oot-Hr-xdi">
@@ -554,10 +556,6 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="lkj-yi-uO0">
-                        <rect key="frame" x="0.0" y="764" width="414" height="49"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </toolbar>
                     <connections>
                         <segue destination="4eU-Af-YrF" kind="relationship" relationship="rootViewController" id="gKX-2r-SIl"/>
                     </connections>
@@ -573,7 +571,7 @@
         <image name="icons8-record" width="50" height="50"/>
         <image name="icons8-slr_camera" width="50" height="50"/>
         <image name="icons8-stop_squared" width="48" height="48"/>
-        <image name="map" catalog="system" width="128" height="113"/>
+        <image name="mappin.and.ellipse" catalog="system" width="118" height="128"/>
         <image name="mic.fill" catalog="system" width="108" height="128"/>
         <image name="pause.fill" catalog="system" width="116" height="128"/>
         <image name="play.rectangle" catalog="system" width="128" height="93"/>
