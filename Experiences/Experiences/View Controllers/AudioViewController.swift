@@ -20,7 +20,6 @@ class AudioViewController: UIViewController {
   var experienceController: ExperienceController?
   let locationManager = CLLocationManager()
   weak var timer: Timer?
-  var experienceNoteTitle = ""
   var delegate: AudioViewControllerDelegate?
   var recordingURL: URL?
   var audioData: Data?
@@ -268,17 +267,28 @@ class AudioViewController: UIViewController {
   }
   
   @IBAction func cancelBtnWasPressed(_ sender: UIBarButtonItem) {
+    dismiss(animated: true, completion: nil)
   }
   
   
   func saveAudio() {
-    view.endEditing(true)
-    guard let recordingURL = recordingURL else { return }
-//    let title = audioTitleField.text ?? "Audio Title"
-    let title = "Audio Post"
-    self.experienceController?.createExperience(withTitle: title, ofType: .audio, location: nil)
-    delegate?.AudioButtonWasTapped()
-    dismiss(animated: true, completion: nil)
+//    view.endEditing(true)
+//    guard let recordingURL = recordingURL else { return }
+////    let title = audioTitleField.text ?? "Audio Title"
+//    let title = "Audio Post"
+//    self.experienceController?.createExperience(withTitle: title, ofType: .audio, location: nil)
+//    delegate?.AudioButtonWasTapped()
+//    dismiss(animated: true, completion: nil)
+    guard let title = audioTitleField.text,
+      !title.isEmpty else {
+        presentInformationalAlertController(title: "Error", message: "Please Make sure that you add a caption before posting.")
+        return
+    }
+    LocationHelper.shared.getCurrentLocation { (coordinate) in
+      self.experienceController?.createExperience(withTitle: title, ofType: .audio, location: coordinate)
+      self.delegate?.AudioButtonWasTapped()
+      self.dismiss(animated: true, completion: nil)
+    }
   }
   
   @IBAction func playBackSliderWasChanged(_ sender: UISlider) {
