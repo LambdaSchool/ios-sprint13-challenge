@@ -74,6 +74,7 @@ class VisitDetailViewController: UIViewController {
     }
     
     @IBAction func saveVisit(_ sender: UIBarButtonItem) {
+        if visit == nil {
         guard let name = nameTextField.text/*, let location = location */ else {
             print("Need to add a name.")
             return
@@ -82,11 +83,28 @@ class VisitDetailViewController: UIViewController {
         let audioURL = URL(fileURLWithPath: "")
         let videoURL = URL(fileURLWithPath: "")
         let newVisit: Visit = Visit(name: name, location: 0, photo: photoImageView.image, audioURL: audioURL, videoURL: videoURL)
-        visitDelegate?.updateTable(visit: newVisit)
+        visitDelegate?.saveNew(visit: newVisit)
         navigationController?.popViewController(animated: true)
+        } else {
+            guard let name = nameTextField.text/*, let location = location */, let visit = visit else {
+                print("Need to add a name.")
+                return
+            }
+            
+            let audioURL = URL(fileURLWithPath: "")
+            let videoURL = URL(fileURLWithPath: "")
+            let image = photoImageView.image
+            //let indexPath = visits.
+            visit.name = name
+            visit.audioRecordingURL = audioURL
+            visit.videoRecordingURL = videoURL
+            visit.photo = image
+            //visitDelegate?.update(visit: visit, indexPath: indexPath)
+        }
     }
 }
 
 protocol VisitDelegate {
-     func updateTable(visit: Visit)
+     func saveNew(visit: Visit)
+     func update(visit: Visit, indexPath: IndexPath)
 }

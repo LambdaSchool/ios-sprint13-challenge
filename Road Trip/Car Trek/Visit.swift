@@ -9,7 +9,7 @@
 import UIKit
 
 class Visit {
-    let name: String
+    var name: String
     var location: Int
     var photo: UIImage?
     var audioRecordingURL: URL?

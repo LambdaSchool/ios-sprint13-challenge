@@ -63,10 +63,15 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
     }
     */
 
-     func updateTable(visit: Visit) {
+     func saveNew(visit: Visit) {
         visits.append(visit)
         tableView.reloadData()
      }
+    
+    func update(visit: Visit, indexPath: IndexPath) {
+        
+        tableView.reloadData()
+    }
 
     // MARK: - Navigation
     // In a storyboard-based application, you will often want to do a little preparation before navigation
