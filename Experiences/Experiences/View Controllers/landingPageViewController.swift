@@ -30,6 +30,7 @@ class landingPageViewController: UIViewController {
     }
     
     var experience: Experience?
+    var experienceUUID: String = ""
     let experienceController = ExperiencesController()
     var locationManager = CLLocationManager()
     var latitude: Double = 0
@@ -99,7 +100,9 @@ class landingPageViewController: UIViewController {
         guard let imageData = processedImage.pngData() else {return}
         
         experience = Experience(image: imageData, title: title, uuid: UUID(), latitude: latitude, longitide: longitude)
-
+        
+        experienceUUID = "\(experience?.uuid?.uuidString ?? "")"
+        
         PHPhotoLibrary.requestAuthorization { status in
             guard status == .authorized else { return }
             

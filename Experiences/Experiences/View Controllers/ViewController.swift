@@ -12,6 +12,7 @@ import AVFoundation
 class ViewController: UIViewController {
     
     var experience: Experience?
+    var experienceUUID: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -13,6 +13,7 @@ import AVFoundation
 class AudioViewController: UIViewController {
     
     var experience: Experience?
+    var UUIDString: String = ""
     
     var audioPlayer: AVAudioPlayer? {
         didSet {
@@ -33,6 +34,7 @@ class AudioViewController: UIViewController {
         super.viewDidLoad()
         loadAudio()
         updateViews()
+        UUIDString = "\(experience?.uuid?.uuidString ?? "")"
     }
     
     func updateViews() {
@@ -83,8 +85,8 @@ class AudioViewController: UIViewController {
     func createNewRecordingURL() -> URL {
         let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         
-        let name = (experience?.uuid?.uuidString)!
-        print("\(name)")
+        let name = UUIDString
+        print(name)
         let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
         
         return file

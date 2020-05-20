@@ -13,12 +13,12 @@ import AVKit
 class VideoViewController: UIViewController {
     
     var experience: Experience?
+    var UUIDString: String = ""
     
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     
     private var player: AVPlayer!
-    
     @IBOutlet var recordButton: UIButton!
     @IBOutlet var cameraView: CameraPreviewView!
     
@@ -31,11 +31,17 @@ class VideoViewController: UIViewController {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
         view.addGestureRecognizer(tapGesture)
+        
+
+        UUIDString = "\(experience?.uuid?.uuidString ?? "")"
     }
     
-    @IBAction func handleTapGesture(_ sender: UITapGestureRecognizer) {
-        if sender.state == .ended {
+    @objc func handleTapGesture(_ tapGesture: UITapGestureRecognizer) {
+        switch tapGesture.state {
+        case .ended:
             playRecording()
+        default:
+            print("Handled other tap states: \(tapGesture.state)")
         }
     }
     
@@ -137,7 +143,7 @@ class VideoViewController: UIViewController {
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions = [.withInternetDateTime]
         
-        let name = (experience?.uuid?.uuidString)!
+        let name = UUIDString
         let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
         return fileURL
     }
@@ -157,9 +163,11 @@ extension VideoViewController: AVCaptureFileOutputRecordingDelegate {
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         if let error = error {
             print("Error saving video: \(error)")
+        } else {
+            print("Video URL: \(outputFileURL)")
         }
         
-        print("Video URL: \(outputFileURL)")
+        
         updateViews()
         playMovie(url: outputFileURL)
     }
