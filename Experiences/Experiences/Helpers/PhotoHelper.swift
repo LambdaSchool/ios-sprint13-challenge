@@ -32,20 +32,10 @@ extension AddExperienceViewController: UIImagePickerControllerDelegate, UINaviga
     }
     //Inputs Monochrome Filter
     func makeBlackandWhite(photo: UIImage) {
-        let context = CIContext(options: nil)
         let image = CIImage(image: photo)
-        let filter = CIFilter(name: "CIColorMonochrome")
-        filter?.setValue(image, forKey: "inputImage")
-        filter?.setValue(CIColor.init(color: .gray), forKey: "inputColor")
-        filter?.setValue(1, forKey: "inputIntensity")
-        if let outputImage = filter?.outputImage,
-            let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
-                let filteredImage = UIImage(cgImage: cgImage)
-                imageView.image = filteredImage
-                save(photo: filteredImage)
-        }
-        
+        guard let new = image else { return }
+        let blackAndWhiteImage = new.applyingFilter("CIColorControls", parameters: ["inputSaturation": 0, "inputContrast": 3, "InputBrightness": 1])
+        let savedImage =  UIImage(ciImage: blackAndWhiteImage)
+                save(photo: savedImage)
     }
-    
-    
 }
