@@ -27,33 +27,34 @@ class AddExperienceViewController: UIViewController {
     }
     //MARK: - Actions
     @IBAction func addPosterButtonPressed(_ sender: Any) {
-        presentPicker(type: .photoLibrary)
+        if imageView.image == nil {
+            presentPicker(type: .photoLibrary)
+        } else {
+            guard let image = imageView.image else { return }
+            makeBlackandWhite(photo: image)
+        }
+        
     }
     @IBAction func recordButtonPressed(_ sender: Any) {
-        let photoRoll = UIImagePickerController()
-        photoRoll.delegate = self as UIImagePickerControllerDelegate & UINavigationControllerDelegate
-        photoRoll.sourceType = .camera
-        present(photoRoll, animated: true, completion: nil)
+        let layer = AVCaptureVideoPreviewLayer()
+        var session = AVCaptureSession()
+//        session.addOutput(<#T##output: AVCaptureOutput##AVCaptureOutput#>)
+//        present(layer, animated: true, completion: nil)
     }
+    //saves photo to struct
     func save(photo: UIImage) {
         xpDelegate?.photo = photo
         DispatchQueue.main.async {
             self.imageView.image = photo
-            self.addPosterButton.isHidden = true
+            self.addPosterButton.setTitle("Black and White", for: .normal)
             self.imageView.isHidden = false
         }
     }
     
-    func save(video: Data) {
-        
-    }
-    
-    func presentPicker(type: UIImagePickerController.SourceType) {
-        let photoRoll = UIImagePickerController()
-        photoRoll.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
-        photoRoll.sourceType = type
-        present(photoRoll, animated: true, completion: nil)
-    }
+    func save(video: URL) {
+        xpDelegate?.video = video
+        }
 }
+
 
 

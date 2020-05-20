@@ -26,6 +26,7 @@ class MapViewController: UIViewController {
         addNewEntryButton.translatesAutoresizingMaskIntoConstraints = false
         addNewEntryButton.setTitle("ADD", for: .normal)
         addNewEntryButton.setTitleColor(.black, for: .normal)
+        addNewEntryButton.backgroundColor = .white
         view.addSubview(addNewEntryButton)
         addNewEntryButton.addTarget(self, action: #selector(addNewEntryButtonPressed(_:)), for: .touchUpInside)
         
