@@ -13,7 +13,7 @@ extension AddExperienceViewController: UIImagePickerControllerDelegate, UINaviga
     // Provides access to Photo Library
     func presentPicker(type: UIImagePickerController.SourceType) {
         let photoRoll = UIImagePickerController()
-        photoRoll.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
+        photoRoll.delegate = self as UIImagePickerControllerDelegate & UINavigationControllerDelegate
         photoRoll.sourceType = type
         present(photoRoll, animated: true, completion: nil)
     }
@@ -30,7 +30,7 @@ extension AddExperienceViewController: UIImagePickerControllerDelegate, UINaviga
         }
         dismiss(animated: true, completion: nil)
     }
-    //Inputs Monochrome Filter
+    //Filter removes Color
     func makeBlackandWhite(photo: UIImage) {
         let image = CIImage(image: photo)
         guard let new = image else { return }
