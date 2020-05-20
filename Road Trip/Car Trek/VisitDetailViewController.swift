@@ -20,7 +20,7 @@ class VisitDetailViewController: UIViewController {
     
     // MARK: - Properties
     var visit: Visit?
-    
+    var indexPath: IndexPath?
     var visitDelegate: VisitDelegate?
     var audioIsPlaying: Bool = false
     
@@ -86,7 +86,7 @@ class VisitDetailViewController: UIViewController {
         visitDelegate?.saveNew(visit: newVisit)
         navigationController?.popViewController(animated: true)
         } else {
-            guard let name = nameTextField.text/*, let location = location */, let visit = visit else {
+            guard let name = nameTextField.text/*, let location = location */, let visit = visit, let indexPath = indexPath else {
                 print("Need to add a name.")
                 return
             }
@@ -94,12 +94,13 @@ class VisitDetailViewController: UIViewController {
             let audioURL = URL(fileURLWithPath: "")
             let videoURL = URL(fileURLWithPath: "")
             let image = photoImageView.image
-            //let indexPath = visits.
+            
             visit.name = name
             visit.audioRecordingURL = audioURL
             visit.videoRecordingURL = videoURL
             visit.photo = image
-            //visitDelegate?.update(visit: visit, indexPath: indexPath)
+            visitDelegate?.update(visit: visit, indexPath: indexPath)
+            navigationController?.popViewController(animated: true)
         }
     }
 }

@@ -69,7 +69,8 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
      }
     
     func update(visit: Visit, indexPath: IndexPath) {
-        
+        visits.remove(at: indexPath.row)
+        visits.insert(visit, at: indexPath.row)
         tableView.reloadData()
     }
 
@@ -81,6 +82,7 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
             visitVC.visitDelegate = self
             
             visitVC.visit = self.visit
+            visitVC.indexPath = tableView.indexPathForSelectedRow
             
         } else if segue.identifier == "addVisitSegue" {
            let addVC = segue.destination as! VisitDetailViewController
