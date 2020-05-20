@@ -12,7 +12,7 @@ import CoreData
 class ExperiencesController {
     
     var experiencePosts: [Experience] = []
-
+    
     @discardableResult
     func appendExperience(images: Data, title: String, latitude: Double, longitude: Double, uuid: UUID) -> Experience {
         
@@ -24,7 +24,7 @@ class ExperiencesController {
             fatalError("Could not save image post: \(error)")
         }
         return experiencePost
-
+        
     }
     
     func addExperience(experience: Experience) -> Experience {
@@ -37,7 +37,7 @@ class ExperiencesController {
             fatalError("Could not save image post: \(error)")
         }
         return experiencePost
-
+        
     }
 }
 

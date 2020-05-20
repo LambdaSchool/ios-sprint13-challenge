@@ -100,8 +100,13 @@ class landingPageViewController: UIViewController {
         guard let imageData = processedImage.pngData() else {return}
         
         experience = Experience(image: imageData, title: title, uuid: UUID(), latitude: latitude, longitide: longitude)
+
+        guard let experienceCreated = experience else { return }
+        experienceController.addExperience(experience: experienceCreated)
         
         experienceUUID = "\(experience?.uuid?.uuidString ?? "")"
+        
+        print("UUID in Save: \(experienceUUID)")
         
         PHPhotoLibrary.requestAuthorization { status in
             guard status == .authorized else { return }

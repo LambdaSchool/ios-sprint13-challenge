@@ -34,7 +34,7 @@ class AudioViewController: UIViewController {
         super.viewDidLoad()
         loadAudio()
         updateViews()
-        UUIDString = "\(experience?.uuid?.uuidString ?? "")"
+        
     }
     
     func updateViews() {
@@ -84,7 +84,7 @@ class AudioViewController: UIViewController {
     
     func createNewRecordingURL() -> URL {
         let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        
+        UUIDString = "\(experience?.uuid?.uuidString ?? "")"
         let name = UUIDString
         print(name)
         let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
@@ -173,10 +173,12 @@ class AudioViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "VideoNextSegue" {
-            guard let videoVC = segue.destination as? AudioViewController else { return }
+            guard let videoVC = segue.destination as? ViewController else { return }
+            videoVC.UUIDString = self.UUIDString
             videoVC.experience = self.experience
         } else if segue.identifier == "VideoSegue" {
-            guard let videoVC = segue.destination as? AudioViewController else { return }
+            guard let videoVC = segue.destination as? ViewController else { return }
+            videoVC.UUIDString = self.UUIDString
             videoVC.experience = self.experience
         }
     }

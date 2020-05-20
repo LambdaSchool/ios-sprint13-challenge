@@ -31,9 +31,7 @@ class VideoViewController: UIViewController {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
         view.addGestureRecognizer(tapGesture)
-        
-
-        UUIDString = "\(experience?.uuid?.uuidString ?? "")"
+    
     }
     
     @objc func handleTapGesture(_ tapGesture: UITapGestureRecognizer) {
@@ -138,13 +136,17 @@ class VideoViewController: UIViewController {
     
     /// Creates a new file URL in the documents directory
     private func newRecordingURL() -> URL {
+
+        
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions = [.withInternetDateTime]
         
-        let name = UUIDString
+        let name = self.UUIDString
         let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
+//        let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
+        
         return fileURL
     }
     

@@ -12,7 +12,7 @@ import AVFoundation
 class ViewController: UIViewController {
     
     var experience: Experience?
-    var experienceUUID: String = ""
+    var UUIDString: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +55,16 @@ class ViewController: UIViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let videoVC = segue.destination as? VideoViewController else { return }
+        videoVC.UUIDString = self.UUIDString
+        videoVC.experience = self.experience
+    }
+    
     private func showCamera() {
         performSegue(withIdentifier: "ShowCamera", sender: self)
+        
+        }
+        
     }
-}
+
