@@ -11,6 +11,9 @@ import AVFoundation
 class CameraViewController: UIViewController {
 
     lazy private var captureSession = AVCaptureSession()
+    lazy private var outputFile = AVCaptureMovieFileOutput()
+    
+    @IBOutlet weak var recordButton: UIButton!
     @IBOutlet var cameraView: CameraPreviewView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +44,9 @@ class CameraViewController: UIViewController {
         if captureSession.canSetSessionPreset(.hd1920x1080) {
             captureSession.sessionPreset = .hd1920x1080
         }
+        guard captureSession.canAddOutput(outputFile) else {
+            preconditionFailure("This session can't handle the output: \(outputFile)")
+        }
         captureSession.commitConfiguration()
         cameraView.session = captureSession
     }
@@ -53,5 +59,26 @@ class CameraViewController: UIViewController {
             return device
         }
         preconditionFailure("No Cameras on device match the specs that we need")
+    }
+    
+    private func newRecordingURL() -> URL {
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime]
+        
+        let name = formatter.string(from: Date())
+        let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
+        return fileURL
+    }
+    
+    @IBAction func recordButtonPressed(_ sender: Any) {
+        if outputFile.isRecording {
+            outputFile.stopRecording()
+        } else {
+            outputFile.startRecording(to: newRecordingURL(), recordingDelegate: self)
+        }
+        
+        
     }
 }
