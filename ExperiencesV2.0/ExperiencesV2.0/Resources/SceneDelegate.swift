@@ -1,9 +1,9 @@
 //
 //  SceneDelegate.swift
-//  Experiences
+//  ExperiencesV2.0
 //
-//  Created by Joshua Rutkowski on 5/17/20.
-//  Copyright © 2020 Josh Rutkowski. All rights reserved.
+//  Created by Joshua Rutkowski on 5/20/20.
+//  Copyright © 2020 Rutkowski. All rights reserved.
 //
 
 import UIKit
