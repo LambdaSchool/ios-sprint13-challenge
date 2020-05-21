@@ -15,7 +15,6 @@ class Experience: NSObject, MKAnnotation {
           
     var title: String? {   return postTitle }
        
-      
     let postTitle:String
     let postURL: URL?
     let latitude: Double
