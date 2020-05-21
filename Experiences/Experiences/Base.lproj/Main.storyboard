@@ -75,6 +75,7 @@
                                         </state>
                                         <connections>
                                             <action selector="recordButtonPressed:" destination="SiW-Dh-dPg" eventType="touchUpInside" id="Ugb-Rh-TRp"/>
+                                            <segue destination="9tE-ZB-8pk" kind="show" identifier="ToAVCapture" id="KLL-Jo-n7d"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -110,6 +111,32 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mXm-zn-pVr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1891" y="127"/>
+        </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="E5e-hY-H9h">
+            <objects>
+                <viewController id="9tE-ZB-8pk" customClass="CameraViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="tLm-y0-pUY" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cqp-bo-VyD">
+                                <rect key="frame" x="163" y="543" width="49" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Record"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="Zup-fD-QNN"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="O2d-YT-vrA"/>
+                    <connections>
+                        <outlet property="cameraView" destination="tLm-y0-pUY" id="wIv-T5-oVl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="R9R-Lc-v8l" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2657" y="126"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="8B1-yj-oSK">

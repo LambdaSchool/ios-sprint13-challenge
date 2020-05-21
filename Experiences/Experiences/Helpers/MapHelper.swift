@@ -6,4 +6,9 @@
 //  Copyright © 2020 AlphaGradeINC. All rights reserved.
 //
 
-import Foundation
+import MapKit
+
+extension AddExperienceViewController {
+    func createAnnotation(_: CLLocation) {
+    }
+}

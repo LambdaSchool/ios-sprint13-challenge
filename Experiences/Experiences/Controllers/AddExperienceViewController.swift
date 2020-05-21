@@ -25,6 +25,10 @@ class AddExperienceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
+    }
     //MARK: - Actions
     @IBAction func addPosterButtonPressed(_ sender: Any) {
         if imageView.image == nil {
@@ -33,13 +37,9 @@ class AddExperienceViewController: UIViewController {
             guard let image = imageView.image else { return }
             makeBlackandWhite(photo: image)
         }
-        
     }
     @IBAction func recordButtonPressed(_ sender: Any) {
-        let layer = AVCaptureVideoPreviewLayer()
-        var session = AVCaptureSession()
-//        session.addOutput(<#T##output: AVCaptureOutput##AVCaptureOutput#>)
-//        present(layer, animated: true, completion: nil)
+        requestPermissionAndShowCamera()
     }
     //saves photo to struct
     func save(photo: UIImage) {
@@ -53,7 +53,7 @@ class AddExperienceViewController: UIViewController {
     
     func save(video: URL) {
         xpDelegate?.video = video
-        }
+        }    
 }
 
 

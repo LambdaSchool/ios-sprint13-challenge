@@ -6,11 +6,12 @@
 //  Copyright © 2020 AlphaGradeINC. All rights reserved.
 //
 
-import AVKit
+import AVFoundation
 import UIKit
 
 extension AddExperienceViewController {
-    func showCamera() {
+    func requestPermissionAndShowCamera() {
+
     let status = AVCaptureDevice.authorizationStatus(for: .video)
     
     switch status {
@@ -49,5 +50,9 @@ extension AddExperienceViewController {
             self?.showCamera()
             }
         }
+    }
+    
+    func showCamera() {
+        performSegue(withIdentifier: "ToAVCapture", sender: self)
     }
 }
