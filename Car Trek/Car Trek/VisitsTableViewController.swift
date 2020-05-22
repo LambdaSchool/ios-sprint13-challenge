@@ -9,6 +9,10 @@
 import UIKit
 import MapKit
 
+extension String {
+    static let annotationReuseIdentifier = "VisitAnnotationView"
+}
+
 class VisitsTableViewController: UITableViewController, VisitDelegate {
     // MARK: - Properties
     var visits: [Visit] = []
@@ -18,8 +22,27 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
         return visit
     }
     
+        
+    // Map setup
+    @IBOutlet var mapView: MKMapView!
+    var userTrackingButton = MKUserTrackingButton()
     private let locationManager = CLLocationManager()
+
     
+    func updateMap() {
+        userTrackingButton = MKUserTrackingButton(mapView: mapView)
+        userTrackingButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(userTrackingButton)
+
+            NSLayoutConstraint.activate([
+                userTrackingButton.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 20),
+                mapView.bottomAnchor.constraint(equalTo: userTrackingButton.bottomAnchor, constant: 20)
+
+            ])
+
+             mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: .annotationReuseIdentifier)
+
+        }
     // MARK: - Views
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +53,7 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
     }
     
     func updateViews() {
-       
+        updateMap()
         tableView.reloadData()
     }
 
@@ -89,4 +112,9 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
            addVC.visitDelegate = self
         }
     }
+}
+
+extension VisitsTableViewController: MKMapViewDelegate {
+
+    
 }
