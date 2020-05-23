@@ -19,7 +19,7 @@ struct ExperienceView: View {
 struct ExperienceView_Previews: PreviewProvider {
     static var previews: some View {
         ForEach(["iPhone SE (2nd generation)", "iPhone 11", "iPhone 11 Pro Max"], id: \.self) { deviceName in
-            ExperienceView(experience: Experience(title: "Test New Experience", photo: nil, audioURL: nil, videoURL: nil, coordinate: nil))
+            ExperienceView(experience: Experience(title: "Test New Experience", photo: nil, audioURL: nil, videoURL: nil, latitude: nil, longitude: nil))
                 .previewDevice(PreviewDevice(rawValue: deviceName))
         }
     }

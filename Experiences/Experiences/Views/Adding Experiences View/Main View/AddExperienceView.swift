@@ -7,18 +7,22 @@
 //
 
 import SwiftUI
+import MapKit
 
 enum ActiveSheet {
    case photo, audio, video, location
 }
 
 struct AddExperienceView: View {
+    @EnvironmentObject var data: ExperienceData
+    @Environment(\.presentationMode) var presentationMode
+    
     @State var experienceTitleText: String = ""
     
     @State var showingSheet = false
     @State var activeSheet: ActiveSheet = .photo
     
-    @State var image: Image?
+    @State var image: UIImage?
     @State var inputImage: UIImage?
     @State var showingImagePicker = false
     
@@ -63,6 +67,9 @@ struct AddExperienceView: View {
             Spacer()
             
             DoneButtonView()
+                .onTapGesture {
+                    self.post()
+            }
         }
         .sheet(isPresented: $showingSheet, onDismiss: saveMaterial) {
             if self.activeSheet == .photo {
@@ -75,7 +82,7 @@ struct AddExperienceView: View {
     
     func loadImage() {
         guard let inputImage = inputImage else { return }
-        image = Image(uiImage: inputImage)
+        image = inputImage
     }
     
     func loadAudio() {
@@ -93,11 +100,21 @@ struct AddExperienceView: View {
     func saveMaterial() {
         self.showingSheet = false
     }
+    
+    func post() {
+        if !experienceTitleText.isEmpty {
+            let experience = Experience(title: self.experienceTitleText, photo: self.image, audioURL: self.audioURL, videoURL: nil, latitude: nil, longitude: nil)
+            
+            self.data.experiences.append(experience)
+            self.data.experienceNames.append(experience.title)
+            self.presentationMode.wrappedValue.dismiss()
+        }
+    }
 }
 
 struct AddExperienceView_Previews: PreviewProvider {
     static var previews: some View {
-        AddExperienceView()
+        AddExperienceView().environmentObject(ExperienceData())
     }
 }
 

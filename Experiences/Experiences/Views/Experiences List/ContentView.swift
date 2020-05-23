@@ -9,24 +9,18 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var data: ExperienceData
+    @EnvironmentObject var data: ExperienceData
     @State var addButtonIsTapped = false
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(0..<data.experiences.count) { experience in
-                    NavigationLink(
-                        destination: ExperienceView(experience: self.data.experiences[experience])
-                    ) {
-                        ExperienceRow(
-                            experience: self.data.experienceNames[experience]
-                        )
-                    }
+                ForEach(data.experiences, id: \.self) { experience in
+                    ExperienceRow(experience: experience.title)
                 }
             }
             .sheet(isPresented: $addButtonIsTapped, onDismiss: resetAddButtonBool, content: {
-                AddExperienceView()
+                AddExperienceView().environmentObject(self.data)
             })
             .navigationBarTitle("Experiences")
             .navigationBarItems(trailing:
@@ -49,7 +43,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(data: ExperienceData())
+        ContentView().environmentObject(ExperienceData())
     }
 }
 

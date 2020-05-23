@@ -7,13 +7,13 @@
 //
 
 import Foundation
-import MapKit
 import AVKit
 
-struct Experience {
+struct Experience: Hashable {
     var title: String
     var photo: UIImage?
     var audioURL: URL?
     var videoURL: URL?
-    var coordinate: CLLocationCoordinate2D?
+    var latitude: Double?
+    var longitude: Double?
 }
