@@ -24,7 +24,7 @@ struct AddPhotoCellView: View {
         .foregroundColor(.blue)
         .frame(width: screen.width - 40, height: screen.width / 8)
         .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
-        .background(Color.white)
+        .background(Color(#colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)))
         .overlay(RoundedRectangle(cornerRadius: 6, style: .continuous).stroke(Color.blue, lineWidth: 4))
         .shadow(color: .black, radius: 1, x: 0, y: 3)
         .padding()
