@@ -21,9 +21,17 @@ class CoreDataStack {
         }
         return container
     }()
-    
     var mainContext: NSManagedObjectContext {
         return container.viewContext
     }
     
+    // Saves content to Core Data
+    func save() {
+        let moc = CoreDataStack.shared.mainContext
+        do {
+          try moc.save()
+        } catch {
+            print("There was a problem saving: \(error)")
+        }
+    }
 }
