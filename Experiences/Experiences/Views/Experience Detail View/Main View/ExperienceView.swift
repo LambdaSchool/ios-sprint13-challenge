@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct ExperienceView: View {
+    var experience: Experience
+    
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
@@ -17,7 +19,7 @@ struct ExperienceView: View {
 struct ExperienceView_Previews: PreviewProvider {
     static var previews: some View {
         ForEach(["iPhone SE (2nd generation)", "iPhone 11", "iPhone 11 Pro Max"], id: \.self) { deviceName in
-            ExperienceView()
+            ExperienceView(experience: Experience(title: "Test New Experience", photo: nil, audioURL: nil, videoURL: nil, coordinate: nil))
                 .previewDevice(PreviewDevice(rawValue: deviceName))
         }
     }
