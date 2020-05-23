@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-extension Experiences: MKAnnotation {
+extension Experience: MKAnnotation {
     public var coordinate: CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
