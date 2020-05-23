@@ -16,7 +16,9 @@ struct ContentView: View {
         NavigationView {
             List {
                 ForEach(data.experiences, id: \.self) { experience in
-                    ExperienceRow(experience: experience.title)
+                    NavigationLink(destination: ExperienceView(experience: experience)) {
+                        ExperienceRow(experience: experience.title)
+                    }
                 }
             }
             .sheet(isPresented: $addButtonIsTapped, onDismiss: resetAddButtonBool, content: {

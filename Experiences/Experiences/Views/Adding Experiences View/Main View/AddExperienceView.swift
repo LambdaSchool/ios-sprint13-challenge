@@ -106,7 +106,6 @@ struct AddExperienceView: View {
             let experience = Experience(title: self.experienceTitleText, photo: self.image, audioURL: self.audioURL, videoURL: nil, latitude: nil, longitude: nil)
             
             self.data.experiences.append(experience)
-            self.data.experienceNames.append(experience.title)
             self.presentationMode.wrappedValue.dismiss()
         }
     }
