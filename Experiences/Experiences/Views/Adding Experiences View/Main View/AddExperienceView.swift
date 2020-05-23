@@ -97,9 +97,17 @@ struct AddExperienceView: View {
     }
     
     func saveMaterial() {
-        if activeSheet == .photo {
+        switch activeSheet {
+        case .photo:
             loadImage()
+        case .audio:
+            loadAudio()
+        case .video:
+            loadVideo()
+        case .location:
+            loadLocation()
         }
+        
         self.showingSheet = false
     }
     

@@ -31,6 +31,7 @@ struct ExperienceView: View {
                             Spacer()
                         }
                         
+                        AudioPlayer(sliderValue: 0.0, audioPlayerObject: AudioPlayerObject(), audioURL: experience.audioURL)
                         Spacer()
                     }
                 }

@@ -11,6 +11,7 @@ import Combine
 import AVFoundation
 
 struct AudioRecorderView: View {
+    @Environment(\.presentationMode) var presentationMode
     @ObservedObject var audioRecorder: AudioRecorder
     @Binding var audioURL: URL?
     
@@ -43,6 +44,13 @@ struct AudioRecorderView: View {
                 }
             }
         }
+        .navigationBarItems(trailing:
+            Button(action: {
+                self.presentationMode.wrappedValue.dismiss()
+            }, label: {
+                Text("Done")
+            })
+        )
     }
 }
 

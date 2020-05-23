@@ -10,7 +10,8 @@ import SwiftUI
 import AVFoundation
 
 struct AudioPlayer: View {
-    @Binding var sliderValue: Double
+    @State var sliderValue: Double
+    @ObservedObject var audioPlayerObject: AudioPlayerObject
     var player: AVAudioPlayer?
     var audioURL: URL?
     
@@ -24,7 +25,7 @@ struct AudioPlayer: View {
             
             HStack {
                 Button(action: {
-                    self.player?.play()
+                    self.audioPlayerObject.player?.play()
                 }) {
                     Image(systemName: "play.fill")
                 }
@@ -32,7 +33,7 @@ struct AudioPlayer: View {
                 Spacer()
                 
                 Button(action: {
-                    self.player?.pause()
+                    self.audioPlayerObject.player?.pause()
                 }) {
                     Image(systemName: "pause.fill")
                 }
@@ -40,6 +41,9 @@ struct AudioPlayer: View {
         }
         .frame(height: screen.width / 3)
         .padding(.horizontal)
+        .onAppear {
+            self.audioPlayerObject.loadAudio(url: self.audioURL)
+        }
     }
     
     mutating func loadAudio() {
@@ -48,7 +52,7 @@ struct AudioPlayer: View {
         do {
             player = try AVAudioPlayer(contentsOf: audioURL)
         } catch {
-            preconditionFailure("Failure to load audio")
+            preconditionFailure("Failure to load audio: \(error)")
         }
     }
 }
@@ -56,7 +60,7 @@ struct AudioPlayer: View {
 struct AudioPlayer_Previews: PreviewProvider {
     static var previews: some View {
         ForEach(["iPhone SE (2nd generation)", "iPhone 11", "iPhone 11 Pro Max"], id: \.self) { deviceName in
-            AudioPlayer(sliderValue: .constant(0.5))
+            AudioPlayer(sliderValue: 0.0, audioPlayerObject: AudioPlayerObject())
                 .previewDevice(PreviewDevice(rawValue: deviceName))
         }
     }
