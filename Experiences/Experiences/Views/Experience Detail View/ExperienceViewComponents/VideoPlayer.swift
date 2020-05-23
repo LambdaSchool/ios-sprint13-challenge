@@ -16,6 +16,7 @@ struct VideoPlayer: View {
         VStack {
             MediaPlayer(mediaURL: videoURL)
         }
+            .edgesIgnoringSafeArea(.vertical)
         .frame(width: screen.width, height: screen.height)
     }
 }
@@ -33,9 +34,14 @@ struct MediaPlayer: UIViewControllerRepresentable {
     var mediaURL: URL?
     
     func makeUIViewController(context: UIViewControllerRepresentableContext<MediaPlayer>) -> AVPlayerViewController {
+        
         let controller = AVPlayerViewController()
-        let player = AVPlayer(url: mediaURL!)
-        controller.player = player
+        
+        if let mediaURL = mediaURL {
+            let player = AVPlayer(url: mediaURL)
+            controller.player = player
+        }
+        
         return controller
     }
     

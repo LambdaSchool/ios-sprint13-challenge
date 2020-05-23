@@ -66,9 +66,8 @@ struct AddExperienceView: View {
             }
             Spacer()
             
-            DoneButtonView()
-                .onTapGesture {
-                    self.post()
+            Button(action: self.post) {
+                DoneButtonView()
             }
         }
         .sheet(isPresented: $showingSheet, onDismiss: saveMaterial) {
@@ -98,12 +97,15 @@ struct AddExperienceView: View {
     }
     
     func saveMaterial() {
+        if activeSheet == .photo {
+            loadImage()
+        }
         self.showingSheet = false
     }
     
     func post() {
         if !experienceTitleText.isEmpty {
-            let experience = Experience(title: self.experienceTitleText, photo: self.image, audioURL: self.audioURL, videoURL: nil, latitude: nil, longitude: nil)
+            let experience = Experience(title: self.experienceTitleText, photo: self.inputImage, audioURL: self.audioURL, videoURL: nil, latitude: nil, longitude: nil)
             
             self.data.experiences.append(experience)
             self.presentationMode.wrappedValue.dismiss()

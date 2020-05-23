@@ -7,12 +7,35 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct ExperienceView: View {
     var experience: Experience
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+                VStack {
+                    VStack {
+                        MapView(latitude: experience.latitude ?? 37.3230, longitude: experience.longitude ?? 122.0322)
+                            .frame(width: screen.width, height: screen.height / 2.5)
+                        
+                        CircleImage(image: Image(uiImage: experience.photo ?? UIImage(systemName: "person.circle")!))
+                            .offset(y: -(screen.height / 6))
+                        
+                        HStack {
+                            Text(experience.title)
+                                .font(.title)
+                                .bold()
+                                .padding()
+                            
+                            Spacer()
+                        }
+                        
+                        Spacer()
+                    }
+                }
+            .edgesIgnoringSafeArea(.top)
+        }
     }
 }
 
