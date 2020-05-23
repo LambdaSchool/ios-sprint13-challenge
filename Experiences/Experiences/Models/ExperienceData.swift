@@ -11,5 +11,4 @@ import SwiftUI
 
 class ExperienceData: ObservableObject {
     @Published var experiences = [Experience]()
-    @Published var experienceNames = [String]()
 }
