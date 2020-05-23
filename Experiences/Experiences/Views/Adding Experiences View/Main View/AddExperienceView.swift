@@ -12,14 +12,16 @@ struct AddExperienceView: View {
     @State var experienceTitleText: String = ""
     @State var image: Image?
     @State var inputImage: UIImage?
+    @State var audioURL: URL?
     @State var showingImagePicker = false
+    @State var showingAudioRecorder = false
     
     var body: some View {
         VStack {
             TextField("Enter a title...", text: $experienceTitleText)
                 .frame(height: 30)
                 .padding()
-                .overlay(RoundedRectangle(cornerRadius: 12, style: .continuous).stroke(Color(#colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)), lineWidth: 1))
+                .overlay(RoundedRectangle(cornerRadius: 12, style: .continuous).stroke(Color(#colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)), lineWidth: 1).shadow(color: .black, radius: 3, x: 0, y: 3))
                 .padding(.horizontal, 8)
             
             
@@ -31,6 +33,9 @@ struct AddExperienceView: View {
                     }
                 
                 AddAudioCellView()
+                    .onTapGesture {
+                        self.showingAudioRecorder.toggle()
+                    }
                 
                 AddVideoCellView()
                 
@@ -43,11 +48,18 @@ struct AddExperienceView: View {
         .sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
             ImagePicker(image: self.$inputImage)
         }
+        .sheet(isPresented: $showingAudioRecorder, onDismiss: loadAudio) {
+            AudioRecorderView(audioRecorder: AudioRecorder(), audioURL: self.$audioURL)
+        }
     }
     
     func loadImage() {
         guard let inputImage = inputImage else { return }
         image = Image(uiImage: inputImage)
+    }
+    
+    func loadAudio() {
+        
     }
 }
 
