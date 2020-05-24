@@ -19,8 +19,10 @@ struct ExperienceView: View {
                         MapView(latitude: experience.latitude ?? 37.3230, longitude: experience.longitude ?? 122.0322, experience: experience)
                             .frame(width: screen.width, height: screen.height / 2.5)
                         
-                        CircleImage(image: Image(uiImage: experience.photo ?? UIImage(systemName: "person.circle")!))
+                        if experience.photo != nil {
+                            CircleImage(image: Image(uiImage: experience.photo ?? UIImage(systemName: "person.circle")!))
                             .offset(y: -(screen.height / 6))
+                        }
                         
                         HStack {
                             Text(experience.title)
@@ -31,10 +33,14 @@ struct ExperienceView: View {
                             Spacer()
                         }
                         
-                        AudioPlayer(sliderValue: 0.0, audioPlayerObject: AudioPlayerObject(), audioURL: experience.audioURL)
+                        if experience.audioURL != nil {
+                            AudioPlayer(sliderValue: 0.0, audioPlayerObject: AudioPlayerObject(), audioURL: experience.audioURL)
+                        }
                         
-                        NavigationLink(destination: PlayerView(experience: self.experience)) {
-                            Text("Play Video")
+                        if experience.videoURL != nil {
+                            NavigationLink(destination: PlayerView(experience: self.experience)) {
+                                Text("Play Video")
+                            }
                         }
                         
                         Spacer()
