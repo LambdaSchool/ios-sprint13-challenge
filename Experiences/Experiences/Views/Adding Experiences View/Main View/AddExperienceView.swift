@@ -75,6 +75,8 @@ struct AddExperienceView: View {
                 ImagePicker(image: self.$inputImage)
             } else if self.activeSheet == .audio {
                 AudioRecorderView(audioRecorder: AudioRecorder(), audioURL: self.$audioURL)
+            } else if self.activeSheet == .video {
+                CameraViewController()
             }
         }
     }
