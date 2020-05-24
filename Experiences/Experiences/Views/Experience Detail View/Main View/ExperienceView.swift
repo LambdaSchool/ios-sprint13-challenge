@@ -10,13 +10,13 @@ import SwiftUI
 import MapKit
 
 struct ExperienceView: View {
-    var experience: Experience
+    @State var experience: Experience
     
     var body: some View {
         ZStack {
                 VStack {
                     VStack {
-                        MapView(latitude: experience.latitude ?? 37.3230, longitude: experience.longitude ?? 122.0322)
+                        MapView(latitude: experience.latitude ?? 37.3230, longitude: experience.longitude ?? 122.0322, experience: experience)
                             .frame(width: screen.width, height: screen.height / 2.5)
                         
                         CircleImage(image: Image(uiImage: experience.photo ?? UIImage(systemName: "person.circle")!))

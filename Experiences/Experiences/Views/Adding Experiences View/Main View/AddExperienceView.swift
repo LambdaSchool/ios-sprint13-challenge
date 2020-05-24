@@ -15,6 +15,7 @@ enum ActiveSheet {
 
 struct AddExperienceView: View {
     @EnvironmentObject var data: ExperienceData
+    @EnvironmentObject var locationData: LocationData
     @Environment(\.presentationMode) var presentationMode
     
     @State var experienceTitleText: String = ""
@@ -30,6 +31,9 @@ struct AddExperienceView: View {
     @State var showingAudioRecorder = false
     
     @State var videoURL: URL?
+    
+    @State var latitude: Double
+    @State var longitude: Double
     
     var body: some View {
         VStack {
@@ -63,7 +67,7 @@ struct AddExperienceView: View {
                 AddLocationCellView()
                     .onTapGesture {
                         self.showingSheet.toggle()
-                        self.activeSheet = .audio
+                        self.activeSheet = .location
                     }
             }
             Spacer()
@@ -79,6 +83,8 @@ struct AddExperienceView: View {
                 AudioRecorderView(audioRecorder: AudioRecorder(), audioURL: self.$audioURL)
             } else if self.activeSheet == .video {
                 CameraViewController()
+            } else {
+                AddLocationMapView(address: "", location: nil).environmentObject(self.locationData)
             }
         }
     }
@@ -117,7 +123,7 @@ struct AddExperienceView: View {
     
     func post() {
         if !experienceTitleText.isEmpty {
-            let experience = Experience(title: self.experienceTitleText, photo: self.inputImage, audioURL: self.audioURL, videoURL: self.videoURL, latitude: nil, longitude: nil)
+            let experience = Experience(title: self.experienceTitleText, photo: self.inputImage, audioURL: self.audioURL, videoURL: self.videoURL, latitude: locationData.location?.coordinate.latitude, longitude: locationData.location?.coordinate.longitude)
             
             self.data.experiences.append(experience)
             self.presentationMode.wrappedValue.dismiss()
@@ -127,7 +133,7 @@ struct AddExperienceView: View {
 
 struct AddExperienceView_Previews: PreviewProvider {
     static var previews: some View {
-        AddExperienceView().environmentObject(ExperienceData())
+        AddExperienceView(latitude: 0, longitude: 0).environmentObject(ExperienceData())
     }
 }
 

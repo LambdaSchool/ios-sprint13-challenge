@@ -22,7 +22,7 @@ struct ContentView: View {
                 }
             }
             .sheet(isPresented: $addButtonIsTapped, onDismiss: resetAddButtonBool, content: {
-                AddExperienceView().environmentObject(self.data)
+                AddExperienceView(latitude: 0, longitude: 0).environmentObject(self.data).environmentObject(LocationData())
             })
             .navigationBarTitle("Experiences")
             .navigationBarItems(trailing:
