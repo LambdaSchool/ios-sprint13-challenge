@@ -10,6 +10,7 @@ import SwiftUI
 import MapKit
 
 struct AddLocationMapView: View {
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var locationData: LocationData
     @State var address: String
     @State var location: CLLocation?
@@ -49,6 +50,7 @@ struct AddLocationMapView: View {
             
             Button(action: {
                 self.locationData.location = self.location
+                self.presentationMode.wrappedValue.dismiss()
             }) {
                 SaveLocationCellView()
             }
