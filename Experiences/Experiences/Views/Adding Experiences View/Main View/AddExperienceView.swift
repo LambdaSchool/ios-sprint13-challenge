@@ -29,6 +29,8 @@ struct AddExperienceView: View {
     @State var audioURL: URL?
     @State var showingAudioRecorder = false
     
+    @State var videoURL: URL?
+    
     var body: some View {
         VStack {
             TextField("Enter a title...", text: $experienceTitleText)
@@ -91,7 +93,7 @@ struct AddExperienceView: View {
     }
     
     func loadVideo() {
-        
+        self.videoURL = CameraController.shared.videoURL
     }
     
     func loadLocation() {
@@ -115,7 +117,7 @@ struct AddExperienceView: View {
     
     func post() {
         if !experienceTitleText.isEmpty {
-            let experience = Experience(title: self.experienceTitleText, photo: self.inputImage, audioURL: self.audioURL, videoURL: nil, latitude: nil, longitude: nil)
+            let experience = Experience(title: self.experienceTitleText, photo: self.inputImage, audioURL: self.audioURL, videoURL: self.videoURL, latitude: nil, longitude: nil)
             
             self.data.experiences.append(experience)
             self.presentationMode.wrappedValue.dismiss()

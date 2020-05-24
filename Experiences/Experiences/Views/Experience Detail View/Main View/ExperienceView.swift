@@ -32,6 +32,11 @@ struct ExperienceView: View {
                         }
                         
                         AudioPlayer(sliderValue: 0.0, audioPlayerObject: AudioPlayerObject(), audioURL: experience.audioURL)
+                        
+                        NavigationLink(destination: PlayerView(experience: self.experience)) {
+                            Text("Play Video")
+                        }
+                        
                         Spacer()
                     }
                 }

@@ -30,6 +30,18 @@ final class CameraViewController: UIViewController {
         setUpSubViews()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        captureSession.startRunning()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        captureSession.stopRunning()
+    }
+    
     func setUpSubViews() {
         view.translatesAutoresizingMaskIntoConstraints = false
         cameraView.frame = CGRect(x:0, y:0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height)
@@ -102,18 +114,6 @@ final class CameraViewController: UIViewController {
         }
         
         preconditionFailure("No microphones on device match the specs that we need")
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        captureSession.startRunning()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        captureSession.stopRunning()
     }
     
     @objc func recordButtonPressed() {
