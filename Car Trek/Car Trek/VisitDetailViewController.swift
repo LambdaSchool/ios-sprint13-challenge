@@ -210,6 +210,71 @@ class VisitDetailViewController: UIViewController {
         updateViews()
         cancelTimer()
     }
+    
+    // Record Audio
+    func createNewAudioRecordingURL() -> URL {
+        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        
+        let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
+        let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
+        
+        print("Audio recording URL: \(file)")
+        
+        return file
+    }
+    
+    func requestPermissionOrStartRecording() {
+        switch AVAudioSession.sharedInstance().recordPermission {
+        case .undetermined:
+            AVAudioSession.sharedInstance().requestRecordPermission { (granted) in
+                guard granted == true else {
+                    print("We need microphone access.")
+                    return
+                }
+                print("Microphone access has been granted!")
+            }
+        case .denied:
+            print("Microphone access has been blocked.")
+            
+           let alertController = UIAlertController(title: "Microphone Access Denied", message: "Please allow this app to access your Microphone.", preferredStyle: .alert)
+                
+                alertController.addAction(UIAlertAction(title: "Open Settings", style: .default) { (_) in
+                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                })
+                
+                alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                
+                present(alertController, animated: true, completion: nil)
+            case .granted:
+                startRecording()
+            @unknown default:
+                break
+            }
+    }
+    
+    func startRecording() {
+        do {
+            try prepareAudioSession()
+        } catch {
+            print("Cannot record audio: \(error)")
+            return
+        }
+        
+        audioRecordingURL = createNewAudioRecordingURL()
+        
+        let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
+        do {
+            audioRecorder = try AVAudioRecorder(url: audioRecordingURL!, format: format)
+            audioRecorder?.delegate = self
+            audioRecorder?.record()
+        } catch {
+            preconditionFailure("The audio recorder could not be created with \(audioRecordingURL!) and \(format)")
+        }
+    }
+    
+    func stopRecording() {
+        audioRecorder?.stop()
+    }
 }
 
 protocol VisitDelegate {
