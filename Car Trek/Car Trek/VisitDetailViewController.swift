@@ -26,6 +26,9 @@ class VisitDetailViewController: UIViewController {
     var indexPath: IndexPath?
     var visitDelegate: VisitDelegate?
     
+    // Image
+    var newImage: UIImage?
+    
     // Audio
     var audioPlayer: AVAudioPlayer? {
         didSet {
@@ -64,8 +67,7 @@ class VisitDetailViewController: UIViewController {
     // MARK: - Views
     override func viewDidLoad() {
         super.viewDidLoad()
-        audioElapsedTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: audioElapsedTimeLabel.font.pointSize, weight: .regular)
-        audioTimeRemainingLabel.font = UIFont.monospacedDigitSystemFont(ofSize: audioTimeRemainingLabel.font.pointSize, weight: .regular)
+
         updateViews()
         loadAudio()
     }
@@ -77,14 +79,13 @@ class VisitDetailViewController: UIViewController {
     
     func updateViews() {
         // TODO: fix to update with all properties correctly
+        audioElapsedTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: audioElapsedTimeLabel.font.pointSize, weight: .regular)
+        audioTimeRemainingLabel.font = UIFont.monospacedDigitSystemFont(ofSize: audioTimeRemainingLabel.font.pointSize, weight: .regular)
+        
         audioPlayButton.isSelected = audioIsPlaying
         recordAudioButton.isSelected = audioIsRecording
-        audioElapsedTimeLabel.text = "0:00"
-        audioTimeRemainingLabel.text = "0:00"
-        audioSlider.minimumValue = 0
-        audioSlider.maximumValue = 20
-        audioSlider.value = 0
-        
+        newImage = photoImageView.image
+
         if audioIsPlaying {
             updateSlider()
             audioPlayButton.title(for: .selected)
@@ -117,7 +118,7 @@ class VisitDetailViewController: UIViewController {
     
     // MARK: - Actions
     @IBAction func addPhoto(_ sender: UIButton) {
-        
+        presentImagePickerController()
     }
     
     @IBAction func addAudioRecording(_ sender: UIButton) {
@@ -178,6 +179,30 @@ class VisitDetailViewController: UIViewController {
         }
     }
     // MARK: - Methods
+    // Image
+    private func presentImagePickerController() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            print("The photo library is not available.")
+            return
+        }
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func loadPhoto() {
+        photoImageView.image = newImage
+    }
+    
+//    private func presentSuccessfulSaveAlert() {
+//        let alert = UIAlertController(title: "Photo Saved!", message: "The photo has been saved to your Photo Library!", preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//        present(alert, animated: true, completion: nil)
+//    }
+    
     // Timer
     func startTimer() {
         timer?.invalidate()
@@ -296,6 +321,7 @@ class VisitDetailViewController: UIViewController {
     }
 }
 
+// Audio Delegate
 extension VisitDetailViewController: AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         if let recordingURL = audioRecordingURL {
@@ -308,6 +334,25 @@ extension VisitDetailViewController: AVAudioRecorderDelegate, AVAudioPlayerDeleg
                 print("Audio Recorder Error: \(error)")
             }
         }
+    }
+}
+
+// Image Delegate
+extension VisitDetailViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[.editedImage] as? UIImage {
+            newImage = image
+        } else if let image = info[.originalImage] as? UIImage {
+            newImage = image
+        }
+        
+        picker.dismiss(animated: true, completion: nil)
+        loadPhoto()
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
     }
 }
 
