@@ -99,12 +99,8 @@ class VisitDetailViewController: UIViewController {
         if let photo = visit.photo {
             photoImageView.image = photo
         }
-
-      
     }
     
-    
-    // TODO: Figure out why slider is going backwards, isn't taking up full width of screen.
     func updateSlider() {
         let elapsedTime = audioPlayer?.currentTime ?? 0
         print("Elapsed: \(elapsedTime)")
