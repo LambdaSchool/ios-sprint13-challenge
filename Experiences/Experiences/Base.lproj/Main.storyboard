@@ -132,32 +132,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tti-h5-WyO" userLabel="Camera View">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tti-h5-WyO" userLabel="Camera View" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="108" width="414" height="700"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qJk-ZT-OMx" userLabel="Record Button">
-                                        <rect key="frame" x="157" y="540" width="100" height="100"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="100" id="Yhe-qt-l39"/>
-                                            <constraint firstAttribute="height" constant="100" id="eFj-wW-gmk"/>
-                                        </constraints>
-                                        <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" image="Record"/>
-                                    </button>
-                                </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstItem="qJk-ZT-OMx" firstAttribute="centerX" secondItem="Tti-h5-WyO" secondAttribute="centerX" id="cjc-ST-Onx"/>
-                                    <constraint firstAttribute="bottom" secondItem="qJk-ZT-OMx" secondAttribute="bottom" constant="60" id="fdH-0m-4Lb"/>
-                                </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ph3-j8-QmR" customClass="MoviePlayerView" customModule="Experiences" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="108" width="414" height="700"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qJk-ZT-OMx" userLabel="Record Button">
+                                <rect key="frame" x="157" y="692" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="Yhe-qt-l39"/>
+                                    <constraint firstAttribute="height" constant="100" id="eFj-wW-gmk"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="Record"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="qJk-ZT-OMx" firstAttribute="centerX" secondItem="wUB-2W-mhd" secondAttribute="centerX" id="297-3f-0AL"/>
                             <constraint firstItem="Tti-h5-WyO" firstAttribute="leading" secondItem="3H8-qJ-6wW" secondAttribute="leading" id="H00-SC-Yjh"/>
+                            <constraint firstItem="3H8-qJ-6wW" firstAttribute="bottom" secondItem="Ph3-j8-QmR" secondAttribute="bottom" id="Pwa-5X-eth"/>
+                            <constraint firstItem="3H8-qJ-6wW" firstAttribute="bottom" secondItem="qJk-ZT-OMx" secondAttribute="bottom" constant="16" id="Qi8-Sh-ZFt"/>
                             <constraint firstItem="3H8-qJ-6wW" firstAttribute="bottom" secondItem="Tti-h5-WyO" secondAttribute="bottom" id="YNK-Y5-QI5"/>
                             <constraint firstItem="3H8-qJ-6wW" firstAttribute="trailing" secondItem="Tti-h5-WyO" secondAttribute="trailing" id="aLm-Dp-QBh"/>
+                            <constraint firstItem="Ph3-j8-QmR" firstAttribute="leading" secondItem="3H8-qJ-6wW" secondAttribute="leading" id="ir0-9R-Z3M"/>
                             <constraint firstItem="Tti-h5-WyO" firstAttribute="top" secondItem="3H8-qJ-6wW" secondAttribute="top" id="kj4-gz-Xf0"/>
+                            <constraint firstItem="3H8-qJ-6wW" firstAttribute="trailing" secondItem="Ph3-j8-QmR" secondAttribute="trailing" id="vog-S1-MRV"/>
+                            <constraint firstItem="Ph3-j8-QmR" firstAttribute="top" secondItem="3H8-qJ-6wW" secondAttribute="top" id="w4Z-Fs-qvu"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="3H8-qJ-6wW"/>
                     </view>
@@ -197,6 +201,9 @@
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="ers-ua-YHb">
                                                 <rect key="frame" x="61" y="0.0" width="260" height="31"/>
+                                                <connections>
+                                                    <action selector="updateCurrentTime:" destination="I7J-4S-ZAM" eventType="valueChanged" id="WvB-0b-0Ry"/>
+                                                </connections>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-00:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hJk-UF-DFp">
                                                 <rect key="frame" x="327" y="0.0" width="55" height="30"/>
@@ -217,11 +224,17 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <state key="normal" image="play.fill" catalog="system"/>
                                                 <state key="selected" image="pause.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="togglePlayback:" destination="I7J-4S-ZAM" eventType="touchUpInside" id="RlO-Xg-JtA"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EmO-V4-wgH">
                                                 <rect key="frame" x="191" y="0.0" width="191" height="46"/>
                                                 <state key="normal" image="mic.fill" catalog="system"/>
                                                 <state key="selected" image="stop.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="toggleRecording:" destination="I7J-4S-ZAM" eventType="touchUpInside" id="M29-wP-sGu"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -247,6 +260,14 @@
                     <navigationItem key="navigationItem" title="Add Audio Recording" id="RiA-TD-RC7">
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="6zB-Wp-DAh"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="audioVisualizer" destination="Inv-SP-yNy" id="3Vc-dM-3FD"/>
+                        <outlet property="playButton" destination="eNh-6U-JQN" id="BsW-UP-eR0"/>
+                        <outlet property="recordButton" destination="EmO-V4-wgH" id="Hh2-hv-fkb"/>
+                        <outlet property="timeElapsedLabel" destination="D4n-5t-74s" id="yXC-uE-aub"/>
+                        <outlet property="timeRemainingLabel" destination="hJk-UF-DFp" id="I01-Cv-Km8"/>
+                        <outlet property="timeSlider" destination="ers-ua-YHb" id="V15-iO-PdO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fxT-0S-QgQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
