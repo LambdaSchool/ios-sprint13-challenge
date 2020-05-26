@@ -11,16 +11,16 @@ import AVFoundation
 
 class CameraPreviewView: UIView {
     
-    override class var layerClass: AnyClass {
-           return AVPlayerLayer.self
+     override class var layerClass: AnyClass {
+           return AVCaptureVideoPreviewLayer.self
        }
        
-       var videoPlayerLayer: AVPlayerLayer {
-           return layer as! AVPlayerLayer
+       var videoPlayerLayer: AVCaptureVideoPreviewLayer {
+           return layer as! AVCaptureVideoPreviewLayer
        }
        
-       var player: AVPlayer? {
-           get { return videoPlayerLayer.player }
-           set { videoPlayerLayer.player = newValue }
+       var session: AVCaptureSession? {
+           get { return videoPlayerLayer.session }
+           set { videoPlayerLayer.session = newValue }
        }
 }
