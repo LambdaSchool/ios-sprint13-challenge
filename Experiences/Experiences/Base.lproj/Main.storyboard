@@ -176,7 +176,72 @@
                     <view key="view" contentMode="scaleToFill" id="qHy-Pm-58K">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Inv-SP-yNy" customClass="AudioVisualizer" customModule="SimpleAudioRecorder" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="724"/>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="O5x-Nv-9bj">
+                                <rect key="frame" x="16" y="732" width="382" height="76"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Kk1-2M-wVB">
+                                        <rect key="frame" x="0.0" y="0.0" width="382" height="30"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D4n-5t-74s">
+                                                <rect key="frame" x="0.0" y="0.0" width="55" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="55" id="lTe-vc-QJR"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="ers-ua-YHb">
+                                                <rect key="frame" x="61" y="0.0" width="260" height="31"/>
+                                            </slider>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-00:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hJk-UF-DFp">
+                                                <rect key="frame" x="327" y="0.0" width="55" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="55" id="Rmp-B8-78r"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="qTh-FA-4Up">
+                                        <rect key="frame" x="0.0" y="30" width="382" height="46"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eNh-6U-JQN">
+                                                <rect key="frame" x="0.0" y="0.0" width="191" height="46"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <state key="normal" image="play.fill" catalog="system"/>
+                                                <state key="selected" image="pause.fill" catalog="system"/>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EmO-V4-wgH">
+                                                <rect key="frame" x="191" y="0.0" width="191" height="46"/>
+                                                <state key="normal" image="mic.fill" catalog="system"/>
+                                                <state key="selected" image="stop.fill" catalog="system"/>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="46" id="zRo-cC-6hf"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="O5x-Nv-9bj" firstAttribute="top" secondItem="Inv-SP-yNy" secondAttribute="bottom" constant="8" id="6v7-pf-5Jj"/>
+                            <constraint firstItem="i6U-Ti-W0a" firstAttribute="bottom" secondItem="O5x-Nv-9bj" secondAttribute="bottom" id="S4a-Dk-Tev"/>
+                            <constraint firstItem="i6U-Ti-W0a" firstAttribute="trailing" secondItem="O5x-Nv-9bj" secondAttribute="trailing" constant="16" id="TB8-bE-jCe"/>
+                            <constraint firstItem="O5x-Nv-9bj" firstAttribute="leading" secondItem="i6U-Ti-W0a" secondAttribute="leading" constant="16" id="i1c-Ek-RSd"/>
+                            <constraint firstItem="O5x-Nv-9bj" firstAttribute="top" secondItem="Inv-SP-yNy" secondAttribute="bottom" constant="8" id="oVF-e7-gVe"/>
+                            <constraint firstItem="Inv-SP-yNy" firstAttribute="top" secondItem="qHy-Pm-58K" secondAttribute="top" id="ole-Xk-Sq8"/>
+                            <constraint firstItem="Inv-SP-yNy" firstAttribute="centerX" secondItem="O5x-Nv-9bj" secondAttribute="centerX" id="vgq-3i-aNG"/>
+                            <constraint firstItem="Inv-SP-yNy" firstAttribute="leading" secondItem="i6U-Ti-W0a" secondAttribute="leading" id="y2Z-7s-ZPV"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="i6U-Ti-W0a"/>
                     </view>
                     <navigationItem key="navigationItem" title="Add Audio Recording" id="RiA-TD-RC7">
@@ -278,5 +343,9 @@
         <image name="Add Video" width="50" height="50"/>
         <image name="Map Icon" width="100" height="100"/>
         <image name="Record" width="116" height="116"/>
+        <image name="mic.fill" catalog="system" width="54" height="64"/>
+        <image name="pause.fill" catalog="system" width="58" height="64"/>
+        <image name="play.fill" catalog="system" width="58" height="64"/>
+        <image name="stop.fill" catalog="system" width="64" height="56"/>
     </resources>
 </document>
