@@ -16,6 +16,7 @@ class AddVideoViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+     var delegate: AddMediaDelegate?
 
     /*
     // MARK: - Navigation

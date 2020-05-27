@@ -7,12 +7,19 @@
 //
 
 import UIKit
+import CoreImage
+import CoreImage.CIFilterBuiltins
+import Photos
 
 class AddExperienceViewController: UIViewController {
 
     // MARK: - Properties
     
     var experienceController: ExperienceController!
+  
+    var imageURL: URL?
+    var audioURL: URL?
+    var videoURL: URL?
     
     // MARK: - IBOulets
     @IBOutlet var imageView: UIImageView!
@@ -23,6 +30,7 @@ class AddExperienceViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
 
         // Do any additional setup after loading the view.
     }
@@ -35,17 +43,54 @@ class AddExperienceViewController: UIViewController {
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
         guard let title = titleTextField.text, !title.isEmpty else { return }
         
+        experienceController.createExperience(title: title, imageURL: imageURL, audioURL: audioURL, videoURL: videoURL)
+        
+        dismiss(animated: true, completion: nil)
         
     }
 
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == SegueIdentifiers.AddImageSegue.rawValue {
+            guard let destinationVC = segue.destination as? AddImageViewController else  { return }
+            destinationVC.delegate = self
+        } else if segue.identifier == SegueIdentifiers.AddAudioSegue.rawValue {
+            guard let destinationVC = segue.destination as? AddAudioViewController else { return }
+            destinationVC.delegate = self
+        } else if segue.identifier == SegueIdentifiers.AddVideoSegue.rawValue {
+            guard let destinationVC = segue.destination as? AddVideoViewController else { return }
+            destinationVC.delegate = self
+        }
     }
-    */
+      
+    private func image(at url: URL) -> UIImage? {
+        guard let imageData = FileManager.default.contents(atPath: url.relativePath),
+            let image = UIImage(data: imageData) else { return nil }
+        
+        return image
+    }
+}
 
+
+
+extension AddExperienceViewController: AddMediaDelegate {
+    func didSaveMedia(mediaType: MediaType, to url: URL) {
+        switch mediaType {
+        case .image:
+            imageURL = url
+            if let image = image(at: url) {
+                imageView.contentMode = .scaleAspectFit
+                imageView.backgroundColor = .clear
+                imageView.image = image
+            }
+        case .audio:
+            audioURL = url
+            addAudioButton.setImage(#imageLiteral(resourceName: "Add Recording"), for: .normal)
+        case .video:
+            videoURL = url
+            addVideoButton.setImage(#imageLiteral(resourceName: "Add Video"), for: .normal)
+    
+        }
+    }
 }

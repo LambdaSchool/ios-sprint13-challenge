@@ -25,6 +25,7 @@ class AddAudioViewController: UIViewController {
     
     var recordingURL: URL?
     var audioRecorder: AVAudioRecorder?
+    var delegate: AddMediaDelegate?
     
     @IBOutlet var playButton: UIButton!
     @IBOutlet var recordButton: UIButton!

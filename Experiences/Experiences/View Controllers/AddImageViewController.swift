@@ -8,6 +8,9 @@
 
 import UIKit
 
+protocol AddMediaDelegate {
+    func didSaveMedia(mediaType: MediaType, to url: URL)
+}
 class AddImageViewController: UIViewController {
 
     override func viewDidLoad() {
@@ -16,7 +19,7 @@ class AddImageViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-
+  var delegate: AddMediaDelegate?
     /*
     // MARK: - Navigation
 
