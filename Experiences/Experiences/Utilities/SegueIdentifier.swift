@@ -15,3 +15,6 @@ enum SegueIdentifiers: String {
     case AddVideoSegue
 }
 
+struct ReuseIdentifiers {
+    static let annotation = "experienceAnnotationView"
+}
