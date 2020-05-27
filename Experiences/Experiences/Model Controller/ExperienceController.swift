@@ -15,15 +15,21 @@ class ExperienceController: NSObject {
     
     private let locationManager = CLLocationManager()
     private var location: CLLocationCoordinate2D?
-    
-    func createExperience(title: String, imageURL: URL? = nil, audioURL: URL? = nil, videoURL: URL? = nil) -> Experience {
+
+    @discardableResult
+    func createExperience(title: String,
+                          imageURL: URL? = nil,
+                          audioURL: URL? = nil,
+                          videoURL: URL? = nil) -> Experience {
         
         locationManager.requestLocation()
         location = locationManager.location?.coordinate
         
         let experience = Experience(title: title,
-                                    imageURL: imageURL, videoURL: videoURL
-            , audioURL: audioURL, geotag: location)
+                                    imageURL: imageURL,
+                                    videoURL: videoURL,
+                                    audioURL: audioURL,
+                                    geotag: location)
         
         experiences.append(experience)
         

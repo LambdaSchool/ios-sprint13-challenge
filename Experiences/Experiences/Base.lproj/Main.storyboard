@@ -11,7 +11,7 @@
         <scene sceneID="NeP-Up-LGq">
             <objects>
                 <viewController id="EP4-jr-ptY" customClass="ExperiencesMapViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="js1-3z-o2M">
+                    <view key="view" contentMode="scaleToFill" id="js1-3z-o2M" customClass="ExperienceView" customModule="Experiences" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -55,7 +55,7 @@
         <!--New Experiences-->
         <scene sceneID="YdO-Qj-Hdt">
             <objects>
-                <viewController id="lrY-no-len" sceneMemberID="viewController">
+                <viewController id="lrY-no-len" customClass="AddExperienceViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ui9-KI-7Is">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -104,22 +104,44 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0Yk-fo-1P4">
+                                <rect key="frame" x="40" y="124" width="334" height="156"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="ZLc-19-mmf" firstAttribute="leading" secondItem="GkA-fZ-pWN" secondAttribute="leading" constant="25" id="3Ux-la-Vgj"/>
+                            <constraint firstItem="0Yk-fo-1P4" firstAttribute="leading" secondItem="GkA-fZ-pWN" secondAttribute="leading" constant="40" id="5q7-tB-ITJ"/>
                             <constraint firstItem="ZLc-19-mmf" firstAttribute="centerY" secondItem="ui9-KI-7Is" secondAttribute="centerY" id="KRh-fG-ZOe"/>
+                            <constraint firstItem="A5A-Pp-RdM" firstAttribute="top" secondItem="0Yk-fo-1P4" secondAttribute="bottom" constant="16" id="M4A-Bu-VzP"/>
                             <constraint firstItem="GkA-fZ-pWN" firstAttribute="trailing" secondItem="A5A-Pp-RdM" secondAttribute="trailing" constant="40" id="Nd3-wc-R2h"/>
                             <constraint firstItem="ZLc-19-mmf" firstAttribute="top" secondItem="A5A-Pp-RdM" secondAttribute="bottom" constant="50" id="Tvl-xo-TNe"/>
+                            <constraint firstItem="0Yk-fo-1P4" firstAttribute="top" secondItem="GkA-fZ-pWN" secondAttribute="top" constant="16" id="W3B-tC-jme"/>
                             <constraint firstItem="GkA-fZ-pWN" firstAttribute="trailing" secondItem="ZLc-19-mmf" secondAttribute="trailing" constant="25" id="fSW-1R-eAM"/>
                             <constraint firstItem="A5A-Pp-RdM" firstAttribute="leading" secondItem="GkA-fZ-pWN" secondAttribute="leading" constant="40" id="nnM-Av-NB2"/>
+                            <constraint firstItem="GkA-fZ-pWN" firstAttribute="trailing" secondItem="0Yk-fo-1P4" secondAttribute="trailing" constant="40" id="ymZ-E9-DVm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="GkA-fZ-pWN"/>
                     </view>
                     <navigationItem key="navigationItem" title="New Experiences" id="IQa-ti-NA1">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="uZE-vx-6m7"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="1Kl-fo-Rg0"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="uZE-vx-6m7">
+                            <connections>
+                                <action selector="cancelButtonTapped:" destination="lrY-no-len" id="KCa-XO-jJb"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="1Kl-fo-Rg0">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="lrY-no-len" id="muY-FU-DUf"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="addAudioButton" destination="m7n-yt-BLS" id="e3Y-qa-9mU"/>
+                        <outlet property="addImageButton" destination="Bgy-bh-fNk" id="9Cf-Zc-tbD"/>
+                        <outlet property="addVideoButton" destination="jHN-ML-zXP" id="QQf-Rb-m8O"/>
+                        <outlet property="imageView" destination="0Yk-fo-1P4" id="rpe-8o-9th"/>
+                        <outlet property="titleTextField" destination="A5A-Pp-RdM" id="BNg-jB-Pss"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xT2-PV-HVI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -10,12 +10,33 @@ import UIKit
 
 class AddExperienceViewController: UIViewController {
 
+    // MARK: - Properties
+    
+    var experienceController: ExperienceController!
+    
+    // MARK: - IBOulets
+    @IBOutlet var imageView: UIImageView!
+    @IBOutlet var titleTextField: UITextField!
+    @IBOutlet var addImageButton: UIButton!
+    @IBOutlet var addAudioButton: UIButton!
+    @IBOutlet var addVideoButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+        
+    }
+    
+    @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
+        guard let title = titleTextField.text, !title.isEmpty else { return }
+        
+        
+    }
 
     /*
     // MARK: - Navigation
