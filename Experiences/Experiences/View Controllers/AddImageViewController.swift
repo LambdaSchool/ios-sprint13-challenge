@@ -14,10 +14,10 @@ import Photos
 protocol AddMediaDelegate {
     func didSaveMedia(mediaType: MediaType, to url: URL)
 }
+
 class AddImageViewController: UIViewController {
 
     // MARK: - Properties
-    
     var originalImage: UIImage? {
         didSet {
             guard let originalImage = originalImage else { return }
@@ -42,6 +42,7 @@ class AddImageViewController: UIViewController {
     }
       
     var delegate: AddMediaDelegate?
+    
     private let context = CIContext()
     private let colorControlsFilter = CIFilter.colorControls()
     
@@ -61,22 +62,21 @@ class AddImageViewController: UIViewController {
     //MARK: - IBActions
     @IBAction func filterSettingsChanged(_ sender: Any) {
         updateImage()
-    
     }
-    @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
-        
+    
+    @IBAction func saveButtonTapped(_ sender: Any) {
         guard let originalImage = originalImage?.flattened, let ciImage = CIImage(image: originalImage) else { return }
-             
-             let processedImage = self.image(byFiltering: ciImage)
+        
+        let processedImage = self.image(byFiltering: ciImage)
         let imageURL = MediaFileURL.newURL(for: .image)
-             
-             store(image: processedImage, to: imageURL)
-             delegate?.didSaveMedia(mediaType: .image, to: imageURL)
-             
-             navigationController?.popViewController(animated: true)
+        
+        store(image: processedImage, to: imageURL)
+        delegate?.didSaveMedia(mediaType: .image, to: imageURL)
+        
+        navigationController?.popViewController(animated: true)
     }
     
-    
+    // MARK: Image Controls
     private func updateImage() {
         if let scaledImage = scaledImage {
             imageView.image = image(byFiltering: scaledImage)
@@ -87,8 +87,10 @@ class AddImageViewController: UIViewController {
     
     private func image(byFiltering inputImage: CIImage) -> UIImage {
         
+        colorControlsFilter.inputImage = inputImage
         colorControlsFilter.brightness = brightnessSlider.value
         colorControlsFilter.contrast = contrastSlider.value
+        
         
         guard let outputImage = colorControlsFilter.outputImage else { return originalImage! }
         
@@ -120,7 +122,7 @@ class AddImageViewController: UIViewController {
        }
 }
 
-
+// MARK: - Extensions
 extension AddImageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         

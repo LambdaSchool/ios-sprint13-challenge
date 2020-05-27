@@ -53,8 +53,6 @@ class AddAudioViewController: UIViewController {
                                                                  weight: .regular)
         timeRemainingLabel.font = UIFont.monospacedDigitSystemFont(ofSize: timeRemainingLabel.font.pointSize,
                                                                    weight: .regular)
-        
-        loadAudio()
     }
     
     func updateViews() {
@@ -131,16 +129,16 @@ class AddAudioViewController: UIViewController {
     var isPlaying: Bool {
         audioPlayer?.isPlaying ?? false
     }
-    
-    func loadAudio() {
-        let songURL = Bundle.main.url(forResource: "piano", withExtension: "mp3")!
-        
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: songURL)
-        } catch {
-            preconditionFailure("Failure to load audio file: \(error)")
-        }
-    }
+//
+//    func loadAudio() {
+//        let songURL = Bundle.main.url(forResource: "piano", withExtension: "mp3")!
+//
+//        do {
+//            audioPlayer = try AVAudioPlayer(contentsOf: songURL)
+//        } catch {
+//            preconditionFailure("Failure to load audio file: \(error)")
+//        }
+//    }
     
     func prepareAudioSession() throws {
         let session = AVAudioSession.sharedInstance()

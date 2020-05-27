@@ -18,19 +18,43 @@ class ExperiencesMapViewController: UIViewController {
     // MARK: - Properties
     var experienceController = ExperienceController()
     private var userTrackingButton: MKUserTrackingButton!
-    private let locationMnanger = CLLocationManager()
-    private var shouldRequestExperience = false
+    private let locationManager = CLLocationManager()
     private var isFetchingExperience = false
-    
+    private var shouldRequestExperience = false
+   
     var experiences: [Experience] = [] {
-       // TODO:
         didSet {
+            let previousExperiences = Set(oldValue)
+            let newExperiences = Set(experiences)
+            
+            let addedExperieneces = Array(newExperiences.subtracting(previousExperiences))
+            let removedExperiences = Array(previousExperiences.subtracting(newExperiences))
+            
+            mapView.removeAnnotations(removedExperiences)
+            mapView.addAnnotations(addedExperieneces)
         }
     }
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        mapView.delegate = self
+        
+        locationManager.requestWhenInUseAuthorization()
+        
+        userTrackingButton = MKUserTrackingButton(mapView: mapView)
+        userTrackingButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(userTrackingButton)
+        
+        NSLayoutConstraint.activate([
+            userTrackingButton.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 20),
+            mapView.bottomAnchor.constraint(equalTo: userTrackingButton.bottomAnchor, constant: 60)
+        ])
+        
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: ReuseIdentifiers.annotation)
+        
+        fetchExperiences()
+        
     }
    
     // MARK: - Fetch Functions
@@ -67,19 +91,19 @@ class ExperiencesMapViewController: UIViewController {
         
         completion(regionExperiences)
     }
-    
+    // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == SegueIdentifiers.AddExperienceSegue.rawValue {
             guard let destinationVC = segue.destination as? UINavigationController,
             
-                let targetController = destinationVC.topViewController as? ExperiencesMapViewController else { return }
+                let targetController = destinationVC.topViewController as? AddExperienceViewController else { return }
             
             targetController.experienceController = experienceController
         }
     }
 }
 
-
+// MARK: - Extensions
 extension ExperiencesMapViewController: MKMapViewDelegate {
      
     func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
@@ -92,6 +116,8 @@ extension ExperiencesMapViewController: MKMapViewDelegate {
         guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: ReuseIdentifiers.annotation, for: experience) as? MKMarkerAnnotationView else {
             preconditionFailure("Missing annotation view on map")
         }
+        
+
         
         annotationView.canShowCallout = true
         let detailView = ExperienceView()

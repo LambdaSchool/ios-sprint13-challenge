@@ -20,15 +20,19 @@ struct Location {
 
 class Experience: NSObject {
     
-  
-    
+  // MARK: - Properties
     var experienceTitle: String
     var media: [Media]
-    //TODO: Add a
     let geotag: CLLocationCoordinate2D!
     let timestamp: Date
     
-    init(title: String, imageURL: URL?, videoURL: URL?, audioURL: URL?, geotag: CLLocationCoordinate2D? = nil, timestamp: Date = Date()) {
+    init(title: String,
+         imageURL: URL?,
+         videoURL: URL?,
+         audioURL: URL?,
+         geotag: CLLocationCoordinate2D? = nil,
+         timestamp: Date = Date()) {
+        
         self.experienceTitle = title
         self.geotag = geotag ?? Location.trickDog
         self.timestamp = timestamp
@@ -47,7 +51,6 @@ class Experience: NSObject {
     }
     
     struct Media {
-      
         let mediaType: MediaType
         let url: URL?
     }

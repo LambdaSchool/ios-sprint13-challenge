@@ -48,6 +48,7 @@ extension ExperienceController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
+            print("Found location: \(location)")
             self.location = location.coordinate
         }
     }

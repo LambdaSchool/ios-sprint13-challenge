@@ -16,5 +16,5 @@ enum SegueIdentifiers: String {
 }
 
 struct ReuseIdentifiers {
-    static let annotation = "experienceAnnotationView"
+    static let annotation = "ExperienceAnnotationView"
 }

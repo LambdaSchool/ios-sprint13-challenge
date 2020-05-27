@@ -32,6 +32,7 @@ class AddVideoViewController: UIViewController {
         cameraView.videoPlayerLayer.videoGravity = .resizeAspect
         setupCamera()
         
+        recordButton.setImage(#imageLiteral(resourceName: "Record"), for: .normal)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -52,6 +53,7 @@ class AddVideoViewController: UIViewController {
         } else {
             videoURL = MediaFileURL.newURL(for: .video)
             fileOutput.startRecording(to: videoURL!, recordingDelegate: self)
+            recordButton.setImage(#imageLiteral(resourceName: "Stop"), for: .normal)
         }
     }
     

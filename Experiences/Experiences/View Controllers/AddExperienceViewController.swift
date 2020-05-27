@@ -73,7 +73,7 @@ class AddExperienceViewController: UIViewController {
 }
 
 
-
+// MARK: Extensions
 extension AddExperienceViewController: AddMediaDelegate {
     func didSaveMedia(mediaType: MediaType, to url: URL) {
         switch mediaType {
@@ -86,11 +86,9 @@ extension AddExperienceViewController: AddMediaDelegate {
             }
         case .audio:
             audioURL = url
-            addAudioButton.setImage(#imageLiteral(resourceName: "Add Recording"), for: .normal)
         case .video:
             videoURL = url
-            addVideoButton.setImage(#imageLiteral(resourceName: "Add Video"), for: .normal)
-    
+          
         }
     }
 }
