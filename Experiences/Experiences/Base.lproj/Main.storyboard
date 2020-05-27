@@ -171,6 +171,9 @@
                                 </constraints>
                                 <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" image="Record"/>
+                                <connections>
+                                    <action selector="recordButtonPressed:" destination="lzb-dV-xcz" eventType="touchUpInside" id="nNY-Lx-70S"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -189,8 +192,17 @@
                         <viewLayoutGuide key="safeArea" id="3H8-qJ-6wW"/>
                     </view>
                     <navigationItem key="navigationItem" title="Add Video Recording" id="TGP-KW-ICp">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="cvi-8B-ZY1"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="cvi-8B-ZY1">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="lzb-dV-xcz" id="5IG-ct-ne6"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="cameraView" destination="Tti-h5-WyO" id="8WE-VY-o7r"/>
+                        <outlet property="moviePlayerView" destination="Ph3-j8-QmR" id="TUX-pa-YYe"/>
+                        <outlet property="recordButton" destination="qJk-ZT-OMx" id="3Be-eL-DDG"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GM0-29-BgL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
