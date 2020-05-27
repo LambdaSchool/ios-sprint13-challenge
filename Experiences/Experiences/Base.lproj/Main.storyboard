@@ -318,6 +318,9 @@
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="rkm-GE-GAy">
                                                 <rect key="frame" x="91" y="0.0" width="293" height="31"/>
+                                                <connections>
+                                                    <action selector="filterSettingsChanged:" destination="eMh-jh-9YK" eventType="valueChanged" id="KeA-kd-tNg"/>
+                                                </connections>
                                             </slider>
                                         </subviews>
                                     </stackView>
@@ -332,6 +335,9 @@
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Mnv-E6-LYQ">
                                                 <rect key="frame" x="82.5" y="0.0" width="301.5" height="31"/>
+                                                <connections>
+                                                    <action selector="filterSettingsChanged:" destination="eMh-jh-9YK" eventType="valueChanged" id="PDZ-qr-eKu"/>
+                                                </connections>
                                             </slider>
                                         </subviews>
                                     </stackView>
@@ -354,8 +360,17 @@
                         <viewLayoutGuide key="safeArea" id="zYp-yK-Q5L"/>
                     </view>
                     <navigationItem key="navigationItem" title="Add Image" id="pZc-RB-if3">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="oEl-4W-3rH"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="oEl-4W-3rH">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="eMh-jh-9YK" id="66R-wm-bhr"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="brightnessSlider" destination="rkm-GE-GAy" id="HuH-xE-Vhq"/>
+                        <outlet property="contrastSlider" destination="Mnv-E6-LYQ" id="W6N-aq-cre"/>
+                        <outlet property="imageView" destination="f32-1X-L5X" id="uIc-iC-lJR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iQy-0I-YmU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
