@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import MapKit
 
 class VisitDetailViewController: UIViewController {
     // MARK: - Outlets
@@ -63,6 +64,13 @@ class VisitDetailViewController: UIViewController {
         timer?.invalidate()
     }
     
+    // Map
+    var newLocation: CLLocationCoordinate2D? {
+        didSet {
+            print("DVC newLocation is \(String(describing: newLocation))")
+        }
+    }
+    
     
     // MARK: - Views
     override func viewDidLoad() {
@@ -104,7 +112,6 @@ class VisitDetailViewController: UIViewController {
     
     func updateSlider() {
         let elapsedTime = audioPlayer?.currentTime ?? 0
-        print("Elapsed: \(elapsedTime)")
         let duration = audioPlayer?.duration ?? 20
         let timeRemaining = duration.rounded() - elapsedTime
         
@@ -150,18 +157,18 @@ class VisitDetailViewController: UIViewController {
     
     @IBAction func saveVisit(_ sender: UIBarButtonItem) {
         if visit == nil {
-            guard let name = nameTextField.text/*, let location = location */ else {
-                print("Need to add a name.")
+            guard let name = nameTextField.text, let location = newLocation else {
+                print("Need to add a name or location.")
                 return
             }
-            // TODO: Fix location to be current locaton, and URLs to reflect correct URL path.
+            // TODO: Fix videoURL to reflect correct URL path.
             let audioURL = audioRecordingURL
             let videoURL = URL(fileURLWithPath: "")
-            let newVisit: Visit = Visit(name: name, location: 0, photo: photoImageView.image, audioURL: audioURL, videoURL: videoURL)
+            let newVisit: Visit = Visit(name: name, location: location, photo: photoImageView.image, audioURL: audioURL, videoURL: videoURL)
             visitDelegate?.saveNew(visit: newVisit)
             navigationController?.popViewController(animated: true)
         } else {
-            guard let name = nameTextField.text/*, let location = location */, let visit = visit, let indexPath = indexPath else {
+            guard let name = nameTextField.text, let location = newLocation, let visit = visit, let indexPath = indexPath else {
                 print("Need to add a name.")
                 return
             }
@@ -174,6 +181,7 @@ class VisitDetailViewController: UIViewController {
             visit.audioRecordingURL = audioURL
             visit.videoRecordingURL = videoURL
             visit.photo = image
+            visit.location = location
             visitDelegate?.update(visit: visit, indexPath: indexPath)
             navigationController?.popViewController(animated: true)
         }
@@ -196,12 +204,6 @@ class VisitDetailViewController: UIViewController {
     func loadPhoto() {
         photoImageView.image = newImage
     }
-    
-//    private func presentSuccessfulSaveAlert() {
-//        let alert = UIAlertController(title: "Photo Saved!", message: "The photo has been saved to your Photo Library!", preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-//        present(alert, animated: true, completion: nil)
-//    }
     
     // Timer
     func startTimer() {

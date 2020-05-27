@@ -50,6 +50,7 @@
                     <navigationItem key="navigationItem" title="Car Trek" id="PLV-0L-mOl">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="rD4-7Z-Ywa">
                             <connections>
+                                <action selector="addVisit:" destination="Jwg-e8-mg2" id="YO9-e0-39n"/>
                                 <segue destination="zrM-aK-DjK" kind="show" identifier="addVisitSegue" id="Zvt-do-DOz"/>
                             </connections>
                         </barButtonItem>
@@ -102,13 +103,13 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="zvz-0Y-VzQ">
-                                        <rect key="frame" x="89" y="304.5" width="196" height="122"/>
+                                        <rect key="frame" x="83" y="304.5" width="208" height="122"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="akx-Bf-OBS">
-                                                <rect key="frame" x="0.0" y="0.0" width="196" height="64"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="208" height="64"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="kb7-st-ppv">
-                                                        <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="208" height="30"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a0b-Iv-Id5">
                                                                 <rect key="frame" x="0.0" y="0.0" width="36" height="30"/>
@@ -117,13 +118,13 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <slider opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="20" translatesAutoresizingMaskIntoConstraints="NO" id="oRu-Kt-aOl">
-                                                                <rect key="frame" x="44" y="0.0" width="108" height="31"/>
+                                                                <rect key="frame" x="44" y="0.0" width="120" height="31"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="Gba-cL-7a0"/>
                                                                 </constraints>
                                                             </slider>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V4T-VV-mBg">
-                                                                <rect key="frame" x="160" y="0.0" width="36" height="30"/>
+                                                                <rect key="frame" x="172" y="0.0" width="36" height="30"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -131,7 +132,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ItO-tr-RaH">
-                                                        <rect key="frame" x="0.0" y="38" width="196" height="26"/>
+                                                        <rect key="frame" x="0.0" y="38" width="208" height="26"/>
                                                         <state key="normal" image="play.fill" catalog="system">
                                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25"/>
                                                         </state>
@@ -144,14 +145,12 @@
                                                     </button>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstItem="kb7-st-ppv" firstAttribute="leading" secondItem="akx-Bf-OBS" secondAttribute="leading" constant="20" id="4ao-Uu-IQ5"/>
                                                     <constraint firstItem="kb7-st-ppv" firstAttribute="top" secondItem="akx-Bf-OBS" secondAttribute="top" id="f5k-ls-qy6"/>
-                                                    <constraint firstAttribute="trailing" secondItem="kb7-st-ppv" secondAttribute="trailing" constant="20" id="gIV-et-omZ"/>
                                                     <constraint firstItem="ItO-tr-RaH" firstAttribute="top" secondItem="kb7-st-ppv" secondAttribute="bottom" constant="8" id="oNT-OC-kax"/>
                                                 </constraints>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0a8-N0-BZB">
-                                                <rect key="frame" x="0.0" y="72" width="196" height="50"/>
+                                                <rect key="frame" x="0.0" y="72" width="208" height="50"/>
                                                 <state key="normal" title="Record Audio"/>
                                                 <state key="selected" title="Stop Recording Audio"/>
                                                 <connections>

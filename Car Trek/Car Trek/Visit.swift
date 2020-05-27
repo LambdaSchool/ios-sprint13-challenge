@@ -7,15 +7,16 @@
 //
 
 import UIKit
+import MapKit
 
 class Visit {
     var name: String
-    var location: Int
+    var location: CLLocationCoordinate2D
     var photo: UIImage?
     var audioRecordingURL: URL?
     var videoRecordingURL: URL?
     
-    init(name: String, location: Int, photo: UIImage?, audioURL: URL?, videoURL: URL?) {
+    init(name: String, location: CLLocationCoordinate2D, photo: UIImage?, audioURL: URL?, videoURL: URL?) {
         self.name = name
         self.location = location
         self.photo = photo

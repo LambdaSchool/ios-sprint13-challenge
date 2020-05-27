@@ -25,8 +25,9 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
         
     // Map setup
     @IBOutlet var mapView: MKMapView!
-    var userTrackingButton = MKUserTrackingButton()
+    private var userTrackingButton = MKUserTrackingButton()
     private let locationManager = CLLocationManager()
+    var newLocation: CLLocationCoordinate2D?
 
     
     func updateMap() {
@@ -41,7 +42,9 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
             ])
 
              mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: .annotationReuseIdentifier)
-
+        let userLocationCoordinates = CLLocationCoordinate2DMake(locationManager.location?.coordinate.latitude ?? 0, locationManager.location?.coordinate.longitude ?? 0)
+        newLocation = userLocationCoordinates
+        print("TVC newLocation is \(String(describing: newLocation))")
         }
     // MARK: - Views
     override func viewDidLoad() {
@@ -98,11 +101,20 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
     }
 
     // MARK: - Navigation
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    @IBAction func addVisit(_ sender: UIBarButtonItem) {
+        let userLocationCoordinates = CLLocationCoordinate2DMake(locationManager.location?.coordinate.latitude ?? 0, locationManager.location?.coordinate.longitude ?? 0)
+        let pinForUserLocation = MKPointAnnotation()
+            pinForUserLocation.coordinate = userLocationCoordinates
+            mapView.addAnnotation(pinForUserLocation)
+            mapView.showAnnotations([pinForUserLocation], animated: true)
+    }
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
          if segue.identifier == "viewVisitSegue" {
             let visitVC = segue.destination as! VisitDetailViewController
             visitVC.visitDelegate = self
+            visitVC.newLocation = newLocation
             
             visitVC.visit = self.visit
             visitVC.indexPath = tableView.indexPathForSelectedRow
@@ -110,6 +122,7 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
         } else if segue.identifier == "addVisitSegue" {
            let addVC = segue.destination as! VisitDetailViewController
            addVC.visitDelegate = self
+            addVC.newLocation = newLocation
         }
     }
 }
