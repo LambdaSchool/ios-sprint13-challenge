@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VideoPlaybackViewController: UIViewController {
+class AddExperienceViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
