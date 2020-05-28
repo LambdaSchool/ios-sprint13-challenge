@@ -27,28 +27,11 @@ class VisitDetailViewController: UIViewController {
     var indexPath: IndexPath?
     var visitDelegate: VisitDelegate?
     
+    // Map
+    var newLocation: CLLocationCoordinate2D?
+    
     // Image
     var newImage: UIImage?
-    
-    // Audio
-    var audioPlayer: AVAudioPlayer? {
-        didSet {
-            guard let audioPlayer = audioPlayer else { return }
-                audioPlayer.delegate = self
-            updateViews()
-        }
-    }
-    
-    var audioIsPlaying: Bool {
-        audioPlayer?.isPlaying ?? false
-    }
-    
-    var audioRecordingURL: URL?
-    var audioRecorder: AVAudioRecorder?
-    
-    var audioIsRecording: Bool {
-        audioRecorder?.isRecording ?? false
-    }
     
     // Timer
     weak var timer: Timer?
@@ -64,18 +47,34 @@ class VisitDetailViewController: UIViewController {
         timer?.invalidate()
     }
     
-    // Map
-    var newLocation: CLLocationCoordinate2D? {
+    // Audio
+    
+    var audioRecordingURL: URL?
+    var audioRecorder: AVAudioRecorder?
+    
+    var audioIsRecording: Bool {
+        audioRecorder?.isRecording ?? false
+    }
+    
+    var audioPlayer: AVAudioPlayer? {
         didSet {
-            print("DVC newLocation is \(String(describing: newLocation))")
+            guard let audioPlayer = audioPlayer else { return }
+            audioPlayer.delegate = self
+            updateViews()
         }
     }
+    
+    var audioIsPlaying: Bool {
+        audioPlayer?.isPlaying ?? false
+    }
+    
+    // Video
     
     
     // MARK: - Views
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         updateViews()
         loadAudio()
     }
@@ -86,16 +85,16 @@ class VisitDetailViewController: UIViewController {
     }
     
     func updateViews() {
-        // TODO: fix to update with all properties correctly
+        // TODO: fix to update video.
         audioElapsedTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: audioElapsedTimeLabel.font.pointSize, weight: .regular)
         audioTimeRemainingLabel.font = UIFont.monospacedDigitSystemFont(ofSize: audioTimeRemainingLabel.font.pointSize, weight: .regular)
         
         audioPlayButton.isSelected = audioIsPlaying
         recordAudioButton.isSelected = audioIsRecording
         newImage = photoImageView.image
-
+        
         if audioIsPlaying {
-            updateSlider()
+            updateAudioSlider()
             audioPlayButton.title(for: .selected)
         } else {
             audioPlayButton.title(for: .normal)
@@ -110,7 +109,7 @@ class VisitDetailViewController: UIViewController {
         }
     }
     
-    func updateSlider() {
+    func updateAudioSlider() {
         let elapsedTime = audioPlayer?.currentTime ?? 0
         let duration = audioPlayer?.duration ?? 20
         let timeRemaining = duration.rounded() - elapsedTime
@@ -130,9 +129,9 @@ class VisitDetailViewController: UIViewController {
     
     @IBAction func addAudioRecording(_ sender: UIButton) {
         if audioIsRecording == false {
-        audioPlayButton.isSelected = false
-        audioPlayer?.pause()
-        requestPermissionOrStartRecording()
+            audioPlayButton.isSelected = false
+            audioPlayer?.pause()
+            requestPermissionOrStartRecording()
         } else {
             stopRecording()
         }
@@ -141,15 +140,14 @@ class VisitDetailViewController: UIViewController {
     
     @IBAction func audioPlayButton(_ sender: UIButton) {
         if audioIsRecording {
-        stopRecording()
+            stopRecording()
         }
         if audioIsPlaying {
-            pause()
+            pauseAudio()
         } else {
-            play()
+            playAudio()
         }
     }
-    
     
     @IBAction func addVideoRecording(_ sender: UIButton) {
         
@@ -167,6 +165,7 @@ class VisitDetailViewController: UIViewController {
             let newVisit: Visit = Visit(name: name, location: location, photo: photoImageView.image, audioURL: audioURL, videoURL: videoURL)
             visitDelegate?.saveNew(visit: newVisit)
             navigationController?.popViewController(animated: true)
+            
         } else {
             guard let name = nameTextField.text, let location = newLocation, let visit = visit, let indexPath = indexPath else {
                 print("Need to add a name.")
@@ -186,6 +185,7 @@ class VisitDetailViewController: UIViewController {
             navigationController?.popViewController(animated: true)
         }
     }
+    
     // MARK: - Methods
     // Image
     private func presentImagePickerController() {
@@ -219,40 +219,6 @@ class VisitDetailViewController: UIViewController {
     func cancelTimer() {
         timer?.invalidate()
         timer = nil
-    }
-    
-    // Audio Playback
-    func prepareAudioSession() throws {
-        let session = AVAudioSession.sharedInstance()
-        try session.setCategory(.playAndRecord, options: [.defaultToSpeaker])
-        try session.setActive(true, options: [])
-    }
-    
-    func loadAudio() {
-        guard let visit = visit, let audioURL = visit.audioRecordingURL else { return }
-        
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: audioURL)
-        } catch {
-            preconditionFailure("Failure to load audio file: \(error)")
-        }
-    }
-    
-    func play() {
-        do {
-            try prepareAudioSession()
-            audioPlayer?.play()
-            updateViews()
-            startTimer()
-        } catch {
-            print("Cannot play audio: \(error)")
-        }
-    }
-    
-    func pause() {
-        audioPlayer?.pause()
-        updateViews()
-        cancelTimer()
     }
     
     // Record Audio
@@ -321,22 +287,53 @@ class VisitDetailViewController: UIViewController {
         audioRecorder?.stop()
         visit?.audioRecordingURL = audioRecordingURL
     }
-}
-
-// Audio Delegate
-extension VisitDetailViewController: AVAudioRecorderDelegate, AVAudioPlayerDelegate {
-    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-        if let recordingURL = audioRecordingURL {
-            audioPlayer = try? AVAudioPlayer(contentsOf: recordingURL)
-            audioRecorder = nil
-        }
+    
+    // Play audio
+    func prepareAudioSession() throws {
+        let session = AVAudioSession.sharedInstance()
+        try session.setCategory(.playAndRecord, options: [.defaultToSpeaker])
+        try session.setActive(true, options: [])
+    }
+    
+    func loadAudio() {
+        guard let visit = visit, let audioURL = visit.audioRecordingURL else { return }
         
-        func audioPlayerDecodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
-            if let error = error {
-                print("Audio Recorder Error: \(error)")
-            }
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: audioURL)
+        } catch {
+            preconditionFailure("Failure to load audio file: \(error)")
         }
     }
+    
+    func playAudio() {
+        do {
+            try prepareAudioSession()
+            audioPlayer?.play()
+            updateViews()
+            startTimer()
+        } catch {
+            print("Cannot play audio: \(error)")
+        }
+    }
+    
+    func pauseAudio() {
+        audioPlayer?.pause()
+        updateViews()
+        cancelTimer()
+    }
+    
+    // Record video
+    
+    
+    // Play video
+    
+}
+// MARK: - Delegates
+// General
+
+protocol VisitDelegate {
+    func saveNew(visit: Visit)
+    func update(visit: Visit, indexPath: IndexPath)
 }
 
 // Image Delegate
@@ -358,7 +355,19 @@ extension VisitDetailViewController: UIImagePickerControllerDelegate, UINavigati
     }
 }
 
-protocol VisitDelegate {
-    func saveNew(visit: Visit)
-    func update(visit: Visit, indexPath: IndexPath)
+// Audio Delegate
+extension VisitDetailViewController: AVAudioRecorderDelegate, AVAudioPlayerDelegate {
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        if let recordingURL = audioRecordingURL {
+            audioPlayer = try? AVAudioPlayer(contentsOf: recordingURL)
+            audioRecorder = nil
+        }
+        
+        func audioPlayerDecodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
+            if let error = error {
+                print("Audio Recorder Error: \(error)")
+            }
+        }
+    }
 }
+
