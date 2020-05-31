@@ -43,8 +43,8 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: .annotationReuseIdentifier)
         let userLocationCoordinates = CLLocationCoordinate2DMake(locationManager.location?.coordinate.latitude ?? 0, locationManager.location?.coordinate.longitude ?? 0)
         newLocation = userLocationCoordinates
-        print("TVC newLocation is \(String(describing: newLocation))")
     }
+    
     // MARK: - Views
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,7 +63,6 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return visits.count
     }
-    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "visitCell", for: indexPath)

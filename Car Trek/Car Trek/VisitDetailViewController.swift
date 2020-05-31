@@ -181,6 +181,7 @@ class VisitDetailViewController: UIViewController {
             visit.videoRecordingURL = videoURL
             visit.photo = image
             visit.location = location
+            
             visitDelegate?.update(visit: visit, indexPath: indexPath)
             navigationController?.popViewController(animated: true)
         }
@@ -273,6 +274,7 @@ class VisitDetailViewController: UIViewController {
         audioRecordingURL = createNewAudioRecordingURL()
         
         let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
+        
         do {
             audioRecorder = try AVAudioRecorder(url: audioRecordingURL!, format: format)
             audioRecorder?.delegate = self
@@ -280,6 +282,7 @@ class VisitDetailViewController: UIViewController {
         } catch {
             preconditionFailure("The audio recorder could not be created with \(audioRecordingURL!) and \(format)")
         }
+        
         visit?.audioRecordingURL = audioRecordingURL
     }
     
