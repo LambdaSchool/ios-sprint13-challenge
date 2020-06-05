@@ -27,8 +27,24 @@ class ExperienceViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "MapCell")
+        self.locationManager.requestAlwaysAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.startUpdatingLocation()
+        }
+        mapView.delegate = self
+        mapView.mapType = .standard
+        mapView.isZoomEnabled = true
+        mapView.isScrollEnabled = true
+        if let userLocation = mapView.userLocation.location?.coordinate {
+            mapView.setCenter(userLocation, animated: true)
+        }
+    }
 
-        // Do any additional setup after loading the view.
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
     }
 
     // MARK: - Methods
@@ -47,5 +63,29 @@ class ExperienceViewController: UIViewController {
 }
 
 // MARK: - Extensions
+
+extension ExperienceViewController: MKMapViewDelegate, CLLocationManagerDelegate {
+
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let experience = annotation as? Experience else { return nil }
+        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "MapCell", for: experience) as! MKMarkerAnnotationView
+        annotationView.glyphImage = UIImage(named: "noteimage")
+        annotationView.glyphText = experience.title
+        annotationView.glyphTintColor = .systemBlue
+        annotationView.titleVisibility = .visible
+        return annotationView
+    }
+
+      func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+          let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+          mapView.mapType = MKMapType.standard
+          let span = MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
+          let region = MKCoordinateRegion(center: locValue, span: span)
+          mapView.setRegion(region, animated: true)
+          let annotation = MKPointAnnotation()
+          annotation.coordinate = locValue
+          coordinate = annotation.coordinate
+      }
+}
 
 
