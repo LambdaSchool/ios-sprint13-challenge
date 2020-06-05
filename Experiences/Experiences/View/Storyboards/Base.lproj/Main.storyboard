@@ -49,33 +49,30 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LABEL" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pAi-m7-rXv">
-                                                    <rect key="frame" x="0.0" y="0.0" width="160" height="60"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="155" height="60"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yVu-wT-P2k">
-                                                    <rect key="frame" x="160" y="11" width="40" height="38"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="fcf-Wb-kHH">
+                                                    <rect key="frame" x="155" y="0.5" width="40" height="59"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="40" id="RAy-WA-3J3"/>
+                                                        <constraint firstAttribute="width" constant="40" id="zvz-V5-G72"/>
                                                     </constraints>
-                                                    <state key="normal" image="plus.app.fill" catalog="system"/>
-                                                    <connections>
-                                                        <action selector="addExperienceButtonTapped:" destination="HpT-Qj-x9u" eventType="touchUpInside" id="QBN-bF-h0W"/>
-                                                    </connections>
-                                                </button>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="yVu-wT-P2k" firstAttribute="top" secondItem="1Br-tQ-aYr" secondAttribute="topMargin" id="6VG-ri-dhj"/>
+                                                <constraint firstAttribute="bottom" secondItem="fcf-Wb-kHH" secondAttribute="bottom" id="5cS-AT-tKO"/>
+                                                <constraint firstItem="fcf-Wb-kHH" firstAttribute="top" secondItem="1Br-tQ-aYr" secondAttribute="top" id="6q5-dF-Gsa"/>
                                                 <constraint firstAttribute="bottom" secondItem="pAi-m7-rXv" secondAttribute="bottom" id="Lm7-vR-G5f"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="yVu-wT-P2k" secondAttribute="bottom" id="WXz-Gq-W08"/>
-                                                <constraint firstItem="yVu-wT-P2k" firstAttribute="leading" secondItem="pAi-m7-rXv" secondAttribute="trailing" id="eIE-tg-cru"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="yVu-wT-P2k" secondAttribute="trailing" id="i9f-8L-3vD"/>
+                                                <constraint firstItem="fcf-Wb-kHH" firstAttribute="leading" secondItem="pAi-m7-rXv" secondAttribute="trailing" id="XAN-PK-Ndl"/>
+                                                <constraint firstAttribute="trailing" secondItem="fcf-Wb-kHH" secondAttribute="trailing" constant="20" id="aVg-Bi-TdY"/>
                                                 <constraint firstItem="pAi-m7-rXv" firstAttribute="top" secondItem="1Br-tQ-aYr" secondAttribute="top" id="sT5-zv-5H4"/>
                                                 <constraint firstItem="pAi-m7-rXv" firstAttribute="leading" secondItem="1Br-tQ-aYr" secondAttribute="leading" id="tLY-Cc-rqz"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="iconImageView" destination="fcf-Wb-kHH" id="iKl-uQ-S86"/>
                                             <outlet property="titleLabel" destination="pAi-m7-rXv" id="i3M-Iv-bwa"/>
                                         </connections>
                                     </tableViewCell>
@@ -103,11 +100,44 @@
                     <connections>
                         <outlet property="mapView" destination="MPO-Vg-Vmd" id="1tU-Rn-6iZ"/>
                         <outlet property="tableView" destination="4EJ-RJ-Zuw" id="u4M-wW-G48"/>
+                        <segue destination="0h3-YV-WID" kind="show" identifier="StorySegue" id="cmZ-gR-Bip"/>
+                        <segue destination="Low-m3-jOH" kind="show" identifier="PhotoSegue" id="Uxn-bS-yf1"/>
+                        <segue destination="Kk1-LW-zrS" kind="show" identifier="VideoSegue" id="4pk-kN-AFK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1071.2" y="138.98050974512745"/>
+        </scene>
+        <!--StoryViewController-->
+        <scene sceneID="1Db-K2-NX3">
+            <objects>
+                <viewControllerPlaceholder storyboardName="StoryExperienceStoryboard" referencedIdentifier="StoryViewController" id="0h3-YV-WID" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="H5Y-Ed-YBi"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rrZ-CH-wwb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1766" y="374"/>
+        </scene>
+        <!--PhotoStoryViewController-->
+        <scene sceneID="Yus-Qd-Ci8">
+            <objects>
+                <viewControllerPlaceholder storyboardName="PhotoStoryboard" referencedIdentifier="PhotoStoryViewController" id="Low-m3-jOH" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="2f0-I3-hok"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GQc-EM-4kG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1794" y="265"/>
+        </scene>
+        <!--VideoStoryViewController-->
+        <scene sceneID="H3h-Yb-WKR">
+            <objects>
+                <viewControllerPlaceholder storyboardName="VideoStoryboard" referencedIdentifier="VideoStoryViewController" id="Kk1-LW-zrS" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Wbe-To-plQ"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iBd-x5-iSR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1794" y="139"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vnQ-RE-7AI">
@@ -129,6 +159,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="plus.app.fill" catalog="system" width="128" height="114"/>
+        <image name="plus.circle.fill" catalog="system" width="128" height="121"/>
     </resources>
 </document>
