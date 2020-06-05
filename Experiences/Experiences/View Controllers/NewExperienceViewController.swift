@@ -7,17 +7,33 @@
 //
 
 import UIKit
+import Photos
+import AVFoundation
 
 class NewExperienceViewController: UIViewController {
+
+    // MARK: - Properties
+
+    var experienceController: ExperienceController?
+    var coordinate: CLLocationCoordinate2D?
+
+
+    // MARK: - Outlets
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
+
+    // MARK: - Methods
+
+
+    // MARK: - Actions
     
 
-    /*
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -25,6 +41,9 @@ class NewExperienceViewController: UIViewController {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
     }
-    */
+
 
 }
+
+// MARK: - Extensions
+
