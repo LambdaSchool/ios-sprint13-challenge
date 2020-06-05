@@ -66,15 +66,16 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ccS-l7-VAN">
-                                <rect key="frame" x="8" y="202" width="398" height="422"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ccS-l7-VAN">
+                                <rect key="frame" x="8" y="202" width="398" height="414"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="zIU-Fl-rh9">
-                                <rect key="frame" x="8" y="632" width="398" height="80"/>
+                                <rect key="frame" x="100" y="624" width="214" height="98"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IKG-4r-l96">
-                                        <rect key="frame" x="0.0" y="0.0" width="398" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="214" height="39"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                         <state key="normal">
                                             <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -83,8 +84,11 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C9h-qA-IXl">
-                                        <rect key="frame" x="0.0" y="50" width="398" height="30"/>
-                                        <state key="normal" image="play.fill" catalog="system"/>
+                                        <rect key="frame" x="0.0" y="59" width="214" height="39"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <state key="normal" image="play.fill" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="26" scale="large"/>
+                                        </state>
                                         <state key="selected" image="pause.fill" catalog="system"/>
                                         <connections>
                                             <action selector="playButtonPressed:" destination="Gvd-QN-bee" eventType="touchUpInside" id="qem-cg-nZy"/>
@@ -93,11 +97,12 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mar-mT-FBY">
-                                <rect key="frame" x="146" y="398" width="122" height="30"/>
+                                <rect key="frame" x="130" y="394" width="154" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="122" id="5Pn-Cl-bEr"/>
                                     <constraint firstAttribute="height" constant="30" id="Ww7-rl-YOw"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Add Poster Image"/>
                                 <connections>
                                     <action selector="addPosterImageButtonPressed:" destination="Gvd-QN-bee" eventType="touchUpInside" id="Zwp-vm-Lbg"/>
@@ -107,19 +112,19 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="ccS-l7-VAN" firstAttribute="leading" secondItem="7aw-5t-cKh" secondAttribute="leading" constant="8" id="25S-ZP-ao2"/>
-                            <constraint firstItem="zIU-Fl-rh9" firstAttribute="leading" secondItem="7aw-5t-cKh" secondAttribute="leading" constant="8" id="3Nm-oO-bTH"/>
+                            <constraint firstItem="zIU-Fl-rh9" firstAttribute="leading" secondItem="7aw-5t-cKh" secondAttribute="leading" constant="100" id="3Nm-oO-bTH"/>
                             <constraint firstItem="ccS-l7-VAN" firstAttribute="top" secondItem="5Fi-k6-bTy" secondAttribute="bottom" constant="8" id="3pO-dI-bCV"/>
                             <constraint firstItem="zIU-Fl-rh9" firstAttribute="top" secondItem="ccS-l7-VAN" secondAttribute="bottom" constant="8" id="7tV-En-G63"/>
                             <constraint firstItem="5Fi-k6-bTy" firstAttribute="top" secondItem="7aw-5t-cKh" secondAttribute="top" constant="20" id="Cih-iy-fc8"/>
                             <constraint firstItem="zIU-Fl-rh9" firstAttribute="top" secondItem="ccS-l7-VAN" secondAttribute="bottom" constant="8" id="Ebm-4x-N6J"/>
                             <constraint firstItem="7aw-5t-cKh" firstAttribute="trailing" secondItem="ccS-l7-VAN" secondAttribute="trailing" constant="8" id="LeN-1g-bM2"/>
-                            <constraint firstItem="7aw-5t-cKh" firstAttribute="trailing" secondItem="zIU-Fl-rh9" secondAttribute="trailing" constant="8" id="Lw9-jC-Yej"/>
+                            <constraint firstItem="7aw-5t-cKh" firstAttribute="trailing" secondItem="zIU-Fl-rh9" secondAttribute="trailing" constant="100" id="Lw9-jC-Yej"/>
                             <constraint firstItem="mar-mT-FBY" firstAttribute="centerX" secondItem="ccS-l7-VAN" secondAttribute="centerX" id="RgB-PY-0Ue"/>
                             <constraint firstItem="7aw-5t-cKh" firstAttribute="trailing" secondItem="5Fi-k6-bTy" secondAttribute="trailing" constant="8" id="XRh-By-J6D"/>
                             <constraint firstItem="mar-mT-FBY" firstAttribute="centerY" secondItem="ccS-l7-VAN" secondAttribute="centerY" id="exI-c7-0TJ"/>
                             <constraint firstItem="ccS-l7-VAN" firstAttribute="top" secondItem="5Fi-k6-bTy" secondAttribute="bottom" constant="8" id="fue-vS-gwt"/>
                             <constraint firstItem="5Fi-k6-bTy" firstAttribute="leading" secondItem="7aw-5t-cKh" secondAttribute="leading" constant="8" id="rXZ-nG-2Fg"/>
-                            <constraint firstItem="7aw-5t-cKh" firstAttribute="bottom" secondItem="zIU-Fl-rh9" secondAttribute="bottom" constant="150" id="wYI-j2-qWa"/>
+                            <constraint firstItem="7aw-5t-cKh" firstAttribute="bottom" secondItem="zIU-Fl-rh9" secondAttribute="bottom" constant="140" id="wYI-j2-qWa"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7aw-5t-cKh"/>
                     </view>

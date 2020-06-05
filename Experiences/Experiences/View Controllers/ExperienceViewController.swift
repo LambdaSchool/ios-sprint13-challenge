@@ -78,7 +78,6 @@ extension ExperienceViewController: MKMapViewDelegate, CLLocationManagerDelegate
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let experience = annotation as? Experience else { return nil }
         let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "MapCell", for: experience) as! MKMarkerAnnotationView
-        annotationView.glyphImage = UIImage(named: "noteimage")
         annotationView.glyphText = experience.experienceTitle
         annotationView.glyphTintColor = .systemBlue
         annotationView.titleVisibility = .visible
