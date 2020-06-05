@@ -58,7 +58,8 @@ extension MainMenuViewController: UITableViewDataSource {
         let backgroundView = UIView()
         backgroundView.backgroundColor = .blue
         cell.selectedBackgroundView = backgroundView
-        cell.title = menuArray[indexPath.row].rawValue.capitalized(with: .current)
+        //Locale: nil is necessary for the image/title/segue pattern to work properly in different locales
+        cell.title = menuArray[indexPath.row].rawValue.capitalized(with: nil)
         return cell
     }
 }
