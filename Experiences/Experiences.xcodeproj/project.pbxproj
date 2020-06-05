@@ -9,20 +9,19 @@
 /* Begin PBXBuildFile section */
 		3FD214BF248AC3F500ED5379 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD214BE248AC3F500ED5379 /* AppDelegate.swift */; };
 		3FD214C1248AC3F500ED5379 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD214C0248AC3F500ED5379 /* SceneDelegate.swift */; };
-		3FD214C3248AC3F500ED5379 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD214C2248AC3F500ED5379 /* ViewController.swift */; };
 		3FD214C6248AC3F500ED5379 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FD214C4248AC3F500ED5379 /* Main.storyboard */; };
 		3FD214C8248AC3F900ED5379 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FD214C7248AC3F900ED5379 /* Assets.xcassets */; };
 		3FD214CB248AC3F900ED5379 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FD214C9248AC3F900ED5379 /* LaunchScreen.storyboard */; };
 		3FD214D5248AC72500ED5379 /* ExperiencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD214D4248AC72500ED5379 /* ExperiencesViewController.swift */; };
 		3FD214D7248AD3D100ED5379 /* Experience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD214D6248AD3D100ED5379 /* Experience.swift */; };
 		3FD214D9248AD41C00ED5379 /* ExperienceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD214D8248AD41C00ED5379 /* ExperienceController.swift */; };
+		3FD214E0248ADC4D00ED5379 /* Image+Scale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD214DF248ADC4D00ED5379 /* Image+Scale.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3FD214BB248AC3F500ED5379 /* Experiences.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Experiences.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FD214BE248AC3F500ED5379 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3FD214C0248AC3F500ED5379 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		3FD214C2248AC3F500ED5379 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3FD214C5248AC3F500ED5379 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3FD214C7248AC3F900ED5379 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3FD214CA248AC3F900ED5379 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -30,6 +29,7 @@
 		3FD214D4248AC72500ED5379 /* ExperiencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperiencesViewController.swift; sourceTree = "<group>"; };
 		3FD214D6248AD3D100ED5379 /* Experience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Experience.swift; sourceTree = "<group>"; };
 		3FD214D8248AD41C00ED5379 /* ExperienceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperienceController.swift; sourceTree = "<group>"; };
+		3FD214DF248ADC4D00ED5379 /* Image+Scale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Scale.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,18 +62,58 @@
 		3FD214BD248AC3F500ED5379 /* Experiences */ = {
 			isa = PBXGroup;
 			children = (
-				3FD214BE248AC3F500ED5379 /* AppDelegate.swift */,
-				3FD214C0248AC3F500ED5379 /* SceneDelegate.swift */,
-				3FD214C2248AC3F500ED5379 /* ViewController.swift */,
-				3FD214C4248AC3F500ED5379 /* Main.storyboard */,
-				3FD214D6248AD3D100ED5379 /* Experience.swift */,
-				3FD214D8248AD41C00ED5379 /* ExperienceController.swift */,
-				3FD214D4248AC72500ED5379 /* ExperiencesViewController.swift */,
+				3FD214DF248ADC4D00ED5379 /* Image+Scale.swift */,
+				3FD214DB248ADBF200ED5379 /* Application */,
+				3FD214DA248ADBEA00ED5379 /* Storyboards */,
+				3FD214DC248ADC0300ED5379 /* Model */,
+				3FD214DD248ADC0900ED5379 /* ModelController */,
+				3FD214DE248ADC1600ED5379 /* ViewControllers */,
 				3FD214C7248AC3F900ED5379 /* Assets.xcassets */,
-				3FD214C9248AC3F900ED5379 /* LaunchScreen.storyboard */,
 				3FD214CC248AC3F900ED5379 /* Info.plist */,
 			);
 			path = Experiences;
+			sourceTree = "<group>";
+		};
+		3FD214DA248ADBEA00ED5379 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				3FD214C4248AC3F500ED5379 /* Main.storyboard */,
+				3FD214C9248AC3F900ED5379 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		3FD214DB248ADBF200ED5379 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				3FD214BE248AC3F500ED5379 /* AppDelegate.swift */,
+				3FD214C0248AC3F500ED5379 /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		3FD214DC248ADC0300ED5379 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3FD214D6248AD3D100ED5379 /* Experience.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3FD214DD248ADC0900ED5379 /* ModelController */ = {
+			isa = PBXGroup;
+			children = (
+				3FD214D8248AD41C00ED5379 /* ExperienceController.swift */,
+			);
+			path = ModelController;
+			sourceTree = "<group>";
+		};
+		3FD214DE248ADC1600ED5379 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				3FD214D4248AC72500ED5379 /* ExperiencesViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,10 +188,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FD214D5248AC72500ED5379 /* ExperiencesViewController.swift in Sources */,
-				3FD214C3248AC3F500ED5379 /* ViewController.swift in Sources */,
 				3FD214BF248AC3F500ED5379 /* AppDelegate.swift in Sources */,
 				3FD214D9248AD41C00ED5379 /* ExperienceController.swift in Sources */,
 				3FD214D7248AD3D100ED5379 /* Experience.swift in Sources */,
+				3FD214E0248ADC4D00ED5379 /* Image+Scale.swift in Sources */,
 				3FD214C1248AC3F500ED5379 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
