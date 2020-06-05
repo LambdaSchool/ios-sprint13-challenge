@@ -7,26 +7,23 @@
 //
 
 import UIKit
+import AVFoundation
+import CoreImage
+import CoreImage.CIFilterBuiltins
+import Photos
 
 class ExperiencesViewController: UIViewController {
 
-    @IBOutlet weak var imageView: UIImageView!
-    
+    // MARK: - Properites
+    var experienceController: ExperienceController?
+    var delegate: MapViewController?
+    private var inited = false
+
+    // If this object exists, it's a view/update situation.
+   
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageView.alpha = 0.7
-        // Do any additional setup after loading the view.
-    }
+}
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
