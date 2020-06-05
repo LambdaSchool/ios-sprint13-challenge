@@ -7,14 +7,18 @@
 //
 
 import UIKit
+import MapKit
 
-class ViewController: UIViewController {
+class MainMenuViewController: UIViewController {
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var tableView: UITableView!
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        tableView.delegate = self
+        tableView.dataSource = self
     }
-
 
 }
 

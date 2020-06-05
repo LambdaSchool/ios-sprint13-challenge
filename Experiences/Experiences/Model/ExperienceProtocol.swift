@@ -9,10 +9,13 @@
 import Foundation
 import MapKit
 
-protocol Experience {
+protocol ExperienceProtocol {
     var date: Date { get }
+    var lastEdit: Date? { get set }
     var location: CLLocationCoordinate2D { get set }
     var title: String { get set }
     var body: String? { get set }
     var audioFile: Data? { get set }
 }
+
+
