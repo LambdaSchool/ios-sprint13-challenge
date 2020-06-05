@@ -10,7 +10,9 @@ import UIKit
 
 class FilterImageViewController: UIViewController {
     // MARK: - Properties -
-    var photoController: PhotoController?
+    lazy var photoController = PhotoController(delegate: self)
+    weak var delegate: PhotoExperienceViewController?
+    var image: UIImage?
 
     @IBOutlet weak var photoFilterImageView: UIImageView!
     @IBOutlet weak var filterSelector: UISegmentedControl!
@@ -27,29 +29,30 @@ class FilterImageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        photoController?.setImage(image: .sampleImage)
+        guard let image = image else { return }
+        photoController.setImage(image: image)
         setupFilterUI(.gaussian)
     }
 
     private func updateFilter() {
         switch filterSelector.selectedSegmentIndex {
         case 0:
-            photoController?.blurFilter(
+            photoController.blurFilter(
                 radius: slider1.value
             )
         case 1:
-            photoController?.bloomFilter(
+            photoController.bloomFilter(
                 intensity: slider1.value,
                 radius: slider2.value
             )
         case 2:
-            photoController?.contrastFilter(
+            photoController.contrastFilter(
                 brightness: slider1.value,
                 contrast: slider2.value,
                 saturation: slider3.value
             )
         case 3:
-            photoController?.sepiaFilter(intensity: slider1.value)
+            photoController.sepiaFilter(intensity: slider1.value)
         default:
             print("Selection number \(filterSelector.selectedSegmentIndex) not implemented")
             break
@@ -84,6 +87,15 @@ class FilterImageViewController: UIViewController {
 
     @IBAction func slider3DidChange(_ sender: UISlider) {
         updateFilter()
+    }
+
+    @IBAction func saveButtonWasTapped(_ sender: Any) {
+        DispatchQueue.main.async {
+            if let image = self.photoFilterImageView.image {
+                self.delegate?.photoController.setImage(image: image)
+            }
+            self.navigationController?.popViewController(animated: true)
+        }
     }
 
     // MARK: - Navigation

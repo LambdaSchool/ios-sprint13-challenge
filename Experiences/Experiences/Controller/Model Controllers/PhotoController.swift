@@ -163,6 +163,12 @@ class PhotoController {
             DispatchQueue.main.async {
                 self.delegate?.updatePhoto(filteredImage)
             }
+        } else {
+            //return the unfiltered Image
+            // ... An unrelated delegate may have filtered the image and assigned it to this photoController instance
+            guard let scaledImage = scaledImage,
+                let flattenedImage = scaledImage.flattened.cgImage else { return }
+            self.delegate?.updatePhoto(flattenedImage)
         }
     }
 }

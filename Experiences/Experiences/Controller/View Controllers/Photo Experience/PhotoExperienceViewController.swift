@@ -9,7 +9,9 @@
 import UIKit
 
 class PhotoExperienceViewController: UIViewController {
+    private var filterSegueID = "AddFilterVC"
     lazy var photoController = PhotoController(delegate: self)
+    weak var delegate: PhotoUIDelegate?
 
     @IBOutlet weak var photoFilterImageView: UIImageView!
     @IBOutlet weak var selectPhotoButton: UIButton!
@@ -26,18 +28,23 @@ class PhotoExperienceViewController: UIViewController {
         titleTextField.delegate = self
         storyTextView.delegate = self
     }
-    
-
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
+        if segue.identifier == filterSegueID {
+            guard let destination = segue.destination as? FilterImageViewController else { return }
+            destination.image = photoFilterImageView.image
+            destination.delegate = self
+        }
     }
 
     @IBAction func saveButton() {
         print("saved! (not implemented)")
     }
 
+    func presentFilterViewController() {
+        performSegue(withIdentifier: filterSegueID, sender: nil)
+    }
 
 }
 
@@ -98,7 +105,7 @@ extension PhotoExperienceViewController: UIImagePickerControllerDelegate, UINavi
             vc: self
         ) { (filterChosen) in
             if filterChosen {
-                //TODO: Present FilterVC
+                self.presentFilterViewController()
             } else {
 
             }

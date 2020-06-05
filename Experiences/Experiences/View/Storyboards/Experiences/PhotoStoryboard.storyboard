@@ -114,7 +114,7 @@
                         <outlet property="selectPhotoButton" destination="Rap-tW-Ida" id="ELR-mj-vrf"/>
                         <outlet property="storyTextView" destination="3O7-SK-Hno" id="MO6-EK-tcO"/>
                         <outlet property="titleTextField" destination="uJs-qP-msl" id="31V-ES-yKj"/>
-                        <segue destination="X9e-1a-v58" kind="show" id="Muq-zR-SGV"/>
+                        <segue destination="X9e-1a-v58" kind="show" identifier="AddFilterVC" id="Muq-zR-SGV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JMq-Gi-wSn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -213,6 +213,9 @@
                                                 <state key="normal" title="Save">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="saveButtonWasTapped:" destination="X9e-1a-v58" eventType="touchUpInside" id="JT2-F1-9xC"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -231,7 +234,11 @@
                         <viewLayoutGuide key="safeArea" id="uNP-yN-cA2"/>
                     </view>
                     <navigationItem key="navigationItem" title="Add a filter" largeTitleDisplayMode="always" id="qXK-FJ-uxC">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="lkz-HZ-DYD"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="lkz-HZ-DYD">
+                            <connections>
+                                <action selector="saveButtonWasTapped:" destination="X9e-1a-v58" id="dLG-bb-7O6"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="filterSelector" destination="0UX-E1-7Tb" id="UIQ-Hz-fy0"/>
