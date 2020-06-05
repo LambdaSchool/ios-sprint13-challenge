@@ -32,6 +32,19 @@ func createExperience(title: String?,
     
 }
     
+    func updateExperience(_ experience: Experience,
+            title: String?,
+            audioClip: URL?,
+            image: UIImage?,
+            videoClip: URL?) {
+
+    experience.title = title
+    experience.audioClip = audioClip
+    experience.image = image
+    experience.videoClip = videoClip
+        
+    }
+    
 }
 
 
