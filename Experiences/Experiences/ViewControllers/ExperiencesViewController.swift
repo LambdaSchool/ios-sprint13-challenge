@@ -36,24 +36,33 @@ class ExperiencesViewController: UIViewController {
     let context = CIContext(options: nil)
     
     var originalImage: UIImage? {
-           didSet {
-               // resize the scaledImage and set it view
-               guard let originalImage = originalImage else { return }
-               // Height and width
-               var scaledSize = imageView.bounds.size
-               let scale = UIScreen.main.scale  // Size of pixels on this device: 1x, 2x, or 3x
-               scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
-               scaledImage = originalImage.imageByScaling(toSize: scaledSize)
-           }
-       }
+        didSet {
+            // resize the scaledImage and set it view
+            guard let originalImage = originalImage else { return }
+            // Height and width
+            var scaledSize = imageView.bounds.size
+            let scale = UIScreen.main.scale  // Size of pixels on this device: 1x, 2x, or 3x
+            scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
+            scaledImage = originalImage.imageByScaling(toSize: scaledSize)
+        }
+    }
     
-    var scaledImage: UIImage? 
+    var scaledImage: UIImage?
     
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet var audioRecordButtonOutlet: UIButton!
+    @IBOutlet var videoRecordButtonOutlet: UIButton!
+    @IBOutlet weak var cameraView: CameraPreviewView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+          
     }
-    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+    }
     
 }
