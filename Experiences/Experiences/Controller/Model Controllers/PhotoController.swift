@@ -18,11 +18,6 @@ enum Filter: String, CaseIterable {
     case bloom = "CIBloom"
 }
 
-protocol PhotoUIDelegate: AVCapturePhotoCaptureDelegate {
-    var photoFilterImageView: UIImageView! { get set }
-    func updatePhoto(_ with: CGImage)
-}
-
 class PhotoController {
     // MARK: - Properties -
     private let context = CIContext(options: nil)
@@ -36,7 +31,7 @@ class PhotoController {
 
     private var pickedImage: UIImage? {
         didSet {
-            guard let originalImage = pickedImage else {
+            guard let pickedImage = pickedImage else {
                 scaledImage = nil
                 //FIXME: alertUnknownEdgeCase()
                 return
@@ -45,7 +40,7 @@ class PhotoController {
             guard var scaledSize = delegate?.photoFilterImageView.bounds.size else { return }
             let scale = UIScreen.main.scale
             scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
-            scaledImage = originalImage.imageByScaling(toSize: scaledSize)
+            scaledImage = pickedImage.imageByScaling(toSize: scaledSize)
         }
     }
     ///the original image, scaled by the delegate's imageView
@@ -66,8 +61,21 @@ class PhotoController {
         return ciImage
     }
 
+    // MARK: - Exposed methods -
+    func setImage(image: UIImage) {
+        pickedImage = image
+    }
+
+
     func createFilter(with name: Filter){
         filter = CIFilter(name: name.rawValue)!
+    }
+
+    func blurFilter(radius: Float) {
+        createFilter(with: .gaussian)
+        filter?.setValue(inputImage, forKey: kCIInputImageKey)
+        filter?.setValue(radius, forKey: kCIInputRadiusKey)
+        filterImage()
     }
 
     /// Filter the inputImage using the bloom filter given an intensity to increase the bloom effect, and a radius to scale the effect
@@ -76,20 +84,20 @@ class PhotoController {
     ///   - radius: min: 0, max: ~20
     /// - Note: the effect doesn't appear to be relevant until an intensity of 0.5 and radius of 5
     func bloomFilter(intensity: Float, radius: Float) {
-        createFilter(with: .gaussian)
+        createFilter(with: .bloom)
         filter?.setValue(inputImage, forKey: kCIInputImageKey)
         filter?.setValue(intensity, forKey: kCIInputIntensityKey)
         filter?.setValue(radius, forKey: kCIInputRadiusKey)
         filterImage()
     }
+    
     ///create a filteredImage and return it to the delegate to be used to update it's UI
     private func filterImage() {
         if let outputImage = filter?.outputImage,
-            let image = scaledImage,
+            let image = scaledImage?.flattened,
             let filteredImage = context.createCGImage(outputImage, from: CGRect(origin: .zero, size: image.size)) {
             DispatchQueue.main.async {
                 self.delegate?.updatePhoto(filteredImage)
-                //self.imageView.image = UIImage(cgImage: filteredImage)
             }
         }
     }

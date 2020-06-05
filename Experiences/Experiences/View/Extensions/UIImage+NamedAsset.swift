@@ -13,6 +13,7 @@ extension UIImage {
         case photo
         case story
         case video
+        case sampleImage
     }
 
     static func withName(_ name: NamedImage) -> UIImage {
@@ -30,5 +31,9 @@ extension UIImage {
 
     static var videoCamera: UIImage {
         withName(.video)
+    }
+
+    static var sampleImage: UIImage {
+        withName(.sampleImage)
     }
 }
