@@ -1,5 +1,5 @@
 //
-//  VideoCameraViewController.swift
+//  CameraViewController.swift
 //  Experiences
 //
 //  Created by Mark Poggi on 6/5/20.
@@ -11,7 +11,7 @@ import AVFoundation
 import CoreLocation
 
 class
-iewController {
+CameraViewController: UIViewController {
 
     // MARK: - Properties
 
@@ -20,7 +20,7 @@ iewController {
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
 
-    private var player: AVPlayer?
+    private var player: AVPlayer!
     private var playerView: VideoPlayerView!
 
     var coordinate: CLLocationCoordinate2D?
@@ -43,6 +43,14 @@ iewController {
         setUpCaptureSession()
     }
 
+    @objc func handleTapGesture(_ tapGesture: UITapGestureRecognizer) {
+         print("Play movie")
+         if let player = player {
+             player.seek(to: CMTime.zero)
+             player.play()
+         }
+     }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         captureSession.startRunning()
@@ -53,16 +61,22 @@ iewController {
         captureSession.stopRunning()
     }
 
+    private func updateViews() {
+         recordButton.isSelected = fileOutput.isRecording
+     }
+
     // MARK: - Methods
 
     private func setUpCaptureSession() {
 
         captureSession.beginConfiguration()
 
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
+           view.addGestureRecognizer(tapGesture)
+
         let camera = bestCamera()
         guard let cameraInput = try? AVCaptureDeviceInput(device: camera),
             captureSession.canAddInput(cameraInput) else {
-                // FUTURE: Display the error so you understand why it failed
                 fatalError("Cannot create camera input, do something better than crashing?")
         }
         captureSession.addInput(cameraInput)
@@ -104,10 +118,6 @@ iewController {
             return device
         }
         fatalError("No audio")
-    }
-
-    private func updateViews() {
-        recordButton.isSelected = fileOutput.isRecording
     }
 
     private func toggleRecording() {
@@ -159,7 +169,18 @@ iewController {
     @IBAction func recordButtonPressed(_ sender: Any) {
         toggleRecording()
     }
+    @IBAction func saveButtonPressed(_ sender: Any) {
+        guard let experienceController = experienceController,
+            let coordinate = coordinate,
+            let title = experienceTitle,
+            let image = image,
+            let audio = audio,
+            let video = video else { return }
+        experienceController.createExperience(coordinate: coordinate, title: title, image: image, audio: audio, video: video)
+        navigationController?.popToRootViewController(animated: true)
+    }
 }
+
 
 // MARK: - Extensions
 
@@ -179,6 +200,7 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
 
         DispatchQueue.main.async {
             self.playMovie(url: outputFileURL)
+            self.video = outputFileURL
         }
 
         updateViews()

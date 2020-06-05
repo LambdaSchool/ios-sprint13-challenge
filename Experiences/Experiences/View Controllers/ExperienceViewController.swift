@@ -45,11 +45,20 @@ class ExperienceViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        addAnnotation()
     }
 
     // MARK: - Methods
-    
-
+    func addAnnotation() {
+        let myPin = MKPointAnnotation()
+        if let myCoordinate = experienceController.experience?.coordinate {
+            myPin.coordinate = myCoordinate
+        }
+        if let annotationText = experienceController.experience?.experienceTitle {
+            myPin.title = annotationText
+        }
+        mapView.addAnnotation(myPin)
+    }
 
     // MARK: - Navigation
 
@@ -70,7 +79,7 @@ extension ExperienceViewController: MKMapViewDelegate, CLLocationManagerDelegate
         guard let experience = annotation as? Experience else { return nil }
         let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "MapCell", for: experience) as! MKMarkerAnnotationView
         annotationView.glyphImage = UIImage(named: "noteimage")
-        annotationView.glyphText = experience.title
+        annotationView.glyphText = experience.experienceTitle
         annotationView.glyphTintColor = .systemBlue
         annotationView.titleVisibility = .visible
         return annotationView
@@ -79,7 +88,7 @@ extension ExperienceViewController: MKMapViewDelegate, CLLocationManagerDelegate
       func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
           let locValue:CLLocationCoordinate2D = manager.location!.coordinate
           mapView.mapType = MKMapType.standard
-          let span = MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
+          let span = MKCoordinateSpan(latitudeDelta: 0.25, longitudeDelta: 0.25)
           let region = MKCoordinateRegion(center: locValue, span: span)
           mapView.setRegion(region, animated: true)
           let annotation = MKPointAnnotation()
