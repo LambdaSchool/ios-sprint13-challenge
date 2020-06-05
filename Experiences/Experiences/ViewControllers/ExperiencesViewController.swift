@@ -138,17 +138,17 @@ extension ExperiencesViewController {
 
         if audioClip == nil || (audioRecorder?.isRecording ?? false) {
             // We need to record a clip
-            let largeStart = UIImage(systemName: "mic.fill", withConfiguration: config)
+            let largeStart = UIImage(systemName: "radio", withConfiguration: config)
             audioRecordButtonOutlet.setImage(largeStart, for: .normal)
 
-            let largeStop = UIImage(systemName: "stop.circle.fill", withConfiguration: config)
+            let largeStop = UIImage(systemName: "stop", withConfiguration: config)
             audioRecordButtonOutlet.setImage(largeStop, for: .selected)
         } else {
             // We need to play a clip
             let largeStart = UIImage(systemName: "play.fill", withConfiguration: config)
             audioRecordButtonOutlet.setImage(largeStart, for: .normal)
 
-            let largeStop = UIImage(systemName: "stop.fill", withConfiguration: config)
+            let largeStop = UIImage(systemName: "stop", withConfiguration: config)
             audioRecordButtonOutlet.setImage(largeStop, for: .selected)
         }
 
@@ -306,10 +306,10 @@ extension ExperiencesViewController {
 
         // Increase the size of the start/stop button
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .regular, scale: .large)
-        let largeStart = UIImage(systemName: "camera.fill", withConfiguration: largeConfig)
+        let largeStart = UIImage(systemName: "Record", withConfiguration: largeConfig)
         videoRecordButtonOutlet.setImage(largeStart, for: .normal)
 
-        let largeStop = UIImage(systemName: "stop.circle.fill", withConfiguration: largeConfig)
+        let largeStop = UIImage(systemName: "Stop-1", withConfiguration: largeConfig)
         videoRecordButtonOutlet.setImage(largeStop, for: .selected)
     }
 

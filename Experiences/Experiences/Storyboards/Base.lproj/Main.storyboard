@@ -130,7 +130,10 @@
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AkA-R5-PxJ">
-                                <rect key="frame" x="80" y="704.5" width="254" height="109.5"/>
+                                <rect key="frame" x="0.0" y="704.5" width="414" height="109.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="109.5" id="gMF-ul-Lv4"/>
+                                </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LWa-8l-s3O" customClass="CameraPreviewView" customModule="Experiences" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="392.5" width="414" height="197"/>
@@ -168,7 +171,7 @@
                             <constraint firstItem="i7O-8D-fQA" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="QFy-oH-8yQ"/>
                             <constraint firstItem="aBG-rw-YEr" firstAttribute="top" secondItem="Kac-Tx-Jk9" secondAttribute="bottom" constant="8" id="SfH-lZ-JJH"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ssq-0x-kVd" secondAttribute="bottom" id="Sob-rL-1t2"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="AkA-R5-PxJ" secondAttribute="trailing" constant="80" id="TcU-kn-hKZ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="AkA-R5-PxJ" secondAttribute="trailing" id="TcU-kn-hKZ"/>
                             <constraint firstItem="ssq-0x-kVd" firstAttribute="top" secondItem="AkA-R5-PxJ" secondAttribute="bottom" constant="10" id="U50-Gn-5lH"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ssq-0x-kVd" secondAttribute="trailing" constant="20" id="WgC-VC-Wnr"/>
                             <constraint firstItem="LWa-8l-s3O" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ad2-lJ-O2y"/>
@@ -179,14 +182,18 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="aBG-rw-YEr" secondAttribute="trailing" constant="80" id="g43-Bk-Nk9"/>
                             <constraint firstItem="vwW-Mv-GCc" firstAttribute="top" secondItem="aBG-rw-YEr" secondAttribute="bottom" constant="20.5" id="jr4-hY-QSC"/>
                             <constraint firstItem="Kac-Tx-Jk9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="njP-15-Xgt"/>
-                            <constraint firstItem="AkA-R5-PxJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="80" id="oFA-uR-tcb"/>
+                            <constraint firstItem="AkA-R5-PxJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="oFA-uR-tcb"/>
                             <constraint firstItem="qAd-7i-Ns5" firstAttribute="top" secondItem="vwW-Mv-GCc" secondAttribute="bottom" constant="30" id="wSp-gG-PFH"/>
                             <constraint firstItem="vwW-Mv-GCc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="143" id="zth-Zl-tjE"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Experiences" id="FUl-ge-aws">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="2Mb-V8-FeS"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="2Mb-V8-FeS">
+                            <connections>
+                                <action selector="saveButton:" destination="BYZ-38-t0r" id="F3c-gs-DEm"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="audioRecordButtonOutlet" destination="zka-Z6-VkB" id="938-E4-aST"/>
