@@ -9,9 +9,10 @@
 import AVFoundation
 import UIKit
 
-protocol PhotoUIDelegate: AVCapturePhotoCaptureDelegate {
+protocol PhotoUIDelegate: AVCapturePhotoCaptureDelegate, UIImagePickerControllerDelegate {
     var photoFilterImageView: UIImageView! { get set }
     func updatePhoto(_ with: CGImage)
+    func presentImagePickerController()
 }
 
 extension PhotoUIDelegate {
@@ -19,5 +20,9 @@ extension PhotoUIDelegate {
         DispatchQueue.main.async {
             self.photoFilterImageView.image = UIImage(cgImage: with)
         }
+    }
+
+    func presentImagePickerController() {
+        
     }
 }

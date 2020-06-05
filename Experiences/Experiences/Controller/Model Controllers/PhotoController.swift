@@ -29,6 +29,43 @@ class PhotoController {
         self.delegate = delegate
     }
 
+    func requestPermissionAndPresentImagePicker() {
+        let authorizationStatus = PHPhotoLibrary.authorizationStatus()
+
+        switch authorizationStatus {
+        case .authorized:
+            delegate?.presentImagePickerController()
+        case .notDetermined:
+
+            PHPhotoLibrary.requestAuthorization { (status) in
+
+                guard status == .authorized else {
+                    NSLog("User did not authorize access to the photo library")
+                    //TODO: Alert User
+                    return
+                }
+
+                self.delegate?.presentImagePickerController()
+            }
+
+        case .denied:
+            print("access to photo library denied")
+            //TODO: Alert User
+        case .restricted:
+            //TODO: Alert User
+            print("access to photo library restricted - parental controls")
+
+        @unknown default:
+            print("FatalError")
+        }
+        delegate?.presentImagePickerController()
+    }
+
+    ///the scaled image as a CIImage for use in filtering operations
+    func setImage(image: UIImage) {
+        pickedImage = image
+    }
+
     private var pickedImage: UIImage? {
         didSet {
             guard let pickedImage = pickedImage else {
@@ -49,8 +86,8 @@ class PhotoController {
             filterImage()
         }
     }
+
     // MARK: - Filter Image -
-    ///the scaled image as a CIImage for use in filtering operations
     private var inputImage: CIImage? {
         guard let scaledImage = scaledImage,
             let cgImage = scaledImage.cgImage else {
@@ -61,20 +98,20 @@ class PhotoController {
         return ciImage
     }
 
+
     // MARK: - Exposed methods -
-    func setImage(image: UIImage) {
-        pickedImage = image
-    }
-
-
     func createFilter(with name: Filter){
         filter = CIFilter(name: name.rawValue)!
     }
 
+    /// FIlter the inputImage using the radius filter given a radius to scale the effect.
+    /// - Parameter radius: min: 0, max: ~10
+    /// - Note: Beyond radius 10 is possible
     func blurFilter(radius: Float) {
         createFilter(with: .gaussian)
         filter?.setValue(inputImage, forKey: kCIInputImageKey)
         filter?.setValue(radius, forKey: kCIInputRadiusKey)
+
         filterImage()
     }
 
@@ -82,12 +119,39 @@ class PhotoController {
     /// - Parameters:
     ///   - intensity: min: 0, max: 1
     ///   - radius: min: 0, max: ~20
-    /// - Note: the effect doesn't appear to be relevant until an intensity of 0.5 and radius of 5
+    /// - Note: the effect doesn't appear to be relevant until an intensity of 0.5 and radius of 5. Lower and higher values respectively are acceptable.
     func bloomFilter(intensity: Float, radius: Float) {
         createFilter(with: .bloom)
         filter?.setValue(inputImage, forKey: kCIInputImageKey)
         filter?.setValue(intensity, forKey: kCIInputIntensityKey)
         filter?.setValue(radius, forKey: kCIInputRadiusKey)
+
+        filterImage()
+    }
+
+    /// Filter the inputImage's color using brightness, contrast, and saturation.
+    /// - Parameters:
+    ///   - brightness: min: -1, max: 1
+    ///   - contrast: min: ~0.25, max: ~4
+    ///   - saturation: min: 0, max: ~2
+    /// - Note: higher/lower values are available for contrast, and higher values are available for saturation. These levels appear to have the most effect
+    func contrastFilter(brightness: Float, contrast: Float, saturation: Float) {
+        createFilter(with: .contrast)
+        filter?.setValue(inputImage, forKey: kCIInputImageKey)
+        filter?.setValue(brightness, forKey: kCIInputBrightnessKey)
+        filter?.setValue(contrast, forKey: kCIInputContrastKey)
+        filter?.setValue(saturation, forKey: kCIInputSaturationKey)
+
+        filterImage()
+    }
+
+    /// FIlter the inputImage, making it varying degrees of Sepia
+    /// - Note: There may be higher values available for intensity, but the image starts to turn bright orange
+    /// - Parameter intensity: min: 0, max: ~2
+    func sepiaFilter(intensity: Float) {
+        createFilter(with: .sepia)
+        filter?.setValue(inputImage, forKey: kCIInputImageKey)
+        filter?.setValue(intensity, forKey: kCIInputIntensityKey)
         filterImage()
     }
     
@@ -101,28 +165,4 @@ class PhotoController {
             }
         }
     }
-
-    // FIXME: Move to delegate
-//    private func updateFilterUI() {
-//        //it's easy to miss something when using a bool to switch states
-//        //and there's no point in setting up a filter with no UI
-//        guard !mainFilterStack.isHidden else {
-//            alertUnknownEdgeCase()
-//            return
-//        }
-//        switch filter.name {
-//        case Filter.gaussian.rawValue:
-//            setupGaussianFilter()
-//        case Filter.checkerboard.rawValue:
-//            setupCheckerboardFilter()
-//        case Filter.contrast.rawValue:
-//            setupColorControlsFilter()
-//        case Filter.sepia.rawValue:
-//            setupSepiaFilter()
-//        case Filter.bloom.rawValue:
-//            setupBloomFilter()
-//        default:
-//            break
-//        }
-//    }
 }

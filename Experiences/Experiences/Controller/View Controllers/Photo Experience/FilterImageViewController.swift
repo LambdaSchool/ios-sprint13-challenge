@@ -10,7 +10,7 @@ import UIKit
 
 class FilterImageViewController: UIViewController {
     // MARK: - Properties -
-    lazy var photoController = PhotoController(delegate: self)
+    var photoController: PhotoController?
 
     @IBOutlet weak var photoFilterImageView: UIImageView!
     @IBOutlet weak var filterSelector: UISegmentedControl!
@@ -27,34 +27,87 @@ class FilterImageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        photoController.setImage(image: .sampleImage)
+        photoController?.setImage(image: .sampleImage)
         setupFilterUI(.gaussian)
     }
 
     private func updateFilter() {
         switch filterSelector.selectedSegmentIndex {
         case 0:
-            photoController.blurFilter(radius: slider1.value)
+            photoController?.blurFilter(
+                radius: slider1.value
+            )
         case 1:
-            photoController.bloomFilter(intensity: slider1.value, radius: slider2.value)
+            photoController?.bloomFilter(
+                intensity: slider1.value,
+                radius: slider2.value
+            )
         case 2:
-            print("Todo")
+            photoController?.contrastFilter(
+                brightness: slider1.value,
+                contrast: slider2.value,
+                saturation: slider3.value
+            )
         case 3:
-            print("Todo")
+            photoController?.sepiaFilter(intensity: slider1.value)
         default:
             print("Selection number \(filterSelector.selectedSegmentIndex) not implemented")
             break
         }
     }
 
+
+
+    @IBAction func filterSelectorDidChange(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            setupFilterUI(.gaussian)
+        case 1:
+            setupFilterUI(.bloom)
+        case 2:
+            setupFilterUI(.contrast)
+        case 3:
+            setupFilterUI(.sepia)
+        default:
+            print("setup this UI")
+        }
+
+    }
+
+    @IBAction func slider1DidChange(_ sender: UISlider) {
+        updateFilter()
+    }
+
+    @IBAction func slider2DidChange(_ sender: UISlider) {
+        updateFilter()
+    }
+
+    @IBAction func slider3DidChange(_ sender: UISlider) {
+        updateFilter()
+    }
+
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+    }
+
+}
+// MARK: - UI Delegate -
+extension FilterImageViewController: PhotoUIDelegate {
+
+}
+// MARK: - Filter UI Implementation -
+extension FilterImageViewController {
     private func setupFilterUI(_ filter: Filter) {
         switch filter {
         case .gaussian:
             blurFilterUI()
         case .bloom:
             bloomFilterUI()
-        default:
-            print("todo")
+        case .contrast:
+            contrastFilterUI()
+        case .sepia:
+            sepiaUI()
         }
         updateFilter()
     }
@@ -87,39 +140,35 @@ class FilterImageViewController: UIViewController {
         propertyStackView3.isHidden = true
     }
 
-    @IBAction func filterSelectorDidChange(_ sender: UISegmentedControl) {
-        switch sender.selectedSegmentIndex {
-        case 0:
-            setupFilterUI(.gaussian)
-        case 1:
-            setupFilterUI(.bloom)
-        default:
-            print("setup this UI")
-        }
+    func contrastFilterUI() {
+        //brightness
+        propertyStackView1.isHidden = false
+        sliderLabel1.text = "Brightness"
+        slider1.minimumValue = -1
+        slider1.maximumValue = 1
+        slider1.value = 0.25
+        //contrast
+        propertyStackView2.isHidden = false
+        sliderLabel2.text = "Contrast"
+        slider2.minimumValue = 0.25
+        slider2.maximumValue = 4
+        slider2.value = 2.33
 
+        propertyStackView3.isHidden = false
+        sliderLabel3.text = "Saturation"
+        slider3.minimumValue = 0
+        slider3.maximumValue = 2
+        slider3.value = 1
     }
 
-    @IBAction func slider1DidChange(_ sender: UISlider) {
-        updateFilter()
+    private func sepiaUI() {
+        propertyStackView1.isHidden = false
+        sliderLabel1.text = "Intensity"
+        slider1.minimumValue = 0
+        slider1.maximumValue = 2
+        slider1.value = 1
+
+        propertyStackView2.isHidden = true
+        propertyStackView3.isHidden = true
     }
-
-    @IBAction func slider2DidChange(_ sender: UISlider) {
-        updateFilter()
-    }
-
-    @IBAction func slider3DidChange(_ sender: UISlider) {
-        updateFilter()
-    }
-
-    // MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-    }
-
 }
-
-extension FilterImageViewController: PhotoUIDelegate {
-
-}
-
-
