@@ -11,24 +11,39 @@ import XCTest
 
 class ExperiencesTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
+    func testExperienceController() {
+        let controller = ExperienceController.shared
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+        let storyExperience = Experience(
+            lastEdit: nil,
+            location: Location(latitude: 20, longitude: 20),
+            title: "A title",
+            body: nil,
+            audioFile: nil)
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
+        let id = storyExperience.id
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+        controller.append(storyExperience)
+
+        var storyExperienceFromController = controller.getStoryExperience(with: id)
+        XCTAssertNotNil(storyExperienceFromController)
+        XCTAssertEqual(storyExperienceFromController?.id, id)
+        XCTAssertEqual(controller.count, 1)
+
+        let videoExperience = VideoExperience(location: Location(latitude: 20, longitude: 20), title: "A Title")
+        let videoId = videoExperience.id
+
+        controller.append(videoExperience)
+
+        let videoExperienceFromController = controller.getVideoExperience(with: videoId)
+        XCTAssertNotNil(videoExperienceFromController)
+        XCTAssertEqual(videoExperienceFromController?.id, videoId)
+        XCTAssertEqual(controller.count, 2)
+
+        controller.remove(with: id)
+        storyExperienceFromController = controller.getStoryExperience(with: id)
+        XCTAssertNil(storyExperienceFromController)
+        XCTAssertEqual(controller.count, 1)
     }
 
 }

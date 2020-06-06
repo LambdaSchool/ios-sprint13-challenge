@@ -10,6 +10,7 @@ import Foundation
 import MapKit
 
 struct PhotoExperience: ExperienceProtocol {
+    let id: UUID = UUID()
     var audioFile: URL?
     var photo: Data?
     var date: Date = Date()

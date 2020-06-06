@@ -10,6 +10,7 @@ import Foundation
 import MapKit
 
 struct VideoExperience: ExperienceProtocol {
+    let id: UUID = UUID()
     var date: Date = Date()
     var lastEdit: Date? = nil
     var location: Location

@@ -9,6 +9,7 @@ import Foundation
 import MapKit
 
 struct Experience: ExperienceProtocol {
+    let id: UUID = UUID()
     let date: Date = Date()
     var lastEdit: Date? = nil
     var location: Location
