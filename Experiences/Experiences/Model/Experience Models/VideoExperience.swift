@@ -14,7 +14,7 @@ class VideoExperience: NSObject, ExperienceProtocol {
     var date: Date
     var lastEdit: Date?
     var location: Location
-    var title: String
+    var subject: String
     var body: String?
     var audioFile: URL?
     var videoFile: URL?
@@ -34,7 +34,7 @@ class VideoExperience: NSObject, ExperienceProtocol {
         self.date = date
         self.lastEdit = lastEdit
         self.location = location
-        self.title = title
+        self.subject = title
         self.body = body
         self.audioFile = audioFile
         super.init()

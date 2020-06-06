@@ -14,7 +14,7 @@ protocol ExperienceProtocol: Codable, NSObject {
     var date: Date { get }
     var lastEdit: Date? { get set }
     var location: Location { get set }
-    var title: String { get set }
+    var subject: String { get set }
     var body: String? { get set }
     var audioFile: URL? { get set }
 }

@@ -13,7 +13,7 @@ class Experience: NSObject, ExperienceProtocol {
     let date: Date
     var lastEdit: Date?
     var location: Location
-    var title: String
+    var subject: String
     var body: String?
     var audioFile: URL?
 
@@ -31,7 +31,7 @@ class Experience: NSObject, ExperienceProtocol {
         self.date = date
         self.lastEdit = lastEdit
         self.location = location
-        self.title = title
+        self.subject = title
         self.body = body
         self.audioFile = audioFile
         super.init()
