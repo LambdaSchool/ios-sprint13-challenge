@@ -10,5 +10,5 @@ import AVFoundation
 import UIKit
 
 protocol AudioRecorderDelegate: AVAudioRecorderDelegate, UIViewController {
-    func updateUI()
+    func updateRecordingUI()
 }

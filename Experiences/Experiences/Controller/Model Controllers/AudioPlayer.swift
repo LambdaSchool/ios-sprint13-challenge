@@ -36,14 +36,14 @@ class AudioPlayer {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.030, repeats: true) { [weak self] (_) in
             guard let self = self else { return }
-            self.delegate?.updateUI()
+            self.delegate?.updatePlayerUI()
         }
     }
 
     private func cancelTimer() {
         timer?.invalidate()
         timer = nil
-        delegate?.updateUI()
+        delegate?.updatePlayerUI()
     }
 
     private func loadAudio() {

@@ -8,14 +8,20 @@
 import Foundation
 import MapKit
 
-struct Experience: ExperienceProtocol {
+struct Experience: Decodable, ExperienceProtocol {
     let date: Date = Date()
     var lastEdit: Date? = nil
-
-    var location: CLLocationCoordinate2D
-
+    var location: Location
     var title: String
     var body: String?
+    var audioFile: URL?
+}
 
-    var audioFile: Data?
+struct Location: Decodable {
+    var latitude: Double
+    var longitude: Double
+
+    var clLocationRep: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
 }

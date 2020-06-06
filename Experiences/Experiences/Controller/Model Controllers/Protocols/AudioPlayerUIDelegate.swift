@@ -8,6 +8,6 @@
 
 import AVFoundation
 protocol AudioPlayerUIDelegate: AVAudioPlayerDelegate {
-    func updateUI()
+    func updatePlayerUI()
     var recordedURL: URL? { get set }
 }

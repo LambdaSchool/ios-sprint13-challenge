@@ -31,6 +31,7 @@ class AudioRecorder {
         recorder?.isRecording ?? false
     }
 
+    // MARK: - Lifecycle -
     init(delegate: AudioRecorderDelegate) {
         self.delegate = delegate
     }
@@ -50,7 +51,7 @@ class AudioRecorder {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.030, repeats: true) { [weak self] (_) in
             guard let self = self else { return }
-            self.delegate?.updateUI()
+            self.delegate?.updateRecordingUI()
         }
     }
     func cancelTimer() {
@@ -108,7 +109,7 @@ class AudioRecorder {
         } else {
             requestPermissionOrStartRecording()
         }
-        delegate?.updateUI()
+        delegate?.updateRecordingUI()
     }
 
     func startRecording() {
@@ -123,7 +124,7 @@ class AudioRecorder {
     }
 
     func stopRecording() {
-        delegate?.updateUI()
+        delegate?.updateRecordingUI()
         recorder?.stop()
     }
 

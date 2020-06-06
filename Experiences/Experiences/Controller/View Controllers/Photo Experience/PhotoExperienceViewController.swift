@@ -7,16 +7,22 @@
 //
 
 import UIKit
+import AVFoundation
 
 class PhotoExperienceViewController: UIViewController {
     private var filterSegueID = "AddFilterVC"
+    var recordedURL: URL?
     lazy var photoController = PhotoController(delegate: self)
+    lazy var audioController = AudioPlayer(delegate: self)
+    lazy var recordingController = AudioRecorder(delegate: self)
     weak var delegate: PhotoUIDelegate?
 
     @IBOutlet weak var photoFilterImageView: UIImageView!
     @IBOutlet weak var selectPhotoButton: UIButton!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var storyTextView: UITextView!
+    @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var timeElapsedLabel: UILabel!
 
     @IBAction func choosePhoto(_ sender: UIButton) {
         photoController.requestPermissionAndPresentImagePicker()
@@ -28,6 +34,18 @@ class PhotoExperienceViewController: UIViewController {
         titleTextField.delegate = self
         storyTextView.delegate = self
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        try? recordingController.prepareAudioSession()
+        updateViews()
+    }
+
+    private func updateViews() {
+        updateRecordingUI()
+        updatePlayerUI()
+    }
+
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -114,5 +132,34 @@ extension PhotoExperienceViewController: UIImagePickerControllerDelegate, UINavi
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+// MARK: - Audio -
+extension PhotoExperienceViewController: AudioPlayerUIDelegate {
+    func updatePlayerUI() {
+
+    }
+}
+
+extension PhotoExperienceViewController: AudioRecorderDelegate {
+    @IBAction func toggleRecording() {
+        recordingController.toggleRecording()
+    }
+
+    func updateRecordingUI() {
+        recordButton.isSelected = recordingController.isRecording
+        displayElapsedTime()
+    }
+
+    private func displayElapsedTime() {
+        let elapsedTime = recordingController.recorder?.currentTime ?? 0
+        timeElapsedLabel.text = recordingController.timeIntervalFormatter.string(from: elapsedTime)
+    }
+
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        recordedURL = recorder.url
+        //this only works because audioController is lazy and hasn't been accessed before recorder.url is assigned (it loads the recordedURL in the init)
+        audioController.togglePlaying()
     }
 }

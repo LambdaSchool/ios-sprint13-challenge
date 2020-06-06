@@ -10,10 +10,10 @@ import Foundation
 import MapKit
 
 struct PhotoExperience: ExperienceProtocol {
+    var audioFile: URL?
     var date: Date = Date()
     var lastEdit: Date? = nil
-    var location: CLLocationCoordinate2D
+    var location: Location
     var title: String
     var body: String?
-    var audioFile: Data?
 }
