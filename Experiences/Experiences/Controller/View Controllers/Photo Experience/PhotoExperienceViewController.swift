@@ -15,6 +15,7 @@ class PhotoExperienceViewController: UIViewController {
 
     var recordedURL: URL?
 
+    let experienceController = ExperienceController.shared
     lazy var photoController = PhotoController(delegate: self)
     lazy var audioController = AudioPlayer(delegate: self)
     lazy var recordingController = AudioRecorder(delegate: self)
@@ -74,7 +75,6 @@ class PhotoExperienceViewController: UIViewController {
         if photoFilterImageView.image == nil {
             fields.append("An image")
         }
-
         if titleTextField.text?.isEmpty ?? true {
             fields.append("A title")
         }
@@ -90,6 +90,7 @@ class PhotoExperienceViewController: UIViewController {
             !title.isEmpty,
             let image = photoFilterImageView.image
         else { return }
+
         let experience = PhotoExperience(
             location: Location(latitude: 20, longitude: 20),
             title: title,
@@ -97,7 +98,7 @@ class PhotoExperienceViewController: UIViewController {
             audioFile: recordedURL,
             photo: image.jpegData(compressionQuality: 60.0)
         )
-        print(experience)
+        experienceController.append(experience)
     }
 
     func presentFilterViewController() {

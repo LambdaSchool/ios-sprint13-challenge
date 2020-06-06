@@ -11,6 +11,7 @@ import MapKit
 
 class MainMenuViewController: UIViewController {
     // MARK: - Properties -
+    let experienceController = ExperienceController.shared
     private let cellID = "MenuCell"
     private let menuArray = [
         UIImage.NamedImage.video,
@@ -33,6 +34,7 @@ class MainMenuViewController: UIViewController {
         for cell in tableView.visibleCells {
             cell.isSelected = false
         }
+        print(experienceController.count)
     }
 
 }
