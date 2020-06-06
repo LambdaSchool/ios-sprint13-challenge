@@ -9,13 +9,36 @@
 import Foundation
 import MapKit
 
-struct PhotoExperience: ExperienceProtocol {
-    let id: UUID = UUID()
-    var audioFile: URL?
-    var photo: Data?
-    var date: Date = Date()
+class PhotoExperience: NSObject, ExperienceProtocol {
+    let id: UUID
+    var date: Date
     var lastEdit: Date? = nil
     var location: Location
     var title: String
     var body: String?
+    var audioFile: URL?
+    var photo: Data?
+
+    init(
+        id: UUID = UUID(),
+        date: Date = Date(),
+        lastEdit: Date? = nil,
+        location: Location,
+        title: String,
+        body: String,
+        audioFile: URL?,
+        photo: Data?
+        ) {
+
+        self.id = id
+        self.date = date
+        self.lastEdit = lastEdit
+        self.location = location
+        self.title = title
+        self.body = body
+        self.audioFile = audioFile
+        self.photo = photo
+        super.init()
+
+    }
 }

@@ -11,16 +11,10 @@ import XCTest
 
 class ExperiencesTests: XCTestCase {
     let videoExperience = VideoExperience(location: Location(latitude: 20, longitude: 20), title: "A Title")
+    let storyExperience = Experience(location: Location(latitude: 20, longitude: 20), title: "A title")
 
     func testExperienceController() {
         let controller = ExperienceController.shared
-
-        let storyExperience = Experience(
-            lastEdit: nil,
-            location: Location(latitude: 20, longitude: 20),
-            title: "A title",
-            body: nil,
-            audioFile: nil)
 
         let id = storyExperience.id
 

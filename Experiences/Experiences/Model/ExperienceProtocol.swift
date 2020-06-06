@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-protocol ExperienceProtocol: Codable {
+protocol ExperienceProtocol: Codable, NSObject {
     var id: UUID { get }
     var date: Date { get }
     var lastEdit: Date? { get set }

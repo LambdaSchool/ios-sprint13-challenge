@@ -9,13 +9,35 @@
 import Foundation
 import MapKit
 
-struct VideoExperience: ExperienceProtocol {
-    let id: UUID = UUID()
-    var date: Date = Date()
-    var lastEdit: Date? = nil
+class VideoExperience: NSObject, ExperienceProtocol {
+    let id: UUID
+    var date: Date
+    var lastEdit: Date?
     var location: Location
     var title: String
     var body: String?
     var audioFile: URL?
     var videoFile: URL?
+
+    init(
+        id: UUID = UUID(),
+        date: Date = Date(),
+        lastEdit: Date? = nil,
+        location: Location,
+        title: String,
+        body: String,
+        audioFile: URL?,
+        videoFile: URL?
+        ) {
+
+        self.id = id
+        self.date = date
+        self.lastEdit = lastEdit
+        self.location = location
+        self.title = title
+        self.body = body
+        self.audioFile = audioFile
+        super.init()
+
+    }
 }

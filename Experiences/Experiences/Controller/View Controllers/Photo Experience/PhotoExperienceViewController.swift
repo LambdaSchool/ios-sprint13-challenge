@@ -91,15 +91,11 @@ class PhotoExperienceViewController: UIViewController {
             let image = photoFilterImageView.image
         else { return }
         let experience = PhotoExperience(
-            audioFile: recordedURL,
-            photo: image.jpegData(compressionQuality: 60.0),
-            date: Date(),
-            lastEdit: nil,
-            //TODO: Location
-            location: Location(latitude: 20,
-                               longitude: 20),
+            location: Location(latitude: 20, longitude: 20),
             title: title,
-            body: storyTextView.text
+            body: storyTextView.text,
+            audioFile: recordedURL,
+            photo: image.jpegData(compressionQuality: 60.0)
         )
         print(experience)
     }
