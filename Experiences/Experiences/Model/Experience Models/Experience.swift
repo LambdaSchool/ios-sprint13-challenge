@@ -22,7 +22,7 @@ class Experience: NSObject, ExperienceProtocol {
         lastEdit: Date? = nil,
         location: Location,
         title: String,
-        body: String,
+        body: String?,
         audioFile: URL?
         ) {
 

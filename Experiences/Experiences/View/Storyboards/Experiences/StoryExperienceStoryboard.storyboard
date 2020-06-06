@@ -10,13 +10,13 @@
         <!--Story Experience-->
         <scene sceneID="2TQ-hY-zhF">
             <objects>
-                <viewController storyboardIdentifier="StoryViewController" id="7fy-ci-7hy" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="StoryViewController" id="7fy-ci-7hy" customClass="StoryExperienceViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="B7v-ap-8dp">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="SwO-c3-Oug" userLabel="Main Stack">
-                                <rect key="frame" x="32" y="116" width="311" height="470.5"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="SwO-c3-Oug" userLabel="Main Stack">
+                                <rect key="frame" x="32" y="116" width="311" height="514.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="acw-IN-0RZ" userLabel="Content Stack">
                                         <rect key="frame" x="0.0" y="0.0" width="311" height="470.5"/>
@@ -63,6 +63,9 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="311" height="22"/>
                                                                 <state key="normal" image="mic.fill" catalog="system"/>
                                                                 <state key="selected" image="stop.fill" catalog="system"/>
+                                                                <connections>
+                                                                    <action selector="recordButtonTapped:" destination="7fy-ci-7hy" eventType="touchUpInside" id="qPD-Jr-I83"/>
+                                                                </connections>
                                                             </button>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap To Record" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F7D-6K-cfK">
                                                                 <rect key="frame" x="0.0" y="22" width="311" height="20.5"/>
@@ -76,6 +79,17 @@
                                             </stackView>
                                         </subviews>
                                     </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ffg-2Z-2Ws">
+                                        <rect key="frame" x="0.0" y="478.5" width="311" height="36"/>
+                                        <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="20"/>
+                                        <state key="normal" title="Save">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="saveButtonTapped:" destination="7fy-ci-7hy" eventType="touchUpInside" id="PLa-s5-mSe"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -88,7 +102,19 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qWf-mq-mgd"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Story Experience" largeTitleDisplayMode="always" id="kAj-kG-HzS"/>
+                    <navigationItem key="navigationItem" title="Story Experience" largeTitleDisplayMode="always" id="kAj-kG-HzS">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="JhD-Fa-yOr">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="7fy-ci-7hy" id="ZGO-nC-Ce4"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="recordButton" destination="QeS-o2-FTw" id="ujc-Rc-QCM"/>
+                        <outlet property="storyTextView" destination="Ckg-13-KYE" id="Vs8-Db-P8y"/>
+                        <outlet property="timeElapsedLabel" destination="uej-i8-BnX" id="g8J-YN-Buo"/>
+                        <outlet property="titleTextField" destination="tHU-iR-Xb2" id="u6f-7d-UET"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0c3-3O-bl9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
