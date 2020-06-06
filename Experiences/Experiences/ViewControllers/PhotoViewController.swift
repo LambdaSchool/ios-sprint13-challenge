@@ -10,6 +10,10 @@ import UIKit
 import CoreImage
 import CoreImage.CIFilterBuiltins
 
+protocol PhotoSaveDelegate {
+    func returnPhotoToSaveScreen(photo: UIImage?)
+}
+
 struct Filter {
     let filterName: String
     var filterEffectValue: Any?
@@ -41,6 +45,7 @@ class PhotoViewController: UIViewController, UINavigationControllerDelegate {
     private let context = CIContext(options: nil)
     private var collectionViewCellImages = [UIImage]()
     private var isEditingImage = false
+    var photoSaveDelegate: PhotoSaveDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -132,9 +137,8 @@ class PhotoViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     @IBAction func savePhotoButtonTapped(_ sender: UIButton) {
-        self.dismiss(animated: true) {
-            print("Save button tapped")
-        }
+        photoSaveDelegate?.returnPhotoToSaveScreen(photo: imageView.image)
+        self.dismiss(animated: true)
     }
     
 }

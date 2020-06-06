@@ -9,6 +9,10 @@
 import UIKit
 import AVFoundation
 
+protocol AudioSaveDelegate {
+    func returnAudioToSaveScreen(audio: URL?)
+}
+
 class AudioViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate {
 
     @IBOutlet weak var recordButton: UIButton!
@@ -19,9 +23,12 @@ class AudioViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPla
     var soundRecorder: AVAudioRecorder?
     var soundPlayer: AVAudioPlayer?
     var fileName: String = "recording.m4a"
+    var audioFilePath = URL(string: "https://www.google.com")!
+    var audioSaveDelegate: AudioSaveDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        audioFilePath = getDocumentsDirectory().appendingPathComponent(fileName)
         setupRecorder()
         setupPlayer()
         setupTimer()
@@ -33,26 +40,26 @@ class AudioViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPla
     }
     
     private func setupRecorder() {
+//        let audioFilePath = getDocumentsDirectory().appendingPathComponent(fileName)
         playPauseButton.isEnabled = false
-        let audioFileName = getDocumentsDirectory().appendingPathComponent(fileName)
         let recordSettings: [String : Any] = [AVFormatIDKey : kAudioFormatAppleLossless,
                               AVEncoderAudioQualityKey : AVAudioQuality.max.rawValue,
                               AVEncoderBitRateKey : 320000,
                               AVNumberOfChannelsKey : 2,
-                              AVSampleRateKey : 44100.0]
+                              AVSampleRateKey : 44100.0] as [String : Any]
         do {
-            soundRecorder = try AVAudioRecorder(url: audioFileName, settings: recordSettings)
+            soundRecorder = try AVAudioRecorder(url: audioFilePath, settings: recordSettings)
             soundRecorder?.delegate = self
             soundRecorder?.prepareToRecord()
         } catch {
-            print(error)
+            print(error.localizedDescription)
         }
     }
     
     private func setupPlayer() {
-        let audioFileName = getDocumentsDirectory().appendingPathComponent(fileName)
+//        let audioFilePath = getDocumentsDirectory().appendingPathComponent(fileName)
         do {
-            soundPlayer = try AVAudioPlayer(contentsOf: audioFileName)
+            soundPlayer = try AVAudioPlayer(contentsOf: audioFilePath)
             soundPlayer?.delegate = self
             soundPlayer?.prepareToPlay()
             soundPlayer?.volume = 1.0
@@ -107,6 +114,8 @@ class AudioViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPla
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
+        audioSaveDelegate?.returnAudioToSaveScreen(audio: audioFilePath)
+        dismiss(animated: true)
     }
     
     /*
