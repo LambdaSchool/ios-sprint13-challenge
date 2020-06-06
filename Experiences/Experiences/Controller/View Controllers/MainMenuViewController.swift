@@ -121,8 +121,8 @@ extension MainMenuViewController: MKMapViewDelegate {
                 print("Unkown error downcasting Experience to annotation")
                 return nil
             }
-
             markerAnnotation = mapView.dequeueReusableAnnotationView(withIdentifier: markerID, for: experience) as? MKMarkerAnnotationView
+            markerAnnotation?.glyphImage = UIImage(systemName: "book.circle")
             markerAnnotation?.markerTintColor = .systemRed
 
         case is PhotoExperience:
@@ -133,14 +133,14 @@ extension MainMenuViewController: MKMapViewDelegate {
 
             markerAnnotation = mapView.dequeueReusableAnnotationView(withIdentifier: markerID, for: experience) as? MKMarkerAnnotationView
 
-            markerAnnotation?.glyphImage = .photoImage
+            markerAnnotation?.glyphImage = UIImage(systemName: "photo.fill")
             markerAnnotation?.markerTintColor = .systemGreen
         case is VideoExperience:
             guard let experience = annotation as? VideoExperience else {
                 print("Unkown error downcasting VideoExperience to annotation")
                 return nil
             }
-
+            markerAnnotation?.glyphImage = UIImage(systemName: "video.fill")
             markerAnnotation = mapView.dequeueReusableAnnotationView(withIdentifier: markerID, for: experience) as? MKMarkerAnnotationView
 
             markerAnnotation?.markerTintColor = .systemOrange
@@ -167,8 +167,8 @@ extension MainMenuViewController: CLLocationManagerDelegate {
             let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))
             if currentRegion == nil {
                 currentRegion = region
+                self.mapView?.setRegion(currentRegion!, animated: true)
             }
-            //mapView?.setRegion(currentRegion!, animated: true)
         }
     }
 }

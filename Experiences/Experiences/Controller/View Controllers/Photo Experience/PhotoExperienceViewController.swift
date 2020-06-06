@@ -99,6 +99,7 @@ class PhotoExperienceViewController: UIViewController {
             photo: image.jpegData(compressionQuality: 60.0)
         )
         experienceController.append(experience)
+        navigationController?.popViewController(animated: true)
     }
 
     func presentFilterViewController() {
