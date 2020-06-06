@@ -11,6 +11,7 @@ import AVFoundation
 import TextFieldValidator
 
 class PhotoExperienceViewController: UIViewController {
+    // MARK: - Properties -
     private var filterSegueID = "AddFilterVC"
 
     var recordedURL: URL?
@@ -22,17 +23,20 @@ class PhotoExperienceViewController: UIViewController {
 
     weak var delegate: PhotoUIDelegate?
 
+    let textViewPlaceholderText = "Tell your story here (optional)"
+
     @IBOutlet weak var photoFilterImageView: UIImageView!
     @IBOutlet weak var selectPhotoButton: UIButton!
-    @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var storyTextView: UITextView!
-    @IBOutlet weak var recordButton: UIButton!
-    @IBOutlet weak var timeElapsedLabel: UILabel!
 
     @IBAction func choosePhoto(_ sender: UIButton) {
         photoController.requestPermissionAndPresentImagePicker()
     }
 
+    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var storyTextView: UITextView!
+
+    @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var timeElapsedLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,10 +95,14 @@ class PhotoExperienceViewController: UIViewController {
             let image = photoFilterImageView.image
         else { return }
 
+        var text = storyTextView.text
+        if text == textViewPlaceholderText {
+            text = nil
+        }
         let experience = PhotoExperience(
             location: Location(latitude: 20, longitude: 20),
             title: title,
-            body: storyTextView.text,
+            body: text,
             audioFile: recordedURL,
             photo: image.jpegData(compressionQuality: 60.0)
         )
@@ -106,20 +114,6 @@ class PhotoExperienceViewController: UIViewController {
         performSegue(withIdentifier: filterSegueID, sender: nil)
     }
 
-}
-
-extension UIViewController: UITextFieldDelegate {
-
-}
-
-extension UIViewController: UITextViewDelegate {
-    public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if textView.text == "Tell your story here (optional)" {
-            textView.text = ""
-            return true
-        }
-        return true
-    }
 }
 
 extension PhotoExperienceViewController: PhotoUIDelegate {

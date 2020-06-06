@@ -6,7 +6,6 @@
 //  Copyright © 2020 Hazy Studios. All rights reserved.
 //
 import Foundation
-import MapKit
 
 class Experience: NSObject, ExperienceProtocol {
     let id: UUID
@@ -32,18 +31,15 @@ class Experience: NSObject, ExperienceProtocol {
         self.lastEdit = lastEdit
         self.location = location
         self.subject = title
-        self.body = body
+        if body == "Tell your story here (optional)" {
+            self.body = nil //redundant, but more clear
+        } else {
+            self.body = body
+        }
         self.audioFile = audioFile
         super.init()
 
     }
 }
 
-struct Location: Codable {
-    var latitude: Double
-    var longitude: Double
 
-    var clLocationRep: CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-    }
-}

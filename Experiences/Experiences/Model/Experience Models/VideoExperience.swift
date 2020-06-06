@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MapKit
 
 class VideoExperience: NSObject, ExperienceProtocol {
     let id: UUID
@@ -35,7 +34,11 @@ class VideoExperience: NSObject, ExperienceProtocol {
         self.lastEdit = lastEdit
         self.location = location
         self.subject = title
-        self.body = body
+        if body == "Tell your story here (optional)" {
+           self.body = nil //redundant, but more clear
+        } else {
+           self.body = body
+        }
         self.audioFile = audioFile
         super.init()
 

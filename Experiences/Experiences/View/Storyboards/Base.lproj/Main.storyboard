@@ -18,12 +18,15 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="MPO-Vg-Vmd">
                                 <rect key="frame" x="0.0" y="96" width="375" height="220"/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="utd-hg-Hsi">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="utd-hg-Hsi" userLabel="ExpandMapView">
                                 <rect key="frame" x="339" y="107.5" width="20" height="18.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="arrow.up.left.and.arrow.down.right" catalog="system"/>
+                                <connections>
+                                    <action selector="enlargeMapViewButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2dC-vk-XmB"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jlP-7L-Zki">
                                 <rect key="frame" x="0.0" y="316" width="375" height="351"/>
@@ -96,11 +99,14 @@
                                     <constraint firstItem="4EJ-RJ-Zuw" firstAttribute="top" secondItem="pfm-44-Ww9" secondAttribute="bottom" constant="65.5" id="zsY-81-B5S"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WXU-0N-AgI">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WXU-0N-AgI" userLabel="CurrentLocation">
                                 <rect key="frame" x="16" y="106" width="21" height="22"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="location.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="currentLocationButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rQm-12-b7D"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -122,6 +128,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="My Experiences" largeTitleDisplayMode="always" id="Nmg-3W-5f5"/>
                     <connections>
+                        <outlet property="addExperienceLabel" destination="pfm-44-Ww9" id="sei-cL-K8h"/>
                         <outlet property="mapView" destination="MPO-Vg-Vmd" id="1tU-Rn-6iZ"/>
                         <outlet property="tableView" destination="4EJ-RJ-Zuw" id="u4M-wW-G48"/>
                         <segue destination="0h3-YV-WID" kind="show" identifier="StorySegue" id="cmZ-gR-Bip"/>

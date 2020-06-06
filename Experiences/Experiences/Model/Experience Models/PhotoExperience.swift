@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MapKit
 
 class PhotoExperience: NSObject, ExperienceProtocol {
     let id: UUID
@@ -25,7 +24,7 @@ class PhotoExperience: NSObject, ExperienceProtocol {
         lastEdit: Date? = nil,
         location: Location,
         title: String,
-        body: String,
+        body: String?,
         audioFile: URL?,
         photo: Data?
         ) {
@@ -35,10 +34,13 @@ class PhotoExperience: NSObject, ExperienceProtocol {
         self.lastEdit = lastEdit
         self.location = location
         self.subject = title
-        self.body = body
+        if body == "Tell your story here (optional)" {
+           self.body = nil //redundant, but more clear
+        } else {
+           self.body = body
+        }
         self.audioFile = audioFile
         self.photo = photo
         super.init()
-
     }
 }

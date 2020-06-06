@@ -17,6 +17,8 @@ class MainMenuViewController: UIViewController {
     private let markerID = "ExperienceView"
     private let cellID = "MenuCell"
 
+    @IBOutlet weak var addExperienceLabel: UILabel!
+
     private let menuArray = [
         UIImage.NamedImage.video,
         UIImage.NamedImage.photo,
@@ -34,6 +36,12 @@ class MainMenuViewController: UIViewController {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        loadViews()
+    }
+
+    private func loadViews() {
+        addExperienceLabel.layer.cornerRadius = 8
+        addExperienceLabel.layer.masksToBounds = true
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -106,6 +114,15 @@ extension MainMenuViewController: UITableViewDataSource {
         //Locale: nil is necessary for the image/title/segue pattern to work properly in different locales
         cell.title = menuArray[indexPath.row].rawValue.capitalized(with: nil)
         return cell
+    }
+    // MARK: - Map Controls -
+
+    @IBAction func enlargeMapViewButtonPressed(_ sender: UIButton) {
+        //cant seem to make the mapView fullScreen using constraints
+    }
+
+    @IBAction func currentLocationButtonPressed(_ sender: UIButton) {
+        mapView?.setRegion(currentRegion!, animated: true)
     }
 }
 
