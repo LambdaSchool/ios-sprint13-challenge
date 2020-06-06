@@ -66,7 +66,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="lgc-tL-gvp">
-                                <rect key="frame" x="15" y="130" width="290" height="115.5"/>
+                                <rect key="frame" x="15" y="130" width="290" height="116.5"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="US8-9Z-eoM">
                                         <rect key="frame" x="0.0" y="0.0" width="290" height="19"/>
@@ -86,14 +86,17 @@
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LcU-hu-heD">
-                                        <rect key="frame" x="0.0" y="63" width="290" height="19"/>
+                                        <rect key="frame" x="0.0" y="63" width="290" height="20"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <state key="normal" title=" + Add Audio" image="camera" catalog="system">
+                                        <state key="normal" title="   + Add Audio" image="mic" catalog="system">
                                             <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                         </state>
+                                        <connections>
+                                            <segue destination="59K-SK-oBQ" kind="show" id="Sit-Cp-2KL"/>
+                                        </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="a1M-tS-yDI">
-                                        <rect key="frame" x="0.0" y="95" width="290" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="96" width="290" height="20.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R4p-Lf-xLN">
                                                 <rect key="frame" x="0.0" y="0.0" width="100" height="20.5"/>
@@ -163,12 +166,12 @@
             </objects>
             <point key="canvasLocation" x="2925" y="138"/>
         </scene>
-        <!--View Controller-->
+        <!--Audio View Controller-->
         <scene sceneID="dEo-kM-ln1">
             <objects>
-                <viewController id="59K-SK-oBQ" sceneMemberID="viewController">
+                <viewController id="59K-SK-oBQ" customClass="AudioViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8u9-Q1-Drd">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Audio" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YVF-SO-GaC">
@@ -177,18 +180,69 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="M68-i2-hkh">
+                                <rect key="frame" x="16" y="67" width="288" height="2"/>
+                            </progressView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yQN-Lc-FS3">
+                                <rect key="frame" x="16" y="77" width="79" height="22"/>
+                                <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Record" image="recordingtape" catalog="system">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="recordButtonPressed:" destination="59K-SK-oBQ" eventType="touchUpInside" id="ePZ-mQ-u4S"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jTl-gV-8II">
+                                <rect key="frame" x="254" y="76" width="50" height="22"/>
+                                <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Play" image="play" catalog="system">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="playButtonPressed:" destination="59K-SK-oBQ" eventType="touchUpInside" id="Cdo-PR-ztj"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cVW-yg-eIy">
+                                <rect key="frame" x="135" y="215" width="50" height="30"/>
+                                <color key="backgroundColor" systemColor="systemGray5Color" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="dLv-84-hVn"/>
+                                </constraints>
+                                <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="saveButtonPressed:" destination="59K-SK-oBQ" eventType="touchUpInside" id="GBT-k0-kXe"/>
+                                    <action selector="savePhotoButtonTapped:" destination="LCD-RR-0Ld" eventType="touchUpInside" id="B0l-Ra-gUk"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="Yd5-vs-itI" firstAttribute="trailing" secondItem="jTl-gV-8II" secondAttribute="trailing" constant="16" id="33s-dI-BLa"/>
+                            <constraint firstItem="yQN-Lc-FS3" firstAttribute="top" secondItem="M68-i2-hkh" secondAttribute="bottom" constant="8" id="5tV-OC-CeW"/>
+                            <constraint firstItem="M68-i2-hkh" firstAttribute="top" secondItem="YVF-SO-GaC" secondAttribute="bottom" constant="8" id="7Cw-0R-UAc"/>
                             <constraint firstItem="YVF-SO-GaC" firstAttribute="leading" secondItem="Yd5-vs-itI" secondAttribute="leading" constant="15" id="9Ul-xE-zBT"/>
+                            <constraint firstItem="jTl-gV-8II" firstAttribute="top" secondItem="M68-i2-hkh" secondAttribute="bottom" constant="7" id="B4l-HI-EBq"/>
+                            <constraint firstItem="cVW-yg-eIy" firstAttribute="centerY" secondItem="8u9-Q1-Drd" secondAttribute="centerY" id="Rnn-TP-TAE"/>
+                            <constraint firstItem="cVW-yg-eIy" firstAttribute="centerX" secondItem="8u9-Q1-Drd" secondAttribute="centerX" id="T1g-H5-POR"/>
+                            <constraint firstItem="M68-i2-hkh" firstAttribute="trailing" secondItem="8u9-Q1-Drd" secondAttribute="trailingMargin" id="VhN-5A-DGL"/>
+                            <constraint firstItem="M68-i2-hkh" firstAttribute="leading" secondItem="8u9-Q1-Drd" secondAttribute="leadingMargin" id="aYq-bg-PSm"/>
                             <constraint firstItem="YVF-SO-GaC" firstAttribute="top" secondItem="Yd5-vs-itI" secondAttribute="top" constant="20" id="dVf-6R-vcz"/>
+                            <constraint firstItem="yQN-Lc-FS3" firstAttribute="leading" secondItem="Yd5-vs-itI" secondAttribute="leading" constant="16" id="wy0-ph-j8r"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Yd5-vs-itI"/>
                     </view>
+                    <navigationItem key="navigationItem" id="12B-2I-lQg"/>
+                    <connections>
+                        <outlet property="playPauseButton" destination="jTl-gV-8II" id="8Uv-Z4-opG"/>
+                        <outlet property="progressBar" destination="M68-i2-hkh" id="HQa-Su-wJd"/>
+                        <outlet property="recordButton" destination="yQN-Lc-FS3" id="vt9-k1-VV6"/>
+                        <outlet property="saveButton" destination="cVW-yg-eIy" id="mjI-n4-FcM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N0c-yX-rFQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2925" y="858"/>
+            <point key="canvasLocation" x="2925" y="857.5"/>
         </scene>
         <!--Photo View Controller-->
         <scene sceneID="Mpu-YX-jfG">
@@ -344,7 +398,10 @@
     <resources>
         <image name="camera" catalog="system" width="128" height="96"/>
         <image name="checkmark" catalog="system" width="128" height="114"/>
-        <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="mic" catalog="system" width="108" height="128"/>
+        <image name="play" catalog="system" width="120" height="128"/>
+        <image name="plus" catalog="system" width="32" height="32"/>
+        <image name="recordingtape" catalog="system" width="128" height="60"/>
         <image name="trash" catalog="system" width="121" height="128"/>
         <image name="video" catalog="system" width="128" height="83"/>
     </resources>
