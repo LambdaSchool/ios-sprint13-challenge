@@ -10,6 +10,7 @@ import XCTest
 @testable import Experiences
 
 class ExperiencesTests: XCTestCase {
+    let videoExperience = VideoExperience(location: Location(latitude: 20, longitude: 20), title: "A Title")
 
     func testExperienceController() {
         let controller = ExperienceController.shared
@@ -30,7 +31,7 @@ class ExperiencesTests: XCTestCase {
         XCTAssertEqual(storyExperienceFromController?.id, id)
         XCTAssertEqual(controller.count, 1)
 
-        let videoExperience = VideoExperience(location: Location(latitude: 20, longitude: 20), title: "A Title")
+
         let videoId = videoExperience.id
 
         controller.append(videoExperience)
@@ -44,6 +45,19 @@ class ExperiencesTests: XCTestCase {
         storyExperienceFromController = controller.getStoryExperience(with: id)
         XCTAssertNil(storyExperienceFromController)
         XCTAssertEqual(controller.count, 1)
+    }
+
+    func testExperienceControllerIsSingleton() {
+        let controller1 = ExperienceController.shared
+        let controller2 = ExperienceController.shared
+        //let controller3 = ExperienceController() //inaccessible due to private - good
+
+        XCTAssertEqual(controller1.count, controller2.count)
+        controller1.append(videoExperience)
+        XCTAssertEqual(controller1.count, controller2.count)
+        controller2.remove(with: videoExperience.id)
+        XCTAssertEqual(controller1.count, controller2.count)
+
     }
 
 }
