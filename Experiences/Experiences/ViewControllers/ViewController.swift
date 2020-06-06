@@ -57,6 +57,12 @@ class ViewController: UIViewController {
         pin.coordinate = coordinate
         pin.title = experience.title
         mapView.addAnnotation(pin)
+        // button
+//        let pinView = MKAnnotationView(annotation: pin, reuseIdentifier: "Pin")
+//        let infoButton = UIButton()
+//        infoButton.setImage(UIImage(systemName: "info")?.withRenderingMode(.alwaysTemplate), for: .normal)
+//        infoButton.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+//        pinView.rightCalloutAccessoryView = infoButton
     }
     
     // MARK: - Navigation
@@ -74,4 +80,29 @@ extension ViewController: MapRefreshDelegate {
         loadPins()
     }
     
+}
+
+extension ViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard annotation is MKPointAnnotation else { return nil }
+        
+        let identifier = "Annotation"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+        
+        
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView!.canShowCallout = true
+        } else {
+            annotationView!.annotation = annotation
+        }
+        let infoButton = UIButton()
+        infoButton.frame.size.width = 44
+        infoButton.frame.size.height = 44
+        infoButton.backgroundColor = .none
+        infoButton.setImage(UIImage(systemName: "info.circle"), for: .normal)
+        annotationView?.leftCalloutAccessoryView = infoButton
+        annotationView?.rightCalloutAccessoryView = infoButton
+        return annotationView
+    }
 }
