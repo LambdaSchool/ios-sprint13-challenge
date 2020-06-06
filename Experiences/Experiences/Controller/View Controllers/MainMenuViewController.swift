@@ -23,7 +23,10 @@ class MainMenuViewController: UIViewController {
         UIImage.NamedImage.story
     ]
 
+    private var currentRegion: MKCoordinateRegion?
+    var locationManager: CLLocationManager!
     @IBOutlet weak var mapView: MKMapView!
+
     @IBOutlet weak var tableView: UITableView!
 
     // MARK: - View Lifecycle -
@@ -33,7 +36,25 @@ class MainMenuViewController: UIViewController {
         tableView.dataSource = self
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        for cell in tableView.visibleCells {
+            cell.isSelected = false
+        }
+        self.mapView.showsUserLocation = true
+        setupMapView()
+    }
+
     private func setupMapView() {
+        //get location:
+        if (CLLocationManager.locationServicesEnabled())
+        {
+            locationManager = CLLocationManager()
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestAlwaysAuthorization()
+            locationManager.startUpdatingLocation()
+        }
         mapView.delegate = self
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: markerID)
         self.mapView.addAnnotations(experienceController.videoExperiences)
@@ -43,24 +64,24 @@ class MainMenuViewController: UIViewController {
         experienceController.videoExperiences.first ??
         experienceController.photoExperiences.first ??
             experienceController.storyExperiences.first
-        guard let firstExperience = firstAvailable as? ExperienceProtocol else { return }
+        guard let firstExperience = firstAvailable as? ExperienceProtocol else {
+            if let region = currentRegion {
+                self.mapView?.setRegion(region, animated: true)
+            }
+            return
+        }
         //zoom level
         let coordinateSpan = MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)
 
         let region = MKCoordinateRegion(center: firstExperience.location.clLocationRep, span: coordinateSpan)
+        self.mapView.showsUserLocation = true
         self.mapView.setRegion(region, animated: true)
-    }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        for cell in tableView.visibleCells {
-            cell.isSelected = false
-        }
-        setupMapView()
     }
 
 }
 
+// MARK: - TableView Delegate and Datasource -
 extension MainMenuViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? MenuTableViewCell,
@@ -77,7 +98,7 @@ extension MainMenuViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellID) as? MenuTableViewCell else {
-            fatalError("check cell ID stoobid")
+            fatalError("check cell ID")
         }
         let backgroundView = UIView()
         backgroundView.backgroundColor = .blue
@@ -88,6 +109,7 @@ extension MainMenuViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - MapKit -
 extension MainMenuViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         var markerAnnotation: MKMarkerAnnotationView?
@@ -96,26 +118,29 @@ extension MainMenuViewController: MKMapViewDelegate {
 
         case is Experience:
             guard let experience = annotation as? Experience else {
-                fatalError("Unkown, should be covered by switch here.")
+                print("Unkown error downcasting Experience to annotation")
+                return nil
             }
 
             markerAnnotation = mapView.dequeueReusableAnnotationView(withIdentifier: markerID, for: experience) as? MKMarkerAnnotationView
-
             markerAnnotation?.markerTintColor = .systemRed
 
         case is PhotoExperience:
             guard let experience = annotation as? PhotoExperience else {
-                fatalError("Unkown, should be covered by switch here.")
+                print("Unkown error downcasting PhotoExperience to annotation")
+                return nil
             }
 
             markerAnnotation = mapView.dequeueReusableAnnotationView(withIdentifier: markerID, for: experience) as? MKMarkerAnnotationView
 
+            markerAnnotation?.glyphImage = .photoImage
             markerAnnotation?.markerTintColor = .systemGreen
         case is VideoExperience:
             guard let experience = annotation as? VideoExperience else {
-                fatalError("Unkown, should be covered by switch here.")
-
+                print("Unkown error downcasting VideoExperience to annotation")
+                return nil
             }
+
             markerAnnotation = mapView.dequeueReusableAnnotationView(withIdentifier: markerID, for: experience) as? MKMarkerAnnotationView
 
             markerAnnotation?.markerTintColor = .systemOrange
@@ -132,5 +157,18 @@ extension MainMenuViewController: MKMapViewDelegate {
 //        markerAnnotation.detailCalloutAccessoryView = detailView
 
         return markerAnnotation
+    }
+}
+
+extension MainMenuViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last{
+            let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))
+            if currentRegion == nil {
+                currentRegion = region
+            }
+            //mapView?.setRegion(currentRegion!, animated: true)
+        }
     }
 }
