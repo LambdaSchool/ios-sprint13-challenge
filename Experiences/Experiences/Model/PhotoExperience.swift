@@ -11,6 +11,7 @@ import MapKit
 
 struct PhotoExperience: ExperienceProtocol {
     var audioFile: URL?
+    var photo: Data?
     var date: Date = Date()
     var lastEdit: Date? = nil
     var location: Location

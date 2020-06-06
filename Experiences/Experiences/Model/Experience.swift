@@ -8,7 +8,7 @@
 import Foundation
 import MapKit
 
-struct Experience: Decodable, ExperienceProtocol {
+struct Experience: ExperienceProtocol {
     let date: Date = Date()
     var lastEdit: Date? = nil
     var location: Location
@@ -17,7 +17,7 @@ struct Experience: Decodable, ExperienceProtocol {
     var audioFile: URL?
 }
 
-struct Location: Decodable {
+struct Location: Codable {
     var latitude: Double
     var longitude: Double
 

@@ -28,39 +28,7 @@ class PhotoController {
     init(delegate: PhotoUIDelegate) {
         self.delegate = delegate
     }
-
-    func requestPermissionAndPresentImagePicker() {
-        let authorizationStatus = PHPhotoLibrary.authorizationStatus()
-
-        switch authorizationStatus {
-        case .authorized:
-            delegate?.presentImagePickerController()
-        case .notDetermined:
-
-            PHPhotoLibrary.requestAuthorization { (status) in
-
-                guard status == .authorized else {
-                    NSLog("User did not authorize access to the photo library")
-                    //TODO: Alert User
-                    return
-                }
-
-                self.delegate?.presentImagePickerController()
-            }
-
-        case .denied:
-            print("access to photo library denied")
-            //TODO: Alert User
-        case .restricted:
-            //TODO: Alert User
-            print("access to photo library restricted - parental controls")
-
-        @unknown default:
-            print("FatalError")
-        }
-        delegate?.presentImagePickerController()
-    }
-
+    // MARK: - Image Processing -
     ///the scaled image as a CIImage for use in filtering operations
     func setImage(image: UIImage) {
         pickedImage = image
@@ -70,7 +38,10 @@ class PhotoController {
         didSet {
             guard let pickedImage = pickedImage else {
                 scaledImage = nil
-                //FIXME: alertUnknownEdgeCase()
+                alertUser(
+                    title: "An Unknown Error Occurred",
+                    message: "Please restart the app and try again."
+                )
                 return
             }
 
@@ -91,7 +62,10 @@ class PhotoController {
     private var inputImage: CIImage? {
         guard let scaledImage = scaledImage,
             let cgImage = scaledImage.cgImage else {
-                //FIXME: alertUnknownEdgeCase()
+                alertUser(
+                    title: "An Unknown Error Occurred",
+                    message: "Please restart the app and try again."
+                )
                 return nil
         }
         let ciImage = CIImage(cgImage: cgImage)
@@ -154,6 +128,8 @@ class PhotoController {
         filter?.setValue(intensity, forKey: kCIInputIntensityKey)
         filterImage()
     }
+
+    // MARK: - Filter Implementation -
     
     ///create a filteredImage and return it to the delegate to be used to update it's UI
     private func filterImage() {
@@ -170,5 +146,49 @@ class PhotoController {
                 let flattenedImage = scaledImage.flattened.cgImage else { return }
             self.delegate?.updatePhoto(flattenedImage)
         }
+    }
+    // MARK: - UX -
+    func requestPermissionAndPresentImagePicker() {
+        let authorizationStatus = PHPhotoLibrary.authorizationStatus()
+
+        switch authorizationStatus {
+        case .authorized:
+            delegate?.presentImagePickerController()
+        case .notDetermined:
+
+            PHPhotoLibrary.requestAuthorization { (status) in
+
+                guard status == .authorized else {
+                    NSLog("User did not authorize access to the photo library")
+                    return
+                }
+                self.delegate?.presentImagePickerController()
+            }
+
+        case .denied:
+            print("access to photo library denied")
+            self.alertUser(
+                title: "Oops, you denied access.",
+                message: "In order to save your photo experience, we need to access photos in your Photo Library. A story experience may be more to your liking."
+            )
+        case .restricted:
+            self.alertUser(
+                title: "Parental Control Settings",
+                message: "Your parental control settings do not currently allow us to access your photo library."
+            )
+            NSLog("access to photo library restricted - parental controls")
+
+        @unknown default:
+            print("FatalError")
+        }
+        delegate?.presentImagePickerController()
+    }
+
+    private func alertUser(title: String, message: String) {
+        guard let delegate = self.delegate as? UIViewController else { return }
+        Alert.show(title: title,
+                   message: message,
+                   vc: delegate)
+        return
     }
 }

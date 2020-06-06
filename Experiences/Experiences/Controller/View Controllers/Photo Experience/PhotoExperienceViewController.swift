@@ -8,13 +8,17 @@
 
 import UIKit
 import AVFoundation
+import TextFieldValidator
 
 class PhotoExperienceViewController: UIViewController {
     private var filterSegueID = "AddFilterVC"
+
     var recordedURL: URL?
+
     lazy var photoController = PhotoController(delegate: self)
     lazy var audioController = AudioPlayer(delegate: self)
     lazy var recordingController = AudioRecorder(delegate: self)
+
     weak var delegate: PhotoUIDelegate?
 
     @IBOutlet weak var photoFilterImageView: UIImageView!
@@ -33,6 +37,8 @@ class PhotoExperienceViewController: UIViewController {
         super.viewDidLoad()
         titleTextField.delegate = self
         storyTextView.delegate = self
+        updateViews()
+        styleFields()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -46,6 +52,13 @@ class PhotoExperienceViewController: UIViewController {
         updatePlayerUI()
     }
 
+    private func styleFields() {
+        storyTextView.layer.borderWidth = 1
+        storyTextView.layer.borderColor = UIColor.black.cgColor
+        titleTextField.layer.borderWidth = 1
+        titleTextField.layer.borderColor = UIColor.black.cgColor
+    }
+
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -57,7 +70,38 @@ class PhotoExperienceViewController: UIViewController {
     }
 
     @IBAction func saveButton() {
-        print("saved! (not implemented)")
+        var fields: [String] = []
+        if photoFilterImageView.image == nil {
+            fields.append("An image")
+        }
+
+        if titleTextField.text?.isEmpty ?? true {
+            fields.append("A title")
+        }
+        let message = fields.joined(separator: ",\n")
+        if !fields.isEmpty {
+            Alert.show(
+                title: "Your experience is missing:",
+                message: message,
+                vc: self
+            )
+        }
+        guard let title = titleTextField.text,
+            !title.isEmpty,
+            let image = photoFilterImageView.image
+        else { return }
+        let experience = PhotoExperience(
+            audioFile: recordedURL,
+            photo: image.jpegData(compressionQuality: 60.0),
+            date: Date(),
+            lastEdit: nil,
+            //TODO: Location
+            location: Location(latitude: 20,
+                               longitude: 20),
+            title: title,
+            body: storyTextView.text
+        )
+        print(experience)
     }
 
     func presentFilterViewController() {
@@ -159,7 +203,8 @@ extension PhotoExperienceViewController: AudioRecorderDelegate {
 
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         recordedURL = recorder.url
-        //this only works because audioController is lazy and hasn't been accessed before recorder.url is assigned (it loads the recordedURL in the init)
+        print("Recorded to: \(recorder.url)")
+        //this only works because audioController is lazy and hasn't been accessed before recordedURL is assigned (it loads the recordedURL in the init)
         audioController.togglePlaying()
     }
 }

@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-protocol ExperienceProtocol: Decodable {
+protocol ExperienceProtocol: Codable {
     var date: Date { get }
     var lastEdit: Date? { get set }
     var location: Location { get set }

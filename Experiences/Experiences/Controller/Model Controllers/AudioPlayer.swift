@@ -65,6 +65,11 @@ class AudioPlayer {
     }
 
     private func play() {
+        if let delegate = delegate {
+            if player?.url != delegate.recordedURL {
+                loadAudio()
+            }
+        }
         player?.play()
         startTimer()
     }
