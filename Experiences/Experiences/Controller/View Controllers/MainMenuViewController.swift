@@ -20,7 +20,9 @@ class MainMenuViewController: UIViewController {
     @IBOutlet weak var addExperienceLabel: UILabel!
 
     private let menuArray = [
-        UIImage.NamedImage.video,
+        //video isn't implemented, but this will add a cell with an image that segues to an empty ViewController if uncommented:
+        //UIImage.NamedImage.video,
+
         UIImage.NamedImage.photo,
         UIImage.NamedImage.story
     ]
