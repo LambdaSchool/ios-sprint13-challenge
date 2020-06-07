@@ -36,7 +36,7 @@ class ViewController: UIViewController {
     }
 
     private func setupSearchBar() {
-        searchBar.placeholder = "Search for a memory..."
+        searchBar.placeholder = "Search Feature Coming Soon"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: searchBar)
     }
     
