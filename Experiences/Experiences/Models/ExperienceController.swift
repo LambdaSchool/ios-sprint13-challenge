@@ -11,7 +11,7 @@ import MapKit
 
 class ExperienceController {
     
-    static var experiences = [Experience]()
+    static var experiences : [Experience] = []
     
     func loadExperience() {
         

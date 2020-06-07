@@ -11,7 +11,7 @@
         <!--Experiences-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MapViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -35,15 +35,15 @@
                     <navigationItem key="navigationItem" title="Experiences" id="czb-jM-MKk">
                         <barButtonItem key="rightBarButtonItem" image="plus" catalog="system" id="J4j-qo-EI2">
                             <connections>
-                                <action selector="plusButtonTapped:" destination="BYZ-38-t0r" id="bWI-DQ-vSD"/>
-                                <segue destination="47V-Ku-8oN" kind="presentation" identifier="GoToNewExperience" modalPresentationStyle="fullScreen" id="cJE-Xw-t0d"/>
+                                <action selector="plusButtonTapped:" destination="BYZ-38-t0r" id="E1z-Xh-zjN"/>
+                                <segue destination="47V-Ku-8oN" kind="presentation" identifier="AddNewExperienceModally" modalPresentationStyle="fullScreen" id="cJE-Xw-t0d"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="mapView" destination="aon-7B-vri" id="mqw-Md-k0c"/>
-                        <outlet property="plusButton" destination="J4j-qo-EI2" id="Obx-7c-zxn"/>
+                        <outlet property="addButton" destination="J4j-qo-EI2" id="aXK-Yy-QPD"/>
+                        <outlet property="mapView" destination="aon-7B-vri" id="bUm-sh-OMf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -76,10 +76,10 @@
             </objects>
             <point key="canvasLocation" x="1044.375" y="136.25"/>
         </scene>
-        <!--New Experience View Controller-->
+        <!--Add New Experience View Controller-->
         <scene sceneID="kff-sk-Dbf">
             <objects>
-                <viewController modalTransitionStyle="flipHorizontal" id="47V-Ku-8oN" customClass="NewExperienceViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalTransitionStyle="flipHorizontal" id="47V-Ku-8oN" customClass="AddNewExperienceViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TQg-C3-XAc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -95,8 +95,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
-                                    <action selector="didBeginEditedTitle:" destination="47V-Ku-8oN" eventType="editingDidBegin" id="O2E-jV-C0m"/>
-                                    <action selector="userEditedTheTitle:" destination="47V-Ku-8oN" eventType="valueChanged" id="ceb-bt-v17"/>
+                                    <action selector="didBeginEditedTitle:" destination="47V-Ku-8oN" eventType="editingDidBegin" id="rMb-cL-LHZ"/>
                                 </connections>
                             </textField>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="lgc-tL-gvp">
@@ -104,26 +103,31 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="US8-9Z-eoM">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
-                                        <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="Bko-9G-itC"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <state key="normal" title=" Add an Image" image="camera" catalog="system"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title=" Add an Image" image="camera" catalog="system">
+                                            <color key="titleColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <state key="selected" title="Image Added" image="camera.fill" catalog="system"/>
                                         <connections>
-                                            <segue destination="LCD-RR-0Ld" kind="show" identifier="GoToPhoto" id="psT-wE-RhK"/>
+                                            <segue destination="LCD-RR-0Ld" kind="show" id="mam-9o-3j7"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LcU-hu-heD">
                                         <rect key="frame" x="0.0" y="53" width="374" height="40"/>
-                                        <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="iau-qn-9LZ"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <state key="normal" title=" Add Audio" image="mic" catalog="system"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title=" Add Audio" image="mic" catalog="system">
+                                            <color key="titleColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <state key="selected" title="Audio Added" image="mic.fill" catalog="system"/>
                                         <connections>
-                                            <segue destination="59K-SK-oBQ" kind="show" identifier="GoToAudio" id="Sit-Cp-2KL"/>
+                                            <segue destination="59K-SK-oBQ" kind="show" identifier="ShowAddRecording" id="Sit-Cp-2KL"/>
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="a1M-tS-yDI">
@@ -136,7 +140,7 @@
                                                     <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="cancelButtonPressed:" destination="47V-Ku-8oN" eventType="touchUpInside" id="Xzz-6s-lXp"/>
+                                                    <action selector="cancelButtonPressed:" destination="47V-Ku-8oN" eventType="touchUpInside" id="irc-61-Y8f"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dft-b4-rM8">
@@ -146,7 +150,7 @@
                                                     <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="saveButtonPressed:" destination="47V-Ku-8oN" eventType="touchUpInside" id="O0W-W8-P8S"/>
+                                                    <action selector="saveButtonPressed:" destination="47V-Ku-8oN" eventType="touchUpInside" id="KU9-YV-LPy"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -169,9 +173,9 @@
                         <viewLayoutGuide key="safeArea" id="85S-Jp-pv2"/>
                     </view>
                     <connections>
-                        <outlet property="addAudioButton" destination="LcU-hu-heD" id="qB5-eI-fy1"/>
-                        <outlet property="addPhotoButton" destination="US8-9Z-eoM" id="yey-yr-M8s"/>
-                        <outlet property="saveButton" destination="dft-b4-rM8" id="G9M-LD-BaD"/>
+                        <outlet property="addAudioButton" destination="LcU-hu-heD" id="GR2-IQ-8xW"/>
+                        <outlet property="addImageButton" destination="US8-9Z-eoM" id="9em-TV-YLY"/>
+                        <outlet property="saveButton" destination="dft-b4-rM8" id="eKX-JB-1ii"/>
                         <outlet property="titleTextField" destination="8Uz-fC-bmu" id="mY3-AI-BOQ"/>
                     </connections>
                 </viewController>
@@ -197,20 +201,26 @@
                                 <rect key="frame" x="20" y="68.666666666666671" width="374" height="2"/>
                             </progressView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yQN-Lc-FS3">
-                                <rect key="frame" x="100" y="78.666666666666671" width="17.333333333333329" height="41"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <rect key="frame" x="49.999999999999993" y="78.666666666666671" width="121.33333333333331" height="41"/>
+                                <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
-                                <state key="normal" image="mic" catalog="system">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
+                                <state key="normal" title="Record" image="mic" catalog="system"/>
+                                <state key="selected" image="stop.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="recordButtonPressed:" destination="59K-SK-oBQ" eventType="touchUpInside" id="0aM-Ga-itx"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jTl-gV-8II">
-                                <rect key="frame" x="299" y="77.666666666666671" width="15" height="41"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <rect key="frame" x="287" y="77.666666666666671" width="77" height="41"/>
+                                <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
-                                <state key="normal" image="play" catalog="system">
+                                <state key="normal" title="Play" image="play" catalog="system">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <state key="selected" image="stop.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="playButtonPressed:" destination="59K-SK-oBQ" eventType="touchUpInside" id="daK-zO-cqJ"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cVW-yg-eIy">
                                 <rect key="frame" x="187" y="401" width="40" height="40"/>
@@ -222,11 +232,14 @@
                                 <state key="normal" title="Save">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="saveButtonPressed:" destination="59K-SK-oBQ" eventType="touchUpInside" id="g8V-Qc-wym"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="Yd5-vs-itI" firstAttribute="trailing" secondItem="jTl-gV-8II" secondAttribute="trailing" constant="100" id="33s-dI-BLa"/>
+                            <constraint firstItem="Yd5-vs-itI" firstAttribute="trailing" secondItem="jTl-gV-8II" secondAttribute="trailing" constant="50" id="33s-dI-BLa"/>
                             <constraint firstItem="yQN-Lc-FS3" firstAttribute="top" secondItem="M68-i2-hkh" secondAttribute="bottom" constant="8" id="5tV-OC-CeW"/>
                             <constraint firstItem="M68-i2-hkh" firstAttribute="top" secondItem="YVF-SO-GaC" secondAttribute="bottom" constant="8" id="7Cw-0R-UAc"/>
                             <constraint firstItem="YVF-SO-GaC" firstAttribute="leading" secondItem="Yd5-vs-itI" secondAttribute="leading" constant="15" id="9Ul-xE-zBT"/>
@@ -238,34 +251,40 @@
                             <constraint firstItem="YVF-SO-GaC" firstAttribute="top" secondItem="Yd5-vs-itI" secondAttribute="top" constant="20" id="dVf-6R-vcz"/>
                             <constraint firstItem="jTl-gV-8II" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="yQN-Lc-FS3" secondAttribute="trailing" constant="8" symbolic="YES" id="moV-7D-4ZE"/>
                             <constraint firstItem="Yd5-vs-itI" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="YVF-SO-GaC" secondAttribute="trailing" symbolic="YES" id="oRj-UG-OV2"/>
-                            <constraint firstItem="yQN-Lc-FS3" firstAttribute="leading" secondItem="Yd5-vs-itI" secondAttribute="leading" constant="100" id="wy0-ph-j8r"/>
+                            <constraint firstItem="yQN-Lc-FS3" firstAttribute="leading" secondItem="Yd5-vs-itI" secondAttribute="leading" constant="50" id="wy0-ph-j8r"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Yd5-vs-itI"/>
                     </view>
                     <navigationItem key="navigationItem" id="12B-2I-lQg"/>
+                    <connections>
+                        <outlet property="playPauseButton" destination="jTl-gV-8II" id="6aw-f9-TTR"/>
+                        <outlet property="progressBar" destination="M68-i2-hkh" id="pfY-Dm-A1r"/>
+                        <outlet property="recordButton" destination="yQN-Lc-FS3" id="iGa-iV-cew"/>
+                        <outlet property="saveButton" destination="cVW-yg-eIy" id="GJv-BF-R5e"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N0c-yX-rFQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2900" y="139"/>
         </scene>
-        <!--Photo View Controller-->
+        <!--Image View Controller-->
         <scene sceneID="Mpu-YX-jfG">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="LCD-RR-0Ld" customClass="PhotoViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="LCD-RR-0Ld" customClass="ImageViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DNs-Ny-1Vs">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BSW-W2-R4h">
-                                <rect key="frame" x="15" y="64" width="81" height="49"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BSW-W2-R4h">
+                                <rect key="frame" x="15" y="64" width="148.33333333333334" height="49"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sel-2H-qy4">
-                                <rect key="frame" x="15" y="121" width="384" height="190"/>
+                                <rect key="frame" x="15" y="121" width="384" height="384"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="190" id="iCq-1J-i6w"/>
+                                    <constraint firstAttribute="width" secondItem="sel-2H-qy4" secondAttribute="height" multiplier="1:1" id="SLz-64-2pZ"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E2j-4m-CQn">
@@ -277,9 +296,12 @@
                                 <state key="normal">
                                     <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="addImageButtonTapped:" destination="LCD-RR-0Ld" eventType="touchUpInside" id="3X1-a2-cpk"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0GL-22-j6A">
-                                <rect key="frame" x="187" y="407" width="40" height="40"/>
+                                <rect key="frame" x="187" y="601" width="40" height="40"/>
                                 <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="Ssb-Y9-L9s"/>
@@ -288,6 +310,9 @@
                                 <state key="normal" title="Save">
                                     <color key="titleColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="saveImageButtonTapped:" destination="LCD-RR-0Ld" eventType="touchUpInside" id="BsI-HR-Eu4"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R7t-FB-6TX">
                                 <rect key="frame" x="326" y="73" width="73" height="40"/>
@@ -298,9 +323,12 @@
                                 <state key="normal" title="Edit Image">
                                     <color key="titleColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="editImageButtonTapped:" destination="LCD-RR-0Ld" eventType="touchUpInside" id="lEH-P8-Ing"/>
+                                </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="woZ-Zw-j5r">
-                                <rect key="frame" x="0.0" y="319" width="414" height="80"/>
+                                <rect key="frame" x="0.0" y="513" width="414" height="80"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="jYo-7u-KbP"/>
@@ -312,15 +340,15 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionViewCell" id="Tv5-Yo-RNo" customClass="CollectionViewCell" customModule="Experiences" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="105" height="80"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ImageCell" id="Tv5-Yo-RNo" customClass="ImageCollectionViewCell" customModule="Experiences" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="5" width="105" height="70"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="hH8-Al-uM2">
-                                            <rect key="frame" x="0.0" y="0.0" width="105" height="80"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="105" height="70"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="905-cy-hyK">
-                                                    <rect key="frame" x="0.0" y="0.0" width="105" height="80"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="105" height="70"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -330,7 +358,7 @@
                                                 <constraint firstItem="905-cy-hyK" firstAttribute="top" secondItem="hH8-Al-uM2" secondAttribute="top" id="xjH-6v-o9q"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <size key="customSize" width="105" height="80"/>
+                                        <size key="customSize" width="105" height="70"/>
                                         <connections>
                                             <outlet property="imageView" destination="905-cy-hyK" id="hMY-bB-GLh"/>
                                         </connections>
@@ -364,6 +392,13 @@
                         <viewLayoutGuide key="safeArea" id="eDE-Nb-4Ur"/>
                     </view>
                     <navigationItem key="navigationItem" id="c2X-Nb-nKm"/>
+                    <connections>
+                        <outlet property="addImageButton" destination="E2j-4m-CQn" id="0DL-iQ-g1n"/>
+                        <outlet property="editImageButton" destination="R7t-FB-6TX" id="zCs-S9-A1Z"/>
+                        <outlet property="filterCollectionView" destination="woZ-Zw-j5r" id="Lsk-47-rjL"/>
+                        <outlet property="imageView" destination="sel-2H-qy4" id="PUw-fe-dyz"/>
+                        <outlet property="saveImageButton" destination="0GL-22-j6A" id="gEh-K2-8ox"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hrb-vp-ATM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -391,11 +426,14 @@
     </scenes>
     <resources>
         <image name="camera" catalog="system" width="128" height="96"/>
+        <image name="camera.fill" catalog="system" width="128" height="96"/>
         <image name="checkmark" catalog="system" width="128" height="114"/>
         <image name="mic" catalog="system" width="108" height="128"/>
+        <image name="mic.fill" catalog="system" width="108" height="128"/>
         <image name="play" catalog="system" width="120" height="128"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="stop.fill" catalog="system" width="128" height="113"/>
         <image name="trash" catalog="system" width="121" height="128"/>
     </resources>
 </document>

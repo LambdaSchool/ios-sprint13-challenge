@@ -14,5 +14,5 @@ struct Experience {
     let title: String
     let location: CLLocation
     let image: UIImage?
-    let audio: URL?
+    let audio: URL
 }
