@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import AVFoundation
 
 class ViewController: UIViewController {
         
@@ -17,6 +18,8 @@ class ViewController: UIViewController {
     lazy var searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width * 0.8 , height: 20))
     let locationManager = CLLocationManager()
     let experienceController = ExperienceController()
+    var annotationTitle: String?
+    var player: AVAudioPlayer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,13 +99,35 @@ extension ViewController: MKMapViewDelegate {
         } else {
             annotationView!.annotation = annotation
         }
+        // info button (should be play button though)
         let infoButton = UIButton()
         infoButton.frame.size.width = 44
         infoButton.frame.size.height = 44
         infoButton.backgroundColor = .none
-        infoButton.setImage(UIImage(systemName: "info.circle"), for: .normal)
-        annotationView?.leftCalloutAccessoryView = infoButton
+        infoButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+        if let annotationTitle = annotation.title {
+            self.annotationTitle = annotationTitle
+            infoButton.addTarget(self, action: #selector(playRecording), for: .touchUpInside)
+        }
         annotationView?.rightCalloutAccessoryView = infoButton
+        // imageView
+        if let annotationTitle = annotation.title {
+            if let annotationImage = loadExperience(withTitle: annotationTitle!)?.photo {
+                let scaledImage = annotationImage.imageByScaling(toSize: CGSize(width: 25, height: 25))
+                annotationView?.image = scaledImage
+            }
+        }
         return annotationView
     }
+    
+    @objc func playRecording() {
+        guard let experience = loadExperience(withTitle: self.annotationTitle!) else { return }
+            player = try? AVAudioPlayer(contentsOf: experience.audio)
+            player?.play()
+    }
+    
+    func loadExperience(withTitle title: String) -> Experience? {
+        ExperienceController.experiences.first { $0.title == title }
+    }
+    
 }

@@ -26,7 +26,7 @@ class NewExperienceViewController: UIViewController {
     let experienceController = ExperienceController()
     let locationManager = CLLocationManager()
 //    var newExperience: Experience?
-    var audio: URL?
+    static var audio = URL(string: "https://www.google.com/")!
     var photo: UIImage? = nil
     var currentLocation: CLLocation?
     var mapRefreshDelegate: MapRefreshDelegate?
@@ -58,7 +58,7 @@ class NewExperienceViewController: UIViewController {
             !title.isEmpty,
         let location = currentLocation else { return }
         
-        let newExperience = Experience(title: title, location: location, photo: photo ?? nil, audio: audio ?? nil)
+        let newExperience = Experience(title: title, location: location, photo: self.photo, audio: NewExperienceViewController.audio)
         experienceController.saveExperience(newExperience) {
             dismiss(animated: true) {
                 self.mapRefreshDelegate?.refreshMap()
@@ -72,7 +72,7 @@ class NewExperienceViewController: UIViewController {
     
     private func updateButtonIcons() {
         photo == nil ? addPhotoButton.setImage(UIImage(systemName: "camera"), for: .normal) : addPhotoButton.setImage(UIImage(systemName: "camera.fill"), for: .normal)
-        audio == nil ? addAudioButton.setImage(UIImage(systemName: "mic"), for: .normal) : addAudioButton.setImage(UIImage(systemName: "mic.fill"), for: .normal)
+        NewExperienceViewController.audio == nil ? addAudioButton.setImage(UIImage(systemName: "mic"), for: .normal) : addAudioButton.setImage(UIImage(systemName: "mic.fill"), for: .normal)
     }
     
     @IBAction func didBeginEditedTitle(_ sender: UITextField) {
@@ -92,7 +92,8 @@ class NewExperienceViewController: UIViewController {
                 presentAlert()
                 return
             }
-            audioViewController.fileName = title + ".m4a"
+            let fileName = title.trimmingCharacters(in: .whitespacesAndNewlines)
+            audioViewController.fileName = fileName + ".m4a"
             audioViewController.audioSaveDelegate = self
         }
     }
@@ -115,8 +116,8 @@ extension NewExperienceViewController: CLLocationManagerDelegate {
 }
 
 extension NewExperienceViewController: AudioSaveDelegate, PhotoSaveDelegate {
-    func returnAudioToSaveScreen(audio: URL?) {
-        self.audio = audio
+    func returnAudioToSaveScreen(audio: URL) {
+        NewExperienceViewController.audio = audio
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
             self.updateButtonIcons()
         })

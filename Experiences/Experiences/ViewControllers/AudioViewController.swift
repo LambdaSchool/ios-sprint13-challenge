@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 
 protocol AudioSaveDelegate {
-    func returnAudioToSaveScreen(audio: URL?)
+    func returnAudioToSaveScreen(audio: URL)
 }
 
 class AudioViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate {
@@ -114,7 +114,7 @@ class AudioViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPla
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
-        audioSaveDelegate?.returnAudioToSaveScreen(audio: audioFilePath)
+        audioSaveDelegate?.returnAudioToSaveScreen(audio: self.audioFilePath)
         dismiss(animated: true)
     }
     
