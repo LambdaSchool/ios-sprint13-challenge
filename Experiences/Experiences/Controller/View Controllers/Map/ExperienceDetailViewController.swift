@@ -76,13 +76,10 @@ class ExperienceDetailView: UIView {
         let storySegueID = "StorySegue"
         switch experience {
         case is PhotoExperience:
-            print("foo")
             delegate?.performSegue(withIdentifier: photoSegueID, sender: experience)
         case is VideoExperience:
-            print("bar")
             delegate?.performSegue(withIdentifier: videoSegueID, sender: experience)
         case is Experience:
-            print("baz")
             delegate?.performSegue(withIdentifier: storySegueID, sender: experience)
         default:
             print("none of these?")
