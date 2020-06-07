@@ -72,6 +72,17 @@ class PhotoExperienceViewController: UIViewController {
     private func updateViews() {
         updateRecordingUI()
         updatePlayerUI()
+
+        guard let experience = experience else { return }
+
+        titleTextField.text = experience.title
+        storyTextView.text = experience.body
+        recordedURL = experience.audioFile
+
+        guard let data = experience.photo else { return }
+        selectPhotoButton.setTitle("", for: .normal)
+        selectPhotoButton.backgroundColor = .clear
+        photoFilterImageView.image = UIImage(data: data)
     }
 
     private func styleFields() {
@@ -117,14 +128,23 @@ class PhotoExperienceViewController: UIViewController {
         if text == textViewPlaceholderText {
             text = nil
         }
-        let experience = PhotoExperience(
-            location: location,
-            title: title,
-            body: text,
-            audioFile: recordedURL,
-            photo: image.jpegData(compressionQuality: 60.0)
-        )
-        experienceController.append(experience)
+
+        if let experience = experience {
+            experience.subject = title
+            experience.body = text
+            experience.photo = image.jpegData(compressionQuality: 60.0)
+            experience.audioFile = recordedURL
+        } else {
+            let experience = PhotoExperience(
+                location: location,
+                title: title,
+                body: text,
+                audioFile: recordedURL,
+                photo: image.jpegData(compressionQuality: 60.0)
+            )
+            experienceController.append(experience)
+        }
+
         navigationController?.popViewController(animated: true)
     }
 
