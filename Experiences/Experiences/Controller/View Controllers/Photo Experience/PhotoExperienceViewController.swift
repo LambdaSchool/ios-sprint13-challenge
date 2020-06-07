@@ -12,6 +12,8 @@ import MapKit
 
 class PhotoExperienceViewController: UIViewController {
     // MARK: - Properties -
+    var experience: PhotoExperience?
+
     private var filterSegueID = "AddFilterVC"
 
     var locationManager: CLLocationManager!
@@ -161,6 +163,10 @@ extension PhotoExperienceViewController: UIImagePickerControllerDelegate, UINavi
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 
         selectPhotoButton.setTitle("", for: [])
+        UIView.animate(withDuration: 2) {
+            self.selectPhotoButton.backgroundColor = .clear
+        }
+
 
         picker.dismiss(animated: true, completion: nil)
 

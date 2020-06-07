@@ -11,6 +11,8 @@ import AVFoundation
 import MapKit
 
 class StoryExperienceViewController: UIViewController {
+    var experience: Experience?
+
     private let experienceController = ExperienceController.shared
 
 
@@ -40,6 +42,10 @@ class StoryExperienceViewController: UIViewController {
         updatePlayerUI()
         styleFields()
         getLocation()
+        guard let experience = experience else { return }
+        titleTextField.text = experience.subject
+        recordedURL = experience.audioFile
+        storyTextView.text = experience.body
     }
 
     private func getLocation() {
@@ -81,13 +87,22 @@ class StoryExperienceViewController: UIViewController {
         if text == textViewPlaceholderText {
             text = nil
         }
-        let experience = Experience(
-            location: location,
-            title: title,
-            body: text,
-            audioFile: recordedURL
-        )
-        experienceController.append(experience)
+        if experience == nil {
+            let experience = Experience(
+                location: location,
+                title: title,
+                body: text,
+                audioFile: recordedURL
+            )
+
+            experienceController.append(experience)
+        } else {
+            experience?.subject = title
+            if text != textViewPlaceholderText && text != experience?.body {
+                experience?.body = text
+            }
+            experience?.audioFile = recordedURL
+        }
         navigationController?.popViewController(animated: true)
     }
 

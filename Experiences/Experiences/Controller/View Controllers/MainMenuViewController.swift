@@ -28,6 +28,8 @@ class MainMenuViewController: UIViewController {
     private var currentRegion: MKCoordinateRegion?
     var locationManager: CLLocationManager!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var expandButton: UIButton!
+    @IBOutlet weak var currentLocationButton: UIButton!
 
     @IBOutlet weak var tableView: UITableView!
 
@@ -64,20 +66,35 @@ class MainMenuViewController: UIViewController {
         }
 
         mapView.delegate = self
+
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: markerID)
         self.mapView.addAnnotations(experienceController.videoExperiences)
         self.mapView.addAnnotations(experienceController.photoExperiences)
         self.mapView.addAnnotations(experienceController.storyExperiences)
+
+        //buttons
+        let locationImage = UIImage(systemName: "location.fill", withConfiguration: largeConfig)
+        currentLocationButton.setImage(locationImage, for: .normal)
+        currentLocationButton.layer.cornerRadius = 8
+        currentLocationButton.layer.masksToBounds = true
+
+        let expanderImage = UIImage(systemName: "arrow.up.left.and.arrow.down.right", withConfiguration: largeConfig)
+        expandButton.setImage(expanderImage, for: .normal)
+        expandButton.layer.cornerRadius = 8
+        currentLocationButton.layer.masksToBounds = true
+
         let firstAvailable =
         experienceController.videoExperiences.first ??
         experienceController.photoExperiences.first ??
             experienceController.storyExperiences.first
+
         guard let firstExperience = firstAvailable as? ExperienceProtocol else {
             if let region = currentRegion {
                 self.mapView?.setRegion(region, animated: true)
             }
             return
         }
+        
         //zoom level
         let coordinateSpan = MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)
 
@@ -85,6 +102,29 @@ class MainMenuViewController: UIViewController {
         self.mapView.showsUserLocation = true
         self.mapView.setRegion(region, animated: true)
 
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if sender != nil {
+            if segue.identifier == "VideoSegue" {
+//                guard let experience = sender as? VideoExperience else { return }
+
+            }
+
+            if segue.identifier == "PhotoSegue" {
+                guard let experience = sender as? PhotoExperience,
+                    let destination = segue.destination as? PhotoExperienceViewController
+                else { return }
+                destination.experience = experience
+            }
+
+            if segue.identifier == "StorySegue" {
+                guard let experience = sender as? Experience,
+                    let destination = segue.destination as? StoryExperienceViewController
+                else { return }
+                destination.experience = experience
+            }
+        }
     }
 
 }
@@ -131,6 +171,10 @@ extension MainMenuViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         var markerAnnotation: MKMarkerAnnotationView?
 
+
+
+        let detailView = ExperienceDetailView()
+
         switch annotation {
 
         case is Experience:
@@ -138,6 +182,10 @@ extension MainMenuViewController: MKMapViewDelegate {
                 print("Unkown error downcasting Experience to annotation")
                 return nil
             }
+
+            detailView.experience = experience
+            detailView.delegate = self
+
             markerAnnotation = mapView.dequeueReusableAnnotationView(withIdentifier: markerID, for: experience) as? MKMarkerAnnotationView
             markerAnnotation?.glyphImage = UIImage(systemName: "book.circle")
             markerAnnotation?.markerTintColor = .systemRed
@@ -148,6 +196,9 @@ extension MainMenuViewController: MKMapViewDelegate {
                 return nil
             }
 
+            detailView.experience = experience
+            detailView.delegate = self
+
             markerAnnotation = mapView.dequeueReusableAnnotationView(withIdentifier: markerID, for: experience) as? MKMarkerAnnotationView
 
             markerAnnotation?.glyphImage = UIImage(systemName: "photo.fill")
@@ -157,6 +208,10 @@ extension MainMenuViewController: MKMapViewDelegate {
                 print("Unkown error downcasting VideoExperience to annotation")
                 return nil
             }
+
+            detailView.experience = experience
+            detailView.delegate = self
+
             markerAnnotation?.glyphImage = UIImage(systemName: "video.fill")
             markerAnnotation = mapView.dequeueReusableAnnotationView(withIdentifier: markerID, for: experience) as? MKMarkerAnnotationView
 
@@ -165,14 +220,11 @@ extension MainMenuViewController: MKMapViewDelegate {
         default:
             break
         }
+        if detailView != ExperienceDetailView() {
+            markerAnnotation?.detailCalloutAccessoryView = detailView
+        }
 
-//        //TODO: Callout
-//        markerAnnotation.canShowCallout = true
-//        //TODO: Create detailView:
-//        let detailView = QuakeDetailView()
-//        detailView.quake = experience
-//        markerAnnotation.detailCalloutAccessoryView = detailView
-
+        markerAnnotation?.canShowCallout = true
         return markerAnnotation
     }
 }
