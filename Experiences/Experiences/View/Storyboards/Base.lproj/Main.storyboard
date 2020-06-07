@@ -18,10 +18,13 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="MPO-Vg-Vmd">
                                 <rect key="frame" x="0.0" y="96" width="375" height="220"/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="utd-hg-Hsi" userLabel="ExpandMapView">
-                                <rect key="frame" x="339" y="107.5" width="20" height="18.5"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="utd-hg-Hsi" userLabel="ExpandMapView">
+                                <rect key="frame" x="319" y="106" width="40" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="KF9-cg-OA8"/>
+                                    <constraint firstAttribute="width" constant="40" id="T9S-bh-adX"/>
+                                </constraints>
                                 <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="arrow.up.left.and.arrow.down.right" catalog="system"/>
                                 <connections>
@@ -99,9 +102,13 @@
                                     <constraint firstItem="4EJ-RJ-Zuw" firstAttribute="top" secondItem="pfm-44-Ww9" secondAttribute="bottom" constant="65.5" id="zsY-81-B5S"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WXU-0N-AgI" userLabel="CurrentLocation">
-                                <rect key="frame" x="16" y="106" width="21" height="22"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WXU-0N-AgI" userLabel="CurrentLocation">
+                                <rect key="frame" x="16" y="106" width="40" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="Hew-gt-DS9"/>
+                                    <constraint firstAttribute="height" constant="40" id="koj-YN-gzV"/>
+                                </constraints>
                                 <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="location.fill" catalog="system"/>
                                 <connections>
@@ -109,7 +116,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="MPO-Vg-Vmd" secondAttribute="trailing" id="3FS-86-OWK"/>
                             <constraint firstItem="jlP-7L-Zki" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="8Hu-ha-bnR"/>
@@ -122,13 +129,15 @@
                             <constraint firstItem="WXU-0N-AgI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="eZm-SE-Q2p"/>
                             <constraint firstItem="MPO-Vg-Vmd" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="m1p-tt-VsW"/>
                             <constraint firstItem="jlP-7L-Zki" firstAttribute="top" secondItem="MPO-Vg-Vmd" secondAttribute="bottom" id="s9g-3S-oR7"/>
-                            <constraint firstItem="MPO-Vg-Vmd" firstAttribute="top" secondItem="utd-hg-Hsi" secondAttribute="bottom" constant="-30" id="vDh-DU-d1O"/>
+                            <constraint firstItem="MPO-Vg-Vmd" firstAttribute="top" secondItem="utd-hg-Hsi" secondAttribute="bottom" constant="-50" id="vDh-DU-d1O"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="My Experiences" largeTitleDisplayMode="always" id="Nmg-3W-5f5"/>
                     <connections>
                         <outlet property="addExperienceLabel" destination="pfm-44-Ww9" id="sei-cL-K8h"/>
+                        <outlet property="currentLocationButton" destination="WXU-0N-AgI" id="3Hp-IX-ASt"/>
+                        <outlet property="expandButton" destination="utd-hg-Hsi" id="NEN-T4-jh8"/>
                         <outlet property="mapView" destination="MPO-Vg-Vmd" id="1tU-Rn-6iZ"/>
                         <outlet property="tableView" destination="4EJ-RJ-Zuw" id="u4M-wW-G48"/>
                         <segue destination="0h3-YV-WID" kind="show" identifier="StorySegue" id="cmZ-gR-Bip"/>
@@ -178,6 +187,10 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="lmV-9W-HBR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
