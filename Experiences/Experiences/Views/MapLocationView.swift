@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MapDetailView: UIView {
+class MapLocationView: UIView {
 
     // MARK: - Properties
     var experience: Experience? {
@@ -16,7 +16,9 @@ class MapDetailView: UIView {
             updateSubviews()
         }
     }
-    
+         
+  var delegate: MapViewDelegate?
+
    
     private let latitudeLabel = UILabel()
     private let longitudeLabel = UILabel()
@@ -60,9 +62,12 @@ class MapDetailView: UIView {
     // MARK: - Public
 
     @objc func action() {
-        print("MapDetailView: tapped")
+          print("MapDetailView: tapped")
 
+              guard let experience = experience,
+                  let delegate = delegate else { return }
 
+              delegate.invokeViewExperience(experience)
     }
 
     // MARK: - Private

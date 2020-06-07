@@ -28,6 +28,13 @@ class ExperiencesViewController: UIViewController {
             audioPlayer?.delegate = self
         }
     }
+    
+    var experience: Experience? {
+           didSet {
+               updateViews()
+           }
+       }
+    
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     
@@ -55,33 +62,98 @@ class ExperiencesViewController: UIViewController {
     @IBOutlet var videoRecordButtonOutlet: UIButton!
     @IBOutlet weak var cameraView: CameraPreviewView!
     
+    private func imageUpdateViews() {
+        if let scaledImage = scaledImage {
+            imageView.image = filterImage(scaledImage)
+        } else {
+            imageView.image = nil
+        }
+        
+    }
+    
+     private func filterImage(_ image: UIImage) -> UIImage? {
+
+            // UIImage -> CGImage -> CIImage
+            guard let cgImage = image.cgImage else { return nil }
+            let ciImage = CIImage(cgImage: cgImage)
+
+            // Filter image step
+            let filter = CIFilter(name: "CIColorControls")! // build-in filter from Apple
+            //        let filter2 = CIFilter.colorControls()
+            //        filter2.brightness = brightnessSlider.value
+
+            // setting values / getting values from Core Image
+            filter.setValue(ciImage, forKey: kCIInputImageKey /* "inputImage" */)
+         
+            // CIImage -> CGImage -> UIImage
+            //        guard let outputCIImage = filter.value(forKey: kCIOutputImageKey) as? CIImage else { return nil }
+            guard let outputCIImage = filter.outputImage else { return nil }
+
+            // Render the image (do image processing here)
+            guard let outputCGImage = context.createCGImage(outputCIImage,
+                                                            from: CGRect(origin: .zero, size: image.size)) else {
+                                                                return nil
+            }
+
+            return UIImage(cgImage: outputCGImage)
+        }
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        videoCameraSetup()
+               imageSetup()
+
+               guard let exp = experience,
+                   !inited else { return }
+
+               inited.toggle()
+               titleTextField.text = exp.title
+               originalImage = exp.image
+               audioClip = exp.audioClip
+               videoClip = exp.videoClip
+               if let videoClip = videoClip {
+                   playMovie(url: videoClip)
+               }
           
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        updateViews()
     }
     
     private func updateViews() {
         guard isViewLoaded else { return }
-
+ imageUpdateViews()
         audioUpdateViews()
         videoUpdateViews()
     }
     
     @IBAction func saveButton(_ sender: UIBarButtonItem) {
-           guard let experienceC = experienceController,
-               let delegate = delegate,
-               let title = titleTextField.text,
-               title.count > 0 else {
-               // TODO: Add a dialog saying why you can't save.
-               return
-           }
+            guard let experienceC = experienceController,
+                   let delegate = delegate,
+                   let title = titleTextField.text,
+                   title.count > 0 else {
+                   // TODO: Add a dialog saying why you can't save.
+                   return
+               }
 
-         
+               let coordinates = delegate.myLocation()
+
+               if let experience = experience {
+                   experienceC.updateExperience(experience,
+                             title: title,
+                             audioClip: audioClip,
+                             image: imageView.image,
+                             videoClip: videoClip)
+               } else {
+                   experienceC.createExperience(title: title,
+                             audioClip: audioClip,
+                             image: imageView.image,
+                             videoClip: videoClip,
+                             latitude: coordinates.latitude,
+                             longitude: coordinates.longitude)
+               }
     }
     
 }
@@ -134,21 +206,21 @@ extension ExperiencesViewController {
     }
 
     private func audioUpdateViews() {
-        let config = UIImage.SymbolConfiguration(pointSize: 14, weight: .regular, scale: .large)
+       let config = UIImage.SymbolConfiguration(pointSize: 14, weight: .regular, scale: .large)
 
         if audioClip == nil || (audioRecorder?.isRecording ?? false) {
             // We need to record a clip
-            let largeStart = UIImage(systemName: "radio", withConfiguration: config)
+            let largeStart = UIImage(systemName: "mic.fill", withConfiguration: config)
             audioRecordButtonOutlet.setImage(largeStart, for: .normal)
 
-            let largeStop = UIImage(systemName: "stop", withConfiguration: config)
+            let largeStop = UIImage(systemName: "stop.circle.fill", withConfiguration: config)
             audioRecordButtonOutlet.setImage(largeStop, for: .selected)
         } else {
             // We need to play a clip
             let largeStart = UIImage(systemName: "play.fill", withConfiguration: config)
             audioRecordButtonOutlet.setImage(largeStart, for: .normal)
 
-            let largeStop = UIImage(systemName: "stop", withConfiguration: config)
+            let largeStop = UIImage(systemName: "stop.fill", withConfiguration: config)
             audioRecordButtonOutlet.setImage(largeStop, for: .selected)
         }
 
@@ -298,7 +370,7 @@ extension ExperiencesViewController {
         // Resize camera preview to fill the entire screen
         // TODO: ? How does this work?
         //        cameraView.videoPlayerView.videoGravity = .resizeAspectFill
-        setUpCaptureSession()
+               setUpCaptureSession()
 
         // Setup the Tap Gesture
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
@@ -306,11 +378,12 @@ extension ExperiencesViewController {
 
         // Increase the size of the start/stop button
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .regular, scale: .large)
-        let largeStart = UIImage(systemName: "Record", withConfiguration: largeConfig)
+        let largeStart = UIImage(systemName: "camera.fill", withConfiguration: largeConfig)
         videoRecordButtonOutlet.setImage(largeStart, for: .normal)
 
-        let largeStop = UIImage(systemName: "Stop-1", withConfiguration: largeConfig)
+        let largeStop = UIImage(systemName: "stop.circle.fill", withConfiguration: largeConfig)
         videoRecordButtonOutlet.setImage(largeStop, for: .selected)
+
     }
 
     @objc func handleTapGesture(_ tapGesture: UITapGestureRecognizer) {
