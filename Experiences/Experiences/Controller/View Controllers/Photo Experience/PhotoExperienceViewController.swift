@@ -40,27 +40,22 @@ class PhotoExperienceViewController: UIViewController {
     //Text
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var storyTextView: UITextView!
-
     //Audio
     @IBOutlet weak var timeElapsedLabel: UILabel!
-
     //Recording
     @IBOutlet weak var recordButton: UIButton!
 
     @IBAction func toggleRecording() {
         if !playButton.isSelected {
-            recordButton.isUserInteractionEnabled = true
             playButton.isUserInteractionEnabled = false
             recordingController.toggleRecording()
         }
     }
-
-    //playback
+    //Playback
     @IBOutlet weak var playButton: UIButton!
 
     @IBAction func togglePlaying() {
         if !recordButton.isSelected {
-
             recordButton.isUserInteractionEnabled = false
             audioController.togglePlaying()
         }
@@ -273,7 +268,6 @@ extension PhotoExperienceViewController: AudioRecorderDelegate {
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         recordedURL = recorder.url
         print("Recorded to: \(recorder.url)")
-        //this only works because audioController is lazy and hasn't been accessed before recordedURL is assigned (it loads the recordedURL in the init)
         playButton.isUserInteractionEnabled = true
         audioController.togglePlaying()
     }

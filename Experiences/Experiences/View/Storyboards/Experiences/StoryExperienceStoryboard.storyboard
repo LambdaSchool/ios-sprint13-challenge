@@ -42,11 +42,11 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="0Bz-3v-6F6">
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="QfC-bK-lnn">
                                                 <rect key="frame" x="0.0" y="399.5" width="311" height="71"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="j95-qY-2gS">
-                                                        <rect key="frame" x="0.0" y="0.0" width="311" height="20.5"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="0Bz-3v-6F6">
+                                                        <rect key="frame" x="0.0" y="0.0" width="311" height="71"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uej-i8-BnX">
                                                                 <rect key="frame" x="0.0" y="0.0" width="311" height="20.5"/>
@@ -54,26 +54,51 @@
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                        </subviews>
-                                                    </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Nrv-V1-ZSs">
-                                                        <rect key="frame" x="0.0" y="28.5" width="311" height="42.5"/>
-                                                        <subviews>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QeS-o2-FTw">
-                                                                <rect key="frame" x="0.0" y="0.0" width="311" height="22"/>
-                                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <state key="normal" image="mic.fill" catalog="system"/>
-                                                                <state key="selected" image="stop.fill" catalog="system"/>
-                                                                <connections>
-                                                                    <action selector="recordButtonTapped:" destination="7fy-ci-7hy" eventType="touchUpInside" id="qPD-Jr-I83"/>
-                                                                </connections>
-                                                            </button>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap To Record" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F7D-6K-cfK">
-                                                                <rect key="frame" x="0.0" y="22" width="311" height="20.5"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="j95-qY-2gS">
+                                                                <rect key="frame" x="0.0" y="28.5" width="311" height="42.5"/>
+                                                                <subviews>
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Nrv-V1-ZSs">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="151.5" height="42.5"/>
+                                                                        <subviews>
+                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QeS-o2-FTw">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="151.5" height="22"/>
+                                                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <state key="normal" image="mic.fill" catalog="system"/>
+                                                                                <state key="selected" image="stop.fill" catalog="system"/>
+                                                                                <connections>
+                                                                                    <action selector="recordButtonTapped:" destination="7fy-ci-7hy" eventType="touchUpInside" id="qPD-Jr-I83"/>
+                                                                                </connections>
+                                                                            </button>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap To Record" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F7D-6K-cfK">
+                                                                                <rect key="frame" x="0.0" y="22" width="151.5" height="20.5"/>
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                        </subviews>
+                                                                    </stackView>
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="044-SC-Ggh">
+                                                                        <rect key="frame" x="159.5" y="0.0" width="151.5" height="42.5"/>
+                                                                        <subviews>
+                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8KX-Zj-1xS" userLabel="Play Button">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="151.5" height="22"/>
+                                                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <state key="normal" image="play.fill" catalog="system"/>
+                                                                                <state key="selected" image="stop.fill" catalog="system"/>
+                                                                                <connections>
+                                                                                    <action selector="togglePlayback:" destination="7fy-ci-7hy" eventType="touchUpInside" id="xrT-GX-oFc"/>
+                                                                                </connections>
+                                                                            </button>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap To Play" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F6Z-ee-9Wu">
+                                                                                <rect key="frame" x="0.0" y="22" width="151.5" height="20.5"/>
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                        </subviews>
+                                                                    </stackView>
+                                                                </subviews>
+                                                            </stackView>
                                                         </subviews>
                                                     </stackView>
                                                 </subviews>
@@ -111,6 +136,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="playButton" destination="8KX-Zj-1xS" id="qA0-pf-ntS"/>
                         <outlet property="recordButton" destination="QeS-o2-FTw" id="ujc-Rc-QCM"/>
                         <outlet property="storyTextView" destination="Ckg-13-KYE" id="Vs8-Db-P8y"/>
                         <outlet property="timeElapsedLabel" destination="uej-i8-BnX" id="g8J-YN-Buo"/>
@@ -124,6 +150,7 @@
     </scenes>
     <resources>
         <image name="mic.fill" catalog="system" width="108" height="128"/>
+        <image name="play.fill" catalog="system" width="116" height="128"/>
         <image name="stop.fill" catalog="system" width="128" height="113"/>
     </resources>
 </document>

@@ -11,28 +11,51 @@ import AVFoundation
 import MapKit
 
 class StoryExperienceViewController: UIViewController {
+    // MARK: - Properties -
     var experience: Experience?
 
     private let experienceController = ExperienceController.shared
-
-
+    //Location
     var locationManager: CLLocationManager!
     var currentLocation: Location?
-
-    var recordedURL: URL?
-    lazy var audioRecorder = AudioRecorder(delegate: self)
-    lazy var audioPlayer = AudioPlayer(delegate: self)
-
+    //Text
     let textViewPlaceholderText = "Tell your story here (optional)"
-
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var storyTextView: UITextView!
+    //Audio
+    var recordedURL: URL?
+    lazy var recordingController = AudioRecorder(delegate: self)
+    lazy var audioController = AudioPlayer(delegate: self)
     @IBOutlet weak var timeElapsedLabel: UILabel!
+    //Recording
     @IBOutlet weak var recordButton: UIButton!
+
+    @IBAction func recordButtonTapped(_ sender: Any) {
+        if !playButton.isSelected {
+            playButton.isUserInteractionEnabled = false
+            recordingController.toggleRecording()
+        }
+    }
+    //Playback
+    @IBOutlet weak var playButton: UIButton!
+
+    @IBAction func togglePlayback(_ sender: UIButton) {
+        if !recordButton.isSelected {
+            recordButton.isUserInteractionEnabled = false
+            audioController.togglePlaying()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if recordedURL != nil {
+            audioController.togglePlaying()
+        }
     }
 
     private func updateViews() {
@@ -106,35 +129,40 @@ class StoryExperienceViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
 
-    @IBAction func recordButtonTapped(_ sender: Any) {
-        audioRecorder.toggleRecording()
-    }
 
-}
-
-extension StoryExperienceViewController: AudioRecorderDelegate {
-    func updateRecordingUI() {
-        recordButton.isSelected = audioRecorder.isRecording
-        displayElapsedTime()
-    }
-
-    private func displayElapsedTime() {
-        let elapsedTime = audioRecorder.recorder?.currentTime ?? 0
-        timeElapsedLabel.text = audioRecorder.timeIntervalFormatter.string(from: elapsedTime)
-    }
-
-    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-        print("finished")
-        recordedURL = recorder.url
-        audioPlayer.togglePlaying()
-    }
 
 }
 
 extension StoryExperienceViewController: AudioPlayerUIDelegate {
     func updatePlayerUI() {
-
+        playButton.isSelected = audioController.isPlaying
+        displayElapsedTime()
     }
+
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        displayElapsedTime()
+        recordButton.isUserInteractionEnabled = true
+    }
+}
+
+extension StoryExperienceViewController: AudioRecorderDelegate {
+    func updateRecordingUI() {
+        recordButton.isSelected = recordingController.isRecording
+        displayElapsedTime()
+    }
+
+    private func displayElapsedTime() {
+        let elapsedTime = recordingController.recorder?.currentTime ?? 0
+        timeElapsedLabel.text = recordingController.timeIntervalFormatter.string(from: elapsedTime)
+    }
+
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        recordedURL = recorder.url
+        print("Recorded to: \(recorder.url)")
+        playButton.isUserInteractionEnabled = true
+        audioController.togglePlaying()
+    }
+
 }
 
 extension StoryExperienceViewController: CLLocationManagerDelegate {
