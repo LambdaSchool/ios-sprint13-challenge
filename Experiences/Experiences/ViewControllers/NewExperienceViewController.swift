@@ -27,6 +27,7 @@ class NewExperienceViewController: UIViewController {
     let locationManager = CLLocationManager()
 //    var newExperience: Experience?
     static var audio = URL(string: "https://www.google.com/")!
+    var audioWasSaved = false
     var photo: UIImage? = nil
     var currentLocation: CLLocation?
     var mapRefreshDelegate: MapRefreshDelegate?
@@ -72,7 +73,7 @@ class NewExperienceViewController: UIViewController {
     
     private func updateButtonIcons() {
         photo == nil ? addPhotoButton.setImage(UIImage(systemName: "camera"), for: .normal) : addPhotoButton.setImage(UIImage(systemName: "camera.fill"), for: .normal)
-        NewExperienceViewController.audio == nil ? addAudioButton.setImage(UIImage(systemName: "mic"), for: .normal) : addAudioButton.setImage(UIImage(systemName: "mic.fill"), for: .normal)
+        audioWasSaved == false ? addAudioButton.setImage(UIImage(systemName: "mic"), for: .normal) : addAudioButton.setImage(UIImage(systemName: "mic.fill"), for: .normal)
     }
     
     @IBAction func didBeginEditedTitle(_ sender: UITextField) {
@@ -118,6 +119,7 @@ extension NewExperienceViewController: CLLocationManagerDelegate {
 extension NewExperienceViewController: AudioSaveDelegate, PhotoSaveDelegate {
     func returnAudioToSaveScreen(audio: URL) {
         NewExperienceViewController.audio = audio
+        audioWasSaved = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
             self.updateButtonIcons()
         })
