@@ -21,7 +21,7 @@ class Experience: NSObject, ExperienceProtocol {
         date: Date = Date(),
         lastEdit: Date? = nil,
         location: Location,
-        title: String,
+        subject: String,
         body: String?,
         audioFile: URL?
         ) {
@@ -30,7 +30,7 @@ class Experience: NSObject, ExperienceProtocol {
         self.date = date
         self.lastEdit = lastEdit
         self.location = location
-        self.subject = title
+        self.subject = subject
         if body == "Tell your story here (optional)" {
             self.body = nil //redundant, but more clear
         } else {

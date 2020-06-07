@@ -30,19 +30,42 @@ class PhotoExperienceViewController: UIViewController {
     weak var delegate: PhotoUIDelegate?
 
     let textViewPlaceholderText = "Tell your story here (optional)"
-
+    //Photos
     @IBOutlet weak var photoFilterImageView: UIImageView!
     @IBOutlet weak var selectPhotoButton: UIButton!
 
     @IBAction func choosePhoto(_ sender: UIButton) {
         photoController.requestPermissionAndPresentImagePicker()
     }
-
+    //Text
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var storyTextView: UITextView!
 
-    @IBOutlet weak var recordButton: UIButton!
+    //Audio
     @IBOutlet weak var timeElapsedLabel: UILabel!
+
+    //Recording
+    @IBOutlet weak var recordButton: UIButton!
+
+    @IBAction func toggleRecording() {
+        if !playButton.isSelected {
+            recordButton.isUserInteractionEnabled = true
+            playButton.isUserInteractionEnabled = false
+            recordingController.toggleRecording()
+        }
+    }
+
+    //playback
+    @IBOutlet weak var playButton: UIButton!
+
+    @IBAction func togglePlaying() {
+        if !recordButton.isSelected {
+
+            recordButton.isUserInteractionEnabled = false
+            audioController.togglePlaying()
+        }
+    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +90,9 @@ class PhotoExperienceViewController: UIViewController {
         super.viewDidAppear(animated)
         try? recordingController.prepareAudioSession()
         updateViews()
+        if recordedURL != nil {
+            audioController.togglePlaying()
+        }
     }
 
     private func updateViews() {
@@ -137,7 +163,7 @@ class PhotoExperienceViewController: UIViewController {
         } else {
             let experience = PhotoExperience(
                 location: location,
-                title: title,
+                subject: title,
                 body: text,
                 audioFile: recordedURL,
                 photo: image.jpegData(compressionQuality: 60.0)
@@ -216,14 +242,18 @@ extension PhotoExperienceViewController: UIImagePickerControllerDelegate, UINavi
 // MARK: - Audio -
 extension PhotoExperienceViewController: AudioPlayerUIDelegate {
     func updatePlayerUI() {
+        playButton.isSelected = audioController.isPlaying
+        displayElapsedTime()
+    }
 
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        displayElapsedTime()
+        recordButton.isUserInteractionEnabled = true
     }
 }
 
 extension PhotoExperienceViewController: AudioRecorderDelegate {
-    @IBAction func toggleRecording() {
-        recordingController.toggleRecording()
-    }
+
 
     func updateRecordingUI() {
         recordButton.isSelected = recordingController.isRecording
@@ -231,14 +261,20 @@ extension PhotoExperienceViewController: AudioRecorderDelegate {
     }
 
     private func displayElapsedTime() {
-        let elapsedTime = recordingController.recorder?.currentTime ?? 0
-        timeElapsedLabel.text = recordingController.timeIntervalFormatter.string(from: elapsedTime)
+        if recordButton.isSelected {
+            let elapsedTime = recordingController.recorder?.currentTime ?? 0
+            timeElapsedLabel.text = recordingController.timeIntervalFormatter.string(from: elapsedTime)
+        } else if playButton.isSelected {
+            let elapsedTime = audioController.player?.currentTime ?? 0
+            timeElapsedLabel.text = recordingController.timeIntervalFormatter.string(from: elapsedTime)
+        }
     }
 
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         recordedURL = recorder.url
         print("Recorded to: \(recorder.url)")
         //this only works because audioController is lazy and hasn't been accessed before recordedURL is assigned (it loads the recordedURL in the init)
+        playButton.isUserInteractionEnabled = true
         audioController.togglePlaying()
     }
 }

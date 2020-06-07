@@ -90,7 +90,7 @@ class StoryExperienceViewController: UIViewController {
         if experience == nil {
             let experience = Experience(
                 location: location,
-                title: title,
+                subject: title,
                 body: text,
                 audioFile: recordedURL
             )
