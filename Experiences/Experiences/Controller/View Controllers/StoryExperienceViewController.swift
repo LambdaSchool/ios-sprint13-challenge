@@ -36,6 +36,8 @@ class StoryExperienceViewController: UIViewController {
             if recordingController.isRecording {
                 playButton.isUserInteractionEnabled = false
             }
+        } else {
+            playButton.isUserInteractionEnabled = true
         }
     }
     //Playback
@@ -46,6 +48,8 @@ class StoryExperienceViewController: UIViewController {
             audioController.togglePlaying()
             if audioController.isPlaying {
                 recordButton.isUserInteractionEnabled = false
+            } else {
+                recordButton.isUserInteractionEnabled = true
             }
         }
     }
