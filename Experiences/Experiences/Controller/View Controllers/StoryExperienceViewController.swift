@@ -32,8 +32,10 @@ class StoryExperienceViewController: UIViewController {
 
     @IBAction func recordButtonTapped(_ sender: Any) {
         if !playButton.isSelected {
-            playButton.isUserInteractionEnabled = false
             recordingController.toggleRecording()
+            if recordingController.isRecording {
+                playButton.isUserInteractionEnabled = false
+            }
         }
     }
     //Playback
@@ -41,8 +43,10 @@ class StoryExperienceViewController: UIViewController {
 
     @IBAction func togglePlayback(_ sender: UIButton) {
         if !recordButton.isSelected {
-            recordButton.isUserInteractionEnabled = false
             audioController.togglePlaying()
+            if audioController.isPlaying {
+                recordButton.isUserInteractionEnabled = false
+            }
         }
     }
 
@@ -152,8 +156,13 @@ extension StoryExperienceViewController: AudioRecorderDelegate {
     }
 
     private func displayElapsedTime() {
-        let elapsedTime = recordingController.recorder?.currentTime ?? 0
-        timeElapsedLabel.text = recordingController.timeIntervalFormatter.string(from: elapsedTime)
+        if recordButton.isSelected {
+            let elapsedTime = recordingController.recorder?.currentTime ?? 0
+            timeElapsedLabel.text = recordingController.timeIntervalFormatter.string(from: elapsedTime)
+        } else if playButton.isSelected {
+            let elapsedTime = audioController.player?.currentTime ?? 0
+            timeElapsedLabel.text = recordingController.timeIntervalFormatter.string(from: elapsedTime)
+        }
     }
 
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
