@@ -8,13 +8,17 @@
 
 import UIKit
 import AVFoundation
-import TextFieldValidator
+import MapKit
 
 class PhotoExperienceViewController: UIViewController {
     // MARK: - Properties -
     private var filterSegueID = "AddFilterVC"
 
+    var locationManager: CLLocationManager!
+    var currentLocation: Location?
+
     var recordedURL: URL?
+
 
     let experienceController = ExperienceController.shared
     lazy var photoController = PhotoController(delegate: self)
@@ -42,8 +46,19 @@ class PhotoExperienceViewController: UIViewController {
         super.viewDidLoad()
         titleTextField.delegate = self
         storyTextView.delegate = self
+        getLocation()
         updateViews()
         styleFields()
+    }
+
+    private func getLocation() {
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager = CLLocationManager()
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestAlwaysAuthorization()
+            locationManager.startUpdatingLocation()
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -92,6 +107,7 @@ class PhotoExperienceViewController: UIViewController {
         }
         guard let title = titleTextField.text,
             !title.isEmpty,
+            let location = currentLocation,
             let image = photoFilterImageView.image
         else { return }
 
@@ -100,7 +116,7 @@ class PhotoExperienceViewController: UIViewController {
             text = nil
         }
         let experience = PhotoExperience(
-            location: Location(latitude: 20, longitude: 20),
+            location: location,
             title: title,
             body: text,
             audioFile: recordedURL,
@@ -198,5 +214,16 @@ extension PhotoExperienceViewController: AudioRecorderDelegate {
         print("Recorded to: \(recorder.url)")
         //this only works because audioController is lazy and hasn't been accessed before recordedURL is assigned (it loads the recordedURL in the init)
         audioController.togglePlaying()
+    }
+}
+
+extension PhotoExperienceViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last{
+            self.currentLocation = Location(
+                latitude: location.coordinate.latitude,
+                longitude: location.coordinate.longitude
+            )
+        }
     }
 }

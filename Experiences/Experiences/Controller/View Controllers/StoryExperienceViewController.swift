@@ -8,9 +8,14 @@
 
 import UIKit
 import AVFoundation
+import MapKit
 
 class StoryExperienceViewController: UIViewController {
     private let experienceController = ExperienceController.shared
+
+
+    var locationManager: CLLocationManager!
+    var currentLocation: Location?
 
     var recordedURL: URL?
     lazy var audioRecorder = AudioRecorder(delegate: self)
@@ -34,6 +39,17 @@ class StoryExperienceViewController: UIViewController {
         updateRecordingUI()
         updatePlayerUI()
         styleFields()
+        getLocation()
+    }
+
+    private func getLocation() {
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager = CLLocationManager()
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestAlwaysAuthorization()
+            locationManager.startUpdatingLocation()
+        }
     }
 
     private func styleFields() {
@@ -57,7 +73,8 @@ class StoryExperienceViewController: UIViewController {
             )
         }
         guard let title = titleTextField.text,
-            !title.isEmpty
+            !title.isEmpty,
+            let location = currentLocation
         else { return }
 
         var text = storyTextView.text
@@ -65,7 +82,7 @@ class StoryExperienceViewController: UIViewController {
             text = nil
         }
         let experience = Experience(
-            location: Location(latitude: 20, longitude: 20),
+            location: location,
             title: title,
             body: text,
             audioFile: recordedURL
@@ -102,5 +119,16 @@ extension StoryExperienceViewController: AudioRecorderDelegate {
 extension StoryExperienceViewController: AudioPlayerUIDelegate {
     func updatePlayerUI() {
 
+    }
+}
+
+extension StoryExperienceViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last{
+            self.currentLocation = Location(
+                latitude: location.coordinate.latitude,
+                longitude: location.coordinate.longitude
+            )
+        }
     }
 }

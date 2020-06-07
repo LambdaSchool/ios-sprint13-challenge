@@ -12,7 +12,7 @@ import MapKit
 class MainMenuViewController: UIViewController {
     // MARK: - Properties -
     private let experienceController = ExperienceController.shared
-    private let largeConfig = UIImage.SymbolConfiguration(pointSize: 140, weight: .bold, scale: .large)
+    private let largeConfig = UIImage.SymbolConfiguration(pointSize: 40, weight: .bold, scale: .large)
 
     private let markerID = "ExperienceView"
     private let cellID = "MenuCell"
@@ -55,14 +55,14 @@ class MainMenuViewController: UIViewController {
 
     private func setupMapView() {
         //get location:
-        if (CLLocationManager.locationServicesEnabled())
-        {
+        if CLLocationManager.locationServicesEnabled() {
             locationManager = CLLocationManager()
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.requestAlwaysAuthorization()
             locationManager.startUpdatingLocation()
         }
+
         mapView.delegate = self
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: markerID)
         self.mapView.addAnnotations(experienceController.videoExperiences)
