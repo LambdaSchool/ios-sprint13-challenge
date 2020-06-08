@@ -16,7 +16,7 @@ struct Post {
     let latitude: Double
     let longitude: Double
     //these properties are specific for adding audio, images, and titles to a post. 
-    let title: String?
-    let image: UIImage?
-    let audio: URL?
+    var title: String?
+    var image: UIImage?
+    var audio: URL?
 }
