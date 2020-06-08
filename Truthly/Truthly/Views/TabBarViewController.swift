@@ -10,6 +10,11 @@ import UIKit
 
 class TabBarViewController: UITabBarController {
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
     let postController = PostController()
 
     override func viewDidLoad() {

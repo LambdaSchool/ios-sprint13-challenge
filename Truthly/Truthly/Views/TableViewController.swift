@@ -10,6 +10,11 @@ import UIKit
 
 class TableViewController: UITableViewController {
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
     //MARK: Properties -
     
     var postController: PostController?
@@ -93,6 +98,8 @@ class TableViewController: UITableViewController {
             }
         }
     }
+
+
 
     extension TableViewController: ImageDelegate, AudioDelegate, VideoDelegate {
         func imageButtonTapped() {

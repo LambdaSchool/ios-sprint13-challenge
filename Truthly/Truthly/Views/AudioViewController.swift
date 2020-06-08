@@ -21,6 +21,11 @@ class AudioViewController: UIViewController {
     let audioController = AudioController()
     let recordingController = RecordingController()
     var audioData: Data?
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
 
         @IBOutlet weak var recordingAudioButton: UIButton!
         @IBOutlet weak var playbackAudioButton: UIButton!

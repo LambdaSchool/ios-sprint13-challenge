@@ -11,6 +11,11 @@ import MapKit
 
 class MapViewController: UIViewController {
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
     
         var postController: PostController?
     
