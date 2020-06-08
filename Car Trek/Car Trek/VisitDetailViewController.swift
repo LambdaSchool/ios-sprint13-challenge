@@ -12,7 +12,11 @@ import MapKit
 
 class VisitDetailViewController: UIViewController {
     // MARK: - Outlets
-    @IBOutlet var nameTextField: UITextField!
+    @IBOutlet var nameTextField: UITextField! {
+        didSet {
+            nameTextField.delegate = self
+        }
+    }
     @IBOutlet var photoImageView: UIImageView!
     @IBOutlet var audioElapsedTimeLabel: UILabel!
     @IBOutlet var audioTimeRemainingLabel: UILabel!
@@ -371,6 +375,17 @@ extension VisitDetailViewController: AVAudioRecorderDelegate, AVAudioPlayerDeleg
                 print("Audio Recorder Error: \(error)")
             }
         }
+    }
+}
+
+extension VisitDetailViewController: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.resignFirstResponder()
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
 
