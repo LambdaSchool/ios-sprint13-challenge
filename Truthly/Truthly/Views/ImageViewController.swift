@@ -13,7 +13,7 @@ protocol ImageDelegate {
     func imageButtonTapped()
 }
 
-class ImageViewController: UIViewController {
+class ImageViewController: UIViewController, UITextFieldDelegate {
     
     var postController: PostController?
     var delegate: ImageDelegate?
@@ -37,8 +37,13 @@ class ImageViewController: UIViewController {
 
             setImageViewHeight(with: 1.0)
             updateViews()
-
+            titleTextField.delegate = self
         }
+    
+    func textFieldShouldReturn(_ scoreText: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
+    }
 
         func setImageViewHeight(with aspectRatio: CGFloat) {
 
@@ -177,6 +182,7 @@ class ImageViewController: UIViewController {
         @IBAction func postButtonTapped(_ sender: Any) {
             postImage()
         }
+    
 
         @IBAction func cancelButtonTapped(_ sender: Any) {
             dismiss(animated: true, completion: nil)
@@ -185,7 +191,6 @@ class ImageViewController: UIViewController {
         @IBAction func blackandwhiteSwitch(_ sender: UISwitch) {
             blackandwhiteImage()
         }
-
     }
 
     extension ImageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
