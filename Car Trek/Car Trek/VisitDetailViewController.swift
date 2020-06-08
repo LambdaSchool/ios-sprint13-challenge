@@ -22,8 +22,8 @@ class VisitDetailViewController: UIViewController {
     @IBOutlet var audioTimeRemainingLabel: UILabel!
     @IBOutlet var audioSlider: UISlider!
     @IBOutlet var audioPlayButton: UIButton!
-    @IBOutlet var videoView: UIView!
     @IBOutlet var recordAudioButton: UIButton!
+    @IBOutlet var recordVideoButton: UIButton!
     
     // MARK: - Properties
     // General
@@ -73,8 +73,9 @@ class VisitDetailViewController: UIViewController {
     }
     
     // Video
+    var videoRecordingURL: URL?
     
-    
+   
     // MARK: - Views
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,7 +90,6 @@ class VisitDetailViewController: UIViewController {
     }
     
     func updateViews() {
-        // TODO: fix to update video.
         audioElapsedTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: audioElapsedTimeLabel.font.pointSize, weight: .regular)
         audioTimeRemainingLabel.font = UIFont.monospacedDigitSystemFont(ofSize: audioTimeRemainingLabel.font.pointSize, weight: .regular)
         
@@ -104,6 +104,8 @@ class VisitDetailViewController: UIViewController {
             audioPlayButton.title(for: .normal)
         }
         
+        recordVideoButton.titleLabel?.text = "Add Video Recording"
+        
         guard let visit = visit else { return }
         let name = visit.name
         nameTextField.text = name
@@ -111,6 +113,7 @@ class VisitDetailViewController: UIViewController {
         if let photo = visit.photo {
             photoImageView.image = photo
         }
+        recordVideoButton.titleLabel?.text = "View Video Recording"
     }
     
     func updateAudioSlider() {
@@ -153,9 +156,6 @@ class VisitDetailViewController: UIViewController {
         }
     }
     
-    @IBAction func addVideoRecording(_ sender: UIButton) {
-        
-    }
     
     @IBAction func saveVisit(_ sender: UIBarButtonItem) {
         if visit == nil {
@@ -163,9 +163,9 @@ class VisitDetailViewController: UIViewController {
                 print("Need to add a name or location.")
                 return
             }
-            // TODO: Fix videoURL to reflect correct URL path.
+
             let audioURL = audioRecordingURL
-            let videoURL = URL(fileURLWithPath: "")
+            let videoURL = videoRecordingURL
             let newVisit: Visit = Visit(name: name, location: location, photo: photoImageView.image, audioURL: audioURL, videoURL: videoURL)
             visitDelegate?.saveNew(visit: newVisit)
             navigationController?.popViewController(animated: true)
@@ -177,7 +177,7 @@ class VisitDetailViewController: UIViewController {
             }
             
             let audioURL = audioRecordingURL
-            let videoURL = URL(fileURLWithPath: "")
+            let videoURL = videoRecordingURL
             let image = photoImageView.image
             
             visit.name = name
@@ -328,12 +328,15 @@ class VisitDetailViewController: UIViewController {
         updateViews()
         cancelTimer()
     }
-    
-    // Record video
-    
-    
-    // Play video
-    
+
+    // MARK:- Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if segue.identifier == "addVideoSegue" {
+        let cameraVC = segue.destination as! CameraViewController
+        cameraVC.visit = self.visit
+        cameraVC.cameraDelegate = self
+        }
+    }
 }
 // MARK: - Delegates
 // General
@@ -386,6 +389,13 @@ extension VisitDetailViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+}
+
+// Video Delegate
+extension VisitDetailViewController: CameraDelegate {
+    func saveURL(url: URL) {
+        videoRecordingURL = url
     }
 }
 
