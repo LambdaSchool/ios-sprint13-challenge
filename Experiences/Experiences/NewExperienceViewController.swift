@@ -70,7 +70,7 @@ class NewExperienceViewController: UIViewController {
         
         delegate?.didAddNewExperience(experience)
         
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     private func addPhoto() {
