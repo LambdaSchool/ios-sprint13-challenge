@@ -1,5 +1,5 @@
 //
-//  AudioViewController.swift
+//  VideoViewController.swift
 //  Truthly
 //
 //  Created by Ezra Black on 6/7/20.
@@ -7,15 +7,21 @@
 //
 
 import UIKit
+import AVFoundation
 
-protocol AudioDelegate {
-    func audioButtonTapped()
+protocol VideoDelegate {
+    func videoButtonTapped()
 }
 
-class AudioViewController: UIViewController {
+class VideoViewController: UIViewController {
     
-    var postController: PostController?
-    var delegate: AudioDelegate?
+    //MARK: Properties -
+    
+    lazy private var captureSession = AVCaptureSession()
+       lazy private var fileOutput = AVCaptureMovieFileOutput()
+       var player: AVPlayer?
+       var postController: PostController?
+       var delegate: VideoDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -16,6 +16,7 @@ protocol ImageDelegate {
 class ImageViewController: UIViewController {
     
     var postController: PostController?
+    var delegate: ImageDelegate?
     
     //MARK: Properties -
     

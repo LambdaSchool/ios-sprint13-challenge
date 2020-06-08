@@ -17,9 +17,6 @@ class TabBarViewController: UITabBarController {
         setupViews()
         // Do any additional setup after loading the view.
     }
-    
-
-    
   private func setupViews() {
         guard let tabViewControllers = self.viewControllers else { return }
         if let navController = tabViewControllers[0] as? UINavigationController,
