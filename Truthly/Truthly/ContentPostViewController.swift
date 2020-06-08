@@ -14,6 +14,12 @@ import Photos
 class ContentPostViewController: UIViewController {
 
         //MARK: Properties -
+    
+    var post: Post? {
+        didSet {
+            updateViews()
+        }
+    }
         
         private var originalImage: UIImage?
         
@@ -62,6 +68,7 @@ class ContentPostViewController: UIViewController {
         func updateViews() {
             if scaledImage != nil {
                 photoImageView.image = originalImage
+                post?.image = photoImageView.image
             } else {
                 photoImageView.image = nil
             }
