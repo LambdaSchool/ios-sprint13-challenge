@@ -81,6 +81,10 @@
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZTh-BO-gZ6">
                                 <rect key="frame" x="161" y="812" width="92" height="30"/>
                                 <state key="normal" title="Record Audio"/>
+                                <state key="selected" title="Stop Recording"/>
+                                <connections>
+                                    <action selector="toggleRecording:" destination="5YC-gv-kkB" eventType="touchUpInside" id="d7t-Oj-UD6"/>
+                                </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="740" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gSh-wd-xUG">
                                 <rect key="frame" x="20" y="431.5" width="374" height="360.5"/>
@@ -117,8 +121,19 @@
                         <viewLayoutGuide key="safeArea" id="oYx-Ls-wwF"/>
                     </view>
                     <navigationItem key="navigationItem" title="New Experience" id="hZY-f0-H0T">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="46H-a8-kPM"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="46H-a8-kPM">
+                            <connections>
+                                <action selector="saveExperience:" destination="5YC-gv-kkB" id="z3B-8r-F4y"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="detailsTextView" destination="gSh-wd-xUG" id="lBX-3i-KGK"/>
+                        <outlet property="imageView" destination="hqB-YK-29b" id="T7r-nR-9ym"/>
+                        <outlet property="recordAudioButton" destination="ZTh-BO-gZ6" id="EZ7-3M-FaT"/>
+                        <outlet property="saveButton" destination="46H-a8-kPM" id="GyP-9o-nL1"/>
+                        <outlet property="titleTextField" destination="Fdi-Ah-6Zp" id="EYU-td-Sat"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X4L-yO-mgh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
