@@ -29,12 +29,12 @@ class MapViewController: UIViewController {
             guard let posts = postController?.posts else { return }
             
             DispatchQueue.main.async {
-                self.mapView.addAnnotation(posts)
+                self.mapView.addAnnotations(posts)
                 
                 guard let post = posts.first else { return }
                 
                 let span = MKCoordinateSpan(latitudeDelta: 2, longitudeDelta: 2)
-                let region = MKCoordinateRegion(center: p, span: span)
+                let region = MKCoordinateRegion(center: post.coordinate, span: span)
                 self.mapView.setRegion(region, animated: true)
             }
         }
