@@ -17,12 +17,12 @@ enum MediaType: String {
 
 class Post: NSObject {
 
-    var entryTitle: String?
+    var postTitle: String?
     let mediaType: MediaType
     var geotag: CLLocationCoordinate2D?
 
     init(title: String?, mediaType: MediaType, geotag: CLLocationCoordinate2D?) {
-        self.entryTitle = title
+        self.postTitle = title
         self.mediaType = mediaType
         self.geotag = geotag
     }

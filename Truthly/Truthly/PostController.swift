@@ -13,12 +13,8 @@ class PostController {
 
     var posts = [Post]()
 
-    func createPost(with title: String,
-                    ofType mediaType: MediaType,
-                    location geotag: CLLocationCoordinate2D?) {
-        let post = Post(title: title,
-                        mediaType: mediaType,
-                        geotag: geotag)
+    func createPost(with title: String, ofType mediaType: MediaType, location geotag: CLLocationCoordinate2D?) {
+        let post = Post(title: title, mediaType: mediaType, geotag: geotag)
         posts.append(post)
     }
 }
