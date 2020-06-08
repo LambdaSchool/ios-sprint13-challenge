@@ -7,8 +7,19 @@
 //
 
 import UIKit
+import Photos
+
+protocol ImageDelegate {
+    func imageButtonTapped()
+}
 
 class ImageViewController: UIViewController {
+    
+    var postController: PostController?
+    
+    //MARK: Properties -
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
