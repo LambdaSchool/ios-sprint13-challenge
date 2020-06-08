@@ -32,37 +32,25 @@ class ContentPostViewController: UIViewController {
         private let context = CIContext(options: nil)
         
         //MARK: Outlets -
-        
+    @IBOutlet weak var addImageButton: UIButton!
+    
  
         @IBOutlet weak var photoImageView: UIImageView!
-        //MARK: IBActions -
-        @IBAction func slider1(_ sender: UISlider) {
-            updateViews()
-        }
-        @IBAction func slider2(_ sender: Any) {
-            updateViews()
-        }
-        @IBAction func slider3(_ sender: Any) {
-            updateViews()
-        }
-        @IBAction func slider4(_ sender: Any) {
-            updateViews()
-        }
-        @IBAction func slider5(_ sender: Any) {
-            updateViews()
-        }
-        @IBAction func addPhotoButtonPressed(_ sender: Any) {
+    
+    
+    
+        @IBAction func addImageToPostPressed(_ sender: Any) {
             presentImagePickerController()
         }
         @IBAction func savePhotoButtonPressed(_ sender: Any) {
-            savePhoto()
+            savePost()
         }
         
         //MARK: Lifecycle
         override func viewDidLoad() {
             super.viewDidLoad()
-    
-            originalImage = photoImageView.image
+//
+//            originalImage = photoImageView.image
         }
         
         func updateViews() {
@@ -85,10 +73,13 @@ class ContentPostViewController: UIViewController {
             imagePicker.sourceType = .photoLibrary
             imagePicker.delegate = self
             present(imagePicker, animated: true)
+           if imagePicker.isBeingDismissed {
+                savePost()
+            }
         }
 
         
-        private func savePhoto() {
+        private func savePost() {
             guard let originalImage = originalImage else { return }
             PHPhotoLibrary.requestAuthorization { status in
                 guard status == .authorized else { return }
@@ -104,6 +95,8 @@ class ContentPostViewController: UIViewController {
                     }
                     DispatchQueue.main.async {
                         print("Saved photo")
+                        self.photoImageView.isHidden = false
+                        self.addImageButton.isHidden = true
                     }
                 }
             }

@@ -17,20 +17,19 @@ class MapKitViewController: UIViewController {
         override func viewDidLoad() {
             super.viewDidLoad()
             mapView.delegate = self
-            mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "QuakeView")
+            mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "PostView")
         }
     }
     //this is to customize the pins on the map
     extension MapKitViewController: MKMapViewDelegate {
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             guard let post = annotation as? Post else {
-                fatalError("Only Quakes are supported")
+                fatalError("Only Posts are supported")
             }
-            guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "QuakeView", for: annotation) as? MKMarkerAnnotationView else {
+            guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "PostView", for: annotation) as? MKMarkerAnnotationView else {
                 fatalError("Missing a registered view")
             }
-            annotationView.glyphImage = UIImage(named: "QuakeIcon")
-            //these four lines give you the pins detail view!!
+            
             annotationView.canShowCallout = true
             let detailView = MapAnnotationDetailView()
             detailView.post = post
