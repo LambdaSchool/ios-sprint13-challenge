@@ -8,23 +8,26 @@
 
 import UIKit
 
-class TabBarViewController: UIViewController {
+class TabBarViewController: UITabBarController {
+    
+    let postController = PostController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setupViews()
         // Do any additional setup after loading the view.
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+  private func setupViews() {
+        guard let tabViewControllers = self.viewControllers else { return }
+        if let navController = tabViewControllers[0] as? UINavigationController,
+            let postTVC = navController.topViewController as? TableViewController {
+            postTVC.postController = self.postController
+        }
+        if let mapView = tabViewControllers[1] as? MapViewController {
+            mapView.postController = self.postController
+        }
     }
-    */
-
 }

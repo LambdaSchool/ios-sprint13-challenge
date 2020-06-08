@@ -7,24 +7,52 @@
 //
 
 import UIKit
+import MapKit
 
 class MapViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
     
+    
+        var postController: PostController?
+    
+        @IBOutlet var mapView: MKMapView!
 
-    /*
-    // MARK: - Navigation
+        override func viewDidLoad() {
+            super.viewDidLoad()
+            mapView.delegate = self
+            mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "PostView")
+            // Do any additional setup after loading the view.
+            fetchPosts()
+        }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        private func fetchPosts() {
+            
+            guard let posts = postController?.posts else { return }
+            
+            DispatchQueue.main.async {
+                
+                self.mapView.addAnnotations(posts)
+                
+                guard let post = posts.first else { return }
+                
+                let span = MKCoordinateSpan(latitudeDelta: 2, longitudeDelta: 2)
+                let region = MKCoordinateRegion(center: post.MKCoordinateRegion.latitudeDelta, span: span)
+                self.mapView.setRegion(region, animated: true)
+            }
+        }
     }
-    */
 
+    extension MapViewController: MKMapViewDelegate {
+
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+
+            guard let _ = annotation as? Post else {
+                fatalError("Only Posts are supported right now")
+            }
+
+            guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "PostView") as? MKMarkerAnnotationView else {
+                fatalError("Missing registered map annotation view")
+            }
+
+            return annotationView
+        }
 }

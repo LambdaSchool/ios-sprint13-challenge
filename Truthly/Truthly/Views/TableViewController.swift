@@ -9,6 +9,8 @@
 import UIKit
 
 class TableViewController: UITableViewController {
+    
+    var postController: PostController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
