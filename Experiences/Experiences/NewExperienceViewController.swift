@@ -9,6 +9,7 @@
 import UIKit
 
 import MapKit
+import CoreLocation
 import AVFoundation
 
 import CoreImage
@@ -21,10 +22,13 @@ protocol NewExperienceDelegate {
 
 class NewExperienceViewController: UIViewController {
     
+    let context = CIContext(options: nil)
+    
     let audioRecorderController = AudioRecorderController()
     
     var delegate: NewExperienceDelegate?
     var audioURL: URL?
+    var locationManager: CLLocationManager?
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var imageView: UIImageView!
@@ -37,7 +41,7 @@ class NewExperienceViewController: UIViewController {
     }
     
     @IBAction func saveExperience(_ sender: Any) {
-        saveExperience()
+        requestLocationPermission()
     }
     
     @IBAction func addPhoto(_ sender: Any) {
@@ -51,13 +55,17 @@ class NewExperienceViewController: UIViewController {
     }
     
     private func saveExperience() {
+        // TODO: Add a loading ui because this takes forever
+        
         guard let title = titleTextField.text,
             !title.isEmpty else {
-                
                 return
         }
+                
+        guard let location = locationManager?.location else {
+            return
+        }
         
-        let location = CLLocation()
         let longitude = location.coordinate.longitude
         let latitude = location.coordinate.latitude
         
@@ -84,6 +92,27 @@ class NewExperienceViewController: UIViewController {
         imagePicker.delegate = self
         
         present(imagePicker, animated: true)
+    }
+    
+    private func requestLocationPermission() {
+        locationManager = CLLocationManager()
+        locationManager?.delegate = self
+        locationManager?.requestAlwaysAuthorization()
+    }
+    
+    private func filterImage(_ image: UIImage) -> UIImage? {
+        guard let cgImage = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        let filter = CIFilter.colorControls()
+        filter.inputImage = ciImage
+        filter.saturation = 0
+        
+        guard let outputCIImage = filter.outputImage,
+            let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else { return nil }
+        
+        let outputUIImage = UIImage(cgImage: outputCGImage)
+        return outputUIImage.flattened
     }
     
     private func updateViews() {
@@ -146,12 +175,31 @@ extension NewExperienceViewController: UIImagePickerControllerDelegate, UINaviga
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.originalImage] as? UIImage {
             
-            imageView.image = image
+            imageView.image = filterImage(image)
         }
         dismiss(animated: true)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true)
+    }
+}
+
+extension NewExperienceViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+         print("Error getting location: \(error)")
+    }
+
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse {
+            locationManager?.requestLocation()
+        } else if status == .authorizedAlways {
+            locationManager?.requestLocation()
+        }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        saveExperience()
     }
 }

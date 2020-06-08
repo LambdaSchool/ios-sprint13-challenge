@@ -19,33 +19,7 @@ class MapViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     
     @IBAction func addNewExperience(_ sender: Any) {
-        switch CLLocationManager.authorizationStatus() {
-        case .notDetermined:
-            locationManager.requestAlwaysAuthorization()
-        case .restricted:
-            // TODO: Present alert
-            fatalError("Read TODO")
-        case .denied:
-            // TODO: Present alert
-            fatalError("Read TODO")
-        case .authorizedAlways:
-            guard CLLocationManager.locationServicesEnabled() else {
-                // TODO: Present alert
-                fatalError("Read TODO")
-            }
-            
-            performSegue(withIdentifier: "NewExperienceSegue", sender: self)
-        case .authorizedWhenInUse:
-            guard CLLocationManager.locationServicesEnabled() else {
-                // TODO: Present alert
-                fatalError("Read TODO")
-            }
-            
-            performSegue(withIdentifier: "NewExperienceSegue", sender: self)
-        @unknown default:
-            // TODO: Present alert
-            fatalError("Read TODO")
-        }
+        performSegue(withIdentifier: "NewExperienceSegue", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
