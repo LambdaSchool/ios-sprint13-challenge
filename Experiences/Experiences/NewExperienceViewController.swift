@@ -7,8 +7,13 @@
 //
 
 import UIKit
+
 import MapKit
 import AVFoundation
+
+import CoreImage
+import CoreImage.CIFilterBuiltins
+import Photos
 
 protocol NewExperienceDelegate {
     func didAddNewExperience(_ experience: Experience) -> Void
@@ -33,6 +38,10 @@ class NewExperienceViewController: UIViewController {
     
     @IBAction func saveExperience(_ sender: Any) {
         saveExperience()
+    }
+    
+    @IBAction func addPhoto(_ sender: Any) {
+        addPhoto()
     }
     
     private func toggleRecording() {
@@ -62,6 +71,19 @@ class NewExperienceViewController: UIViewController {
         delegate?.didAddNewExperience(experience)
         
         dismiss(animated: true)
+    }
+    
+    private func addPhoto() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            print("Error: The photo library is not available")
+            return
+        }
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        
+        present(imagePicker, animated: true)
     }
     
     private func updateViews() {
@@ -117,5 +139,19 @@ extension NewExperienceViewController: AudioRecorderControllerDelegate {
         alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
         
         present(alertController, animated: true)
+    }
+}
+
+extension NewExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[.originalImage] as? UIImage {
+            
+            imageView.image = image
+        }
+        dismiss(animated: true)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true)
     }
 }
