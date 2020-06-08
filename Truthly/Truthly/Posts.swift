@@ -7,44 +7,23 @@
 //
 
 import Foundation
-import UIKit
-import MapKit
+import CoreLocation
+
+enum MediaType: String {
+    case image
+    case audio
+    case video
+}
 
 class Post: NSObject {
-    //properties for your mapView. These will be internally accessbile and used to present the post onto the map.
-    let place: String
-    let time: Date
-    let latitude: Double
-    let longitude: Double
-    //these properties are specific for adding audio, images, and titles to a post. 
-    var title: String?
-    var image: UIImage?
-    var audio: URL?
-    
-    init(place: String, time: Date, latitude: Double, longitude: Double, title: String?, image: UIImage?, audio: URL?) {
-        self.place = place
-        self.time = time
-        self.latitude = latitude
-        self.longitude = longitude
-        self.title = title
-        self.image = image
-        self.audio = audio
+
+    var entryTitle: String?
+    let mediaType: MediaType
+    var geotag: CLLocationCoordinate2D?
+
+    init(title: String?, mediaType: MediaType, geotag: CLLocationCoordinate2D?) {
+        self.entryTitle = title
+        self.mediaType = mediaType
+        self.geotag = geotag
     }
 }
-
-extension Post: MKAnnotation {
-    var coordinate: CLLocationCoordinate2D {
-        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-    }
-    
-    var subtitle: String? {
-        if let title = title {
-            return title
-        } else {
-            return "No Title"
-        }
-    }
-    
-    
-}
-
