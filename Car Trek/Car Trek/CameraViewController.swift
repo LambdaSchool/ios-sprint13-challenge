@@ -12,23 +12,29 @@ import AVFoundation
 import AVKit
 
 class CameraViewController: UIViewController {
-    
+    // MARK: - Properties
+    // General
     var visit: Visit? {
         didSet {
             videoURL = visit?.videoRecordingURL
         }
     }
-    var cameraDelegate: CameraDelegate?
-    var videoURL: URL?
     
+    var cameraDelegate: CameraDelegate?
+    
+    // Record
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     
+    // Playback
+    var videoURL: URL?
     var player: AVPlayer!
     
+    // Outlets
     @IBOutlet var recordButton: UIButton!
     @IBOutlet var cameraView: CameraPreviewView!
     
+    // MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -37,17 +43,6 @@ class CameraViewController: UIViewController {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
         view.addGestureRecognizer(tapGesture)
-        
-        if let videoURL = videoURL {
-            playMovie(url: videoURL)
-        }
-    }
-    
-    
-    @IBAction func handleTapGesture(_ sender: UITapGestureRecognizer) {
-        if sender.state == .ended {
-            playRecording()
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -63,20 +58,30 @@ class CameraViewController: UIViewController {
         captureSession.stopRunning()
     }
     
-    func playRecording() {
-        if let player = player {
-            player.seek(to: CMTime(seconds: 0, preferredTimescale: 600))
-            player.play()
+    func updateViews() {
+        recordButton.isSelected = fileOutput.isRecording
+        if let videoURL = visit?.videoRecordingURL {
+            playMovie(url: videoURL)
         }
     }
     
-    func playMovie(url: URL) {
-        let playerVC = AVPlayerViewController()
-        playerVC.player = AVPlayer(url: url)
-        
-        self.present(playerVC, animated: true, completion: nil)
+    // MARK: - Actions
+    @IBAction func handleTapGesture(_ sender: UITapGestureRecognizer) {
+        if sender.state == .ended {
+            playRecording()
+        }
     }
     
+    @IBAction func recordButtonPressed(_ sender: Any) {
+        if fileOutput.isRecording {
+            fileOutput.stopRecording()
+        } else {
+            fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
+        }
+    }
+    
+    // MARK: - Methods
+    // Record
     private func setupCamera() {
         let camera = bestCamera()
         let microphone = bestMicrophone()
@@ -107,9 +112,7 @@ class CameraViewController: UIViewController {
         }
         
         captureSession.addOutput(fileOutput)
-        
         captureSession.commitConfiguration()
-        
         cameraView.session = captureSession
     }
     
@@ -131,14 +134,6 @@ class CameraViewController: UIViewController {
         preconditionFailure("No microphones on device match the specs that we need.")
     }
     
-    @IBAction func recordButtonPressed(_ sender: Any) {
-        if fileOutput.isRecording {
-            fileOutput.stopRecording()
-        } else {
-            fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
-        }
-    }
-    
     private func newRecordingURL() -> URL {
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         
@@ -150,15 +145,28 @@ class CameraViewController: UIViewController {
         visit?.videoRecordingURL = fileURL
         return fileURL
     }
-
-    func updateViews() {
-        recordButton.isSelected = fileOutput.isRecording
-        if let videoURL = visit?.videoRecordingURL {
-            playMovie(url: videoURL)
+    
+    // Playback
+    func playRecording() {
+        if let player = player {
+            player.seek(to: CMTime(seconds: 0, preferredTimescale: 600))
+            player.play()
         }
+    }
+    
+    func playMovie(url: URL) {
+        let playerVC = AVPlayerViewController()
+        playerVC.player = AVPlayer(url: url)
+        
+        self.present(playerVC, animated: true, completion: nil)
     }
 }
 
+
+// MARK: - Delegates
+protocol CameraDelegate {
+    func saveURL(url: URL)
+}
 
 extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
@@ -176,9 +184,3 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         updateViews()
     }
 }
-
-protocol CameraDelegate {
-    func saveURL(url: URL)
-}
-
-

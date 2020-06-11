@@ -113,7 +113,10 @@ class VisitDetailViewController: UIViewController {
         if let photo = visit.photo {
             photoImageView.image = photo
         }
+        
+        if let _ = visit.videoRecordingURL {
         recordVideoButton.titleLabel?.text = "View Video Recording"
+        }
     }
     
     func updateAudioSlider() {
