@@ -15,7 +15,18 @@ extension String {
 
 class VisitsTableViewController: UITableViewController, VisitDelegate {
     // MARK: - Properties
-    var visits: [Visit] = []
+    var visits: [Visit] = [] {
+        didSet {
+            let oldVisits = Set(oldValue)
+            let newVisits = Set(visits)
+            
+            let addedVisits = Array(newVisits.subtracting(oldVisits))
+            let removedVisits = Array(oldVisits.subtracting(newVisits))
+            
+            mapView.removeAnnotations(removedVisits)
+            mapView.addAnnotations(addedVisits)
+        }
+    }
     var visit: Visit? {
         guard let indexPath = tableView.indexPathForSelectedRow else { return nil }
         let visit = visits[indexPath.row]
@@ -87,17 +98,18 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
     
     func update(visit: Visit, indexPath: IndexPath) {
         visits.remove(at: indexPath.row)
+
         visits.insert(visit, at: indexPath.row)
         tableView.reloadData()
     }
     
     // MARK: - Navigation
     @IBAction func addVisit(_ sender: UIBarButtonItem) {
-        let userLocationCoordinates = CLLocationCoordinate2DMake(locationManager.location?.coordinate.latitude ?? 0, locationManager.location?.coordinate.longitude ?? 0)
-        let pinForUserLocation = MKPointAnnotation()
-        pinForUserLocation.coordinate = userLocationCoordinates
-        mapView.addAnnotation(pinForUserLocation)
-        mapView.showAnnotations([pinForUserLocation], animated: true)
+//        let userLocationCoordinates = CLLocationCoordinate2DMake(locationManager.location?.coordinate.latitude ?? 0, locationManager.location?.coordinate.longitude ?? 0)
+//        let pinForUserLocation = MKPointAnnotation()
+//        pinForUserLocation.coordinate = userLocationCoordinates
+//        mapView.addAnnotation(pinForUserLocation)
+//        mapView.showAnnotations([pinForUserLocation], animated: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -127,3 +139,5 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
 extension VisitsTableViewController: MKMapViewDelegate {
     // Do I need this?
 }
+
+

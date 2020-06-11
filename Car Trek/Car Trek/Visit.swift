@@ -9,18 +9,31 @@
 import UIKit
 import MapKit
 
-class Visit {
+class Visit: NSObject {
     var name: String
-    var location: CLLocationCoordinate2D
+    var latitude: Double
+    var longitude: Double
     var photo: UIImage?
     var audioRecordingURL: URL?
     var videoRecordingURL: URL?
     
-    init(name: String, location: CLLocationCoordinate2D, photo: UIImage?, audioURL: URL?, videoURL: URL?) {
+    init(name: String, latitude: Double, longitude: Double, photo: UIImage?, audioURL: URL?, videoURL: URL?) {
         self.name = name
-        self.location = location
+        self.latitude = latitude
+        self.longitude = longitude
         self.photo = photo
         self.audioRecordingURL = audioURL
         self.videoRecordingURL = videoURL
     }
+}
+
+extension Visit: MKAnnotation {
+    var coordinate: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
+    
+    var title: String? {
+        name
+    }
+
 }

@@ -34,7 +34,15 @@ class VisitDetailViewController: UIViewController {
     var recordingExists = false
     
     // Map
-    var newLocation: CLLocationCoordinate2D?
+    var newLocation: CLLocationCoordinate2D? {
+        didSet {
+            newLatitude = newLocation?.latitude
+            newLongitude = newLocation?.longitude
+        }
+    }
+    
+    var newLatitude: Double?
+    var newLongitude: Double?
     
     // Image
     var newImage: UIImage?
@@ -54,7 +62,6 @@ class VisitDetailViewController: UIViewController {
     }
     
     // Audio
-    
     var audioRecordingURL: URL?
     var audioRecorder: AVAudioRecorder?
     
@@ -163,19 +170,19 @@ class VisitDetailViewController: UIViewController {
     
     @IBAction func saveVisit(_ sender: UIBarButtonItem) {
         if visit == nil {
-            guard let name = nameTextField.text, let location = newLocation else {
+            guard let name = nameTextField.text, let latitude = newLatitude, let longitude = newLongitude else {
                 print("Need to add a name or location.")
                 return
             }
 
             let audioURL = audioRecordingURL
             let videoURL = videoRecordingURL
-            let newVisit: Visit = Visit(name: name, location: location, photo: photoImageView.image, audioURL: audioURL, videoURL: videoURL)
+            let newVisit: Visit = Visit(name: name, latitude: latitude, longitude: longitude, photo: photoImageView.image, audioURL: audioURL, videoURL: videoURL)
             visitDelegate?.saveNew(visit: newVisit)
             navigationController?.popViewController(animated: true)
             
         } else {
-            guard let name = nameTextField.text, let location = newLocation, let visit = visit, let indexPath = indexPath else {
+            guard let name = nameTextField.text, let latitude = newLatitude, let longitude = newLongitude, let visit = visit, let indexPath = indexPath else {
                 print("Need to add a name.")
                 return
             }
@@ -188,7 +195,8 @@ class VisitDetailViewController: UIViewController {
             visit.audioRecordingURL = audioURL
             visit.videoRecordingURL = videoURL
             visit.photo = image
-            visit.location = location
+            visit.latitude = latitude
+            visit.longitude = longitude
             
             visitDelegate?.update(visit: visit, indexPath: indexPath)
             navigationController?.popViewController(animated: true)
