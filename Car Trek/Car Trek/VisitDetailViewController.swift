@@ -23,6 +23,7 @@ class VisitDetailViewController: UIViewController {
     @IBOutlet var audioSlider: UISlider!
     @IBOutlet var audioPlayButton: UIButton!
     @IBOutlet var recordAudioButton: UIButton!
+    @IBOutlet var viewVideoButton: UIButton!
     @IBOutlet var recordVideoButton: UIButton!
     
     // MARK: - Properties
@@ -30,6 +31,7 @@ class VisitDetailViewController: UIViewController {
     var visit: Visit?
     var indexPath: IndexPath?
     var visitDelegate: VisitDelegate?
+    var recordingExists = false
     
     // Map
     var newLocation: CLLocationCoordinate2D?
@@ -104,7 +106,7 @@ class VisitDetailViewController: UIViewController {
             audioPlayButton.title(for: .normal)
         }
         
-        recordVideoButton.titleLabel?.text = "Add Video Recording"
+        viewVideoButton.isHidden = true
         
         guard let visit = visit else { return }
         let name = visit.name
@@ -114,8 +116,8 @@ class VisitDetailViewController: UIViewController {
             photoImageView.image = photo
         }
         
-        if let _ = visit.videoRecordingURL {
-        recordVideoButton.titleLabel?.text = "View Video Recording"
+        if recordingExists {
+            viewVideoButton.isHidden = false
         }
     }
     
@@ -158,7 +160,6 @@ class VisitDetailViewController: UIViewController {
             playAudio()
         }
     }
-    
     
     @IBAction func saveVisit(_ sender: UIBarButtonItem) {
         if visit == nil {
@@ -338,12 +339,21 @@ class VisitDetailViewController: UIViewController {
         let cameraVC = segue.destination as! CameraViewController
         cameraVC.visit = self.visit
         cameraVC.cameraDelegate = self
+        cameraVC.recordingExists = false
+        
+    } else if segue.identifier == "viewVideoSegue" {
+        let cameraVC = segue.destination as! CameraViewController
+        cameraVC.visit = self.visit
+        cameraVC.cameraDelegate = self
+        cameraVC.recordingExists = true
+        cameraVC.videoURL = visit?.videoRecordingURL
         }
     }
 }
+
+
 // MARK: - Delegates
 // General
-
 protocol VisitDelegate {
     func saveNew(visit: Visit)
     func update(visit: Visit, indexPath: IndexPath)

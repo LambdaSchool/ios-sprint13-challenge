@@ -21,6 +21,7 @@ class CameraViewController: UIViewController {
     }
     
     var cameraDelegate: CameraDelegate?
+    var recordingExists: Bool = false
     
     // Record
     lazy private var captureSession = AVCaptureSession()
@@ -37,12 +38,15 @@ class CameraViewController: UIViewController {
     // MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        if !recordingExists {
         cameraView.videoPlayerLayer.videoGravity = .resizeAspectFill
         setupCamera()
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
         view.addGestureRecognizer(tapGesture)
+        } else {
+            playMovie(url: videoURL!)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -60,9 +64,6 @@ class CameraViewController: UIViewController {
     
     func updateViews() {
         recordButton.isSelected = fileOutput.isRecording
-        if let videoURL = visit?.videoRecordingURL {
-            playMovie(url: videoURL)
-        }
     }
     
     // MARK: - Actions

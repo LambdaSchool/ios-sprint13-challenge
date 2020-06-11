@@ -109,10 +109,17 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
             visitVC.visit = self.visit
             visitVC.indexPath = tableView.indexPathForSelectedRow
             
+            if visit?.videoRecordingURL != nil {
+                visitVC.recordingExists = true
+            } else {
+                visitVC.recordingExists = false
+            }
+            
         } else if segue.identifier == "addVisitSegue" {
             let addVC = segue.destination as! VisitDetailViewController
             addVC.visitDelegate = self
             addVC.newLocation = newLocation
+            addVC.recordingExists = false
         }
     }
 }
