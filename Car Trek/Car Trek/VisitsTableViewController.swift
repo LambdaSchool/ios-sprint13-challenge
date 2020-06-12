@@ -15,18 +15,8 @@ extension String {
 
 class VisitsTableViewController: UITableViewController, VisitDelegate {
     // MARK: - Properties
-    var visits: [Visit] = [] {
-        didSet {
-            let oldVisits = Set(oldValue)
-            let newVisits = Set(visits)
-            
-            let addedVisits = Array(newVisits.subtracting(oldVisits))
-            let removedVisits = Array(oldVisits.subtracting(newVisits))
-            
-            mapView.removeAnnotations(removedVisits)
-            mapView.addAnnotations(addedVisits)
-        }
-    }
+    var visits: [Visit] = []
+    
     var visit: Visit? {
         guard let indexPath = tableView.indexPathForSelectedRow else { return nil }
         let visit = visits[indexPath.row]
@@ -39,7 +29,6 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
     private let locationManager = CLLocationManager()
     var newLocation: CLLocationCoordinate2D?
     
-    // TODO: make a pin for each visit show up on the map.
     func updateMap() {
         userTrackingButton = MKUserTrackingButton(mapView: mapView)
         userTrackingButton.translatesAutoresizingMaskIntoConstraints = false
@@ -65,6 +54,12 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
         locationManager.requestWhenInUseAuthorization()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
+        updateViews()
+    }
+    
     func updateViews() {
         updateMap()
         tableView.reloadData()
@@ -86,21 +81,26 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            let visit = visits[indexPath.row]
+            mapView.removeAnnotation(visit)
+            
             visits.remove(at: indexPath.row)
+            
             tableView.deleteRows(at: [indexPath], with: .fade)
         }    
     }
     
     func saveNew(visit: Visit) {
         visits.append(visit)
-        tableView.reloadData()
+        mapView.addAnnotation(visit)
+        updateViews()
     }
     
     func update(visit: Visit, indexPath: IndexPath) {
         visits.remove(at: indexPath.row)
 
         visits.insert(visit, at: indexPath.row)
-        tableView.reloadData()
+        updateViews()
     }
     
     // MARK: - Navigation
