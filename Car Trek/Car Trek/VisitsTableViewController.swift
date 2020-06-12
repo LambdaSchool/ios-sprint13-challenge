@@ -29,7 +29,7 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
     private let locationManager = CLLocationManager()
     var newLocation: CLLocationCoordinate2D?
     
-    func updateMap() {
+    func loadMap() {
         userTrackingButton = MKUserTrackingButton(mapView: mapView)
         userTrackingButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(userTrackingButton)
@@ -39,7 +39,9 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
             mapView.bottomAnchor.constraint(equalTo: userTrackingButton.bottomAnchor, constant: 20)
             
         ])
-        
+    }
+    
+    func updateMap() {
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: .annotationReuseIdentifier)
         let userLocationCoordinates = CLLocationCoordinate2DMake(locationManager.location?.coordinate.latitude ?? 0, locationManager.location?.coordinate.longitude ?? 0)
         newLocation = userLocationCoordinates
@@ -49,14 +51,14 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        updateViews()
+        loadMap()
         tableView.delegate = self
         locationManager.requestWhenInUseAuthorization()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        
+
         updateViews()
     }
     
@@ -104,15 +106,9 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
     }
     
     // MARK: - Navigation
-    @IBAction func addVisit(_ sender: UIBarButtonItem) {
-//        let userLocationCoordinates = CLLocationCoordinate2DMake(locationManager.location?.coordinate.latitude ?? 0, locationManager.location?.coordinate.longitude ?? 0)
-//        let pinForUserLocation = MKPointAnnotation()
-//        pinForUserLocation.coordinate = userLocationCoordinates
-//        mapView.addAnnotation(pinForUserLocation)
-//        mapView.showAnnotations([pinForUserLocation], animated: true)
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        updateMap()
+        
         if segue.identifier == "viewVisitSegue" {
             let visitVC = segue.destination as! VisitDetailViewController
             visitVC.visitDelegate = self
@@ -136,8 +132,5 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
     }
 }
 
-extension VisitsTableViewController: MKMapViewDelegate {
-    // Do I need this?
-}
 
 
