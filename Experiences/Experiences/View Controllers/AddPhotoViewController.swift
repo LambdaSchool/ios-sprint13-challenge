@@ -7,8 +7,8 @@
 
 import UIKit
 import Photos
-
-//TODO: Create filtering method.
+import CoreImage
+import CoreImage.CIFilterBuiltins
 
 class AddPhotoViewController: UIViewController {
     //MARK: - Properties -
@@ -16,6 +16,8 @@ class AddPhotoViewController: UIViewController {
     
     var photoDelegate: PhotoAdderDelegate?
     var image: UIImage?
+    let context = CIContext()
+    
     
     //MARK: - Life Cycles -
     override func viewDidLoad() {
@@ -23,15 +25,14 @@ class AddPhotoViewController: UIViewController {
         presentImagePicker()
     }
     
+    
     //MARK: - Actions -
     @IBAction func filterButtonTapped(_ sender: UIButton) {
         guard let image = image else { return }
-        //call filter image function as property to get filtered image
-        let filteredImage = sharpen(image)
-        //make current image filtered image
-        self.image = filteredImage
-        self.currentImage.image = self.image
+        let filteredImage = sharpen(image, sharpness: 15)
+        updateImage(filteredImage)
     }
+    
     @IBAction func pickerButtonTapped(_ sender: UIButton) {
         presentImagePicker()
     }
@@ -49,6 +50,7 @@ class AddPhotoViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+    
     // MARK: - Methods -
     private func presentImagePicker() {
         //make sure the photo library is available
@@ -63,19 +65,30 @@ class AddPhotoViewController: UIViewController {
         present(imagePicker, animated: true, completion: nil)
     }
     
-    private func sharpen(_ image: UIImage) -> UIImage {
-        let sharpen = 
-        sha
+    private func sharpen(_ image: UIImage, sharpness: Float) -> UIImage {
+        guard let cgImage = image.cgImage else { return image }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        let sharpen = CIFilter.sharpenLuminance()
+        sharpen.inputImage = ciImage
+        sharpen.sharpness = sharpness
+        
+        guard let outputImage = sharpen.outputImage else { return image }
+        guard let outputCGImage = context.createCGImage(outputImage, from: outputImage.extent) else { return image }
+        return UIImage(cgImage: outputCGImage)
     }
     
+    private func updateImage(_ image: UIImage) {
+        self.image = image
+        self.currentImage.image = self.image
+    }
 }
 
 extension AddPhotoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let selectedImage = info[.originalImage] as? UIImage {
-            self.image = selectedImage
-            self.currentImage.image = image
+            updateImage(selectedImage)
         }
         dismiss(animated: true, completion: nil)
     }
