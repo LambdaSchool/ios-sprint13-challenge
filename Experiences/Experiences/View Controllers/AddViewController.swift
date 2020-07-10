@@ -29,11 +29,9 @@ class AddViewController: UIViewController, UINavigationControllerDelegate {
     var isRecording: Bool = false
     var isPlayback: Bool = false
     
-    var audioRecording: URL? {
-        didSet {
-            updateAudioFile()
-        }
-    }
+    var permissionsGranted: Bool = false
+    
+    var audioRecording: URL?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -148,35 +146,41 @@ extension AddViewController: AVAudioPlayerDelegate, AVAudioRecorderDelegate {
     }
     
     private func startRecording() {
-        isRecording = true
-        
-        recordButton.setImage(UIImage(systemName: "stop.fill"), for: .normal)
-        playButton.setImage(UIImage(systemName: "play"), for: .normal)
-        
-        playButton.isUserInteractionEnabled = false
-        
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let url = documentsDirectory.appendingPathComponent(DateFormatter.localizedString(
-            from: Date(),
-            dateStyle: .long,
-            timeStyle: .long),
+        if permissionsGranted {
+            isRecording = true
+            
+            recordButton.setImage(UIImage(systemName: "stop.fill"), for: .normal)
+            playButton.setImage(UIImage(systemName: "play"), for: .normal)
+            
+            playButton.isUserInteractionEnabled = false
+            
+            let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let url = documentsDirectory.appendingPathComponent(DateFormatter.localizedString(
+                from: Date(),
+                dateStyle: .long,
+                timeStyle: .long),
                                                                   isDirectory: false).appendingPathExtension("caf")
-        
-        let audioFormat = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
-        
-        do {
-            avRecorder = try AVAudioRecorder(url: url, format: audioFormat)
-        } catch {
-            NSLog("Unable to start recording")
-            return
+            
+            let audioFormat = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
+            
+            do {
+                avRecorder = try AVAudioRecorder(url: url, format: audioFormat)
+            } catch {
+                NSLog("Unable to start recording")
+                return
+            }
+            
+            avRecorder?.delegate = self
+            avRecorder?.isMeteringEnabled = true
+            
+            avRecorder?.record()
+            
+            audioRecording = url
+            
+            updateAudioFile()
+        } else {
+            getPermissionAudioRecording()
         }
-        
-        avRecorder?.delegate = self
-        avRecorder?.isMeteringEnabled = true
-        
-        avRecorder?.record()
-        
-        audioRecording = url
     }
     
     private func stopRecording() {
@@ -200,5 +204,36 @@ extension AddViewController: AVAudioPlayerDelegate, AVAudioRecorderDelegate {
             NSLog("Unable to set audio to new instance of AVAudioPlayer")
             return
         }
+    }
+    
+    func getPermissionAudioRecording() {
+        switch AVAudioSession.sharedInstance().recordPermission {
+        case .undetermined:
+            AVAudioSession.sharedInstance().requestRecordPermission { granted in
+                guard granted == true else {
+                    self.present(self.alertBuilder(message: "Unable to access microphone"), animated: true, completion: nil)
+                    return
+                }
+            }
+            
+        case .denied:
+            present(alertBuilder(message: "Microphone access was denied"), animated: true, completion: nil)
+            
+        case .granted:
+            permissionsGranted = true
+            startRecording()
+            
+        @unknown default:
+            NSLog("Unknown error occured while getting audio recording permissions")
+            return
+        }
+    }
+    
+    func alertBuilder(message: String) -> UIAlertController {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+    
+        return alert
     }
 }
