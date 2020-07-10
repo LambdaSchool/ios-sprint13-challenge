@@ -134,7 +134,6 @@ class ExperiencesViewController: UIViewController {
             let delegate = delegate,
             let title = titleTextField.text,
             title.count > 0 else {
-                // TODO: Add a dialog saying why you can't save.
                 return
         }
         
@@ -146,6 +145,7 @@ class ExperiencesViewController: UIViewController {
                                          audioClip: audioClip,
                                          image: imageView.image,
                                          videoClip: videoClip)
+            
         } else {
             experienceC.createExperience(title: title,
                                          audioClip: audioClip,
@@ -153,6 +153,7 @@ class ExperiencesViewController: UIViewController {
                                          videoClip: videoClip,
                                          latitude: coordinates.latitude,
                                          longitude: coordinates.longitude)
+     
         }
         
     }

@@ -55,8 +55,7 @@ class MapViewController: UIViewController, MapViewDelegate {
             var lat = locManager.location?.coordinate.latitude ?? 0.0
             var long = locManager.location?.coordinate.longitude ?? 0.0
 
-            lat = lat + Double.random(in: -0.005...0.005) // FUTURE: Privacy feature?
-            long = long + Double.random(in: -0.005...0.005)
+         // TODO: Privacy Feature - add random cooordinates around 40 meters
 
             return (latitude: lat, longitude: long)
         }
