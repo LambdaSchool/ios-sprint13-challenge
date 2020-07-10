@@ -175,27 +175,7 @@ extension ExperienceViewController {
         audioRecorder?.stop()
         updateViews()
     }
-    
-//    private func audioUpdateViews() {
-//        let config = UIImage.SymbolConfiguration(pointSize: 14, weight: .regular, scale: .large)
-//
-//        if audioClip == nil || (audioRecorder?.isRecording ?? false) {
-//            let audioMic = UIImage(systemName: "mic.fill", withConfiguration: config)
-//            audioRecordButton.setImage(audioMic, for: .normal)
-//
-//            let audioStop = UIImage(systemName: "stop.fill", withConfiguration: config)
-//            audioRecordButton.setImage(audioStop, for: .selected)
-//        } else {
-//            let largeStart = UIImage(systemName: "stop", withConfiguration: config)
-//            audioRecordButton.setImage(largeStart, for: .normal)
-//
-//            let largeStop = UIImage(systemName: "stop.fill", withConfiguration: config)
-//            audioRecordButton.setImage(largeStop, for: .selected)
-//        }
-//        if let audioRecorder = audioRecorder {
-//            audioRecordButton.isSelected = audioRecorder.isRecording
-//        }
-//    }
+// todo, figure out mic fill button
     
     private func prepareAudioSession() throws {
         let session = AVAudioSession.sharedInstance()
