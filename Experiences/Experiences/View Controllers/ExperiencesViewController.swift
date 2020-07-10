@@ -64,38 +64,28 @@ class ExperiencesViewController: UIViewController {
     
     private func imageUpdateViews() {
         if let scaledImage = scaledImage {
-            imageView.image = filterImage(scaledImage)
+            imageView.image = bwEffectFilter(scaledImage)
         } else {
             imageView.image = nil
         }
         
     }
     
-    private func filterImage(_ image: UIImage) -> UIImage? {
+    private func bwEffectFilter(_ image: UIImage) -> UIImage? {
         
-        // UIImage -> CGImage -> CIImage
-        guard let cgImage = image.cgImage else { return nil }
-        let ciImage = CIImage(cgImage: cgImage)
+        guard   let filter = CIFilter(name: "CIPhotoEffectMono"),
+            
+            let originalImage = CIImage(image: image) else { return nil }
         
-        // Filter image step
-        let filter = CIFilter(name: "CIColorControls")! // build-in filter from Apple
-        //        let filter2 = CIFilter.colorControls()
-        //        filter2.brightness = brightnessSlider.value
         
-        // setting values / getting values from Core Image
-        filter.setValue(ciImage, forKey: kCIInputImageKey /* "inputImage" */)
+        filter.setValue(originalImage, forKey: kCIInputImageKey)
         
-        // CIImage -> CGImage -> UIImage
-        //        guard let outputCIImage = filter.value(forKey: kCIOutputImageKey) as? CIImage else { return nil }
-        guard let outputCIImage = filter.outputImage else { return nil }
+        guard   let outputImage = filter.outputImage,
+            
+            let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else { return nil }
         
-        // Render the image (do image processing here)
-        guard let outputCGImage = context.createCGImage(outputCIImage,
-                                                        from: CGRect(origin: .zero, size: image.size)) else {
-                                                            return nil
-        }
+        return UIImage(cgImage: cgImage).flattened
         
-        return UIImage(cgImage: outputCGImage)
     }
     
     
@@ -130,6 +120,7 @@ class ExperiencesViewController: UIViewController {
     }
     
     @IBAction func saveButton(_ sender: UIBarButtonItem) {
+        
         guard let experienceC = experienceController,
             let delegate = delegate,
             let title = titleTextField.text,
@@ -155,9 +146,23 @@ class ExperiencesViewController: UIViewController {
                                          longitude: coordinates.longitude)
      
         }
+        func showAlertButtonTapped(){
+
+            // create the alert
+            let alert = UIAlertController(title: "Experience Saved!", message: "Press 'Back' to view your experience on a map!", preferredStyle: UIAlertController.Style.alert)
+
+            // add an action (button)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+
+            // show the alert
+        self.present(alert, animated: true, completion: nil)
+        }
+        
+        showAlertButtonTapped()
         
     }
 }
+
 
 
 
@@ -568,6 +573,7 @@ extension ExperiencesViewController {
         
         // Demo with a starter image from Storyboard
         originalImage = imageView.image
+        
     }
     
     // MARK: - Private Functions

@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Experiences-->
+        <!--Map View Controller-->
         <scene sceneID="a34-VP-yub">
             <objects>
-                <viewController id="CXf-fX-FcA" customClass="MapViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Experience" id="CXf-fX-FcA" customClass="MapViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DJD-Kf-Nbq">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -28,15 +28,15 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="NyD-kB-UsW"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Experiences" id="wCV-Uh-q1s">
+                    <navigationItem key="navigationItem" id="wCV-Uh-q1s">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="UOW-E8-cwr">
                             <connections>
-                                <segue destination="8od-JZ-gXh" kind="push" identifier="AddSegue" id="CLG-7H-WF5"/>
+                                <segue destination="8od-JZ-gXh" kind="show" identifier="AddSegue" id="CLG-7H-WF5"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="mapView" destination="y9Q-IB-EWR" id="Csi-3J-GqN"/>
+                        <outlet property="mapView" destination="y9Q-IB-EWR" id="e09-nQ-cb5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R5y-3i-qui" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -80,12 +80,6 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uGA-Xz-3lC">
-                                <rect key="frame" x="122.5" y="653" width="169" height="157"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="uGA-Xz-3lC" secondAttribute="height" constant="12" id="bJ4-Zs-2PC"/>
-                                </constraints>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zB4-pK-1A7">
                                 <rect key="frame" x="171" y="818" width="72" height="30"/>
                                 <state key="normal" title="Add Photo"/>
@@ -106,6 +100,12 @@
                                     <action selector="videoRecordButton:" destination="8od-JZ-gXh" eventType="touchUpInside" id="J6e-bk-wl9"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uGA-Xz-3lC">
+                                <rect key="frame" x="90" y="621" width="234" height="189"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="uGA-Xz-3lC" secondAttribute="height" constant="12" id="bJ4-Zs-2PC"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -131,9 +131,9 @@
                         <viewLayoutGuide key="safeArea" id="T0p-Ne-wPI"/>
                     </view>
                     <navigationItem key="navigationItem" id="RMm-Xv-3EL">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="VEJ-B1-Qru">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="b8J-3R-ojY">
                             <connections>
-                                <action selector="saveButton:" destination="8od-JZ-gXh" id="2fr-dd-M93"/>
+                                <action selector="saveButton:" destination="8od-JZ-gXh" id="r60-y4-WZw"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

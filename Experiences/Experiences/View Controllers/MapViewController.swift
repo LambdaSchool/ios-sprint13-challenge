@@ -26,7 +26,7 @@ class MapViewController: UIViewController, MapViewDelegate {
         
         startLocationManager()
 
-              mapView.delegate = self
+        mapView.delegate = self
 
               // MKMarkerAnnotationView is like a table view cell
               mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExpView")
