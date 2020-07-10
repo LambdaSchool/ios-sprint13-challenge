@@ -8,14 +8,16 @@
 
 import UIKit
 //TODO: Wire in Map View
-//TODO: Display experiences from controller, all controller instances should share same array of experiences via userdefaults
+//TODO: Display experiences via dependency injection from home view controller.
 //TODO: Stretch: Display detail bubble above map annotation.
 class ExperiencesMapViewController: UIViewController {
-
+    //MARK: - Properties -
+    var experiences: [Experience]?
+    
+    
+    //MARK: - Life Cycles -
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
 

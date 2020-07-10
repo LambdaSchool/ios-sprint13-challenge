@@ -7,14 +7,26 @@
 //
 
 import UIKit
+//TODO: load experiences from user defaults in vDL with an update views method
+//TODO: pass experiences by dependency injection via segues to tableView and MapView VCs
 
 class HomeViewController: UIViewController {
-
+    //MARK: - Properties -
+    var experiences: [Experience] = []
+    
+    
+    //MARK: - Life Cycles -
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
+    
+    //MARK: - Methods -
+    private func updateViews() {
+        
+    }
 
+    
     /*
     // MARK: - Navigation
 
