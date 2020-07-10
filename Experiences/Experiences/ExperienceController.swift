@@ -18,8 +18,8 @@ class ExperienceController {
     func createExperience(title: String?,
                           audioClip: URL?,
                           image: UIImage?,
-                          latitude: Double,
-                          longitude: Double) {
+                          latitude: Double = 0.0,
+                          longitude: Double = 0.0) {
         let newExperience = Experience()
         
         newExperience.title = title
