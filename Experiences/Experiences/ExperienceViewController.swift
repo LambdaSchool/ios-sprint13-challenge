@@ -25,6 +25,7 @@ class ExperienceViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet var audioRecordButton: UIButton!
+    @IBOutlet weak var brightnessFilterSlider: UISlider!
     
     var audioPlayer: AVAudioPlayer? {
         didSet {
@@ -88,7 +89,6 @@ class ExperienceViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageSetup()
         
         guard let experience = experience,
             !inited else { return }
@@ -299,22 +299,49 @@ extension ExperienceViewController: AVAudioPlayerDelegate {
 
 extension ExperienceViewController {
     
+    
     // MARK: - ACTIONS
+    
     @IBAction func addButton(_ sender: Any) {
         presentImagePickerControllerToUser()
     }
-    @IBAction func brightnessSlider(_ sender: Any) {
+    @IBAction func brightnessSlider(_ sender: UISlider) {
         updateViews()
+        updateImage()
     }
     
-    func imageSetup() {
-    
-        let filter = CIFilter(name: "CIBumpDistortion")!
-        print(filter)
-        print(filter.attributes)
-    
-        originalImage = imageView.image
-    }
+ private func updateImage() {
+     if let scaledImage = scaledImage {
+         imageView.image = image(byFiltering: scaledImage)
+     } else {
+         imageView.image = nil
+     }
+ }
+ 
+    private func image(byFiltering image: UIImage) -> UIImage {
+        //UIImage -> CGImage -> CIImage "recipe"
+        guard let cgImage = image.cgImage else { return image }
+        let ciImage = CIImage(cgImage: cgImage)
+        let filter = CIFilter.colorControls()
+        
+        filter.inputImage = ciImage
+//        filter.brightness = brightnessSlider.value
+        
+        let filter2 = CIFilter(name: "CIColorControls")!
+        filter2.setValue(ciImage, forKey: "inputImage")
+        
+//        filter2.setValue(brightnessSlider.value, forKey: "inputBrightness")
+        
+        guard let outputImage = filter.outputImage else {
+            return image
+        }
+        
+        guard let outputCGImage = context.createCGImage(outputImage, from: outputImage.extent) else {
+            return image
+           }
+           return UIImage(cgImage: outputCGImage)
+       }
+       
     
     private func presentImagePickerControllerToUser() {
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
