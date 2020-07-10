@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="75" id="vxO-Xu-AEz" customClass="ExperienceViewCell" customModule="Experiences" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="reuseIdentifier" rowHeight="75" id="vxO-Xu-AEz" customClass="ExperienceViewCell" customModule="Experiences" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="75"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vxO-Xu-AEz" id="UYO-P1-iD8">
@@ -49,6 +49,7 @@
                                 <connections>
                                     <outlet property="experienceImage" destination="08h-Gy-ilp" id="Mzm-rp-yza"/>
                                     <outlet property="title" destination="hcC-Hu-UQ4" id="QpH-og-XK5"/>
+                                    <segue destination="NRA-i6-558" kind="show" id="XRh-HL-7fJ"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -143,11 +144,7 @@
                         <viewLayoutGuide key="safeArea" id="QlU-cV-ruT"/>
                     </view>
                     <navigationItem key="navigationItem" id="S3F-5d-uW0">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="V6B-4k-16K">
-                            <connections>
-                                <action selector="saveButtonPressed:" destination="Pyo-sm-fAE" id="r6Z-ax-5ul"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="V6B-4k-16K"/>
                     </navigationItem>
                     <connections>
                         <outlet property="addImageButton" destination="iOo-60-GeB" id="Skf-pT-IsA"/>
@@ -155,13 +152,43 @@
                         <outlet property="image" destination="ioU-8r-2pu" id="swZ-5J-crY"/>
                         <outlet property="playButton" destination="IBa-AI-Sc1" id="LzZ-Oa-WB1"/>
                         <outlet property="recordButton" destination="ix5-EB-Qnz" id="jzK-dk-8eg"/>
-                        <outlet property="saveButton" destination="V6B-4k-16K" id="ZHk-xK-Opc"/>
+                        <outlet property="saveButton" destination="V6B-4k-16K" id="rES-Zg-XaB"/>
                         <outlet property="titleTextField" destination="UEz-8L-6Cq" id="yUp-qK-Bwy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M1j-IF-aI9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3113" y="127"/>
+        </scene>
+        <!--Map Kit View Controller-->
+        <scene sceneID="VnE-os-E7K">
+            <objects>
+                <viewController id="NRA-i6-558" customClass="MapKitViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="py6-lI-3tO">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="4zg-Za-BqQ">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="sZz-rC-gMi" firstAttribute="bottom" secondItem="4zg-Za-BqQ" secondAttribute="bottom" id="Bjr-2p-Bxu"/>
+                            <constraint firstItem="4zg-Za-BqQ" firstAttribute="leading" secondItem="sZz-rC-gMi" secondAttribute="leading" id="UwC-8E-v2H"/>
+                            <constraint firstItem="4zg-Za-BqQ" firstAttribute="top" secondItem="sZz-rC-gMi" secondAttribute="top" id="jBD-f0-e3r"/>
+                            <constraint firstItem="sZz-rC-gMi" firstAttribute="trailing" secondItem="4zg-Za-BqQ" secondAttribute="trailing" id="pux-hg-qoK"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="sZz-rC-gMi"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Tcb-Xy-DM9"/>
+                    <connections>
+                        <outlet property="mapKitView" destination="4zg-Za-BqQ" id="XfM-f4-Dev"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aJd-Vc-QgL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3112" y="858"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="I7U-qh-Txk">

@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import CoreLocation
 
 class AddViewController: UIViewController, UINavigationControllerDelegate {
     
@@ -32,6 +33,8 @@ class AddViewController: UIViewController, UINavigationControllerDelegate {
     var permissionsGranted: Bool = false
     
     var audioRecording: URL?
+    
+    var locationController: LocationController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,22 +80,37 @@ class AddViewController: UIViewController, UINavigationControllerDelegate {
         present(imagePickerController, animated: true, completion: nil)
     }
     
-    @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
-        
-    }
-    
     // MARK: - Utility
     
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        super.prepare(for: segue, sender: sender)
+        
+        guard let button = sender as? UIBarButtonItem, button === saveButton else {
+            NSLog("Button identifier mismatch")
+            return
+        }
+        
+        guard let title = titleTextField.text else {
+            present(alertBuilder(message: "Title field must not be empty"), animated: true, completion: nil)
+            return
+        }
+        
+        guard let coordinate = locationController?.getLocation() else {
+            NSLog("Coordinates not available")
+            return
+        }
+        
+        let newExperience = Experience(title: title, image: image.image?.pngData(), audioRecording: audioRecording, coordinate: coordinate.coordinate)
+        
+        experience = newExperience
     }
-    */
+    
+    // MARK: - Location
+    
 
 }
 

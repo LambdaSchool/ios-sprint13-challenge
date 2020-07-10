@@ -7,16 +7,22 @@
 //
 
 import UIKit
+import CoreLocation
+import MapKit
 
 class ExperienceTableViewController: UITableViewController {
     
     // MARK: - Properties
     var experiences: [Experience] = [Experience]()
     
+    let locationController = LocationController()
+    
     // MARK: - View Initialization
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        locationController.getCurrentLocation()
     }
 
     // MARK: - Table view data source
@@ -29,15 +35,18 @@ class ExperienceTableViewController: UITableViewController {
         return experiences.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath) as? ExperienceViewCell else {
+            NSLog("The dequeued cell is not an instance of ExperienceViewCell")
+            return UITableViewCell()
+        }
+        
+        cell.experience = experiences[indexPath.row]
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
@@ -79,8 +88,23 @@ class ExperienceTableViewController: UITableViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        super.prepare(for: segue, sender: sender)
+        
+        switch(segue.identifier ?? "") {
+        case "addSegue":
+            NSLog("addSegue invoked")
+            
+            guard let addExperienceViewController = segue.destination as? AddViewController else {
+                return
+            }
+            
+            addExperienceViewController.locationController = locationController
+            
+        default:
+            NSLog("Unexpected segue identifier or no segue available")
+            return
+        }
+
     }
     
     @IBAction func unwindToExperienceTable(_ unwindSegue: UIStoryboardSegue) {
@@ -96,5 +120,6 @@ class ExperienceTableViewController: UITableViewController {
         }
     }
     
+    // MARK: - Utility
 
 }
