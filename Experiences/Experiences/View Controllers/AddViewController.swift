@@ -194,8 +194,7 @@ extension AddViewController: AVAudioPlayerDelegate, AVAudioRecorderDelegate {
             avRecorder?.record()
             
             audioRecording = url
-            
-            updateAudioFile()
+
         } else {
             getPermissionAudioRecording()
         }
@@ -208,6 +207,7 @@ extension AddViewController: AVAudioPlayerDelegate, AVAudioRecorderDelegate {
         playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
         
         playButton.isUserInteractionEnabled = true
+        audioTrack.isUserInteractionEnabled = true
         
         avRecorder?.stop()
     }
@@ -217,11 +217,37 @@ extension AddViewController: AVAudioPlayerDelegate, AVAudioRecorderDelegate {
             avPlayer = try AVAudioPlayer(contentsOf: audioRecording!)
             avPlayer?.delegate = self
             avPlayer?.isMeteringEnabled = true
-    
+            
+//            let displayLink = CADisplayLink(target: self, selector: #selector(updateSlider))
+//            displayLink.add(to: .current, forMode: .common)
         } catch {
             NSLog("Unable to set audio to new instance of AVAudioPlayer")
             return
         }
+    }
+    
+    @objc func updateSlider() {
+        updateAudioTrack()
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        updateAudioTrack()
+    }
+    
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        if flag {
+            updateAudioFile()
+        }
+    }
+    
+    private func updateAudioTrack() {
+        let duration = Float(avPlayer?.duration ?? 0.0)
+        let current = Float(avPlayer?.currentTime ?? 0.0)
+        
+        audioTrack.maximumValue = duration
+        audioTrack.maximumValue = 0.0
+        audioTrack.value = current
+        
     }
     
     func getPermissionAudioRecording() {
@@ -253,5 +279,10 @@ extension AddViewController: AVAudioPlayerDelegate, AVAudioRecorderDelegate {
         alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
     
         return alert
+    }
+    
+    @IBAction func sliderValueChanged(_ sender: UISlider) {
+        avPlayer?.currentTime = TimeInterval(audioTrack.value)
+        updateAudioTrack()
     }
 }
