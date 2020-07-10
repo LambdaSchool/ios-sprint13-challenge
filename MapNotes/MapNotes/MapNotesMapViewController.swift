@@ -19,7 +19,6 @@ class MapNotesMapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     override func viewDidLoad() {
         super.viewDidLoad()
-//        determineCurrentLocation()
         mapView.delegate = self
         setupMapView()
 //        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "QuakeView")

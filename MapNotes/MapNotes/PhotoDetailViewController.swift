@@ -140,6 +140,7 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
                 }
             }
         }
+        navigationController?.popViewController(animated: true)
     }
     
     
