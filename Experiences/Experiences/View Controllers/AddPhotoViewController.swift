@@ -1,7 +1,6 @@
 //
 //  AddPhotoViewController.swift
-//  ExperiencesWorkingDraft
-//
+//  Experiences
 //  Created by Cody Morley on 7/10/20.
 //  Copyright © 2020 Cody Morley. All rights reserved.
 //
