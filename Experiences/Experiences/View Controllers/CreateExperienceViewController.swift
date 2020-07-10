@@ -7,24 +7,56 @@
 //
 
 import UIKit
+import AVFoundation
 
 class CreateExperienceViewController: UIViewController {
+    //MARK: - Properties -
+    var experienceController = ExperienceController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
 
-    /*
+    
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == .addVideoSegue {
+            guard let addVideoVC = segue.destination as?
+                AddVideoViewController else { return }
+            addVideoVC.videoDelegate = self.experienceController
+            
+        }
     }
-    */
+    
+    
+    //MARK: - Methods -
+    private func requestPermissionAndShowCamera() {
+        let status = AVCaptureDevice.authorizationStatus(for: .video)
+        
+        switch status {
+        case .authorized:
+            showCamera()
+        case .denied:
+            fatalError("Camera Permission Denied")
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                guard granted else {
+                    fatalError("Camera permission denied.")
+                }
+                DispatchQueue.main.async {
+                    self.showCamera()
+                }
+            }
+        case .restricted:
+            fatalError("Camera Permission Restricted")
+        @unknown default:
+            fatalError("Unknown system state. Permission value not handled.")
+        }
+    }
+    
+    private func showCamera() {
+        performSegue(withIdentifier: .addVideoSegue, sender: self)
+    }
 
 }

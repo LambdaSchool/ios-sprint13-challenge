@@ -19,7 +19,7 @@ struct ExperienceController {
     var draftAudio: URL?
     var draftLatitude: Double?
     var draftLongitude: Double?
-    var experiences: [Experience]
+    var experiences: [Experience] = []
     
     
     //MARK: - Life Cycle -
