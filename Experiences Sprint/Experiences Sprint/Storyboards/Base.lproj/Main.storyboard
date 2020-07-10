@@ -73,37 +73,53 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Add Image"/>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Zu-vN-dNv">
-                                <rect key="frame" x="20" y="530" width="374" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" title="Record an Audio Clip!">
-                                    <color key="titleColor" red="0.58072251080000004" green="0.066734083" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="ZOp-GI-dpT">
+                                <rect key="frame" x="20" y="559" width="374" height="46"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cif-MM-zec">
+                                        <rect key="frame" x="0.0" y="0.0" width="187" height="46"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" image="play.fill" catalog="system"/>
+                                        <state key="selected" image="pause.fill" catalog="system"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yDE-17-eqg">
+                                        <rect key="frame" x="187" y="0.0" width="187" height="46"/>
+                                        <state key="normal" image="mic.fill" catalog="system"/>
+                                        <state key="selected" image="stop.fill" catalog="system"/>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="46" id="doc-15-47A"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="qhd-Tr-K9d" firstAttribute="top" secondItem="yTS-oI-I8Y" secondAttribute="top" id="0Ly-QD-Zhq"/>
-                            <constraint firstItem="yTS-oI-I8Y" firstAttribute="trailing" secondItem="4Zu-vN-dNv" secondAttribute="trailing" constant="20" id="1Uk-aS-szM"/>
+                            <constraint firstItem="ZOp-GI-dpT" firstAttribute="leading" secondItem="yTS-oI-I8Y" secondAttribute="leading" constant="20" id="1GE-67-le3"/>
                             <constraint firstItem="qhd-Tr-K9d" firstAttribute="leading" secondItem="yTS-oI-I8Y" secondAttribute="leading" id="9WG-Vk-gxU"/>
+                            <constraint firstItem="yTS-oI-I8Y" firstAttribute="trailing" secondItem="ZOp-GI-dpT" secondAttribute="trailing" constant="20" id="Dc6-mH-ycB"/>
                             <constraint firstItem="kKY-nb-tty" firstAttribute="leading" secondItem="yTS-oI-I8Y" secondAttribute="leading" constant="20" id="EZR-H1-apv"/>
-                            <constraint firstItem="4Zu-vN-dNv" firstAttribute="leading" secondItem="yTS-oI-I8Y" secondAttribute="leading" constant="20" id="Hqb-55-8U9"/>
                             <constraint firstItem="0lu-e6-sxJ" firstAttribute="leading" secondItem="yTS-oI-I8Y" secondAttribute="leading" constant="60" id="Ige-VJ-pG7"/>
+                            <constraint firstItem="yTS-oI-I8Y" firstAttribute="bottom" secondItem="ZOp-GI-dpT" secondAttribute="bottom" constant="257" id="LX6-Ig-y80"/>
                             <constraint firstItem="yTS-oI-I8Y" firstAttribute="trailing" secondItem="xP4-Pm-4j0" secondAttribute="trailing" constant="20" id="Spt-ir-0gD"/>
                             <constraint firstItem="xP4-Pm-4j0" firstAttribute="top" secondItem="qhd-Tr-K9d" secondAttribute="bottom" constant="30" id="UQt-6X-sYe"/>
-                            <constraint firstItem="4Zu-vN-dNv" firstAttribute="top" secondItem="kKY-nb-tty" secondAttribute="bottom" constant="69" id="Vo0-qu-XWD"/>
-                            <constraint firstItem="yTS-oI-I8Y" firstAttribute="bottom" secondItem="4Zu-vN-dNv" secondAttribute="bottom" constant="298" id="VtX-7j-oNH"/>
                             <constraint firstItem="kKY-nb-tty" firstAttribute="top" secondItem="0lu-e6-sxJ" secondAttribute="bottom" constant="50" id="YGY-tT-7qq"/>
                             <constraint firstItem="yTS-oI-I8Y" firstAttribute="trailing" secondItem="0lu-e6-sxJ" secondAttribute="trailing" constant="60" id="YTw-b5-S3F"/>
                             <constraint firstItem="xP4-Pm-4j0" firstAttribute="leading" secondItem="yTS-oI-I8Y" secondAttribute="leading" constant="20" id="hKo-JA-30i"/>
                             <constraint firstItem="qhd-Tr-K9d" firstAttribute="trailing" secondItem="yTS-oI-I8Y" secondAttribute="trailing" id="kXu-83-RQy"/>
                             <constraint firstItem="0lu-e6-sxJ" firstAttribute="top" secondItem="xP4-Pm-4j0" secondAttribute="bottom" constant="35" id="mIC-l7-kqN"/>
+                            <constraint firstItem="ZOp-GI-dpT" firstAttribute="top" secondItem="kKY-nb-tty" secondAttribute="bottom" constant="98" id="tMA-cj-oWv"/>
                             <constraint firstItem="yTS-oI-I8Y" firstAttribute="trailing" secondItem="kKY-nb-tty" secondAttribute="trailing" constant="20" id="w9q-PX-gFX"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="yTS-oI-I8Y"/>
                     </view>
                     <connections>
+                        <outlet property="addImage" destination="kKY-nb-tty" id="dSh-8l-JtZ"/>
                         <outlet property="imageView" destination="0lu-e6-sxJ" id="CMp-fv-PXV"/>
+                        <outlet property="playButton" destination="Cif-MM-zec" id="zIs-WH-Mdz"/>
+                        <outlet property="recordAudio" destination="yDE-17-eqg" id="HPX-UB-2Nh"/>
+                        <outlet property="titleTextField" destination="xP4-Pm-4j0" id="CZM-iI-GM4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zfU-Pz-fRH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -129,4 +145,10 @@
             <point key="canvasLocation" x="-81.159420289855078" y="84.375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="mic.fill" catalog="system" width="108" height="128"/>
+        <image name="pause.fill" catalog="system" width="116" height="128"/>
+        <image name="play.fill" catalog="system" width="116" height="128"/>
+        <image name="stop.fill" catalog="system" width="128" height="113"/>
+    </resources>
 </document>
