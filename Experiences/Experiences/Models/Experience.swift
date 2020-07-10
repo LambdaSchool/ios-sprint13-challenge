@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreLocation
 
 
 struct Experience {
@@ -16,6 +17,5 @@ struct Experience {
     var video: URL?
     var photo: UIImage?
     var audio: URL?
-    var latitude: Double
-    var longitude: Double
+    var location: CLLocationCoordinate2D
 }

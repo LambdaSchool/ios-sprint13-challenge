@@ -18,8 +18,7 @@ struct ExperienceController: TextAdderDelegate {
     var draftVideo: URL?
     var draftPhoto: UIImage?
     var draftAudio: URL?
-    var draftLatitude: Double?
-    var draftLongitude: Double?
+    var draftLocation: CLLocationCoordinate2D?
     var experiences: [Experience] = []
     
     
@@ -44,16 +43,14 @@ struct ExperienceController: TextAdderDelegate {
     
     mutating func createExperience() {
         guard let title = draftTitle,
-            let latitude = draftLatitude,
-            let longitude = draftLongitude else { return }
+            let location = draftLocation else { return }
         
         experiences.append(Experience(title: title,
                                       caption: draftCaption,
                                       video: draftVideo,
                                       photo: draftPhoto,
                                       audio: draftAudio,
-                                      latitude: latitude,
-                                      longitude: longitude))
+                                      location: location))
         //TODO: Save experiences to user defaults
     }
 }

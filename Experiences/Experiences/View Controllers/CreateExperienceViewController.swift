@@ -55,18 +55,13 @@ class CreateExperienceViewController: UIViewController {
             return false
         } else { return true }
     }
-    private var isLat: Bool {
-        if self.experienceController.draftLatitude == nil {
-            return false
-        } else { return true }
-    }
-    private var isLon: Bool {
-        if self.experienceController.draftLongitude == nil {
+    private var isLocation: Bool {
+        if self.experienceController.draftLocation == nil {
             return false
         } else { return true }
     }
     private var isReady: Bool {
-        if isTitle == true && isLat == true && isLon == true {
+        if isTitle == true && isLocation == true {
             return true
         } else { return false }
     }
