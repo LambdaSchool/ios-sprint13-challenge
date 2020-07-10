@@ -44,9 +44,6 @@ class AddExperienceViewController: UIViewController {
     func updateViews() {
         playButton.isSelected = isPlaying
         
-        let recordButtonText = isRecording ? "Stop recording" : "Start recording"
-        recordButton.setTitle(recordButtonText, for: .normal)
-        
     }
     var originalImage: UIImage? {
         didSet {
