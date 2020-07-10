@@ -83,5 +83,18 @@ class ExperienceTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     
+    @IBAction func unwindToExperienceTable(_ unwindSegue: UIStoryboardSegue) {
+        if let sourceViewController = unwindSegue.source as? AddViewController, let experience = sourceViewController.experience {
+            
+            if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                experiences[selectedIndexPath.row] = experience
+            } else {
+                experiences.append(experience)
+            }
+            
+            tableView.reloadData()
+        }
+    }
+    
 
 }

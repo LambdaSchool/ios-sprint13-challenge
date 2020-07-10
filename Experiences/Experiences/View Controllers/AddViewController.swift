@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import AVFoundation
 
-class AddViewController: UIViewController {
+class AddViewController: UIViewController, UINavigationControllerDelegate, AVAudioPlayerDelegate {
     
     // MARK: - Interface Builder
     @IBOutlet var saveButton: UIBarButtonItem!
@@ -20,12 +21,59 @@ class AddViewController: UIViewController {
     @IBOutlet var audioTrack: UISlider!
     
     // MARK: - Properties
+    var experience: Experience?
+    
+    var avPlayer: AVAudioPlayer = AVAudioPlayer()
+    
+    var isRecording: Bool = false
+    var isPlayback: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        avPlayer.delegate = self
+        audioTrack.setValue(0, animated: false)
+        
+        if let _ = experience {
+            audioTrack.isUserInteractionEnabled = true
+        } else {
+            audioTrack.isUserInteractionEnabled = false
+        }
     }
+    
+    // MARK: - IBActions
+    @IBAction func playButtonPressed(_ sender: UIButton) {
+        
+    }
+    
+    @IBAction func recordButtonPressed(_ sender: UIButton) {
+        
+    }
+    
+    @IBAction func addImageButtonPressed(_ sender: UIButton) {
+        titleTextField.resignFirstResponder()
+        
+        let imagePickerController = UIImagePickerController()
+        
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.delegate = self
+        
+        present(imagePickerController, animated: true, completion: nil)
+    }
+    
+    @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
+        
+    }
+    
+    // MARK: - Utility
+    private func startRecording() throws {
+        isRecording = true
+        
+        let session = AVAudioSession.sharedInstance()
+        try session.setCategory(.playAndRecord)
+        try session.setActive(true, options: [])
+    }
+    
     
 
     /*
@@ -38,4 +86,20 @@ class AddViewController: UIViewController {
     }
     */
 
+}
+
+extension AddViewController: UIImagePickerControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
+            return
+        }
+        
+        image.image = selectedImage
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
 }
