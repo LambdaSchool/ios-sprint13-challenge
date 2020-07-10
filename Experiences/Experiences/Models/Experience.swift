@@ -9,16 +9,20 @@
 import Foundation
 import MapKit
 
-class Experience: NSCoder {
-    let title: String
+class Experience: NSCoder, MKAnnotation {
+    
+    let title: String?
     let image: Data?
     let audioRecording: URL?
-    let location: MKCoordinateSpan?
     
-    init(title: String, image: Data?, audioRecording: URL?, location: MKCoordinateSpan?) {
+    var coordinate: CLLocationCoordinate2D
+
+    
+    init(title: String, image: Data?, audioRecording: URL?, coordinate: CLLocationCoordinate2D) {
         self.title = title
         self.image = image
         self.audioRecording = audioRecording
-        self.location = location
+        self.coordinate = coordinate
     }
+    
 }

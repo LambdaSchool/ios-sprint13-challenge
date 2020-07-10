@@ -104,9 +104,12 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="REM-s2-sG6">
                                         <rect key="frame" x="0.0" y="37.5" width="364" height="37.5"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IBa-AI-Sc1">
+                                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IBa-AI-Sc1">
                                                 <rect key="frame" x="0.0" y="0.0" width="182" height="37.5"/>
-                                                <state key="normal" image="play.fill" catalog="system"/>
+                                                <state key="normal" image="play" catalog="system"/>
+                                                <connections>
+                                                    <action selector="playButtonPressed:" destination="Pyo-sm-fAE" eventType="touchUpInside" id="9VM-OY-YV0"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ix5-EB-Qnz">
                                                 <rect key="frame" x="182" y="0.0" width="182" height="37.5"/>
@@ -150,7 +153,7 @@
                         <outlet property="addImageButton" destination="iOo-60-GeB" id="Skf-pT-IsA"/>
                         <outlet property="audioTrack" destination="ax6-p9-vhy" id="bpv-b1-6K8"/>
                         <outlet property="image" destination="ioU-8r-2pu" id="swZ-5J-crY"/>
-                        <outlet property="playButton" destination="IBa-AI-Sc1" id="3Mc-mF-gjA"/>
+                        <outlet property="playButton" destination="IBa-AI-Sc1" id="LzZ-Oa-WB1"/>
                         <outlet property="recordButton" destination="ix5-EB-Qnz" id="jzK-dk-8eg"/>
                         <outlet property="saveButton" destination="V6B-4k-16K" id="ZHk-xK-Opc"/>
                         <outlet property="titleTextField" destination="UEz-8L-6Cq" id="yUp-qK-Bwy"/>
@@ -181,7 +184,7 @@
     </scenes>
     <resources>
         <image name="lambda" width="378" height="98.5"/>
-        <image name="play.fill" catalog="system" width="116" height="128"/>
+        <image name="play" catalog="system" width="120" height="128"/>
         <image name="recordingtape" catalog="system" width="128" height="60"/>
     </resources>
 </document>
