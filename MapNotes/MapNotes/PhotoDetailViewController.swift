@@ -10,10 +10,13 @@ import UIKit
 import CoreImage
 import CoreImage.CIFilterBuiltins
 import Photos
+import CoreLocation
+import MapKit
 
 class PhotoDetailViewController: UIViewController, UINavigationControllerDelegate {
     private let context = CIContext(options: nil)
 
+    var mapNoteController: MapNoteController?
     
     private var originalImage: UIImage? {
         didSet {
@@ -35,15 +38,15 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
         }
     }
     
+    var coordinates: CLLocationCoordinate2D!
+    
     @IBOutlet weak var sepiaIntensitySlider: UISlider!
     @IBOutlet weak var imageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let filter1 = CIFilter(name: "CIColorControls")
-        let filter = CIFilter.colorControls()
-        filter.brightness = 1 // ranges are dependent on implementation / documentation
+    
         
         
         
@@ -116,6 +119,11 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
         
         guard let processedImage = filterImage(originalImage) else {return}
         
+        print("\(mapNoteController)")
+        
+        mapNoteController!.createMapNote(title: "Photo MapNote", coordinate: coordinates, imageData: processedImage.jpegData(compressionQuality: 0))
+        
+        
         PHPhotoLibrary.requestAuthorization { (status) in
             guard status == .authorized else {return} // TODO handle other cases
             
@@ -136,7 +144,7 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
     
     
     // MARK: Slider events
-    @IBAction func sepiaIntensityChanged(_ sender: Any) {
+    @IBAction func sepiaIntensityChanged(_ sender: UISlider) {
         updateImage()
     }
     

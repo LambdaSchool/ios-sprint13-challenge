@@ -8,6 +8,8 @@
 
 import UIKit
 import AVFoundation
+import CoreLocation
+import MapKit
 
 class AudioDetailViewController: UIViewController {
     
@@ -18,6 +20,8 @@ class AudioDetailViewController: UIViewController {
             audioPlayer.delegate = self
         }
     }
+    var mapNoteController: MapNoteController?
+    var coordinates: CLLocationCoordinate2D!
     var audioRecorder: AVAudioRecorder?
     //    This will point to the place that we record the audio, so we can play it back later
     var recordingURL: URL?
@@ -25,7 +29,7 @@ class AudioDetailViewController: UIViewController {
     var isPlaying: Bool {
         audioPlayer?.isPlaying ?? false
     }
-    
+   
     weak var timer: Timer?
     
     @IBOutlet weak var playButton: UIButton!
@@ -61,7 +65,6 @@ class AudioDetailViewController: UIViewController {
                                                                    weight: .regular)
         
         //        calling functions
-        loadAudio()
         updateViews()
         
     }
@@ -102,16 +105,16 @@ class AudioDetailViewController: UIViewController {
     
     // MARK: - Playback
     
-    func loadAudio() {
-        // app bundle is raeadonly folder
-        
-        let songURL = Bundle.main.url(forResource: "piano", withExtension: "mp3")! // programmer error if this fails to load
-        
-        audioPlayer = try? AVAudioPlayer(contentsOf: songURL) // Fix better error handling
-        audioPlayer?.isMeteringEnabled = true
-        audioPlayer?.delegate = self
-        
-    }
+//    func loadAudio() {
+//        // app bundle is raeadonly folder
+//
+//        let songURL = Bundle.main.url(forResource: "piano", withExtension: "mp3")! // programmer error if this fails to load
+//
+//        audioPlayer = try? AVAudioPlayer(contentsOf: songURL) // Fix better error handling
+//        audioPlayer?.isMeteringEnabled = true
+//        audioPlayer?.delegate = self
+//
+//    }
     
     //what do we want to do?
     //    pause, volume control, restart audio, update the time/labels
@@ -187,7 +190,9 @@ class AudioDetailViewController: UIViewController {
             audioRecorder?.isMeteringEnabled = true
             updateViews()
             startTimer()
+            
         }
+
     }
     
     func stopRecording(){
@@ -230,6 +235,12 @@ class AudioDetailViewController: UIViewController {
     
     @IBAction func toggleRecording(_ sender: Any) {
         toggleRecording()
+    }
+    
+    @IBAction func saveTapped( _sender: Any) {
+        mapNoteController?.createMapNote(title: "Audio MapNote", coordinate: coordinates, audioURL: recordingURL)
+        navigationController?.popToRootViewController(animated: true)
+        
     }
 }
 
