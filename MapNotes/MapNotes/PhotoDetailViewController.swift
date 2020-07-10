@@ -80,9 +80,6 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
         filter.inputImage = ciImage
         filter.intensity = sepiaIntensitySlider.value
       
-        
-        
-        
         //        CIImage -> CGImage -> UIImage
         guard let outputCIImage = filter.outputImage else { return nil }
         
