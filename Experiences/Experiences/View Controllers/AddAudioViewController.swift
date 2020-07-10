@@ -8,10 +8,10 @@
 
 import UIKit
 import AVFoundation
-
+//TODO: Set up Audio permissions in info.plist
+//TODO: Save URL for recorded audio track to the controller via the delegate
+//TODO: Create Action for cancel button to dismiss without saving.
 class AddAudioViewController: UIViewController {
-    //TODO: Save URL for recorded audio track to the controller via the delegate
-    //TODO: Create Action for cancel button to dismiss without saving.
     //MARK: - Properties -
     @IBOutlet var recordButton: UIButton!
     @IBOutlet var playPauseButton: UIButton!
@@ -98,9 +98,6 @@ class AddAudioViewController: UIViewController {
         
     }
     
-    @IBAction func sendCommentToServer(_ sender: Any) {
-        //TODO: Send Comment to firebase.
-    }
     
     
     //MARK: - Methods -

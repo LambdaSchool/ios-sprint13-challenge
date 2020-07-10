@@ -181,11 +181,17 @@
                                 <rect key="frame" x="8" y="44" width="48" height="39"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                 <state key="normal" title="Back"/>
+                                <connections>
+                                    <action selector="back:" destination="wNY-Hz-Aqg" eventType="touchUpInside" id="LLW-3z-o4V"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T1W-Io-B1n">
                                 <rect key="frame" x="342" y="44" width="64" height="39"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                 <state key="normal" title="Create"/>
+                                <connections>
+                                    <action selector="createTapped:" destination="wNY-Hz-Aqg" eventType="touchUpInside" id="I5J-H9-HMB"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="36" translatesAutoresizingMaskIntoConstraints="NO" id="VF3-1A-S5B">
                                 <rect key="frame" x="8" y="135" width="398" height="201"/>
@@ -195,7 +201,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                         <state key="normal" image="video.circle.fill" catalog="system"/>
                                         <connections>
-                                            <segue destination="7bL-Td-Y5y" kind="presentation" identifier="AddVideoSegue" modalPresentationStyle="fullScreen" id="WUy-OC-Xtt"/>
+                                            <action selector="addVideo:" destination="wNY-Hz-Aqg" eventType="touchUpInside" id="haP-zr-IhD"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I7X-7J-biv">
@@ -239,6 +245,17 @@
                         <viewLayoutGuide key="safeArea" id="eJx-ee-mDB"/>
                     </view>
                     <navigationItem key="navigationItem" id="CBH-hY-2JG"/>
+                    <connections>
+                        <outlet property="audioReadyLabel" destination="5Ud-69-vga" id="iBI-ow-2qP"/>
+                        <outlet property="captionReadyLabel" destination="UUm-5z-azt" id="4lz-Ai-hS3"/>
+                        <outlet property="captionTextView" destination="3xd-Mb-H94" id="JKD-NX-xmc"/>
+                        <outlet property="photoReadyLabel" destination="Pb3-7M-6N7" id="x3i-Af-LQg"/>
+                        <outlet property="readyLabel" destination="y8C-Jb-7Tz" id="cS2-8q-5aD"/>
+                        <outlet property="titleReadyLabel" destination="Ngk-eK-XCf" id="VTr-tB-pcK"/>
+                        <outlet property="titleTextField" destination="iY2-ML-j41" id="DX7-AJ-JT9"/>
+                        <outlet property="videoReadyLabel" destination="AOZ-AX-spF" id="kkQ-jf-Rjl"/>
+                        <segue destination="7bL-Td-Y5y" kind="presentation" identifier="AddVideoSegue" modalPresentationStyle="fullScreen" id="7oY-B8-d5c"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Un-rQ-LQT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

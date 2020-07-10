@@ -7,7 +7,9 @@
 //
 
 import UIKit
-
+//TODO: Get experience from table view
+//TODO: Wire in UI elements
+//TODO: Display Experience properties via UI elements as Master -> Detail pattern
 class ExperienceDetailViewController: UIViewController {
 
     override func viewDidLoad() {

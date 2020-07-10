@@ -8,9 +8,10 @@
 
 import Foundation
 import UIKit
+import CoreLocation
 
 
-struct ExperienceController {
+struct ExperienceController: TextAdderDelegate {
     //MARK: - Properties -
     var draftTitle: String?
     var draftCaption: String?
@@ -38,7 +39,7 @@ struct ExperienceController {
     }
     
     mutating func addGPC(_ lat: Double, _ lon: Double) {
-        //figure out how to get current corrdinates and set lat and long
+        //TODO: figure out how to get current corrdinates and set lat and long
     }
     
     mutating func createExperience() {

@@ -7,6 +7,9 @@
 //
 
 import UIKit
+//TODO: Wire in Cell
+//TODO: Set up tableview to display contents of elements in controller
+//TODO: Wire segue to pass experience via dependency injection to detail view
 
 class ExperiencesTableViewController: UITableViewController {
 

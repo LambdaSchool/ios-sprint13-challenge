@@ -20,3 +20,9 @@ protocol PhotoAdderDelegate {
 protocol AudioAdderDelegate {
     mutating func addAudio(_ audio: URL)
 }
+
+protocol TextAdderDelegate {
+    mutating func addTitle(_ title: String)
+       
+    mutating func addCaption(_ caption: String)
+}

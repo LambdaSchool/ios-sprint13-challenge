@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+//TODO: Set up photo permissions in info.plist
 class AddPhotoViewController: UIViewController {
     //MARK: - Properties -
     var photoDelegate: PhotoAdderDelegate?
