@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Experience Map View Controller-->
         <scene sceneID="cIW-og-Y3b">
             <objects>
-                <viewController id="GsW-yU-gu9" sceneMemberID="viewController">
+                <viewController id="GsW-yU-gu9" customClass="ExperienceMapViewController" customModule="Experiences_Sprint" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vyd-O3-vVy">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -31,19 +31,23 @@
                     <navigationItem key="navigationItem" id="d3l-9t-bOt">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="J6r-tG-tuh">
                             <connections>
-                                <segue destination="ghh-vz-UNb" kind="presentation" modalPresentationStyle="fullScreen" id="6t5-JR-cnv"/>
+                                <segue destination="ghh-vz-UNb" kind="presentation" identifier="NewExperienceSegue" modalPresentationStyle="fullScreen" id="6t5-JR-cnv"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="5PF-ou-o8i" id="HXP-SP-Cvs"/>
+                        <outlet property="newExperienceButton" destination="J6r-tG-tuh" id="tFL-gT-ONC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5SJ-oC-UNC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="760.86956521739137" y="84.375"/>
         </scene>
-        <!--View Controller-->
+        <!--Experience Detail View Controller-->
         <scene sceneID="2mC-F7-08H">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="ghh-vz-UNb" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="ghh-vz-UNb" customClass="ExperienceDetailViewController" customModule="Experiences_Sprint" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8yv-J3-5b1">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -98,6 +102,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="yTS-oI-I8Y"/>
                     </view>
+                    <connections>
+                        <outlet property="imageView" destination="0lu-e6-sxJ" id="CMp-fv-PXV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zfU-Pz-fRH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
