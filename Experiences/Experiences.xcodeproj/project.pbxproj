@@ -9,13 +9,14 @@
 /* Begin PBXBuildFile section */
 		BE70AFE624B8BB2B0086CC5D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE70AFE524B8BB2B0086CC5D /* AppDelegate.swift */; };
 		BE70AFE824B8BB2B0086CC5D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE70AFE724B8BB2B0086CC5D /* SceneDelegate.swift */; };
-		BE70AFEA24B8BB2B0086CC5D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE70AFE924B8BB2B0086CC5D /* ViewController.swift */; };
 		BE70AFED24B8BB2B0086CC5D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE70AFEB24B8BB2B0086CC5D /* Main.storyboard */; };
 		BE70AFF024B8BB2B0086CC5D /* Experiences.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BE70AFEE24B8BB2B0086CC5D /* Experiences.xcdatamodeld */; };
 		BE70AFF224B8BB2C0086CC5D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE70AFF124B8BB2C0086CC5D /* Assets.xcassets */; };
 		BE70AFF524B8BB2C0086CC5D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE70AFF324B8BB2C0086CC5D /* LaunchScreen.storyboard */; };
 		BE70B00024B8BB2C0086CC5D /* ExperiencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE70AFFF24B8BB2C0086CC5D /* ExperiencesTests.swift */; };
 		BE70B00B24B8BB2D0086CC5D /* ExperiencesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE70B00A24B8BB2D0086CC5D /* ExperiencesUITests.swift */; };
+		BE70B01D24B8BD300086CC5D /* Experience.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE70B01C24B8BD300086CC5D /* Experience.swift */; };
+		BE70B01F24B8C0110086CC5D /* ExperienceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE70B01E24B8C0110086CC5D /* ExperienceTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +40,6 @@
 		BE70AFE224B8BB2B0086CC5D /* Experiences.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Experiences.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE70AFE524B8BB2B0086CC5D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BE70AFE724B8BB2B0086CC5D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		BE70AFE924B8BB2B0086CC5D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		BE70AFEC24B8BB2B0086CC5D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BE70AFEF24B8BB2B0086CC5D /* Experiences.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Experiences.xcdatamodel; sourceTree = "<group>"; };
 		BE70AFF124B8BB2C0086CC5D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -51,6 +51,8 @@
 		BE70B00624B8BB2D0086CC5D /* ExperiencesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExperiencesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE70B00A24B8BB2D0086CC5D /* ExperiencesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperiencesUITests.swift; sourceTree = "<group>"; };
 		BE70B00C24B8BB2D0086CC5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BE70B01C24B8BD300086CC5D /* Experience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Experience.swift; sourceTree = "<group>"; };
+		BE70B01E24B8C0110086CC5D /* ExperienceTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperienceTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,9 +103,10 @@
 		BE70AFE424B8BB2B0086CC5D /* Experiences */ = {
 			isa = PBXGroup;
 			children = (
-				BE70AFE524B8BB2B0086CC5D /* AppDelegate.swift */,
-				BE70AFE724B8BB2B0086CC5D /* SceneDelegate.swift */,
-				BE70AFE924B8BB2B0086CC5D /* ViewController.swift */,
+				BE70B01B24B8BC4E0086CC5D /* App */,
+				BE70B01A24B8BC420086CC5D /* Models */,
+				BE70B01924B8BC3A0086CC5D /* Storyboards */,
+				BE70B01824B8BC310086CC5D /* View Controllers */,
 				BE70AFEB24B8BB2B0086CC5D /* Main.storyboard */,
 				BE70AFF124B8BB2C0086CC5D /* Assets.xcassets */,
 				BE70AFF324B8BB2C0086CC5D /* LaunchScreen.storyboard */,
@@ -129,6 +132,38 @@
 				BE70B00C24B8BB2D0086CC5D /* Info.plist */,
 			);
 			path = ExperiencesUITests;
+			sourceTree = "<group>";
+		};
+		BE70B01824B8BC310086CC5D /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BE70B01E24B8C0110086CC5D /* ExperienceTableViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		BE70B01924B8BC3A0086CC5D /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		BE70B01A24B8BC420086CC5D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BE70B01C24B8BD300086CC5D /* Experience.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		BE70B01B24B8BC4E0086CC5D /* App */ = {
+			isa = PBXGroup;
+			children = (
+				BE70AFE524B8BB2B0086CC5D /* AppDelegate.swift */,
+				BE70AFE724B8BB2B0086CC5D /* SceneDelegate.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -262,10 +297,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE70AFEA24B8BB2B0086CC5D /* ViewController.swift in Sources */,
 				BE70AFE624B8BB2B0086CC5D /* AppDelegate.swift in Sources */,
 				BE70AFE824B8BB2B0086CC5D /* SceneDelegate.swift in Sources */,
 				BE70AFF024B8BB2B0086CC5D /* Experiences.xcdatamodeld in Sources */,
+				BE70B01D24B8BD300086CC5D /* Experience.swift in Sources */,
+				BE70B01F24B8C0110086CC5D /* ExperienceTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
