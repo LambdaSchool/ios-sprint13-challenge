@@ -27,17 +27,18 @@ class MapKitViewController: UIViewController, MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard let experience = experience else {
-            NSLog("Experience found to be null")
-            return nil
+        guard annotation is MKPointAnnotation else { return nil }
+        
+        var annotationView = mapKitView.dequeueReusableAnnotationView(withIdentifier: "Annotation")
+        
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "Annotation")
+            annotationView!.canShowCallout = true
+        } else {
+            annotationView!.annotation = annotation
         }
         
-        guard let annotation = mapKitView.dequeueReusableAnnotationView(withIdentifier: "Annotation", for: experience) as? MKMarkerAnnotationView else {
-            NSLog("Unable to generate annotation")
-            return nil
-        }
-        
-        return annotation
+        return annotationView
     }
 
 }

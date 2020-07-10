@@ -26,7 +26,9 @@
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="08h-Gy-ilp">
                                             <rect key="frame" x="342" y="3" width="69" height="69"/>
                                             <constraints>
+                                                <constraint firstAttribute="width" constant="69" id="5zw-bx-xCO"/>
                                                 <constraint firstAttribute="width" secondItem="08h-Gy-ilp" secondAttribute="height" multiplier="1:1" id="TCa-g7-OLH"/>
+                                                <constraint firstAttribute="height" constant="69" id="aRH-wH-D9K"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hcC-Hu-UQ4">
@@ -49,7 +51,7 @@
                                 <connections>
                                     <outlet property="experienceImage" destination="08h-Gy-ilp" id="Mzm-rp-yza"/>
                                     <outlet property="title" destination="hcC-Hu-UQ4" id="QpH-og-XK5"/>
-                                    <segue destination="NRA-i6-558" kind="show" id="XRh-HL-7fJ"/>
+                                    <segue destination="NRA-i6-558" kind="show" identifier="detailSegue" id="XRh-HL-7fJ"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -144,7 +146,11 @@
                         <viewLayoutGuide key="safeArea" id="QlU-cV-ruT"/>
                     </view>
                     <navigationItem key="navigationItem" id="S3F-5d-uW0">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="V6B-4k-16K"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="V6B-4k-16K">
+                            <connections>
+                                <segue destination="dco-uU-Ide" kind="unwind" unwindAction="unwindToExperienceTable:" id="i7a-aS-Eye"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="addImageButton" destination="iOo-60-GeB" id="Skf-pT-IsA"/>
@@ -157,6 +163,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M1j-IF-aI9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="dco-uU-Ide" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3113" y="127"/>
         </scene>
@@ -169,14 +176,47 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="4zg-Za-BqQ">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="689"/>
                             </mapView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="CCg-mn-9UV">
+                                <rect key="frame" x="25" y="787" width="364" height="75"/>
+                                <subviews>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="sO2-rr-y25">
+                                        <rect key="frame" x="-2" y="0.0" width="368" height="38.5"/>
+                                    </slider>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Zqd-nT-exu">
+                                        <rect key="frame" x="0.0" y="37.5" width="364" height="37.5"/>
+                                        <subviews>
+                                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SJF-D6-x43">
+                                                <rect key="frame" x="0.0" y="0.0" width="182" height="37.5"/>
+                                                <state key="normal" image="play" catalog="system"/>
+                                                <connections>
+                                                    <action selector="playButtonPressed:" destination="Pyo-sm-fAE" eventType="touchUpInside" id="EL4-D6-dgj"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uRz-lC-cqu">
+                                                <rect key="frame" x="182" y="0.0" width="182" height="37.5"/>
+                                                <state key="normal" image="recordingtape" catalog="system"/>
+                                                <connections>
+                                                    <action selector="recordButtonPressed:" destination="Pyo-sm-fAE" eventType="touchUpInside" id="lgv-bf-TVI"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="75" id="J5Y-v4-AEU"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="sZz-rC-gMi" firstAttribute="bottom" secondItem="4zg-Za-BqQ" secondAttribute="bottom" id="Bjr-2p-Bxu"/>
+                            <constraint firstItem="4zg-Za-BqQ" firstAttribute="bottom" secondItem="CCg-mn-9UV" secondAttribute="top" constant="-10" id="9iC-wS-cGO"/>
+                            <constraint firstItem="sZz-rC-gMi" firstAttribute="trailing" secondItem="CCg-mn-9UV" secondAttribute="trailing" constant="25" id="JE8-nG-hN6"/>
                             <constraint firstItem="4zg-Za-BqQ" firstAttribute="leading" secondItem="sZz-rC-gMi" secondAttribute="leading" id="UwC-8E-v2H"/>
+                            <constraint firstItem="CCg-mn-9UV" firstAttribute="leading" secondItem="sZz-rC-gMi" secondAttribute="leading" constant="25" id="hOq-8M-DQU"/>
                             <constraint firstItem="4zg-Za-BqQ" firstAttribute="top" secondItem="sZz-rC-gMi" secondAttribute="top" id="jBD-f0-e3r"/>
+                            <constraint firstItem="sZz-rC-gMi" firstAttribute="bottom" secondItem="CCg-mn-9UV" secondAttribute="bottom" id="osl-nC-7Vx"/>
                             <constraint firstItem="sZz-rC-gMi" firstAttribute="trailing" secondItem="4zg-Za-BqQ" secondAttribute="trailing" id="pux-hg-qoK"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="sZz-rC-gMi"/>

@@ -35,11 +35,9 @@ class LocationController: NSObject, CLLocationManagerDelegate {
     }
     
     func getLocation() -> CLLocation {
-        if let location = locationManager.location {
-            return location
-        }
-        
-        return CLLocation(latitude: 0, longitude: 0)
+        let location = locationManager.location!
+        print(location.coordinate)
+        return location
     }
 
 }

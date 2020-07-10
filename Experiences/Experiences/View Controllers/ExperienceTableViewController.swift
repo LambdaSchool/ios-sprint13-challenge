@@ -100,6 +100,21 @@ class ExperienceTableViewController: UITableViewController {
             
             addExperienceViewController.locationController = locationController
             
+        case "detailSegue":
+            guard let mapViewController = segue.destination as? MapKitViewController else {
+                return
+            }
+            
+            guard let selectedExperience = sender as? ExperienceViewCell else {
+                return
+            }
+            
+            guard let indexPath = tableView.indexPath(for: selectedExperience) else {
+                return
+            }
+            
+            mapViewController.experience = experiences[indexPath.row]
+            
         default:
             NSLog("Unexpected segue identifier or no segue available")
             return
