@@ -11,7 +11,7 @@ import CoreLocation
 import MapKit
 
 
-class MapNotesMapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+class MapNotesMapViewController: UIViewController, MKMapViewDelegate {
     
     var locationManager = CLLocationManager()
     var mapNoteController =  MapNoteController()
@@ -19,26 +19,26 @@ class MapNotesMapViewController: UIViewController, MKMapViewDelegate, CLLocation
     @IBOutlet weak var mapView: MKMapView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        determineCurrentLocation()
+//        determineCurrentLocation()
         mapView.delegate = self
-        for mapnote in mapNoteController.Mapnotes {
-            mapView.addAnnotation(mapnote)
-        }
+        setupMapView()
 //        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "QuakeView")
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+           mapView.addAnnotations(mapNoteController.Mapnotes)
+            mapView.showAnnotations(mapNoteController.Mapnotes, animated: true)
+    }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addImageNoteSegue" {
         guard let destinationVC = segue.destination as? PhotoDetailViewController else {return}
             
-            destinationVC.coordinates.latitude = locationManager.location?.coordinate.latitude as! CLLocationDegrees
-            destinationVC.coordinates.longitude = locationManager.location?.coordinate.longitude as! CLLocationDegrees
+            destinationVC.coordinates = locationManager.location?.coordinate
         destinationVC.mapNoteController = mapNoteController
         }
         else if segue.identifier == "addAudioNoteSegue" {
             guard let destinationVC = segue.destination as? AudioDetailViewController else {return}
-            destinationVC.coordinates.latitude = mapView.centerCoordinate.latitude
-            destinationVC.coordinates.longitude = mapView.centerCoordinate.longitude
+            destinationVC.coordinates = locationManager.location?.coordinate
+         
             destinationVC.mapNoteController = mapNoteController.self
         }
     }
@@ -46,28 +46,44 @@ class MapNotesMapViewController: UIViewController, MKMapViewDelegate, CLLocation
         print(mapNoteController.Mapnotes)
     }
     
-        func determineCurrentLocation()
-        {
-            locationManager = CLLocationManager()
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.requestAlwaysAuthorization()
-            
-            if CLLocationManager.locationServicesEnabled() {
-                //locationManager.startUpdatingHeading()
-                locationManager.startUpdatingLocation()
-            }
+//        func determineCurrentLocation()
+//        {
+//            locationManager = CLLocationManager()
+//            locationManager.delegate = self
+//            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//            locationManager.requestAlwaysAuthorization()
+//
+//            if CLLocationManager.locationServicesEnabled() {
+//                //locationManager.startUpdatingHeading()
+//                locationManager.startUpdatingLocation()
+//            }
+//        }
+    
+    private func centerMapOnLocation() {
+        if let mapCenter = locationManager.location?.coordinate {
+            let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+            let region = MKCoordinateRegion(center: mapCenter, span: span)
+            mapView.setRegion(region, animated: false)
         }
+    }
+    
+    private func setupMapView () {
+        mapView.delegate = self
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        let status = CLLocationManager.authorizationStatus()
+        switch status {
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .authorizedWhenInUse:
+            locationManager.requestLocation()
+            centerMapOnLocation()
+        default:
+            break
+        }
+    }
         
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        print("locations = \(locValue.latitude) \(locValue.longitude)")
-        }
-        
-    private func locationManager(manager: CLLocationManager, didFailWithError error: NSError)
-        {
-            print("Error \(error)")
-        }
+
 
  
     @IBAction func audioMapNoteTapped(_ sender: Any) {
@@ -78,6 +94,17 @@ class MapNotesMapViewController: UIViewController, MKMapViewDelegate, CLLocation
         performSegue(withIdentifier: "addImageNoteSegue", sender: Any?.self)
     }
     
+    
 }
-
+extension MapNotesMapViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    }
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        NSLog("Location manager failed with error: \(error)")
+    }
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        guard status == .authorizedWhenInUse else { return }
+        locationManager.requestLocation()
+    }
+}
 
