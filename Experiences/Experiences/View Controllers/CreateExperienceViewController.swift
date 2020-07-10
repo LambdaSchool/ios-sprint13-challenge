@@ -8,13 +8,11 @@
 
 import UIKit
 import AVFoundation
+import CoreLocation
 
 //TODO: Set up location permissions here and in map view
 //TODO: Set up creation actions
 //TODO: complete all actions for UI buttons
-
-
-
 class CreateExperienceViewController: UIViewController {
     //MARK: - Properties -
     ///outlets
@@ -81,11 +79,11 @@ class CreateExperienceViewController: UIViewController {
     }
     
     @IBAction func backTapped(_ sender: Any) {
-        
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func createTapped(_ sender: Any) {
-        
+        let currentLoc = 
     }
     
     

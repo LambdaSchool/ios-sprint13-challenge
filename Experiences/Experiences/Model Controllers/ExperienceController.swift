@@ -20,6 +20,7 @@ struct ExperienceController: TextAdderDelegate {
     var draftAudio: URL?
     var draftLocation: CLLocationCoordinate2D?
     var experiences: [Experience] = []
+    let locationManager = CLLocationManager()
     
     
     //MARK: - Life Cycle -
@@ -37,8 +38,9 @@ struct ExperienceController: TextAdderDelegate {
         draftCaption = caption
     }
     
-    mutating func addGPC(_ lat: Double, _ lon: Double) {
-        //TODO: figure out how to get current corrdinates and set lat and long
+    mutating func addGPC(_ location: CLLocationCoordinate2D) {
+        getCurrentLocation()
+        draftLocation = location
     }
     
     mutating func createExperience() {
@@ -53,6 +55,11 @@ struct ExperienceController: TextAdderDelegate {
                                       location: location))
         //TODO: Save experiences to user defaults
     }
+    
+    mutating func getCurrentLocation() {
+        draftLocation = locationManager.location?.coordinate
+    }
+    
 }
 
 
