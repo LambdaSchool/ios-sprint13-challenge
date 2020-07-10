@@ -65,47 +65,60 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="150" translatesAutoresizingMaskIntoConstraints="NO" id="cfd-7d-B4P">
-                                <rect key="frame" x="20" y="431" width="374" height="31"/>
+                                <rect key="frame" x="20" y="427" width="374" height="35"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UbE-w7-boH">
-                                        <rect key="frame" x="0.0" y="0.5" width="122" height="30"/>
+                                        <rect key="frame" x="0.0" y="2.5" width="122" height="30"/>
                                         <state key="normal" title="Add Poster Image"/>
+                                        <connections>
+                                            <action selector="addImageButtonTapped:" destination="SNz-Jf-6WU" eventType="touchUpInside" id="N2j-V4-VsR"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Pw-E2-JeH">
-                                        <rect key="frame" x="325" y="0.5" width="49" height="30"/>
+                                        <rect key="frame" x="325" y="2.5" width="49" height="30"/>
                                         <state key="normal" title="Record">
                                             <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="recordButtonTapped:" destination="SNz-Jf-6WU" eventType="touchUpInside" id="aIc-z9-lK4"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XLi-hL-w47">
-                                <rect key="frame" x="20" y="167" width="374" height="234"/>
-                                <color key="backgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0w9-zD-PiZ">
+                                <rect key="frame" x="20" y="162" width="374" height="240"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="374" id="gub-9r-PJV"/>
-                                    <constraint firstAttribute="height" constant="234" id="hun-SI-PDq"/>
+                                    <constraint firstAttribute="height" constant="240" id="8d9-wG-pvM"/>
+                                    <constraint firstAttribute="width" constant="374" id="nnV-Wh-zPY"/>
                                 </constraints>
-                            </view>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="cfd-7d-B4P" firstAttribute="top" secondItem="0w9-zD-PiZ" secondAttribute="bottom" constant="25" id="1SO-Jm-mrb"/>
                             <constraint firstItem="EZf-mV-zNH" firstAttribute="top" secondItem="dhX-hM-aGk" secondAttribute="top" constant="15" id="F3H-GN-qVH"/>
                             <constraint firstItem="dhX-hM-aGk" firstAttribute="bottom" secondItem="cfd-7d-B4P" secondAttribute="bottom" constant="400" id="IrT-eQ-lux"/>
                             <constraint firstItem="dhX-hM-aGk" firstAttribute="trailing" secondItem="cfd-7d-B4P" secondAttribute="trailing" constant="20" id="Njy-KB-417"/>
+                            <constraint firstItem="dhX-hM-aGk" firstAttribute="trailing" secondItem="0w9-zD-PiZ" secondAttribute="trailing" constant="20" id="PJr-ER-eMa"/>
                             <constraint firstItem="EZf-mV-zNH" firstAttribute="leading" secondItem="dhX-hM-aGk" secondAttribute="leading" constant="15" id="QYH-IF-go0"/>
-                            <constraint firstItem="dhX-hM-aGk" firstAttribute="trailing" secondItem="XLi-hL-w47" secondAttribute="trailing" constant="20" id="STp-MD-d02"/>
-                            <constraint firstItem="XLi-hL-w47" firstAttribute="leading" secondItem="dhX-hM-aGk" secondAttribute="leading" constant="20" id="W85-I8-hcv"/>
-                            <constraint firstItem="XLi-hL-w47" firstAttribute="top" secondItem="EZf-mV-zNH" secondAttribute="bottom" constant="30" id="ZmI-vE-xTN"/>
+                            <constraint firstItem="0w9-zD-PiZ" firstAttribute="leading" secondItem="dhX-hM-aGk" secondAttribute="leading" constant="20" id="bu3-uC-IfF"/>
                             <constraint firstItem="cfd-7d-B4P" firstAttribute="leading" secondItem="dhX-hM-aGk" secondAttribute="leading" constant="20" id="jn9-OU-2Uq"/>
                             <constraint firstItem="dhX-hM-aGk" firstAttribute="trailing" secondItem="EZf-mV-zNH" secondAttribute="trailing" constant="15" id="uew-a5-h4j"/>
-                            <constraint firstItem="cfd-7d-B4P" firstAttribute="top" secondItem="XLi-hL-w47" secondAttribute="bottom" constant="30" id="xGx-rH-3MK"/>
+                            <constraint firstItem="0w9-zD-PiZ" firstAttribute="top" secondItem="EZf-mV-zNH" secondAttribute="bottom" constant="25" id="wYt-d8-jpW"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="dhX-hM-aGk"/>
                     </view>
                     <navigationItem key="navigationItem" title="New Experience" largeTitleDisplayMode="always" id="LC0-gZ-Vs7">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="nxD-7k-8Tn"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="nxD-7k-8Tn">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="SNz-Jf-6WU" id="kzf-ql-ThT"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="imageView" destination="0w9-zD-PiZ" id="S2C-fq-gVz"/>
+                        <outlet property="titleTextField" destination="EZf-mV-zNH" id="TIj-sv-OzR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0He-kA-pHB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
