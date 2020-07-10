@@ -72,6 +72,11 @@ class CreateExperienceViewController: UIViewController {
         updateViews()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        updateViews()
+    }
+    
 
     //MARK: - Actions -
     @IBAction func addVideo(_ sender: Any) {
