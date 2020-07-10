@@ -112,13 +112,37 @@ class ExperienceViewController: UIViewController {
         
     }
     
-    @IBAction func saveButton(_ sender: UIBarButtonItem) {
+    @IBAction func saveButton(_ sender: UIButton) {
         guard let experienceController = experienceController,
             let delegate = delegate,
-            let title = titleTextField.text,
-            title.count > 0 else {
-                return
-        }
+            let orginalImage = originalImage,
+            let title = titleTextField.text else { return }
+        
+            let filteredImage = image(byFiltering: orginalImage)
+  
+            PHPhotoLibrary.requestAuthorization { (status) in
+            guard status == .authorized else {
+                NSLog("The user has not authorized permission for Photo Library Usage")
+                       return
+                   }
+                   
+                   PHPhotoLibrary.shared().performChanges({
+                       PHAssetCreationRequest.creationRequestForAsset(from: filteredImage)
+                       
+                   }) { (success, error) in
+                       if let error = error {
+                           NSLog("Error saving photo asset: \(error)")
+                           return
+                       }
+                       
+                   }
+               }
+//        guard let experienceController = experienceController,
+//            let delegate = delegate,
+//            let title = titleTextField.text,
+//            title.count > 0 else {
+//                return
+//        }
         let coordinates = delegate.myLocation()
         
         if let experience = experience {
