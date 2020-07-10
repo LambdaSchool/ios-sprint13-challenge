@@ -8,8 +8,8 @@
 
 import UIKit
 import AVFoundation
-//TODO: Save URL for recorded audio track to the controller via the delegate
-//TODO: Create Action for cancel button to dismiss without saving.
+
+
 class AddAudioViewController: UIViewController {
     //MARK: - Properties -
     @IBOutlet var recordButton: UIButton!
@@ -86,7 +86,7 @@ class AddAudioViewController: UIViewController {
         updateViews()
     }
     
-    @IBAction func cancelPlaybackOrRecord(_ sender: Any) {
+    @IBAction func stopPlaybackOrRecord(_ sender: Any) {
         if isPlaying {
             audioPlayer?.stop()
         }
@@ -95,6 +95,16 @@ class AddAudioViewController: UIViewController {
             updateViews()
         }
         
+    }
+    
+    @IBAction func saveRecordingToExperience() {
+        if let url = recordingURL {
+            audioDelegate?.addAudio(url)
+        }
+    }
+    
+    @IBAction func cancelPressed() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     

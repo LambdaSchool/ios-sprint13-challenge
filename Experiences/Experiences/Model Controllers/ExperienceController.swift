@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 import CoreLocation
 
-
 struct ExperienceController: TextAdderDelegate {
     //MARK: - Properties -
     var draftTitle: String?
@@ -21,10 +20,13 @@ struct ExperienceController: TextAdderDelegate {
     var draftLocation: CLLocationCoordinate2D?
     var experiences: [Experience] = []
     let locationManager = CLLocationManager()
-    
+    let persistenceController = PersistenceController()
     
     //MARK: - Life Cycle -
-    //TODO: Init experiences from user defaults
+    init() {
+        updateExperiences()
+        addGPC()
+    }
     
     
     //MARK: - Actions -
@@ -36,9 +38,10 @@ struct ExperienceController: TextAdderDelegate {
         draftCaption = caption
     }
     
-    mutating func addGPC(_ location: CLLocationCoordinate2D) {
-        getCurrentLocation()
-        draftLocation = location
+    mutating func addGPC() {
+        if let coordinate = locationManager.location?.coordinate {
+            draftLocation = coordinate
+        }
     }
     
     mutating func createExperience() {
@@ -51,11 +54,12 @@ struct ExperienceController: TextAdderDelegate {
                                       photo: draftPhoto,
                                       audio: draftAudio,
                                       location: location))
-        //TODO: Save experiences to user defaults
+        persistenceController.saveExperiences(experiences)
     }
     
-    mutating func getCurrentLocation() {
-        draftLocation = locationManager.location?.coordinate
+    mutating private func updateExperiences() {
+        let experiences = persistenceController.loadExperiences()
+        self.experiences = experiences
     }
     
 }
@@ -80,3 +84,4 @@ extension ExperienceController: VideoAdderDelegate {
         draftVideo = video
     }
 }
+

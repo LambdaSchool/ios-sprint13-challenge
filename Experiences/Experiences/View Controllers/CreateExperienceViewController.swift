@@ -11,8 +11,6 @@ import AVFoundation
 import CoreLocation
 
 //TODO: Set up location permissions here and in map view
-//TODO: Set up creation actions
-//TODO: complete all actions for UI buttons
 class CreateExperienceViewController: UIViewController {
     //MARK: - Properties -
     ///outlets
@@ -88,7 +86,15 @@ class CreateExperienceViewController: UIViewController {
     }
     
     @IBAction func createTapped(_ sender: Any) {
+        guard let title = titleTextField.text else { return }
+        textDelegate?.addTitle(title)
         
+        if let caption = captionTextView.text {
+            textDelegate?.addCaption(caption)
+        }
+        experienceController.addGPC()
+        guard isReady else { return }
+        experienceController.createExperience()
     }
     
     

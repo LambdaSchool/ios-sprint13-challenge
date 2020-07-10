@@ -21,4 +21,8 @@ extension String {
     
     //MARK: Cells
     static let experienceCell = "ExperienceCell"
+    
+    
+    //MARK: User Defaults
+    static let experienceKey = "ExperienceKey"
 }

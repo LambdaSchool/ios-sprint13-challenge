@@ -13,28 +13,38 @@ import UIKit
 class HomeViewController: UIViewController {
     //MARK: - Properties -
     var experiences: [Experience] = []
-    
+    var persistenceController = PersistenceController()
     
     //MARK: - Life Cycles -
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateViews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        updateViews()
     }
     
     
     //MARK: - Methods -
     private func updateViews() {
-        
+        let experiences = persistenceController.loadExperiences()
+        self.experiences = experiences
     }
 
     
-    /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == .listSegue {
+            guard let ListVC = segue.destination as? ExperiencesTableViewController else { return }
+            ListVC.experiences = experiences
+        }
+        
+        if segue.identifier == .mapSegue {
+            guard let MapVC = segue.destination as? ExperiencesMapViewController else { return }
+            MapVC.experiences = experiences
+        }
     }
-    */
+    
 
 }
