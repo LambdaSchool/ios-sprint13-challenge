@@ -9,7 +9,6 @@
 import UIKit
 import AVFoundation
 //TODO: Set Up video permissions here
-//TODO: Set up video permissions in info.plist
 //TODO: Record and save video with immediate playback in a smaller window.
 //TODO: connect buttons so when user hits save or cancel buttons the view controller dismisses with or without the delegate function properly and sends on the data to the controller
 class AddVideoViewController: UIViewController {

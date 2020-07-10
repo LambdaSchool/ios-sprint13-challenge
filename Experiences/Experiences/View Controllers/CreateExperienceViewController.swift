@@ -10,7 +10,6 @@ import UIKit
 import AVFoundation
 
 //TODO: Set up location permissions here and in map view
-//TODO: Set up location permissions in info.plist
 //TODO: Set up creation actions
 //TODO: complete all actions for UI buttons
 

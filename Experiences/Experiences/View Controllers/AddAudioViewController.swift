@@ -8,7 +8,6 @@
 
 import UIKit
 import AVFoundation
-//TODO: Set up Audio permissions in info.plist
 //TODO: Save URL for recorded audio track to the controller via the delegate
 //TODO: Create Action for cancel button to dismiss without saving.
 class AddAudioViewController: UIViewController {
