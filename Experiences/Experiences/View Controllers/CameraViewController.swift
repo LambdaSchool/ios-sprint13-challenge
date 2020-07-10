@@ -13,7 +13,6 @@ import CoreLocation
 class CameraViewController: UIViewController {
     
     // MARK: - PROPERTIES
-    
     var experienceController: ExperienceController?
     
     lazy private var captureSession = AVCaptureSession()
@@ -29,7 +28,6 @@ class CameraViewController: UIViewController {
     var video: URL?
     
     // MARK: - Outlets
-    
     @IBOutlet var recordButton: UIButton!
     @IBOutlet var cameraView: CameraPreviewView!
     
@@ -59,7 +57,6 @@ class CameraViewController: UIViewController {
     private func updateViews() {
         recordButton.isSelected = fileOutput.isRecording
     }
-    
     
     private func setUpCaptureSession() {
         
@@ -175,7 +172,6 @@ class CameraViewController: UIViewController {
     }
 }
 
-
 // MARK: - EXTENSION
 
 extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
@@ -190,13 +186,10 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
             print("Error saving movie: \(error)")
             return
         }
-        print("Play movie!")
-        
         DispatchQueue.main.async {
             self.playMovie(url: outputFileURL)
             self.video = outputFileURL
         }
-        
         updateViews()
     }
 }

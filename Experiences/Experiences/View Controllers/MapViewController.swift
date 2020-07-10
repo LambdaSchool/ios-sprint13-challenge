@@ -11,13 +11,11 @@ import MapKit
 
 class MapViewController: UIViewController {
     // MARK: - PROPERTIES
-    
     let experienceController = ExperienceController()
     let locationManager = CLLocationManager()
     var coordinate: CLLocationCoordinate2D?
     
     // MARK: - OUTLETS
-    
     @IBOutlet var mapView: MKMapView!
         
     override func viewDidLoad() {
