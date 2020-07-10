@@ -122,14 +122,13 @@ class ExperienceViewController: UIViewController {
         let coordinates = delegate.myLocation()
         
         if let experience = experience {
-           experienceController.createExperience(title: title,
-            audioClip: audioClip,
-            image: imageView.image,
-            latitude: coordinates.latitude,
-            longitude: coordinates.longitude)
-        } else {
-            return
+            experienceController.createExperience(title: title,
+                                         audioClip: audioClip,
+                                         image: imageView.image,
+                                         latitude: coordinates.latitude,
+                                         longitude: coordinates.longitude)
         }
+        
     }
 }
 
@@ -175,6 +174,8 @@ extension ExperienceViewController {
         audioRecorder?.stop()
         updateViews()
     }
+    
+    #warning("Mic")
 // todo, figure out mic fill button
     
     private func prepareAudioSession() throws {
