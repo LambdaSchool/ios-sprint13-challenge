@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import CoreLocation
 
-class AddViewController: UIViewController, UINavigationControllerDelegate {
+class AddViewController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate {
     
     // MARK: - Interface Builder
     @IBOutlet var saveButton: UIBarButtonItem!
@@ -38,6 +38,8 @@ class AddViewController: UIViewController, UINavigationControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        titleTextField.delegate = self
         
         audioTrack.setValue(0, animated: false)
         
@@ -81,6 +83,11 @@ class AddViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     // MARK: - Utility
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        titleTextField.resignFirstResponder()
+        return true
+    }
     
 
     // MARK: - Navigation
