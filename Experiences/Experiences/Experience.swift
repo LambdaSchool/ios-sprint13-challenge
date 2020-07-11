@@ -23,5 +23,11 @@ class Experience: NSObject, MKAnnotation {
         self.audio = audio
         self.coordinate = coordinate
     }
+    
+    var title: String? {
+        expTitle
+    }
 }
+
+
 

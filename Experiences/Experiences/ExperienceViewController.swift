@@ -34,6 +34,8 @@ class ExperienceViewController: UIViewController, MKMapViewDelegate {
         locationManager.requestLocation()
         currentLocation = locationManager.location?.coordinate
         
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "AnnotationView")
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -60,7 +62,18 @@ class ExperienceViewController: UIViewController, MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        <#code#>
+        guard let experience = annotation as? Experience else {
+        fatalError("Only Experienc objectws are supported right now")
+        }
+        
+        guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "AnnotationView", for: experience) as? MKMarkerAnnotationView else {
+            fatalError("Missing a registered map annotation view. Have you done this in the viewDidLoad?")
+        }
+        
+        return annotationView
+        
+        
+        
     }
 }
 
@@ -80,3 +93,4 @@ extension ExperienceViewController: CLLocationManagerDelegate {
         NSLog("Error: Did fail with error \(error)")
     }
 }
+
