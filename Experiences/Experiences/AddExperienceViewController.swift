@@ -20,9 +20,10 @@ class AddExperienceViewController: UIViewController {
     
     private let context = CIContext(options: nil)
     
-    weak var timer: Timer?
+    var experienceController: ExperienceController? 
     var recordingURL: URL?
     var audioRecorder: AVAudioRecorder?
+    var currentLocation: CLLocationCoordinate2D?
     
     var isRecording: Bool {
         audioRecorder?.isRecording ?? false
@@ -32,15 +33,22 @@ class AddExperienceViewController: UIViewController {
         didSet {
             guard let audioPlayer = audioPlayer else { return }
             audioPlayer.delegate = self
-            audioPlayer.isMeteringEnabled = true
         }
     }
+    
+    var image: UIImage? {
+        didSet {
+            imageView.image = image?.flattened
+        }
+    }
+    
     
     // MARK: Outlets
     
     @IBOutlet var titleTextField: UITextField!
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var recordButton: UIButton!
+    @IBOutlet var saveButton: UIBarButtonItem!
     
     // MARK: Actions
     
@@ -60,16 +68,38 @@ class AddExperienceViewController: UIViewController {
     
     @IBAction func saveButtonTapped(_ sender: Any) {
         
+        if isRecording == true { return }
+        
+        guard let title = titleTextField.text,
+            !title.isEmpty else { return }
+        
+        var newImage: UIImage? = nil
+        if let image = imageView.image { newImage = image }
+        
+        var newAudio: URL? = nil
+        
+        if let audio = recordingURL {
+            newAudio = audio
+        }
+        
+        guard let location = currentLocation else { return }
+        let experience = Experience(expTitle: title, image: newImage, audio: newAudio, coordinate: location)
+        
+        experienceController?.experiences.append(experience)
+        
+        navigationController?.popViewController(animated: true)
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
+      
     }
     
     func updateViews() {
+        
+       
         
         if isRecording {
             recordButton.setTitle("Stop Recording", for: .normal)
@@ -104,7 +134,7 @@ class AddExperienceViewController: UIViewController {
         
         guard let outputCGImage = context.createCGImage(outputImage, from: outputImage.extent) else { return image }
         
-        return UIImage(cgImage: outputCGImage)
+        return UIImage(cgImage: outputCGImage, scale: image.scale, orientation: image.imageOrientation)
     }
     
     
@@ -122,7 +152,6 @@ class AddExperienceViewController: UIViewController {
     
     // MARK: - Recording
     
-    // func createNewRecordingURL(with Name: String) -> URL {
     func createNewRecordingURL() -> URL {
         let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         
@@ -145,7 +174,6 @@ class AddExperienceViewController: UIViewController {
                 }
                 
                 print("Recording permission has been granted!")
-                // NOTE: Invite the user to tap record again, since we just interrupted them, and they may not have been ready to record
             }
         case .denied:
             print("Microphone access has been blocked.")
@@ -168,17 +196,14 @@ class AddExperienceViewController: UIViewController {
     
     
     func startRecording() {
-        // Grab the recording URL
         recordingURL = createNewRecordingURL()
-        
-        // Check for permission
+
         AVAudioSession.sharedInstance().requestRecordPermission { granted in
             guard granted else {
                 NSLog("We need permission to access the microphone")
                 return
             }
-            
-            // Set up the recorder (give it the settings we want, etc.)
+
             guard let recordingURL = self.recordingURL else {
                 NSLog("No recording URL available")
                 return
@@ -188,9 +213,8 @@ class AddExperienceViewController: UIViewController {
             
             do {
                 self.audioRecorder = try AVAudioRecorder(url: recordingURL, format: format)
-                // Start recording
+
                 self.audioRecorder?.delegate = self
-                self.audioRecorder?.isMeteringEnabled = true
                 self.audioRecorder?.record()
                 self.updateViews()
             } catch {
@@ -211,7 +235,7 @@ extension AddExperienceViewController: UIImagePickerControllerDelegate, UINaviga
         
         guard let viewImage = info[.originalImage] as? UIImage else { return }
         
-        imageView.image = image(byFiltering: viewImage)
+        self.image = image(byFiltering: viewImage)
         
         dismiss(animated: true, completion: nil)
     }

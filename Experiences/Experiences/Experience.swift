@@ -9,32 +9,19 @@
 import Foundation
 import MapKit
 
-class Experience: NSObject {
+class Experience: NSObject, MKAnnotation {
     
     let expTitle: String
     let image: UIImage?
     let audio: URL?
-    let longitude: Double
-    let latitude: Double
     
-    init(expTitle: String, image: UIImage?, audio: URL?, longitude: Double, latitude: Double) {
+    var coordinate: CLLocationCoordinate2D
+    
+    init(expTitle: String, image: UIImage?, audio: URL?, coordinate: CLLocationCoordinate2D) {
         self.expTitle = expTitle
         self.image = image
         self.audio = audio
-        self.latitude = latitude
-        self.longitude = longitude
-        
-        super.init()
+        self.coordinate = coordinate
     }
-    
 }
 
-extension Experience: MKAnnotation {
-    var coordinate: CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-    }
-    
-    var title: String? {
-        expTitle
-    }
-}

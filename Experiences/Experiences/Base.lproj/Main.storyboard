@@ -17,6 +17,9 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="yJU-Bt-p49">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <connections>
+                                    <outlet property="delegate" destination="ds8-2k-nrY" id="w9T-gX-b7w"/>
+                                </connections>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EBo-Tl-Dlq">
                                 <rect key="frame" x="318" y="810" width="72" height="22"/>
@@ -30,7 +33,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="SNz-Jf-6WU" kind="show" id="yZw-bj-MNR"/>
+                                    <segue destination="SNz-Jf-6WU" kind="show" identifier="ShowAddExperiences" id="yZw-bj-MNR"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -46,6 +49,10 @@
                         <viewLayoutGuide key="safeArea" id="xe9-Pb-Y8g"/>
                     </view>
                     <navigationItem key="navigationItem" id="WDW-dk-a5G"/>
+                    <connections>
+                        <outlet property="addExperienceButton" destination="EBo-Tl-Dlq" id="ABA-fi-dzr"/>
+                        <outlet property="mapView" destination="yJU-Bt-p49" id="p9p-lz-INz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OIr-Tm-ANu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -59,52 +66,47 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EZf-mV-zNH">
-                                <rect key="frame" x="15" y="103" width="384" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="cfd-7d-B4P">
-                                <rect key="frame" x="20" y="427" width="374" height="35"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="DTk-Le-6TQ">
+                                <rect key="frame" x="41.5" y="278" width="331" height="394"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UbE-w7-boH">
-                                        <rect key="frame" x="0.0" y="2.5" width="122" height="30"/>
-                                        <state key="normal" title="Add Poster Image"/>
-                                        <connections>
-                                            <action selector="addImageButtonTapped:" destination="SNz-Jf-6WU" eventType="touchUpInside" id="N2j-V4-VsR"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Pw-E2-JeH">
-                                        <rect key="frame" x="325" y="2.5" width="49" height="30"/>
-                                        <state key="normal" title="Record">
-                                            <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="recordButtonTapped:" destination="SNz-Jf-6WU" eventType="touchUpInside" id="aIc-z9-lK4"/>
-                                        </connections>
-                                    </button>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EZf-mV-zNH">
+                                        <rect key="frame" x="0.0" y="0.0" width="331" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0w9-zD-PiZ">
+                                        <rect key="frame" x="0.0" y="44" width="331" height="310"/>
+                                    </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="cfd-7d-B4P">
+                                        <rect key="frame" x="0.0" y="364" width="331" height="30"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UbE-w7-boH">
+                                                <rect key="frame" x="0.0" y="0.0" width="122" height="30"/>
+                                                <state key="normal" title="Add Poster Image"/>
+                                                <connections>
+                                                    <action selector="addImageButtonTapped:" destination="SNz-Jf-6WU" eventType="touchUpInside" id="N2j-V4-VsR"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Pw-E2-JeH">
+                                                <rect key="frame" x="282" y="0.0" width="49" height="30"/>
+                                                <state key="normal" title="Record">
+                                                    <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="recordButtonTapped:" destination="SNz-Jf-6WU" eventType="touchUpInside" id="aIc-z9-lK4"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                             </stackView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0w9-zD-PiZ">
-                                <rect key="frame" x="20" y="162" width="374" height="240"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="240" id="8d9-wG-pvM"/>
-                                    <constraint firstAttribute="width" constant="374" id="nnV-Wh-zPY"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="cfd-7d-B4P" firstAttribute="top" secondItem="0w9-zD-PiZ" secondAttribute="bottom" constant="25" id="1SO-Jm-mrb"/>
-                            <constraint firstItem="EZf-mV-zNH" firstAttribute="top" secondItem="dhX-hM-aGk" secondAttribute="top" constant="15" id="F3H-GN-qVH"/>
-                            <constraint firstItem="dhX-hM-aGk" firstAttribute="bottom" secondItem="cfd-7d-B4P" secondAttribute="bottom" constant="400" id="IrT-eQ-lux"/>
-                            <constraint firstItem="dhX-hM-aGk" firstAttribute="trailing" secondItem="cfd-7d-B4P" secondAttribute="trailing" constant="20" id="Njy-KB-417"/>
-                            <constraint firstItem="dhX-hM-aGk" firstAttribute="trailing" secondItem="0w9-zD-PiZ" secondAttribute="trailing" constant="20" id="PJr-ER-eMa"/>
-                            <constraint firstItem="EZf-mV-zNH" firstAttribute="leading" secondItem="dhX-hM-aGk" secondAttribute="leading" constant="15" id="QYH-IF-go0"/>
-                            <constraint firstItem="0w9-zD-PiZ" firstAttribute="leading" secondItem="dhX-hM-aGk" secondAttribute="leading" constant="20" id="bu3-uC-IfF"/>
-                            <constraint firstItem="cfd-7d-B4P" firstAttribute="leading" secondItem="dhX-hM-aGk" secondAttribute="leading" constant="20" id="jn9-OU-2Uq"/>
-                            <constraint firstItem="dhX-hM-aGk" firstAttribute="trailing" secondItem="EZf-mV-zNH" secondAttribute="trailing" constant="15" id="uew-a5-h4j"/>
-                            <constraint firstItem="0w9-zD-PiZ" firstAttribute="top" secondItem="EZf-mV-zNH" secondAttribute="bottom" constant="25" id="wYt-d8-jpW"/>
+                            <constraint firstItem="0w9-zD-PiZ" firstAttribute="height" secondItem="dhX-hM-aGk" secondAttribute="height" multiplier="0.4" id="OhW-7a-Z1U"/>
+                            <constraint firstItem="DTk-Le-6TQ" firstAttribute="centerX" secondItem="dhX-hM-aGk" secondAttribute="centerX" id="Tf2-tX-mSq"/>
+                            <constraint firstItem="DTk-Le-6TQ" firstAttribute="centerY" secondItem="dhX-hM-aGk" secondAttribute="centerY" id="flg-ui-ObW"/>
+                            <constraint firstItem="0w9-zD-PiZ" firstAttribute="width" secondItem="dhX-hM-aGk" secondAttribute="width" multiplier="0.8" id="zIT-01-tzP"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="dhX-hM-aGk"/>
                     </view>
@@ -118,7 +120,8 @@
                     <connections>
                         <outlet property="imageView" destination="0w9-zD-PiZ" id="S2C-fq-gVz"/>
                         <outlet property="recordButton" destination="9Pw-E2-JeH" id="nNa-6C-aYr"/>
-                        <outlet property="titleTextField" destination="EZf-mV-zNH" id="TIj-sv-OzR"/>
+                        <outlet property="saveButton" destination="nxD-7k-8Tn" id="vxB-IR-6C8"/>
+                        <outlet property="titleTextField" destination="EZf-mV-zNH" id="XgS-y9-Vmo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0He-kA-pHB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
