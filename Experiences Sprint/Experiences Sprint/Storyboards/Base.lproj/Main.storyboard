@@ -31,7 +31,7 @@
                     <navigationItem key="navigationItem" id="d3l-9t-bOt">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="J6r-tG-tuh">
                             <connections>
-                                <segue destination="ghh-vz-UNb" kind="presentation" identifier="NewExperienceSegue" modalPresentationStyle="fullScreen" id="6t5-JR-cnv"/>
+                                <segue destination="ghh-vz-UNb" kind="show" identifier="NewExperienceSegue" id="6t5-JR-cnv"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -53,39 +53,45 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qhd-Tr-K9d">
-                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="44"/>
                                 <items>
                                     <navigationItem title="New Experience" id="jYe-1x-x5K">
-                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="BMn-10-f0X"/>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="BMn-10-f0X">
+                                            <connections>
+                                                <action selector="saveButtonTapped:" destination="ghh-vz-UNb" id="Mci-K8-a9K"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xP4-Pm-4j0">
-                                <rect key="frame" x="20" y="118" width="374" height="34"/>
+                                <rect key="frame" x="20" y="162" width="374" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0lu-e6-sxJ">
-                                <rect key="frame" x="60" y="187" width="294" height="190"/>
+                                <rect key="frame" x="20" y="216" width="374" height="191"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kKY-nb-tty">
                                 <rect key="frame" x="20" y="427" width="374" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Add Image"/>
+                                <connections>
+                                    <action selector="addImageButtonTapped:" destination="ghh-vz-UNb" eventType="touchUpInside" id="Ao9-GV-dYS"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="ZOp-GI-dpT">
                                 <rect key="frame" x="20" y="559" width="374" height="46"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cif-MM-zec">
-                                        <rect key="frame" x="0.0" y="0.0" width="187" height="46"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <state key="normal" image="play.fill" catalog="system"/>
-                                        <state key="selected" image="pause.fill" catalog="system"/>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yDE-17-eqg">
-                                        <rect key="frame" x="187" y="0.0" width="187" height="46"/>
-                                        <state key="normal" image="mic.fill" catalog="system"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="46"/>
+                                        <state key="normal" title="Start Recording">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
                                         <state key="selected" image="stop.fill" catalog="system"/>
+                                        <connections>
+                                            <action selector="recordAudioButtonTapped:" destination="ghh-vz-UNb" eventType="touchUpInside" id="v3S-Mf-DE1"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -97,28 +103,32 @@
                         <constraints>
                             <constraint firstItem="qhd-Tr-K9d" firstAttribute="top" secondItem="yTS-oI-I8Y" secondAttribute="top" id="0Ly-QD-Zhq"/>
                             <constraint firstItem="ZOp-GI-dpT" firstAttribute="leading" secondItem="yTS-oI-I8Y" secondAttribute="leading" constant="20" id="1GE-67-le3"/>
+                            <constraint firstItem="yDE-17-eqg" firstAttribute="leading" secondItem="yTS-oI-I8Y" secondAttribute="leading" constant="20" id="5yR-m3-1lp"/>
                             <constraint firstItem="qhd-Tr-K9d" firstAttribute="leading" secondItem="yTS-oI-I8Y" secondAttribute="leading" id="9WG-Vk-gxU"/>
+                            <constraint firstItem="yTS-oI-I8Y" firstAttribute="trailing" secondItem="yDE-17-eqg" secondAttribute="trailing" constant="20" id="BPX-w8-gHD"/>
                             <constraint firstItem="yTS-oI-I8Y" firstAttribute="trailing" secondItem="ZOp-GI-dpT" secondAttribute="trailing" constant="20" id="Dc6-mH-ycB"/>
                             <constraint firstItem="kKY-nb-tty" firstAttribute="leading" secondItem="yTS-oI-I8Y" secondAttribute="leading" constant="20" id="EZR-H1-apv"/>
-                            <constraint firstItem="0lu-e6-sxJ" firstAttribute="leading" secondItem="yTS-oI-I8Y" secondAttribute="leading" constant="60" id="Ige-VJ-pG7"/>
+                            <constraint firstItem="0lu-e6-sxJ" firstAttribute="leading" secondItem="yTS-oI-I8Y" secondAttribute="leading" constant="20" id="Ige-VJ-pG7"/>
                             <constraint firstItem="yTS-oI-I8Y" firstAttribute="bottom" secondItem="ZOp-GI-dpT" secondAttribute="bottom" constant="257" id="LX6-Ig-y80"/>
                             <constraint firstItem="yTS-oI-I8Y" firstAttribute="trailing" secondItem="xP4-Pm-4j0" secondAttribute="trailing" constant="20" id="Spt-ir-0gD"/>
                             <constraint firstItem="xP4-Pm-4j0" firstAttribute="top" secondItem="qhd-Tr-K9d" secondAttribute="bottom" constant="30" id="UQt-6X-sYe"/>
-                            <constraint firstItem="kKY-nb-tty" firstAttribute="top" secondItem="0lu-e6-sxJ" secondAttribute="bottom" constant="50" id="YGY-tT-7qq"/>
-                            <constraint firstItem="yTS-oI-I8Y" firstAttribute="trailing" secondItem="0lu-e6-sxJ" secondAttribute="trailing" constant="60" id="YTw-b5-S3F"/>
+                            <constraint firstItem="kKY-nb-tty" firstAttribute="top" secondItem="0lu-e6-sxJ" secondAttribute="bottom" constant="20" id="YGY-tT-7qq"/>
+                            <constraint firstItem="yTS-oI-I8Y" firstAttribute="trailing" secondItem="0lu-e6-sxJ" secondAttribute="trailing" constant="20" id="YTw-b5-S3F"/>
+                            <constraint firstItem="yTS-oI-I8Y" firstAttribute="bottom" secondItem="yDE-17-eqg" secondAttribute="bottom" constant="257" id="b9z-GV-1EF"/>
                             <constraint firstItem="xP4-Pm-4j0" firstAttribute="leading" secondItem="yTS-oI-I8Y" secondAttribute="leading" constant="20" id="hKo-JA-30i"/>
                             <constraint firstItem="qhd-Tr-K9d" firstAttribute="trailing" secondItem="yTS-oI-I8Y" secondAttribute="trailing" id="kXu-83-RQy"/>
-                            <constraint firstItem="0lu-e6-sxJ" firstAttribute="top" secondItem="xP4-Pm-4j0" secondAttribute="bottom" constant="35" id="mIC-l7-kqN"/>
+                            <constraint firstItem="0lu-e6-sxJ" firstAttribute="top" secondItem="xP4-Pm-4j0" secondAttribute="bottom" constant="20" id="mIC-l7-kqN"/>
                             <constraint firstItem="ZOp-GI-dpT" firstAttribute="top" secondItem="kKY-nb-tty" secondAttribute="bottom" constant="98" id="tMA-cj-oWv"/>
                             <constraint firstItem="yTS-oI-I8Y" firstAttribute="trailing" secondItem="kKY-nb-tty" secondAttribute="trailing" constant="20" id="w9q-PX-gFX"/>
+                            <constraint firstItem="yDE-17-eqg" firstAttribute="top" secondItem="kKY-nb-tty" secondAttribute="bottom" constant="98" id="zuG-rv-zM6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="yTS-oI-I8Y"/>
                     </view>
+                    <navigationItem key="navigationItem" id="P9J-Re-aSk"/>
                     <connections>
                         <outlet property="addImage" destination="kKY-nb-tty" id="dSh-8l-JtZ"/>
-                        <outlet property="imageView" destination="0lu-e6-sxJ" id="CMp-fv-PXV"/>
-                        <outlet property="playButton" destination="Cif-MM-zec" id="zIs-WH-Mdz"/>
-                        <outlet property="recordAudio" destination="yDE-17-eqg" id="HPX-UB-2Nh"/>
+                        <outlet property="imageView" destination="0lu-e6-sxJ" id="vDN-xd-pj8"/>
+                        <outlet property="recordAudioButton" destination="yDE-17-eqg" id="hn0-5f-IIi"/>
                         <outlet property="titleTextField" destination="xP4-Pm-4j0" id="CZM-iI-GM4"/>
                     </connections>
                 </viewController>
@@ -146,9 +156,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="mic.fill" catalog="system" width="108" height="128"/>
-        <image name="pause.fill" catalog="system" width="116" height="128"/>
-        <image name="play.fill" catalog="system" width="116" height="128"/>
         <image name="stop.fill" catalog="system" width="128" height="113"/>
     </resources>
 </document>

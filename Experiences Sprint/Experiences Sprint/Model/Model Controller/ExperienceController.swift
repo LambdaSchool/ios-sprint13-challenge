@@ -8,24 +8,19 @@
 
 import Foundation
 import UIKit
+import MapKit
 
 class ExperienceController {
     var experiences: [Experience] = []
-
-    func createExperience(title: String?,
+    var experience: Experience?
+    
+    func createExperience(title: String,
                           image: UIImage?,
                           audio: URL?,
-                          latitude: Double,
-                          longitude: Double) {
-
-        let newExperience = Experience()
-
-        newExperience.title = title
-        newExperience.image = image
-        newExperience.audio = audio
-        newExperience.latitude = latitude
-        newExperience.longitude = longitude
-
+                          coordinate: CLLocationCoordinate2D) {
+        
+        var newExperience = Experience(title: title, image: image, audio: audio, coordinate: coordinate)
         experiences.append(newExperience)
+        experience = newExperience
     }
 }
