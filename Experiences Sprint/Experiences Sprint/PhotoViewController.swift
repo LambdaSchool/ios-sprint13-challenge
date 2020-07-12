@@ -8,8 +8,9 @@
 
 import UIKit
 import AVFoundation
+import Photos
 
-class PhotoViewController: UIViewController {
+class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var imageView: UIImageView!
@@ -56,7 +57,33 @@ class PhotoViewController: UIViewController {
     }
     
     @IBAction func photosButtonTapped(_ sender: UIButton) {
+        let authorizationStatus = PHPhotoLibrary.authorizationStatus()
         
+        switch authorizationStatus {
+        case .authorized:
+            presentImagePickerController()
+        case .notDetermined:
+            
+            PHPhotoLibrary.requestAuthorization { (status) in
+                
+                guard status == .authorized else {
+                    NSLog("User did not authorize access to the photo library")
+                    self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
+                    return
+                }
+                
+                self.presentImagePickerController()
+            }
+            
+        case .denied:
+            self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
+        case .restricted:
+            self.presentInformationalAlertController(title: "Error", message: "Unable to access the photo library. Your device's restrictions do not allow access.")
+            
+        @unknown default:
+            print("FatalError")
+        }
+        presentImagePickerController()
     }
     
     @IBAction func cancelButtonTapped(_ sender: UIButton) {
@@ -69,6 +96,7 @@ class PhotoViewController: UIViewController {
         
     }
     
+    // MARK: - Audio Recording Methods -
     func createNewRecordingURL() -> URL {
         let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         
@@ -114,8 +142,26 @@ class PhotoViewController: UIViewController {
         audioRecorder?.stop()
         audioRecorder = nil
     }
+    
+    // MARK: - Photo Picker Methods -
+    private func presentImagePickerController() {
+        
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            presentInformationalAlertController(title: "Error", message: "The photo library is unavailable")
+            return
+        }
+        
+        let imagePicker = UIImagePickerController()
+        
+        imagePicker.delegate = self
+        
+        imagePicker.sourceType = .photoLibrary
+
+        present(imagePicker, animated: true, completion: nil)
+    }
 }
 
+// MARK: - Extensions -
 extension PhotoViewController: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         DispatchQueue.main.async {
