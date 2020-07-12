@@ -162,7 +162,9 @@ class AddAudioViewController: UIViewController {
                 self.audioRecorder?.delegate = self
                 self.audioRecorder?.isMeteringEnabled = true
                 self.audioRecorder?.record()
-                self.updateViews()
+                DispatchQueue.main.async {
+                    self.updateViews()
+                }
                 self.startTimer()
             } catch {
                 NSLog("Error setting up audio recorder: \(error) \(error.localizedDescription)")

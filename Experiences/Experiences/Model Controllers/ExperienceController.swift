@@ -9,21 +9,24 @@
 import Foundation
 import UIKit
 import CoreLocation
+import MapKit
 
-struct ExperienceController: TextAdderDelegate {
+class ExperienceController: NSObject, TextAdderDelegate {
     //MARK: - Properties -
-    var draftTitle: String?
-    var draftCaption: String?
-    var draftVideo: URL?
-    var draftPhoto: UIImage?
-    var draftAudio: URL?
-    var draftLocation: CLLocationCoordinate2D?
+    var draftTitle: String? = nil
+    var draftCaption: String? = nil
+    var draftVideo: URL? = nil
+    var draftPhoto: UIImage? = nil
+    var draftAudio: URL? = nil
+    var draftLocation: CLLocationCoordinate2D? = nil
     var experiences: [Experience] = []
     let locationManager = CLLocationManager()
     let persistenceController = PersistenceController()
     
     //MARK: - Life Cycle -
-    init() {
+    override init() {
+        super.init()
+        locationManager.delegate = self
         updateExperiences()
         locationManager.requestLocation()
         addGPC()
@@ -31,21 +34,21 @@ struct ExperienceController: TextAdderDelegate {
     
     
     //MARK: - Actions -
-    mutating func addTitle(_ title: String) {
+    func addTitle(_ title: String) {
         draftTitle = title
     }
     
-    mutating func addCaption(_ caption: String) {
+    func addCaption(_ caption: String) {
         draftCaption = caption
     }
     
-    mutating func addGPC() {
+    func addGPC() {
         if let coordinate = locationManager.location?.coordinate {
             draftLocation = coordinate
         }
     }
     
-    mutating func createExperience() {
+    func createExperience() {
         guard let title = draftTitle,
             let location = draftLocation else { return }
         
@@ -58,7 +61,7 @@ struct ExperienceController: TextAdderDelegate {
         persistenceController.saveExperiences(experiences)
     }
     
-    mutating private func updateExperiences() {
+    private func updateExperiences() {
         let experiences = persistenceController.loadExperiences()
         self.experiences = experiences
     }
@@ -66,23 +69,48 @@ struct ExperienceController: TextAdderDelegate {
 }
 
 
+//MARK: - Extensions -
+//MARK: - Delegates -
 extension ExperienceController: PhotoAdderDelegate {
-    mutating func addPhoto(_ photo: UIImage) {
+    func addPhoto(_ photo: UIImage) {
         draftPhoto = photo
     }
 }
 
 
 extension ExperienceController: AudioAdderDelegate {
-    mutating func addAudio(_ audio: URL) {
+    func addAudio(_ audio: URL) {
         draftAudio = audio
     }
 }
 
 
 extension ExperienceController: VideoAdderDelegate {
-    mutating func addVideo(_ video: URL) {
+    func addVideo(_ video: URL) {
         draftVideo = video
+    }
+}
+
+
+extension ExperienceController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager,
+                         didChangeAuthorization status: CLAuthorizationStatus) {
+        
+        switch status {
+        case .authorizedWhenInUse:
+            locationManager.requestLocation()
+        default:
+            break
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager,
+                         didUpdateLocations locations: [CLLocation]) {
+        addGPC()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+            NSLog("Error with location manager: \(error)")
     }
 }
 
