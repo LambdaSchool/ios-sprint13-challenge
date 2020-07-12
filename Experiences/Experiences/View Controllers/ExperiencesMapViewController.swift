@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import MapKit
+import CoreImage
 //TODO: Wire in Map View
 //TODO: Display experiences via dependency injection from home view controller.
 //TODO: Stretch: Display detail bubble above map annotation.
 class ExperiencesMapViewController: UIViewController {
     //MARK: - Properties -
     var experiences: [Experience]?
+    var locationManager: CLLocationManager?
     
     
     //MARK: - Life Cycles -

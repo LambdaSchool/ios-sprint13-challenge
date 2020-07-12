@@ -25,6 +25,7 @@ struct ExperienceController: TextAdderDelegate {
     //MARK: - Life Cycle -
     init() {
         updateExperiences()
+        locationManager.requestLocation()
         addGPC()
     }
     

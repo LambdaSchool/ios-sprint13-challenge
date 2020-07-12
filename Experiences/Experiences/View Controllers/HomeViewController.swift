@@ -7,13 +7,14 @@
 //
 
 import UIKit
-//TODO: load experiences from user defaults in vDL with an update views method
-//TODO: pass experiences by dependency injection via segues to tableView and MapView VCs
+import CoreLocation
+
 
 class HomeViewController: UIViewController {
     //MARK: - Properties -
     var experiences: [Experience] = []
     var persistenceController = PersistenceController()
+    var locationManager = CLLocationManager()
     
     //MARK: - Life Cycles -
     override func viewDidLoad() {
@@ -23,6 +24,14 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         updateViews()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        locationManager.requestWhenInUseAuthorization()
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            locationManager.requestLocation()
+        }
     }
     
     
@@ -43,6 +52,7 @@ class HomeViewController: UIViewController {
         if segue.identifier == .mapSegue {
             guard let MapVC = segue.destination as? ExperiencesMapViewController else { return }
             MapVC.experiences = experiences
+            MapVC.locationManager = locationManager
         }
     }
     

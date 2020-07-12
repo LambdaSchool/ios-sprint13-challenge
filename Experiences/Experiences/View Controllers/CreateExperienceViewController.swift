@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import CoreLocation
 
-//TODO: Set up location permissions here and in map view
+
 class CreateExperienceViewController: UIViewController {
     //MARK: - Properties -
     ///outlets
