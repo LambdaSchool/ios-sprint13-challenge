@@ -95,6 +95,7 @@ class CreateExperienceViewController: UIViewController {
         experienceController.addGPC()
         guard isReady else { return }
         experienceController.createExperience()
+        self.dismiss(animated: true, completion: nil)
     }
     
     

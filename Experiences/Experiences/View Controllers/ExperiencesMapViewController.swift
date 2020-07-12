@@ -15,6 +15,7 @@ import CoreLocation
 class ExperiencesMapViewController: UIViewController {
     //MARK: - Properties -
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var backButton: UIButton!
     
     var experiences: [Experience]?
     var locationManager: CLLocationManager?
@@ -27,15 +28,21 @@ class ExperiencesMapViewController: UIViewController {
             fatalError("loacation manager instance not being passed to map view.")
         }
         locationManager.delegate = self
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            locationManager.requestLocation()
+        }
         mapView.delegate = self
-        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "QuakeView")
         if let experiences = experiences {
             self.mapView.addAnnotations(experiences)
         }
     }
     
 
-
+    //MARK: - Actions -
+    @IBAction func back(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 
@@ -53,7 +60,6 @@ extension ExperiencesMapViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager,
                          didUpdateLocations locations: [CLLocation]) {
-        
         mapView.showsUserLocation = true
     }
     
@@ -64,5 +70,6 @@ extension ExperiencesMapViewController: CLLocationManagerDelegate {
 
 
 extension ExperiencesMapViewController: MKMapViewDelegate {
+    
     
 }

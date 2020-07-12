@@ -101,6 +101,7 @@ class AddAudioViewController: UIViewController {
         if let url = recordingURL {
             audioDelegate?.addAudio(url)
         }
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func cancelPressed() {

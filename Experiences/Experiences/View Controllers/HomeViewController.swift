@@ -29,9 +29,6 @@ class HomeViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         locationManager.requestWhenInUseAuthorization()
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            locationManager.requestLocation()
-        }
     }
     
     
