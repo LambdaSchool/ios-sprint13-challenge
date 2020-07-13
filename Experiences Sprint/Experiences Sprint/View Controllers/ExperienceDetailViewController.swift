@@ -7,14 +7,22 @@
 //
 
 import UIKit
-import CoreLocation
 import MapKit
+import CoreLocation
 import Photos
 import AVFoundation
 import CoreImage
 import CoreImage.CIFilterBuiltins
 
 class ExperienceDetailViewController: UIViewController {
+
+    // MARK: - Outlets
+
+    @IBOutlet var titleTextField: UITextField!
+    @IBOutlet var imageView: UIImageView!
+    @IBOutlet var addImage: UIButton!
+    @IBOutlet var recordAudioButton: UIButton!
+
 
     // MARK: - Properites
 
@@ -42,29 +50,22 @@ class ExperienceDetailViewController: UIViewController {
         }
     }
 
-// MARK: - View Controller LifeCycle
+    // MARK: - View Controller LifeCycle
 
     override func viewDidLoad() {
-          super.viewDidLoad()
-          updateViews()
-      }
+        super.viewDidLoad()
+        updateViews()
+    }
 
-      func updateViews() {
-          DispatchQueue.main.async {
-              if self.isRecording {
-                  self.recordAudioButton.setTitle("Stop Recording", for: .normal)
-              } else {
-                  self.recordAudioButton.setTitle("Record", for: .normal)
-              }
-          }
-      }
-
-    // MARK: - Outlets
-
-    @IBOutlet var titleTextField: UITextField!
-    @IBOutlet var imageView: UIImageView!
-    @IBOutlet var addImage: UIButton!
-    @IBOutlet var recordAudioButton: UIButton!
+    func updateViews() {
+        DispatchQueue.main.async {
+            if self.isRecording {
+                self.recordAudioButton.setTitle("Stop Recording", for: .normal)
+            } else {
+                self.recordAudioButton.setTitle("Record", for: .normal)
+            }
+        }
+    }
 
     // MARK: - Images
 
@@ -133,7 +134,7 @@ class ExperienceDetailViewController: UIViewController {
         navigationController?.popToRootViewController(animated: true)
     }
 
-    // MARK: - Audio
+    // MARK: - Audio Recording
 
     func startRecording() {
         // Grab the recording URL
@@ -213,7 +214,7 @@ class ExperienceDetailViewController: UIViewController {
     }
 }
 
-// MARK: - Extensions
+// MARK: - Audio Extensions
 
 extension ExperienceDetailViewController: AVAudioRecorderDelegate {
 
@@ -248,6 +249,8 @@ extension ExperienceDetailViewController: AVAudioPlayerDelegate {
         }
     }
 }
+
+// MARK: - Image Extension
 
 extension ExperienceDetailViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

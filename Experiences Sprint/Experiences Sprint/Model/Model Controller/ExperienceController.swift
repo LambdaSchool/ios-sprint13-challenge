@@ -19,7 +19,7 @@ class ExperienceController {
                           audio: URL?,
                           coordinate: CLLocationCoordinate2D) {
         
-        var newExperience = Experience(title: title, image: image, audio: audio, coordinate: coordinate)
+        let newExperience = Experience(title: title, image: image, audio: audio, coordinate: coordinate)
         experiences.append(newExperience)
         experience = newExperience
     }

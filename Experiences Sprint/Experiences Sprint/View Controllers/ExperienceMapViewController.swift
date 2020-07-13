@@ -90,6 +90,7 @@ extension ExperienceMapViewController: MKMapViewDelegate, CLLocationManagerDeleg
 
         locationManager.requestLocation()
     }
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         NSLog("Error: Did fail with error \(error)")
     }
