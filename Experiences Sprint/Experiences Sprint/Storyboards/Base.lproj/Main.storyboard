@@ -64,63 +64,61 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xP4-Pm-4j0">
-                                <rect key="frame" x="20" y="162" width="374" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0lu-e6-sxJ">
-                                <rect key="frame" x="20" y="216" width="374" height="191"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kKY-nb-tty">
-                                <rect key="frame" x="20" y="427" width="374" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" title="Add Image"/>
-                                <connections>
-                                    <action selector="addImageButtonTapped:" destination="ghh-vz-UNb" eventType="touchUpInside" id="Ao9-GV-dYS"/>
-                                </connections>
-                            </button>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="ZOp-GI-dpT">
-                                <rect key="frame" x="20" y="559" width="374" height="46"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="n4L-WV-Lqn">
+                                <rect key="frame" x="20" y="152" width="374" height="347"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yDE-17-eqg">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="46"/>
-                                        <state key="normal" title="Start Recording">
-                                            <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                        <state key="selected" image="stop.fill" catalog="system"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xP4-Pm-4j0">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0lu-e6-sxJ">
+                                        <rect key="frame" x="0.0" y="59" width="374" height="239"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kKY-nb-tty">
+                                        <rect key="frame" x="0.0" y="313" width="374" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" title="Add Image"/>
                                         <connections>
-                                            <action selector="recordAudioButtonTapped:" destination="ghh-vz-UNb" eventType="touchUpInside" id="v3S-Mf-DE1"/>
+                                            <action selector="addImageButtonTapped:" destination="ghh-vz-UNb" eventType="touchUpInside" id="Ao9-GV-dYS"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="46" id="doc-15-47A"/>
-                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="VqL-9r-QiH">
+                                <rect key="frame" x="20" y="592" width="374" height="22"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H6t-9c-jMR">
+                                        <rect key="frame" x="0.0" y="0.0" width="157" height="22"/>
+                                        <state key="normal" image="play.fill" catalog="system"/>
+                                        <state key="selected" image="stop.fill" catalog="system"/>
+                                        <connections>
+                                            <action selector="togglePlayback:" destination="ghh-vz-UNb" eventType="touchUpInside" id="Eef-Rr-09j"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a9y-OH-XMM">
+                                        <rect key="frame" x="217" y="0.0" width="157" height="22"/>
+                                        <state key="normal" image="mic.fill" catalog="system"/>
+                                        <state key="selected" image="mic" catalog="system"/>
+                                        <connections>
+                                            <action selector="toggleRecording:" destination="ghh-vz-UNb" eventType="touchUpInside" id="upW-gg-HJ8"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="qhd-Tr-K9d" firstAttribute="top" secondItem="yTS-oI-I8Y" secondAttribute="top" id="0Ly-QD-Zhq"/>
-                            <constraint firstItem="ZOp-GI-dpT" firstAttribute="leading" secondItem="yTS-oI-I8Y" secondAttribute="leading" constant="20" id="1GE-67-le3"/>
-                            <constraint firstItem="yDE-17-eqg" firstAttribute="leading" secondItem="yTS-oI-I8Y" secondAttribute="leading" constant="20" id="5yR-m3-1lp"/>
-                            <constraint firstItem="qhd-Tr-K9d" firstAttribute="leading" secondItem="yTS-oI-I8Y" secondAttribute="leading" id="9WG-Vk-gxU"/>
-                            <constraint firstItem="yTS-oI-I8Y" firstAttribute="trailing" secondItem="yDE-17-eqg" secondAttribute="trailing" constant="20" id="BPX-w8-gHD"/>
-                            <constraint firstItem="yTS-oI-I8Y" firstAttribute="trailing" secondItem="ZOp-GI-dpT" secondAttribute="trailing" constant="20" id="Dc6-mH-ycB"/>
-                            <constraint firstItem="kKY-nb-tty" firstAttribute="leading" secondItem="yTS-oI-I8Y" secondAttribute="leading" constant="20" id="EZR-H1-apv"/>
-                            <constraint firstItem="0lu-e6-sxJ" firstAttribute="leading" secondItem="yTS-oI-I8Y" secondAttribute="leading" constant="20" id="Ige-VJ-pG7"/>
-                            <constraint firstItem="yTS-oI-I8Y" firstAttribute="bottom" secondItem="ZOp-GI-dpT" secondAttribute="bottom" constant="257" id="LX6-Ig-y80"/>
-                            <constraint firstItem="yTS-oI-I8Y" firstAttribute="trailing" secondItem="xP4-Pm-4j0" secondAttribute="trailing" constant="20" id="Spt-ir-0gD"/>
-                            <constraint firstItem="xP4-Pm-4j0" firstAttribute="top" secondItem="qhd-Tr-K9d" secondAttribute="bottom" constant="30" id="UQt-6X-sYe"/>
-                            <constraint firstItem="kKY-nb-tty" firstAttribute="top" secondItem="0lu-e6-sxJ" secondAttribute="bottom" constant="20" id="YGY-tT-7qq"/>
-                            <constraint firstItem="yTS-oI-I8Y" firstAttribute="trailing" secondItem="0lu-e6-sxJ" secondAttribute="trailing" constant="20" id="YTw-b5-S3F"/>
-                            <constraint firstItem="yTS-oI-I8Y" firstAttribute="bottom" secondItem="yDE-17-eqg" secondAttribute="bottom" constant="257" id="b9z-GV-1EF"/>
-                            <constraint firstItem="xP4-Pm-4j0" firstAttribute="leading" secondItem="yTS-oI-I8Y" secondAttribute="leading" constant="20" id="hKo-JA-30i"/>
-                            <constraint firstItem="qhd-Tr-K9d" firstAttribute="trailing" secondItem="yTS-oI-I8Y" secondAttribute="trailing" id="kXu-83-RQy"/>
-                            <constraint firstItem="0lu-e6-sxJ" firstAttribute="top" secondItem="xP4-Pm-4j0" secondAttribute="bottom" constant="20" id="mIC-l7-kqN"/>
-                            <constraint firstItem="ZOp-GI-dpT" firstAttribute="top" secondItem="kKY-nb-tty" secondAttribute="bottom" constant="98" id="tMA-cj-oWv"/>
-                            <constraint firstItem="yTS-oI-I8Y" firstAttribute="trailing" secondItem="kKY-nb-tty" secondAttribute="trailing" constant="20" id="w9q-PX-gFX"/>
-                            <constraint firstItem="yDE-17-eqg" firstAttribute="top" secondItem="kKY-nb-tty" secondAttribute="bottom" constant="98" id="zuG-rv-zM6"/>
+                            <constraint firstItem="VqL-9r-QiH" firstAttribute="top" secondItem="n4L-WV-Lqn" secondAttribute="bottom" constant="93" id="8ig-dW-Adt"/>
+                            <constraint firstItem="n4L-WV-Lqn" firstAttribute="leading" secondItem="yTS-oI-I8Y" secondAttribute="leading" constant="20" id="FbB-3N-5zJ"/>
+                            <constraint firstItem="yTS-oI-I8Y" firstAttribute="trailing" secondItem="n4L-WV-Lqn" secondAttribute="trailing" constant="20" id="GF9-aX-xWv"/>
+                            <constraint firstItem="n4L-WV-Lqn" firstAttribute="top" secondItem="qhd-Tr-K9d" secondAttribute="bottom" constant="20" id="I9k-aA-Qtc"/>
+                            <constraint firstItem="yTS-oI-I8Y" firstAttribute="bottom" secondItem="VqL-9r-QiH" secondAttribute="bottom" constant="248" id="Kio-fH-mzs"/>
+                            <constraint firstItem="qhd-Tr-K9d" firstAttribute="top" secondItem="yTS-oI-I8Y" secondAttribute="top" id="Rfa-5w-7Gx"/>
+                            <constraint firstItem="qhd-Tr-K9d" firstAttribute="leading" secondItem="yTS-oI-I8Y" secondAttribute="leading" id="Xrv-Km-dwW"/>
+                            <constraint firstItem="qhd-Tr-K9d" firstAttribute="trailing" secondItem="yTS-oI-I8Y" secondAttribute="trailing" id="e3z-9Q-ZYF"/>
+                            <constraint firstItem="VqL-9r-QiH" firstAttribute="leading" secondItem="yTS-oI-I8Y" secondAttribute="leading" constant="20" id="geJ-6x-J6V"/>
+                            <constraint firstItem="yTS-oI-I8Y" firstAttribute="trailing" secondItem="VqL-9r-QiH" secondAttribute="trailing" constant="20" id="z6y-x3-JLq"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="yTS-oI-I8Y"/>
                     </view>
@@ -128,7 +126,8 @@
                     <connections>
                         <outlet property="addImage" destination="kKY-nb-tty" id="dSh-8l-JtZ"/>
                         <outlet property="imageView" destination="0lu-e6-sxJ" id="vDN-xd-pj8"/>
-                        <outlet property="recordAudioButton" destination="yDE-17-eqg" id="hn0-5f-IIi"/>
+                        <outlet property="playButton" destination="H6t-9c-jMR" id="fPX-n4-dka"/>
+                        <outlet property="recordAudioButton" destination="a9y-OH-XMM" id="qPA-jp-xzR"/>
                         <outlet property="titleTextField" destination="xP4-Pm-4j0" id="CZM-iI-GM4"/>
                     </connections>
                 </viewController>
@@ -156,6 +155,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="mic" catalog="system" width="108" height="128"/>
+        <image name="mic.fill" catalog="system" width="108" height="128"/>
+        <image name="play.fill" catalog="system" width="116" height="128"/>
         <image name="stop.fill" catalog="system" width="128" height="113"/>
     </resources>
 </document>

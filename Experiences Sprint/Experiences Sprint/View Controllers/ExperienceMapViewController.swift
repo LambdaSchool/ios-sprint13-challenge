@@ -67,7 +67,7 @@ class ExperienceMapViewController: UIViewController {
     }
 }
 
-// MARK: - Extension
+// MARK: - Extensions
 
 extension ExperienceMapViewController: MKMapViewDelegate, CLLocationManagerDelegate {
 
@@ -76,6 +76,14 @@ extension ExperienceMapViewController: MKMapViewDelegate, CLLocationManagerDeleg
         guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "MapView", for: experience) as? MKMarkerAnnotationView else {
             fatalError("Missing a registered map annotation view")
         }
+
+//        annotationView.canShowCallout = true
+//
+//        let detailView = ExperienceDetailViewController()
+//        detailView.experience = experience
+//
+//        annotationView.detailCalloutAccessoryView = detailView
+
         return annotationView
     }
     

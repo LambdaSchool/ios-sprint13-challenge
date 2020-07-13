@@ -22,11 +22,13 @@ class ExperienceDetailViewController: UIViewController {
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var addImage: UIButton!
     @IBOutlet var recordAudioButton: UIButton!
+    @IBOutlet var playButton: UIButton!
 
 
     // MARK: - Properites
 
     var experienceController: ExperienceController?
+    var experience: Experience?
     var coordinate: CLLocationCoordinate2D?
     var recordingURL: URL?
     var audioRecorder: AVAudioRecorder?
@@ -34,6 +36,10 @@ class ExperienceDetailViewController: UIViewController {
 
     var isRecording: Bool {
         audioRecorder?.isRecording ?? false
+    }
+
+    var isPlaying: Bool {
+        return audioPlayer?.isPlaying ?? false
     }
 
     var audioPlayer: AVAudioPlayer? {
@@ -44,9 +50,9 @@ class ExperienceDetailViewController: UIViewController {
         }
     }
 
-    var image: UIImage? {
+    var originalImage: UIImage? {
         didSet {
-            imageView.image = image?.flattened
+            updateImage()
         }
     }
 
@@ -54,17 +60,16 @@ class ExperienceDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        audioRecorder?.delegate = self
+        try? prepareAudioSession()
         updateViews()
     }
 
     func updateViews() {
-        DispatchQueue.main.async {
-            if self.isRecording {
-                self.recordAudioButton.setTitle("Stop Recording", for: .normal)
-            } else {
-                self.recordAudioButton.setTitle("Record", for: .normal)
-            }
-        }
+        playButton.isEnabled = !isRecording
+        recordAudioButton.isEnabled = !isPlaying
+        playButton.isSelected = isPlaying
+        recordAudioButton.isSelected = isRecording
     }
 
     // MARK: - Images
@@ -96,16 +101,39 @@ class ExperienceDetailViewController: UIViewController {
         present(imagePicker, animated: true, completion: nil)
     }
 
+    func updateImage() {
+        if let originalImage = originalImage {
+
+            var scaledSize = imageView.bounds.size
+            let scale = UIScreen.main.scale
+            scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
+
+            imageView.image = image(byFiltering: originalImage.imageByScaling(toSize: scaledSize)!)
+
+        } else {
+            imageView.image = nil
+        }
+    }
+
     // MARK: - Actions
 
-    @IBAction func recordAudioButtonTapped(_ sender: Any) {
+    @IBAction func toggleRecording(_ sender: Any) {
         if isRecording {
             stopRecording()
         } else {
-            startRecording()
+            requestPermissionOrStartRecording()
         }
     }
-    
+
+    @IBAction func togglePlayback(_ sender: Any) {
+        if isPlaying {
+            pause()
+        } else {
+            play()
+        }
+        updateViews()
+    }
+
     @IBAction func addImageButtonTapped(_ sender: Any) {
         presentImagePicker()
     }
@@ -117,61 +145,51 @@ class ExperienceDetailViewController: UIViewController {
         guard let title = titleTextField.text,
             !title.isEmpty else { return }
 
-        var newImage: UIImage? = nil
-        if let image = imageView.image { newImage = image }
+        guard let coordinate = self.coordinate else { return }
 
-        var newAudio:  URL? = nil
-
-        if let audio = recordingURL {
-            newAudio = audio
-        }
-
-        guard let coordinate = coordinate else { return }
-        let experience = Experience(title: title, image: newImage, audio: newAudio, coordinate: coordinate)
-
-        experienceController?.experiences.append(experience)
+        experienceController?.createExperience(title: title, image: imageView.image, audio: recordingURL, coordinate: coordinate)
 
         navigationController?.popToRootViewController(animated: true)
     }
 
-    // MARK: - Audio Recording
+    // MARK: - Audio Playback
 
-    func startRecording() {
-        // Grab the recording URL
-        recordingURL = createNewRecordingURL()
-
-        // Check for permission
-        AVAudioSession.sharedInstance().requestRecordPermission { (granted) in
-
-            guard granted else {
-                NSLog("We need microphone access")
-                return
-            }
-
-            // Set up the recorder (give it the settings we want, etc.)
-            guard let recordingURL = self.recordingURL else {
-                NSLog("No recording URL available")
-                return
-            }
-
-            let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
-            do {
-                self.audioRecorder?.delegate = self
-                self.audioRecorder = try AVAudioRecorder(url: recordingURL, format: format)
-                self.audioRecorder?.isMeteringEnabled = true
-                // Start recording
-                self.audioRecorder?.record()
-                self.updateViews()
-            } catch {
-                NSLog("Error setting up audio recorder: \(error)")
-            }
+    func loadAudio() {
+        let songURL = createNewRecordingURL()
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: songURL)
+        } catch {
+            NSLog("Error loading the audio file into a player: \(error)")
         }
     }
 
-    func stopRecording() {
-        audioRecorder?.stop()
-        audioRecorder = nil
+    func prepareAudioSession() throws {
+        let session = AVAudioSession.sharedInstance()
+        try session.setCategory(.playAndRecord, options: [.defaultToSpeaker])
+        try session.setActive(true, options: [])
+    }
+
+    func play() {
+        audioPlayer?.play()
         updateViews()
+    }
+
+    func pause() {
+        audioPlayer?.pause()
+        updateViews()
+    }
+
+    // MARK: - Recording
+
+    func createNewRecordingURL() -> URL {
+        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+
+        let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
+        let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
+
+        print("recording URL: \(file)")
+
+        return file
     }
 
     func requestPermissionOrStartRecording() {
@@ -202,16 +220,45 @@ class ExperienceDetailViewController: UIViewController {
         }
     }
 
-    func createNewRecordingURL() -> URL {
-        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    func startRecording() {
+        // Grab the recording URL
+        recordingURL = createNewRecordingURL()
 
-        let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
-        let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
+        // Check for permission
+        AVAudioSession.sharedInstance().requestRecordPermission { (granted) in
 
-        print("recording URL: \(file)")
+            guard granted else {
+                NSLog("We need microphone access")
+                return
+            }
 
-        return file
+            // Set up the recorder (give it the settings we want, etc.)
+            guard let recordingURL = self.recordingURL else {
+                NSLog("No recording URL available")
+                return
+            }
+
+            let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
+            do {
+                self.audioRecorder?.delegate = self
+                self.audioRecorder = try AVAudioRecorder(url: recordingURL, format: format)
+                self.audioRecorder?.isMeteringEnabled = true
+                // Start recording
+                self.audioRecorder?.record()
+                self.recordingURL = recordingURL
+                self.updateViews()
+            } catch {
+                NSLog("Error setting up audio recorder: \(error)")
+            }
+        }
     }
+
+    func stopRecording() {
+        audioRecorder?.stop()
+        audioRecorder = nil
+        updateViews()
+    }
+
 }
 
 // MARK: - Audio Extensions
@@ -257,7 +304,8 @@ extension ExperienceDetailViewController: UIImagePickerControllerDelegate, UINav
 
         guard let selectedImage = info[.originalImage] as? UIImage else { return }
 
-        self.image = image(byFiltering: selectedImage)
+        originalImage = selectedImage
+        addImage.isHidden = true
 
         dismiss(animated: true, completion: nil)
     }
