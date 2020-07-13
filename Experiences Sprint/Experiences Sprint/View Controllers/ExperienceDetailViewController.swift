@@ -31,11 +31,11 @@ class ExperienceDetailViewController: UIViewController {
     var experience: Experience?
     var coordinate: CLLocationCoordinate2D?
     var recordingURL: URL?
-    var audioRecorder: AVAudioRecorder?
+    var audioRecorder = AVAudioRecorder()
     private let context = CIContext(options: nil)
 
     var isRecording: Bool {
-        audioRecorder?.isRecording ?? false
+        audioRecorder.isRecording ?? false
     }
 
     var isPlaying: Bool {
@@ -60,9 +60,10 @@ class ExperienceDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        audioRecorder?.delegate = self
+        audioRecorder.delegate = self
         try? prepareAudioSession()
         updateViews()
+
     }
 
     func updateViews() {
@@ -240,12 +241,13 @@ class ExperienceDetailViewController: UIViewController {
 
             let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
             do {
-                self.audioRecorder?.delegate = self
+                self.audioRecorder.delegate = self
                 self.audioRecorder = try AVAudioRecorder(url: recordingURL, format: format)
-                self.audioRecorder?.isMeteringEnabled = true
+                self.audioRecorder.isMeteringEnabled = true
                 // Start recording
-                self.audioRecorder?.record()
                 self.recordingURL = recordingURL
+                self.audioRecorder.record()
+
                 self.updateViews()
             } catch {
                 NSLog("Error setting up audio recorder: \(error)")
@@ -254,8 +256,8 @@ class ExperienceDetailViewController: UIViewController {
     }
 
     func stopRecording() {
-        audioRecorder?.stop()
-        audioRecorder = nil
+        audioRecorder.stop()
+        // audioRecorder = nil
         updateViews()
     }
 
