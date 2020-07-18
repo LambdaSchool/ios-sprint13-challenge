@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import MapKit
 
 struct Experience {
     let title: String
     let image: UIImage?
+    let location: CLLocationCoordinate2D?
 }
