@@ -20,17 +20,14 @@ class MapKitHomeViewController: UIViewController {
     var postItem: Post!
     var postArray: [Post] = []
     let locationManager = CLLocationManager()
-    var currentLocation: Location!
+    var currentLongitude: CLLocationDegrees = 0
+    var currentLatitude: CLLocationDegrees = 0
+
 
     @IBOutlet var mapView: MKMapView!
     
-    var sampleData = [
-        ["title": "This is a test", "latitude": 40.003252, "longitude": -86.0655897]
-    ]
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        createAnnotations(locations: sampleData)
         
         // Ask for Authorisation from the User.
         self.locationManager.requestAlwaysAuthorization()
@@ -43,7 +40,20 @@ class MapKitHomeViewController: UIViewController {
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        DispatchQueue.main.async {
+            print(self.currentLongitude)
+            print(self.currentLatitude)
+            
+            var sampleData = [
+                ["title": "This is a test", "latitude": self.currentLatitude, "longitude": self.currentLongitude]
+             ]
+            self.createAnnotations(locations: sampleData)
 
+
+        }
     }
     
     func createAnnotations(locations: [[String: Any]]) {
@@ -60,7 +70,7 @@ class MapKitHomeViewController: UIViewController {
 extension MapKitHomeViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-
-        print("locations = \(locValue.latitude) \(locValue.longitude)")
+        self.currentLongitude = locValue.longitude
+        self.currentLatitude = locValue.latitude
     }
 }
