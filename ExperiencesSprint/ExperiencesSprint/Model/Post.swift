@@ -9,7 +9,8 @@
 import UIKit
 
 struct Post {
-    var image: UIImage
+    var image: UIImage?
+    var title: String
     var recording: String?
     var geoLocation: String?
 }

@@ -10,15 +10,11 @@ import UIKit
 import MapKit
 import CoreLocation
 
-struct Location {
-    var longitude: CLLocationDegrees
-    var latitude: CLLocationDegrees
-}
-
 class MapKitHomeViewController: UIViewController {
     
-    var postItem: Post!
+    var postItem: Post = Post(title: "")
     var postArray: [Post] = []
+    var helperInt = 0
     let locationManager = CLLocationManager()
     var currentLongitude: CLLocationDegrees = 0
     var currentLatitude: CLLocationDegrees = 0
@@ -43,17 +39,19 @@ class MapKitHomeViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
+        if helperInt > 0 {
+        print(postItem.title)
         DispatchQueue.main.async {
             print(self.currentLongitude)
             print(self.currentLatitude)
-            
+            print(self.postItem.title)
             var sampleData = [
-                ["title": "This is a test", "latitude": self.currentLatitude, "longitude": self.currentLongitude]
+                ["title": self.postItem.title, "latitude": self.currentLatitude, "longitude": self.currentLongitude]
              ]
             self.createAnnotations(locations: sampleData)
-
-
         }
+    }
     }
     
     func createAnnotations(locations: [[String: Any]]) {
