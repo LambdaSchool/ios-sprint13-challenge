@@ -62,6 +62,11 @@ class LibraryAndAudioViewController: UIViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destVC = segue.destination as! CreatePostViewController
+        destVC.currentPicture = imageView.image
+    }
+    
 }
 
 extension LibraryAndAudioViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

@@ -9,22 +9,15 @@
 import UIKit
 
 class CreatePostViewController: UIViewController {
+    
+    var currentPicture: UIImage!
 
+    @IBOutlet var thumbnailPicture: UIImageView!
+    @IBOutlet var commentTextView: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        thumbnailPicture.image = currentPicture
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
