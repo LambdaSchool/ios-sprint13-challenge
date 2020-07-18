@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Map View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MapViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -26,6 +26,7 @@
                                 </constraints>
                                 <state key="normal" backgroundImage="square.and.pencil" catalog="system"/>
                                 <connections>
+                                    <action selector="addExperienceButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ieB-Dq-LIe"/>
                                     <segue destination="5YC-gv-kkB" kind="show" id="In3-Uk-pO3"/>
                                 </connections>
                             </button>
@@ -44,6 +45,7 @@
                     <navigationItem key="navigationItem" id="CTw-vm-5zF"/>
                     <connections>
                         <outlet property="mapView" destination="uV2-nG-wI4" id="R2p-vV-Q2W"/>
+                        <outlet property="mapvView" destination="uV2-nG-wI4" id="5XS-W9-iAv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -53,7 +55,7 @@
         <!--New Experience-->
         <scene sceneID="DXR-xi-ZGk">
             <objects>
-                <viewController id="5YC-gv-kkB" sceneMemberID="viewController">
+                <viewController id="5YC-gv-kkB" customClass="ExperiencesScreenViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KLE-nK-4Pa">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -75,12 +77,18 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PsE-bN-7Pe">
                                         <rect key="frame" x="126" y="149" width="122" height="30"/>
                                         <state key="normal" title="Add Poster Image"/>
+                                        <connections>
+                                            <action selector="addImageButtonPressed:" destination="5YC-gv-kkB" eventType="touchUpInside" id="P2A-Ia-OSH"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZTh-BO-gZ6">
                                 <rect key="frame" x="182.5" y="433" width="49" height="30"/>
                                 <state key="normal" title="Record"/>
+                                <connections>
+                                    <action selector="recordButtonPressed:" destination="5YC-gv-kkB" eventType="touchUpInside" id="jd7-2F-2PV"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -98,8 +106,16 @@
                         <viewLayoutGuide key="safeArea" id="oYx-Ls-wwF"/>
                     </view>
                     <navigationItem key="navigationItem" title="New Experience" id="hZY-f0-H0T">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="46H-a8-kPM"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="46H-a8-kPM">
+                            <connections>
+                                <action selector="saveButtonPressed:" destination="5YC-gv-kkB" id="aLv-aO-qZV"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="imageView" destination="hqB-YK-29b" id="Mzd-NN-3ad"/>
+                        <outlet property="titleTextField" destination="Fdi-Ah-6Zp" id="Eth-MI-bi9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X4L-yO-mgh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
