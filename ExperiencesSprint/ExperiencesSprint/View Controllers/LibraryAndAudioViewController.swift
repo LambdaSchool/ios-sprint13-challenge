@@ -13,6 +13,8 @@ import Photos
 
 class LibraryAndAudioViewController: UIViewController {
     
+    var alertController = AlertController()
+    
     // Image Code
     var pictureChanged: Bool = false
     
@@ -49,11 +51,7 @@ class LibraryAndAudioViewController: UIViewController {
     }
     
     private func presentFailureAlert() {
-        let alert = UIAlertController(title: "Failure", message: "Please add an image first.", preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        
-        present(alert, animated: true, completion: nil)
+        present(alertController.basicAlertController(title: "Failure", message: "Please add a picture", selection: "OK"), animated: true, completion: nil)
     }
     
     // MARK: Actions

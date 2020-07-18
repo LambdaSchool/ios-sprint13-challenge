@@ -40,17 +40,12 @@ class MapKitHomeViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         
+        #warning("Only allows for a single annotation to be added. Need to work with the array")
         if helperInt > 0 {
-        print(postItem.title)
-        DispatchQueue.main.async {
-            print(self.currentLongitude)
-            print(self.currentLatitude)
-            print(self.postItem.title)
-            var sampleData = [
+            let sampleData = [
                 ["title": self.postItem.title, "latitude": self.currentLatitude, "longitude": self.currentLongitude]
              ]
             self.createAnnotations(locations: sampleData)
-        }
     }
     }
     
