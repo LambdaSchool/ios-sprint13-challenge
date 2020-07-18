@@ -19,11 +19,10 @@ class RecordingViewController: UIViewController {
     @IBOutlet var recordButton: UIButton!
     @IBOutlet var titleTextField: UITextField!
     @IBOutlet var saveButton: UIBarButtonItem!
+    
+
 
     override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
 

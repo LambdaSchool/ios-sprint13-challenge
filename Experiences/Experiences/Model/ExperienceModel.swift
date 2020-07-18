@@ -11,5 +11,10 @@ import Foundation
 struct Experience {
     var title: String
     var image: URL
-    var audioRecording: URL
+    var audioRecording: Recording
+    
+    struct Recording {
+        var recordingURL: URL
+        var timeLength: String
+    }
 }
