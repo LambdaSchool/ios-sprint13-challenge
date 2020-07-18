@@ -21,10 +21,8 @@ class MapViewController: UIViewController {
             let addedXPs = Array(newXPs.subtracting(oldXPs))
             let removedXPs = Array(oldXPs.subtracting(newXPs))
 
-            
-
-            //mapView.removeAnnotations(removedXPs)
-            //mapView.addAnnotations(addedXPs)
+            mapView.removeAnnotations(removedXPs)
+            mapView.addAnnotations(addedXPs)
         }
     }
 
