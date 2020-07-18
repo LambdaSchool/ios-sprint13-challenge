@@ -50,7 +50,7 @@ class MapViewController: UIViewController {
             guard let newExperienceNav = segue.destination as? UINavigationController,
                 let newExperienceVC = newExperienceNav.topViewController as? NewExperienceViewController else { fatalError("Incorrect VC")}
             guard let currentLocation = currentLocation else {
-                presentInfoAlert(title: "Location missing", message: "Please update location permission settings or select a location in Xcode.")
+                presentInfoAlert(title: "Location missing!", message: "Please update location permission settings or select a location in Xcode.")
                 return
             }
             newExperienceVC.currentLocation = currentLocation
@@ -77,6 +77,8 @@ extension MapViewController: CLLocationManagerDelegate {
     }
 }
 
+
+// MARK: - New Experience Delegate
 
 extension MapViewController: NewExperienceDelegate {
 
