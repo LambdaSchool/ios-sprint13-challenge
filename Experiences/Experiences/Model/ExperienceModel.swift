@@ -18,3 +18,8 @@ struct Recording {
     var audioRecording: URL
     var timeLength: String
 }
+
+struct MapPost {
+    var images: [Image] = []
+    var recordings: [Recording] = []
+}
