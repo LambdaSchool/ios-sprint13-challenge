@@ -11,7 +11,7 @@ import UIKit
 class CreatePostViewController: UIViewController {
     
     var currentPicture: UIImage!
-
+    
     @IBOutlet var thumbnailPicture: UIImageView!
     @IBOutlet var commentTextView: UITextView!
     

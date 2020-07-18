@@ -9,6 +9,8 @@
 import UIKit
 
 class MapKitHomeViewController: UIViewController {
+    
+    var postArray: [Post] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
