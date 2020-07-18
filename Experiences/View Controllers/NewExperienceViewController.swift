@@ -7,10 +7,14 @@
 //
 
 import UIKit
+import MapKit
 
 class NewExperienceViewController: UIViewController {
 
     // MARK: - Properties
+
+    var locationManager: CLLocationManager!
+    var currentLocation: CLLocationCoordinate2D?
 
     @IBOutlet var titleTextField: UITextField!
     @IBOutlet var imageView: UIImageView!
@@ -20,6 +24,9 @@ class NewExperienceViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        locationManager.delegate = self
+        locationManager.startUpdatingLocation()
     }
 
 
@@ -41,7 +48,23 @@ class NewExperienceViewController: UIViewController {
 }
 
 
-// MARK: - ImagePicker
+// MARK: - Location Delegate
+
+extension NewExperienceViewController: CLLocationManagerDelegate {
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location = locations.last! as CLLocation
+        currentLocation = location.coordinate
+        locationManager.stopUpdatingLocation()
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+       print(error.localizedDescription)
+    }
+}
+
+
+// MARK: - ImagePicker Delegate
 
 extension NewExperienceViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 

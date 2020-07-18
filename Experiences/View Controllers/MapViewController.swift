@@ -37,6 +37,9 @@ class MapViewController: UIViewController {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let newExperienceVC = segue.destination as? NewExperienceViewController {
+            newExperienceVC.locationManager = locationManager
+        }
     }
 }
 
