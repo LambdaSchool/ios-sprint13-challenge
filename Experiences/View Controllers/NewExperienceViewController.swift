@@ -17,10 +17,8 @@ class NewExperienceViewController: UIViewController {
 
     // MARK: - Properties
 
-    var locationManager: CLLocationManager!
     var delegate: NewExperienceDelegate!
-
-    private var currentLocation: CLLocationCoordinate2D?
+    var currentLocation: CLLocationCoordinate2D!
 
     @IBOutlet private var titleTextField: UITextField!
     @IBOutlet private var imageView: UIImageView!
@@ -30,9 +28,6 @@ class NewExperienceViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        locationManager.delegate = self
-        locationManager.startUpdatingLocation()
     }
 
 
@@ -63,22 +58,6 @@ class NewExperienceViewController: UIViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
-    }
-}
-
-
-// MARK: - Location Delegate
-
-extension NewExperienceViewController: CLLocationManagerDelegate {
-
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let location = locations.last! as CLLocation
-        currentLocation = location.coordinate
-        locationManager.stopUpdatingLocation()
-    }
-
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-       print(error.localizedDescription)
     }
 }
 

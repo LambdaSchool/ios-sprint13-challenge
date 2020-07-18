@@ -28,6 +28,7 @@ class MapViewController: UIViewController {
 
     @IBOutlet private var mapView: MKMapView!
 
+    private var currentLocation: CLLocationCoordinate2D?
     private let locationManager = CLLocationManager()
 
 
@@ -53,7 +54,8 @@ class MapViewController: UIViewController {
         if segue.identifier == "NewExperienceSegue" {
             guard let newExperienceNav = segue.destination as? UINavigationController,
                 let newExperienceVC = newExperienceNav.topViewController as? NewExperienceViewController else { fatalError("Incorrect VC")}
-            newExperienceVC.locationManager = locationManager
+            guard let currentLocation = currentLocation else { fatalError("No current location") }
+            newExperienceVC.currentLocation = currentLocation
             newExperienceVC.delegate = self
         }
     }
@@ -68,8 +70,8 @@ extension MapViewController: CLLocationManagerDelegate {
         let location = locations.last! as CLLocation
         let currentLocation = location.coordinate
         let coordinateRegion = MKCoordinateRegion(center: currentLocation, latitudinalMeters: 8000, longitudinalMeters: 8000)
+        self.currentLocation = currentLocation
         mapView.setRegion(coordinateRegion, animated: true)
-        locationManager.stopUpdatingLocation()
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
