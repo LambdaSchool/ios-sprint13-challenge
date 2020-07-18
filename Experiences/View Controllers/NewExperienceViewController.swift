@@ -1,5 +1,5 @@
 //
-//  MapViewController.swift
+//  NewExperienceViewController.swift
 //  Experiences
 //
 //  Created by Chad Parker on 7/17/20.
@@ -7,13 +7,12 @@
 //
 
 import UIKit
-import MapKit
 
-class MapViewController: UIViewController {
+class NewExperienceViewController: UIViewController {
 
     // MARK: - Properties
 
-    @IBOutlet var mapView: MKMapView!
+    @IBOutlet var titleTextField: UITextField!
 
 
     // MARK: - View Lifecycle
@@ -21,7 +20,7 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
+    
 
     // MARK: - Navigation
 

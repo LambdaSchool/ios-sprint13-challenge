@@ -29,7 +29,7 @@
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="62" scale="default" weight="medium"/>
                                 </state>
                                 <connections>
-                                    <action selector="addExperienceButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jIb-oo-hMW"/>
+                                    <segue destination="peW-Ig-dj5" kind="presentation" modalPresentationStyle="fullScreen" id="D8o-hY-WMs"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -51,6 +51,57 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="137.68115942028987" y="137.94642857142856"/>
+        </scene>
+        <!--New Experience-->
+        <scene sceneID="hX6-of-iVC">
+            <objects>
+                <viewController id="8QE-73-Jax" customClass="NewExperienceViewController" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5PY-5v-gnD">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title:" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6F7-ba-wYv">
+                                <rect key="frame" x="20" y="170" width="374" height="34"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="gME-17-YLt" firstAttribute="trailing" secondItem="6F7-ba-wYv" secondAttribute="trailing" constant="20" id="Aw2-7v-cIB"/>
+                            <constraint firstItem="6F7-ba-wYv" firstAttribute="top" secondItem="gME-17-YLt" secondAttribute="top" constant="30" id="eUb-xX-6ol"/>
+                            <constraint firstItem="6F7-ba-wYv" firstAttribute="leading" secondItem="gME-17-YLt" secondAttribute="leading" constant="20" id="h44-tm-B5f"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="gME-17-YLt"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="New Experience" id="gWJ-BJ-Dws">
+                        <barButtonItem key="rightBarButtonItem" title="Next" style="done" id="8Fc-Bc-hIw"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="titleTextField" destination="6F7-ba-wYv" id="qXs-kf-SAZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7nP-fe-Iff" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1966.6666666666667" y="137.94642857142856"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="7y5-bg-daD">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="peW-Ig-dj5" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="IV1-sQ-1Xw">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="8QE-73-Jax" kind="relationship" relationship="rootViewController" id="SAY-JT-rDF"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PdD-8D-dbC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1056.5217391304348" y="137.94642857142856"/>
         </scene>
     </scenes>
     <resources>
