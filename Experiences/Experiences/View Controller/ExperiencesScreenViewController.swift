@@ -9,6 +9,10 @@
 import UIKit
 import MapKit
 import AVFoundation
+import CoreImage
+import CoreImage.CIFilterBuiltins
+import Photos
+
 
 protocol NewExperienceDelegate {
     func didAddNewExperience(_ experience: Experience) -> Void
@@ -37,6 +41,16 @@ class ExperiencesScreenViewController: UIViewController {
     
     //MARK: - IBAction
     @IBAction func addImageButtonPressed(_ sender: Any) {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            print("Error: The photo library is not available")
+            return
+        }
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        
+        present(imagePicker, animated: true)
     }
     
     @IBAction func recordButtonPressed(_ sender: Any) {
@@ -124,5 +138,18 @@ extension ExperiencesScreenViewController: AudioRecorderControllerDelegate {
         alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
 
         present(alertController, animated: true)
+    }
+}
+
+extension ExperiencesScreenViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[.originalImage] as? UIImage {
+            imageView.image = image
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
 }
