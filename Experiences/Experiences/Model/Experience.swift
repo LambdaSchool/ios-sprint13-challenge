@@ -12,13 +12,15 @@ import MapKit
 class Experience: NSObject {
     let title: String?
     let audioURL: URL?
+    let image: Data?
     
     let longitude: Double
     let latitude: Double
     
-    init(title: String, audioURL: URL?, longitude: Double, latitude: Double) {
+    init(title: String, audioURL: URL?, image: Data?, longitude: Double, latitude: Double) {
         self.title = title
         self.audioURL = audioURL
+        self.image = image
         self.longitude = longitude
         self.latitude = latitude
     }
