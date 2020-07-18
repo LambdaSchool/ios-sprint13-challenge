@@ -41,6 +41,7 @@ class ExperiencesScreenViewController: UIViewController {
     
     @IBAction func recordButtonPressed(_ sender: Any) {
         audioRecorderController.toggleRecording()
+        audioRecorderController.audioRecorder?.delegate = self
         updateViews()
     }
     
@@ -107,5 +108,21 @@ extension ExperiencesScreenViewController: AVAudioRecorderDelegate {
         DispatchQueue.main.async {
             self.updateViews()
         }
+    }
+}
+
+extension ExperiencesScreenViewController: AudioRecorderControllerDelegate {
+    func didNotReceivePermission() {
+        print("Microphone access has been blocked.")
+
+        let alertController = UIAlertController(title: "Microphone Access Denied", message: "Please allow this app to access your Microphone.", preferredStyle: .alert)
+
+        alertController.addAction(UIAlertAction(title: "Open Settings", style: .default) { (_) in
+            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+        })
+
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+
+        present(alertController, animated: true)
     }
 }

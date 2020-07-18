@@ -9,6 +9,9 @@
 import UIKit
 import AVFoundation
 
+protocol AudioRecorderControllerDelegate {
+    func didNotReceivePermission() -> Void
+}
 class AudioRecorderController {
     // MARK: - Properties
     
@@ -21,6 +24,7 @@ class AudioRecorderController {
     
     var recordingURL: URL?
     var audioRecorder: AVAudioRecorder?
+    var delegate: AudioRecorderControllerDelegate?
     
     // MARK: - Playback
     
@@ -92,7 +96,7 @@ class AudioRecorderController {
                 // NOTE: Invite the user to tap record again, since we just interrupted them, and they may not have been ready to record
             }
         case .denied:
-            print("Microphone access has been blocked.")
+            delegate?.didNotReceivePermission()
 
         case .granted:
             startRecording()
