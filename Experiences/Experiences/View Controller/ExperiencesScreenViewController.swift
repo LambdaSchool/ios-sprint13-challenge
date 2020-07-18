@@ -8,8 +8,15 @@
 
 import UIKit
 
+protocol NewExperienceDelegate {
+    func didAddNewExperience(_ experience: Experience) -> Void
+}
+
 class ExperiencesScreenViewController: UIViewController {
 
+    //MARK: - Properties
+    var delegate: NewExperienceDelegate?
+    
     //MARK: - IBAOutlet
     @IBOutlet var titleTextField: UITextField!
     @IBOutlet var imageView: UIImageView!

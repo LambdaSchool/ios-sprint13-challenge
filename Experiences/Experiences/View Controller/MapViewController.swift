@@ -11,6 +11,8 @@ import MapKit
 
 class MapViewController: UIViewController {
 
+    //MARK: - Properties
+    var experiences = [Experience]()
     
     // MARK: - IBOutlets
     @IBOutlet var mapvView: MKMapView!
@@ -38,4 +40,18 @@ class MapViewController: UIViewController {
     }
     */
 
+}
+
+//MARK: - Extension
+extension MapViewController: NewExperienceDelegate {
+    func didAddNewExperience(_ experience: Experience) {
+        mapvView.addAnnotation(experience)
+        
+        let coordinateSpan = MKCoordinateSpan(latitudeDelta: 2, longitudeDelta: 2)
+        let region = MKCoordinateRegion(center: experience.coordinate, span: coordinateSpan)
+        
+        mapvView.setRegion(region, animated: true)
+    }
+    
+    
 }
