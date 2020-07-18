@@ -49,7 +49,10 @@ class MapViewController: UIViewController {
         if segue.identifier == "NewExperienceSegue" {
             guard let newExperienceNav = segue.destination as? UINavigationController,
                 let newExperienceVC = newExperienceNav.topViewController as? NewExperienceViewController else { fatalError("Incorrect VC")}
-            guard let currentLocation = currentLocation else { fatalError("No current location") }
+            guard let currentLocation = currentLocation else {
+                presentInfoAlert(title: "Location missing", message: "Please update location permission settings or select a location in Xcode.")
+                return
+            }
             newExperienceVC.currentLocation = currentLocation
             newExperienceVC.delegate = self
         }
