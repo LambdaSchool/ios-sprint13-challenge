@@ -52,13 +52,6 @@ class NewExperienceViewController: UIViewController {
 
         dismiss(animated: true, completion: nil)
     }
-
-
-    // MARK: - Navigation
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-    }
 }
 
 
@@ -67,8 +60,9 @@ class NewExperienceViewController: UIViewController {
 extension NewExperienceViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        imageView.image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
-
+        guard let image = info[.originalImage] as? UIImage else { fatalError("No image from picker") }
+        
+        imageView.image = ImageProcessor.desaturate(image)
         dismiss(animated: true, completion: nil)
     }
 
