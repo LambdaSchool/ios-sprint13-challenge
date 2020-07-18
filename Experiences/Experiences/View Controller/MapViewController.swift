@@ -8,11 +8,14 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
 class MapViewController: UIViewController {
 
     //MARK: - Properties
     var experiences = [Experience]()
+    
+    var locationManager = CLLocationManager()
     
     // MARK: - IBOutlets
     @IBOutlet var mapvView: MKMapView!
@@ -27,18 +30,37 @@ class MapViewController: UIViewController {
     
     //MARK: - IBAction
     @IBAction func addExperienceButtonPressed(_ sender: Any) {
+        switch CLLocationManager.authorizationStatus() {
+        case .notDetermined:
+            locationManager.requestAlwaysAuthorization()
+        case .restricted:
+            print("restricted location services")
+        case .denied:
+            print("denied location services")
+        case .authorizedAlways:
+            guard CLLocationManager.locationServicesEnabled() else {
+                print("problem with authorization")
+                return
+            }
+        case .authorizedWhenInUse:
+            guard CLLocationManager.locationServicesEnabled() else {
+                print("problem with authorization")
+                return
+            }
+        @unknown default:
+            print("other problem")
+        }
     }
     
 
-    /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "addExperienceSegue" {
+            guard let experienceVC = segue.destination as? ExperiencesScreenViewController else { return }
+            
+            experienceVC.delegate = self
+        }
     }
-    */
 
 }
 
@@ -46,6 +68,7 @@ class MapViewController: UIViewController {
 extension MapViewController: NewExperienceDelegate {
     func didAddNewExperience(_ experience: Experience) {
         mapvView.addAnnotation(experience)
+        mapvView.reloadInputViews()
         
         let coordinateSpan = MKCoordinateSpan(latitudeDelta: 2, longitudeDelta: 2)
         let region = MKCoordinateRegion(center: experience.coordinate, span: coordinateSpan)
