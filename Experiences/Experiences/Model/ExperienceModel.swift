@@ -8,13 +8,13 @@
 
 import Foundation
 
-struct Experience {
+struct Image {
     var title: String
     var image: URL
-    var audioRecording: Recording
-    
-    struct Recording {
-        var recordingURL: URL
-        var timeLength: String
-    }
+}
+
+struct Recording {
+    var title: String
+    var audioRecording: URL
+    var timeLength: String
 }
