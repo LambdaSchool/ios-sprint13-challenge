@@ -9,18 +9,33 @@
 import UIKit
 import MapKit
 
-struct Experience: Equatable, Hashable {
+class Experience: NSObject {
 
     let id = UUID()
-    let title: String
+    let title: String? // MKAnnotation wants an optional `title`
     let image: UIImage?
-    let location: CLLocationCoordinate2D?
+    let location: CLLocationCoordinate2D
 
-    static func == (lhs: Experience, rhs: Experience) -> Bool {
-        lhs.id == rhs.id
+    init(title: String, image: UIImage?, location: CLLocationCoordinate2D) {
+        self.title = title
+        self.image = image
+        self.location = location
     }
 
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
+    override func isEqual(_ object: Any?) -> Bool {
+        guard let object = object as? Experience else { return false }
+
+        return self.id == object.id
     }
+
+    override var hash: Int {
+        id.hashValue
+    }
+}
+
+extension Experience: MKAnnotation {
+
+    var coordinate: CLLocationCoordinate2D { location }
+
+    //var title: String? { /* defined above */ }
 }
