@@ -9,6 +9,10 @@
 import UIKit
 import AVFoundation
 
+protocol AddRecordingDelegate {
+    func recordingeWasAdded(_ experience: Experience)
+}
+
 class RecordingViewController: UIViewController {
     
     //MARK: - Outlets
@@ -30,14 +34,16 @@ class RecordingViewController: UIViewController {
         }
     }
     
-    weak var timer: Timer?
-    var recordingURL: URL?
-    var audioRecorder: AVAudioRecorder?
-    var recording: Recording? {
+    var delegate: AddRecordingDelegate?
+    
+    var experience: Experience? {
         didSet {
             updateViews()
         }
     }
+    weak var timer: Timer?
+    var recordingURL: URL?
+    var audioRecorder: AVAudioRecorder?
     
     // Formatter for time time remaining and time elapsed
     private lazy var timeIntervalFormatter: DateComponentsFormatter = {
@@ -90,15 +96,13 @@ class RecordingViewController: UIViewController {
         @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
             guard let newRecordingTitle = titleTextField.text,
                 !newRecordingTitle.isEmpty,
-                let newTimeLength = timeRemainingLabel.text else { return }
-            guard let recording = recordingURL else { return }
+            let recording = recordingURL else { return }
             
-            let newRecording = Recording(title: newRecordingTitle,
-                                         audioRecording: recording,
-                                          timeLength: newTimeLength)
+            let newRecording = Experience(title: newRecordingTitle,
+                                           audioURL: recording)
             print(newRecording)
-//            globalRecordings.append(newRecording)
-    //        delegate?.recordingWasAdded(newRecording)
+            experiences.append(newRecording)
+            delegate?.recordingeWasAdded(newRecording)
             navigationController?.popViewController(animated: true)
         }
     
@@ -111,7 +115,7 @@ class RecordingViewController: UIViewController {
                
                playButton.isSelected = isPlaying
                recordButton.isSelected = isRecording
-               titleTextField.text = recording?.title
+               titleTextField.text = experience?.title
                
                if !isRecording {
                    let elapsedTime = audioPlayer?.currentTime ?? 0
@@ -178,8 +182,8 @@ class RecordingViewController: UIViewController {
     
     func loadAudio() {
         let songURL = Bundle.main.url(forResource: "piano", withExtension: "mp3")!
-        if let recording = recording {
-            audioPlayer = try? AVAudioPlayer(contentsOf: recording.audioRecording)
+        if let experience = experience {
+            audioPlayer = try? AVAudioPlayer(contentsOf: experience.audioURL!)
             return
         }
         audioPlayer = try? AVAudioPlayer(contentsOf: songURL)

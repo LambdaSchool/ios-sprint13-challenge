@@ -20,6 +20,14 @@ struct Recording {
 }
 
 struct MapPost {
-    var images: [Image] = []
-    var recordings: [Recording] = []
+    var timestamp: Date
+    var url: URL
+    var comment: String
+}
+
+struct Experience {
+    var title: String
+    var audioURL: URL?
+    var imageURL: URL?
+    var videoURL: URL?
 }
