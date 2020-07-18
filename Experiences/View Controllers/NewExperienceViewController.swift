@@ -39,6 +39,18 @@ class NewExperienceViewController: UIViewController {
         self.present(imagePicker, animated: true, completion: nil)
     }
 
+    @IBAction func cancelButtonTapped(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+
+    @IBAction func doneButtonPressed(_ sender: Any) {
+        guard let title = titleTextField.text, !title.isEmpty else { return }
+
+        let newExperience = Experience(title: title, image: imageView.image, location: currentLocation)
+
+        dismiss(animated: true, completion: nil)
+    }
+
 
     // MARK: - Navigation
 
