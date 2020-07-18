@@ -12,6 +12,7 @@ import AVFoundation
 import CoreImage
 import CoreImage.CIFilterBuiltins
 import Photos
+import CoreLocation
 
 
 protocol NewExperienceDelegate {
@@ -24,6 +25,8 @@ class ExperiencesScreenViewController: UIViewController {
     var delegate: NewExperienceDelegate?
     let audioRecorderController = AudioRecorderController()
     var audioURL: URL?
+    let context = CIContext(options: nil)
+    var locationManager: CLLocationManager?
     
     //MARK: - IBOutlet
     @IBOutlet var titleTextField: UITextField!
@@ -60,17 +63,7 @@ class ExperiencesScreenViewController: UIViewController {
     }
     
     @IBAction func saveButtonPressed(_ sender: Any) {
-        guard let title = titleTextField.text, !title.isEmpty else { return }
-        
-        let location = CLLocation()
-        let longitude = location.coordinate.longitude
-        let latitude = location.coordinate.latitude
-        
-        let experience = Experience(title: title, audioURL: audioURL, image: imageView.image?.pngData(), longitude: longitude, latitude: latitude)
-        
-        delegate?.didAddNewExperience(experience)
-        
-        navigationController?.popViewController(animated: true)
+       locationPermission()
     }
     
     //MARK:- Functions
@@ -86,15 +79,31 @@ class ExperiencesScreenViewController: UIViewController {
         }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func saveExperience() {
+        locationPermission()
     }
-    */
+    
+    func locationPermission() {
+        locationManager = CLLocationManager()
+        locationManager?.delegate = self
+        locationManager?.requestAlwaysAuthorization()
+    }
+    
+    func filterImage(image: UIImage) -> UIImage? {
+        guard let cgImage = image.cgImage else { return nil }
+        
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        let filter = CIFilter.colorControls()
+        filter.inputImage = ciImage
+        filter.brightness = 0.4
+        
+        guard let outputCIImage = filter.outputImage,
+            let renderedCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else { return nil }
+        
+        let outputUIImage = UIImage(cgImage: renderedCGImage)
+        return outputUIImage.flattened
+    }
 
 }
 
@@ -144,12 +153,31 @@ extension ExperiencesScreenViewController: AudioRecorderControllerDelegate {
 extension ExperiencesScreenViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.originalImage] as? UIImage {
-            imageView.image = image
+            imageView.image = filterImage(image: image)
         }
         dismiss(animated: true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
+    }
+}
+
+extension ExperiencesScreenViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+         print("Error getting location: \(error)")
+    }
+
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse {
+            locationManager?.requestLocation()
+        } else if status == .authorizedAlways {
+            locationManager?.requestLocation()
+        }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+
+        saveExperience()
     }
 }
