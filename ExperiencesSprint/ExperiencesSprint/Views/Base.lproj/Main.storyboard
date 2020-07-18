@@ -66,6 +66,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Choose Image"/>
+                                <connections>
+                                    <action selector="choosePhotoButtonPressed:" destination="Dok-Gz-5q4" eventType="touchUpInside" id="gHK-jC-riK"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="THE-rp-Icx">
                                 <rect key="frame" x="20" y="604" width="374" height="30"/>
@@ -100,20 +103,29 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gze-5S-UhR">
+                                <rect key="frame" x="154" y="564" width="106" height="30"/>
+                                <state key="normal" title="Change Picture"/>
+                                <connections>
+                                    <action selector="changeCurrentPicturePressed:" destination="Dok-Gz-5q4" eventType="touchUpInside" id="zWB-Br-WBC"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="IQS-wT-jKs" firstAttribute="trailing" secondItem="3Yz-1Q-HAX" secondAttribute="trailing" id="46R-vf-xla"/>
                             <constraint firstItem="IQS-wT-jKs" firstAttribute="trailing" secondItem="iem-OB-DbX" secondAttribute="trailing" id="CIp-cW-qz5"/>
-                            <constraint firstItem="THE-rp-Icx" firstAttribute="top" secondItem="iem-OB-DbX" secondAttribute="bottom" constant="50" id="HPw-lF-dTT"/>
                             <constraint firstItem="IQS-wT-jKs" firstAttribute="trailing" secondItem="THE-rp-Icx" secondAttribute="trailing" constant="20" id="K7L-0E-VmT"/>
                             <constraint firstItem="cOj-LK-2VB" firstAttribute="centerX" secondItem="5hn-2O-aqO" secondAttribute="centerX" id="N3S-vD-Qe4"/>
                             <constraint firstItem="3Yz-1Q-HAX" firstAttribute="leading" secondItem="IQS-wT-jKs" secondAttribute="leading" id="NbD-tr-t61"/>
+                            <constraint firstItem="gze-5S-UhR" firstAttribute="centerX" secondItem="5hn-2O-aqO" secondAttribute="centerX" id="QXt-F3-gAv"/>
                             <constraint firstItem="iem-OB-DbX" firstAttribute="leading" secondItem="IQS-wT-jKs" secondAttribute="leading" id="VHf-WX-CnT"/>
                             <constraint firstItem="iem-OB-DbX" firstAttribute="top" secondItem="IQS-wT-jKs" secondAttribute="top" id="We7-aN-vtJ"/>
+                            <constraint firstItem="gze-5S-UhR" firstAttribute="top" secondItem="iem-OB-DbX" secondAttribute="bottom" constant="10" id="fhW-lN-YUQ"/>
                             <constraint firstItem="3Yz-1Q-HAX" firstAttribute="top" secondItem="IQS-wT-jKs" secondAttribute="top" id="h5z-em-KWU"/>
                             <constraint firstItem="cOj-LK-2VB" firstAttribute="top" secondItem="THE-rp-Icx" secondAttribute="bottom" constant="35" id="ilt-UF-mdM"/>
                             <constraint firstItem="THE-rp-Icx" firstAttribute="leading" secondItem="IQS-wT-jKs" secondAttribute="leading" constant="20" id="u1K-ms-zn3"/>
+                            <constraint firstItem="THE-rp-Icx" firstAttribute="top" secondItem="gze-5S-UhR" secondAttribute="bottom" constant="10" id="zAT-Qn-kBk"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="IQS-wT-jKs"/>
                     </view>
@@ -126,11 +138,17 @@
                                     <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="H0n-WD-cu1" kind="show" id="XjV-lm-zrU"/>
+                                    <action selector="nextNavBarButtonPressed:" destination="Dok-Gz-5q4" eventType="touchUpInside" id="scV-E5-BfD"/>
                                 </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="changeCurrentImage" destination="gze-5S-UhR" id="tIK-C8-pab"/>
+                        <outlet property="chooseImageButton" destination="3Yz-1Q-HAX" id="eek-jI-eKr"/>
+                        <outlet property="imageView" destination="iem-OB-DbX" id="RrM-xv-gHZ"/>
+                        <segue destination="H0n-WD-cu1" kind="show" identifier="toCreatePostVC" id="Ady-Mw-JOW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V2V-Q1-xCb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
