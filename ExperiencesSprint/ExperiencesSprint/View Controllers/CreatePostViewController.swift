@@ -17,10 +17,15 @@ class CreatePostViewController: UIViewController {
     
     @IBOutlet var thumbnailPicture: UIImageView!
     @IBOutlet var commentTextView: UITextView!
+    @IBOutlet var playAudioButton: UIButton!
+    @IBOutlet var rerecordAudioButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         thumbnailPicture.image = currentPicture
+        #warning("Need to avoid this hardcoded workaround")
+        playAudioButton.alpha = 0
+        rerecordAudioButton.alpha = 0
     }
     private func presentFailureAlert(title: String, message: String) {
           present(alertController.basicAlertController(title: title, message: message, selection: "OK"), animated: true, completion: nil)

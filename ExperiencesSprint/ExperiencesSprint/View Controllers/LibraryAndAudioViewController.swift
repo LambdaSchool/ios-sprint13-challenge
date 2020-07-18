@@ -57,6 +57,34 @@ class LibraryAndAudioViewController: UIViewController {
     // MARK: Actions
     
     @IBAction func choosePhotoButtonPressed(_ sender: Any) {
+        
+        let authorizationStatus = PHPhotoLibrary.authorizationStatus()
+        
+        switch authorizationStatus {
+        case .authorized:
+            presentImagePickerController()
+        case .notDetermined:
+            
+            PHPhotoLibrary.requestAuthorization { (status) in
+                
+                guard status == .authorized else {
+                    NSLog("User did not authorize access to the photo library")
+                    //                        self.alertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
+                    return
+                }
+                self.presentImagePickerController()
+            }
+            
+        case .denied:
+            print("error")
+        //                self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
+        case .restricted:
+            print("error")
+            //                self.presentInformationalAlertController(title: "Error", message: "Unable to access the photo library. Your device's restrictions do not allow access.")
+            
+        @unknown default:
+            print("FatalError")
+        }
         presentImagePickerController()
     }
     
