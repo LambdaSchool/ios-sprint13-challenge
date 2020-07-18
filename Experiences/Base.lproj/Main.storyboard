@@ -65,12 +65,32 @@
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lyH-tA-P7v">
+                                <rect key="frame" x="20" y="212" width="374" height="280.5"/>
+                                <state key="normal" title="Add Poster Image"/>
+                                <connections>
+                                    <action selector="addPosterImage:" destination="8QE-73-Jax" eventType="touchUpInside" id="HcS-3a-Wmd"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Bpu-S3-Ppo">
+                                <rect key="frame" x="20" y="212" width="374" height="280.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Bpu-S3-Ppo" secondAttribute="height" multiplier="4:3" id="iBF-j7-h7B"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="Bpu-S3-Ppo" firstAttribute="top" secondItem="6F7-ba-wYv" secondAttribute="bottom" constant="8" id="0Ez-WR-vdq"/>
+                            <constraint firstItem="lyH-tA-P7v" firstAttribute="leading" secondItem="Bpu-S3-Ppo" secondAttribute="leading" id="65o-Ul-UNw"/>
+                            <constraint firstItem="lyH-tA-P7v" firstAttribute="bottom" secondItem="Bpu-S3-Ppo" secondAttribute="bottom" id="8Gl-tw-kSF"/>
                             <constraint firstItem="gME-17-YLt" firstAttribute="trailing" secondItem="6F7-ba-wYv" secondAttribute="trailing" constant="20" id="Aw2-7v-cIB"/>
+                            <constraint firstItem="gME-17-YLt" firstAttribute="trailing" secondItem="Bpu-S3-Ppo" secondAttribute="trailing" constant="20" id="DVx-hc-4BO"/>
+                            <constraint firstItem="lyH-tA-P7v" firstAttribute="top" secondItem="Bpu-S3-Ppo" secondAttribute="top" id="OEl-SE-qC8"/>
                             <constraint firstItem="6F7-ba-wYv" firstAttribute="top" secondItem="gME-17-YLt" secondAttribute="top" constant="30" id="eUb-xX-6ol"/>
                             <constraint firstItem="6F7-ba-wYv" firstAttribute="leading" secondItem="gME-17-YLt" secondAttribute="leading" constant="20" id="h44-tm-B5f"/>
+                            <constraint firstItem="Bpu-S3-Ppo" firstAttribute="leading" secondItem="gME-17-YLt" secondAttribute="leading" constant="20" id="hfG-yE-Zbn"/>
+                            <constraint firstItem="lyH-tA-P7v" firstAttribute="trailing" secondItem="Bpu-S3-Ppo" secondAttribute="trailing" id="mGA-Nf-DQD"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gME-17-YLt"/>
                     </view>
@@ -78,6 +98,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Next" style="done" id="8Fc-Bc-hIw"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="imageView" destination="Bpu-S3-Ppo" id="ZbJ-vA-qHN"/>
                         <outlet property="titleTextField" destination="6F7-ba-wYv" id="qXs-kf-SAZ"/>
                     </connections>
                 </viewController>
