@@ -19,5 +19,4 @@ class CreatePostViewController: UIViewController {
         super.viewDidLoad()
         thumbnailPicture.image = currentPicture
     }
-
 }
