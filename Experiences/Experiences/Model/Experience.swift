@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MapKit
 
 class Experience: NSObject {
     let title: String?
@@ -20,5 +21,11 @@ class Experience: NSObject {
         self.audioURL = audioURL
         self.longitude = longitude
         self.latitude = latitude
+    }
+}
+
+extension Experience: MKAnnotation {
+    var coordinate: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
 }
