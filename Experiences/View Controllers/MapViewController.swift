@@ -13,7 +13,22 @@ class MapViewController: UIViewController {
 
     // MARK: - Properties
 
-    @IBOutlet var mapView: MKMapView!
+    private var experiences = [Experience]() {
+        didSet {
+            let oldXPs = Set(oldValue)
+            let newXPs = Set(experiences)
+
+            let addedXPs = Array(newXPs.subtracting(oldXPs))
+            let removedXPs = Array(oldXPs.subtracting(newXPs))
+
+            
+
+            //mapView.removeAnnotations(removedXPs)
+            //mapView.addAnnotations(addedXPs)
+        }
+    }
+
+    @IBOutlet private var mapView: MKMapView!
 
     private let locationManager = CLLocationManager()
 
