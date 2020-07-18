@@ -16,8 +16,8 @@ class NewExperienceViewController: UIViewController {
     var locationManager: CLLocationManager!
     var currentLocation: CLLocationCoordinate2D?
 
-    @IBOutlet var titleTextField: UITextField!
-    @IBOutlet var imageView: UIImageView!
+    @IBOutlet private var titleTextField: UITextField!
+    @IBOutlet private var imageView: UIImageView!
 
 
     // MARK: - View Lifecycle
