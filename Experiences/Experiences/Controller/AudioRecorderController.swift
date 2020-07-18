@@ -118,6 +118,14 @@ class AudioRecorderController {
     func stopRecording() {
         audioRecorder?.stop()
     }
+    
+    func toggleRecording() {
+        if isRecording {
+            stopRecording()
+        } else {
+            requestPermissionOrStartRecording()
+        }
+    }
 //
 //    // MARK: - Actions
 //
@@ -138,11 +146,5 @@ class AudioRecorderController {
 //        updateViews()
 //    }
 //
-    @IBAction func toggleRecording(_ sender: Any) {
-        if isRecording {
-            stopRecording()
-        } else {
-            requestPermissionOrStartRecording()
-        }
-    }
+    
 }

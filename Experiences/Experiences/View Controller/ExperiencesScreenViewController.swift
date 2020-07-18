@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import MapKit
+import AVFoundation
 
 protocol NewExperienceDelegate {
     func didAddNewExperience(_ experience: Experience) -> Void
@@ -16,10 +18,15 @@ class ExperiencesScreenViewController: UIViewController {
 
     //MARK: - Properties
     var delegate: NewExperienceDelegate?
+    let audioRecorderController = AudioRecorderController()
+    var audioURL: URL?
     
-    //MARK: - IBAOutlet
+    //MARK: - IBOutlet
     @IBOutlet var titleTextField: UITextField!
     @IBOutlet var imageView: UIImageView!
+    @IBOutlet var recordButton: UIButton!
+    @IBOutlet var addPosterImageButton: UIButton!
+    @IBOutlet var saveButton: UIBarButtonItem!
     
     
     override func viewDidLoad() {
@@ -28,16 +35,41 @@ class ExperiencesScreenViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    //MARK: - IBACtion
+    //MARK: - IBAction
     @IBAction func addImageButtonPressed(_ sender: Any) {
     }
     
     @IBAction func recordButtonPressed(_ sender: Any) {
+        audioRecorderController.toggleRecording()
+        updateViews()
     }
     
     @IBAction func saveButtonPressed(_ sender: Any) {
+        guard let title = titleTextField.text, !title.isEmpty else { return }
+        
+        let location = CLLocation()
+        let longitude = location.coordinate.longitude
+        let latitude = location.coordinate.latitude
+        
+        let experience = Experience(title: title, audioURL: audioURL, image: imageView.image?.pngData(), longitude: longitude, latitude: latitude)
+        
+        delegate?.didAddNewExperience(experience)
+        
+        dismiss(animated: true, completion: nil)
     }
     
+    //MARK:- Functions
+    func updateViews() {
+        let audioRecorder = audioRecorderController.audioRecorder
+        recordButton.isSelected = audioRecorder?.isRecording ?? false
+        
+        switch recordButton.isSelected {
+        case true:
+            saveButton.isEnabled = false
+        case false:
+            saveButton.isEnabled = true
+        }
+    }
     
     /*
     // MARK: - Navigation
@@ -49,4 +81,31 @@ class ExperiencesScreenViewController: UIViewController {
     }
     */
 
+}
+
+// MARK: - Extensions
+extension ExperiencesScreenViewController: AVAudioRecorderDelegate {
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        if let recordingURL = audioRecorderController.recordingURL {
+            print("Finished recording: \(recordingURL.path)")
+
+            audioURL = recordingURL
+        } else {
+            print("Did not successfully finish recording")
+        }
+
+        DispatchQueue.main.async {
+            self.updateViews()
+        }
+    }
+
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
+        if let error = error {
+            NSLog("Error occured during recording: \(error)")
+        }
+
+        DispatchQueue.main.async {
+            self.updateViews()
+        }
+    }
 }
