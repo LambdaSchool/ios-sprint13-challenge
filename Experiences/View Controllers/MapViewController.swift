@@ -41,12 +41,7 @@ class MapViewController: UIViewController {
         locationManager.delegate = self
         locationManager.startUpdatingLocation()
     }
-
-
-    // MARK: - Location
-
-
-
+    
 
     // MARK: - Navigation
 
