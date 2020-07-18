@@ -51,3 +51,4 @@ The requirements for this project are as follows:
 * Add a custom callout view to the annotations that shows either the image, video, a way to play the experience's audio, or a combination of the three.
 * Persist the experiences using Core Data or Firebase (either using the SDK or just as a REST API).
 * Add an image editor screen to choose between 3-5 different editing tools.
+ 
