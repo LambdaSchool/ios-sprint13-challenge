@@ -37,8 +37,11 @@ class MapViewController: UIViewController {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let newExperienceVC = segue.destination as? NewExperienceViewController {
+        if segue.identifier == "NewExperienceSegue" {
+            guard let newExperienceNav = segue.destination as? UINavigationController,
+                let newExperienceVC = newExperienceNav.topViewController as? NewExperienceViewController else { fatalError("Incorrect VC")}
             newExperienceVC.locationManager = locationManager
+            newExperienceVC.delegate = self
         }
     }
 }
