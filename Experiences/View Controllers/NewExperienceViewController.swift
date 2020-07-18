@@ -9,12 +9,18 @@
 import UIKit
 import MapKit
 
+protocol NewExperienceDelegate {
+    func newExperienceSaved(_ experience: Experience)
+}
+
 class NewExperienceViewController: UIViewController {
 
     // MARK: - Properties
 
     var locationManager: CLLocationManager!
-    var currentLocation: CLLocationCoordinate2D?
+    var delegate: NewExperienceDelegate!
+
+    private var currentLocation: CLLocationCoordinate2D?
 
     @IBOutlet private var titleTextField: UITextField!
     @IBOutlet private var imageView: UIImageView!
@@ -47,6 +53,7 @@ class NewExperienceViewController: UIViewController {
         guard let title = titleTextField.text, !title.isEmpty else { return }
 
         let newExperience = Experience(title: title, image: imageView.image, location: currentLocation)
+        delegate.newExperienceSaved(newExperience)
 
         dismiss(animated: true, completion: nil)
     }

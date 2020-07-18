@@ -63,3 +63,11 @@ extension MapViewController: CLLocationManagerDelegate {
        print(error.localizedDescription)
     }
 }
+
+
+extension MapViewController: NewExperienceDelegate {
+
+    func newExperienceSaved(_ experience: Experience) {
+        experiences.append(experience)
+    }
+}
