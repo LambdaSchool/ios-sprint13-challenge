@@ -60,12 +60,7 @@ class MapKitHomeViewController: UIViewController {
 extension MapKitHomeViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        currentLocation.longitude = locValue.longitude
-        currentLocation.latitude = locValue.latitude
-        
-        print(currentLocation.longitude)
-        print(currentLocation.latitude)
 
-//        print("locations = \(locValue.latitude) \(locValue.longitude)")
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
     }
 }
