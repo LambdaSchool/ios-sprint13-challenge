@@ -70,7 +70,7 @@ class ExperiencesScreenViewController: UIViewController {
         
         delegate?.didAddNewExperience(experience)
         
-        dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
     
     //MARK:- Functions
