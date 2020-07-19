@@ -14,11 +14,13 @@ class Experience: NSObject {
     let id = UUID()
     let title: String? // MKAnnotation wants an optional `title`
     let image: UIImage?
+    let audioURL: URL?
     let location: CLLocationCoordinate2D
 
-    init(title: String, image: UIImage?, location: CLLocationCoordinate2D) {
+    init(title: String, image: UIImage?, audioURL: URL?, location: CLLocationCoordinate2D) {
         self.title = title
         self.image = image
+        self.audioURL = audioURL
         self.location = location
     }
 

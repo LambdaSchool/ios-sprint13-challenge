@@ -85,7 +85,7 @@ class NewExperienceViewController: UIViewController {
     @IBAction func doneButtonPressed(_ sender: Any) {
         guard let title = titleTextField.text, !title.isEmpty else { return }
 
-        let newExperience = Experience(title: title, image: imageView.image, location: currentLocation)
+        let newExperience = Experience(title: title, image: imageView.image, audioURL: recordingURL, location: currentLocation)
         delegate.newExperienceSaved(newExperience)
 
         dismiss(animated: true, completion: nil)
