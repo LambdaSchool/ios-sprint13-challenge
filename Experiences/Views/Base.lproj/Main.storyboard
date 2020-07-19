@@ -78,10 +78,47 @@
                                     <constraint firstAttribute="width" secondItem="Bpu-S3-Ppo" secondAttribute="height" multiplier="4:3" id="iBF-j7-h7B"/>
                                 </constraints>
                             </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fAp-yR-cJi">
+                                <rect key="frame" x="20" y="519" width="374" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XVm-NK-wsR">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
+                                        <state key="normal" title="Add Audio Recording"/>
+                                        <connections>
+                                            <action selector="startRecording:" destination="8QE-73-Jax" eventType="touchUpInside" id="x99-Vi-3rL"/>
+                                        </connections>
+                                    </button>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recording..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oNa-1X-wjj">
+                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="50"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A1u-U7-a2O">
+                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="50"/>
+                                        <state key="normal" title="Stop Recording"/>
+                                        <connections>
+                                            <action selector="stopRecording:" destination="8QE-73-Jax" eventType="touchUpInside" id="yWV-Cp-ZIv"/>
+                                        </connections>
+                                    </button>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xGD-fO-aXi">
+                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="50"/>
+                                        <state key="normal" title="Play"/>
+                                        <connections>
+                                            <action selector="playRecording:" destination="8QE-73-Jax" eventType="touchUpInside" id="EcG-C7-x8Z"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="APf-ia-uFU"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="Bpu-S3-Ppo" firstAttribute="top" secondItem="6F7-ba-wYv" secondAttribute="bottom" constant="8" id="0Ez-WR-vdq"/>
+                            <constraint firstItem="fAp-yR-cJi" firstAttribute="leading" secondItem="Bpu-S3-Ppo" secondAttribute="leading" id="1eF-wC-R3c"/>
+                            <constraint firstItem="fAp-yR-cJi" firstAttribute="top" secondItem="Bpu-S3-Ppo" secondAttribute="bottom" constant="26.5" id="5PT-Hc-ebr"/>
                             <constraint firstItem="lyH-tA-P7v" firstAttribute="leading" secondItem="Bpu-S3-Ppo" secondAttribute="leading" id="65o-Ul-UNw"/>
                             <constraint firstItem="lyH-tA-P7v" firstAttribute="bottom" secondItem="Bpu-S3-Ppo" secondAttribute="bottom" id="8Gl-tw-kSF"/>
                             <constraint firstItem="gME-17-YLt" firstAttribute="trailing" secondItem="6F7-ba-wYv" secondAttribute="trailing" constant="20" id="Aw2-7v-cIB"/>
@@ -90,6 +127,7 @@
                             <constraint firstItem="6F7-ba-wYv" firstAttribute="top" secondItem="gME-17-YLt" secondAttribute="top" constant="30" id="eUb-xX-6ol"/>
                             <constraint firstItem="6F7-ba-wYv" firstAttribute="leading" secondItem="gME-17-YLt" secondAttribute="leading" constant="20" id="h44-tm-B5f"/>
                             <constraint firstItem="Bpu-S3-Ppo" firstAttribute="leading" secondItem="gME-17-YLt" secondAttribute="leading" constant="20" id="hfG-yE-Zbn"/>
+                            <constraint firstItem="fAp-yR-cJi" firstAttribute="trailing" secondItem="Bpu-S3-Ppo" secondAttribute="trailing" id="k0B-MI-4Cp"/>
                             <constraint firstItem="lyH-tA-P7v" firstAttribute="trailing" secondItem="Bpu-S3-Ppo" secondAttribute="trailing" id="mGA-Nf-DQD"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gME-17-YLt"/>
@@ -108,6 +146,10 @@
                     </navigationItem>
                     <connections>
                         <outlet property="imageView" destination="Bpu-S3-Ppo" id="ZbJ-vA-qHN"/>
+                        <outlet property="recordingLabel" destination="oNa-1X-wjj" id="WVZ-Me-CSc"/>
+                        <outlet property="recordingPlayButton" destination="xGD-fO-aXi" id="ilG-aZ-dFf"/>
+                        <outlet property="recordingStartButton" destination="XVm-NK-wsR" id="Ka6-I7-n0y"/>
+                        <outlet property="recordingStopButton" destination="A1u-U7-a2O" id="OUT-c6-f8C"/>
                         <outlet property="titleTextField" destination="6F7-ba-wYv" id="qXs-kf-SAZ"/>
                     </connections>
                 </viewController>

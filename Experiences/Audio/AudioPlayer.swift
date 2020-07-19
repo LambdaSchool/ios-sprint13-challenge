@@ -61,7 +61,7 @@ class AudioPlayer: NSObject, ObservableObject {
     override init() {
         super.init()
         
-        loadAudio()
+        //loadAudio()
     }
     
     deinit {
