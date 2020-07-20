@@ -12,6 +12,8 @@ import MapKit
 
 class MapViewController: UIViewController {
     
+    // MARK: - Properties
+    
     var postController = PostController()
     
     @IBOutlet weak var mapView: MKMapView!
@@ -29,6 +31,8 @@ class MapViewController: UIViewController {
                }
            }
 
+    
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -50,6 +54,8 @@ class MapViewController: UIViewController {
     }
 }
 
+ 
+ // MARK: - Extensions
  extension MapViewController: MKMapViewDelegate {
          func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
              

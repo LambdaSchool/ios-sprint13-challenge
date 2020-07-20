@@ -9,14 +9,17 @@
 import UIKit
 import AVFoundation
 
+// MARK: - Protocols
 protocol AudioCommentViewControllerDelegate {
     func saveAudioCommentButtonWasTapped(_ audioData: Data, _ viewController: UIViewController)
 }
 
 class RecordAudioViewController: UIViewController {
     
+    // MARK: - Properties
     var delegate: AudioCommentViewControllerDelegate?
     
+    // MARK: - Outlets
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var timeAllotedLabel: UILabel!
@@ -32,6 +35,8 @@ class RecordAudioViewController: UIViewController {
         formatting.allowedUnits = [.minute, .second]
         return formatting
     }()
+    
+    // MARK: - LifeCycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +58,7 @@ class RecordAudioViewController: UIViewController {
         }
     }
     
+    // MARK: - Audio
     // Playback APIs
     var audioPlayer: AVAudioPlayer?
 
@@ -158,7 +164,7 @@ class RecordAudioViewController: UIViewController {
         recordToggle()
     }
 
-
+    // MARK: - Private Functions
     private func updateViews() {
         let playButtonTitle = isPlaying ? "Pause" : "Play"
         playButton.setTitle(playButtonTitle, for: .normal)
@@ -180,6 +186,7 @@ class RecordAudioViewController: UIViewController {
 
 }
 
+// MARK: - Extensions
 extension RecordAudioViewController: AVAudioPlayerDelegate {
 
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {

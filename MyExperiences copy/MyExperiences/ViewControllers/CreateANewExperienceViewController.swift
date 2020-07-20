@@ -11,6 +11,8 @@ import Photos
 import CoreImage
 import CoreImage.CIFilterBuiltins
 
+
+// MARK: - Enumerations
 enum FilterType {
     case ciFalseColor
     case ciEffectTonal
@@ -22,6 +24,8 @@ enum FilterType {
 
 
 class CreateANewExperienceViewController: UIViewController {
+    
+    // MARK: - Outlets
     
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var addPhotoButton: UIButton!
@@ -35,6 +39,7 @@ class CreateANewExperienceViewController: UIViewController {
     @IBOutlet weak var sepiaIntensitySlider: UISlider!
     @IBOutlet weak var isGeoTaggedSwitch: UISwitch!
     
+    // MARK: - Properties
     var postController = PostController()
     var imageData: Data?
     var context = CIContext(options: nil)
@@ -277,12 +282,12 @@ class CreateANewExperienceViewController: UIViewController {
     
     
     //MARK: - Sepia Tone
-    
-    
     @IBAction func sepiaIntensitySlider(_ sender: Any) {
         updateImage()
     }
     //MARK: - END (Sepia Tone)
+    
+    // MARK: - IBActions
     
     @IBAction func falseColorTapped(_ sender: Any) {
         originalImage = imageView.image

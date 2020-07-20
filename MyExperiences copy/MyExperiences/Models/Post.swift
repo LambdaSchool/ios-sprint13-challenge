@@ -17,6 +17,8 @@ enum MediaType: String {
 
 class Post: NSObject {
     
+    
+    // MARK: - Properties
     var mediaURL: URL
     let mediaType: MediaType
     let author: Author
@@ -94,6 +96,7 @@ class Post: NSObject {
     }
 }
 
+// MARK: - Extension
 extension Post: MKAnnotation {
     var coordinate: CLLocationCoordinate2D {
         return geotag ?? CLLocationCoordinate2D()

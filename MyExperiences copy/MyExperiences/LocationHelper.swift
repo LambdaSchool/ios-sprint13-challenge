@@ -12,6 +12,7 @@ import CoreLocation
 
 class LocationHelper: NSObject, CLLocationManagerDelegate {
 
+    
     static let shared = LocationHelper()
     
     private let locationManager = CLLocationManager()

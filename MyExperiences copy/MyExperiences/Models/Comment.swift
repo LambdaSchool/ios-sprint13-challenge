@@ -23,7 +23,7 @@ class Comment: FirebaseConvertible, Equatable {
     let timestamp: Date
     let audioURL: URL?
     
-    // Why The F are there two init methods
+    
     init(text: String?, author: Author, timestamp: Date = Date(), audioURL: URL? = nil) {
         self.text = text
         self.author = author
@@ -48,7 +48,6 @@ class Comment: FirebaseConvertible, Equatable {
         }
     }
     
-    // And also a dictionary representation method.
     var dictionaryRepresentation: [String: Any] {
         return [Comment.textKey: text ?? "",
                 Comment.author: author.dictionaryRepresentation,

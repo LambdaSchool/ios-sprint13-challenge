@@ -23,6 +23,8 @@ struct Author: FirebaseConvertible, Equatable {
         self.displayName = displayName
     }
     
+    
+    // MARK: - Properties
     let uid: String
     let displayName: String?
     
