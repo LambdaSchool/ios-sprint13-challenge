@@ -10,6 +10,7 @@ import UIKit
 import CoreImage
 import CoreImage.CIFilterBuiltins
 import AVFoundation
+import MapKit
 
 class AddExperienceViewController: UIViewController {
     
@@ -19,8 +20,12 @@ class AddExperienceViewController: UIViewController {
     @IBOutlet weak var photoButton: UIButton!
     @IBOutlet weak var micButton: UIButton!
     @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var recordingSuccessful: UIImageView!
     
     // MARK: - Properties
+    var mapView: MKMapView?
+    var latitude: Double?
+    var longitude: Double?
     private let context = CIContext()
     private let colorControlFilter = CIFilter.colorControls()
     private var audioRecorder: AVAudioRecorder?
@@ -173,6 +178,15 @@ class AddExperienceViewController: UIViewController {
         }
     }
     
+    @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
+        guard let latitude = latitude,
+            let longitude = longitude else { return }
+        let newExperience = Experience(title: titleTextField.text, image: imageView.image, audioURL: recordingURL, latitude: latitude, longitude: longitude)
+        mapView?.addAnnotation(newExperience)
+        
+        navigationController?.popToRootViewController(animated: true)
+    }
+    
 }
 
 extension AddExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -194,8 +208,8 @@ extension AddExperienceViewController: UIImagePickerControllerDelegate, UINaviga
 
 extension AddExperienceViewController: AVAudioRecorderDelegate {
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-        if let recordingURL = recordingURL {
-            print("Successfully recorded message: \(recordingURL)")
+        if recordingURL != nil {
+            recordingSuccessful.isHidden = false
         }
     }
     

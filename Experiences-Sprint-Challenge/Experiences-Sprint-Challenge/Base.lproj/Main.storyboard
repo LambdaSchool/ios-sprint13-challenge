@@ -109,29 +109,44 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="iA8-54-4qI">
+                                <rect key="frame" x="282" y="777.5" width="30" height="29"/>
+                                <color key="tintColor" red="0.36763241405556524" green="0.64139831849999995" blue="0.29652088856502751" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="0er-pA-Nby"/>
+                                    <constraint firstAttribute="width" constant="30" id="TJY-LG-rq4"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="uS2-to-eo3" firstAttribute="leading" secondItem="3Fc-f7-vpu" secondAttribute="leading" constant="30" id="1Tt-GL-1mT"/>
                             <constraint firstItem="3Fc-f7-vpu" firstAttribute="trailing" secondItem="uS2-to-eo3" secondAttribute="trailing" constant="30" id="60e-6Y-8gR"/>
                             <constraint firstItem="3Fc-f7-vpu" firstAttribute="trailing" secondItem="6et-dl-0No" secondAttribute="trailing" constant="30" id="8r2-KS-MGw"/>
+                            <constraint firstItem="iA8-54-4qI" firstAttribute="centerX" secondItem="5vr-pI-3Hb" secondAttribute="centerX" id="MPt-ix-vBq"/>
                             <constraint firstItem="qPx-s0-KtX" firstAttribute="centerX" secondItem="REX-VC-TzU" secondAttribute="centerX" id="Mct-au-MMB"/>
                             <constraint firstItem="uS2-to-eo3" firstAttribute="top" secondItem="6et-dl-0No" secondAttribute="bottom" constant="50" id="Q69-ds-mi8"/>
                             <constraint firstItem="qPx-s0-KtX" firstAttribute="top" secondItem="uS2-to-eo3" secondAttribute="bottom" constant="50" id="hoe-TS-Rsc"/>
                             <constraint firstItem="6et-dl-0No" firstAttribute="leading" secondItem="3Fc-f7-vpu" secondAttribute="leading" constant="30" id="nkq-SW-R8o"/>
                             <constraint firstItem="6et-dl-0No" firstAttribute="centerX" secondItem="REX-VC-TzU" secondAttribute="centerX" id="nqv-IM-KfH"/>
+                            <constraint firstItem="iA8-54-4qI" firstAttribute="top" secondItem="5vr-pI-3Hb" secondAttribute="bottom" constant="15" id="sYr-jL-AhS"/>
                             <constraint firstItem="3Fc-f7-vpu" firstAttribute="bottom" secondItem="qPx-s0-KtX" secondAttribute="bottom" constant="100" id="vLx-9R-Bvc"/>
                             <constraint firstItem="6et-dl-0No" firstAttribute="top" secondItem="3Fc-f7-vpu" secondAttribute="top" constant="50" id="vPq-d5-MZE"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="3Fc-f7-vpu"/>
                     </view>
                     <navigationItem key="navigationItem" title="Add Experience" id="KoB-Tv-KKa">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="275-B7-Ojw"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="275-B7-Ojw">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="QI7-8q-9SX" id="kDl-P9-TFo"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="imageView" destination="uS2-to-eo3" id="ULe-2u-q5W"/>
                         <outlet property="micButton" destination="5vr-pI-3Hb" id="ljO-cS-gNv"/>
                         <outlet property="photoButton" destination="Rsx-pt-GUO" id="d2R-vr-ZET"/>
+                        <outlet property="recordingSuccessful" destination="iA8-54-4qI" id="Vv1-HY-QVU"/>
                         <outlet property="saveButton" destination="275-B7-Ojw" id="lOW-Oi-mfL"/>
                         <outlet property="titleTextField" destination="8ab-zl-irv" id="k6a-Je-jDG"/>
                     </connections>
@@ -161,6 +176,7 @@
     </scenes>
     <resources>
         <image name="NoImage" width="256" height="158.5"/>
+        <image name="checkmark.circle.fill" catalog="system" width="128" height="121"/>
         <image name="mic.fill" catalog="system" width="108" height="128"/>
         <image name="photo" catalog="system" width="128" height="93"/>
     </resources>

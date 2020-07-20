@@ -17,6 +17,8 @@ class MapViewController: UIViewController {
     // MARK: - Properties
     private let locationManager = CLLocationManager()
     private var userTrackingButton: MKUserTrackingButton!
+    var latitude: Double?
+    var longitude: Double?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +38,18 @@ class MapViewController: UIViewController {
     }
 
     @IBAction func addExperienceButtonTapped(_ sender: UIBarButtonItem) {
-        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AddExperienceSegue" {
+            let addExperienceVC = segue.destination as! AddExperienceViewController
+            guard let location = locationManager.location?.coordinate else { return }
+            latitude = location.latitude
+            longitude = location.longitude
+            addExperienceVC.latitude = latitude
+            addExperienceVC.longitude = longitude
+            addExperienceVC.mapView = mapView
+        }
     }
     
 }
