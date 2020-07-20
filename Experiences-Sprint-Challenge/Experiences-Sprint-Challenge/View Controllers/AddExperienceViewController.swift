@@ -30,15 +30,17 @@ class AddExperienceViewController: UIViewController {
     }
     
     private func setupViews() {
-        let configuration = UIImage.SymbolConfiguration(pointSize: 50)
+        let configuration = UIImage.SymbolConfiguration(pointSize: 40)
         
         // setup photoImage
         let photoImage = UIImage(systemName: "photo", withConfiguration: configuration)
         photoButton.setImage(photoImage, for: .normal)
+        photoButton.layer.cornerRadius = 12
         
         // setup micImage
         let micImage = UIImage(systemName: "mic.fill", withConfiguration: configuration)
         micButton.setImage(micImage, for: .normal)
+        micButton.layer.cornerRadius = 12
     }
 
     // MARK: - Methods
