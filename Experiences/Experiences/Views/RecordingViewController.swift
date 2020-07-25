@@ -8,10 +8,8 @@
 
 import UIKit
 import AVFoundation
+import CoreLocation
 
-protocol AddRecordingDelegate {
-    func recordingeWasAdded(_ experience: Experience)
-}
 
 class RecordingViewController: UIViewController {
     
@@ -33,9 +31,10 @@ class RecordingViewController: UIViewController {
             updateViews()
         }
     }
-    
-    var delegate: AddRecordingDelegate?
-    
+    var location: LocationService?
+    var mapViewController: MapViewController?
+    var delegate: AddExperienceDelegate!
+    var experienceController: ExperienceController?
     var experience: Experience? {
         didSet {
             updateViews()
@@ -56,123 +55,119 @@ class RecordingViewController: UIViewController {
         formatting.allowedUnits = [.minute, .second]
         return formatting
     }()
-
+    
     // MARK: - View Controller Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         timeElapsedLabel.font = UIFont.monospacedDigitSystemFont(ofSize: timeElapsedLabel.font.pointSize,
-                                                          weight: .regular)
+                                                                 weight: .regular)
         timeRemainingLabel.font = UIFont.monospacedDigitSystemFont(ofSize: timeRemainingLabel.font.pointSize,
                                                                    weight: .regular)
         updateViews()
     }
     
     //MARK: - Actions
-            @IBAction func togglePlayback(_ sender: Any) {
-                if isPlaying {
-                    pause()
-                } else {
-                    play()
-                }
-            }
-            
-            @IBAction func updateCurrentTime(_ sender: UISlider) {
-                if isPlaying {
-                    pause()
-                }
-                
-                audioPlayer?.currentTime = TimeInterval(sender.value)
-                updateViews()
-            }
-            
-            @IBAction func toggleRecording(_ sender: Any) {
-                if isRecording {
-                    stopRecording()
-                } else {
-                    requestPermissionOrStartRecording()
-                }
-            }
-        
-        @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
-            guard let newRecordingTitle = titleTextField.text,
-                !newRecordingTitle.isEmpty,
-            let recording = recordingURL else { return }
-            
-            let newRecording = Experience(title: newRecordingTitle,
-                                           audioURL: recording)
-            print(newRecording)
-            experiences.append(newRecording)
-            delegate?.recordingeWasAdded(newRecording)
-            navigationController?.popViewController(animated: true)
+    @IBAction func togglePlayback(_ sender: Any) {
+        if isPlaying {
+            pause()
+        } else {
+            play()
         }
+    }
+    
+    @IBAction func updateCurrentTime(_ sender: UISlider) {
+        if isPlaying {
+            pause()
+        }
+        
+        audioPlayer?.currentTime = TimeInterval(sender.value)
+        updateViews()
+    }
+    
+    @IBAction func toggleRecording(_ sender: Any) {
+        if isRecording {
+            stopRecording()
+        } else {
+            requestPermissionOrStartRecording()
+        }
+    }
+    
+    @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
+        guard let newRecordingTitle = titleTextField.text,
+            !newRecordingTitle.isEmpty,
+            let recording = recordingURL else { return }
+        delegate.experienceWasAdded(experience: Experience(name: newRecordingTitle,
+                                                           url: recording))
+        navigationController?.popToRootViewController(animated: true)
+    }
     
     //MARK: - Methods
     func updateViews() {
-               guard isViewLoaded else { return }
-               playButton.isEnabled = !isRecording
-               recordButton.isEnabled = !isPlaying
-               timeSlider.isEnabled = !isRecording
-               
-               playButton.isSelected = isPlaying
-               recordButton.isSelected = isRecording
-               titleTextField.text = experience?.title
-               
-               if !isRecording {
-                   let elapsedTime = audioPlayer?.currentTime ?? 0
-                   let duration = audioPlayer?.duration ?? 0
-                   let timeRemaining = duration.rounded() - elapsedTime
-                   
-                   timeElapsedLabel.text = timeIntervalFormatter.string(for: elapsedTime)
-                   
-                   timeSlider.minimumValue = 0
-                   timeSlider.maximumValue = Float(duration)
-                   timeSlider.value = Float(elapsedTime)
-                   
-                   timeRemainingLabel.text = "-" + timeIntervalFormatter.string(from: timeRemaining)!
-               } else {
-                   let elapsedtime = audioRecorder?.currentTime ?? 0
-                   
-                   timeSlider.minimumValue = 0
-                   timeSlider.maximumValue = 1
-                   timeSlider.value = 0
-                   
-                   timeElapsedLabel.text = "--:--"
-                   timeRemainingLabel.text = timeIntervalFormatter.string(from: elapsedtime)
-               }
-           }
-           
-           deinit {
-               timer?.invalidate()
-           }
-
+        guard isViewLoaded else { return }
+        playButton.isEnabled = !isRecording
+        recordButton.isEnabled = !isPlaying
+        timeSlider.isEnabled = !isRecording
+        
+        playButton.isSelected = isPlaying
+        recordButton.isSelected = isRecording
+        titleTextField.text = experience?.title
+        
+        if !isRecording {
+            let elapsedTime = audioPlayer?.currentTime ?? 0
+            let duration = audioPlayer?.duration ?? 0
+            let timeRemaining = duration.rounded() - elapsedTime
+            
+            timeElapsedLabel.text = timeIntervalFormatter.string(for: elapsedTime)
+            
+            timeSlider.minimumValue = 0
+            timeSlider.maximumValue = Float(duration)
+            timeSlider.value = Float(elapsedTime)
+            
+            timeRemainingLabel.text = "-" + timeIntervalFormatter.string(from: timeRemaining)!
+        } else {
+            let elapsedtime = audioRecorder?.currentTime ?? 0
+            
+            timeSlider.minimumValue = 0
+            timeSlider.maximumValue = 1
+            timeSlider.value = 0
+            
+            timeElapsedLabel.text = "--:--"
+            timeRemainingLabel.text = timeIntervalFormatter.string(from: elapsedtime)
+        }
+    }
+    
+    deinit {
+        timer?.invalidate()
+    }
+    
     // Timer
     func startTimer() {
-               timer?.invalidate()
-               
-               timer = Timer.scheduledTimer(withTimeInterval: 0.030, repeats: true) { [weak self] (_) in
-                   guard let self = self else { return }
-                   
-                   self.updateViews()
-                   
-                   if let audioRecorder = self.audioRecorder,
-                       self.isRecording == true {
-
-                       audioRecorder.updateMeters()
-
-                   }
-
-                   if let audioPlayer = self.audioPlayer,
-                       self.isPlaying == true {
-
-                       audioPlayer.updateMeters()
-                   }
-               }
-           }
-           
-           func cancelTimer() {
-               timer?.invalidate()
-               timer = nil
-           }
+        timer?.invalidate()
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 0.030, repeats: true) { [weak self] (_) in
+            guard let self = self else { return }
+            
+            self.updateViews()
+            
+            if let audioRecorder = self.audioRecorder,
+                self.isRecording == true {
+                
+                audioRecorder.updateMeters()
+                
+            }
+            
+            if let audioPlayer = self.audioPlayer,
+                self.isPlaying == true {
+                
+                audioPlayer.updateMeters()
+            }
+        }
+    }
+    
+    func cancelTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
     
     // Playback
     
@@ -183,7 +178,7 @@ class RecordingViewController: UIViewController {
     func loadAudio() {
         let songURL = Bundle.main.url(forResource: "piano", withExtension: "mp3")!
         if let experience = experience {
-            audioPlayer = try? AVAudioPlayer(contentsOf: experience.audioURL!)
+            audioPlayer = try? AVAudioPlayer(contentsOf: experience.url)
             return
         }
         audioPlayer = try? AVAudioPlayer(contentsOf: songURL)
@@ -217,95 +212,84 @@ class RecordingViewController: UIViewController {
     
     // Recording
     var isRecording: Bool {
-            audioRecorder?.isRecording ?? false
-        }
-        
-        func createNewRecordingURL() -> URL {
-            let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-            
-            let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
-            let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
-            // caf- Core Audio Folder
-            
-    //        print("recording URL: \(file)")
-            
-            return file
-        }
-        
-        
-        func requestPermissionOrStartRecording() {
-            switch AVAudioSession.sharedInstance().recordPermission {
-            case .undetermined:
-                AVAudioSession.sharedInstance().requestRecordPermission { granted in
-                    guard granted == true else {
-                        print("We need microphone access")
-                        return
-                    }
-                    
-                    print("Recording permission has been granted!")
-                    // NOTE: Invite the user to tap record again, since we just interrupted them, and they may not have been ready to record
-                }
-            case .denied:
-                print("Microphone access has been blocked.")
-                
-                let alertController = UIAlertController(title: "Microphone Access Denied", message: "Please allow this app to access your Microphone.", preferredStyle: .alert)
-                
-                alertController.addAction(UIAlertAction(title: "Open Settings", style: .default) { (_) in
-                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-                })
-                
-                alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-                
-                present(alertController, animated: true, completion: nil)
-            case .granted:
-                startRecording()
-            @unknown default:
-                break
-            }
-        }
-        
-        
-        func startRecording() {
-            do {
-                try prepareAudioSession()
-            } catch {
-                print("Cannot record audio: \(error)")
-                return
-            }
-            
-            let recordingURL = createNewRecordingURL()
-            
-            let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
-            
-            do {
-                audioRecorder = try AVAudioRecorder(url: recordingURL, format: format)
-                audioRecorder?.delegate = self
-                audioRecorder?.isMeteringEnabled = true
-                audioRecorder?.record()
-                self.recordingURL = recordingURL
-                updateViews()
-                startTimer()
-            } catch {
-                preconditionFailure("The audio recorder could not be created with \(recordingURL) and \(format)")
-            }
-        }
-        
-        func stopRecording() {
-            audioRecorder?.stop()
-            updateViews()
-            cancelTimer()
-        }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        audioRecorder?.isRecording ?? false
     }
-    */
-
+    
+    func createNewRecordingURL() -> URL {
+        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        
+        let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
+        let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
+        // caf- Core Audio Folder
+        
+        //        print("recording URL: \(file)")
+        
+        return file
+    }
+    
+    
+    func requestPermissionOrStartRecording() {
+        switch AVAudioSession.sharedInstance().recordPermission {
+        case .undetermined:
+            AVAudioSession.sharedInstance().requestRecordPermission { granted in
+                guard granted == true else {
+                    print("We need microphone access")
+                    return
+                }
+                
+                print("Recording permission has been granted!")
+                // NOTE: Invite the user to tap record again, since we just interrupted them, and they may not have been ready to record
+            }
+        case .denied:
+            print("Microphone access has been blocked.")
+            
+            let alertController = UIAlertController(title: "Microphone Access Denied", message: "Please allow this app to access your Microphone.", preferredStyle: .alert)
+            
+            alertController.addAction(UIAlertAction(title: "Open Settings", style: .default) { (_) in
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+            })
+            
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            
+            present(alertController, animated: true, completion: nil)
+        case .granted:
+            startRecording()
+        @unknown default:
+            break
+        }
+    }
+    
+    
+    func startRecording() {
+        do {
+            try prepareAudioSession()
+        } catch {
+            print("Cannot record audio: \(error)")
+            return
+        }
+        
+        let recordingURL = createNewRecordingURL()
+        
+        let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
+        
+        do {
+            audioRecorder = try AVAudioRecorder(url: recordingURL, format: format)
+            audioRecorder?.delegate = self
+            audioRecorder?.isMeteringEnabled = true
+            audioRecorder?.record()
+            self.recordingURL = recordingURL
+            updateViews()
+            startTimer()
+        } catch {
+            preconditionFailure("The audio recorder could not be created with \(recordingURL) and \(format)")
+        }
+    }
+    
+    func stopRecording() {
+        audioRecorder?.stop()
+        updateViews()
+        cancelTimer()
+    }
 }
 
 
@@ -340,6 +324,3 @@ extension RecordingViewController: AVAudioRecorderDelegate {
         }
     }
 }
-
-
-

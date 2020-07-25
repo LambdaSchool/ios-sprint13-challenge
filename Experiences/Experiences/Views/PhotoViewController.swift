@@ -11,6 +11,10 @@ import CoreImage
 import CoreImage.CIFilterBuiltins
 import Photos
 
+protocol AddExperienceDelegate {
+    func experienceWasAdded(experience: Experience)
+}
+
 class PhotoViewController: UIViewController {
     
     //MARK: - Outlets
@@ -21,6 +25,7 @@ class PhotoViewController: UIViewController {
     @IBOutlet var titleTextField: UITextField!
     
     //MARK: - Properties and computed properties
+    var experienceController: ExperienceController?
     var experience: Experience? {
         didSet {
             updateViews()
@@ -56,6 +61,7 @@ class PhotoViewController: UIViewController {
         }
     }
     
+    var delegate: AddExperienceDelegate?
     private let context = CIContext()
     private let sepiaToneFilter = CIFilter.sepiaTone()
     
@@ -66,17 +72,14 @@ class PhotoViewController: UIViewController {
     
     //MARK: - Methods
     
-        func createNewRecordingURL() -> URL {
-            let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-            
-            let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
-            let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("jpeg")
-            // caf- Core Audio Folder
-            
-    //        print("recording URL: \(file)")
-            
-            return file
-        }
+    func createNewRecordingURL() -> URL {
+        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        
+        let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
+        let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("jpeg")
+        
+        return file
+    }
     
     private func updateViews() {
         titleTextField.text = experience?.title
@@ -138,10 +141,9 @@ class PhotoViewController: UIViewController {
         guard let newPhotoTitle = titleTextField.text,
             !newPhotoTitle.isEmpty else { return }
         let imageURL = createNewRecordingURL()
-        
-        let newPhoto = Experience(title: newPhotoTitle, imageURL: imageURL)
-        experiences.append(newPhoto)
-        
+        delegate?.experienceWasAdded(experience: Experience(name: newPhotoTitle,
+                                                            url: imageURL))
+        navigationController?.popToRootViewController(animated: true)
     }
     
     private func presentSuccessfulSaveAlert() {
@@ -156,16 +158,6 @@ class PhotoViewController: UIViewController {
     @IBAction func brightnessChanged(_ sender: UISlider) {
         updateImage()
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
 }
 
 extension PhotoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
