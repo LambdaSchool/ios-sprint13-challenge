@@ -129,16 +129,7 @@ class AddAudioViewController: UIViewController {
     var isPlaying: Bool {
         audioPlayer?.isPlaying ?? false
     }
-//
-//    func loadAudio() {
-//        let songURL = Bundle.main.url(forResource: "piano", withExtension: "mp3")!
-//
-//        do {
-//            audioPlayer = try AVAudioPlayer(contentsOf: songURL)
-//        } catch {
-//            preconditionFailure("Failure to load audio file: \(error)")
-//        }
-//    }
+
     
     func prepareAudioSession() throws {
         let session = AVAudioSession.sharedInstance()
@@ -175,6 +166,8 @@ class AddAudioViewController: UIViewController {
         
         let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
         let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
+        
+        print("recording URL: \(file)")
         
         return file
     }
@@ -218,7 +211,7 @@ class AddAudioViewController: UIViewController {
             return
         }
         
-        recordingURL = createNewRecordingURL()
+        recordingURL = MediaFileURL.newURL(for: .audio)
         
         let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
         

@@ -45,11 +45,14 @@ class AddImageViewController: UIViewController {
     
     private let context = CIContext()
     private let colorControlsFilter = CIFilter.colorControls()
+    private let blurFilter = CIFilter.gaussianBlur()
     
     // MARK: - IBOutlets
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var brightnessSlider: UISlider!
     @IBOutlet var contrastSlider: UISlider!
+    @IBOutlet var saturationSlider: UISlider!
+    @IBOutlet var blurSlider: UISlider!
     
     
     override func viewDidLoad() {
@@ -74,6 +77,7 @@ class AddImageViewController: UIViewController {
         delegate?.didSaveMedia(mediaType: .image, to: imageURL)
         
         navigationController?.popViewController(animated: true)
+
     }
     
     // MARK: Image Controls
@@ -90,9 +94,12 @@ class AddImageViewController: UIViewController {
         colorControlsFilter.inputImage = inputImage
         colorControlsFilter.brightness = brightnessSlider.value
         colorControlsFilter.contrast = contrastSlider.value
+        colorControlsFilter.saturation = saturationSlider.value
         
+        blurFilter.inputImage = colorControlsFilter.outputImage?.clampedToExtent()
+        blurFilter.radius = blurSlider.value
         
-        guard let outputImage = colorControlsFilter.outputImage else { return originalImage! }
+        guard let outputImage = blurFilter.outputImage else { return originalImage! }
         
         guard let renderedImage = context.createCGImage(outputImage, from: inputImage.extent) else { return originalImage! }
         
@@ -101,6 +108,7 @@ class AddImageViewController: UIViewController {
     
     private func presentImagePickerController() {
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            print("The photo library is not available.")
             return
         }
         
