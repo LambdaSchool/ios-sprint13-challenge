@@ -27,8 +27,8 @@ class ExperienceController: NSObject {
         
         let experience = Experience(title: title,
                                     imageURL: imageURL,
-                                    videoURL: videoURL,
                                     audioURL: audioURL,
+                                    videoURL: videoURL,
                                     geotag: location)
         
         experiences.append(experience)
@@ -48,11 +48,11 @@ extension ExperienceController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
-            print("Found location: \(location)")
+            print("Found user's location: \(location)")
             self.location = location.coordinate
         }
     }
-    
+
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
        print("Failed to find user's location: \(error.localizedDescription)")
     }

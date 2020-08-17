@@ -1,5 +1,5 @@
 //
-//  VideoPlaybackViewController.swift
+//  AddExperienceViewController.swift
 //  Experiences
 //
 //  Created by Gerardo Hernandez on 5/20/20.
@@ -7,14 +7,10 @@
 //
 
 import UIKit
-import CoreImage
-import CoreImage.CIFilterBuiltins
-import Photos
 
 class AddExperienceViewController: UIViewController {
 
     // MARK: - Properties
-    
     var experienceController: ExperienceController!
   
     var imageURL: URL?
@@ -31,10 +27,8 @@ class AddExperienceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
-        // Do any additional setup after loading the view.
     }
-    
+    // MARK: - IBActions
     @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
         
@@ -53,7 +47,7 @@ class AddExperienceViewController: UIViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == SegueIdentifiers.AddImageSegue.rawValue {
-            guard let destinationVC = segue.destination as? AddImageViewController else  { return }
+            guard let destinationVC = segue.destination as? AddImageViewController else { return }
             destinationVC.delegate = self
         } else if segue.identifier == SegueIdentifiers.AddAudioSegue.rawValue {
             guard let destinationVC = segue.destination as? AddAudioViewController else { return }

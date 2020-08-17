@@ -22,10 +22,10 @@ class MediaFileURL {
         var fileExtension: String
         
         switch mediaType {
-        case .audio:
-            fileExtension = "caf"
         case .image:
             fileExtension = "png"
+        case .audio:
+            fileExtension = "caf"
         case .video:
             fileExtension = "mov"
         }

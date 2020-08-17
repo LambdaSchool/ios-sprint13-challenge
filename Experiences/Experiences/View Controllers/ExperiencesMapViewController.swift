@@ -19,19 +19,19 @@ class ExperiencesMapViewController: UIViewController {
     var experienceController = ExperienceController()
     private var userTrackingButton: MKUserTrackingButton!
     private let locationManager = CLLocationManager()
-    private var isFetchingExperience = false
-    private var shouldRequestExperience = false
+    private var isCurrentlyFetchingExperiences = false
+    private var shouldRequestExperiencesAgain = false
    
     var experiences: [Experience] = [] {
         didSet {
-            let previousExperiences = Set(oldValue)
+            let oldExperiences = Set(oldValue)
             let newExperiences = Set(experiences)
             
-            let addedExperieneces = Array(newExperiences.subtracting(previousExperiences))
-            let removedExperiences = Array(previousExperiences.subtracting(newExperiences))
+            let addedExperiences = Array(newExperiences.subtracting(oldExperiences))
+            let removedExperiences = Array(oldExperiences.subtracting(newExperiences))
             
             mapView.removeAnnotations(removedExperiences)
-            mapView.addAnnotations(addedExperieneces)
+            mapView.addAnnotations(addedExperiences)
         }
     }
     // MARK: - View Lifecycle
@@ -54,27 +54,26 @@ class ExperiencesMapViewController: UIViewController {
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: ReuseIdentifiers.annotation)
         
         fetchExperiences()
-        
     }
    
     // MARK: - Fetch Functions
     private func fetchExperiences() {
         
-        guard !isFetchingExperience else {
-            shouldRequestExperience = true
+        guard !isCurrentlyFetchingExperiences else {
+            shouldRequestExperiencesAgain = true
             return
         }
         
-        isFetchingExperience = true
+        isCurrentlyFetchingExperiences = true
         
         let visibleMapRegion = mapView.visibleMapRect
         
         fetchExperiences(in: visibleMapRegion) { experiences in
-            self.isFetchingExperience = false
+            self.isCurrentlyFetchingExperiences = false
             
             defer {
-                if self.shouldRequestExperience {
-                    self.shouldRequestExperience = false
+                if self.shouldRequestExperiencesAgain {
+                    self.shouldRequestExperiencesAgain = false
                     self.fetchExperiences()
                 }
             }
@@ -84,10 +83,9 @@ class ExperiencesMapViewController: UIViewController {
         
     }
     
-    func fetchExperiences(in visibleRegion: MKMapRect? = nil, completion: @escaping ([Experience]) -> Void) {
+    func fetchExperiences(in region: MKMapRect? = nil, completion: @escaping ([Experience]) -> Void) {
         
-        let regionExperiences = experienceController.experiences.filter {
-            visibleRegion?.contains(MKMapPoint($0.coordinate)) ?? true }
+        let regionExperiences = experienceController.experiences.filter { region?.contains(MKMapPoint($0.coordinate)) ?? true }
         
         completion(regionExperiences)
     }
@@ -116,8 +114,6 @@ extension ExperiencesMapViewController: MKMapViewDelegate {
         guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: ReuseIdentifiers.annotation, for: experience) as? MKMarkerAnnotationView else {
             preconditionFailure("Missing annotation view on map")
         }
-        
-
         
         annotationView.canShowCallout = true
         let detailView = ExperienceView()
