@@ -23,31 +23,31 @@ class Experience: NSObject {
   // MARK: - Properties
     var experienceTitle: String
     var media: [Media]
-    let geotag: CLLocationCoordinate2D!
     let timestamp: Date
+    let geotag: CLLocationCoordinate2D!
     
     init(title: String,
          imageURL: URL?,
-         videoURL: URL?,
          audioURL: URL?,
-         geotag: CLLocationCoordinate2D? = nil,
-         timestamp: Date = Date()) {
+         videoURL: URL?,
+         timestamp: Date = Date(),
+         geotag: CLLocationCoordinate2D? = nil) {
         
         self.experienceTitle = title
-        self.geotag = geotag ?? Location.trickDog
         self.timestamp = timestamp
+        self.geotag = geotag ?? Location.trickDog
         self.media = [Media(mediaType: .image, url: imageURL),
-                      Media(mediaType: .video, url: videoURL),
-                      Media(mediaType: .audio, url: audioURL )]
+                      Media(mediaType: .audio, url: videoURL),
+                      Media(mediaType: .video, url: audioURL )]
         
     }
     
-    var storedMedia: [Media] {
-        media.filter { $0.url != nil}
+    var savedMedia: [Media] {
+        media.filter { $0.url != nil }
     }
     
-    var storedMediaTypes: [String] {
-        storedMedia.compactMap { $0.mediaType.rawValue}
+    var savedMediaTypes: [String] {
+        savedMedia.compactMap { $0.mediaType.rawValue}
     }
     
     struct Media {
@@ -68,10 +68,10 @@ extension Experience: MKAnnotation {
     }
     
     var subtitle: String? {
-        if storedMedia.count == 0 {
+        if savedMedia.count == 0 {
            return "No Experiences."
         } else {
-            return "Experience stored: \(storedMediaTypes.joined(separator: ", ."))"
+            return "Experience stored: \(savedMediaTypes.joined(separator: ", "))"
         }
     }
 }
