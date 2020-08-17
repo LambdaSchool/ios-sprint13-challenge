@@ -6,6 +6,7 @@
 //  Copyright © 2020 Gerardo Hernandez. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
 @IBDesignable
