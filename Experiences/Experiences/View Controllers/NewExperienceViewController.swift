@@ -10,23 +10,41 @@ import Photos
 
 class NewExperienceViewController: UIViewController {
     
-    //MARK: - Properties -
+    ///All Properties
+    
+    //MARK: - Core Image Property -
     let filterController = FilterController()
     
-    //MARK: - IBOutlets -
+    //MARK: - Audio Properties -
+    var audioRecorder  : AVAudioRecorder?
+    var recordingURL   : URL?
+    var isRecording : Bool {
+        return audioRecorder?.isRecording ?? false
+    }
+    
+    ///All IBOutlets
+    
+    //MARK: - General IBOutlets -
     @IBOutlet weak var titleTextField: UITextField!
+    
+    //MARK: - Core Image IBOutlets -
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     
-
-    //MARK: - Methods -
+    //MARK: - Audio Outlets -
+    @IBOutlet weak var recordButton: UIButton!
+    
+    ///All Methods
+    
+    //MARK: - General Methods -
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         titleTextField.addDoneButtonOnKeyboard()
     }
     
+    //MARK: - Core Image Methods -
     private func presentImagePickerController() {
         
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
@@ -50,7 +68,87 @@ class NewExperienceViewController: UIViewController {
         view.layoutSubviews()
     }
     
-    //MARK: - IBActions -
+    //MARK: - Audio Methods -
+    private func prepareAudioSession() throws {
+        let session = AVAudioSession.sharedInstance()
+        try session.setCategory(.playAndRecord, options: [.defaultToSpeaker])
+        try session.setActive(true, options: []) // can fail if on a phone call, for instance
+    }
+    
+    private func newRecordingURL() -> URL {
+        let fm = FileManager.default
+        let documentsDir = try! fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        
+        return documentsDir.appendingPathComponent(UUID().uuidString).appendingPathExtension("caf")
+    }
+    
+    private func requestPermissionOrStartRecording() {
+        switch AVAudioSession.sharedInstance().recordPermission {
+            
+        case .undetermined:
+            AVAudioSession.sharedInstance().requestRecordPermission { granted in
+                guard granted == true else {
+                    print("We need microphone access")
+                    return
+                }
+                
+                print("Recording permission has been granted!")
+                // NOTE: Invite the user to tap record again, since we just interrupted them, and they may not have been ready to record
+            }
+            
+        case .denied:
+            print("Microphone access has been blocked.")
+            
+            let alertController = UIAlertController(title: "Microphone Access Denied", message: "Please allow this app to access your Microphone.", preferredStyle: .alert)
+            
+            alertController.addAction(UIAlertAction(title: "Open Settings", style: .default) { (_) in
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+            })
+            
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            
+            present(alertController, animated: true, completion: nil)
+            
+        case .granted:
+            startRecording()
+            
+        @unknown default:
+            break
+        }
+    }
+    
+    private func startRecording() {
+        
+        do {
+            try prepareAudioSession()
+        } catch {
+            print("can't record audio: \(error)")
+            return
+        }
+        
+        recordingURL = newRecordingURL()
+        
+        let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)
+        
+        do {
+            audioRecorder = try AVAudioRecorder(url: recordingURL!, format: format!)
+            audioRecorder?.delegate = self
+            audioRecorder?.isMeteringEnabled = true
+            audioRecorder?.record()
+            recordButton.setTitle("Stop Recording", for: .normal)
+        } catch {
+            preconditionFailure("The audio recorder could not be created with \(String(describing: recordingURL)) and \(String(describing: format))")
+        }
+        
+    }
+    
+    private func stopRecording() {
+        audioRecorder?.stop()
+    }
+    
+    ///All Actions
+    
+    //MARK: - Core Image IBActions -
     @IBAction func chooseImage(_ sender: Any) {
         
         let authorizationStatus = PHPhotoLibrary.authorizationStatus()
@@ -80,9 +178,23 @@ class NewExperienceViewController: UIViewController {
         }
         presentImagePickerController()
     }
-
+    
+    //MARK: - Audio Actions -
+    @IBAction func recordButtonTapped(_ sender: UIButton) {
+        guard !isRecording else {
+            audioRecorder?.stop()
+            recordButton.setTitle("Record", for: .normal)
+            return
+        }
+        
+        requestPermissionOrStartRecording()
+    }
+    
 }
 
+///All extensions
+
+    //MARK: - Core Image extension -
 extension NewExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -101,9 +213,14 @@ extension NewExperienceViewController: UIImagePickerControllerDelegate, UINaviga
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
-
+    
 }
 
+    //MARK: - Audio extensions -
+extension NewExperienceViewController: AVAudioRecorderDelegate {
+}
+
+//MARK: - Keyboard Done Button extension -
 extension UITextField {
     
     @IBInspectable var doneAccessory: Bool {

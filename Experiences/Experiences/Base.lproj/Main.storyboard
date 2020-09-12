@@ -84,6 +84,21 @@
                                     <constraint firstItem="uMq-AU-nOj" firstAttribute="width" secondItem="0bY-8a-uPH" secondAttribute="width" id="lDN-il-P7L"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i8n-qc-L8k">
+                                <rect key="frame" x="127" y="604" width="160" height="40"/>
+                                <color key="backgroundColor" systemColor="systemRedColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="WZT-ne-ax0"/>
+                                    <constraint firstAttribute="width" constant="160" id="vrJ-bo-yFw"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="15"/>
+                                <state key="normal" title="Record">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="recordButtonTapped:" destination="nMk-UA-EEq" eventType="touchUpInside" id="G4S-DW-2tD"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="4Ly-DQ-Kkm"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -92,7 +107,9 @@
                             <constraint firstItem="4Ly-DQ-Kkm" firstAttribute="trailing" secondItem="MTV-5I-ZsP" secondAttribute="trailing" constant="25" id="9Op-Bl-q2O"/>
                             <constraint firstItem="MTV-5I-ZsP" firstAttribute="top" secondItem="4Ly-DQ-Kkm" secondAttribute="top" constant="5" id="CQm-SL-JIy"/>
                             <constraint firstItem="MTV-5I-ZsP" firstAttribute="leading" secondItem="4Ly-DQ-Kkm" secondAttribute="leading" constant="25" id="Ll8-7s-Zaz"/>
+                            <constraint firstItem="i8n-qc-L8k" firstAttribute="centerX" secondItem="T7R-bt-Ve2" secondAttribute="centerX" id="MXf-RA-mT7"/>
                             <constraint firstItem="4Ly-DQ-Kkm" firstAttribute="trailing" secondItem="Gxq-Oi-KJq" secondAttribute="trailing" constant="25" id="R8X-WZ-EBH"/>
+                            <constraint firstItem="i8n-qc-L8k" firstAttribute="top" secondItem="Gxq-Oi-KJq" secondAttribute="bottom" constant="40" id="Y6R-L5-VnX"/>
                             <constraint firstItem="Gxq-Oi-KJq" firstAttribute="leading" secondItem="4Ly-DQ-Kkm" secondAttribute="leading" constant="25" id="cQx-c5-6qY"/>
                             <constraint firstItem="MTV-5I-ZsP" firstAttribute="centerX" secondItem="T7R-bt-Ve2" secondAttribute="centerX" id="e5X-ax-owy"/>
                         </constraints>
@@ -104,6 +121,7 @@
                         <outlet property="chooseImageButton" destination="uMq-AU-nOj" id="8OC-4Q-NQF"/>
                         <outlet property="imageHeightConstraint" destination="SQu-R5-Pfm" id="OLG-QY-GfX"/>
                         <outlet property="imageView" destination="0bY-8a-uPH" id="3Ca-6f-gmj"/>
+                        <outlet property="recordButton" destination="i8n-qc-L8k" id="LeT-Rr-Guc"/>
                         <outlet property="titleTextField" destination="MTV-5I-ZsP" id="ZF0-tF-TEc"/>
                     </connections>
                 </viewController>
@@ -151,6 +169,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
