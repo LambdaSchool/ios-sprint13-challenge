@@ -1,6 +1,6 @@
 //
 //  MapViewController.swift
-//  experiences
+//  memories
 //
 //  Created by Clayton Watkins on 9/11/20.
 //  Copyright © 2020 Clayton Watkins. All rights reserved.
@@ -26,7 +26,6 @@ class MapViewController: UIViewController {
         setPinUsingMKPointAnnotation(location: location!)
     }
     
-    // Creates a pin using the location passed in from the cell
     func setPinUsingMKPointAnnotation(location: CLLocationCoordinate2D){
         let annotation = MKPointAnnotation()
         annotation.coordinate = location

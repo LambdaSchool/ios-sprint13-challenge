@@ -1,8 +1,8 @@
 //
 //  MemoriesCollectionViewController.swift
-//  experiences
+//  memories
 //
-//  Created by Clayton Watkins on 9/11/20.
+//  Created by Clayton Watkins on 9/10/20.
 //  Copyright © 2020 Clayton Watkins. All rights reserved.
 //
 
@@ -35,7 +35,6 @@ class MemoriesCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let post = postController.posts[indexPath.row]
         
-        // Sets up cells based on what the post contains
         if post.image != nil {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoEntryCell", for: indexPath) as? PhotoCollectionViewCell else { return UICollectionViewCell() }
             cell.post = post
@@ -64,11 +63,11 @@ class MemoriesCollectionViewController: UICollectionViewController {
         return UICollectionViewCell()
     }
     
-    // MARK: - IBActions
-    // Unwinds us after saving each post
-    @IBAction func unwindSegue(_ sender: UIStoryboardSegue){}
+    // MARK: - Private Methods
     
-    // transistions the user to post creation view controller based on their choice
+    
+    // MARK: - IBActions
+    @IBAction func unwindSegue(_ sender: UIStoryboardSegue){}
     @IBAction func addPostTapped(_ sender: Any) {
         let alert = UIAlertController(title: "New Post", message: "Which kind of post do you want to create?", preferredStyle: .actionSheet)
         
@@ -102,7 +101,6 @@ class MemoriesCollectionViewController: UICollectionViewController {
     
 }
 
-// Allows us to set up and get locations
 extension MemoriesCollectionViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
@@ -114,7 +112,6 @@ extension MemoriesCollectionViewController: CLLocationManagerDelegate {
     }
 }
 
-// Allows us to use the same location manager throughout view controllers
 extension CLLocationManager {
     static let shared = CLLocationManager()
 }

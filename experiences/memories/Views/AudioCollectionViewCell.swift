@@ -1,19 +1,16 @@
 //
 //  AudioCollectionViewCell.swift
-//  experiences
+//  memories
 //
-//  Created by Clayton Watkins on 9/11/20.
+//  Created by Clayton Watkins on 9/10/20.
 //  Copyright © 2020 Clayton Watkins. All rights reserved.
 //
 
 import UIKit
 import AVFoundation
-
-// This delegate will allow us to get the indexPath of the cell when tapping on a button
 protocol cellIndexPathDelegate2: AnyObject {
     func locationButtonTapped(cell: AudioCollectionViewCell)
 }
-
 class AudioCollectionViewCell: UICollectionViewCell {
     
     // MARK: - IBOutlet
@@ -22,6 +19,7 @@ class AudioCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var authorLabel: UILabel!
     
     // MARK: - Properties
+//    var recordingURL: URL?
     var audioPlayer: AVAudioPlayer?
     var delegate: cellIndexPathDelegate2?
     var post: Post?{
@@ -34,19 +32,17 @@ class AudioCollectionViewCell: UICollectionViewCell {
          super.layoutSubviews()
      }
     
-    // MARK: - Private
     private func updateViews() {
         playButton.backgroundColor = .systemOrange
         playButton.layer.cornerRadius = 25
     }
     
-   private func prepareAudioSession() throws {
+    func prepareAudioSession() throws {
         let session = AVAudioSession.sharedInstance()
         try session.setCategory(.playback, options: [.defaultToSpeaker])
         try session.setActive(true, options: [])
     }
     
-    // MARK: - IBActions
     @IBAction func playButtonTapped(_ sender: Any) {
         do {
             try prepareAudioSession()
@@ -61,7 +57,6 @@ class AudioCollectionViewCell: UICollectionViewCell {
             preconditionFailure("Failure to load audio file at path \(post!.audioURL!): \(error)")
         }
     }
-    
     @IBAction func locationButtonTapped(_ sender: UIButton) {
         delegate?.locationButtonTapped(cell: self)
     }

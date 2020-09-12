@@ -1,8 +1,8 @@
 //
 //  LoginViewController.swift
-//  experiences
+//  memories
 //
-//  Created by Clayton Watkins on 9/11/20.
+//  Created by Clayton Watkins on 9/10/20.
 //  Copyright © 2020 Clayton Watkins. All rights reserved.
 //
 
@@ -37,28 +37,26 @@ class LoginViewController: UIViewController {
     override func viewDidLayoutSubviews() {
          newPlayer.frame = self.backgroundVideoView.bounds
      }
-    
     // MARK: - Private Methods
+    
     private func setupView() {
         newPlayer = AVPlayerLayer(player: player)
         newPlayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
         
         self.backgroundVideoView.layer.addSublayer(newPlayer)
         
+        
         player.play()
         player.actionAtItemEnd = AVPlayer.ActionAtItemEnd.none
         
-        // Checks to see if video has ended
         NotificationCenter.default.addObserver(self, selector: #selector(self.videoDidPlayToEnd(_: )), name: NSNotification.Name(rawValue: "AVPlayerItemDidPlayToEndTimeNotification"), object: player.currentItem)
     }
     
-    // If video is at it's end, play again from 0
     @objc private func videoDidPlayToEnd(_ notification: Notification) {
         let player: AVPlayerItem = notification.object as! AVPlayerItem
         player.seek(to: CMTime.zero, completionHandler: nil)
     }
     
-    // This will mitigate the login screen if the user already has a username
     private func segueIfUsernameExists() {
           if UserDefaults.standard.string(forKey: "username") != nil {
               performSegue(withIdentifier: "MemoriesCollectionSegue", sender: nil)
@@ -72,3 +70,4 @@ class LoginViewController: UIViewController {
         segueIfUsernameExists()
     }
 }
+
