@@ -13,7 +13,11 @@ import AVFoundation
 import MapKit
 import Photos
 
-class NewExperienceViewController {
+class NewExperienceViewController: UIViewController {
+    
+    // MARK: - Properties
+    
+    // MARK: - IBOutlets
     
     
     

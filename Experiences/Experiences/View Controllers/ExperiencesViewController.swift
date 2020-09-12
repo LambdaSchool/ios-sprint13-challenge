@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class ExperiencesViewController {
+class ExperiencesViewController: UIViewController {
     
     
     

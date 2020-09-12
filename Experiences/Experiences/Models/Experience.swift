@@ -9,8 +9,8 @@
 import UIKit
 import MapKit
 
-class Experience {
-    
+class Experience/** NSObject, MKAnnotation**/ {
+
     
     
 }
