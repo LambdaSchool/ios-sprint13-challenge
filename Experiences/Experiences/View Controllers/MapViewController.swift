@@ -12,8 +12,11 @@ import CoreLocation
 class MapViewController: UIViewController {
 
     //MARK: - Properties -
-    var mapCenter : CLLocationCoordinate2D?
-    var region    : MKCoordinateRegion?
+    var experienceAnnotations: [MKAnnotation] = [] {
+        didSet {
+            mapView.showAnnotations(experienceAnnotations, animated: true)
+        }
+    }
     
     //MARK: - IBOutlets -
     @IBOutlet weak var mapView: MKMapView!
@@ -21,32 +24,27 @@ class MapViewController: UIViewController {
     //MARK: - Methods -
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        setMapViewRegion()
-        ShowDinerAnnotation()
-    }
-
-    func setMapViewRegion() {
-        mapCenter = CLLocationCoordinate2D(latitude: 37.79425, longitude: -122.403528)
-        region = MKCoordinateRegion(center: mapCenter!, latitudinalMeters: 50, longitudinalMeters: 50)
-        mapView.setRegion(region!, animated: false)
-    }
-
-    func ShowDinerAnnotation() {
-        let doggieDiner = CLLocationCoordinate2D(latitude: 37.735461, longitude: -122.502969)
-        let doggieDinerAnnotation = MKPointAnnotation()
-        doggieDinerAnnotation.coordinate = doggieDiner
-        doggieDinerAnnotation.title = "Doggie Diner"
-        doggieDinerAnnotation.subtitle = "Landmark No. 254"
-        mapView.showAnnotations([doggieDinerAnnotation], animated: true)
     }
 
 }
 
+//Custome annotation view attempt
 extension MapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        <#code#>
+        if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: .annotationReuseIdentifier) {
+            annotationView.annotation = annotation
+            annotationView.image = UIImage(named: "Pin")
+            annotationView.canShowCallout = true
+            return annotationView
+        }
+        else {
+            let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: .annotationReuseIdentifier)
+            annotationView.annotation = annotation
+            annotationView.image = UIImage(named: "Pin")
+            annotationView.canShowCallout = true
+            return annotationView
+        }
     }
     
-}
+} //End of extension
