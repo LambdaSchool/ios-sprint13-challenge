@@ -1,8 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="rWg-r5-epg">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <scenes/>
+    <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="ZVf-CT-ITg">
+            <objects>
+                <viewController id="rWg-r5-epg" customClass="LoginViewController" customModule="memories" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="PJg-MT-Zxa">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="9jE-ZD-19z"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="ngv-uS-Z69"/>
+                    <connections>
+                        <outlet property="backgroundVideoView" destination="PJg-MT-Zxa" id="G65-Ci-GVW"/>
+                        <outlet property="loginView" destination="INR-0O-K2T" id="gDZ-jd-Exp"/>
+                        <outlet property="usernameTextField" destination="zJu-I2-loE" id="sz6-xV-RmT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pqt-2r-gqJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="INR-0O-K2T">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create a username to get started" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NUf-HG-Gg2">
+                            <rect key="frame" x="40" y="375" width="334" height="24"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <color key="textColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Memories" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ysm-UN-jdd">
+                            <rect key="frame" x="20" y="64" width="374" height="45.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="38"/>
+                            <color key="textColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zJu-I2-loE">
+                            <rect key="frame" x="40" y="404" width="334" height="34"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7PR-Zv-kJs">
+                            <rect key="frame" x="40" y="453" width="334" height="30"/>
+                            <state key="normal" title="Login"/>
+                            <connections>
+                                <action selector="loginTapped:" destination="rWg-r5-epg" eventType="touchUpInside" id="n3w-dd-L4U"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where all your memories get saved" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bo0-xq-6SN">
+                            <rect key="frame" x="40" y="129.5" width="334" height="27"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                            <color key="textColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Ysm-UN-jdd" firstAttribute="leading" secondItem="04a-W7-HLV" secondAttribute="leading" constant="20" id="1ow-Wu-vig"/>
+                        <constraint firstItem="04a-W7-HLV" firstAttribute="trailing" secondItem="NUf-HG-Gg2" secondAttribute="trailing" constant="40" id="25M-h9-UTZ"/>
+                        <constraint firstItem="04a-W7-HLV" firstAttribute="trailing" secondItem="bo0-xq-6SN" secondAttribute="trailing" constant="40" id="6Ub-MQ-81C"/>
+                        <constraint firstItem="04a-W7-HLV" firstAttribute="trailing" secondItem="zJu-I2-loE" secondAttribute="trailing" constant="40" id="A0d-at-u8b"/>
+                        <constraint firstItem="bo0-xq-6SN" firstAttribute="leading" secondItem="04a-W7-HLV" secondAttribute="leading" constant="40" id="KLT-ca-c6w"/>
+                        <constraint firstItem="zJu-I2-loE" firstAttribute="top" secondItem="NUf-HG-Gg2" secondAttribute="bottom" constant="5" id="MuK-og-nHg"/>
+                        <constraint firstItem="04a-W7-HLV" firstAttribute="trailing" secondItem="7PR-Zv-kJs" secondAttribute="trailing" constant="40" id="Nsh-W8-Qlc"/>
+                        <constraint firstItem="NUf-HG-Gg2" firstAttribute="top" secondItem="bo0-xq-6SN" secondAttribute="bottom" constant="218.33000000000001" id="Vor-dq-skn"/>
+                        <constraint firstItem="bo0-xq-6SN" firstAttribute="top" secondItem="Ysm-UN-jdd" secondAttribute="bottom" constant="20" id="Yc6-lH-WZF"/>
+                        <constraint firstItem="Ysm-UN-jdd" firstAttribute="top" secondItem="04a-W7-HLV" secondAttribute="top" constant="20" id="iRj-4r-iWl"/>
+                        <constraint firstItem="7PR-Zv-kJs" firstAttribute="top" secondItem="zJu-I2-loE" secondAttribute="bottom" constant="15" id="m49-kH-y1k"/>
+                        <constraint firstItem="7PR-Zv-kJs" firstAttribute="leading" secondItem="04a-W7-HLV" secondAttribute="leading" constant="40" id="pxa-MY-PmM"/>
+                        <constraint firstItem="04a-W7-HLV" firstAttribute="trailing" secondItem="Ysm-UN-jdd" secondAttribute="trailing" constant="20" id="sNL-et-5Xw"/>
+                        <constraint firstItem="zJu-I2-loE" firstAttribute="leading" secondItem="04a-W7-HLV" secondAttribute="leading" constant="40" id="tGo-tD-EAg"/>
+                        <constraint firstItem="NUf-HG-Gg2" firstAttribute="leading" secondItem="04a-W7-HLV" secondAttribute="leading" constant="40" id="zwj-1L-8Ro"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="04a-W7-HLV"/>
+                </view>
+            </objects>
+            <point key="canvasLocation" x="577" y="143"/>
+        </scene>
+    </scenes>
 </document>
