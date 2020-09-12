@@ -7,8 +7,15 @@
 
 import UIKit
 import AVFoundation
+import MapKit
 
 class VideoRecorderViewController: UIViewController {
+    
+    //MARK: - Experience Creation Properties -
+    let experienceController = ExperienceController.shared
+    var experienceTitle: String?
+    var image: UIImage?
+    var recordingURL: URL?
     
     //MARK: - Properties -
     lazy private var captureSession = AVCaptureSession()
@@ -25,6 +32,13 @@ class VideoRecorderViewController: UIViewController {
     //MARK: - IBActions -
     @IBAction func recordButtonTapped(_ sender: UIButton) {
         toggleRecord()
+    }
+    
+    @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
+        let locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+        locationManager.requestLocation()
     }
     
     //MARK: - Life Cycle Methods -
@@ -247,5 +261,38 @@ extension VideoRecorderViewController: AVCaptureFileOutputRecordingDelegate {
         playMovie(url: outputFileURL)
     }
     
+    
+}
+
+extension VideoRecorderViewController: CLLocationManagerDelegate {
+    
+    //Will be executed after successfully obtaining user's location
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let coordinates: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        guard let title = experienceTitle else { return }
+        guard let image = image else { return }
+        guard let recordingURL = recordingURL else { return }
+        
+        let newExperience = Experience(experienceTitle: title, image: image, audioRecordingURL: recordingURL, coordinate: coordinates)
+        
+        experienceController.addExperience(newExperience)
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    //Will be executed when obtaining the user's location fails
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+        print("ERROR: Could not user's location, using default cooridinates instead to create the annotation")
+        
+        guard let title = experienceTitle else { return }
+        guard let image = image else { return }
+        guard let recordingURL = recordingURL else { return }
+        let mapCenter = CLLocationCoordinate2D(latitude: 37.79425, longitude: -122.403528)
+        
+        let newExperience = Experience(experienceTitle: title, image: image, audioRecordingURL: recordingURL, coordinate: mapCenter)
+        
+        experienceController.addExperience(newExperience)
+        self.dismiss(animated: true, completion: nil)
+    }
     
 }

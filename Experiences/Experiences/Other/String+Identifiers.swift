@@ -10,5 +10,6 @@ import Foundation
 extension String {
     
     static let annotationReuseIdentifier = "annotationReuseIdentifier"
+    static let videoRecorderSegue = "videoRecorderSegue"
     
 }

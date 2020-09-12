@@ -61,11 +61,106 @@ class NewExperienceViewController: UIViewController {
         
     }
     
+    private func beginChoosingFromPhotoLibrary() {
+        let authorizationStatus = PHPhotoLibrary.authorizationStatus()
+        
+        switch authorizationStatus {
+        case .authorized:
+            presentImagePickerController()
+        case .notDetermined:
+            
+            PHPhotoLibrary.requestAuthorization { (status) in
+                
+                guard status == .authorized else {
+                    NSLog("User did not authorize access to the photo library")
+                    self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
+                    return
+                }
+                
+                self.presentImagePickerController()
+            }
+            
+        case .denied:
+            self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
+        case .restricted:
+            self.presentInformationalAlertController(title: "Error", message: "Unable to access the photo library. Your device's restrictions do not allow access.")
+        default:
+            break
+        }
+        presentImagePickerController()
+    }
+    
+    private func presentPhotoCamera() {
+        
+        guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+            presentInformationalAlertController(title: "Error", message: "The photo library is unavailable")
+            return
+        }
+        
+        DispatchQueue.main.async {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .camera
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+        
+        
+    }
+    
+    private func beginTakingPhoto() {
+        let authorizationStatus = PHPhotoLibrary.authorizationStatus()
+        
+        switch authorizationStatus {
+        case .authorized:
+            presentPhotoCamera()
+        case .notDetermined:
+            
+            PHPhotoLibrary.requestAuthorization { (status) in
+                
+                guard status == .authorized else {
+                    NSLog("User did not authorize access to the take picture")
+                    self.presentInformationalAlertController(title: "Error", message: "In order to access the camera, you must allow this application access to it.")
+                    return
+                }
+                
+                self.presentPhotoCamera()
+            }
+            
+        case .denied:
+            self.presentInformationalAlertController(title: "Error", message: "In order to access the camera, you must allow this application access to it.")
+        case .restricted:
+            self.presentInformationalAlertController(title: "Error", message: "Unable to access the camera. Your device's restrictions do not allow access.")
+        default:
+            break
+        }
+        presentPhotoCamera()
+    }
+    
     private func setImageViewHeight(with aspectRatio: CGFloat) {
         
         imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
         
         view.layoutSubviews()
+    }
+    
+    private func presentImageSourceAlert() {
+        let alert = UIAlertController(title: "Select Source", message: nil, preferredStyle: .actionSheet)
+        
+        let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .default) { (_) in
+            self.beginChoosingFromPhotoLibrary()
+        }
+        
+        let cameraAction = UIAlertAction(title: "Camera", style: .default) { (_) in
+            self.beginTakingPhoto()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(photoLibraryAction)
+        alert.addAction(cameraAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     //MARK: - Audio Methods -
@@ -84,7 +179,7 @@ class NewExperienceViewController: UIViewController {
     
     private func requestPermissionOrStartRecording() {
         switch AVAudioSession.sharedInstance().recordPermission {
-            
+        
         case .undetermined:
             AVAudioSession.sharedInstance().requestRecordPermission { granted in
                 guard granted == true else {
@@ -150,33 +245,7 @@ class NewExperienceViewController: UIViewController {
     
     //MARK: - Core Image IBActions -
     @IBAction func chooseImage(_ sender: Any) {
-        
-        let authorizationStatus = PHPhotoLibrary.authorizationStatus()
-        
-        switch authorizationStatus {
-        case .authorized:
-            presentImagePickerController()
-        case .notDetermined:
-            
-            PHPhotoLibrary.requestAuthorization { (status) in
-                
-                guard status == .authorized else {
-                    NSLog("User did not authorize access to the photo library")
-                    self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
-                    return
-                }
-                
-                self.presentImagePickerController()
-            }
-            
-        case .denied:
-            self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
-        case .restricted:
-            self.presentInformationalAlertController(title: "Error", message: "Unable to access the photo library. Your device's restrictions do not allow access.")
-        default:
-            break
-        }
-        presentImagePickerController()
+        presentImageSourceAlert()
     }
     
     //MARK: - Audio Actions -
@@ -190,11 +259,23 @@ class NewExperienceViewController: UIViewController {
         requestPermissionOrStartRecording()
     }
     
-}
+    ///Navigation
+    
+    //MARK: - Navigation Methods -
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == .videoRecorderSegue {
+            let videoRecorderVC = segue.destination as! VideoRecorderViewController
+            videoRecorderVC.experienceTitle = titleTextField.text
+            videoRecorderVC.image = imageView.image
+            videoRecorderVC.recordingURL = recordingURL
+        }
+    }
+    
+} //End of class
 
 ///All extensions
 
-    //MARK: - Core Image extension -
+//MARK: - Core Image extension -
 extension NewExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -216,7 +297,7 @@ extension NewExperienceViewController: UIImagePickerControllerDelegate, UINaviga
     
 }
 
-    //MARK: - Audio extensions -
+//MARK: - Audio extensions -
 extension NewExperienceViewController: AVAudioRecorderDelegate {
 }
 

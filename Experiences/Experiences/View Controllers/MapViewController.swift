@@ -12,21 +12,18 @@ import CoreLocation
 class MapViewController: UIViewController {
 
     //MARK: - Properties -
-    var experienceAnnotations: [MKAnnotation] = [] {
-        didSet {
-            mapView.showAnnotations(experienceAnnotations, animated: true)
-        }
-    }
+    let experienceController = ExperienceController.shared
     
     //MARK: - IBOutlets -
     @IBOutlet weak var mapView: MKMapView!
     
     //MARK: - Methods -
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        mapView.showAnnotations(experienceController.experiences, animated: true)
     }
 
-}
+} //End of class
 
 //Custome annotation view attempt
 extension MapViewController: MKMapViewDelegate {
