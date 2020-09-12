@@ -22,7 +22,8 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setMapViewRegion()
+//        setMapViewRegion()
+        ShowDinerAnnotation()
     }
 
     func setMapViewRegion() {
@@ -31,6 +32,21 @@ class MapViewController: UIViewController {
         mapView.setRegion(region!, animated: false)
     }
 
+    func ShowDinerAnnotation() {
+        let doggieDiner = CLLocationCoordinate2D(latitude: 37.735461, longitude: -122.502969)
+        let doggieDinerAnnotation = MKPointAnnotation()
+        doggieDinerAnnotation.coordinate = doggieDiner
+        doggieDinerAnnotation.title = "Doggie Diner"
+        doggieDinerAnnotation.subtitle = "Landmark No. 254"
+        mapView.showAnnotations([doggieDinerAnnotation], animated: true)
+    }
 
 }
 
+extension MapViewController: MKMapViewDelegate {
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        <#code#>
+    }
+    
+}
