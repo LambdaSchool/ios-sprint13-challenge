@@ -31,10 +31,13 @@
                     <navigationItem key="navigationItem" title="Experiences" id="U7S-01-G68">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="pe8-NZ-TDF">
                             <connections>
-                                <segue destination="eoZ-KA-6PV" kind="show" id="WXb-f6-kJG"/>
+                                <segue destination="eoZ-KA-6PV" kind="show" identifier="NewExperienceSegue" id="WXb-f6-kJG"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="Uh7-7M-sOu" id="r9S-rc-1Ok"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9VG-xY-9dh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -51,7 +54,7 @@
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Describe your experience" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kmV-zf-pZU">
                                 <rect key="frame" x="111" y="156" width="192.5" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                             </textField>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bRD-XB-BRy">
                                 <rect key="frame" x="16" y="206" width="382" height="240"/>
@@ -59,22 +62,64 @@
                                     <constraint firstAttribute="height" constant="240" id="XrH-R6-HHL"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LJ5-ve-gV5">
+                                <rect key="frame" x="161.5" y="454" width="91" height="34"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                <state key="normal" title="Add Image"/>
+                                <connections>
+                                    <action selector="addImageButtonTapped:" destination="eoZ-KA-6PV" eventType="touchUpInside" id="14k-XA-yfu"/>
+                                </connections>
+                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="nHJ-Vp-fZO">
+                                <rect key="frame" x="119.5" y="746" width="175" height="84"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Ef-qC-Bcz">
+                                        <rect key="frame" x="0.0" y="0.0" width="175" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                        <state key="normal" title="Record Audio"/>
+                                        <connections>
+                                            <action selector="recordAudioButtonTapped:" destination="eoZ-KA-6PV" eventType="touchUpInside" id="3iM-sL-ope"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zIX-Ss-VhK">
+                                        <rect key="frame" x="0.0" y="50" width="175" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                        <state key="normal" title="Play Recorded Audio">
+                                            <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="playRecordedAudioButtonTapped:" destination="eoZ-KA-6PV" eventType="touchUpInside" id="SMB-fy-U0P"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="EXt-Gh-iqx" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="kmV-zf-pZU" secondAttribute="trailing" id="5XL-VA-XuE"/>
                             <constraint firstItem="bRD-XB-BRy" firstAttribute="leading" secondItem="EXt-Gh-iqx" secondAttribute="leading" constant="16" id="84Q-71-X77"/>
-                            <constraint firstItem="kmV-zf-pZU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="EXt-Gh-iqx" secondAttribute="leading" id="8Mb-91-fHt"/>
+                            <constraint firstItem="LJ5-ve-gV5" firstAttribute="top" secondItem="bRD-XB-BRy" secondAttribute="bottom" constant="8" id="BbO-f0-plf"/>
+                            <constraint firstItem="nHJ-Vp-fZO" firstAttribute="centerX" secondItem="fOf-ba-uPb" secondAttribute="centerX" id="DWu-2F-v7Q"/>
                             <constraint firstItem="bRD-XB-BRy" firstAttribute="top" secondItem="kmV-zf-pZU" secondAttribute="bottom" constant="16" id="Pmb-Fd-fi8"/>
                             <constraint firstItem="kmV-zf-pZU" firstAttribute="centerX" secondItem="fOf-ba-uPb" secondAttribute="centerX" id="VRF-nR-MIy"/>
                             <constraint firstItem="EXt-Gh-iqx" firstAttribute="trailing" secondItem="bRD-XB-BRy" secondAttribute="trailing" constant="16" id="juA-gj-J1q"/>
+                            <constraint firstItem="EXt-Gh-iqx" firstAttribute="bottom" secondItem="nHJ-Vp-fZO" secondAttribute="bottom" constant="32" id="q1W-Bo-v1q"/>
+                            <constraint firstItem="LJ5-ve-gV5" firstAttribute="centerX" secondItem="fOf-ba-uPb" secondAttribute="centerX" id="qeO-mE-0cv"/>
                             <constraint firstItem="kmV-zf-pZU" firstAttribute="top" secondItem="EXt-Gh-iqx" secondAttribute="top" constant="16" id="xKU-et-Coa"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="EXt-Gh-iqx"/>
                     </view>
                     <navigationItem key="navigationItem" id="hQJ-Sg-AQj">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="Kvb-by-qdT"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="Kvb-by-qdT">
+                            <connections>
+                                <action selector="saveExperienceButtonTapped:" destination="eoZ-KA-6PV" id="pQy-ZX-JTv"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="experienceImage" destination="bRD-XB-BRy" id="TLW-y2-kvy"/>
+                        <outlet property="experienceTitle" destination="kmV-zf-pZU" id="hH4-cc-GdC"/>
+                        <outlet property="recordAudioButton" destination="9Ef-qC-Bcz" id="vdW-aC-ud7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jEp-uE-fZn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

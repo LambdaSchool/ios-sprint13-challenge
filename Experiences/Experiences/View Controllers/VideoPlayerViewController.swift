@@ -10,6 +10,6 @@ import UIKit
 
 class VideoPlayerViewController: UIViewController {
     
-    
+    // Implement if completing video support stretch goal
     
 }
