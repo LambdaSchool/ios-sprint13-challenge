@@ -40,14 +40,11 @@ class ExperiencesViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
         case "NewExperience":
-            print("")
+        if let newExperienceVC = segue.destination as? NewExperienceViewController {
+            newExperienceVC.experience = experience
+            }
         default:
             break
         }
     }
-
-    @IBAction func addExperience(_ sender: UIButton) {
-
-    }
 }
-
