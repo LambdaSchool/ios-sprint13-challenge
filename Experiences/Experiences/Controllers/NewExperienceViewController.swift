@@ -13,9 +13,14 @@ import CoreImage.CIFilterBuiltins
 import Photos
 import AVFoundation
 import MapKit
+import CoreLocation
 
 extension String {
     static let annotationReuseIdentifier = "Experiences"
+}
+
+protocol ExperienceDelegate {
+    func getExperience(experience: Experience)
 }
 
 class NewExperienceViewController: UIViewController {
@@ -24,9 +29,11 @@ class NewExperienceViewController: UIViewController {
     @IBOutlet weak var audioRecordingButton: UIButton!
 
     var experience: [Experience] = []
+    var experienceDelegate: ExperienceDelegate?
     var audioPlayer: AVAudioPlayer?
     var recordingURL: URL?
     var audioRecorder: AVAudioRecorder?
+    private let locationManager = CLLocationManager()
 
     var originalImage: UIImage? {
         didSet {
@@ -65,7 +72,7 @@ class NewExperienceViewController: UIViewController {
     func prepareAudioSession() throws {
         let session = AVAudioSession.sharedInstance()
         try session.setCategory(.playAndRecord, options: [.defaultToSpeaker])
-        try session.setActive(true, options: []) // can fail if on a phone call, for instance
+        try session.setActive(true, options: [])
     }
 
     var isRecording: Bool {
@@ -77,8 +84,6 @@ class NewExperienceViewController: UIViewController {
 
         let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
         let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
-
-        //        print("recording URL: \(file)")
 
         return file
     }
@@ -93,7 +98,7 @@ class NewExperienceViewController: UIViewController {
                 }
 
                 print("Recording permission has been granted!")
-                // NOTE: Invite the user to tap record again, since we just interrupted them, and they may not have been ready to record
+
             }
         case .denied:
             print("Microphone access has been blocked.")
@@ -218,7 +223,11 @@ class NewExperienceViewController: UIViewController {
     }
 
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
-//        experience.append(Experience(titleName: titleTextField.text ?? "", image: originalImage!, latitude: Double, longitude: Double))
+        let location = locationManager.location?.coordinate
+
+        let newExperience = Experience(titleName: titleTextField.text ?? "", image: originalImage!, latitude: location!.latitude, longitude: location!.longitude)
+        experienceDelegate?.getExperience(experience: newExperience)
+        navigationController?.dismiss(animated: true, completion: nil)
     }
 
 }
@@ -254,48 +263,5 @@ extension NewExperienceViewController: AVAudioRecorderDelegate {
         if let error = error {
             print("Audio Recorder Error: \(error)")
         }
-    }
-}
-
-extension ExperiencesViewController: MKMapViewDelegate {
-    func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
-
-    }
-
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-
-        let alert = UIAlertController()
-
-        guard let experience = annotation as? Experience else { return nil }
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: .annotationReuseIdentifier, for: experience) as! MKMarkerAnnotationView
-
-        let annotationCampSite = UIAlertAction(title: "Campsite", style: .default) { (action) in
-            annotationView.glyphImage = #imageLiteral(resourceName: "icons8-campsite")
-        }
-
-        let annotationsHotel = UIAlertAction(title: "Hotel", style: .default) { (action) in
-            annotationView.glyphImage = #imageLiteral(resourceName: "icons8-hotel-building")
-        }
-
-        let annotationDiving = UIAlertAction(title: "Scuba Diving", style: .default) { (action) in
-            annotationView.glyphImage = #imageLiteral(resourceName: "icons8-scuba-diving")
-        }
-
-        let annotationCancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-
-        alert.addAction(annotationCampSite)
-        alert.addAction(annotationsHotel)
-        alert.addAction(annotationDiving)
-        alert.addAction(annotationCancel)
-        self.present(alert, animated: true)
-
-        if annotationView == nil {
-        annotationView.canShowCallout = true
-            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: .annotationReuseIdentifier)
-            annotationView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-        } else {
-            annotationView.annotation = annotation
-        }
-        return annotationView
     }
 }
