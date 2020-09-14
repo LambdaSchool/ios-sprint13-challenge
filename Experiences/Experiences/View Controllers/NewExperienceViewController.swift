@@ -31,6 +31,7 @@ class NewExperienceViewController: UIViewController {
     
     //MARK: - General IBOutlets -
     @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var nextButton: UIBarButtonItem!
     
     //MARK: - Core Image IBOutlets -
     @IBOutlet weak var imageView: UIImageView!
@@ -268,32 +269,20 @@ class NewExperienceViewController: UIViewController {
         playButton.isSelected = isPlaying
     }
     
-    ///All Actions
-    
-    //MARK: - Core Image IBActions -
-    @IBAction func chooseImage(_ sender: Any) {
-        presentImageSourceAlert()
-    }
-    
-    //MARK: - Audio Actions -
-    @IBAction func recordButtonTapped(_ sender: UIButton) {
-        guard !isRecording else {
-            stopRecording()
-            recordButton.setTitle("Record", for: .normal)
-            
+    //MARK: - Navigation Methods -
+
+    //This will enable the 'Next' button when the user has fulfilled all the requirements
+    private func checkIfUserCanProceed() {
+        guard let title = titleTextField.text,
+              !title.isEmpty,
+              let _ = imageView.image,
+              let _ = recordingURL else {
+            nextButton.isEnabled = false
             return
         }
-        
-        requestPermissionOrStartRecording()
+        nextButton.isEnabled = true
     }
     
-    @IBAction func playButtonTapped(_ sender: UIButton) {
-        play()
-    }
-    
-    ///Navigation
-    
-    //MARK: - Navigation Methods -
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == .videoRecorderSegue {
             let videoRecorderVC = segue.destination as! VideoRecorderViewController
@@ -301,6 +290,42 @@ class NewExperienceViewController: UIViewController {
             videoRecorderVC.image = imageView.image
             videoRecorderVC.recordingURL = recordingURL
         }
+    }
+    
+    ///All Actions
+    
+    //MARK: - Core Image IBActions -
+    @IBAction func chooseImage(_ sender: Any) {
+        presentImageSourceAlert()
+        checkIfUserCanProceed()
+    }
+    
+    //MARK: - Audio IBActions -
+    @IBAction func recordButtonTapped(_ sender: UIButton) {
+        guard !isRecording else {
+            stopRecording()
+            recordButton.setTitle("Record", for: .normal)
+            checkIfUserCanProceed()
+            return
+        }
+        
+        requestPermissionOrStartRecording()
+        checkIfUserCanProceed()
+    }
+    
+    @IBAction func playButtonTapped(_ sender: UIButton) {
+        play()
+        checkIfUserCanProceed()
+    }
+    
+    //MARK: - Navigation IBActions -
+    @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    //MARK: - General IBActions -
+    @IBAction func titleTextFieldEditingDidEnd(_ sender: UITextField) {
+        checkIfUserCanProceed()
     }
     
 } //End of class
@@ -321,10 +346,12 @@ extension NewExperienceViewController: UIImagePickerControllerDelegate, UINaviga
         imageView.image = filteredImage
         
         setImageViewHeight(with: image.ratio)
+        checkIfUserCanProceed()
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+        checkIfUserCanProceed()
     }
     
 }

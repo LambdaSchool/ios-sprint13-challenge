@@ -57,6 +57,9 @@
                                 <rect key="frame" x="25" y="145" width="364" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="titleTextFieldEditingDidEnd:" destination="nMk-UA-EEq" eventType="editingDidEnd" id="3dK-u3-2Jf"/>
+                                </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gxq-Oi-KJq">
                                 <rect key="frame" x="25" y="189" width="364" height="375"/>
@@ -112,17 +115,27 @@
                                     <action selector="playButtonTapped:" destination="nMk-UA-EEq" eventType="touchUpInside" id="6wE-me-VqA"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please be sure to add a title, an image, and an audio recording, you will not be able to proceed otherwise 😁" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Rs-Ac-yl4">
+                                <rect key="frame" x="25" y="714" width="364" height="61"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="4Ly-DQ-Kkm"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Gxq-Oi-KJq" firstAttribute="top" secondItem="MTV-5I-ZsP" secondAttribute="bottom" constant="10" id="0bS-iE-VHu"/>
                             <constraint firstItem="4Ly-DQ-Kkm" firstAttribute="trailing" secondItem="MTV-5I-ZsP" secondAttribute="trailing" constant="25" id="9Op-Bl-q2O"/>
+                            <constraint firstItem="4Ly-DQ-Kkm" firstAttribute="trailing" secondItem="5Rs-Ac-yl4" secondAttribute="trailing" constant="25" id="BmO-Tq-cGx"/>
                             <constraint firstItem="MTV-5I-ZsP" firstAttribute="top" secondItem="4Ly-DQ-Kkm" secondAttribute="top" constant="5" id="CQm-SL-JIy"/>
+                            <constraint firstItem="5Rs-Ac-yl4" firstAttribute="leading" secondItem="4Ly-DQ-Kkm" secondAttribute="leading" constant="25" id="ImJ-TN-Yxc"/>
                             <constraint firstItem="MTV-5I-ZsP" firstAttribute="leading" secondItem="4Ly-DQ-Kkm" secondAttribute="leading" constant="25" id="Ll8-7s-Zaz"/>
                             <constraint firstItem="i8n-qc-L8k" firstAttribute="centerX" secondItem="T7R-bt-Ve2" secondAttribute="centerX" id="MXf-RA-mT7"/>
                             <constraint firstItem="4Ly-DQ-Kkm" firstAttribute="trailing" secondItem="Gxq-Oi-KJq" secondAttribute="trailing" constant="25" id="R8X-WZ-EBH"/>
                             <constraint firstItem="i8n-qc-L8k" firstAttribute="top" secondItem="Gxq-Oi-KJq" secondAttribute="bottom" constant="40" id="Y6R-L5-VnX"/>
+                            <constraint firstItem="5Rs-Ac-yl4" firstAttribute="centerX" secondItem="T7R-bt-Ve2" secondAttribute="centerX" id="YSf-p1-MYJ"/>
+                            <constraint firstItem="5Rs-Ac-yl4" firstAttribute="top" secondItem="8FA-y0-GKG" secondAttribute="bottom" constant="15" id="Z6O-7Q-G60"/>
                             <constraint firstItem="Gxq-Oi-KJq" firstAttribute="leading" secondItem="4Ly-DQ-Kkm" secondAttribute="leading" constant="25" id="cQx-c5-6qY"/>
                             <constraint firstItem="MTV-5I-ZsP" firstAttribute="centerX" secondItem="T7R-bt-Ve2" secondAttribute="centerX" id="e5X-ax-owy"/>
                             <constraint firstItem="8FA-y0-GKG" firstAttribute="centerX" secondItem="T7R-bt-Ve2" secondAttribute="centerX" id="eBV-iy-tkD"/>
@@ -130,9 +143,13 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="New Experience" id="SS4-eI-0TP">
-                        <barButtonItem key="rightBarButtonItem" title="Next" id="RBc-hz-Gk5">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="adt-J2-yNl">
                             <connections>
-                                <action selector="nextButtonTapped:" destination="nMk-UA-EEq" id="N3n-Ic-cgm"/>
+                                <action selector="cancelButtonTapped:" destination="nMk-UA-EEq" id="OJF-MQ-pfF"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Next" id="RBc-hz-Gk5">
+                            <connections>
                                 <segue destination="HWu-3r-TXi" kind="show" identifier="videoRecorderSegue" id="TAk-F5-pBp"/>
                             </connections>
                         </barButtonItem>
@@ -141,6 +158,7 @@
                         <outlet property="chooseImageButton" destination="uMq-AU-nOj" id="8OC-4Q-NQF"/>
                         <outlet property="imageHeightConstraint" destination="SQu-R5-Pfm" id="OLG-QY-GfX"/>
                         <outlet property="imageView" destination="0bY-8a-uPH" id="3Ca-6f-gmj"/>
+                        <outlet property="nextButton" destination="RBc-hz-Gk5" id="SJZ-7X-cGg"/>
                         <outlet property="playButton" destination="8FA-y0-GKG" id="e3q-z0-gam"/>
                         <outlet property="recordButton" destination="i8n-qc-L8k" id="LeT-Rr-Guc"/>
                         <outlet property="titleTextField" destination="MTV-5I-ZsP" id="ZF0-tF-TEc"/>
