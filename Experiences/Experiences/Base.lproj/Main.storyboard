@@ -100,6 +100,18 @@
                                     <action selector="recordButtonTapped:" destination="nMk-UA-EEq" eventType="touchUpInside" id="G4S-DW-2tD"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8FA-y0-GKG">
+                                <rect key="frame" x="182" y="649" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="e6u-qi-NBs"/>
+                                    <constraint firstAttribute="width" constant="50" id="zus-eH-hrO"/>
+                                </constraints>
+                                <state key="normal" image="play.fill" catalog="system"/>
+                                <state key="selected" image="pause.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="playButtonTapped:" destination="nMk-UA-EEq" eventType="touchUpInside" id="6wE-me-VqA"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="4Ly-DQ-Kkm"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -113,6 +125,8 @@
                             <constraint firstItem="i8n-qc-L8k" firstAttribute="top" secondItem="Gxq-Oi-KJq" secondAttribute="bottom" constant="40" id="Y6R-L5-VnX"/>
                             <constraint firstItem="Gxq-Oi-KJq" firstAttribute="leading" secondItem="4Ly-DQ-Kkm" secondAttribute="leading" constant="25" id="cQx-c5-6qY"/>
                             <constraint firstItem="MTV-5I-ZsP" firstAttribute="centerX" secondItem="T7R-bt-Ve2" secondAttribute="centerX" id="e5X-ax-owy"/>
+                            <constraint firstItem="8FA-y0-GKG" firstAttribute="centerX" secondItem="T7R-bt-Ve2" secondAttribute="centerX" id="eBV-iy-tkD"/>
+                            <constraint firstItem="8FA-y0-GKG" firstAttribute="top" secondItem="i8n-qc-L8k" secondAttribute="bottom" constant="5" id="qrP-wM-kBj"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="New Experience" id="SS4-eI-0TP">
@@ -127,6 +141,7 @@
                         <outlet property="chooseImageButton" destination="uMq-AU-nOj" id="8OC-4Q-NQF"/>
                         <outlet property="imageHeightConstraint" destination="SQu-R5-Pfm" id="OLG-QY-GfX"/>
                         <outlet property="imageView" destination="0bY-8a-uPH" id="3Ca-6f-gmj"/>
+                        <outlet property="playButton" destination="8FA-y0-GKG" id="e3q-z0-gam"/>
                         <outlet property="recordButton" destination="i8n-qc-L8k" id="LeT-Rr-Guc"/>
                         <outlet property="titleTextField" destination="MTV-5I-ZsP" id="ZF0-tF-TEc"/>
                     </connections>
@@ -230,6 +245,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="pause.fill" catalog="system" width="116" height="128"/>
+        <image name="play.fill" catalog="system" width="116" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

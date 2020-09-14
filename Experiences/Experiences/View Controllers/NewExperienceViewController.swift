@@ -16,10 +16,15 @@ class NewExperienceViewController: UIViewController {
     let filterController = FilterController()
     
     //MARK: - Audio Properties -
+    var audioPlayer    : AVAudioPlayer?
     var audioRecorder  : AVAudioRecorder?
     var recordingURL   : URL?
+    
     var isRecording : Bool {
         return audioRecorder?.isRecording ?? false
+    }
+    var isPlaying   : Bool {
+        return audioPlayer?.isPlaying ?? false
     }
     
     ///All IBOutlets
@@ -34,6 +39,7 @@ class NewExperienceViewController: UIViewController {
     
     //MARK: - Audio Outlets -
     @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var playButton: UIButton!
     
     ///All Methods
     
@@ -231,6 +237,7 @@ class NewExperienceViewController: UIViewController {
             audioRecorder?.isMeteringEnabled = true
             audioRecorder?.record()
             recordButton.setTitle("Stop Recording", for: .normal)
+            playButton.isEnabled = false
         } catch {
             preconditionFailure("The audio recorder could not be created with \(String(describing: recordingURL)) and \(String(describing: format))")
         }
@@ -239,6 +246,26 @@ class NewExperienceViewController: UIViewController {
     
     private func stopRecording() {
         audioRecorder?.stop()
+        playButton.isEnabled = true
+    }
+    
+    private func play() {
+        do {
+            try prepareAudioSession()
+            audioPlayer?.delegate = self
+            audioPlayer?.play()
+            updateViews()
+        } catch {
+            print("Cannot play audio")
+            let alert = UIAlertController(title: "Can't play audio", message: "Sorry, looks like something else is performing audio playback at the moment, you can try again once the other audio activity has finished", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(action)
+            present(alert, animated: true)
+        }
+    }
+    
+    func updateViews() {
+        playButton.isSelected = isPlaying
     }
     
     ///All Actions
@@ -251,12 +278,17 @@ class NewExperienceViewController: UIViewController {
     //MARK: - Audio Actions -
     @IBAction func recordButtonTapped(_ sender: UIButton) {
         guard !isRecording else {
-            audioRecorder?.stop()
+            stopRecording()
             recordButton.setTitle("Record", for: .normal)
+            
             return
         }
         
         requestPermissionOrStartRecording()
+    }
+    
+    @IBAction func playButtonTapped(_ sender: UIButton) {
+        play()
     }
     
     ///Navigation
@@ -298,7 +330,22 @@ extension NewExperienceViewController: UIImagePickerControllerDelegate, UINaviga
 }
 
 //MARK: - Audio extensions -
-extension NewExperienceViewController: AVAudioRecorderDelegate {
+extension NewExperienceViewController: AVAudioRecorderDelegate, AVAudioPlayerDelegate {
+    
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        if let recordingURL = recordingURL {
+            audioPlayer = try? AVAudioPlayer(contentsOf: recordingURL)
+        }
+    }
+    
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
+        print("ERROR: Could not record audio \(error)")
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        updateViews()
+    }
+    
 }
 
 //MARK: - Keyboard Done Button extension -
