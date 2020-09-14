@@ -11,13 +11,19 @@ import MapKit
 
 class VideoRecorderViewController: UIViewController {
     
+    //MARK: - Alerts -
+    var savingAlert: UIAlertController {
+        let alert = UIAlertController(title: "Saving...", message: "Fethcing your location and saving your experience, please wait.", preferredStyle: .alert)
+        return alert
+    }
+    
     //MARK: - Experience Creation Properties -
     let experienceController = ExperienceController.shared
     var experienceTitle: String?
     var image: UIImage?
     var recordingURL: URL?
     
-    //MARK: - Properties -
+    //MARK: - Video Properties -
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     var player: AVPlayer!
@@ -39,6 +45,7 @@ class VideoRecorderViewController: UIViewController {
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
         locationManager.requestLocation()
+        present(savingAlert, animated: true, completion: nil)
     }
     
     //MARK: - Life Cycle Methods -
@@ -276,6 +283,8 @@ extension VideoRecorderViewController: CLLocationManagerDelegate {
         let newExperience = Experience(experienceTitle: title, image: image, audioRecordingURL: recordingURL, coordinate: coordinates)
         
         experienceController.addExperience(newExperience)
+        
+        self.dismiss(animated: true, completion: nil)
         self.dismiss(animated: true, completion: nil)
     }
     
