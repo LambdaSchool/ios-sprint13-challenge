@@ -11,7 +11,7 @@ import Photos
 import CoreImage
 import CoreImage.CIFilterBuiltins
 
-class AddExperienceViewController: UIViewController {
+class AddExperienceViewController: UIViewController, CLLocationManagerDelegate {
 
     // MARK: - IBOutlets
     @IBOutlet weak var imageView: UIImageView!
@@ -29,6 +29,8 @@ class AddExperienceViewController: UIViewController {
     let experienceController = ExperienceController.shared
     var imageData: Data?
     var audioURL: URL?
+    let locationManager = CLLocationManager.shared
+    var currentLocation: CLLocation!
     private let context = CIContext()
 
     var originalImage: UIImage? {
@@ -65,6 +67,9 @@ class AddExperienceViewController: UIViewController {
         super.viewDidLoad()
 
         originalImage = imageView.image
+
+        locationManager.delegate = self
+
     }
 
     func updateViews() {
@@ -175,7 +180,10 @@ class AddExperienceViewController: UIViewController {
                 return
         }
 
-        experienceController.createExperience(with: title, image: image, audioURL: audioURL ?? nil)
+        guard let location = locationManager.location?.coordinate else { return }
+//        guard let audioURL = audioURL else { return }
+
+        experienceController.createExperience(with: title, image: image, location: location)
         navigationController?.popToRootViewController(animated: true)
     }
 

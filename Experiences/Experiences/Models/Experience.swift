@@ -7,28 +7,19 @@
 //
 
 import UIKit
+import MapKit
 
-enum MediaType {
-    case image(UIImage)
-}
-
-class Experience: Equatable {
+class Experience: NSObject {
 
     let title: String
-    let mediaType: MediaType
-    var id: String?
+    let image: UIImage?
     var audioURL: URL?
+    let location: CLLocationCoordinate2D
 
-    init(title: String, mediaType: MediaType, audioURL: URL?) {
+    init(title: String, image: UIImage?, audioURL: URL?, location: CLLocationCoordinate2D) {
         self.title = title
-        self.mediaType = mediaType
+        self.image = image
         self.audioURL = audioURL
-        self.id = UUID().uuidString
+        self.location = location
     }
-
-    static func ==(lhs: Experience, rhs: Experience) -> Bool {
-        return lhs.id == rhs.id
-    }
-
 }
-

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class ExperienceController {
 
@@ -14,9 +15,9 @@ class ExperienceController {
 
     var experiences: [Experience] = []
 
-    func createExperience(with title: String, image: UIImage, audioURL: URL?) {
+    func createExperience(with title: String, image: UIImage, audioURL: URL? = nil, location: CLLocationCoordinate2D) {
 
-        let experience = Experience(title: title, mediaType: .image(image), audioURL: audioURL)
+        let experience = Experience(title: title, image: image, audioURL: audioURL, location: location)
 
         experiences.append(experience)
 
