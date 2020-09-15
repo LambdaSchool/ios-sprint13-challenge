@@ -20,13 +20,19 @@ class ExperiencesViewController: UIViewController {
     var annotations: [MKAnnotation] = []
 
     let locationManager = CLLocationManager.shared
-    let experienceController = ExperienceController.shared
+    let experienceController = ExperienceController()
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setUpLocation()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+
+        setUpAnnotations()
     }
 
     private func setUpLocation() {
@@ -70,6 +76,13 @@ class ExperiencesViewController: UIViewController {
         mapView.setRegion(region, animated: true)
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AddExperienceSegue" {
+            let destination = segue.destination as? AddExperienceViewController
+            destination?.experienceController = experienceController
+        }
+    }
+
 }
 
 extension String {
@@ -105,6 +118,7 @@ extension ExperiencesViewController: CLLocationManagerDelegate, MKMapViewDelegat
             setUpAnnotations()
         }
         currentLocation = lastLocation.coordinate
+        setUpAnnotations()
     }
 }
 

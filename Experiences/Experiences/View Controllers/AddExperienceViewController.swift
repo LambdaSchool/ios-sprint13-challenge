@@ -26,7 +26,7 @@ class AddExperienceViewController: UIViewController, CLLocationManagerDelegate {
     // MARK: - Properties
 
     var experience: Experience?
-    let experienceController = ExperienceController.shared
+    var experienceController: ExperienceController?
     var imageData: Data?
     var audioURL: URL?
     let locationManager = CLLocationManager.shared
@@ -180,10 +180,16 @@ class AddExperienceViewController: UIViewController, CLLocationManagerDelegate {
                 return
         }
 
-        guard let location = locationManager.location?.coordinate else { return }
-//        guard let audioURL = audioURL else { return }
+        guard let location = locationManager.location?.coordinate else {
+            return
+        }
 
-        experienceController.createExperience(with: title, image: image, location: location)
+        if audioURL != nil {
+            experienceController?.createExperience(with: title, image: image, audioURL: audioURL, location: location)
+        } else {
+            experienceController?.createExperience(with: title, image: image, location: location)
+        }
+
         navigationController?.popToRootViewController(animated: true)
     }
 
