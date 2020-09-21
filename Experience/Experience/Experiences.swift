@@ -16,12 +16,29 @@ struct personalExperience: Decodable {
 
 
 
-class Experiences: NSObject, Decodable {
+class Experiences: NSObject, Codable {
     let name: String
-    let image: Image?
-    let audio: Audio?
+    let image: String
+    let audio: String
     let identifier: String
+    
+    init(name: String, image: String, audio: String, identifier: String) {
+        self.name = name
+        self.image = image
+        self.audio = audio
+        self.identifier = identifier
+        
+        
+    }
+    
+ 
+    
+ 
 }
+ 
+ 
+ 
+ 
 
 
  
