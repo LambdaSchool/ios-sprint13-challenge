@@ -12,6 +12,10 @@ import CoreImage.CIFilterBuiltins
 import Photos
 import AVFoundation
 
+protocol PassExperience {
+    func newExperience(experience: Experience)
+}
+
 class NewExperienceDetailViewController: UIViewController {
     
     @IBOutlet weak var experienceTextField: UITextField!
@@ -78,7 +82,7 @@ class NewExperienceDetailViewController: UIViewController {
     
     //MARK: - Map Variables and Constants
     let locationManager = CLLocationManager()
-    var mapViewController = MapViewController()
+    var mapDelegate: PassExperience?
     
     
     //MARK: -App Lifecycle
@@ -295,7 +299,6 @@ class NewExperienceDetailViewController: UIViewController {
         guard let originalImage = originalImage,
               let filteredImage = image(byFiltering: originalImage),
               let experienceText = experienceTextField.text,
-              let location = locationManager.location?.coordinate,
               !experienceText.isEmpty else { return }
         
         PHPhotoLibrary.requestAuthorization { (status) in
@@ -313,9 +316,10 @@ class NewExperienceDetailViewController: UIViewController {
                 }
             }
         }
-        
-        let experience = Experience(name: experienceText, latitude: location.latitude, longitude: location.longitude)
-        
+        let location = locationManager.location!.coordinate
+        let experience = Experience(name: experienceText, latitude: location.latitude + 0.1, longitude: location.longitude)
+        mapDelegate?.newExperience(experience: experience)
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func brightnessChanged(_ sender: UISlider) {
@@ -406,7 +410,7 @@ extension NewExperienceDetailViewController: AVAudioRecorderDelegate {
     
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
         if let error = error {
-            print("Audipo recorder error did occur: \(error)")
+            print("Audio recorder error did occur: \(error)")
         }
     }
 }
