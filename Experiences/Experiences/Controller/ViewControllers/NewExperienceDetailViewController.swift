@@ -76,6 +76,10 @@ class NewExperienceDetailViewController: UIViewController {
         audioRecorder?.isRecording ?? false
     }
     
+    //MARK: - Map Variables and Constants
+    let locationManager = CLLocationManager()
+    var mapViewController = MapViewController()
+    
     
     //MARK: -App Lifecycle
     override func viewDidLoad() {
@@ -290,9 +294,9 @@ class NewExperienceDetailViewController: UIViewController {
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
         guard let originalImage = originalImage,
               let filteredImage = image(byFiltering: originalImage),
-              let recordingURL = recordingURL,
-              let experience = experienceTextField.text,
-              !experience.isEmpty else { return }
+              let experienceText = experienceTextField.text,
+              let location = locationManager.location?.coordinate,
+              !experienceText.isEmpty else { return }
         
         PHPhotoLibrary.requestAuthorization { (status) in
             guard status == .authorized else {
@@ -309,6 +313,9 @@ class NewExperienceDetailViewController: UIViewController {
                 }
             }
         }
+        
+        let experience = Experience(name: experienceText, latitude: location.latitude, longitude: location.longitude)
+        
     }
     
     @IBAction func brightnessChanged(_ sender: UISlider) {

@@ -15,10 +15,12 @@ class MapViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     
     let locationManager = CLLocationManager()
+    var mapViewController = MapViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        mapView.delegate = self
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "ExperienceView")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -40,9 +42,10 @@ class MapViewController: UIViewController {
     func render(_ location: CLLocation) {
         let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         
+        
         let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
         
-        let region = MKCoordinateRegion(center: coordinate  , span: span)
+        let region = MKCoordinateRegion(center: coordinate, span: span)
         mapView.setRegion(region, animated: true)
         
         let pin = MKPointAnnotation()
@@ -53,4 +56,19 @@ class MapViewController: UIViewController {
 
 extension MapViewController: CLLocationManagerDelegate {
      
+}
+
+extension MapViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        guard let experience = annotation as? Experience else {
+            fatalError("Only Experience objects are supported right now")
+        }
+        
+        guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ExperienceView", for: experience) as? MKMarkerAnnotationView else {
+            fatalError("Missing a registered map annotation view. Have you done this in the viewDidLoad?")
+        }
+        
+        return annotationView
+    }
 }
