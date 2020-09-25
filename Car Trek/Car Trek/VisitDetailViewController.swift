@@ -64,11 +64,9 @@ class VisitDetailViewController: UIViewController {
     // Audio
     var audioRecordingURL: URL?
     var audioRecorder: AVAudioRecorder?
-    
     var audioIsRecording: Bool {
         audioRecorder?.isRecording ?? false
     }
-    
     var audioPlayer: AVAudioPlayer? {
         didSet {
             guard let audioPlayer = audioPlayer else { return }
@@ -76,7 +74,6 @@ class VisitDetailViewController: UIViewController {
             updateViews()
         }
     }
-    
     var audioIsPlaying: Bool {
         audioPlayer?.isPlaying ?? false
     }
@@ -88,7 +85,6 @@ class VisitDetailViewController: UIViewController {
     // MARK: - Views
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         updateViews()
         loadAudio()
     }
@@ -99,22 +95,30 @@ class VisitDetailViewController: UIViewController {
     }
     
     func updateViews() {
+        // Make time elapsed and time remaining labels a consistent size, regardless of value
         audioElapsedTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: audioElapsedTimeLabel.font.pointSize, weight: .regular)
         audioTimeRemainingLabel.font = UIFont.monospacedDigitSystemFont(ofSize: audioTimeRemainingLabel.font.pointSize, weight: .regular)
         
+        // If audio is playing, set to the "selected" state, which shows a pause button.
         audioPlayButton.isSelected = audioIsPlaying
+        // If audio is recording, set to the "selected" state, which gives the user the option to stop recording.
         recordAudioButton.isSelected = audioIsRecording
+        // Store the currently displayed image in a variable for later use.
         newImage = photoImageView.image
         
+        // If audio is playing, update the slider and the audio button...
         if audioIsPlaying {
             updateAudioSlider()
             audioPlayButton.title(for: .selected)
         } else {
+            // ...otherwise, the audio button should revert to its normal state.
             audioPlayButton.title(for: .normal)
         }
         
+        // Hide the View Video button if there is no existing video to play.
         viewVideoButton.isHidden = true
         
+        // If user is opening a previous entry, load the name, photo, and video, if they exist.
         guard let visit = visit else { return }
         let name = visit.name
         nameTextField.text = name
@@ -123,12 +127,22 @@ class VisitDetailViewController: UIViewController {
             photoImageView.image = photo
         }
         
+        if let audioURL = visit.audioRecordingURL {
+            audioRecordingURL = audioURL
+        }
+        
+        if let videoURL = visit.videoRecordingURL {
+            videoRecordingURL = videoURL
+            recordingExists = true
+        }
+        // Show the view video button if there is a video to view.
         if recordingExists {
             viewVideoButton.isHidden = false
         }
     }
     
     func updateAudioSlider() {
+        // Update the slider as the audio is played.
         let elapsedTime = audioPlayer?.currentTime ?? 0
         let duration = audioPlayer?.duration ?? 20
         let timeRemaining = duration.rounded() - elapsedTime
@@ -142,24 +156,36 @@ class VisitDetailViewController: UIViewController {
     }
     
     // MARK: - Actions
+    // Choose a photo to add to the visit.
     @IBAction func addPhoto(_ sender: UIButton) {
-        presentImagePickerController()
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            print("The photo library is not available.")
+            return
+        }
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        
+        present(imagePicker, animated: true, completion: nil)
     }
     
+    // Either record audio or stop recording, based on the current state.
     @IBAction func addAudioRecording(_ sender: UIButton) {
         if audioIsRecording == false {
             audioPlayButton.isSelected = false
             audioPlayer?.pause()
             requestPermissionOrStartRecording()
         } else {
-            stopRecording()
+            stopAudioRecording()
         }
         updateViews()
     }
     
+    // Either play or pause audio, based on the current state.  Also stops recording if it was recording when the button was pressed.
     @IBAction func audioPlayButton(_ sender: UIButton) {
         if audioIsRecording {
-            stopRecording()
+            stopAudioRecording()
         }
         if audioIsPlaying {
             pauseAudio()
@@ -168,9 +194,11 @@ class VisitDetailViewController: UIViewController {
         }
     }
     
+    // Save the visit.
     @IBAction func saveVisit(_ sender: UIBarButtonItem) {
         if visit == nil {
             guard let name = nameTextField.text, let latitude = newLatitude, let longitude = newLongitude else {
+                // TODO: Send error to user.
                 print("Need to add a name or location.")
                 return
             }
@@ -183,6 +211,7 @@ class VisitDetailViewController: UIViewController {
             
         } else {
             guard let name = nameTextField.text, let latitude = newLatitude, let longitude = newLongitude, let visit = visit, let indexPath = indexPath else {
+                // TODO: Send error to user.
                 print("Need to add a name.")
                 return
             }
@@ -205,19 +234,6 @@ class VisitDetailViewController: UIViewController {
     
     // MARK: - Methods
     // Image
-    private func presentImagePickerController() {
-        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
-            print("The photo library is not available.")
-            return
-        }
-        
-        let imagePicker = UIImagePickerController()
-        imagePicker.sourceType = .photoLibrary
-        imagePicker.delegate = self
-        
-        present(imagePicker, animated: true, completion: nil)
-    }
-    
     func loadPhoto() {
         photoImageView.image = newImage
     }
@@ -255,6 +271,7 @@ class VisitDetailViewController: UIViewController {
         case .undetermined:
             AVAudioSession.sharedInstance().requestRecordPermission { (granted) in
                 guard granted == true else {
+                    // TODO: Add user error notification.
                     print("We need microphone access.")
                     return
                 }
@@ -273,16 +290,17 @@ class VisitDetailViewController: UIViewController {
             
             present(alertController, animated: true, completion: nil)
         case .granted:
-            startRecording()
+            startAudioRecording()
         @unknown default:
             break
         }
     }
     
-    func startRecording() {
+    func startAudioRecording() {
         do {
             try prepareAudioSession()
         } catch {
+            //TODO: Add user error notification
             print("Cannot record audio: \(error)")
             return
         }
@@ -302,7 +320,7 @@ class VisitDetailViewController: UIViewController {
         visit?.audioRecordingURL = audioRecordingURL
     }
     
-    func stopRecording() {
+    func stopAudioRecording() {
         audioRecorder?.stop()
         visit?.audioRecordingURL = audioRecordingURL
     }
@@ -361,10 +379,22 @@ class VisitDetailViewController: UIViewController {
 
 
 // MARK: - Delegates
-// General
+// Save/Update Delegate
 protocol VisitDelegate {
     func saveNew(visit: Visit)
     func update(visit: Visit, indexPath: IndexPath)
+}
+
+// Text Delegate
+extension VisitDetailViewController: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.resignFirstResponder()
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }
 
 // Image Delegate
@@ -402,16 +432,6 @@ extension VisitDetailViewController: AVAudioRecorderDelegate, AVAudioPlayerDeleg
     }
 }
 
-extension VisitDetailViewController: UITextFieldDelegate {
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.resignFirstResponder()
-    }
-
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-}
 
 // Video Delegate
 extension VisitDetailViewController: CameraDelegate {

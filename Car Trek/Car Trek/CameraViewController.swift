@@ -42,8 +42,6 @@ class CameraViewController: UIViewController {
         cameraView.videoPlayerLayer.videoGravity = .resizeAspectFill
         setupCamera()
         
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
-//        view.addGestureRecognizer(tapGesture)
         } else {
             playMovie(url: videoURL!)
         }
@@ -53,7 +51,6 @@ class CameraViewController: UIViewController {
         super.viewDidAppear(animated)
         
         captureSession.startRunning()
-   
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -67,12 +64,6 @@ class CameraViewController: UIViewController {
     }
     
     // MARK: - Actions
-//    @IBAction func handleTapGesture(_ sender: UITapGestureRecognizer) {
-//        if sender.state == .ended {
-//            playRecording()
-//        }
-//    }
-    
     @IBAction func recordButtonPressed(_ sender: Any) {
         if fileOutput.isRecording {
             fileOutput.stopRecording()
@@ -118,10 +109,10 @@ class CameraViewController: UIViewController {
     }
     
     private func bestCamera() -> AVCaptureDevice {
-        if let device = AVCaptureDevice.default(.builtInUltraWideCamera,for: .video, position: .back) {
+        if let device = AVCaptureDevice.default(.builtInUltraWideCamera,for: .video, position: .front) {
             return device
         }
-        if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
+        if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) {
             return device;
         }
         preconditionFailure("No cameras on device match the specs that we need.")

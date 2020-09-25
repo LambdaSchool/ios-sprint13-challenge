@@ -37,7 +37,6 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
         NSLayoutConstraint.activate([
             userTrackingButton.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 20),
             mapView.bottomAnchor.constraint(equalTo: userTrackingButton.bottomAnchor, constant: 20)
-            
         ])
     }
     
@@ -100,7 +99,6 @@ class VisitsTableViewController: UITableViewController, VisitDelegate {
     
     func update(visit: Visit, indexPath: IndexPath) {
         visits.remove(at: indexPath.row)
-
         visits.insert(visit, at: indexPath.row)
         updateViews()
     }

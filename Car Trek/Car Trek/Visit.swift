@@ -35,5 +35,4 @@ extension Visit: MKAnnotation {
     var title: String? {
         name
     }
-
 }
