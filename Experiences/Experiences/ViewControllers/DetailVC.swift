@@ -36,12 +36,6 @@ class DetailVC: UIViewController {
             audioVC.playOnlyMode = true
         }
     }
-
-    @IBAction func playAudio(_ sender: UIButton) {
-    }
-    
-    @IBAction func playVideo(_ sender: UIButton) {
-    }
     
     private func updateView() {
         guard let experience = experience else { return }
@@ -56,6 +50,9 @@ class DetailVC: UIViewController {
             videoButton.isHidden = false
         } else {
             videoButton.isHidden = true
+        }
+        if let image = experience.image {
+            imageView.image = image
         }
         setUpMap()
     }

@@ -27,6 +27,7 @@ class AddExperienceVC: UIViewController {
     var userLocation: CLLocationCoordinate2D?
     weak var delegate: AddExpDelegate?
     var audioURL: URL?
+    var image: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +41,9 @@ class AddExperienceVC: UIViewController {
         if segue.identifier == "addAudioSegue" {
             let audioVC = segue.destination as! AudioRecorderVC
             audioVC.delegate = self
+        } else if segue.identifier == "addImageSegue" {
+            let imageVC = segue.destination as! ImageVC
+            imageVC.delegate = self
         }
     }
     
@@ -83,6 +87,9 @@ class AddExperienceVC: UIViewController {
         let experience = Experience(title: title, coordinate: coordinate)
         if let audioURL = audioURL {
             experience.audioURL = audioURL
+        }
+        if let image = image {
+            experience.image = image
         }
         ExperienceController.shared.experiences.append(experience)
         delegate?.addExperience()
@@ -134,5 +141,11 @@ extension AddExperienceVC: CLLocationManagerDelegate {
 extension AddExperienceVC: AudioRecorderDelegate {
     func addAudioURL(url: URL) {
         audioURL = url
+    }
+}
+
+extension AddExperienceVC: ImageDelegate {
+    func addImage(image: UIImage) {
+        self.image = image
     }
 }
