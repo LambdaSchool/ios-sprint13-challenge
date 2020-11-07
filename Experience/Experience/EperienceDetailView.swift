@@ -8,13 +8,47 @@
 import UIKit
 
 class EperienceDetailView: UIView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        let placeDateStackView = UIStackView(arrangedSubviews: [titleLabel, image])
+        placeDateStackView.spacing = UIStackView.spacingUseSystem
+        
+        let mainStackView = UIStackView(arrangedSubviews: [placeDateStackView])
+        mainStackView.axis = .vertical
+        mainStackView.spacing = UIStackView.spacingUseSystem
+        
+        mainStackView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(mainStackView)
+        mainStackView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        mainStackView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        mainStackView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        mainStackView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
     }
-    */
-
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError()
+    }
+    
+    // MARK: - Private
+    
+    private func updateSubviews() {
+        guard let experience = experience else { return }
+        let title = experience.title
+        titleLabel.text = String(title!)
+        image.image = experience.image
+    }
+    
+    // MARK: - Properties
+    var experience: Experience? {
+        didSet {
+            updateSubviews()
+        }
+    }
+    
+    private let titleLabel = UILabel()
+    private let image = UIImageView()
 }
+
+

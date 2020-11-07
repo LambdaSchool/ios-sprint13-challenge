@@ -10,20 +10,19 @@ import MapKit
 
 class Experience: NSObject, MKAnnotation {
     
-    let experienceTitle: String
-    let image: UIImage
-    let audioRecordingURL: URL
-    
+    var title: String?
     var coordinate: CLLocationCoordinate2D
-    var title: String? {
-        return experienceTitle
-    }
+    var image: UIImage?
+    var audioURL: URL?
     
-    init(experienceTitle: String, image: UIImage, audioRecordingURL: URL, coordinate: CLLocationCoordinate2D) {
-        self.experienceTitle = experienceTitle
-        self.image = image
-        self.audioRecordingURL = audioRecordingURL
+    
+    // MARK: - Initializers
+    
+    init(title: String, coordinate: CLLocationCoordinate2D, image: UIImage?, audioURL: URL?) {
+        self.title = title
         self.coordinate = coordinate
+        self.image = image
+        self.audioURL = audioURL
     }
 }
 
@@ -38,14 +37,3 @@ class ExperienceController  {
     }
 }
 
-
-//extension Quake: MKAnnotation {
-//
-//    var coordinate: CLLocationCoordinate2D {
-//        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-//    }
-//
-//    var title: String? { place }
-//
-//    var subtitle: String? { "Magnitude: \(magnitude)" }
-//}
