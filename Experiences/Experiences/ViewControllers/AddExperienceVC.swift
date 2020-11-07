@@ -32,12 +32,15 @@ class AddExperienceVC: UIViewController {
     weak var delegate: AddExpDelegate?
     var audioURL: URL?
     var image: UIImage?
+    var videoURL: URL?
     
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpMap()
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
     }
     
     // MARK: - Navigation
@@ -49,6 +52,9 @@ class AddExperienceVC: UIViewController {
         } else if segue.identifier == "addImageSegue" {
             let imageVC = segue.destination as! ImageVC
             imageVC.delegate = self
+        } else if segue.identifier == "addVideoSegue" {
+            let videoVC = segue.destination as! CameraVC
+            videoVC.delegate = self
         }
     }
     
@@ -88,6 +94,9 @@ class AddExperienceVC: UIViewController {
         }
         if let image = image {
             experience.image = image
+        }
+        if let videoURL = videoURL {
+            experience.videoURL = videoURL
         }
         ExperienceController.shared.experiences.append(experience)
         delegate?.addExperience()
@@ -147,5 +156,11 @@ extension AddExperienceVC: AudioRecorderDelegate {
 extension AddExperienceVC: ImageDelegate {
     func addImage(image: UIImage) {
         self.image = image
+    }
+}
+
+extension AddExperienceVC: VideoDelegate {
+    func addVideo(url: URL) {
+        videoURL = url
     }
 }

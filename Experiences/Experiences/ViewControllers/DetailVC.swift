@@ -42,6 +42,9 @@ class DetailVC: UIViewController {
             let audioVC = segue.destination as! AudioRecorderVC
             audioVC.recordingURL = experience?.audioURL
             audioVC.playOnlyMode = true
+        } else if segue.identifier == "playVideoSegue" {
+            let videoVC = segue.destination as! VideoPlayerVC
+            videoVC.videoURL = experience?.videoURL
         }
     }
     
