@@ -29,16 +29,9 @@ class NewExperienceViewController: UIViewController {
     // MARK: - Properties -
     
     var audioPlayer: AVAudioPlayer?
-    var audioRecording: AVAudioRecorder?
+    var audioRecorder: AVAudioRecorder?
     var recordingURL: URL?
     
-    var isRecording: Bool {
-        return audioRecording?.isRecording ?? false
-    }
-    
-    var isPlaying: Bool {
-        return audioPlayer?.isPlaying ?? false
-    }
     
     private func presentImagePickerController() {
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
@@ -83,6 +76,56 @@ class NewExperienceViewController: UIViewController {
             self.present(alert, animated: true, completion: nil)
         }
 
+    // MARK: - Audio -
+    var isRecording: Bool {
+        return audioRecorder?.isRecording ?? false
+    }
+    
+    var isPlaying: Bool {
+        return audioPlayer?.isPlaying ?? false
+    }
+    func updateViews() {
+        playButton.isSelected = isPlaying
+    }
+    
+    private func prepareAudioSession() throws {
+        let session = AVAudioSession.sharedInstance()
+        try session.setCategory(.playAndRecord, options: [.defaultToSpeaker])
+        try session.setActive(true, options: [])
+    }
+    
+    private func startRecording() {
+        do {
+            try prepareAudioSession()
+        } catch {
+            print("Error can not record audio \(error)")
+            return
+        }
+        recordingURL = newRecordingURL()
+        
+        let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)
+        
+        do {
+            audioRecorder = try AVAudioRecorder(url: recordingURL!, format: format!)
+            audioRecorder?.delegate = self
+            audioRecorder?.isMeteringEnabled = true
+            audioRecorder?.record()
+            recordButton.setTitle("Stop Recording", for: .normal)
+            playButton.isEnabled = false
+        } catch {
+            preconditionFailure("Error audio recorder couldn't be created")
+        }
+    }
+    private func stopRecording() {
+        audioRecorder?.stop()
+        playButton.isEnabled = true
+    }
+    
+    private func newRecordingURL() -> URL {
+        let docDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let fileURL = docDirectory.appendingPathExtension("mov")
+        return fileURL
+    }
     
     
     /*
@@ -110,3 +153,21 @@ extension NewExperienceViewController: UIImagePickerControllerDelegate, UINaviga
         picker.dismiss(animated: true, completion: nil)
     }
 }
+extension NewExperienceViewController: AVAudioRecorderDelegate, AVAudioPlayerDelegate {
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        if let recordingURL = recordingURL {
+            audioPlayer = try? AVAudioPlayer(contentsOf: recordingURL)
+        }
+    }
+    
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
+        if let error = error {
+            print("Error Could not record audio \(error)")
+        }
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        updateViews()
+    }
+}
+
