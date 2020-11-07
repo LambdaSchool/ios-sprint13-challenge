@@ -16,24 +16,38 @@ class DetailVC: UIViewController {
     @IBOutlet private var imageView: UIImageView!
     @IBOutlet private var mapView: MKMapView!
     
+    var experience: Experience?
+    private lazy var dateFormatter: DateFormatter = {
+        let result = DateFormatter()
+        result.dateStyle = .medium
+        result.timeStyle = .short
+        return result
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        updateView()
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     @IBAction func playAudio(_ sender: UIButton) {
     }
     
     @IBAction func playVideo(_ sender: UIButton) {
     }
+    
+    private func updateView() {
+        guard let experience = experience else { return }
+        title = experience.title
+        dateLabel.text = dateFormatter.string(from: experience.timestamp)
+        setUpMap()
+    }
+    
+    private func setUpMap() {
+        guard let experience = experience else { return }
+        let span = MKCoordinateSpan(latitudeDelta: 0.15, longitudeDelta: 0.15)
+        let coordinateRegion = MKCoordinateRegion(center: experience.coordinate, span: span)
+        mapView.setRegion(coordinateRegion, animated: true)
+        mapView.addAnnotation(experience)
+    }
+    
 }
