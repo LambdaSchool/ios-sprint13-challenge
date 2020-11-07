@@ -8,29 +8,107 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--LambdaXperiences-->
         <scene sceneID="4ng-ho-YDh">
             <objects>
-                <viewController id="wHI-26-p8X" sceneMemberID="viewController">
+                <viewController id="wHI-26-p8X" customClass="ExperienceViewController" customModule="_1_7_20_iosLambdaExperiencesSprintChallenge" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hvg-Cr-R9d">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="yDf-2X-Pcv">
+                                <rect key="frame" x="-6" y="140" width="426" height="636"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="426" id="EmR-fE-CHA"/>
+                                    <constraint firstAttribute="height" constant="636" id="NMs-eK-CFw"/>
+                                </constraints>
+                            </mapView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="Xfm-ee-Ops"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="yDf-2X-Pcv" firstAttribute="top" secondItem="Xfm-ee-Ops" secondAttribute="top" id="Uja-aU-W1S"/>
+                            <constraint firstItem="yDf-2X-Pcv" firstAttribute="centerX" secondItem="hvg-Cr-R9d" secondAttribute="centerX" id="q7x-jJ-hYc"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="G5s-yq-4je"/>
+                    <navigationItem key="navigationItem" title="LambdaXperiences" id="G5s-yq-4je">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="dUz-j0-gHG">
+                            <connections>
+                                <segue destination="O0O-q1-9xw" kind="show" id="v5e-m8-BMK"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="yDf-2X-Pcv" id="XtM-bq-eOj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dJG-Bd-JNL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="263.768115942029" y="-69.642857142857139"/>
+        </scene>
+        <!--New Xperience-->
+        <scene sceneID="ISC-7b-cvu">
+            <objects>
+                <viewController id="O0O-q1-9xw" customClass="NewXperiencePostViewController" customModule="_1_7_20_iosLambdaExperiencesSprintChallenge" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="oh3-6T-yyt">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Create a title!" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VWZ-cZ-uDH">
+                                <rect key="frame" x="57" y="156" width="300" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="syk-B5-xWS"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dKq-3l-Hys">
+                                <rect key="frame" x="128.5" y="222" width="157" height="43"/>
+                                <color key="backgroundColor" systemColor="systemGray3Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="43" id="N0r-RM-CXX"/>
+                                    <constraint firstAttribute="width" constant="157" id="tPn-cX-l6J"/>
+                                </constraints>
+                                <state key="normal" title="Add an image"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hbg-2i-M1V">
+                                <rect key="frame" x="128.5" y="281" width="157" height="43"/>
+                                <color key="backgroundColor" systemColor="systemGray3Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="157" id="HKF-6P-qDE"/>
+                                    <constraint firstAttribute="height" constant="43" id="jRZ-7n-la0"/>
+                                </constraints>
+                                <state key="normal" title="Add a recording">
+                                    <color key="titleColor" systemColor="systemRedColor"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="V3w-Bv-KzA"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="dKq-3l-Hys" firstAttribute="top" secondItem="VWZ-cZ-uDH" secondAttribute="bottom" constant="32" id="4sx-gG-GBa"/>
+                            <constraint firstItem="VWZ-cZ-uDH" firstAttribute="top" secondItem="V3w-Bv-KzA" secondAttribute="top" constant="16" id="8Jo-dh-XGw"/>
+                            <constraint firstItem="hbg-2i-M1V" firstAttribute="top" secondItem="dKq-3l-Hys" secondAttribute="bottom" constant="16" id="Ig9-au-w4j"/>
+                            <constraint firstItem="VWZ-cZ-uDH" firstAttribute="centerX" secondItem="oh3-6T-yyt" secondAttribute="centerX" id="N7H-FI-R1t"/>
+                            <constraint firstItem="dKq-3l-Hys" firstAttribute="centerX" secondItem="oh3-6T-yyt" secondAttribute="centerX" id="rqr-Hp-toF"/>
+                            <constraint firstItem="hbg-2i-M1V" firstAttribute="centerX" secondItem="oh3-6T-yyt" secondAttribute="centerX" id="vl0-Gw-KZF"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="New Xperience" id="XDR-V6-UoK">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="BuT-Mh-Oyq"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vnm-vu-hxS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1128.985507246377" y="-70.3125"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="zrb-4h-C4w">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="LQp-na-WBi" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="3cd-i8-wNW">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="3cd-i8-wNW">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -46,6 +124,12 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray3Color">
+            <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
