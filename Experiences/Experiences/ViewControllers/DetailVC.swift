@@ -28,6 +28,14 @@ class DetailVC: UIViewController {
         super.viewDidLoad()
         updateView()
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "playAudioSegue" {
+            let audioVC = segue.destination as! AudioRecorderVC
+            audioVC.recordingURL = experience?.audioURL
+            audioVC.playOnlyMode = true
+        }
+    }
 
     @IBAction func playAudio(_ sender: UIButton) {
     }
@@ -39,6 +47,16 @@ class DetailVC: UIViewController {
         guard let experience = experience else { return }
         title = experience.title
         dateLabel.text = dateFormatter.string(from: experience.timestamp)
+        if experience.audioURL != nil {
+            audioButton.isHidden = false
+        } else {
+            audioButton.isHidden = true
+        }
+        if experience.videoURL != nil {
+            videoButton.isHidden = false
+        } else {
+            videoButton.isHidden = true
+        }
         setUpMap()
     }
     

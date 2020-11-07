@@ -86,6 +86,7 @@
                                                 <state key="normal" title="Add Audio"/>
                                                 <connections>
                                                     <action selector="addAudio:" destination="znC-1F-nCc" eventType="touchUpInside" id="2H4-wU-Kd2"/>
+                                                    <segue destination="8LF-bJ-PFa" kind="presentation" identifier="addAudioSegue" id="vPc-SI-1n9"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vxi-5i-oI7">
@@ -192,6 +193,7 @@
                                         <state key="normal" title="Play Audio"/>
                                         <connections>
                                             <action selector="playAudio:" destination="DDA-Nx-ttx" eventType="touchUpInside" id="pDm-9a-u3f"/>
+                                            <segue destination="8LF-bJ-PFa" kind="presentation" identifier="playAudioSegue" id="Fxy-Df-XMe"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A4h-WC-wAJ">
@@ -311,8 +313,131 @@
             </objects>
             <point key="canvasLocation" x="-252.17391304347828" y="118.52678571428571"/>
         </scene>
+        <!--Audio RecorderVC-->
+        <scene sceneID="uAj-1s-xBr">
+            <objects>
+                <viewController id="8LF-bJ-PFa" customClass="AudioRecorderVC" customModule="Experiences" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dl0-UV-ZQp">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hEE-g7-Blp" customClass="AudioVisualizer" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="50" width="414" height="581"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="On0-On-jJK">
+                                        <rect key="frame" x="158.5" y="20" width="97" height="28"/>
+                                        <color key="backgroundColor" red="0.47684186699999997" green="0.50480759139999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
+                                        <state key="normal" title="Save Audio">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="saveButton:" destination="8LF-bJ-PFa" eventType="touchUpInside" id="utB-bF-GR1"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="On0-On-jJK" firstAttribute="centerX" secondItem="hEE-g7-Blp" secondAttribute="centerX" id="Fhu-br-Cvf"/>
+                                    <constraint firstItem="On0-On-jJK" firstAttribute="top" secondItem="hEE-g7-Blp" secondAttribute="top" constant="20" id="pv3-EQ-kk4"/>
+                                </constraints>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="LIL-eY-ocA">
+                                <rect key="frame" x="20" y="660" width="374" height="108"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="wGj-rS-ZIP">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="30"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0dQ-2P-Bu9">
+                                                <rect key="frame" x="0.0" y="0.0" width="55" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="55" id="XaY-c9-yoH"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="WHb-PU-XP3">
+                                                <rect key="frame" x="61" y="0.0" width="252" height="31"/>
+                                                <color key="tintColor" red="0.47684186699999997" green="0.50480759139999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </slider>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aVj-G6-LqL">
+                                                <rect key="frame" x="319" y="0.0" width="55" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="55" id="PfM-3i-aVL"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="xM4-P4-20b">
+                                        <rect key="frame" x="0.0" y="62" width="374" height="46"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k7b-V2-zyi">
+                                                <rect key="frame" x="0.0" y="0.0" width="187" height="46"/>
+                                                <color key="tintColor" red="0.47684186699999997" green="0.50480759139999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" image="play.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="playButton:" destination="8LF-bJ-PFa" eventType="touchUpInside" id="0fn-jK-Sb3"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cuU-Ad-dt2">
+                                                <rect key="frame" x="187" y="0.0" width="187" height="46"/>
+                                                <color key="tintColor" red="0.47684186699999997" green="0.50480759139999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" image="mic.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="recordButton:" destination="8LF-bJ-PFa" eventType="touchUpInside" id="hFm-zU-xeE"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="46" id="Saq-lZ-QjF"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="WWe-fp-jD7"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="WWe-fp-jD7" firstAttribute="trailing" secondItem="LIL-eY-ocA" secondAttribute="trailing" constant="20" id="6t9-Zj-sF7"/>
+                            <constraint firstItem="WWe-fp-jD7" firstAttribute="trailing" secondItem="hEE-g7-Blp" secondAttribute="trailing" id="AhZ-6E-62R"/>
+                            <constraint firstItem="WWe-fp-jD7" firstAttribute="bottom" secondItem="LIL-eY-ocA" secondAttribute="bottom" constant="40" id="Ejs-7v-SBr"/>
+                            <constraint firstItem="LIL-eY-ocA" firstAttribute="leading" secondItem="dl0-UV-ZQp" secondAttribute="leading" constant="20" id="IiA-UR-rbW"/>
+                            <constraint firstItem="hEE-g7-Blp" firstAttribute="top" secondItem="dl0-UV-ZQp" secondAttribute="top" constant="50" id="IqL-ca-b06"/>
+                            <constraint firstItem="LIL-eY-ocA" firstAttribute="top" secondItem="hEE-g7-Blp" secondAttribute="bottom" constant="29" id="MbX-Ls-ccE"/>
+                            <constraint firstItem="hEE-g7-Blp" firstAttribute="leading" secondItem="dl0-UV-ZQp" secondAttribute="leading" id="gdu-ls-pCk"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="audioVisualizer" destination="hEE-g7-Blp" id="YNm-fh-ga0"/>
+                        <outlet property="playButton" destination="k7b-V2-zyi" id="BvU-W7-ftl"/>
+                        <outlet property="recordButton" destination="cuU-Ad-dt2" id="BUH-i9-MXB"/>
+                        <outlet property="saveButton" destination="On0-On-jJK" id="laG-dT-uAj"/>
+                        <outlet property="timeElapsedLabel" destination="0dQ-2P-Bu9" id="4YT-qt-DIV"/>
+                        <outlet property="timeRemainingLabel" destination="aVj-G6-LqL" id="p7O-Wh-zZT"/>
+                        <outlet property="timeSlider" destination="WHb-PU-XP3" id="h1q-RN-heS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YJp-pd-IWE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3591" y="-569"/>
+        </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Fxy-Df-XMe"/>
+    </inferredMetricsTieBreakers>
     <resources>
+        <image name="mic.fill" catalog="system" width="108" height="128"/>
+        <image name="play.fill" catalog="system" width="116" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

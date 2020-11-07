@@ -26,6 +26,7 @@ class AddExperienceVC: UIViewController {
     var span = MKCoordinateSpan(latitudeDelta: 0.15, longitudeDelta: 0.15)
     var userLocation: CLLocationCoordinate2D?
     weak var delegate: AddExpDelegate?
+    var audioURL: URL?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,15 +34,14 @@ class AddExperienceVC: UIViewController {
     }
     
 
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "addAudioSegue" {
+            let audioVC = segue.destination as! AudioRecorderVC
+            audioVC.delegate = self
+        }
     }
-    */
     
     @IBAction func addAudio(_ sender: UIButton) {
     }
@@ -81,6 +81,9 @@ class AddExperienceVC: UIViewController {
         guard let title = titleTextField.text,
               let coordinate = coordinate else { return }
         let experience = Experience(title: title, coordinate: coordinate)
+        if let audioURL = audioURL {
+            experience.audioURL = audioURL
+        }
         ExperienceController.shared.experiences.append(experience)
         delegate?.addExperience()
         dismiss(animated: true, completion: nil)
@@ -125,5 +128,11 @@ extension AddExperienceVC: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error.localizedDescription)
+    }
+}
+
+extension AddExperienceVC: AudioRecorderDelegate {
+    func addAudioURL(url: URL) {
+        audioURL = url
     }
 }
