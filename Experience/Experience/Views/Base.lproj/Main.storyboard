@@ -52,35 +52,50 @@
         <scene sceneID="CrB-49-FZ2">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iIp-Fw-K8i" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <viewController id="e2J-6L-mdZ" customClass="PhotoViewController" customModule="Experience" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="e2J-6L-mdZ" customClass="PhotoAndAudioViewController" customModule="Experience" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iHK-ur-4to">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G1t-tn-c2n">
+                                <rect key="frame" x="0.0" y="202" width="414" height="414"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="G1t-tn-c2n" secondAttribute="height" multiplier="1:1" id="bwo-5k-vT2"/>
+                                </constraints>
+                            </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title: " textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JDo-75-wdd">
                                 <rect key="frame" x="20" y="160" width="374" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OQ3-3J-MLH">
-                                <rect key="frame" x="183" y="544" width="49" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OQ3-3J-MLH">
+                                <rect key="frame" x="183" y="677" width="49" height="30"/>
                                 <state key="normal" title="Record">
                                     <color key="titleColor" systemColor="systemRedColor"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qJz-cf-RoE">
-                                <rect key="frame" x="146" y="317" width="122" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qJz-cf-RoE">
+                                <rect key="frame" x="146" y="394" width="122" height="30"/>
                                 <state key="normal" title="Add Poster Image"/>
+                                <connections>
+                                    <action selector="addPosterImage:" destination="e2J-6L-mdZ" eventType="touchUpInside" id="o6G-LY-Lkc"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="FIG-eX-zT3"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="JDo-75-wdd" firstAttribute="leading" secondItem="FIG-eX-zT3" secondAttribute="leading" constant="20" id="Cw9-01-Rtl"/>
-                            <constraint firstItem="JDo-75-wdd" firstAttribute="top" secondItem="FIG-eX-zT3" secondAttribute="top" constant="20" id="FQG-Rz-wKh"/>
-                            <constraint firstItem="FIG-eX-zT3" firstAttribute="trailing" secondItem="JDo-75-wdd" secondAttribute="trailing" constant="20" id="jsp-oQ-quh"/>
+                            <constraint firstItem="G1t-tn-c2n" firstAttribute="top" secondItem="JDo-75-wdd" secondAttribute="bottom" constant="8" symbolic="YES" id="9t8-xV-lws"/>
+                            <constraint firstItem="G1t-tn-c2n" firstAttribute="leading" secondItem="FIG-eX-zT3" secondAttribute="leading" id="Ak7-6l-I7F"/>
+                            <constraint firstItem="JDo-75-wdd" firstAttribute="top" secondItem="FIG-eX-zT3" secondAttribute="top" constant="20" id="Qcy-gu-vKH"/>
+                            <constraint firstItem="OQ3-3J-MLH" firstAttribute="top" secondItem="G1t-tn-c2n" secondAttribute="bottom" constant="61" id="Qek-bW-W3R"/>
+                            <constraint firstItem="qJz-cf-RoE" firstAttribute="centerY" secondItem="G1t-tn-c2n" secondAttribute="centerY" id="gWe-uo-CeY"/>
+                            <constraint firstItem="JDo-75-wdd" firstAttribute="centerX" secondItem="qJz-cf-RoE" secondAttribute="centerX" id="h29-5v-RGj"/>
+                            <constraint firstItem="G1t-tn-c2n" firstAttribute="trailing" secondItem="FIG-eX-zT3" secondAttribute="trailing" id="iam-ps-JFD"/>
+                            <constraint firstItem="OQ3-3J-MLH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="FIG-eX-zT3" secondAttribute="leading" id="njh-e7-yL8"/>
+                            <constraint firstItem="FIG-eX-zT3" firstAttribute="trailing" secondItem="OQ3-3J-MLH" secondAttribute="trailing" constant="182" id="tiy-qo-PgY"/>
+                            <constraint firstItem="JDo-75-wdd" firstAttribute="leading" secondItem="iHK-ur-4to" secondAttribute="leadingMargin" id="tqH-ve-dR4"/>
+                            <constraint firstItem="qJz-cf-RoE" firstAttribute="centerX" secondItem="G1t-tn-c2n" secondAttribute="centerX" id="udp-lv-HPs"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="New Experience" leftItemsSupplementBackButton="YES" id="RJb-s0-hst">
@@ -90,6 +105,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="posterImageView" destination="G1t-tn-c2n" id="1zj-X9-Odj"/>
+                    </connections>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="3257.971014492754" y="-177.45535714285714"/>
@@ -107,7 +125,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mjs-O0-iOl">
-                                        <rect key="frame" x="149" y="529" width="116" height="116"/>
+                                        <rect key="frame" x="172" y="577" width="70" height="70"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="tintColor" red="0.97623199220000001" green="0.2333504558" blue="0.19139823319999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="Record"/>
