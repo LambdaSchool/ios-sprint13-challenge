@@ -6,8 +6,10 @@
 //
 
 import UIKit
+import Photos
 
-class ViewController: UIViewController {
+
+class PhotoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
