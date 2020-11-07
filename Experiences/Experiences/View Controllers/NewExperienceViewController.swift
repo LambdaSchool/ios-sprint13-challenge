@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Photos
+import AVFoundation
 
 class NewExperienceViewController: UIViewController {
 
@@ -24,10 +26,63 @@ class NewExperienceViewController: UIViewController {
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
 
+    // MARK: - Properties -
     
+    var audioPlayer: AVAudioPlayer?
+    var audioRecording: AVAudioRecorder?
+    var recordingURL: URL?
     
+    var isRecording: Bool {
+        return audioRecording?.isRecording ?? false
+    }
     
+    var isPlaying: Bool {
+        return audioPlayer?.isPlaying ?? false
+    }
     
+    private func presentImagePickerController() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            return
+        }
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    private func presentCamera() {
+        guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+            print("The camera is not available")
+            return
+        }
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .camera
+        imagePicker.delegate = self
+        self.present(imagePicker, animated: true)
+    }
+    
+    private func presentImageSourceAlert() {
+            let alert = UIAlertController(title: "Select Source", message: nil, preferredStyle: .actionSheet)
+
+            let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .default) { (_) in
+                self.presentImagePickerController()
+            }
+
+            let cameraAction = UIAlertAction(title: "Camera", style: .default) { (_) in
+                self.presentCamera()
+            }
+
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+
+            alert.addAction(photoLibraryAction)
+            alert.addAction(cameraAction)
+            alert.addAction(cancelAction)
+
+            self.present(alert, animated: true, completion: nil)
+        }
+
     
     
     /*
@@ -40,4 +95,18 @@ class NewExperienceViewController: UIViewController {
     }
     */
 
+}
+
+extension NewExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        chooseImageButton.setTitle("", for: [])
+        picker.dismiss(animated: true, completion: nil)
+        
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
+        imageView.image = image
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
 }
