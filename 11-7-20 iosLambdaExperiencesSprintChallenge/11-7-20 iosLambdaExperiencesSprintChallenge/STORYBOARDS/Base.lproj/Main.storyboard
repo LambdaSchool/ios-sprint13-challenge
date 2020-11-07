@@ -67,6 +67,9 @@
                                         <state key="normal" title="Choose an Image..." image="plus" catalog="system">
                                             <color key="titleColor" systemColor="systemBlueColor"/>
                                         </state>
+                                        <connections>
+                                            <action selector="chooseAnImageTapped:" destination="O0O-q1-9xw" eventType="touchUpInside" id="tLT-Lw-rN7"/>
+                                        </connections>
                                     </button>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aIn-g8-289">
                                         <rect key="frame" x="0.0" y="56" width="375" height="227"/>
@@ -109,6 +112,9 @@
                                 <state key="normal" title="Add a recording">
                                     <color key="titleColor" systemColor="systemRedColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="addARecordingTapped:" destination="O0O-q1-9xw" eventType="touchUpInside" id="WGj-Jy-cni"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="V3w-Bv-KzA"/>
@@ -124,8 +130,20 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="New Xperience" id="XDR-V6-UoK">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="BuT-Mh-Oyq"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="BuT-Mh-Oyq">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="O0O-q1-9xw" id="kbm-do-o9h"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="imageView" destination="aIn-g8-289" id="mVl-3E-hW2"/>
+                        <outlet property="slider1" destination="5eX-qt-EuZ" id="ANt-Lj-dSc"/>
+                        <outlet property="slider2" destination="9Tp-Um-hhC" id="gRM-Ck-4IN"/>
+                        <outlet property="slider3" destination="R18-4t-aa7" id="Ho7-g6-2LD"/>
+                        <outlet property="slider4" destination="5wE-V5-0cd" id="9wx-vc-8K5"/>
+                        <outlet property="titleTextField" destination="VWZ-cZ-uDH" id="Gxv-2m-OLa"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vnm-vu-hxS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
