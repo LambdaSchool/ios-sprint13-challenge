@@ -13,6 +13,8 @@ protocol AddExpDelegate: AnyObject {
 }
 
 class AddExperienceVC: UIViewController {
+    
+    // MARK: - Outlets
 
     @IBOutlet private var titleTextField: UITextField!
     @IBOutlet private var audioButton: UIButton!
@@ -20,6 +22,8 @@ class AddExperienceVC: UIViewController {
     @IBOutlet private var imageButton: UIButton!
     @IBOutlet private var addressTextField: UITextField!
     @IBOutlet private var mapView: MKMapView!
+    
+    // MARK: - Properties
     
     var coordinate: CLLocationCoordinate2D?
     fileprivate let locationManager = CLLocationManager()
@@ -29,12 +33,13 @@ class AddExperienceVC: UIViewController {
     var audioURL: URL?
     var image: UIImage?
     
+    // MARK: - View Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpMap()
     }
     
-
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -47,14 +52,7 @@ class AddExperienceVC: UIViewController {
         }
     }
     
-    @IBAction func addAudio(_ sender: UIButton) {
-    }
-    
-    @IBAction func addVideo(_ sender: UIButton) {
-    }
-    
-    @IBAction func addImage(_ sender: UIButton) {
-    }
+    // MARK: - Actions
     
     @IBAction func useLocation(_ sender: UIButton) {
         guard let userLocation = userLocation else { return }
@@ -95,6 +93,8 @@ class AddExperienceVC: UIViewController {
         delegate?.addExperience()
         dismiss(animated: true, completion: nil)
     }
+    
+    // MARK: - Private Functions
     
     private func setUpMap() {
         locationManager.delegate = self

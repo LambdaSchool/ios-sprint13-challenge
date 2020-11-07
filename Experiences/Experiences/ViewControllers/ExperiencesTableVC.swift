@@ -9,12 +9,16 @@ import UIKit
 
 class ExperiencesTableVC: UITableViewController {
     
+    // MARK: - Properties
+    
     private lazy var dateFormatter: DateFormatter = {
         let result = DateFormatter()
         result.dateStyle = .medium
         result.timeStyle = .short
         return result
     }()
+    
+    // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -63,6 +63,8 @@ class AudioRecorderVC: UIViewController {
         setPlayOnly()
     }
     
+    // MARK: - Private Functions
+    
     private func setPlayOnly() {
         if playOnlyMode {
             loadAudio()

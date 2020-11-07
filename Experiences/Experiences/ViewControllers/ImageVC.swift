@@ -16,12 +16,15 @@ protocol ImageDelegate: AnyObject {
 
 class ImageVC: UIViewController {
     
+    // MARK: - Outlets
+    
     @IBOutlet private var imageView: UIImageView!
     @IBOutlet private var chooseImageButton: UIButton!
     @IBOutlet private var saveImageButton: UIButton!
-    
     @IBOutlet private var hueSlider: UISlider!
     @IBOutlet private var crystalSlider: UISlider!
+    
+    // MARK: - Properties
     
     var originalImage: UIImage? {
         didSet {
@@ -53,10 +56,14 @@ class ImageVC: UIViewController {
     private let context = CIContext()
     weak var delegate: ImageDelegate?
     
+    // MARK: - View Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         originalImage = imageView.image
     }
+    
+    // MARK: - Actions
     
     @IBAction func chooseImage(_ sender: UIButton) {
         presentImagePickerController()
@@ -82,6 +89,8 @@ class ImageVC: UIViewController {
         guard let scaledImage = scaledImage else { return }
         imageView.image = crystallize(byFiltering: scaledImage)
     }
+    
+    // MARK: - Private Functions
     
     private func presentImagePickerController() {
         

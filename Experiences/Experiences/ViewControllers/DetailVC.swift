@@ -9,12 +9,16 @@ import UIKit
 import MapKit
 
 class DetailVC: UIViewController {
+    
+    // MARK: - Outlets
 
     @IBOutlet private var dateLabel: UILabel!
     @IBOutlet private var audioButton: UIButton!
     @IBOutlet private var videoButton: UIButton!
     @IBOutlet private var imageView: UIImageView!
     @IBOutlet private var mapView: MKMapView!
+    
+    // MARK: - Properties
     
     var experience: Experience?
     private lazy var dateFormatter: DateFormatter = {
@@ -24,10 +28,14 @@ class DetailVC: UIViewController {
         return result
     }()
     
+    // MARK: - View Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         updateView()
     }
+    
+    // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "playAudioSegue" {
@@ -36,6 +44,8 @@ class DetailVC: UIViewController {
             audioVC.playOnlyMode = true
         }
     }
+    
+    // MARK: - Private Functions
     
     private func updateView() {
         guard let experience = experience else { return }

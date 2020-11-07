@@ -9,18 +9,26 @@ import UIKit
 import MapKit
 
 class MapVC: UIViewController {
+    
+    // MARK: - Outlets
 
     @IBOutlet private var mapView: MKMapView!
+    
+    // MARK: - Properties
     
     fileprivate let locationManager = CLLocationManager()
     var span = MKCoordinateSpan(latitudeDelta: 0.15, longitudeDelta: 0.15)
     var userLocation: CLLocationCoordinate2D?
     var pins: [MKAnnotation] = []
     
+    // MARK: - View Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpMap()
     }
+    
+    // MARK: - Private Functions
     
     private func setUpMap() {
         mapView.removeAnnotations(pins)
