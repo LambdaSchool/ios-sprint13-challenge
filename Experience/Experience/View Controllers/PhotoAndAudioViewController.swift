@@ -7,6 +7,8 @@
 
 import UIKit
 import Photos
+import CoreImage
+import CoreImage.CIFilterBuiltins
 
 
 class PhotoAndAudioViewController: UIViewController {
@@ -15,16 +17,60 @@ class PhotoAndAudioViewController: UIViewController {
     
     let imagePicker = UIImagePickerController()
     
+//    var posterImage: UIImage? {
+//        didSet {
+//            guard let posterImage = posterImage else {
+//                scaledImage = nil
+//                return
+//            }
+//
+//            var scaledSize = posterImageView.bounds.size
+//            let scale = posterImageView.contentScaleFactor
+//
+//            scaledSize.width *= scale
+//            scaledSize.height *= scale
+//
+//            guard let scaledUIImage = posterImage.imageByScaling(toSize: scaledSize) else {
+//                scaledImage = nil
+//                return
+//            }
+//
+//            scaledImage = CIImage(image: scaledUIImage)
+//        }
+//    }
+//
+//    var scaledImage: CIImage? {
+//        didSet {
+//            updateImageView()
+//        }
+//    }
+    
     // MARK: OUTLETS
     
     @IBOutlet var posterImageView: UIImageView!
+    @IBOutlet var addPosterImageButtonSelector: UIButton!
+    
+    
+    // MARK: FUNCTIONS
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+//        posterImage = posterImageView.image
+        imagePicker.delegate = self
     }
     
-    // MARK: FUNCTIONS
+
+    
+//    private func updateImageView() {
+//        var scaledImages = scaledImage
+////        {
+////            posterImageView.image = image(byFiltering: scaledImage)
+////        } else {
+////            posterImageView.image = nil
+////        }
+//    }
+    
     private func posterSelector() {
         
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
@@ -32,8 +78,15 @@ class PhotoAndAudioViewController: UIViewController {
             return
         }
         
-        imagePicker.sourceType = .photoLibrary
+        if imagePicker.sourceType == .photoLibrary {
+            addPosterImageButtonSelector.isHidden = true
+        } else {
+            addPosterImageButtonSelector.isHidden = false
+        }
+            
+        imagePicker.allowsEditing = true
         imagePicker.delegate = self
+        
         
         self.present(imagePicker, animated: true, completion: nil)
     }
@@ -92,6 +145,19 @@ class PhotoAndAudioViewController: UIViewController {
 
     // MARK: EXTENSIONS
 extension PhotoAndAudioViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let imageSelected = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            posterImageView.image = imageSelected
+        }
+        if let imageOriginal = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            posterImageView.image = imageOriginal
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
 }
 
