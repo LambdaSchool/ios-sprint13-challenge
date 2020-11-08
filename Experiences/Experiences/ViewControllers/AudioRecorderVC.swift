@@ -26,7 +26,7 @@ class AudioRecorderVC: UIViewController {
     
     // MARK: - Properties
     
-    weak var delegate: AudioRecorderDelegate!
+    weak var delegate: AudioRecorderDelegate?
     
     var audioPlayer: AVAudioPlayer? {
         didSet {
@@ -285,7 +285,8 @@ class AudioRecorderVC: UIViewController {
             return
         }
         guard let recordingURL = recordingURL else { return }
-        delegate.addAudioURL(url: recordingURL)
+        delegate?.addAudioURL(url: recordingURL)
+        audioRecorder = nil
         dismiss(animated: true, completion: nil)
     }
 }
