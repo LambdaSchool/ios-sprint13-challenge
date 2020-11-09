@@ -12,6 +12,10 @@ import AVKit
 
 class CameraViewController: UIViewController {
     
+    var experienceController: ExperienceController?
+    var fileTitle: String?
+    var audioRecorder: AVAudioRecorder?
+    
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     

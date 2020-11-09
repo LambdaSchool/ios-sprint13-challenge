@@ -26,20 +26,54 @@ class NewExperienceViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        recordButton.isEnabled = false
     }
     
     @IBAction func addPhoto(_ sender: UIButton) {
+        guard let title = experienceTextField.text, !title.isEmpty else {return}
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            fatalError("Cannot add photo")
+        }
+        
+        let picker = UIImagePickerController()
+        picker.sourceType = .photoLibrary
+        picker.allowsEditing = true
+        picker.delegate = self
+        present(picker, animated: true)
     }
     
     @IBAction func recordButtonPressed(_ sender: UIButton) {
+        guard currentImage != nil else {return}
+        print("recordButtonPressed")
     }
     
     func prepareForRecord() {
         imageView.image = currentImage!
         recordButton.isEnabled = true
-        recordButton.backgroundColor = .red
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "CameraViewController" {
+            guard let VC = segue.destination as? CameraViewController,
+                let fileTitle = experienceTextField.text, !fileTitle.isEmpty else {return}
+            
+            VC.fileTitle = fileTitle
+            VC.experienceController = experienceController
+        }
+    }
+    
+}
+
+extension NewExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        guard let image = info[.originalImage] as? UIImage else { return }
+        imageView.image = image
+        dismiss(animated: true)
+        currentImage = image
+    }
 }
