@@ -25,3 +25,7 @@ class Experience: NSObject {
     var video: String?
     var image: UIImage?
 }
+
+extension Experience: MKAnnotation {
+    
+}

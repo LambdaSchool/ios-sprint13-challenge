@@ -16,7 +16,7 @@ class CameraViewController: UIViewController {
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     
     lazy private var player = AVPlayer()
-  //  private var playerView: VideoPlayerView!
+    private var playerView: VideoPlayerView!
     
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet var cameraView: CameraPreviewView!
