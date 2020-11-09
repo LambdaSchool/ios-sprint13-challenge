@@ -26,6 +26,7 @@ class NewXperiencePostViewController: UIViewController {
     // MARK: - Properties
     var imageData: Data?
     let context = CIContext()
+    let locationManager = CLLocationManager()
     
     var originalImage: UIImage? {
         didSet {
@@ -84,9 +85,12 @@ class NewXperiencePostViewController: UIViewController {
     @IBAction func chooseAnImageTapped(_ sender: Any) {
         presentImagePickerController()
     }
+    
     @IBAction func addARecordingTapped(_ sender: Any) {
     }
+    
     @IBAction func saveButtonTapped(_ sender: Any) {
+        
     }
     
 }
@@ -94,6 +98,10 @@ class NewXperiencePostViewController: UIViewController {
     // MARK: - Extenstions
     extension NewXperiencePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            
+            chooseImageButton.setTitle("", for: [])
+            chooseImageButton.image(for: [])
+            
             if let image = info[.editedImage] as? UIImage {
                 originalImage = image
             } else if let image = info[.originalImage] as? UIImage {

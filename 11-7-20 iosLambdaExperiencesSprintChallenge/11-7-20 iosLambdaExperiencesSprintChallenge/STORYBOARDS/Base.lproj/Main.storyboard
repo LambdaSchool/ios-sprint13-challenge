@@ -54,79 +54,80 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="s2E-Ia-f7n">
-                                <rect key="frame" x="20" y="156" width="375" height="283"/>
-                                <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Create a title!" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VWZ-cZ-uDH">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="34"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iFk-Ee-gJs">
-                                        <rect key="frame" x="0.0" y="39" width="375" height="12"/>
-                                        <state key="normal" title="Choose an Image..." image="plus" catalog="system">
-                                            <color key="titleColor" systemColor="systemBlueColor"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="chooseAnImageTapped:" destination="O0O-q1-9xw" eventType="touchUpInside" id="tLT-Lw-rN7"/>
-                                        </connections>
-                                    </button>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aIn-g8-289">
-                                        <rect key="frame" x="0.0" y="56" width="375" height="227"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="375" id="jus-vr-Cyn"/>
-                                        </constraints>
-                                    </imageView>
-                                </subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aIn-g8-289">
+                                <rect key="frame" x="19.5" y="221" width="375" height="227"/>
                                 <constraints>
-                                    <constraint firstItem="aIn-g8-289" firstAttribute="top" secondItem="s2E-Ia-f7n" secondAttribute="top" constant="56" id="dFc-DT-Lq9"/>
+                                    <constraint firstAttribute="width" constant="375" id="0in-9i-RkY"/>
+                                    <constraint firstAttribute="height" constant="227" id="chn-l8-kt3"/>
                                 </constraints>
-                            </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="EFj-SI-4cc">
-                                <rect key="frame" x="47" y="447" width="320" height="144"/>
-                                <subviews>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="5eX-qt-EuZ">
-                                        <rect key="frame" x="-2" y="0.0" width="324" height="31"/>
-                                    </slider>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="9Tp-Um-hhC">
-                                        <rect key="frame" x="-2" y="38" width="324" height="31"/>
-                                    </slider>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="R18-4t-aa7">
-                                        <rect key="frame" x="-2" y="76" width="324" height="31"/>
-                                    </slider>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="5wE-V5-0cd">
-                                        <rect key="frame" x="-2" y="114" width="324" height="31"/>
-                                    </slider>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="144" id="rve-Tl-BRD"/>
-                                    <constraint firstAttribute="width" constant="320" id="yKG-y9-lsD"/>
-                                </constraints>
-                            </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hbg-2i-M1V">
-                                <rect key="frame" x="152.5" y="627" width="109" height="43"/>
-                                <color key="backgroundColor" systemColor="systemGray3Color"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="43" id="pfZ-cg-q7n"/>
-                                </constraints>
-                                <state key="normal" title="Add a recording">
-                                    <color key="titleColor" systemColor="systemRedColor"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iFk-Ee-gJs">
+                                <rect key="frame" x="130" y="324" width="154" height="21"/>
+                                <state key="normal" title="Choose an Image...">
+                                    <color key="titleColor" systemColor="systemBlueColor"/>
                                 </state>
                                 <connections>
-                                    <action selector="addARecordingTapped:" destination="O0O-q1-9xw" eventType="touchUpInside" id="WGj-Jy-cni"/>
+                                    <action selector="chooseAnImageTapped:" destination="O0O-q1-9xw" eventType="touchUpInside" id="tLT-Lw-rN7"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Create a title!" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VWZ-cZ-uDH">
+                                <rect key="frame" x="19.5" y="155" width="375" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="k7s-Uk-BZv">
+                                <rect key="frame" x="39" y="464" width="336" height="195"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="EFj-SI-4cc">
+                                        <rect key="frame" x="0.0" y="0.0" width="336" height="144"/>
+                                        <subviews>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="5eX-qt-EuZ">
+                                                <rect key="frame" x="-2" y="0.0" width="340" height="31"/>
+                                            </slider>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="9Tp-Um-hhC">
+                                                <rect key="frame" x="-2" y="38" width="340" height="31"/>
+                                            </slider>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="R18-4t-aa7">
+                                                <rect key="frame" x="-2" y="76" width="340" height="31"/>
+                                            </slider>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="5wE-V5-0cd">
+                                                <rect key="frame" x="-2" y="114" width="340" height="31"/>
+                                            </slider>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="144" id="0dT-dB-GGP"/>
+                                            <constraint firstAttribute="width" constant="336" id="TRZ-SU-1cO"/>
+                                        </constraints>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hbg-2i-M1V">
+                                        <rect key="frame" x="0.0" y="165" width="336" height="30"/>
+                                        <color key="backgroundColor" systemColor="systemGray3Color"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="DMS-rC-Wqv"/>
+                                        </constraints>
+                                        <state key="normal" title="Add a recording">
+                                            <color key="titleColor" systemColor="systemRedColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="addARecordingTapped:" destination="O0O-q1-9xw" eventType="touchUpInside" id="WGj-Jy-cni"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="V3w-Bv-KzA"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="s2E-Ia-f7n" firstAttribute="top" secondItem="V3w-Bv-KzA" secondAttribute="top" constant="16" id="3iT-O1-o6w"/>
-                            <constraint firstItem="hbg-2i-M1V" firstAttribute="centerX" secondItem="oh3-6T-yyt" secondAttribute="centerX" id="HEj-Rd-TEN"/>
-                            <constraint firstAttribute="bottom" secondItem="s2E-Ia-f7n" secondAttribute="bottom" constant="457" id="LCi-Jf-zkd"/>
-                            <constraint firstItem="EFj-SI-4cc" firstAttribute="top" secondItem="aIn-g8-289" secondAttribute="bottom" constant="8" symbolic="YES" id="Vk7-P9-40N"/>
-                            <constraint firstItem="EFj-SI-4cc" firstAttribute="centerX" secondItem="oh3-6T-yyt" secondAttribute="centerX" id="YCB-gj-13j"/>
-                            <constraint firstItem="s2E-Ia-f7n" firstAttribute="leading" secondItem="oh3-6T-yyt" secondAttribute="leadingMargin" id="YUy-Qi-fAy"/>
-                            <constraint firstItem="hbg-2i-M1V" firstAttribute="top" secondItem="EFj-SI-4cc" secondAttribute="bottom" constant="36" id="roa-74-frv"/>
+                            <constraint firstItem="VWZ-cZ-uDH" firstAttribute="trailing" secondItem="aIn-g8-289" secondAttribute="trailing" id="M9a-0W-HyY"/>
+                            <constraint firstItem="aIn-g8-289" firstAttribute="top" secondItem="iFk-Ee-gJs" secondAttribute="bottom" constant="-124" id="PHQ-cR-7Dj"/>
+                            <constraint firstItem="iFk-Ee-gJs" firstAttribute="centerX" secondItem="oh3-6T-yyt" secondAttribute="centerX" id="RHQ-9m-vKa"/>
+                            <constraint firstItem="VWZ-cZ-uDH" firstAttribute="top" secondItem="V3w-Bv-KzA" secondAttribute="top" constant="15" id="WTu-mm-teH"/>
+                            <constraint firstItem="k7s-Uk-BZv" firstAttribute="top" secondItem="aIn-g8-289" secondAttribute="bottom" constant="16" id="XkQ-Fk-hfN"/>
+                            <constraint firstItem="aIn-g8-289" firstAttribute="centerX" secondItem="oh3-6T-yyt" secondAttribute="centerX" id="nb8-Uq-MJb"/>
+                            <constraint firstItem="VWZ-cZ-uDH" firstAttribute="leading" secondItem="aIn-g8-289" secondAttribute="leading" id="q0P-4S-fy0"/>
+                            <constraint firstItem="iFk-Ee-gJs" firstAttribute="top" secondItem="oh3-6T-yyt" secondAttribute="top" constant="324" id="tQe-3H-dK2"/>
+                            <constraint firstItem="k7s-Uk-BZv" firstAttribute="centerX" secondItem="oh3-6T-yyt" secondAttribute="centerX" id="vfx-Jw-z9D"/>
+                            <constraint firstItem="iFk-Ee-gJs" firstAttribute="centerY" secondItem="aIn-g8-289" secondAttribute="centerY" id="w4a-Fd-2s1"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="New Xperience" id="XDR-V6-UoK">
@@ -170,7 +171,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
