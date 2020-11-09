@@ -14,7 +14,7 @@ class CameraViewController: UIViewController {
     
     
     @IBOutlet weak var recordButton: UIButton!
-    @IBOutlet var cameraView: UIView!
+    @IBOutlet var cameraView: CameraPreviewView!
     
 
     override func viewDidLoad() {
