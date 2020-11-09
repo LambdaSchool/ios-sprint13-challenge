@@ -7,48 +7,29 @@
 
 import UIKit
 import Photos
-import CoreImage
-import CoreImage.CIFilterBuiltins
+import AVFoundation
 
 
 class PhotoAndAudioViewController: UIViewController {
     
-    // MARK: PROPERTIES
+    // MARK: PROPERTIES -- Photo
     
     let imagePicker = UIImagePickerController()
+    var recordButtonWasPressed = false
     
-//    var posterImage: UIImage? {
-//        didSet {
-//            guard let posterImage = posterImage else {
-//                scaledImage = nil
-//                return
-//            }
-//
-//            var scaledSize = posterImageView.bounds.size
-//            let scale = posterImageView.contentScaleFactor
-//
-//            scaledSize.width *= scale
-//            scaledSize.height *= scale
-//
-//            guard let scaledUIImage = posterImage.imageByScaling(toSize: scaledSize) else {
-//                scaledImage = nil
-//                return
-//            }
-//
-//            scaledImage = CIImage(image: scaledUIImage)
-//        }
-//    }
-//
-//    var scaledImage: CIImage? {
-//        didSet {
-//            updateImageView()
-//        }
-//    }
+    // MARK: PROPERTIES -- Audio
     
-    // MARK: OUTLETS
+    var audioRecorder: AVAudioRecorder?
+    var recordingURL: URL?
+    
+    // MARK: OUTLETS For Photos
     
     @IBOutlet var posterImageView: UIImageView!
     @IBOutlet var addPosterImageButtonSelector: UIButton!
+    
+    // MARK: OUTLETS For Audio
+    
+    @IBOutlet var recordButton: UIButton!
     
     
     // MARK: FUNCTIONS
@@ -56,20 +37,8 @@ class PhotoAndAudioViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        posterImage = posterImageView.image
         imagePicker.delegate = self
     }
-    
-
-    
-//    private func updateImageView() {
-//        var scaledImages = scaledImage
-////        {
-////            posterImageView.image = image(byFiltering: scaledImage)
-////        } else {
-////            posterImageView.image = nil
-////        }
-//    }
     
     private func posterSelector() {
         
@@ -78,15 +47,8 @@ class PhotoAndAudioViewController: UIViewController {
             return
         }
         
-        if imagePicker.sourceType == .photoLibrary {
-            addPosterImageButtonSelector.isHidden = true
-        } else {
-            addPosterImageButtonSelector.isHidden = false
-        }
-            
-        imagePicker.allowsEditing = true
+        imagePicker.sourceType = .photoLibrary
         imagePicker.delegate = self
-        
         
         self.present(imagePicker, animated: true, completion: nil)
     }
@@ -114,7 +76,7 @@ class PhotoAndAudioViewController: UIViewController {
         }
     }
     
-    // MARK: ACTIONS
+    // MARK: ACTIONS For Photos
     @IBAction func addPosterImage(_ sender: UIButton) {
         
         let alert = UIAlertController(title: "Select Source", message: nil, preferredStyle: .actionSheet)
@@ -141,19 +103,124 @@ class PhotoAndAudioViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    // MARK: ACTIONS For Record
+    
+    @IBAction func recordButtonWasTapped(_ sender: UIButton) {
+        updateViews()
+        
+    }
+    
+    // MARK: FUNCTION For Record
+    
+    func prepareAudioSession() throws {
+        let session = AVAudioSession.sharedInstance()
+        try session.setCategory(.playAndRecord, options: [.defaultToSpeaker])
+        try session.setActive(true, options: [])
+    }
+    
+    var isRecording: Bool {
+        audioRecorder?.isRecording ?? false
+    }
+    
+//    func cancelTimer() {
+//        timer?.invalidate()
+//        timer = nil
+//    }
+    
+    func createNewRecordingURL() -> URL {
+        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        
+        let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
+        let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
+        
+        print("recording URL: \(file)")
+        
+        return file
+    }
+    
+    func requestPermissionOrStartRecording() {
+        switch AVAudioSession.sharedInstance().recordPermission {
+        case .undetermined:
+            AVAudioSession.sharedInstance().requestRecordPermission { granted in
+                guard granted == true else {
+                    print("We need microphone access")
+                    return
+                }
+                
+                print("Recording permission has been granted!")
+                // NOTE: Invite the user to tap record again, since we just interrupted them, and they may not have been ready to record
+            }
+        case .denied:
+            print("Microphone access has been blocked.")
+            
+            let alertController = UIAlertController(title: "Microphone Access Denied", message: "Please allow this app to access your Microphone.", preferredStyle: .alert)
+            
+            alertController.addAction(UIAlertAction(title: "Open Settings", style: .default) { (_) in
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+            })
+            
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            
+            present(alertController, animated: true, completion: nil)
+        case .granted:
+            startRecording()
+        @unknown default:
+            break
+        }
+    }
+    
+    func startRecording() {
+        do {
+            try prepareAudioSession()
+        } catch {
+            print("Cannot record audio: \(error)")
+            return
+        }
+        
+        recordingURL = createNewRecordingURL()
+        
+        let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
+        
+        do {
+            audioRecorder = try AVAudioRecorder(url: recordingURL!, format: format)
+            audioRecorder?.delegate = self
+            audioRecorder?.isMeteringEnabled = true
+            audioRecorder?.record()
+            updateViews()
+
+        } catch {
+            preconditionFailure("The audio recorder could not be created with \(recordingURL!) and \(format)")
+        }
+    }
+    
+    func stopRecording() {
+        audioRecorder?.stop()
+        updateViews()
+    }
+    
+    func updateViews() {
+        
+        recordButton.isSelected = isRecording
+        
+        if !isRecording {
+            recordButton.setTitle("Record", for: .normal)
+        } else {
+            recordButton.setTitle("Stop Recording", for: .normal)
+        }
+    }
+    
 }
 
     // MARK: EXTENSIONS
 extension PhotoAndAudioViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let imageSelected = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            posterImageView.image = imageSelected
-        }
-        if let imageOriginal = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            posterImageView.image = imageOriginal
-        }
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
+        
+        addPosterImageButtonSelector.setTitle("", for: [])
         picker.dismiss(animated: true, completion: nil)
+                
+        posterImageView.image = image
     }
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -161,3 +228,22 @@ extension PhotoAndAudioViewController: UIImagePickerControllerDelegate, UINaviga
     }
 }
 
+// MARK: EXTENSIONS
+
+extension PhotoAndAudioViewController: AVAudioRecorderDelegate {
+    
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        if let recordingURL = recordingURL {
+//            audioPlayer = try? AVAudioPlayer(contentsOf: recordingURL)
+        }
+        recordingURL = nil
+        stopRecording()
+    }
+    
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
+        if let error = error {
+            print("Audio Recorder Error: \(error)")
+        }
+    }
+    
+}
