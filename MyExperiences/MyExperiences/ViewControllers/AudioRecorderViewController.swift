@@ -248,7 +248,7 @@ class AudioRecorderViewController: UIViewController {
     @IBAction func saveButtonTapped(_ sender: Any) {
         guard let recording = self.recordingURL else { return }
         guard let location = locationManager.location?.coordinate else { return }
-        postExperiencesController.createAudioPost(with: "Audio Post", audioURL: recording, location: location)
+        postExperiencesController.createAudio(with: "Audio Post", audioURL: recording, location: location)
     }
 
     @IBAction func recordButtonTapped(_ sender: Any) {

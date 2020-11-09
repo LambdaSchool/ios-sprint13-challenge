@@ -13,7 +13,7 @@ class MapViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     
     var location: CLLocationCoordinate2D?
-    var postTitle: String
+    var postTitle: String?
     var postAuthor: String?
     
     override func viewDidLoad() {

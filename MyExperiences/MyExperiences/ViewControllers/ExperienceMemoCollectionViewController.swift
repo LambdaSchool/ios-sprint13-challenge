@@ -6,11 +6,15 @@
 //
 
 import UIKit
+import MapKit
 
 private let reuseIdentifier = "Cell"
 
 class ExperienceMemoCollectionViewController: UICollectionViewController {
-
+    
+    let locationManager = CLLocationManager.shared
+    let postExperiencesController = PostExperiencesController.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,71 +22,140 @@ class ExperienceMemoCollectionViewController: UICollectionViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Register cell classes
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+      //  self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
-        // Do any additional setup after loading the view.
+        locationManager.delegate = self
+                locationManager.requestWhenInUseAuthorization()
+        
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    // MARK: UICollectionViewDataSource
-
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 0
+            return postExperiencesController.posts.count
+        }
+
+        override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+            let post = postExperiencesController.posts[indexPath.row]
+
+            if post.image != nil {
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as? PhotoCollectionViewCell else { return UICollectionViewCell() }
+                cell.post = post
+                cell.delegate = self
+                cell.layer.cornerRadius = 8
+                cell.layer.borderWidth = 2
+                cell.layer.borderColor = UIColor.systemOrange.cgColor
+                return cell
+            } else if post.audioURL != nil {
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AudioEntryCell", for: indexPath) as? AudioCollectionViewCell else { return UICollectionViewCell() }
+                cell.post = post
+                cell.delegate = self
+                cell.layer.cornerRadius = 8
+                cell.layer.borderWidth = 2
+                cell.layer.borderColor = UIColor.systemOrange.cgColor
+                return cell
+            } else if post.entry != nil {
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TextEntryCell", for: indexPath) as? TextCollectionViewCell else { return UICollectionViewCell() }
+                cell.post = post
+                cell.delegate = self
+                cell.layer.cornerRadius = 8
+                cell.layer.borderWidth = 2
+                cell.layer.borderColor = UIColor.systemOrange.cgColor
+                return cell
+            }
+            return UICollectionViewCell()
+        }
+
+        // MARK: - Private Methods
+        
+
+        // MARK: - IBActions
+        @IBAction func unwindSegue(_ sender: UIStoryboardSegue){}
+        @IBAction func addPostTapped(_ sender: Any) {
+            let alert = UIAlertController(title: "New Post", message: "Which kind of post do you want to create?", preferredStyle: .actionSheet)
+
+            let imagePostAction = UIAlertAction(title: "Image", style: .default) { _ in
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = storyboard.instantiateViewController(identifier: "ImagePostController") as! PhotoViewController
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+
+            let audioPostAction = UIAlertAction(title: "Audio", style: .default) { _ in
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = storyboard.instantiateViewController(identifier: "AudioPostController") as! AudioRecorderViewController
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+
+            let textPostAction = UIAlertAction(title: "Text", style: .default) { _ in
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = storyboard.instantiateViewController(identifier: "TextPostController") as! TextViewController
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+
+            alert.addAction(imagePostAction)
+            alert.addAction(audioPostAction)
+            alert.addAction(textPostAction)
+            alert.addAction(cancelAction)
+
+            self.present(alert, animated: true, completion: nil)
+        }
+
     }
 
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-    
-        // Configure the cell
-    
-        return cell
+    extension ExperienceMemoCollectionViewController: CLLocationManagerDelegate {
+        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+            guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+            print("locations = \(locValue.latitude) \(locValue.longitude)")
+        }
+
+        func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+            print(error)
+        }
     }
 
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
+    extension CLLocationManager {
+        static let shared = CLLocationManager()
     }
+
+    /* Conforming to our protocols on each UICollectionViewCell so that when we tap our nav button, we are able to get the appropriate indexPath for each cell, and transistionas appropriately to the MapViewController to fill in the blanks and displays location on map with a pin
     */
 
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
+    extension ExperienceMemoCollectionViewController: cellIndexPathDelegate {
+        func locationButtonTapped(cell: PhotoCollectionViewCell) {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(identifier: "MapViewController") as! MapViewController
+            self.navigationController?.pushViewController(vc, animated: true)
+            let indexPath = self.collectionView.indexPath(for: cell)
+            print(indexPath!.row)
+            let post = postExperiencesController.posts[indexPath!.row]
+            vc.location = post.location
+            vc.postTitle = post.title!
+            vc.postAuthor = post.author
+        }
     }
 
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
+    extension ExperienceMemoCollectionViewController: cellIndexPathDelegate2 {
+        func locationButtonTapped(cell: AudioCollectionViewCell) {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(identifier: "MapViewController") as! MapViewController
+            self.navigationController?.pushViewController(vc, animated: true)
+            let indexPath = self.collectionView.indexPath(for: cell)
+            let post = postExperiencesController.posts[indexPath!.row]
+            vc.location = post.location
+            vc.postTitle = post.title!
+            vc.postAuthor = post.author
+        }
     }
-    */
 
-}
+    extension ExperienceMemoCollectionViewController: cellIndexPathDelegate3 {
+        func locationButtonTapped(cell: TextCollectionViewCell) {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(identifier: "MapViewController") as! MapViewController
+            self.navigationController?.pushViewController(vc, animated: true)
+            let indexPath = self.collectionView.indexPath(for: cell)
+            let post = postExperiencesController.posts[indexPath!.row]
+            vc.location = post.location
+            vc.postTitle = post.title!
+            vc.postAuthor = post.author
+        }
+    }
