@@ -10,9 +10,11 @@ import MapKit
 
 class ExperienceViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
-    var locationManager = CLLocationManager()
+    //MARK: - PROPERTIES
+    private var locationManager = CLLocationManager()
     
-    @IBOutlet weak var mapView: MKMapView!
+     @IBOutlet weak var mapView: MKMapView!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,10 +49,6 @@ class ExperienceViewController: UIViewController, CLLocationManagerDelegate, MKM
                 self.locationManager.startUpdatingLocation()
             }
     }
-
-    
-    
-    
 
     /*
     // MARK: - Navigation

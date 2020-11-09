@@ -24,6 +24,7 @@ class NewXperiencePostViewController: UIViewController {
     @IBOutlet weak var slider4: UISlider!
     
     // MARK: - Properties
+    let xperienceController = XperienceController.shared
     var imageData: Data?
     let context = CIContext()
     let locationManager = CLLocationManager()
@@ -90,6 +91,21 @@ class NewXperiencePostViewController: UIViewController {
     }
     
     @IBAction func saveButtonTapped(_ sender: Any) {
+        guard let image = imageView.image,
+                let title = titleTextField.text, title != "" else {
+                    presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
+                    return
+            }
+            
+            let newLocation = locationManager.location?.coordinate
+        
+        xperienceController.createXperiencePost(with: title, image: image, audioURL: nil, location: newLocation!)
+        
+        
+            
+        
+            
+            navigationController?.popViewController(animated: true)
         
     }
     

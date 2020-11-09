@@ -26,7 +26,17 @@ class XperiencePost: NSObject {
     init(title: String?, mediaType: MediaType, location: CLLocationCoordinate2D? = nil) {
         self.mediaType = mediaType
         self.title = title
-        self.location = location ?? Locations.randomLocation
+        self.location = location! 
     }
+    
+}
+
+extension XperiencePost: MKAnnotation {
+    var coordinate: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: location.latitude, longitude: location.latitude)
+    }
+    
+    var postTitle: String? { title }
+    
     
 }

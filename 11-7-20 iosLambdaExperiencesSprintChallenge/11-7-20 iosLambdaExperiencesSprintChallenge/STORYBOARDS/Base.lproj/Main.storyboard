@@ -16,19 +16,39 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="yDf-2X-Pcv">
-                                <rect key="frame" x="-6" y="140" width="426" height="636"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="426" id="EmR-fE-CHA"/>
-                                    <constraint firstAttribute="height" constant="636" id="NMs-eK-CFw"/>
-                                </constraints>
-                            </mapView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="7Sw-zH-y9r">
+                                <rect key="frame" x="0.0" y="140" width="414" height="759"/>
+                                <subviews>
+                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="yDf-2X-Pcv">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="550"/>
+                                    </mapView>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="G7E-FO-0Ww">
+                                        <rect key="frame" x="0.0" y="550" width="414" height="209"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="209" id="PSb-XD-7Yu"/>
+                                        </constraints>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="3p7-Su-pu5">
+                                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3p7-Su-pu5" id="FkU-hf-Jm3">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </tableViewCellContentView>
+                                            </tableViewCell>
+                                        </prototypes>
+                                    </tableView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Xfm-ee-Ops"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="yDf-2X-Pcv" firstAttribute="top" secondItem="Xfm-ee-Ops" secondAttribute="top" id="Uja-aU-W1S"/>
-                            <constraint firstItem="yDf-2X-Pcv" firstAttribute="centerX" secondItem="hvg-Cr-R9d" secondAttribute="centerX" id="q7x-jJ-hYc"/>
+                            <constraint firstItem="7Sw-zH-y9r" firstAttribute="leading" secondItem="Xfm-ee-Ops" secondAttribute="leading" id="EG2-ZF-48K"/>
+                            <constraint firstItem="7Sw-zH-y9r" firstAttribute="centerX" secondItem="hvg-Cr-R9d" secondAttribute="centerX" id="XI8-N3-KkL"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="7Sw-zH-y9r" secondAttribute="bottom" constant="-37" id="Zgd-wu-Ze2"/>
+                            <constraint firstItem="7Sw-zH-y9r" firstAttribute="top" secondItem="Xfm-ee-Ops" secondAttribute="top" id="ozB-Dw-MSM"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="LambdaXperiences" id="G5s-yq-4je">
