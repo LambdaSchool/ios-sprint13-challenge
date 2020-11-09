@@ -65,14 +65,19 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="04Q-5S-8w0">
-                                <rect key="frame" x="170" y="481" width="74" height="30"/>
+                                <rect key="frame" x="170" y="483.5" width="74" height="27.5"/>
                                 <state key="normal" title="Add Image"/>
                                 <connections>
                                     <action selector="addPhoto:" destination="ejz-A0-Jiu" eventType="touchUpInside" id="FVR-h2-ia3"/>
                                 </connections>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lfB-Cv-fI5">
-                                <rect key="frame" x="45" y="261" width="324" height="212"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="lfB-Cv-fI5">
+                                <rect key="frame" x="45" y="262" width="324" height="212"/>
+                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="214.5" id="Jlr-Gt-R4C"/>
+                                    <constraint firstAttribute="width" constant="324" id="bpr-IK-gpr"/>
+                                </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add an experience:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xoj-Ha-9Cs">
                                 <rect key="frame" x="20" y="159" width="147" height="21"/>
@@ -93,24 +98,52 @@
                                     <segue destination="Q8S-nn-Vl6" kind="presentation" identifier="CameraViewController" id="8Tr-kS-QG9"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Audio:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Elf-rS-nPD">
+                                <rect key="frame" x="20" y="768" width="92" height="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M1V-0r-lEk">
+                                <rect key="frame" x="16" y="796" width="374" height="30"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="7Xf-J9-ydl"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="374" id="aGd-kJ-3mm"/>
+                                </constraints>
+                                <state key="normal" title="Press to record audio">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="recordAudioButton:" destination="ejz-A0-Jiu" eventType="touchUpInside" id="iAn-jR-VUL"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="fjJ-dC-6PL" firstAttribute="trailing" secondItem="z4y-qd-lhK" secondAttribute="trailing" constant="16" id="1ch-6E-CX0"/>
                             <constraint firstItem="xoj-Ha-9Cs" firstAttribute="top" secondItem="fjJ-dC-6PL" secondAttribute="top" constant="71" id="3vi-AU-kVL"/>
+                            <constraint firstItem="M1V-0r-lEk" firstAttribute="top" secondItem="Elf-rS-nPD" secondAttribute="bottom" constant="8" id="4td-at-ZE3"/>
                             <constraint firstItem="z4y-qd-lhK" firstAttribute="top" secondItem="xoj-Ha-9Cs" secondAttribute="bottom" constant="8" id="9aT-dI-ELf"/>
                             <constraint firstItem="fjJ-dC-6PL" firstAttribute="trailing" secondItem="04Q-5S-8w0" secondAttribute="trailing" constant="170" id="Al0-5r-70P"/>
                             <constraint firstItem="lfB-Cv-fI5" firstAttribute="leading" secondItem="fjJ-dC-6PL" secondAttribute="leading" constant="45" id="BNg-Lf-I1V"/>
+                            <constraint firstItem="fjJ-dC-6PL" firstAttribute="bottom" secondItem="M1V-0r-lEk" secondAttribute="bottom" constant="36" id="DIM-w9-bXN"/>
                             <constraint firstItem="qsP-Wh-zIk" firstAttribute="top" secondItem="04Q-5S-8w0" secondAttribute="bottom" constant="59" id="FQC-jG-Mmz"/>
                             <constraint firstItem="fjJ-dC-6PL" firstAttribute="trailing" secondItem="lfB-Cv-fI5" secondAttribute="trailing" constant="45" id="Gau-SR-x3P"/>
                             <constraint firstItem="fjJ-dC-6PL" firstAttribute="trailing" secondItem="xoj-Ha-9Cs" secondAttribute="trailing" constant="247" id="I51-Z4-hMC"/>
+                            <constraint firstItem="fjJ-dC-6PL" firstAttribute="trailing" secondItem="M1V-0r-lEk" secondAttribute="trailing" constant="24" id="JD4-rZ-Alh"/>
                             <constraint firstItem="fjJ-dC-6PL" firstAttribute="bottom" secondItem="qsP-Wh-zIk" secondAttribute="bottom" constant="270" id="Jdn-UK-dU8"/>
                             <constraint firstItem="z4y-qd-lhK" firstAttribute="leading" secondItem="fjJ-dC-6PL" secondAttribute="leading" constant="16" id="Jo1-Sg-QEh"/>
+                            <constraint firstItem="fjJ-dC-6PL" firstAttribute="bottom" secondItem="z4y-qd-lhK" secondAttribute="bottom" constant="640" id="LXg-7P-EIx"/>
                             <constraint firstItem="xoj-Ha-9Cs" firstAttribute="leading" secondItem="fjJ-dC-6PL" secondAttribute="leading" constant="20" id="OdI-un-R9R"/>
                             <constraint firstItem="lfB-Cv-fI5" firstAttribute="top" secondItem="z4y-qd-lhK" secondAttribute="bottom" constant="39" id="Oee-98-nWE"/>
                             <constraint firstItem="04Q-5S-8w0" firstAttribute="leading" secondItem="fjJ-dC-6PL" secondAttribute="leading" constant="170" id="aL9-UC-TFE"/>
+                            <constraint firstItem="fjJ-dC-6PL" firstAttribute="trailing" secondItem="Elf-rS-nPD" secondAttribute="trailing" constant="302" id="aod-qd-hMM"/>
                             <constraint firstItem="qsP-Wh-zIk" firstAttribute="leading" secondItem="fjJ-dC-6PL" secondAttribute="leading" constant="187" id="cqT-CM-5ud"/>
+                            <constraint firstItem="M1V-0r-lEk" firstAttribute="leading" secondItem="fjJ-dC-6PL" secondAttribute="leading" constant="16" id="dUm-QO-MWW"/>
                             <constraint firstItem="04Q-5S-8w0" firstAttribute="top" secondItem="lfB-Cv-fI5" secondAttribute="bottom" constant="8" id="ntC-vC-2VS"/>
+                            <constraint firstItem="Elf-rS-nPD" firstAttribute="top" secondItem="lfB-Cv-fI5" secondAttribute="bottom" constant="292.5" id="ySR-qr-yLF"/>
+                            <constraint firstItem="Elf-rS-nPD" firstAttribute="leading" secondItem="fjJ-dC-6PL" secondAttribute="leading" constant="20" id="yaN-Bq-sen"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fjJ-dC-6PL"/>
                     </view>
@@ -118,6 +151,7 @@
                     <connections>
                         <outlet property="experienceTextField" destination="z4y-qd-lhK" id="m5v-iH-xpu"/>
                         <outlet property="imageView" destination="lfB-Cv-fI5" id="Fh5-lu-Yw0"/>
+                        <outlet property="recordAudioButton" destination="M1V-0r-lEk" id="Vj9-J2-nDj"/>
                         <outlet property="recordButton" destination="qsP-Wh-zIk" id="llQ-L2-EgB"/>
                     </connections>
                 </viewController>
@@ -139,6 +173,9 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="tintColor" red="0.84904247519999998" green="0.20919537539999999" blue="0.20518353580000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" image="Record"/>
+                                <connections>
+                                    <action selector="recordButtonPressed:" destination="Q8S-nn-Vl6" eventType="touchUpInside" id="mbS-zg-ME2"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -174,6 +211,7 @@
     </scenes>
     <resources>
         <image name="Record" width="116" height="116"/>
+        <image name="photo" catalog="system" width="128" height="93"/>
         <image name="play.circle.fill" catalog="system" width="128" height="121"/>
         <image name="plus.bubble.fill" catalog="system" width="128" height="110"/>
     </resources>

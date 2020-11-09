@@ -10,7 +10,7 @@ import Foundation
 import MapKit
 import AVFoundation
 
-class Experience: NSObject {
+class Experience: NSObject, MKAnnotation {
     var title: String?
     var coordinate: CLLocationCoordinate2D
     
@@ -24,8 +24,4 @@ class Experience: NSObject {
     var audio: String?
     var video: String?
     var image: UIImage?
-}
-
-extension Experience: MKAnnotation {
-    
 }

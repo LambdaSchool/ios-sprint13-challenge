@@ -25,10 +25,10 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet var cameraView: CameraPreviewView!
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         cameraView.videoPlayerLayer.videoGravity = .resizeAspectFill
         setupCamera()
     }
@@ -44,14 +44,53 @@ class CameraViewController: UIViewController {
     }
     
     func updateViews() {
-        recordButton.isSelected = fileOutput.isRecording
+        if fileOutput.isRecording {
+            recordButton.setImage(UIImage(named: "Stop"), for: .normal)
+        } else {
+            recordButton.setImage(UIImage(named: "Record"), for: .normal)
+        }
     }
     
     func playMovie(url: URL) {
+        player.replaceCurrentItem(with: AVPlayerItem(url: url))
+        
+        if playerView == nil {
+            playerView = VideoPlayerView()
+            playerView.player = player
+            
+            var topRect = view.bounds
+            topRect.size.width /= 4
+            topRect.size.height /= 4
+            topRect.origin.y = view.layoutMargins.top
+            topRect.origin.x = view.bounds.size.width - topRect.size.width
+            
+            playerView.frame = topRect
+            view.addSubview(playerView)
+            
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(playRecording(_:)))
+            playerView.addGestureRecognizer(tapGesture)
+        }
+        
+        player.play()
         
     }
     
-    //ib action for record button goes here
+    @IBAction func playRecording(_ sender: UITapGestureRecognizer) {
+        guard sender.state == .ended else { return }
+        
+        let playerVC = AVPlayerViewController()
+        playerVC.player = player
+        
+        self.present(playerVC, animated: true, completion: nil)
+    }
+    
+    @IBAction func recordButtonPressed(_ sender: UIButton) {
+        if fileOutput.isRecording {
+            fileOutput.stopRecording()
+        } else {
+            fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
+        }
+    }
     
     private func setupCamera() {
         let camera = bestCamera
@@ -92,49 +131,52 @@ class CameraViewController: UIViewController {
     }
     
     private var bestCamera: AVCaptureDevice {
-           if let device = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) {
-               return device
-           } else if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
-               return device
-           }
-           
-           preconditionFailure("No cameras on device match our specifications.")
-       }
+        if let device = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) {
+            return device
+        } else if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
+            return device
+        }
+        
+        preconditionFailure("No cameras on device match our specifications.")
+    }
     
     private var bestMicrophone: AVCaptureDevice {
-           if let device = AVCaptureDevice.default(for: .audio) {
-               return device
-           }
-           
-           preconditionFailure("No microphones on device match our specifications")
-       }
+        if let device = AVCaptureDevice.default(for: .audio) {
+            return device
+        }
+        
+        preconditionFailure("No microphones on device match our specifications")
+    }
     
     private func newRecordingURL() -> URL {
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-
+        
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions = [.withInternetDateTime]
-
+        
         let name = formatter.string(from: Date())
         let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
         return fileURL
     }
-
-
+    
+    
 }
 
 extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
     
     func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
-        updateViews()
+        DispatchQueue.main.async {
+            self.updateViews()
+        }
     }
     
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
-        if let error = error {
-            print("Error saving video: \(error)")
-        }
+        guard let currentLoaction = experienceController?.currentLocation, let fileTitle = fileTitle else {return}
         
-        print("Video URL: \(outputFileURL)")
+        let experience = Experience(title: fileTitle, coordinate: currentLoaction)
+        experience.video = String(outputFileURL.absoluteString)
+        experienceController?.addNewExperience(newExperience: experience)
+        dismiss(animated: true, completion: nil)
         
         playMovie(url: outputFileURL)
         updateViews()

@@ -22,6 +22,7 @@ class NewExperienceViewController: UIViewController {
     @IBOutlet weak var experienceTextField: UITextField!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var recordAudioButton: UIButton!
     
 
     override func viewDidLoad() {
@@ -44,12 +45,24 @@ class NewExperienceViewController: UIViewController {
     
     @IBAction func recordButtonPressed(_ sender: UIButton) {
         guard currentImage != nil else {return}
-        print("recordButtonPressed")
+    }
+    
+    @IBAction func recordAudioButton(_ sender: UIButton) {
+        guard currentImage != nil else {return}
+        guard let title = experienceTextField.text, !title.isEmpty else {return}
+        
+        
     }
     
     func prepareForRecord() {
         imageView.image = currentImage!
         recordButton.isEnabled = true
+    }
+    
+    func newRecordingURL(fileTitle: String) -> URL {
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let url = documentsDirectory.appendingPathComponent(fileTitle).appendingPathExtension("mp3")
+        return url
     }
     
     override func viewDidAppear(_ animated: Bool) {
