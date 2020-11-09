@@ -12,6 +12,13 @@ import AVFoundation
 
 class NewExperienceViewController: UIViewController {
     
+    var experienceController: ExperienceController?
+    var currentImage: UIImage? {
+        didSet {
+            prepareForRecord()
+        }
+    }
+    
     @IBOutlet weak var experienceTextField: UITextField!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var recordButton: UIButton!
@@ -27,6 +34,12 @@ class NewExperienceViewController: UIViewController {
     }
     
     @IBAction func recordButtonPressed(_ sender: UIButton) {
+    }
+    
+    func prepareForRecord() {
+        imageView.image = currentImage!
+        recordButton.isEnabled = true
+        recordButton.backgroundColor = .red
     }
     
 }
