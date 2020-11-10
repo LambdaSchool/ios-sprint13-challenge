@@ -104,6 +104,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ljb-ud-g5h">
+                                <rect key="frame" x="171" y="638" width="72" height="30"/>
+                                <state key="normal" title="Play Audio"/>
+                                <connections>
+                                    <action selector="playAudio:" destination="ejz-A0-Jiu" eventType="touchUpInside" id="ulJ-Hh-Doa"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M1V-0r-lEk">
                                 <rect key="frame" x="16" y="796" width="374" height="30"/>
                                 <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -116,6 +123,7 @@
                                 </state>
                                 <connections>
                                     <action selector="recordAudioButton:" destination="ejz-A0-Jiu" eventType="touchUpInside" id="iAn-jR-VUL"/>
+                                    <action selector="toggleAudioRecording:" destination="ejz-A0-Jiu" eventType="touchUpInside" id="bfa-a4-13G"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -127,6 +135,7 @@
                             <constraint firstItem="z4y-qd-lhK" firstAttribute="top" secondItem="xoj-Ha-9Cs" secondAttribute="bottom" constant="8" id="9aT-dI-ELf"/>
                             <constraint firstItem="fjJ-dC-6PL" firstAttribute="trailing" secondItem="04Q-5S-8w0" secondAttribute="trailing" constant="170" id="Al0-5r-70P"/>
                             <constraint firstItem="lfB-Cv-fI5" firstAttribute="leading" secondItem="fjJ-dC-6PL" secondAttribute="leading" constant="45" id="BNg-Lf-I1V"/>
+                            <constraint firstItem="M1V-0r-lEk" firstAttribute="top" secondItem="ljb-ud-g5h" secondAttribute="bottom" constant="128" id="CGq-Ri-Egm"/>
                             <constraint firstItem="fjJ-dC-6PL" firstAttribute="bottom" secondItem="M1V-0r-lEk" secondAttribute="bottom" constant="36" id="DIM-w9-bXN"/>
                             <constraint firstItem="qsP-Wh-zIk" firstAttribute="top" secondItem="04Q-5S-8w0" secondAttribute="bottom" constant="59" id="FQC-jG-Mmz"/>
                             <constraint firstItem="fjJ-dC-6PL" firstAttribute="trailing" secondItem="lfB-Cv-fI5" secondAttribute="trailing" constant="45" id="Gau-SR-x3P"/>
@@ -137,11 +146,14 @@
                             <constraint firstItem="fjJ-dC-6PL" firstAttribute="bottom" secondItem="z4y-qd-lhK" secondAttribute="bottom" constant="640" id="LXg-7P-EIx"/>
                             <constraint firstItem="xoj-Ha-9Cs" firstAttribute="leading" secondItem="fjJ-dC-6PL" secondAttribute="leading" constant="20" id="OdI-un-R9R"/>
                             <constraint firstItem="lfB-Cv-fI5" firstAttribute="top" secondItem="z4y-qd-lhK" secondAttribute="bottom" constant="39" id="Oee-98-nWE"/>
+                            <constraint firstItem="ljb-ud-g5h" firstAttribute="leading" secondItem="fjJ-dC-6PL" secondAttribute="leading" constant="171" id="WI4-fm-ntE"/>
                             <constraint firstItem="04Q-5S-8w0" firstAttribute="leading" secondItem="fjJ-dC-6PL" secondAttribute="leading" constant="170" id="aL9-UC-TFE"/>
                             <constraint firstItem="fjJ-dC-6PL" firstAttribute="trailing" secondItem="Elf-rS-nPD" secondAttribute="trailing" constant="302" id="aod-qd-hMM"/>
                             <constraint firstItem="qsP-Wh-zIk" firstAttribute="leading" secondItem="fjJ-dC-6PL" secondAttribute="leading" constant="187" id="cqT-CM-5ud"/>
                             <constraint firstItem="M1V-0r-lEk" firstAttribute="leading" secondItem="fjJ-dC-6PL" secondAttribute="leading" constant="16" id="dUm-QO-MWW"/>
+                            <constraint firstItem="ljb-ud-g5h" firstAttribute="top" secondItem="qsP-Wh-zIk" secondAttribute="bottom" constant="46" id="gHT-QW-U2Z"/>
                             <constraint firstItem="04Q-5S-8w0" firstAttribute="top" secondItem="lfB-Cv-fI5" secondAttribute="bottom" constant="8" id="ntC-vC-2VS"/>
+                            <constraint firstItem="fjJ-dC-6PL" firstAttribute="trailing" secondItem="ljb-ud-g5h" secondAttribute="trailing" constant="171" id="w8B-rr-SpN"/>
                             <constraint firstItem="Elf-rS-nPD" firstAttribute="top" secondItem="lfB-Cv-fI5" secondAttribute="bottom" constant="292.5" id="ySR-qr-yLF"/>
                             <constraint firstItem="Elf-rS-nPD" firstAttribute="leading" secondItem="fjJ-dC-6PL" secondAttribute="leading" constant="20" id="yaN-Bq-sen"/>
                         </constraints>
