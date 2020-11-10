@@ -15,7 +15,7 @@ class NewExperienceViewController: UIViewController {
     var experienceController: ExperienceController?
     var currentImage: UIImage? {
         didSet {
-            prepareForRecord()
+         //   prepareForRecord()
         }
     }
     var recordingURL: URL?
@@ -40,6 +40,7 @@ class NewExperienceViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var recordAudioButton: UIButton!
+    @IBOutlet weak var playButton: UIButton!
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -47,7 +48,8 @@ class NewExperienceViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //recordButton.isEnabled = false
+        loadAudio()
+        recordButton.isEnabled = false
         //recordAudioButton.isEnabled = false
     }
     
@@ -68,14 +70,10 @@ class NewExperienceViewController: UIViewController {
         guard currentImage != nil else {return}
     }
     
-    @IBAction func recordAudioButton(_ sender: UIButton) {
-      //  guard currentImage != nil else {return}
-        guard let title = experienceTextField.text, !title.isEmpty else {return}
-
-    }
     
     @IBAction func toggleAudioRecording(_ sender: UIButton) {
         guard let title = experienceTextField.text, !title.isEmpty else {return}
+        //  guard currentImage != nil else {return}
         
         if isRecording {
             stopRecording()
@@ -93,8 +91,11 @@ class NewExperienceViewController: UIViewController {
     }
     
     func updateViews() {
-        recordAudioButton.isEnabled = !isRecording
-        recordAudioButton.isSelected = isPlaying
+        playButton.isEnabled = !isRecording
+        recordAudioButton.isEnabled = !isPlaying
+        
+        playButton.isSelected = isPlaying
+        recordAudioButton.isSelected = isRecording
     }
     
     func play() {
@@ -112,11 +113,11 @@ class NewExperienceViewController: UIViewController {
         updateViews()
     }
     
-    func prepareForRecord() {
-        imageView.image = currentImage!
-        recordButton.isEnabled = true
-        recordAudioButton.isEnabled = true
-    }
+//    func prepareForRecord() {
+//        imageView.image = currentImage!
+//        recordButton.isEnabled = true
+//        recordAudioButton.isEnabled = true
+//    }
     
     func prepareAudioSession() throws {
         let session = AVAudioSession.sharedInstance()
@@ -209,6 +210,16 @@ class NewExperienceViewController: UIViewController {
             break
         }
     }
+    
+    func loadAudio() {
+           let songURL = Bundle.main.url(forResource: "piano copy", withExtension: "mp3")!
+           
+           do {
+               audioPlayer = try AVAudioPlayer(contentsOf: songURL)
+           } catch {
+               preconditionFailure("Failure to load audio file: \(error)")
+           }
+       }
     
 }
 
