@@ -43,7 +43,12 @@ class TextCollectionViewCell: UICollectionViewCell {
         textView.text = post.entry
     }
     
-    @IBAction func locationButtonTapped(_ sender: UIButton) {
+    
+    @IBAction func locationButtonTapped(_ sender: Any) {
         delegate?.locationButtonTapped(cell: self)
     }
+    
+//    @IBAction func locationButtonTapped(_ sender: UIButton) {
+//        delegate?.locationButtonTapped(cell: self)
+//    }
 }

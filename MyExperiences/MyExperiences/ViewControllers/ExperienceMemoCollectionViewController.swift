@@ -80,13 +80,13 @@ class ExperienceMemoCollectionViewController: UICollectionViewController {
 
             let audioPostAction = UIAlertAction(title: "Audio", style: .default) { _ in
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let vc = storyboard.instantiateViewController(identifier: "AudioPostController") as! AudioRecorderViewController
+                let vc = storyboard.instantiateViewController(identifier: "AudioRecordController") as! AudioRecorderViewController
                 self.navigationController?.pushViewController(vc, animated: true)
             }
 
             let textPostAction = UIAlertAction(title: "Text", style: .default) { _ in
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let vc = storyboard.instantiateViewController(identifier: "TextPostController") as! TextViewController
+                let vc = storyboard.instantiateViewController(identifier: "TextViewController") as! TextViewController
                 self.navigationController?.pushViewController(vc, animated: true)
             }
 

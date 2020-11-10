@@ -22,7 +22,7 @@ class MapViewController: UIViewController {
         // Do any additional setup after loading the view.
         mapView.mapType = .standard
         mapView.register(MKAnnotationView.self, forAnnotationViewWithReuseIdentifier: .annotationReuseIdentifier)
-        setPinUsingMKPointAnnotation(location: location!)
+//        setPinUsingMKPointAnnotation(location: location!)
 
     }
     
