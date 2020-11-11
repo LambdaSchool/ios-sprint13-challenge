@@ -15,7 +15,7 @@ class NewExperienceViewController: UIViewController {
     var experienceController: ExperienceController?
     var currentImage: UIImage? {
         didSet {
-         //   prepareForRecord()
+           prepareForRecord()
         }
     }
     var recordingURL: URL?
@@ -50,7 +50,6 @@ class NewExperienceViewController: UIViewController {
         super.viewDidLoad()
         loadAudio()
         recordButton.isEnabled = false
-        //recordAudioButton.isEnabled = false
     }
     
     @IBAction func addPhoto(_ sender: UIButton) {
@@ -113,11 +112,11 @@ class NewExperienceViewController: UIViewController {
         updateViews()
     }
     
-//    func prepareForRecord() {
-//        imageView.image = currentImage!
-//        recordButton.isEnabled = true
-//        recordAudioButton.isEnabled = true
-//    }
+    func prepareForRecord() {
+        imageView.image = currentImage!
+        recordButton.isEnabled = true
+        recordAudioButton.isEnabled = true
+    }
     
     func prepareAudioSession() throws {
         let session = AVAudioSession.sharedInstance()
