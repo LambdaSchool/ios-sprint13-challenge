@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sCB-E0-NMB">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Map View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="MapViewController" customModule="Experience" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Q7o-8d-Bt1">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="N4G-zs-LjQ"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Q7o-8d-Bt1" secondAttribute="trailing" id="6tD-2e-Nug"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Q7o-8d-Bt1" secondAttribute="bottom" id="Mof-MR-k3X"/>
+                            <constraint firstItem="Q7o-8d-Bt1" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Tbo-Mu-YOy"/>
+                            <constraint firstItem="Q7o-8d-Bt1" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="lJm-Pt-eBt"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="idH-K5-nWS">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="3Kc-nd-gUN">
+                            <connections>
+                                <segue destination="Xoe-PS-DEy" kind="show" identifier="NewExperienceSegue" id="Kqf-TG-Qec"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="Q7o-8d-Bt1" id="3E6-KI-74W"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1047.8260869565217" y="65.625"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="npO-Ne-QQR">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sCB-E0-NMB" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="nFD-Hv-4Qg">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="aqi-ag-60E"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lHs-xf-iiD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="65.625"/>
+        </scene>
+        <!--New Experience View Controller-->
+        <scene sceneID="Bzj-Xb-ubC">
+            <objects>
+                <viewController id="Xoe-PS-DEy" customClass="NewExperienceViewController" customModule="Experience" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="gu1-DH-gF4">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="QaY-I9-PLZ">
+                                <rect key="frame" x="0.0" y="44" width="414" height="834"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0vs-2N-nBa">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="414"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="0vs-2N-nBa" secondAttribute="height" multiplier="1:1" id="BbY-OH-NM4"/>
+                                        </constraints>
+                                    </imageView>
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gyv-s8-pQ4" userLabel="BottomView">
+                                        <rect key="frame" x="0.0" y="439" width="414" height="395"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="SDb-VK-9iO" userLabel="Bottom Stack View">
+                                                <rect key="frame" x="16" y="8" width="382" height="345"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="1Fm-zd-A4k" userLabel="Brightness Stack View">
+                                                        <rect key="frame" x="0.0" y="0.0" width="382" height="50.5"/>
+                                                        <subviews>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="29T-sH-98E">
+                                                                <rect key="frame" x="0.0" y="0.0" width="382" height="50.5"/>
+                                                                <color key="backgroundColor" red="0.0" green="0.55187320709999999" blue="0.82879245280000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <state key="normal" image="photo" catalog="system"/>
+                                                                <connections>
+                                                                    <action selector="addImageButtonTapped:" destination="Xoe-PS-DEy" eventType="touchUpInside" id="5nK-FU-RMJ"/>
+                                                                </connections>
+                                                            </button>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="50.5" id="fj9-gd-fIF"/>
+                                                        </constraints>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="oWv-0Z-hM1" userLabel="Contrast Stack View">
+                                                        <rect key="frame" x="0.0" y="70.5" width="382" height="50.5"/>
+                                                        <subviews>
+                                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kge-Jh-lbh">
+                                                                <rect key="frame" x="0.0" y="0.0" width="282" height="50.5"/>
+                                                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <state key="normal" image="play" catalog="system">
+                                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="playRecordedAudioButtonTapped:" destination="Xoe-PS-DEy" eventType="touchUpInside" id="Gvs-et-Beb"/>
+                                                                </connections>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uFu-kk-8kV">
+                                                                <rect key="frame" x="290" y="0.0" width="92" height="50.5"/>
+                                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <state key="normal" title="Record Audio">
+                                                                    <color key="titleColor" systemColor="systemRedColor"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="recordAudioButtonTapped:" destination="Xoe-PS-DEy" eventType="touchUpInside" id="8VM-W5-Jhe"/>
+                                                                </connections>
+                                                            </button>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="50.5" id="vuo-dY-mZn"/>
+                                                        </constraints>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="5dH-hY-tUR" userLabel="Saturation Stack View">
+                                                        <rect key="frame" x="0.0" y="141" width="382" height="70"/>
+                                                        <subviews>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Describe your Experience:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LGc-Ry-w4S">
+                                                                <rect key="frame" x="0.0" y="0.0" width="382" height="70"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                <textInputTraits key="textInputTraits"/>
+                                                            </textField>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="70" id="XHz-bx-yjG"/>
+                                                        </constraints>
+                                                    </stackView>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QFz-on-fEX">
+                                                        <rect key="frame" x="0.0" y="231" width="382" height="44"/>
+                                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="80" id="HqG-jJ-OmE"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                                        <state key="normal" title="Save Experience">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="saveExperienceButtonTapped:" destination="Xoe-PS-DEy" eventType="touchUpInside" id="fCP-jr-9Qz"/>
+                                                        </connections>
+                                                    </button>
+                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1k3-OV-uzd" userLabel="Spacer View">
+                                                        <rect key="frame" x="0.0" y="295" width="382" height="50"/>
+                                                    </view>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="SDb-VK-9iO" firstAttribute="top" secondItem="Gyv-s8-pQ4" secondAttribute="topMargin" id="ES7-Jr-yzl"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="SDb-VK-9iO" secondAttribute="bottom" id="Emu-UY-mzf"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="SDb-VK-9iO" secondAttribute="trailing" id="QT3-ea-r5J"/>
+                                            <constraint firstItem="SDb-VK-9iO" firstAttribute="leading" secondItem="Gyv-s8-pQ4" secondAttribute="leadingMargin" id="dhx-1c-6Sv"/>
+                                        </constraints>
+                                        <edgeInsets key="layoutMargins" top="8" left="16" bottom="8" right="16"/>
+                                    </view>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="pa3-p5-ilY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="pa3-p5-ilY" firstAttribute="trailing" secondItem="QaY-I9-PLZ" secondAttribute="trailing" id="6an-1c-TZj"/>
+                            <constraint firstItem="pa3-p5-ilY" firstAttribute="bottom" secondItem="QaY-I9-PLZ" secondAttribute="bottom" id="al1-sI-w1N"/>
+                            <constraint firstItem="QaY-I9-PLZ" firstAttribute="leading" secondItem="pa3-p5-ilY" secondAttribute="leading" id="fBa-0C-CIn"/>
+                            <constraint firstItem="QaY-I9-PLZ" firstAttribute="top" secondItem="pa3-p5-ilY" secondAttribute="top" id="sfb-HO-Gp7"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Qp5-ps-asd"/>
+                    <connections>
+                        <outlet property="chooseImageButton" destination="29T-sH-98E" id="aj2-pe-8dX"/>
+                        <outlet property="descriptionTextField" destination="LGc-Ry-w4S" id="6I1-F2-JKN"/>
+                        <outlet property="imageView" destination="0vs-2N-nBa" id="LRx-Ho-Dnf"/>
+                        <outlet property="playButton" destination="uFu-kk-8kV" id="kGA-UV-Uos"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RZ0-d9-jkK" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2059" y="66"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="6XO-1r-T1b">
+            <objects>
+                <viewController id="usk-Yf-Pgp" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hbS-PV-v6r">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="ssE-e7-sec"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pOv-ef-dmu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2884" y="66"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="photo" catalog="system" width="128" height="93"/>
+        <image name="play" catalog="system" width="120" height="128"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
