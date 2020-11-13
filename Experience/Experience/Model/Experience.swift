@@ -14,10 +14,8 @@ class Experience: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     var image: UIImage?
     var audioURL: URL?
-    
-    
-    // MARK: - Initializers
-    
+
+    // MARK: - Initializer
     init(title: String, coordinate: CLLocationCoordinate2D, image: UIImage?, audioURL: URL?) {
         self.title = title
         self.coordinate = coordinate
@@ -25,7 +23,6 @@ class Experience: NSObject, MKAnnotation {
         self.audioURL = audioURL
     }
 }
-
 
 class ExperienceController  {
     

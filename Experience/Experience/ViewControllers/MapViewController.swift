@@ -24,11 +24,9 @@ class MapViewController: UIViewController {
     var currentLocation: CLLocationCoordinate2D?
     var annotations: [MKAnnotation] = []
     
-    
-    
+    // MARK:  Lifecycle
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        print(experienceController.experiences)
         mapView.showAnnotations(experienceController.experiences, animated: true)
     }
     
@@ -53,7 +51,7 @@ class MapViewController: UIViewController {
         setupAnnotations()
     }
     
-    
+    // MARK:  Private merthods
     private func setupLocation() {
         locationManager.delegate = self
         
@@ -76,6 +74,7 @@ class MapViewController: UIViewController {
         for experience in experiences {
             let annotation = MKPointAnnotation()
             annotation.title = experience.title as? String
+            annotation.subtitle = "Experience"
             annotation.coordinate = experience.coordinate
             annotations.append(annotation)
         }
@@ -95,7 +94,6 @@ class MapViewController: UIViewController {
     }
     
     // MARK: - Navigation
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let reuseIdentifier = "NewExperienceSegue"
         
@@ -112,19 +110,16 @@ class MapViewController: UIViewController {
 extension MapViewController: MKMapViewDelegate, CLLocationManagerDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard let experience = annotation as? Experience else { return nil }
+        guard let exp = annotation as? Experience else { return nil }
         
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: ReuseIdentifier.experienceAnnotation, for: experience) as! MKMarkerAnnotationView
+        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: ReuseIdentifier.experienceAnnotation, for: exp) as! MKMarkerAnnotationView
+            annotationView.annotation = exp
+            annotationView.canShowCallout = true
         
-        annotationView.canShowCallout = true
-
-        let detailView = EperienceDetailView()
-        detailView.experience = experience
-        annotationView.detailCalloutAccessoryView = detailView
-
-        if annotationView == nil {
-            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: ReuseIdentifier.experienceAnnotation) as! MKMarkerAnnotationView
-        }
+/// Lines of code that work but do not display properly
+//            let detailView = EperienceDetailView()
+//            detailView.experience = exp
+//            annotationView.detailCalloutAccessoryView = detailView
         
         return annotationView
     }
@@ -146,6 +141,4 @@ extension MapViewController: MKMapViewDelegate, CLLocationManagerDelegate {
         }
         currentLocation = lastLocation.coordinate
     }
-    
-    
 }         

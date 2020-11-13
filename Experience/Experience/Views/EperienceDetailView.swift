@@ -12,11 +12,11 @@ class EperienceDetailView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let placeDateStackView = UIStackView(arrangedSubviews: [titleLabel, image])
+        let placeDateStackView = UIStackView(arrangedSubviews: [image])
         placeDateStackView.spacing = UIStackView.spacingUseSystem
         
         let mainStackView = UIStackView(arrangedSubviews: [placeDateStackView])
-        mainStackView.axis = .vertical
+        mainStackView.axis = .horizontal
         mainStackView.spacing = UIStackView.spacingUseSystem
         
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -32,7 +32,6 @@ class EperienceDetailView: UIView {
     }
     
     // MARK: - Private
-    
     private func updateSubviews() {
         guard let experience = experience else { return }
         let title = experience.title
@@ -48,7 +47,8 @@ class EperienceDetailView: UIView {
     }
     
     private let titleLabel = UILabel()
-    private let image = UIImageView()
+    private var image = UIImageView()
+    
 }
 
 

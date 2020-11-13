@@ -18,6 +18,7 @@ class NewExperienceViewController: UIViewController {
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
     
+    // MARK: Properties
     var experienceController: ExperienceController?
     var coordinates: CLLocationCoordinate2D?
     var image: UIImage?
@@ -25,25 +26,11 @@ class NewExperienceViewController: UIViewController {
     
     let context = CIContext(options: nil)
     
-    // Audio Properties
+    // MARK: Audio Properties
     var audioRecording: AVAudioRecorder?
     var audioPlayer: AVAudioPlayer?
     var recordingURL: URL?
     var finishedAudioURL: URL?
-    
-    var isRecording: Bool {
-        return audioRecording?.isRecording ?? false
-    }
-    
-    var isPlaying: Bool {
-        audioPlayer?.isPlaying ?? false
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
-    }
     
     @IBAction func addImageButtonTapped(_ sender: UIButton) {
         presentImagePicker()
@@ -51,16 +38,22 @@ class NewExperienceViewController: UIViewController {
     
     @IBAction func saveExperienceButtonTapped(_ sender: UIButton) {
         guard let description = descriptionTextField.text, !description.isEmpty,
-              let coordinates = coordinates,
-              let image = image ,
-              let audioURL = audioURL else {
+              let coordinates = coordinates else {
             NSLog("Could not save new experience. Missing a property.")
             return
         }
         let exp = Experience(title: description, coordinate: coordinates, image: image, audioURL: audioURL)
-        print(exp)
         experienceController?.addExperence(exp)
+        
         navigationController?.popViewController(animated: true)
+    }
+    
+    var isRecording: Bool {
+        return audioRecording?.isRecording ?? false
+    }
+    
+    var isPlaying: Bool {
+        audioPlayer?.isPlaying ?? false
     }
     
     @IBAction func recordAudioButtonTapped(_ sender: UIButton) {
@@ -86,8 +79,61 @@ class NewExperienceViewController: UIViewController {
         } else {
             playRecording()
         }
-        
     }
+    
+    func startRecording() {
+        do {
+            try prepareAudioSession()
+        } catch {
+            NSLog("Could not record audio")
+            return
+        }
+        
+        audioURL = createNewRecordingURL()
+        
+        let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
+        
+        do {
+            audioRecording = try AVAudioRecorder(url: audioURL!, format: format)
+            audioRecording?.delegate = self
+            audioRecording?.isMeteringEnabled = true
+            audioRecording?.record()
+        } catch {
+            preconditionFailure("The audio recorder could not be created with \(audioURL!) and \(format)")
+        }
+    }
+    
+    func stopRecording() {
+        audioRecording?.stop()
+    }
+    
+    func playRecording() {
+        do {
+            try prepareAudioSession()
+            audioPlayer?.play()
+        } catch {
+            NSLog("Could not play recorded audio")
+        }
+    }
+    
+    func pauseRecording() {
+        audioPlayer?.pause()
+    }
+    
+    func prepareAudioSession() throws {
+        let session = AVAudioSession.sharedInstance()
+        try session.setCategory(.playAndRecord, options: [.defaultToSpeaker])
+        try session.setActive(true, options: []) // can fail if on a phone call, for instance
+    }
+    
+    func createNewRecordingURL() -> URL {
+        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
+        let url = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
+        
+        return url
+    }
+    
     private func presentImagePicker() {
         let imagePicker = UIImagePickerController()
         imagePicker.allowsEditing = true
@@ -137,22 +183,6 @@ class NewExperienceViewController: UIViewController {
         return UIImage(cgImage: outputCGImage)
     }
     
-    func prepareAudioSession() throws {
-        let session = AVAudioSession.sharedInstance()
-        try session.setCategory(.playAndRecord, options: [.defaultToSpeaker])
-        try session.setActive(true, options: []) // can fail if on a phone call, for instance
-    }
-    
-    func createNewRecordingURL() -> URL {
-        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
-        let url = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
-        
-        print("Recording URL: \(url)")
-        
-        return url
-    }
-    
     private func presentCamera() {
         guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
             print("The camera is not available")
@@ -184,66 +214,10 @@ class NewExperienceViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func startRecording() {
-        do {
-            try prepareAudioSession()
-        } catch {
-            NSLog("Could not record audio")
-            return
-        }
-        
-        audioURL = createNewRecordingURL()
-        
-        let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
-        
-        do {
-            audioRecording = try AVAudioRecorder(url: audioURL!, format: format)
-            audioRecording?.delegate = self
-            audioRecording?.isMeteringEnabled = true
-            audioRecording?.record()
-        } catch {
-            preconditionFailure("The audio recorder could not be created with \(audioURL!) and \(format)")
-        }
-    }
-    
-    func stopRecording() {
-        audioRecording?.stop()
-    }
-    
-    func playRecording() {
-        do {
-            try prepareAudioSession()
-            audioPlayer?.play()
-        } catch {
-            NSLog("Could not play recorded audio")
-        }
-    }
-    
-    func pauseRecording() {
-        audioPlayer?.pause()
-    }
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }
 
 extension NewExperienceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        // chooseImageButton.setTitle("", for: [])
-        picker.dismiss(animated: true, completion: nil)
-        
-        //        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        //        imageView.image = image
-        
         guard let image = info[.editedImage] as? UIImage else { return }
         
         let filteredImage = filterChosenImage(image)
@@ -264,7 +238,6 @@ extension NewExperienceViewController: AVAudioRecorderDelegate, AVAudioPlayerDel
         if let audioURL = audioURL {
             audioPlayer = try? AVAudioPlayer(contentsOf: audioURL)
         }
-        // audioURL = nil
     }
     
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {

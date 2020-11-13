@@ -43,10 +43,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        guard let location = locations.last else {
-            return
-        }
+        guard let location = locations.last else { return }
         
         currentLocation = location
         updateLocation(location)
@@ -58,19 +55,13 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     }
     
     fileprivate func updateLocation(_ currentLocation: CLLocation) {
-        
-        guard let delegate = self.delegate else {
-            return
-        }
+        guard let delegate = self.delegate else { return }
         
         delegate.tracingLocation(currentLocation)
     }
     
     fileprivate func updateLocationDidFailWithError(_ error: NSError) {
-        
-        guard let delegate = self.delegate else {
-            return
-        }
+        guard let delegate = self.delegate else { return }
         
         delegate.tracingLocationDidFailWithError(error)
     }

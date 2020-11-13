@@ -11,11 +11,10 @@ import CoreImage.CIFilterBuiltins
 
 
 struct ImageFilterController {
-    let context = CIContext()
     
+    let context = CIContext()
     let vignetteFilter = CIFilter.vignette()
     let hueFilter = CIFilter.hueAdjust()
-    
     
     func addVignetteFilter(image: UIImage, intensity: Float, radius: Float) -> UIImage? {
         guard let cgimage = image.cgImage else { return nil }
@@ -32,7 +31,6 @@ struct ImageFilterController {
     }
     
     func applyHueFilter(image: UIImage, angle: Float) -> UIImage? {
-        
         guard let cgImage = image.cgImage else { return nil }
         let ciImage = CIImage(cgImage: cgImage)
         
