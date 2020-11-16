@@ -20,6 +20,10 @@ class ExperienceViewController: UIViewController {
     @IBOutlet weak var recordButton: UIButton!
     
     var expController: ExperienceController!
+    var expTitle = "No Title"
+    
+    var currentLocation: CLLocationCoordinate2D?
+    let locationManager = CLLocationManager()
     
     var recordingURL: URL?
     var audioRecorder: AVAudioRecorder?
@@ -57,6 +61,14 @@ class ExperienceViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
     }
     
     private func presentImagePickerController() {
@@ -242,5 +254,14 @@ extension ExperienceViewController: AVAudioRecorderDelegate {
         if let error = error {
             print("Audio Recording Error: \(error)")
         }
+    }
+}
+
+
+extension ExperienceViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        
+        currentLocation = locValue
     }
 }
