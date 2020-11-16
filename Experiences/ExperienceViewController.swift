@@ -15,6 +15,8 @@ class ExperienceViewController: UIViewController {
     @IBOutlet weak var addImageButton: UIButton!
     @IBOutlet weak var recordButton: UIButton!
     
+    var expController: ExperienceController!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
