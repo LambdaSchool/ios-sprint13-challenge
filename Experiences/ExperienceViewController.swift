@@ -9,6 +9,7 @@ import UIKit
 import CoreImage
 import CoreImage.CIFilterBuiltins
 import Photos
+import AVFoundation
 
 class ExperienceViewController: UIViewController {
     
@@ -19,6 +20,9 @@ class ExperienceViewController: UIViewController {
     @IBOutlet weak var recordButton: UIButton!
     
     var expController: ExperienceController!
+    
+    var recordingURL: URL?
+    var audioRecorder: AVAudioRecorder?
     
     private let context = CIContext()
     private let vintageFilter = CIFilter.photoEffectInstant()
@@ -89,6 +93,86 @@ class ExperienceViewController: UIViewController {
         }
     }
     
+    var isRecording: Bool {
+        audioRecorder?.isRecording ?? false
+    }
+    
+    func createNewRecordingURL() -> URL {
+        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        
+        let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
+        let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
+        
+        print("recording URL: \(file)")
+        
+        return file
+    }
+    
+    func requestPermissionOrStartRecording() {
+        switch AVAudioSession.sharedInstance().recordPermission {
+        case .undetermined:
+            AVAudioSession.sharedInstance().requestRecordPermission { granted in
+                guard granted == true else {
+                    print("We need microphone access")
+                    return
+                }
+                
+                print("Recording permission has been granted!")
+            }
+        case .denied:
+            print("Microphone access has been blocked.")
+            
+            let alertController = UIAlertController(title: "Microphone Access Denied", message: "Please allow this app to access your Microphone.", preferredStyle: .alert)
+            
+            alertController.addAction(UIAlertAction(title: "Open Settings", style: .default) { (_) in
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+            })
+            
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            
+            present(alertController, animated: true, completion: nil)
+        case .granted:
+            startRecording()
+        @unknown default:
+            break
+        }
+    }
+    
+    func prepareAudioSession() throws {
+        let session = AVAudioSession.sharedInstance()
+        try session.setCategory(.playAndRecord, options: [.defaultToSpeaker])
+        try session.setActive(true, options: [])
+    }
+    
+    func startRecording() {
+        do {
+            try prepareAudioSession()
+        } catch {
+            print("Cannot record audio: \(error)")
+            return
+        }
+        
+        recordButton.setTitle("Stop Recording", for: [])
+        
+        recordingURL = createNewRecordingURL()
+        
+        let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
+        
+        do {
+            audioRecorder = try AVAudioRecorder(url: recordingURL!, format: format)
+            audioRecorder?.delegate = self
+            audioRecorder?.isMeteringEnabled = true
+            audioRecorder?.record()
+        } catch {
+            preconditionFailure("The audio recorder could not be created with \(recordingURL!) and \(format)")
+        }
+    }
+    
+    func stopRecording() {
+        audioRecorder?.stop()
+        recordButton.setTitle("Record", for: [])
+    }
+    
     @IBAction func saveExperience(_ sender: Any) {
         
     }
@@ -123,7 +207,11 @@ class ExperienceViewController: UIViewController {
     }
     
     @IBAction func recordAudio(_ sender: Any) {
-        
+        if isRecording {
+            stopRecording()
+        } else {
+            requestPermissionOrStartRecording()
+        }
     }
 }
 
@@ -145,5 +233,14 @@ extension ExperienceViewController: UIImagePickerControllerDelegate, UINavigatio
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+
+extension ExperienceViewController: AVAudioRecorderDelegate {
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
+        if let error = error {
+            print("Audio Recording Error: \(error)")
+        }
     }
 }
