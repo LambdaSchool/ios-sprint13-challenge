@@ -56,14 +56,15 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         if segue.identifier == ReuseIdentifier.addExpSegue {
             let destinationVC = segue.destination as? ExperienceViewController
             destinationVC?.expController = expController
+            destinationVC?.delegate = self
         }
     }
-    
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard let post = annotation as? Experience else { return nil }
-        
-        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: ReuseIdentifier.expAnnotation, for: post) as! MKMarkerAnnotationView
-        
-        return annotationView
+}
+
+
+extension ViewController: AddExperienceDelegate {
+    func expCreated() {
+        mapView.removeAnnotations(mapView.annotations)
+        mapView.addAnnotations(expController.experiences)
     }
 }

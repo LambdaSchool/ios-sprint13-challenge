@@ -11,6 +11,10 @@ import CoreImage.CIFilterBuiltins
 import Photos
 import AVFoundation
 
+protocol AddExperienceDelegate {
+    func expCreated()
+}
+
 class ExperienceViewController: UIViewController {
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
@@ -19,8 +23,11 @@ class ExperienceViewController: UIViewController {
     @IBOutlet weak var addImageButton: UIButton!
     @IBOutlet weak var recordButton: UIButton!
     
+    var delegate: AddExperienceDelegate?
+    
     var expController: ExperienceController!
     var expTitle = "No Title"
+    var expImage: UIImage?
     
     var currentLocation: CLLocationCoordinate2D?
     let locationManager = CLLocationManager()
@@ -186,7 +193,19 @@ class ExperienceViewController: UIViewController {
     }
     
     @IBAction func saveExperience(_ sender: Any) {
+        if let title = titleTextField.text,
+           !title.isEmpty {
+            expTitle = title
+        }
         
+        if let image = imageView.image {
+            expImage = image
+        }
+        
+        expController.createExperience(with: expTitle, image: expImage, ratio: expImage?.ratio, recording: recordingURL, geotag: currentLocation!)
+        delegate?.expCreated()
+        
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func addImage(_ sender: Any) {
