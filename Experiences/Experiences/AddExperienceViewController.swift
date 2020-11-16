@@ -12,40 +12,47 @@ import AVKit
 
 class AddExperienceViewController: UIViewController, UINavigationControllerDelegate {
 
+    
+    //Outlets
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var experienceImageView: UIImageView!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var nextButton: UIBarButtonItem!
     @IBOutlet weak var addImageButton: UIButton!
+    
+    //Experience Variables
+    var coordinate: CLLocationCoordinate2D?
+    var audioURL: URL?
+    var currentImage: UIImage?
+    
+    //Audio Variables
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     lazy private var player = AVPlayer()
+    var audioRecorder: AVAudioRecorder?
+    var audioPlayer: AVAudioPlayer?
+    var isRecording: Bool {
+        return audioRecorder?.isRecording ?? false
+    }
+    
+    var isPlaying: Bool {
+        audioPlayer?.isPlaying ?? false
+    }
+    
+    
+    // Experience Protocol
     var experienceMover: ExperienceMover?
     
     var photoSelected : Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("Test in viewDidLoad")
+        updateViews()
 
-        // Do any additional setup after loading the view.
     }
     
     func updateViews() {
-        
-    }
-    
-    @IBAction func recordButtonTapped(_ sender: UIButton) {
-        guard let titleText = titleTextField.text, !titleText.isEmpty, let experienceMover = experienceMover else {
-            print("No title text")
-            presentAlert()
-            return
-        }
-        
-        let experience = Experience(title: titleText, image: experienceImageView.image)
-        experienceMover.savedExperience(experience: experience)
-        
-        self.dismiss(animated: true, completion: nil)
-        
-        
+        recordButton.setTitle("Record Audio", for: .normal)
         
     }
     
@@ -59,88 +66,76 @@ class AddExperienceViewController: UIViewController, UINavigationControllerDeleg
         }
     }
     
+    @IBAction func recordButtonTapped(_ sender: UIButton) {
+        if recordButton.currentTitle == "Record Audio" {
+            // Sets button to a recording state
+            recordButton.setTitle("Stop Recording", for: .normal)
+            recordButton.tintColor = .systemRed
+            
+            startRecording()
+        } else {
+            // Return buton to normal state
+            recordButton.setTitle("Record Audio", for: .normal)
+            recordButton.tintColor = .systemBlue
+            
+            stopRecording()
+        }
+            
+    }
+
+    
+    @IBAction func nextButtonTapped(_ sender: UIBarButtonItem) {
+        print("tapped")
+        guard let titleText = titleTextField.text, !titleText.isEmpty, let coordinate = coordinate else {
+            presentAlert()
+            print("titleText or coordinate is nil")
+            return
+            
+        }
+        
+        let experience = Experience(title: titleText, coordinate: coordinate, url: audioURL, image: currentImage)
+        
+        experienceMover?.savedExperience(experience: experience)
+        
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func playRecordedAudio(_ sender: UIButton) {
+        if isPlaying {
+            pauseRecording()
+        } else {
+            playRecording()
+        }
+    }
+    
+    func playRecording() {
+        do {
+            try prepareAudioSession()
+            audioPlayer?.play()
+        } catch {
+            print("Unable to play audio")
+        }
+    }
+    
+
     func presentAlert() {
-        let alert = UIAlertController(title: "No Title Text", message: "Please enter title text", preferredStyle: .alert)
+        
+        let alert = UIAlertController(title: "No Location and/or Title Text", message: "Please enter title text", preferredStyle: .alert)
         let action = UIAlertAction(title: "Sounds good", style: .default, handler: nil)
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
     }
     
-    private var bestCamera: AVCaptureDevice {
-        if let device = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) {
-            return device
-        } else if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
-            return device
-        }
-        
-        preconditionFailure("No cameras on device match the specs that we need.")
-    }
-    
-    private var bestMicrophone: AVCaptureDevice {
-        if let device = AVCaptureDevice.default(for: .audio) {
-            return device
-        }
-        
-        preconditionFailure("No microphones on device match the specs that we need.")
-    }
-    
-    private func setupCamera() {
-        let camera = bestCamera
-        let microphone = bestMicrophone
-        
-        captureSession.beginConfiguration()
-        
-        guard let cameraInput = try? AVCaptureDeviceInput(device: camera) else {
-            preconditionFailure("Can't create an input from the camera.")
-        }
-        
-        guard let microphoneInput = try? AVCaptureDeviceInput(device: microphone) else {
-            preconditionFailure("Can't create an input from the microphone.")
-        }
-        
-        guard captureSession.canAddInput(cameraInput) else {
-            preconditionFailure("This session can't handle this type of input: \(cameraInput)")
-        }
-        captureSession.addInput(cameraInput)
-        
-        guard captureSession.canAddInput(microphoneInput) else {
-            preconditionFailure("This session can't handle this type of input: \(microphoneInput)")
-        }
-        captureSession.addInput(microphoneInput)
-        
-        if captureSession.canSetSessionPreset(.hd1920x1080) {
-            captureSession.sessionPreset = .hd1920x1080
-        }
-        
-        guard captureSession.canAddOutput(fileOutput) else {
-            preconditionFailure("This session can't handle this type of output: \(fileOutput)")
-        }
-        captureSession.addOutput(fileOutput)
-        
-        captureSession.commitConfiguration()
-        
-    }
-    
-    
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
+
+//Image Picker Functions and IBAction in here
 extension AddExperienceViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             experienceImageView.contentMode = .scaleAspectFit
             experienceImageView.image = pickedImage
+            currentImage = pickedImage
             photoSelected = true
         }
 
@@ -150,6 +145,7 @@ extension AddExperienceViewController: UIImagePickerControllerDelegate {
         func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
             dismiss(animated: true, completion: nil)
         }
+    
 }
 
 extension AddExperienceViewController: AVCaptureFileOutputRecordingDelegate {
@@ -165,10 +161,85 @@ extension AddExperienceViewController: AVCaptureFileOutputRecordingDelegate {
         
         print("Video URL: \(outputFileURL)")
         
-        playMovie(url: outputFileURL)
+//        playMovie(url: outputFileURL)
         updateViews()
     }
     
 }
+
+
+//MARK: Audio Delegate Functions and Audio Functions
+extension AddExperienceViewController: AVAudioRecorderDelegate, AVAudioPlayerDelegate {
+    
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        if let audioURL = audioURL {
+            audioPlayer = try? AVAudioPlayer(contentsOf: audioURL)
+        }
+    }
+    
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
+        if error != nil {
+            NSLog("Error occured during audio playback")
+        }
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        NSLog("Finished playing audio")
+    }
+    
+    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        if error != nil {
+            NSLog("Error occured during audio playback")
+        }
+    }
+    func prepareAudioSession() throws {
+        let session = AVAudioSession.sharedInstance()
+        try session.setCategory(.playAndRecord, options: [.defaultToSpeaker])
+        try session.setActive(true, options: []) // can fail if on a phone call, for instance
+    }
+    func createNewAudioURL() -> URL {
+        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
+        let url = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
+        
+        print("Recording URL: \(url)")
+        
+        return url
+    }
+    
+    
+    func startRecording() {
+        do {
+            try prepareAudioSession()
+        } catch {
+            NSLog("Could not record audio")
+            return
+        }
+        
+        audioURL = createNewAudioURL()
+        
+        let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
+        
+        do {
+            audioRecorder = try AVAudioRecorder(url: audioURL!, format: format)
+            audioRecorder?.delegate = self
+            audioRecorder?.isMeteringEnabled = true
+            audioRecorder?.record()
+        } catch {
+            preconditionFailure("The audio recorder could not be created with \(audioURL!) and \(format)")
+        }
+        }
+    
+    func stopRecording() {
+        audioRecorder?.stop()
+    }
+    
+    func pauseRecording() {
+        audioRecorder?.pause()
+    }
+    
+}
+
+
 
 
