@@ -6,16 +6,25 @@
 //
 
 import UIKit
+import MapKit
 
-struct Experience {
+class Experience: NSObject, MKAnnotation {
     
-    let title: String?
-    let image: UIImage?
+    var title: String?
+    var image: UIImage?
+    var coordinate: CLLocationCoordinate2D
+    var ratio: CGFloat?
+    var audio: URL?
+    var timestamp: Date
     
     
-    init(title: String?, image: UIImage? = nil) {
+    init(title: String?, image: UIImage? = nil, coordinate: CLLocationCoordinate2D, ratio: CGFloat? = nil, audio: URL? = nil, timestamp: Date = Date()) {
         self.title = title
         self.image = image
+        self.coordinate = coordinate
+        self.ratio = ratio
+        self.audio = audio
+        self.timestamp = timestamp
     }
     
 }
