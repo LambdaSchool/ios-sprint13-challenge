@@ -6,13 +6,20 @@
 //
 
 import UIKit
+import MapKit
 
 class MapsViewController: UIViewController {
-
+    
+    @IBOutlet var mapView: UIView!
+    
+    private let locationManager = CLLocationManager()
+    
+    var post: [Post] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        locationManager.requestWhenInUseAuthorization()
     }
     
 
@@ -26,4 +33,15 @@ class MapsViewController: UIViewController {
     }
     */
 
+}
+
+extension MapsViewController: MKMapViewDelegate {
+    
+//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//        guard annotation is Post else { return nil }
+//        
+//        return
+//        
+//    }
+    
 }

@@ -9,6 +9,9 @@ import UIKit
 
 class VideoRecorderViewController: UIViewController {
 
+    @IBOutlet var saveButton: UIBarButtonItem!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,5 +28,7 @@ class VideoRecorderViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
+    }
+    
 }

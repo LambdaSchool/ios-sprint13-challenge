@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1Jf-C3-DL1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1Jf-C3-DL1">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -67,8 +67,15 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qJz-cf-RoE">
+                                <rect key="frame" x="146" y="202" width="122" height="414"/>
+                                <state key="normal" title="Add Poster Image"/>
+                                <connections>
+                                    <action selector="addPosterImage:" destination="e2J-6L-mdZ" eventType="touchUpInside" id="o6G-LY-Lkc"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OQ3-3J-MLH">
-                                <rect key="frame" x="183" y="677" width="49" height="30"/>
+                                <rect key="frame" x="183" y="689" width="49" height="30"/>
                                 <state key="normal" title="Record">
                                     <color key="titleColor" systemColor="systemRedColor"/>
                                 </state>
@@ -76,30 +83,23 @@
                                     <action selector="recordButtonWasTapped:" destination="e2J-6L-mdZ" eventType="touchUpInside" id="CUU-f3-5Dx"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qJz-cf-RoE">
-                                <rect key="frame" x="20" y="202" width="374" height="414"/>
-                                <state key="normal" title="Add Poster Image"/>
-                                <connections>
-                                    <action selector="addPosterImage:" destination="e2J-6L-mdZ" eventType="touchUpInside" id="o6G-LY-Lkc"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="FIG-eX-zT3"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="OQ3-3J-MLH" firstAttribute="leading" secondItem="FIG-eX-zT3" secondAttribute="leading" constant="183" id="3Rb-Z8-gr3"/>
                             <constraint firstItem="qJz-cf-RoE" firstAttribute="bottom" secondItem="G1t-tn-c2n" secondAttribute="bottom" id="8M5-yy-G9j"/>
-                            <constraint firstItem="qJz-cf-RoE" firstAttribute="leading" secondItem="JDo-75-wdd" secondAttribute="leading" id="9Rv-2D-BRk"/>
-                            <constraint firstItem="G1t-tn-c2n" firstAttribute="top" secondItem="JDo-75-wdd" secondAttribute="bottom" constant="8" symbolic="YES" id="9t8-xV-lws"/>
                             <constraint firstItem="G1t-tn-c2n" firstAttribute="leading" secondItem="FIG-eX-zT3" secondAttribute="leading" id="Ak7-6l-I7F"/>
-                            <constraint firstItem="JDo-75-wdd" firstAttribute="top" secondItem="FIG-eX-zT3" secondAttribute="top" constant="20" id="Qcy-gu-vKH"/>
-                            <constraint firstItem="OQ3-3J-MLH" firstAttribute="top" secondItem="G1t-tn-c2n" secondAttribute="bottom" constant="61" id="Qek-bW-W3R"/>
+                            <constraint firstItem="OQ3-3J-MLH" firstAttribute="top" secondItem="G1t-tn-c2n" secondAttribute="bottom" constant="73" id="ENd-mG-1fI"/>
+                            <constraint firstItem="JDo-75-wdd" firstAttribute="leading" secondItem="FIG-eX-zT3" secondAttribute="leading" constant="20" id="FHK-kE-qKi"/>
+                            <constraint firstItem="FIG-eX-zT3" firstAttribute="bottom" secondItem="OQ3-3J-MLH" secondAttribute="bottom" constant="143" id="MHz-tM-FNV"/>
+                            <constraint firstItem="FIG-eX-zT3" firstAttribute="trailing" secondItem="OQ3-3J-MLH" secondAttribute="trailing" constant="182" id="aWw-wJ-GgI"/>
                             <constraint firstItem="qJz-cf-RoE" firstAttribute="centerX" secondItem="G1t-tn-c2n" secondAttribute="centerX" id="daR-iU-Le8"/>
                             <constraint firstItem="qJz-cf-RoE" firstAttribute="top" secondItem="G1t-tn-c2n" secondAttribute="top" id="fK4-I9-eDb"/>
-                            <constraint firstItem="FIG-eX-zT3" firstAttribute="trailing" secondItem="JDo-75-wdd" secondAttribute="trailing" constant="20" id="guv-d6-aIO"/>
                             <constraint firstItem="G1t-tn-c2n" firstAttribute="trailing" secondItem="FIG-eX-zT3" secondAttribute="trailing" id="iam-ps-JFD"/>
-                            <constraint firstItem="FIG-eX-zT3" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="OQ3-3J-MLH" secondAttribute="trailing" id="tiy-qo-PgY"/>
-                            <constraint firstItem="JDo-75-wdd" firstAttribute="leading" secondItem="iHK-ur-4to" secondAttribute="leadingMargin" id="tqH-ve-dR4"/>
+                            <constraint firstItem="G1t-tn-c2n" firstAttribute="top" secondItem="JDo-75-wdd" secondAttribute="bottom" constant="8" symbolic="YES" id="k42-HC-Drr"/>
+                            <constraint firstItem="OQ3-3J-MLH" firstAttribute="leading" secondItem="FIG-eX-zT3" secondAttribute="leading" constant="183" id="ofl-8L-oo7"/>
+                            <constraint firstItem="JDo-75-wdd" firstAttribute="top" secondItem="FIG-eX-zT3" secondAttribute="top" constant="20" id="sUU-ma-kmQ"/>
+                            <constraint firstItem="FIG-eX-zT3" firstAttribute="trailing" secondItem="JDo-75-wdd" secondAttribute="trailing" constant="20" id="ySE-ka-jtB"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="New Experience" leftItemsSupplementBackButton="YES" id="RJb-s0-hst">
@@ -146,8 +146,16 @@
                     </view>
                     <navigationItem key="navigationItem" title="Video Recording" leftItemsSupplementBackButton="YES" id="kWq-LU-UCz">
                         <barButtonItem key="backBarButtonItem" title="Back" id="2dJ-1O-I0o"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="taM-AC-EU4"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="taM-AC-EU4">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="QB1-DV-hUx" id="xVR-A4-LRp"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="X5u-wZ-EiD" id="9id-eT-uTN"/>
+                        <outlet property="saveButton" destination="taM-AC-EU4" id="kS6-D4-KXh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="up3-lE-Vld" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
