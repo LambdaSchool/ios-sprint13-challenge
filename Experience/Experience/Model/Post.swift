@@ -14,16 +14,18 @@ enum MediaType {
 
 class Post: NSObject {
     
-    let mediaType: MediaType
+    let mediaType: MediaType?
     let title: String?
     let latitude: Double
     let longitude: Double
+    let audioURL: URL?
     
-    init(title: String, mediaType: MediaType, latitude: Double, longitude: Double) {
-        self.title = title
-        self.mediaType = mediaType
+    init(title: String?, mediaType: MediaType?, latitude: Double, longitude: Double, audioURL: URL?) {
+        self.title = title ?? nil
+        self.mediaType = mediaType ?? nil
         self.latitude = latitude
         self.longitude = longitude
+        self.audioURL = audioURL ?? nil
     }
 }
 
