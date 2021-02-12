@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1Jf-C3-DL1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
@@ -11,7 +11,7 @@
         <!--Maps View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="MapsViewController" customModule="Experience" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Experiences" id="BYZ-38-t0r" customClass="MapsViewController" customModule="Experience" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -27,7 +27,7 @@
                                 </constraints>
                                 <state key="normal" image="1200px-Tomboy_logo.svg"/>
                                 <connections>
-                                    <segue destination="ba9-sZ-buj" kind="presentation" modalPresentationStyle="fullScreen" id="iYF-mu-H3O"/>
+                                    <segue destination="ba9-sZ-buj" kind="presentation" identifier="NewPost" modalPresentationStyle="fullScreen" id="yWU-vN-VZ4"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -43,6 +43,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="DAT-EX-9PM"/>
+                    <connections>
+                        <outlet property="addNotesButton" destination="tF8-Xc-bGM" id="yUd-Ll-fLR"/>
+                        <outlet property="mapView" destination="Uy9-0W-Se2" id="YVE-Qw-RvU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -51,15 +55,15 @@
         <!--New Experience-->
         <scene sceneID="CrB-49-FZ2">
             <objects>
-                <viewController id="e2J-6L-mdZ" customClass="PhotoAndAudioViewController" customModule="Experience" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="e2J-6L-mdZ" customClass="PostViewController" customModule="Experience" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iHK-ur-4to">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G1t-tn-c2n">
-                                <rect key="frame" x="0.0" y="202" width="414" height="414"/>
+                                <rect key="frame" x="0.0" y="202" width="414" height="310.5"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="G1t-tn-c2n" secondAttribute="height" multiplier="1:1" id="bwo-5k-vT2"/>
+                                    <constraint firstAttribute="width" secondItem="G1t-tn-c2n" secondAttribute="height" multiplier="4:3" id="HTE-gw-t7g"/>
                                 </constraints>
                             </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title: " textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JDo-75-wdd">
@@ -67,117 +71,59 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qJz-cf-RoE">
-                                <rect key="frame" x="146" y="202" width="122" height="414"/>
-                                <state key="normal" title="Add Poster Image"/>
-                                <connections>
-                                    <action selector="addPosterImage:" destination="e2J-6L-mdZ" eventType="touchUpInside" id="o6G-LY-Lkc"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OQ3-3J-MLH">
-                                <rect key="frame" x="183" y="689" width="49" height="30"/>
-                                <state key="normal" title="Record">
-                                    <color key="titleColor" systemColor="systemRedColor"/>
-                                </state>
-                                <connections>
-                                    <action selector="recordButtonWasTapped:" destination="e2J-6L-mdZ" eventType="touchUpInside" id="CUU-f3-5Dx"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="NS4-9f-C24">
+                                <rect key="frame" x="40" y="514" width="334" height="80"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qJz-cf-RoE">
+                                        <rect key="frame" x="0.0" y="0.0" width="334" height="30"/>
+                                        <state key="normal" title="Add Poster Image"/>
+                                        <connections>
+                                            <action selector="addImageTapped:" destination="e2J-6L-mdZ" eventType="touchUpInside" id="dlL-x3-ZPf"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OQ3-3J-MLH">
+                                        <rect key="frame" x="0.0" y="50" width="334" height="30"/>
+                                        <state key="normal">
+                                            <color key="titleColor" systemColor="systemRedColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="recordButtonWasTapped:" destination="e2J-6L-mdZ" eventType="touchUpInside" id="DUD-Y1-A65"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="FIG-eX-zT3"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="qJz-cf-RoE" firstAttribute="bottom" secondItem="G1t-tn-c2n" secondAttribute="bottom" id="8M5-yy-G9j"/>
-                            <constraint firstItem="G1t-tn-c2n" firstAttribute="leading" secondItem="FIG-eX-zT3" secondAttribute="leading" id="Ak7-6l-I7F"/>
-                            <constraint firstItem="OQ3-3J-MLH" firstAttribute="top" secondItem="G1t-tn-c2n" secondAttribute="bottom" constant="73" id="ENd-mG-1fI"/>
+                            <constraint firstItem="G1t-tn-c2n" firstAttribute="trailing" secondItem="FIG-eX-zT3" secondAttribute="trailing" id="BDv-So-rUs"/>
                             <constraint firstItem="JDo-75-wdd" firstAttribute="leading" secondItem="FIG-eX-zT3" secondAttribute="leading" constant="20" id="FHK-kE-qKi"/>
-                            <constraint firstItem="FIG-eX-zT3" firstAttribute="bottom" secondItem="OQ3-3J-MLH" secondAttribute="bottom" constant="143" id="MHz-tM-FNV"/>
-                            <constraint firstItem="FIG-eX-zT3" firstAttribute="trailing" secondItem="OQ3-3J-MLH" secondAttribute="trailing" constant="182" id="aWw-wJ-GgI"/>
-                            <constraint firstItem="qJz-cf-RoE" firstAttribute="centerX" secondItem="G1t-tn-c2n" secondAttribute="centerX" id="daR-iU-Le8"/>
-                            <constraint firstItem="qJz-cf-RoE" firstAttribute="top" secondItem="G1t-tn-c2n" secondAttribute="top" id="fK4-I9-eDb"/>
-                            <constraint firstItem="G1t-tn-c2n" firstAttribute="trailing" secondItem="FIG-eX-zT3" secondAttribute="trailing" id="iam-ps-JFD"/>
-                            <constraint firstItem="G1t-tn-c2n" firstAttribute="top" secondItem="JDo-75-wdd" secondAttribute="bottom" constant="8" symbolic="YES" id="k42-HC-Drr"/>
-                            <constraint firstItem="OQ3-3J-MLH" firstAttribute="leading" secondItem="FIG-eX-zT3" secondAttribute="leading" constant="183" id="ofl-8L-oo7"/>
+                            <constraint firstItem="NS4-9f-C24" firstAttribute="top" secondItem="G1t-tn-c2n" secondAttribute="bottom" constant="1.5" id="HKD-5b-GvL"/>
+                            <constraint firstItem="G1t-tn-c2n" firstAttribute="top" secondItem="JDo-75-wdd" secondAttribute="bottom" constant="8" id="JH2-4L-90x"/>
+                            <constraint firstItem="NS4-9f-C24" firstAttribute="leading" secondItem="FIG-eX-zT3" secondAttribute="leading" constant="40" id="UVb-yg-UBQ"/>
+                            <constraint firstItem="FIG-eX-zT3" firstAttribute="trailing" secondItem="NS4-9f-C24" secondAttribute="trailing" constant="40" id="fsS-cL-v8a"/>
+                            <constraint firstItem="NS4-9f-C24" firstAttribute="top" secondItem="iHK-ur-4to" secondAttribute="top" constant="514" id="jvV-B7-MhN"/>
                             <constraint firstItem="JDo-75-wdd" firstAttribute="top" secondItem="FIG-eX-zT3" secondAttribute="top" constant="20" id="sUU-ma-kmQ"/>
                             <constraint firstItem="FIG-eX-zT3" firstAttribute="trailing" secondItem="JDo-75-wdd" secondAttribute="trailing" constant="20" id="ySE-ka-jtB"/>
+                            <constraint firstItem="G1t-tn-c2n" firstAttribute="leading" secondItem="FIG-eX-zT3" secondAttribute="leading" id="zYB-os-V8G"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="New Experience" leftItemsSupplementBackButton="YES" id="RJb-s0-hst">
-                        <barButtonItem key="rightBarButtonItem" title="Next" id="ark-Zq-FT8">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="ark-Zq-FT8">
                             <connections>
-                                <segue destination="QB1-DV-hUx" kind="show" id="xTB-Hc-Peq"/>
+                                <action selector="saveButtonTapped:" destination="e2J-6L-mdZ" id="vJW-pX-gOw"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="addPosterImageButtonSelector" destination="qJz-cf-RoE" id="pyp-lY-Zf8"/>
-                        <outlet property="posterImageView" destination="G1t-tn-c2n" id="1zj-X9-Odj"/>
-                        <outlet property="recordButton" destination="OQ3-3J-MLH" id="0lh-s6-hxq"/>
+                        <outlet property="posterImageView" destination="G1t-tn-c2n" id="70o-t6-JLG"/>
+                        <outlet property="recordButton" destination="OQ3-3J-MLH" id="L2I-8s-Gyx"/>
+                        <outlet property="titleTextField" destination="JDo-75-wdd" id="RyB-kR-K0c"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iIp-Fw-K8i" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3257.971014492754" y="-177.45535714285714"/>
-        </scene>
-        <!--Video Recording-->
-        <scene sceneID="syT-0h-q6h">
-            <objects>
-                <viewController id="QB1-DV-hUx" customClass="VideoRecorderViewController" customModule="Experience" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="WNb-am-gOl">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X5u-wZ-EiD">
-                                <rect key="frame" x="0.0" y="140" width="414" height="756"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mjs-O0-iOl">
-                                        <rect key="frame" x="172" y="577" width="70" height="70"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="tintColor" red="0.97623199220000001" green="0.2333504558" blue="0.19139823319999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" image="Record"/>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemPurpleColor"/>
-                            </view>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="K1P-zY-vzT"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Video Recording" leftItemsSupplementBackButton="YES" id="kWq-LU-UCz">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="2dJ-1O-I0o"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="taM-AC-EU4">
-                            <connections>
-                                <action selector="saveButtonTapped:" destination="QB1-DV-hUx" id="xVR-A4-LRp"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="mapView" destination="X5u-wZ-EiD" id="9id-eT-uTN"/>
-                        <outlet property="saveButton" destination="taM-AC-EU4" id="kS6-D4-KXh"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="up3-lE-Vld" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4282.608695652174" y="-177.45535714285714"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="fdJ-OA-nLi">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1Jf-C3-DL1" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="yH4-Pp-fot">
-                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="RQQ-73-IUd"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SvH-FO-NBo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="140.57971014492756" y="123.88392857142857"/>
+            <point key="canvasLocation" x="2945" y="124"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="b1P-4f-zkN">
@@ -195,17 +141,13 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TyD-33-jHw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2347.826086956522" y="-177.45535714285714"/>
+            <point key="canvasLocation" x="2035" y="124"/>
         </scene>
     </scenes>
     <resources>
         <image name="1200px-Tomboy_logo.svg" width="400" height="400"/>
-        <image name="Record" width="116" height="116"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemPurpleColor">
-            <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

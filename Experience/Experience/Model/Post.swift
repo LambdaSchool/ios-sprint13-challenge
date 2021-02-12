@@ -8,35 +8,26 @@
 import UIKit
 import MapKit
 
-enum MediaType {
-    case image(UIImage)
-}
-
 class Post: NSObject {
     
-    let mediaType: MediaType?
-    let title: String?
+    let image: UIImage?
+    let titleName: String
     let latitude: Double
     let longitude: Double
-    let audioURL: URL?
     
-    init(title: String?, mediaType: MediaType?, latitude: Double, longitude: Double, audioURL: URL?) {
-        self.title = title ?? nil
-        self.mediaType = mediaType ?? nil
+    init(titleName: String, image: UIImage, latitude: Double, longitude: Double) {
+        self.titleName = titleName
+        self.image = image
         self.latitude = latitude
         self.longitude = longitude
-        self.audioURL = audioURL ?? nil
     }
 }
 
 extension Post: MKAnnotation {
-    
     var coordinate: CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        
     }
-    
-    
+    var title: String? { titleName }
 }
-
-
 
